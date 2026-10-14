@@ -1,0 +1,1175 @@
+{
+  "actual_whole_source_closure_and_prior_complete_read_count": 2,
+  "assignment_sha256": "1b0e24167068d985eb0cfa67fed45a05c5d509b95c3fbc9e615975c9cfdfa8a1",
+  "boundary": "Two fresh unsigned assessments distinct from previous25verified proofs.1299 remains pending. No automatictag/P/mode/owner transformation.",
+  "cumulative_complete_read_count": 30,
+  "input_sha256": "8e55650ab768cd287b707bebeb11ba2139b475f6f3b0a3d1d17fe82ab128ea66",
+  "model": "gpt-6.1-sol",
+  "native_approved": 0,
+  "new_proofs": 0,
+  "next_unread": 1280,
+  "operating": 0,
+  "prepared_count": 50,
+  "range": [
+    1278,
+    1280
+  ],
+  "reasoning_effort": "high",
+  "root_approved": 0,
+  "rows": [
+    {
+      "actual_current_full": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ],
+          "native_guards": {
+            "rules": [
+              {
+                "id": "face_belongs_to_character",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "face"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                }
+              },
+              {
+                "id": "hands_region_belongs_to_character",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "hands"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                }
+              },
+              {
+                "id": "face_and_hands_are_distinct_regions",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "face"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "hands"
+                }
+              },
+              {
+                "dimension": "subject",
+                "id": "selected_character_is_explicitly_human",
+                "kind": "frozen_value",
+                "owner": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                },
+                "property": "entity.category",
+                "value": {
+                  "type": "entity.category/v1",
+                  "value": "human"
+                }
+              }
+            ],
+            "schema": "photo-native-source-guards/v2"
+          }
+        },
+        "content": {
+          "application_contract": "Apply only to the independently declared existing face and existing hands-region of the same independently declared existing human character, with all three actual owners explicitly selected by the caller. The hands-region is the already declared region containing the hands named by this cue; it neither creates a group nor specifies an exact total hand count. Select the blank facial response, the warm helpful presentation of those hands, and the contrast between that blank face and those warm helpful hands. Do not add body parts, prescribe a particular helping gesture, or assert temperature, private emotion or successful help. No main, primary or foreground role is assigned.",
+          "en": "blank face with warm helpful hands",
+          "ko": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+          "tags": [
+            "human",
+            "expression"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "character_response",
+            "expression"
+          ],
+          "properties": [
+            {
+              "dimension": "expression",
+              "property": "expression.face",
+              "target": "face"
+            },
+            {
+              "dimension": "character_response",
+              "property": "response.presentation",
+              "target": "hands"
+            },
+            {
+              "dimension": "character_response",
+              "property": "character.contrast",
+              "target": "hands"
+            }
+          ]
+        },
+        "id": "cand_7f96b80af091533cb700db081b3dbbaf",
+        "provenance": [
+          {
+            "sha256": "5d6b0f287b1f40261fe387a0b9f8cd00e288e4043957c86edd7746b2850cc356",
+            "source": "slot:expression:blank_face_warm_hands"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+      "compiled5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 29,
+          "sha256": "f308b4d03010f3de34983a947a865360d2083690fb56340293fdda858ddac333"
+        },
+        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "expression",
+            "pointer": "/content/en",
+            "property": "face.expression.blank",
+            "quote": "blank face with warm helpful hands",
+            "realization_id": "base",
+            "target": "actor_face"
+          },
+          {
+            "dimension": "character_response",
+            "pointer": "/content/en",
+            "property": "character.contrast.blank_face_helpful_hands",
+            "quote": "blank face with warm helpful hands",
+            "realization_id": "base",
+            "target": "actor"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "An expressionless face contrasts with helpful-looking hands.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "Warm hands is a social reading, not measured temperature or a specific helping action."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "expression",
+                "pointer": "/content/en",
+                "property": "face.expression.blank",
+                "quote": "blank face with warm helpful hands",
+                "target": "actor_face"
+              }
+            ],
+            "rationale": "An expressionless face contrasts with helpful-looking hands.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "expression"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "character_response",
+                "pointer": "/content/en",
+                "property": "character.contrast.blank_face_helpful_hands",
+                "quote": "blank face with warm helpful hands",
+                "target": "actor"
+              }
+            ],
+            "rationale": "An expressionless face contrasts with helpful-looking hands.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "character_contrast"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "690b386d8d6aeb930a6b4bded24c5aa5d32aba4086f13519b7ac015e01adcda3",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "complete_ownbindings": {
+        "bind_7f96b80af091533cb700db081b3dbbaf": {
+          "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+          "conditions": {
+            "subject_applicability": {
+              "subject_categories": [
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "id": "bind_7f96b80af091533cb700db081b3dbbaf",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "expression",
+          "weight": 0.82
+        }
+      },
+      "facts": [
+        {
+          "dimension": "subject",
+          "id": "characterP",
+          "mode": "prerequisite",
+          "pointer": "/content/application_contract",
+          "property": "entity.category",
+          "quote": "independently declared existing human character",
+          "realization_id": "base",
+          "requires": [],
+          "target": "character",
+          "value": {
+            "type": "entity.category/v1",
+            "value": "human"
+          }
+        },
+        {
+          "dimension": "subject",
+          "id": "faceP",
+          "mode": "prerequisite",
+          "pointer": "/content/application_contract",
+          "property": "anatomy.face.presence",
+          "quote": "independently declared existing face",
+          "realization_id": "base",
+          "requires": [],
+          "target": "face",
+          "value": {
+            "type": "anatomy.face.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "dimension": "subject",
+          "id": "handsP",
+          "mode": "prerequisite",
+          "pointer": "/content/application_contract",
+          "property": "entity.type",
+          "quote": "existing hands-region",
+          "realization_id": "base",
+          "requires": [],
+          "target": "hands",
+          "value": {
+            "type": "entity.type/v1",
+            "value": "hands_region"
+          }
+        },
+        {
+          "dimension": "subject",
+          "id": "actualHandsP",
+          "mode": "prerequisite",
+          "pointer": "/content/application_contract",
+          "property": "anatomy.hands.presence",
+          "quote": "already declared region containing the hands named by this cue",
+          "realization_id": "base",
+          "requires": [],
+          "target": "hands",
+          "value": {
+            "type": "anatomy.hands.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "dimension": "expression",
+          "id": "blankEn",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/en",
+          "property": "expression.face",
+          "quote": "blank face",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "characterP",
+            "faceP"
+          ],
+          "target": "face",
+          "value": {
+            "type": "expression.face/v1",
+            "value": "blank"
+          }
+        },
+        {
+          "dimension": "character_response",
+          "id": "handsEn",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/en",
+          "property": "response.presentation",
+          "quote": "warm helpful hands",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "characterP",
+            "handsP",
+            "actualHandsP"
+          ],
+          "target": "hands",
+          "value": {
+            "type": "response.presentation/v1",
+            "value": "warm_helpful_hands_impression"
+          }
+        },
+        {
+          "dimension": "character_response",
+          "id": "contrastEn",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/en",
+          "property": "character.contrast",
+          "quote": "blank face with warm helpful hands",
+          "realization_id": "base",
+          "receivers": [
+            "face"
+          ],
+          "requires": [
+            "characterP",
+            "faceP",
+            "handsP",
+            "actualHandsP"
+          ],
+          "target": "hands",
+          "value": {
+            "type": "character.contrast/v1",
+            "value": "blank_face_warm_helpful_hands_contrast"
+          }
+        },
+        {
+          "dimension": "expression",
+          "id": "blankKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/ko",
+          "property": "expression.face",
+          "quote": "무표정한 얼굴",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "characterP",
+            "faceP"
+          ],
+          "target": "face",
+          "value": {
+            "type": "expression.face/v1",
+            "value": "blank"
+          }
+        },
+        {
+          "dimension": "character_response",
+          "id": "handsKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/ko",
+          "property": "response.presentation",
+          "quote": "따뜻하고 도움을 주는 인상의 손",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "characterP",
+            "handsP",
+            "actualHandsP"
+          ],
+          "target": "hands",
+          "value": {
+            "type": "response.presentation/v1",
+            "value": "warm_helpful_hands_impression"
+          }
+        },
+        {
+          "dimension": "character_response",
+          "id": "contrastKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/ko",
+          "property": "character.contrast",
+          "quote": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+          "realization_id": "base",
+          "receivers": [
+            "face"
+          ],
+          "requires": [
+            "characterP",
+            "faceP",
+            "handsP",
+            "actualHandsP"
+          ],
+          "target": "hands",
+          "value": {
+            "type": "character.contrast/v1",
+            "value": "blank_face_warm_helpful_hands_contrast"
+          }
+        },
+        {
+          "dimension": "expression",
+          "id": "blankApp",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/application_contract",
+          "property": "expression.face",
+          "quote": "Select the blank facial response",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "characterP",
+            "faceP"
+          ],
+          "target": "face",
+          "value": {
+            "type": "expression.face/v1",
+            "value": "blank"
+          }
+        },
+        {
+          "dimension": "character_response",
+          "id": "handsApp",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/application_contract",
+          "property": "response.presentation",
+          "quote": "the warm helpful presentation of those hands",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "characterP",
+            "handsP",
+            "actualHandsP"
+          ],
+          "target": "hands",
+          "value": {
+            "type": "response.presentation/v1",
+            "value": "warm_helpful_hands_impression"
+          }
+        },
+        {
+          "dimension": "character_response",
+          "id": "contrastApp",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/application_contract",
+          "property": "character.contrast",
+          "quote": "the contrast between that blank face and those warm helpful hands",
+          "realization_id": "base",
+          "receivers": [
+            "face"
+          ],
+          "requires": [
+            "characterP",
+            "faceP",
+            "handsP",
+            "actualHandsP"
+          ],
+          "target": "hands",
+          "value": {
+            "type": "character.contrast/v1",
+            "value": "blank_face_warm_helpful_hands_contrast"
+          }
+        }
+      ],
+      "full_after_reread": "Whole current/original/exact5B/completeownbinding/emptyclosure/SHAequalwholeorigin and pinned04 wholefact/role/unit/map/guard/review read. All manual literal facts/units/unchanged currentafter reread; phrase_en/ko included. No source edit.",
+      "full_units": [
+        {
+          "fact_refs": [
+            "blankEn",
+            "handsEn",
+            "contrastEn"
+          ],
+          "pointer": "/content/en",
+          "quote": "blank face with warm helpful hands",
+          "realization_id": "base"
+        },
+        {
+          "fact_refs": [
+            "blankKo",
+            "handsKo",
+            "contrastKo"
+          ],
+          "pointer": "/content/ko",
+          "quote": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+          "realization_id": "base"
+        },
+        {
+          "fact_refs": [
+            "characterP",
+            "faceP",
+            "handsP",
+            "actualHandsP",
+            "blankApp",
+            "handsApp",
+            "contrastApp"
+          ],
+          "pointer": "/content/application_contract",
+          "quote": "Apply only to the independently declared existing face and existing hands-region of the same independently declared existing human character, with all three actual owners explicitly selected by the caller. The hands-region is the already declared region containing the hands named by this cue; it neither creates a group nor specifies an exact total hand count. Select the blank facial response, the warm helpful presentation of those hands, and the contrast between that blank face and those warm helpful hands. Do not add body parts, prescribe a particular helping gesture, or assert temperature, private emotion or successful help. No main, primary or foreground role is assigned.",
+          "realization_id": "base"
+        }
+      ],
+      "guard_review": "Exact v2 face part_of character, hands-region part_of SAME character, face/hands disjoint, and selected character exact subject/entity.category/v1 human. No equivalence or inferred inheritance from carrierface/hands labels. Four independent custom/neutral P values retained; caller must select three existingactualowners independently and runtime neutralpresence cannot be generated from Ptype/owner labels. Three E groups and contrast face receiver remain. Closure {}, profile none.",
+      "manual_meaning": "Caller selects independently existing human character, face, and already-declared actual hands-region belonging to that same human. Blank facial response, warm/helpful hands impression and their explicit same-character contrast are three selected effects. Hands region neither adds parts/group nor asserts total count; warmth is impression, no temperature or concrete successful help.",
+      "native_proof": null,
+      "ordinal": 1278,
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 29,
+        "row_sha256": "3cc68e9f8ce063737f3eac2d6caff0cddade6fbd0e7f304e88acf45c4c838cd0"
+      },
+      "original_full": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "blank face with warm helpful hands",
+          "ko": "무표정하지만 손은 따뜻한 인상",
+          "tags": [
+            "human",
+            "expression"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_7f96b80af091533cb700db081b3dbbaf",
+        "provenance": [
+          {
+            "sha256": "5d6b0f287b1f40261fe387a0b9f8cd00e288e4043957c86edd7746b2850cc356",
+            "source": "slot:expression:blank_face_warm_hands"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "own_binding_review": "Own optional/direct expression .82 human/animal subject_categories. Intrinsic for_anyhuman plus actual selected character human entity.category P/guard stays conjunctive: animal display allowance does not waive human actualsource. Charactercontrast own human/deny-domain catalog also retained, not copied as source meaning.",
+      "owner_bindings": {
+        "character": {
+          "introduced_by": null,
+          "origin": "existing",
+          "selector": {
+            "kind": "selected_existing_owner"
+          }
+        },
+        "face": {
+          "introduced_by": null,
+          "origin": "existing",
+          "selector": {
+            "kind": "selected_existing_owner"
+          }
+        },
+        "hands": {
+          "introduced_by": null,
+          "origin": "existing",
+          "selector": {
+            "kind": "selected_existing_owner"
+          }
+        }
+      },
+      "rejected": [
+        "No particular helping gesture/action, successful help, privateemotion, physical warmth, hand count, group creation, invented parts, primary/main/foreground owner, social audience or material/temperature proxy. Warm helpful presentation E remains untagged, not dropped/context/P."
+      ],
+      "required_CID_closure": {},
+      "required_binding_closure": {},
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/28",
+          "sha256": "5d03b3a2eee67ced5b87951cde8153f44b4fe36ea1734e2342af5bafacaa0af1"
+        },
+        "reason": "Fresh directsource/quote/mode/role review and all current actualconditions under149V6; prior statuses remain history."
+      },
+      "role_intent": {
+        "character_contrast": {
+          "fact_refs": [
+            "contrastEn",
+            "contrastKo",
+            "contrastApp"
+          ],
+          "rationale": "Explicit local same-character contrast between blank face and warm-helpful hands impression, with exact distinct body scopes retained.",
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "expression": {
+          "fact_refs": [
+            "blankEn",
+            "blankKo",
+            "blankApp"
+          ],
+          "rationale": "Explicit visible blank facial response on actual independently declared face; actual human carrier established separately.",
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "root_selected": false,
+      "signature": null,
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ],
+          "native_guards": {
+            "rules": [
+              {
+                "id": "face_belongs_to_character",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "face"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                }
+              },
+              {
+                "id": "hands_region_belongs_to_character",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "hands"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                }
+              },
+              {
+                "id": "face_and_hands_are_distinct_regions",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "face"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "hands"
+                }
+              },
+              {
+                "dimension": "subject",
+                "id": "selected_character_is_explicitly_human",
+                "kind": "frozen_value",
+                "owner": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                },
+                "property": "entity.category",
+                "value": {
+                  "type": "entity.category/v1",
+                  "value": "human"
+                }
+              }
+            ],
+            "schema": "photo-native-source-guards/v2"
+          }
+        },
+        "content": {
+          "application_contract": "Apply only to the independently declared existing face and existing hands-region of the same independently declared existing human character, with all three actual owners explicitly selected by the caller. The hands-region is the already declared region containing the hands named by this cue; it neither creates a group nor specifies an exact total hand count. Select the blank facial response, the warm helpful presentation of those hands, and the contrast between that blank face and those warm helpful hands. Do not add body parts, prescribe a particular helping gesture, or assert temperature, private emotion or successful help. No main, primary or foreground role is assigned.",
+          "en": "blank face with warm helpful hands",
+          "ko": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+          "tags": [
+            "human",
+            "expression"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "character_response",
+            "expression"
+          ],
+          "properties": [
+            {
+              "dimension": "expression",
+              "property": "expression.face",
+              "target": "face"
+            },
+            {
+              "dimension": "character_response",
+              "property": "response.presentation",
+              "target": "hands"
+            },
+            {
+              "dimension": "character_response",
+              "property": "character.contrast",
+              "target": "hands"
+            }
+          ]
+        },
+        "id": "cand_7f96b80af091533cb700db081b3dbbaf",
+        "provenance": [
+          {
+            "sha256": "5d6b0f287b1f40261fe387a0b9f8cd00e288e4043957c86edd7746b2850cc356",
+            "source": "slot:expression:blank_face_warm_hands"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_mutations": [],
+      "technical_pending": "Fresh unsigned exact currentsource assessment. Actualsource-target guard/frozenP/ownerchoice/bodypart scopes require fresh fullcompact execution and everyE/Rx lock, no old04 conversion."
+    },
+    {
+      "actual_current_full": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Select the bamboo-forest path for the independently declared scene bound to scene. This is a setting choice, without adding a walker or selecting a country or season.",
+          "en": "a bamboo forest path",
+          "ko": "대나무 숲길",
+          "phrase_en": "on a bamboo forest path",
+          "phrase_ko": "대나무 숲길에서",
+          "tags": [
+            "nature",
+            "travel"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "property": "setting.location",
+              "target": "scene"
+            }
+          ]
+        },
+        "id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+        "provenance": [
+          {
+            "sha256": "f67fbe6fa21e99cb1f2c1f9fa70d392e6d1299385b11a11c355aff37322f7f93",
+            "source": "slot:location:bamboo_forest"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "candidate_id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+      "compiled5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 30,
+          "sha256": "526bb9670dcb337ef89e8316a0d021a8cca73f535c5badb75a17d166ae22707a"
+        },
+        "candidate_id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location.bamboo_forest_path",
+            "quote": "a bamboo forest path",
+            "realization_id": "base",
+            "target": "environment"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "The scene lies on a bamboo forest path.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No country, season or walking action is entailed."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location.bamboo_forest_path",
+                "quote": "a bamboo forest path",
+                "target": "environment"
+              }
+            ],
+            "rationale": "The scene lies on a bamboo forest path.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "1ca5814281ba792ca0c6e79180d787d05ce93a1e30d7098edc03e221791df1aa",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "complete_ownbindings": {
+        "bind_9990c28077f255bbb96ee7104a58e3a7": {
+          "candidate_id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_9990c28077f255bbb96ee7104a58e3a7",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 0.9
+        }
+      },
+      "facts": [
+        {
+          "dimension": "subject",
+          "id": "sceneP",
+          "mode": "prerequisite",
+          "pointer": "/content/application_contract",
+          "property": "entity.presence",
+          "quote": "independently declared scene",
+          "realization_id": "base",
+          "requires": [],
+          "target": "scene",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "dimension": "setting",
+          "id": "placeEn",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/en",
+          "property": "setting.location",
+          "quote": "a bamboo forest path",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "sceneP"
+          ],
+          "target": "scene",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "bamboo_forest_path"
+          }
+        },
+        {
+          "dimension": "setting",
+          "id": "placeKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/ko",
+          "property": "setting.location",
+          "quote": "대나무 숲길",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "sceneP"
+          ],
+          "target": "scene",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "bamboo_forest_path"
+          }
+        },
+        {
+          "dimension": "setting",
+          "id": "phraseEn",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/phrase_en",
+          "property": "setting.location",
+          "quote": "on a bamboo forest path",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "sceneP"
+          ],
+          "target": "scene",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "bamboo_forest_path"
+          }
+        },
+        {
+          "dimension": "setting",
+          "id": "phraseKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/phrase_ko",
+          "property": "setting.location",
+          "quote": "대나무 숲길에서",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "sceneP"
+          ],
+          "target": "scene",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "bamboo_forest_path"
+          }
+        },
+        {
+          "dimension": "setting",
+          "id": "placeApp",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/application_contract",
+          "property": "setting.location",
+          "quote": "Select the bamboo-forest path",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "sceneP"
+          ],
+          "target": "scene",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "bamboo_forest_path"
+          }
+        }
+      ],
+      "full_after_reread": "Whole current/original/exact5B/completeownbinding/emptyclosure/SHAequalwholeorigin and pinned04 wholefact/role/unit/map/guard/review read. All manual literal facts/units/unchanged currentafter reread; phrase_en/ko included. No source edit.",
+      "full_units": [
+        {
+          "fact_refs": [
+            "placeEn"
+          ],
+          "pointer": "/content/en",
+          "quote": "a bamboo forest path",
+          "realization_id": "base"
+        },
+        {
+          "fact_refs": [
+            "placeKo"
+          ],
+          "pointer": "/content/ko",
+          "quote": "대나무 숲길",
+          "realization_id": "base"
+        },
+        {
+          "fact_refs": [
+            "phraseEn"
+          ],
+          "pointer": "/content/phrase_en",
+          "quote": "on a bamboo forest path",
+          "realization_id": "base"
+        },
+        {
+          "fact_refs": [
+            "phraseKo"
+          ],
+          "pointer": "/content/phrase_ko",
+          "quote": "대나무 숲길에서",
+          "realization_id": "base"
+        },
+        {
+          "fact_refs": [
+            "sceneP",
+            "placeApp"
+          ],
+          "pointer": "/content/application_contract",
+          "quote": "Select the bamboo-forest path for the independently declared scene bound to scene. This is a setting choice, without adding a walker or selecting a country or season.",
+          "realization_id": "base"
+        }
+      ],
+      "guard_review": "Neutral exact independently existing scene presence at same scene commonrole; actualsetting.location effect consumes P and actual setting locks. Both phrase fields ordinary directpositive units included, no semanticref needed.",
+      "manual_meaning": "Existing scene receives selected bamboo-forest-path setting. Both short EN/KO and phrase_en/phrase_ko explicitly assert same place; no walker/country/season or travel activity.",
+      "native_proof": null,
+      "ordinal": 1279,
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 30,
+        "row_sha256": "14d2a1a3a4ad983993a7e5ad6bf62a5418cc97db84ff99073b6334ccd263f5b6"
+      },
+      "original_full": {
+        "conditions": {},
+        "content": {
+          "en": "a bamboo forest path",
+          "ko": "대나무 숲길",
+          "phrase_en": "on a bamboo forest path",
+          "phrase_ko": "대나무 숲길에서",
+          "tags": [
+            "nature",
+            "travel"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+        "provenance": [
+          {
+            "sha256": "f67fbe6fa21e99cb1f2c1f9fa70d392e6d1299385b11a11c355aff37322f7f93",
+            "source": "slot:location:bamboo_forest"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "own_binding_review": "Own unrestricted optional/direct location .9. Source conditions {}, binding {}, no closure/profile. No new tag or metadata creates walker or human prerequisite.",
+      "owner_bindings": {
+        "scene": {
+          "introduced_by": null,
+          "origin": "existing",
+          "selector": {
+            "kind": "core_role",
+            "role": "scene"
+          }
+        }
+      },
+      "rejected": [
+        "No country, season, walking/travel event, specific ecology, climate, named bamboo species, new person or background-only owner."
+      ],
+      "required_CID_closure": {},
+      "required_binding_closure": {},
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/29",
+          "sha256": "6c3b8c68ed697ff81a687c84b33d4bd87aa769357dbc9373b90dfc3f66af9ef5"
+        },
+        "reason": "Fresh directsource/quote/mode/role review and all current actualconditions under149V6; prior statuses remain history."
+      },
+      "role_intent": {
+        "location": {
+          "fact_refs": [
+            "placeEn",
+            "placeKo",
+            "phraseEn",
+            "phraseKo",
+            "placeApp"
+          ],
+          "rationale": "One same existing scene physically placed on bamboo forest path, not independently frozen already-bamboo context.",
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "root_selected": false,
+      "signature": null,
+      "source_after": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Select the bamboo-forest path for the independently declared scene bound to scene. This is a setting choice, without adding a walker or selecting a country or season.",
+          "en": "a bamboo forest path",
+          "ko": "대나무 숲길",
+          "phrase_en": "on a bamboo forest path",
+          "phrase_ko": "대나무 숲길에서",
+          "tags": [
+            "nature",
+            "travel"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "property": "setting.location",
+              "target": "scene"
+            }
+          ]
+        },
+        "id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+        "provenance": [
+          {
+            "sha256": "f67fbe6fa21e99cb1f2c1f9fa70d392e6d1299385b11a11c355aff37322f7f93",
+            "source": "slot:location:bamboo_forest"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_mutations": [],
+      "technical_pending": "Unsigned until fresh sourceproof/fullcompact consumer/whole setting and exactlocation locks."
+    }
+  ],
+  "schema": "photo-fresh-native-source-fact-assessment/v1",
+  "signatures": 0,
+  "task_name": "/root/review_11870_12250"
+}

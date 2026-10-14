@@ -1,0 +1,1393 @@
+{
+  "assignment": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/prepared/review11870-01250-01300-06/ASSIGNMENT.json",
+    "file_sha256": "0837d1a6991515b5dcac102bdc1c79d02a52e4f2b299d6f71a5cf02576796047",
+    "sha256": "4ba2e541a51eb3de0785b568f59f6eac1daaa88a1d37823005ff96033f7b9e19"
+  },
+  "compact": {
+    "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+    "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+    "compact_sha256": "e7f3910ea6509c706b641e4b66c4b950b01b7b18545ca0b2436601f6b3b80e3c",
+    "complete": true,
+    "dependencies": {
+      "base": []
+    },
+    "dependency_guards": {
+      "base": []
+    },
+    "effect_sets": {
+      "base": {
+        "dimensions": [
+          "action",
+          "composition",
+          "role"
+        ],
+        "properties": [
+          {
+            "dimension": "action",
+            "property": "action.holding",
+            "target": "holder"
+          },
+          {
+            "dimension": "composition",
+            "property": "props.placement.near_same_holder",
+            "target": "held_object"
+          },
+          {
+            "dimension": "role",
+            "property": "prop.state.neutral_presentation",
+            "target": "held_object"
+          }
+        ]
+      }
+    },
+    "facts": [
+      {
+        "dimension": "subject",
+        "id": "holderP",
+        "mode": "prerequisite",
+        "property": "entity.presence",
+        "realization_id": "base",
+        "requires": [],
+        "target": "holder",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "objectP",
+        "mode": "prerequisite",
+        "property": "entity.presence",
+        "realization_id": "base",
+        "requires": [],
+        "target": "held_object",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "action",
+        "id": "holdingEn",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "action.holding",
+        "realization_id": "base",
+        "receivers": [
+          "held_object"
+        ],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "holder",
+        "value": {
+          "type": "action.holding/v1",
+          "value": "holding_same_selected_object"
+        }
+      },
+      {
+        "dimension": "role",
+        "id": "neutralEn",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "prop.state.neutral_presentation",
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "held_object",
+        "value": {
+          "type": "prop.state.neutral_presentation/v1",
+          "value": "neutral_presentation"
+        }
+      },
+      {
+        "dimension": "action",
+        "id": "holdingKo",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "action.holding",
+        "realization_id": "base",
+        "receivers": [
+          "held_object"
+        ],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "holder",
+        "value": {
+          "type": "action.holding/v1",
+          "value": "holding_same_selected_object"
+        }
+      },
+      {
+        "dimension": "composition",
+        "id": "nearKo",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "props.placement.near_same_holder",
+        "realization_id": "base",
+        "receivers": [
+          "holder"
+        ],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "held_object",
+        "value": {
+          "type": "props.placement.near_same_holder/v1",
+          "value": "near_same_holder_own_side"
+        }
+      },
+      {
+        "dimension": "role",
+        "id": "neutralKo",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "prop.state.neutral_presentation",
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "held_object",
+        "value": {
+          "type": "prop.state.neutral_presentation/v1",
+          "value": "neutral_presentation"
+        }
+      },
+      {
+        "dimension": "action",
+        "id": "holdingApp",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "action.holding",
+        "realization_id": "base",
+        "receivers": [
+          "held_object"
+        ],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "holder",
+        "value": {
+          "type": "action.holding/v1",
+          "value": "holding_same_selected_object"
+        }
+      },
+      {
+        "dimension": "composition",
+        "id": "nearApp",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "props.placement.near_same_holder",
+        "realization_id": "base",
+        "receivers": [
+          "holder"
+        ],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "held_object",
+        "value": {
+          "type": "props.placement.near_same_holder/v1",
+          "value": "near_same_holder_own_side"
+        }
+      },
+      {
+        "dimension": "role",
+        "id": "neutralApp",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "prop.state.neutral_presentation",
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "holderP",
+          "objectP"
+        ],
+        "target": "held_object",
+        "value": {
+          "type": "prop.state.neutral_presentation/v1",
+          "value": "neutral_presentation"
+        }
+      }
+    ],
+    "guard_sets": {
+      "base": {
+        "member_conditions": {},
+        "source_conditions": [
+          {
+            "native_guards": {
+              "rules": [
+                {
+                  "id": "common_0",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                    "kind": "source_target",
+                    "target": "holder"
+                  },
+                  "relation": "disjoint",
+                  "right": {
+                    "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                    "kind": "source_target",
+                    "target": "held_object"
+                  }
+                }
+              ],
+              "schema": "photo-native-source-guards/v2"
+            }
+          },
+          {}
+        ]
+      }
+    },
+    "has_owner_selectors": true,
+    "manual_role_view_bindings": {
+      "bindings": [
+        {
+          "anchors": [
+            {
+              "facet_sha256": "01383fa6d5c739b732a0728bd49cb97a2e618cac13c24f8c28f22d584eb5535d",
+              "fact_id": "holdingApp",
+              "full_field_sha256": "b41c1e81295dca4623b3cb4c2c770e3ef6f9954f2778323a9290ca6af84f87e8",
+              "pointer_sha256": "7ecacd0c063591033aa7ccdad6fab5c137f5d5819d8b863978bfde936039b761",
+              "source_unit_sha256": "3adaedb8b6381be5177dfe3abe9edf899b87def27fdb514a20933cef56955cc1",
+              "start": 434,
+              "stop": 517
+            }
+          ],
+          "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+          "endpoint_refs": [
+            {
+              "fact_id": "holdingApp",
+              "position": "target"
+            },
+            {
+              "fact_id": "holdingApp",
+              "index": 0,
+              "position": "receiver"
+            }
+          ],
+          "fact": {
+            "dimension": "action",
+            "id": "holdingApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "action.holding",
+            "realization_id": "base",
+            "receivers": [
+              "held_object"
+            ],
+            "requires": [
+              "holderP",
+              "objectP"
+            ],
+            "target": "holder",
+            "value": {
+              "type": "action.holding/v1",
+              "value": "holding_same_selected_object"
+            }
+          },
+          "fact_sha256": "c4296d5d390b04382c4f78f9333927e734914ff34bc52d391ee898c49d47be0a",
+          "manual_view_sha256": "51521efb44a9cbe8462a63d50f05521d13d91c0b4c77b0f459e501c4de5d73c6",
+          "realization_id": "base",
+          "requires_refs": [
+            "holderP",
+            "objectP"
+          ],
+          "role_id": "relational_action",
+          "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+          "view_id": "same_holder_object_interaction",
+          "whole_closure_sha256": "d529b23512b5c77f64aeff1b9c9c15e57687d43334e10ef9a3f9e3b47ac500b6"
+        }
+      ],
+      "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+      "receipt_sha256": "fc2bdd49b7cfe8fc7fdcc40f680258fb7846d2d6c084aab13b8083f519c30e68",
+      "schema": "photo-manual-semantic-role-view-bindings/v1",
+      "source_contract_sha256": "bc89350cfa57e26eb71ee3bae87e5512e918b436b7a582b28b7c05f5926cdeb5",
+      "views_sha256": "b9e1dad221f5626dbb438d91e8c3b9043c56ce23d62a37a1d35c39dc68a70a6c"
+    },
+    "meaning_sha256": "cb13865fe3f9a41fdfcba7cd9d4abf9bbf12133c82c508986ea4fd798bf12e8f",
+    "owner_maps": {
+      "base": {
+        "bindings": [
+          {
+            "introduced_by": null,
+            "origin": "existing",
+            "selector": {
+              "kind": "selected_existing_owner"
+            },
+            "target": "held_object"
+          },
+          {
+            "introduced_by": null,
+            "origin": "existing",
+            "selector": {
+              "kind": "selected_existing_owner"
+            },
+            "target": "holder"
+          }
+        ],
+        "schema": "photo-native-owner-bindings/v3"
+      }
+    },
+    "profile_contracts": {
+      "base": null
+    },
+    "qualification_sha256": "beae77491f06ac438ab4001065c42c4b34bd9434c9dabbc748fce6923cbfa004",
+    "reference_sha256": {},
+    "roles": {
+      "action": {
+        "fact_refs": [
+          "holdingEn",
+          "holdingKo",
+          "holdingApp"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+        "support_modes": [
+          "effect"
+        ]
+      },
+      "prop_placement": {
+        "fact_refs": [
+          "nearKo",
+          "nearApp"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "ea4419f0141104a5cc21d865f071b6ff8cb091aaf2415de9930e6a33d2503789",
+        "support_modes": [
+          "effect"
+        ]
+      },
+      "prop_state": {
+        "fact_refs": [
+          "neutralEn",
+          "neutralKo",
+          "neutralApp"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "c100dc7658e3b368e5cc90e1b20a6f8997a8817dd7444f14776adb925fdb1e58",
+        "support_modes": [
+          "effect"
+        ]
+      },
+      "relational_action": {
+        "fact_refs": [
+          "holdingApp"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+        "support_modes": [
+          "effect"
+        ],
+        "view_refs": [
+          "same_holder_object_interaction"
+        ]
+      }
+    },
+    "schema": "photo-candidate-role-evidence/v4"
+  },
+  "fresh_source_read_count": 1,
+  "full_validation": true,
+  "fullspecs_fresh_read": {
+    "action": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "A declared actor or object performing one concrete activity at the selected instant.",
+      "description_ko": "소유자가 특정 시점에 수행하는 동작: 시선·연속 절차·정지 자세가 섞임; 과정 단계와 순간 동작 구별",
+      "dimensions": [
+        "action"
+      ],
+      "evidence_terms": [
+        "holding",
+        "playing",
+        "walking",
+        "working",
+        "performing",
+        "hand"
+      ],
+      "excludes": [
+        "시선·연속 절차·정지 자세가 섞임; 과정 단계와 순간 동작 구별"
+      ],
+      "id": "action",
+      "includes": [
+        "A declared actor or object performing one concrete activity at the selected instant."
+      ],
+      "neighbors": [
+        "body_pose",
+        "camera_movement",
+        "contact_point",
+        "hand_pose",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "action.",
+        "activity.",
+        "operation."
+      ],
+      "semantic_role": "direct"
+    },
+    "prop_placement": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Position and orientation of owned props relative to named actors, surfaces and boundaries.",
+      "description_ko": "소품의 방향·배치·주체와의 공간 관계: 막대 방향뿐 아니라 장벽·주머니·둘레가 섞임; 물건 상태는 prop_state",
+      "dimensions": [
+        "composition",
+        "pose"
+      ],
+      "evidence_terms": [
+        "held",
+        "beside",
+        "between",
+        "horizontal",
+        "pocket",
+        "encircles"
+      ],
+      "excludes": [
+        "막대 방향뿐 아니라 장벽·주머니·둘레가 섞임; 물건 상태는 prop_state"
+      ],
+      "id": "prop_placement",
+      "includes": [
+        "Position and orientation of owned props relative to named actors, surfaces and boundaries."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "prop",
+        "prop_state",
+        "wardrobe_layering"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "props.placement",
+        "prop.position",
+        "prop.orientation",
+        "objects.position"
+      ],
+      "semantic_role": "direct"
+    },
+    "prop_state": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Owned object's current use, attachment, readiness, damage or arrangement state, with occupational context optional.",
+      "description_ko": "물건의 사용·정리·고정·손상 상태: 업무 소품으로만 한정할 근거가 약함; duty는 맥락 조건으로 보존",
+      "dimensions": [
+        "role"
+      ],
+      "evidence_terms": [
+        "in use",
+        "secured",
+        "set-down",
+        "worn",
+        "sorted",
+        "folded",
+        "open"
+      ],
+      "excludes": [
+        "업무 소품으로만 한정할 근거가 약함; duty는 맥락 조건으로 보존"
+      ],
+      "id": "prop_state",
+      "includes": [
+        "Owned object's current use, attachment, readiness, damage or arrangement state, with occupational context optional."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "prop",
+        "prop_placement",
+        "wardrobe_layering"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "props.state",
+        "prop.state",
+        "objects.state"
+      ],
+      "semantic_role": "direct"
+    },
+    "relational_action": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Concrete interaction with explicitly declared action endpoints, including biological, mechanical or represented participants and their objects.",
+      "description_ko": "명시된 행위 주체와 상대·물체 사이의 구체적 상호 동작. 인간·동물·기계·묘사된 대상을 포함하며 실제 행위와 소유·접촉 관계를 구별한다.",
+      "dimensions": [
+        "action",
+        "relationship"
+      ],
+      "evidence_terms": [
+        "handoff",
+        "offering",
+        "conversation",
+        "together",
+        "listener",
+        "contact"
+      ],
+      "excludes": [
+        "A role label, co-presence, proximity or an isolated hand pose does not supply a performed interaction.",
+        "Do not add a counterpart, helper, contact, tool or action endpoint from a verb category alone.",
+        "Do not split one actual self-owned body into two people or merge explicitly distinct participants."
+      ],
+      "id": "relational_action",
+      "includes": [
+        "The source explicitly describes the participants or a participant and an object interacting; each endpoint must be independently supported.",
+        "Self-directed interaction can address an explicitly owned part or object while retaining its actual part/whole relationship.",
+        "A human participant is not compulsory. Intrinsic source conditions, distinctness or part ownership, and actual performed action remain mandatory."
+      ],
+      "neighbors": [
+        "action",
+        "aftermath_trace",
+        "color",
+        "companion_animal",
+        "contact_point",
+        "crowd_density",
+        "physical_motion",
+        "proxemics",
+        "reality_anchor",
+        "reflection_logic",
+        "scale_relation",
+        "sensory_cue",
+        "shadow_relation",
+        "subject",
+        "subject_count",
+        "surreal_physics_detail",
+        "transformation_stage",
+        "visible_text"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "action.interaction",
+        "relation.action",
+        "interaction."
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "input": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/prepared/review11870-01250-01300-06/INPUT.json",
+    "file_sha256": "7c4daabed45df4e559b397b43da10be18aa9bff6ac304e1c42775a064d1325a2",
+    "sha256": "8c55fc7b2d4f458b7b14943909a65ec7dde0d8d5f8591514b6190b09ebc58bba"
+  },
+  "literal_fact_and_unit_repair": {
+    "deleted_fact": {
+      "dimension": "composition",
+      "id": "nearEn",
+      "mode": "effect",
+      "operation": "set_value",
+      "pointer": "/content/en",
+      "property": "props.placement.near_same_holder",
+      "quote": "near the subject",
+      "realization_id": "base",
+      "receivers": [
+        "holder"
+      ],
+      "requires": [
+        "holderP",
+        "objectP"
+      ],
+      "target": "held_object",
+      "value": {
+        "type": "props.placement.near_same_holder/v1",
+        "value": "near_same_holder_own_side"
+      }
+    },
+    "english_ordinary_after": {
+      "disposition": "semantic",
+      "fact_refs": [
+        "holdingEn",
+        "neutralEn"
+      ],
+      "pointer": "/content/en",
+      "quote": "held neutrally near the subject",
+      "realization_id": "base"
+    },
+    "english_reference_after": {
+      "disposition": "semantic_reference",
+      "fact_refs": [
+        "nearApp"
+      ],
+      "pointer": "/content/en",
+      "quote": "held neutrally near the subject",
+      "realization_id": "base",
+      "reference_relation": "partial_restatement",
+      "retained_constraint_rationale": "Short English near the subject identifies proximity to the source-resolved same holder but does not independently state the full own-side qualification. Preserve complete selected near_same_holder_own_side placement directly in the unchanged App canonical fact, plus KO 자기 쪽에, without strengthening English, changing source/effects or fabricating a lateral side."
+    }
+  },
+  "memo": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-quote-repair-plan-17/ROOT-1255-QUOTE-HOLD.json",
+    "file_sha256": "6d2f6cbbddc662ac6ef45dc8ea65bf780c810c492fcfb16de0005b3093251609",
+    "sha256": "dc8ef346940a37f981c192ee6fe96c6960c2fc7546ae2c5423568105101c220d"
+  },
+  "model": "gpt-6.1-sol",
+  "operating": 0,
+  "other49_new_reads": 0,
+  "other49_new_signatures": 0,
+  "packet": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/prepared/review11870-01250-01300-06/PREPARED-PACKET.json",
+    "file_sha256": "b3c1a04132f29a0437d08067f5161fa3e909766c1ad9d8fe6fd0312941d1b81a",
+    "sha256": "545aba213dd2a8489ede0487cffac68d8d950a6b8dd26f43190094e133afdf10"
+  },
+  "prior_batch": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json",
+    "file_sha256": "c08d427a198ed4bb21c214118119c973e16e5b3d50584ec8a6c7c04030cff894",
+    "sha256": "0666d0c5035fac8818e95d818014e158336d1c04d4226a34064eee9ad1c77e90"
+  },
+  "prior_row_sha256": "9b7a55a7c10164fd28569b8d0430b59831155f523bbfddce89ce398ad0ccdf9a",
+  "prior_source_read_reuse_count": 49,
+  "proposal": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_1255_quote_reanchor_05_proposal_v1.json",
+    "file_sha256": "a5287dfda6a020dcc14932427d0b9db35fc1680daa8f5e84258788ff785a798f",
+    "sha256": "ed657439ba517ae9e57fad9484cbaa34fcb4f2955fd47db61d089791091d6e48"
+  },
+  "reasoning_effort": "high",
+  "record": {
+    "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+    "delta": [
+      {
+        "after": {
+          "application_contract": "Use the independently declared existing holder and held object explicitly selected by the caller. They must be explicitly disjoint actual owners in the frozen graph. The subject in English and 자기 in Korean denote that same holder. Select that holder holding that same object neutrally near their own side. Holding, near-self placement and neutral presentation are all chosen effects, not already-held or already-placed prerequisites. Holding is performed by that same holder with that same held object as its receiver. Near-self placement is applied to that same held object with that same holder as its receiver. Neutral presentation is applied to that same held object; it asserts no private mental state. Do not invent a hand, finger, object type, other person, threat, offering or private intent.",
+          "en": "held neutrally near the subject",
+          "ko": "자기 쪽에 중립적으로 들고 있는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe"
+          ]
+        },
+        "after_exists": true,
+        "before": {
+          "en": "held neutrally near the subject",
+          "ko": "자기 쪽에 중립적으로 들고 있는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe"
+          ]
+        },
+        "before_exists": true,
+        "pointer": "/content",
+        "reason": "Exactformal05 root input, no current source edit. Fresh original/current/exact5B/ownbinding/fullorigin/emptyclosure/priorwholefacts and full149specs manually reviewed. Holder and object caller-selected existing/disjoint. Holding, nearself placement and neutral presentation are all E. New optional samefactview is manually authored on direct ordinary holdingApp: relational eligibility only, canonical dimension/property/value/operation/receivers/requirements and all other E unchanged. Actual old human+deny-domain binding remains conjunctive; no prefix-renamed duplicate E or context demotion."
+      },
+      {
+        "after": {
+          "native_guards": {
+            "rules": [
+              {
+                "id": "common_0",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                  "kind": "source_target",
+                  "target": "holder"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                  "kind": "source_target",
+                  "target": "held_object"
+                }
+              }
+            ],
+            "schema": "photo-native-source-guards/v2"
+          }
+        },
+        "after_exists": true,
+        "before": {},
+        "before_exists": true,
+        "pointer": "/conditions",
+        "reason": "Exactformal05 root input, no current source edit. Fresh original/current/exact5B/ownbinding/fullorigin/emptyclosure/priorwholefacts and full149specs manually reviewed. Holder and object caller-selected existing/disjoint. Holding, nearself placement and neutral presentation are all E. New optional samefactview is manually authored on direct ordinary holdingApp: relational eligibility only, canonical dimension/property/value/operation/receivers/requirements and all other E unchanged. Actual old human+deny-domain binding remains conjunctive; no prefix-renamed duplicate E or context demotion."
+      },
+      {
+        "after": {
+          "dimensions": [
+            "action",
+            "composition",
+            "role"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "property": "action.holding",
+              "target": "holder"
+            },
+            {
+              "dimension": "composition",
+              "property": "props.placement.near_same_holder",
+              "target": "held_object"
+            },
+            {
+              "dimension": "role",
+              "property": "prop.state.neutral_presentation",
+              "target": "held_object"
+            }
+          ]
+        },
+        "after_exists": true,
+        "before": {
+          "dimensions": [],
+          "properties": []
+        },
+        "before_exists": true,
+        "pointer": "/effects",
+        "reason": "Exactformal05 root input, no current source edit. Fresh original/current/exact5B/ownbinding/fullorigin/emptyclosure/priorwholefacts and full149specs manually reviewed. Holder and object caller-selected existing/disjoint. Holding, nearself placement and neutral presentation are all E. New optional samefactview is manually authored on direct ordinary holdingApp: relational eligibility only, canonical dimension/property/value/operation/receivers/requirements and all other E unchanged. Actual old human+deny-domain binding remains conjunctive; no prefix-renamed duplicate E or context demotion."
+      }
+    ],
+    "dependency_records": {},
+    "ordinal": 1255,
+    "original_compiled": {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+      "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+      "item": 6,
+      "row_sha256": "949e1917792aad575cf6708317f94c123e9d8c3703b429bbb03b359d840777d7"
+    },
+    "proof": {
+      "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+      "complete": true,
+      "dependencies": {
+        "base": []
+      },
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "action",
+            "composition",
+            "role"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "property": "action.holding",
+              "target": "holder"
+            },
+            {
+              "dimension": "composition",
+              "property": "props.placement.near_same_holder",
+              "target": "held_object"
+            },
+            {
+              "dimension": "role",
+              "property": "prop.state.neutral_presentation",
+              "target": "held_object"
+            }
+          ]
+        }
+      },
+      "facts": [
+        {
+          "dimension": "subject",
+          "id": "holderP",
+          "mode": "prerequisite",
+          "pointer": "/content/application_contract",
+          "property": "entity.presence",
+          "quote": "independently declared existing holder",
+          "realization_id": "base",
+          "requires": [],
+          "target": "holder",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "dimension": "subject",
+          "id": "objectP",
+          "mode": "prerequisite",
+          "pointer": "/content/application_contract",
+          "property": "entity.presence",
+          "quote": "existing holder and held object explicitly selected by the caller",
+          "realization_id": "base",
+          "requires": [],
+          "target": "held_object",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "dimension": "action",
+          "id": "holdingEn",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/en",
+          "property": "action.holding",
+          "quote": "held",
+          "realization_id": "base",
+          "receivers": [
+            "held_object"
+          ],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "holder",
+          "value": {
+            "type": "action.holding/v1",
+            "value": "holding_same_selected_object"
+          }
+        },
+        {
+          "dimension": "role",
+          "id": "neutralEn",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/en",
+          "property": "prop.state.neutral_presentation",
+          "quote": "neutrally",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "held_object",
+          "value": {
+            "type": "prop.state.neutral_presentation/v1",
+            "value": "neutral_presentation"
+          }
+        },
+        {
+          "dimension": "action",
+          "id": "holdingKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/ko",
+          "property": "action.holding",
+          "quote": "들고 있는",
+          "realization_id": "base",
+          "receivers": [
+            "held_object"
+          ],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "holder",
+          "value": {
+            "type": "action.holding/v1",
+            "value": "holding_same_selected_object"
+          }
+        },
+        {
+          "dimension": "composition",
+          "id": "nearKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/ko",
+          "property": "props.placement.near_same_holder",
+          "quote": "자기 쪽에",
+          "realization_id": "base",
+          "receivers": [
+            "holder"
+          ],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "held_object",
+          "value": {
+            "type": "props.placement.near_same_holder/v1",
+            "value": "near_same_holder_own_side"
+          }
+        },
+        {
+          "dimension": "role",
+          "id": "neutralKo",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/ko",
+          "property": "prop.state.neutral_presentation",
+          "quote": "중립적으로",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "held_object",
+          "value": {
+            "type": "prop.state.neutral_presentation/v1",
+            "value": "neutral_presentation"
+          }
+        },
+        {
+          "dimension": "action",
+          "id": "holdingApp",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/application_contract",
+          "property": "action.holding",
+          "quote": "Holding is performed by that same holder with that same held object as its receiver",
+          "realization_id": "base",
+          "receivers": [
+            "held_object"
+          ],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "holder",
+          "value": {
+            "type": "action.holding/v1",
+            "value": "holding_same_selected_object"
+          }
+        },
+        {
+          "dimension": "composition",
+          "id": "nearApp",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/application_contract",
+          "property": "props.placement.near_same_holder",
+          "quote": "Select that holder holding that same object neutrally near their own side",
+          "realization_id": "base",
+          "receivers": [
+            "holder"
+          ],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "held_object",
+          "value": {
+            "type": "props.placement.near_same_holder/v1",
+            "value": "near_same_holder_own_side"
+          }
+        },
+        {
+          "dimension": "role",
+          "id": "neutralApp",
+          "mode": "effect",
+          "operation": "set_value",
+          "pointer": "/content/application_contract",
+          "property": "prop.state.neutral_presentation",
+          "quote": "Neutral presentation is applied to that same held object",
+          "realization_id": "base",
+          "receivers": [],
+          "requires": [
+            "holderP",
+            "objectP"
+          ],
+          "target": "held_object",
+          "value": {
+            "type": "prop.state.neutral_presentation/v1",
+            "value": "neutral_presentation"
+          }
+        }
+      ],
+      "guard_sets": {
+        "base": {
+          "member_conditions": {},
+          "source_conditions": [
+            {
+              "native_guards": {
+                "rules": [
+                  {
+                    "id": "common_0",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                      "kind": "source_target",
+                      "target": "holder"
+                    },
+                    "relation": "disjoint",
+                    "right": {
+                      "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                      "kind": "source_target",
+                      "target": "held_object"
+                    }
+                  }
+                ],
+                "schema": "photo-native-source-guards/v2"
+              }
+            },
+            {}
+          ]
+        }
+      },
+      "manual_role_views": [
+        {
+          "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+          "canonical_fact_refs": [
+            {
+              "fact_id": "holdingApp",
+              "fact_sha256": "c4296d5d390b04382c4f78f9333927e734914ff34bc52d391ee898c49d47be0a",
+              "mode": "effect"
+            }
+          ],
+          "endpoint_refs": [
+            {
+              "fact_id": "holdingApp",
+              "position": "target"
+            },
+            {
+              "fact_id": "holdingApp",
+              "index": 0,
+              "position": "receiver"
+            }
+          ],
+          "id": "same_holder_object_interaction",
+          "manual_boundary_rationale": "No hand, finger, object type, other person, threat, offering, intent or lateral side is supplied. Exact current source and full149 relational/action/placement/state boundaries manually read.",
+          "manual_semantic_facet": "The same existing holder actually holds that same selected object. This performed interaction facet supports relational_action, with the original holder target and held_object receiver, not proximity or role labels alone.",
+          "normal_anchors": [
+            {
+              "facet_quote": "Holding is performed by that same holder with that same held object as its receiver",
+              "fact_id": "holdingApp",
+              "full_field_sha256": "b41c1e81295dca4623b3cb4c2c770e3ef6f9954f2778323a9290ca6af84f87e8",
+              "pointer": "/content/application_contract",
+              "source_unit_sha256": "3adaedb8b6381be5177dfe3abe9edf899b87def27fdb514a20933cef56955cc1",
+              "start": 434,
+              "stop": 517
+            }
+          ],
+          "realization_id": "base",
+          "requires_refs": [
+            "holderP",
+            "objectP"
+          ],
+          "role_id": "relational_action",
+          "schema": "photo-manual-semantic-role-view/v1",
+          "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+          "whole_closure_sha256": "d529b23512b5c77f64aeff1b9c9c15e57687d43334e10ef9a3f9e3b47ac500b6",
+          "whole_value_retained": "Retain complete action.holding effect, holding_same_selected_object value, set_value, holder target, held_object receiver and both independent presence prerequisites. Retain separate near-self placement and neutral presentation effects and original disjoint guard. No footprint projection."
+        }
+      ],
+      "meaning_sha256": "cb13865fe3f9a41fdfcba7cd9d4abf9bbf12133c82c508986ea4fd798bf12e8f",
+      "owner_maps": {
+        "base": {
+          "bindings": [
+            {
+              "introduced_by": null,
+              "origin": "existing",
+              "selector": {
+                "kind": "selected_existing_owner"
+              },
+              "target": "held_object"
+            },
+            {
+              "introduced_by": null,
+              "origin": "existing",
+              "selector": {
+                "kind": "selected_existing_owner"
+              },
+              "target": "holder"
+            }
+          ],
+          "schema": "photo-native-owner-bindings/v3"
+        }
+      },
+      "profile_contracts": {
+        "base": null
+      },
+      "reference_sha256": {},
+      "review": {
+        "basis": "Fresh targeted1255 whole source/exact5B/ownbinding/emptyclosure/complete05proof and full149action/placement/state/relational specs directly reread under exact06input. ShortEN near the subject does not itself state complete own-side qualification. Delete only unsupported duplicate nearEn, retain ordinaryEN holdingEn+neutralEn, and add fullEN one-hop partial_restatement to direct complete nearApp. NearKo/App whole selected placement E/value/target/Rx/P/mode and all three actual E groups remain unchanged; no lateral geometry invented. All49other rows are byte-identical05reuse with their prior actual source/spec/test provenance, not49new reads or signatures.",
+        "native_review": {
+          "method": "codex_subagent_direct_source_read",
+          "native_contract_sha256": "956b1c5830044c1c758c4b324dc579119eb319ae4408401ee2b58fc2ce815127",
+          "reviewer": "/root/review_11870_12250"
+        },
+        "original_review": {
+          "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=6",
+          "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+          "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+          "decision_sha256": "949e1917792aad575cf6708317f94c123e9d8c3703b429bbb03b359d840777d7",
+          "source_record_sha256": "1398fc9e3ae894639b7112db10f96d56c510c8982bea5ac19024599ec244765f"
+        },
+        "source_correction": {
+          "after_sha256": "cb13865fe3f9a41fdfcba7cd9d4abf9bbf12133c82c508986ea4fd798bf12e8f",
+          "before_sha256": "539f978647bd237e1e9d30bf8aacb122f3765041b912c3cd31d145dddc2ad79b",
+          "rationale": "Exact unchanged source09selected current from original; only quote-grounding proof repaired. Fresh targeted1255 whole source/exact5B/ownbinding/emptyclosure/complete05proof and full149action/placement/state/relational specs directly reread under exact06input. ShortEN near the subject does not itself state complete own-side qualification. Delete only unsupported duplicate nearEn, retain ordinaryEN holdingEn+neutralEn, and add fullEN one-hop partial_restatement to direct complete nearApp. NearKo/App whole selected placement E/value/target/Rx/P/mode and all three actual E groups remain unchanged; no lateral geometry invented. All49other rows are byte-identical05reuse with their prior actual source/spec/test provenance, not49new reads or signatures."
+        },
+        "whole_source_reviewed": true
+      },
+      "roles": {
+        "action": {
+          "fact_refs": [
+            "holdingEn",
+            "holdingKo",
+            "holdingApp"
+          ],
+          "realization_ids": [
+            "base"
+          ],
+          "scope": "whole_record",
+          "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "prop_placement": {
+          "fact_refs": [
+            "nearKo",
+            "nearApp"
+          ],
+          "realization_ids": [
+            "base"
+          ],
+          "scope": "whole_record",
+          "spec_sha256": "ea4419f0141104a5cc21d865f071b6ff8cb091aaf2415de9930e6a33d2503789",
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "prop_state": {
+          "fact_refs": [
+            "neutralEn",
+            "neutralKo",
+            "neutralApp"
+          ],
+          "realization_ids": [
+            "base"
+          ],
+          "scope": "whole_record",
+          "spec_sha256": "c100dc7658e3b368e5cc90e1b20a6f8997a8817dd7444f14776adb925fdb1e58",
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "relational_action": {
+          "fact_refs": [
+            "holdingApp"
+          ],
+          "realization_ids": [
+            "base"
+          ],
+          "scope": "whole_record",
+          "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+          "support_modes": [
+            "effect"
+          ],
+          "view_refs": [
+            "same_holder_object_interaction"
+          ]
+        }
+      },
+      "schema": "photo-candidate-role-evidence/v4",
+      "source_units": [
+        {
+          "disposition": "semantic",
+          "fact_refs": [
+            "holdingEn",
+            "neutralEn"
+          ],
+          "pointer": "/content/en",
+          "quote": "held neutrally near the subject",
+          "realization_id": "base"
+        },
+        {
+          "disposition": "semantic",
+          "fact_refs": [
+            "holdingKo",
+            "nearKo",
+            "neutralKo"
+          ],
+          "pointer": "/content/ko",
+          "quote": "자기 쪽에 중립적으로 들고 있는",
+          "realization_id": "base"
+        },
+        {
+          "disposition": "semantic",
+          "fact_refs": [
+            "holderP",
+            "objectP",
+            "holdingApp",
+            "nearApp",
+            "neutralApp"
+          ],
+          "pointer": "/content/application_contract",
+          "quote": "Use the independently declared existing holder and held object explicitly selected by the caller. They must be explicitly disjoint actual owners in the frozen graph. The subject in English and 자기 in Korean denote that same holder. Select that holder holding that same object neutrally near their own side. Holding, near-self placement and neutral presentation are all chosen effects, not already-held or already-placed prerequisites. Holding is performed by that same holder with that same held object as its receiver. Near-self placement is applied to that same held object with that same holder as its receiver. Neutral presentation is applied to that same held object; it asserts no private mental state. Do not invent a hand, finger, object type, other person, threat, offering or private intent.",
+          "realization_id": "base"
+        },
+        {
+          "disposition": "semantic_reference",
+          "fact_refs": [
+            "nearApp"
+          ],
+          "pointer": "/content/en",
+          "quote": "held neutrally near the subject",
+          "realization_id": "base",
+          "reference_relation": "partial_restatement",
+          "retained_constraint_rationale": "Short English near the subject identifies proximity to the source-resolved same holder but does not independently state the full own-side qualification. Preserve complete selected near_same_holder_own_side placement directly in the unchanged App canonical fact, plus KO 자기 쪽에, without strengthening English, changing source/effects or fabricating a lateral side."
+        }
+      ]
+    },
+    "rationale": "Fresh targeted1255 whole source/exact5B/ownbinding/emptyclosure/complete05proof and full149action/placement/state/relational specs directly reread under exact06input. ShortEN near the subject does not itself state complete own-side qualification. Delete only unsupported duplicate nearEn, retain ordinaryEN holdingEn+neutralEn, and add fullEN one-hop partial_restatement to direct complete nearApp. NearKo/App whole selected placement E/value/target/Rx/P/mode and all three actual E groups remain unchanged; no lateral geometry invented. All49other rows are byte-identical05reuse with their prior actual source/spec/test provenance, not49new reads or signatures.",
+    "reference_bindings": {},
+    "reference_reread_complete": true,
+    "revision": {
+      "memo_artifacts": [
+        {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-quote-repair-plan-17/ROOT-1255-QUOTE-HOLD.json",
+          "file_sha256": "6d2f6cbbddc662ac6ef45dc8ea65bf780c810c492fcfb16de0005b3093251609",
+          "sha256": "dc8ef346940a37f981c192ee6fe96c6960c2fc7546ae2c5423568105101c220d"
+        }
+      ],
+      "prior_review": {
+        "artifact": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json",
+          "file_sha256": "c08d427a198ed4bb21c214118119c973e16e5b3d50584ec8a6c7c04030cff894",
+          "sha256": "0666d0c5035fac8818e95d818014e158336d1c04d4226a34064eee9ad1c77e90"
+        },
+        "pointer": "/records/5",
+        "sha256": "9b7a55a7c10164fd28569b8d0430b59831155f523bbfddce89ce398ad0ccdf9a"
+      },
+      "rationale": "Fresh targeted1255 whole source/exact5B/ownbinding/emptyclosure/complete05proof and full149action/placement/state/relational specs directly reread under exact06input. ShortEN near the subject does not itself state complete own-side qualification. Delete only unsupported duplicate nearEn, retain ordinaryEN holdingEn+neutralEn, and add fullEN one-hop partial_restatement to direct complete nearApp. NearKo/App whole selected placement E/value/target/Rx/P/mode and all three actual E groups remain unchanged; no lateral geometry invented. All49other rows are byte-identical05reuse with their prior actual source/spec/test provenance, not49new reads or signatures."
+    },
+    "source_after": {
+      "conditions": {
+        "native_guards": {
+          "rules": [
+            {
+              "id": "common_0",
+              "kind": "owner_relation",
+              "left": {
+                "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                "kind": "source_target",
+                "target": "holder"
+              },
+              "relation": "disjoint",
+              "right": {
+                "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                "kind": "source_target",
+                "target": "held_object"
+              }
+            }
+          ],
+          "schema": "photo-native-source-guards/v2"
+        }
+      },
+      "content": {
+        "application_contract": "Use the independently declared existing holder and held object explicitly selected by the caller. They must be explicitly disjoint actual owners in the frozen graph. The subject in English and 자기 in Korean denote that same holder. Select that holder holding that same object neutrally near their own side. Holding, near-self placement and neutral presentation are all chosen effects, not already-held or already-placed prerequisites. Holding is performed by that same holder with that same held object as its receiver. Near-self placement is applied to that same held object with that same holder as its receiver. Neutral presentation is applied to that same held object; it asserts no private mental state. Do not invent a hand, finger, object type, other person, threat, offering or private intent.",
+        "en": "held neutrally near the subject",
+        "ko": "자기 쪽에 중립적으로 들고 있는",
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "action",
+          "composition",
+          "role"
+        ],
+        "properties": [
+          {
+            "dimension": "action",
+            "property": "action.holding",
+            "target": "holder"
+          },
+          {
+            "dimension": "composition",
+            "property": "props.placement.near_same_holder",
+            "target": "held_object"
+          },
+          {
+            "dimension": "role",
+            "property": "prop.state.neutral_presentation",
+            "target": "held_object"
+          }
+        ]
+      },
+      "id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+      "provenance": [
+        {
+          "sha256": "abd151c2d0b74a96885af2992c766fa2ea6eff8acadb025171f9ff6c8774bdd6",
+          "source": "slot:prop_direction:neutral_held_self"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "source_before": {
+      "conditions": {},
+      "content": {
+        "en": "held neutrally near the subject",
+        "ko": "자기 쪽에 중립적으로 들고 있는",
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe"
+        ]
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+      "provenance": [
+        {
+          "sha256": "abd151c2d0b74a96885af2992c766fa2ea6eff8acadb025171f9ff6c8774bdd6",
+          "source": "slot:prop_direction:neutral_held_self"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "source_reread_complete": true,
+    "status": "approved"
+  },
+  "root_acceptance": 0,
+  "schema": "photo-native-targeted-manual-repair/v1",
+  "source_changes": 0,
+  "task_name": "/root/review_11870_12250",
+  "whole_read_and_reuse": "Whole1255before/current/ENKOApp/nativev2guards/effects/provenance/exact5B/ownoptional.82human+4denydomains/emptyclosure/whole05facts11units3roles4map+view freshly read; source and actual wholefiveB payload printed again bounded after an earlier metadata-heavy output truncation. Newly corrected10facts4units and complete unchangedcurrentafter manually reread. Other49whole input and row content exact checks, prior05directread/proofs reused without newread claim. No model/network/code/source/Git/runtime mutation."
+}

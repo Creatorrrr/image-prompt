@@ -1,0 +1,4499 @@
+{
+  "actual_complete_read_count": 20,
+  "assignment_sha256": "1b0e24167068d985eb0cfa67fed45a05c5d509b95c3fbc9e615975c9cfdfa8a1",
+  "boundary": "Five explicitly reviewed fresh149 sourceproofs, fullvalidate+compact only before independent controlled tests. No historical04/single status conversion or source change; normally locked subject effect not waived.",
+  "full_shape_checks": [
+    {
+      "compact": {
+        "candidate_id": "cand_f166a9a7610050828d5e0610cc3f8443",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "762226800ca574538481904b57890644a624eb348760bd2c38d447344ee4deed",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "material"
+            ],
+            "properties": [
+              {
+                "dimension": "material",
+                "property": "surface.optical_response",
+                "target": "surface"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "surfaceP",
+            "mode": "prerequisite",
+            "property": "entity.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterP",
+            "mode": "prerequisite",
+            "property": "surface.material",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterEn",
+            "mode": "prerequisite",
+            "property": "surface.material",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "surface.optical_response",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterKo",
+            "mode": "prerequisite",
+            "property": "surface.material",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "surface.optical_response",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterEmb",
+            "mode": "prerequisite",
+            "property": "surface.material",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenEmb",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "surface.optical_response",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "surface.optical_response",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": true,
+        "meaning_sha256": "4c2c462ec2b53c68361c301e2c0b56f5728fa20d5d0e55555922cfc4c05d730b",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "surface"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "67e6bf3ebc5f7d33b18b1e5a9d0176085e62e71673a65f2521dc012e17341e17",
+        "reference_sha256": {},
+        "roles": {
+          "surface_material": {
+            "fact_refs": [
+              "saltwaterP",
+              "saltwaterEn",
+              "saltwaterKo",
+              "saltwaterEmb",
+              "sheenEn",
+              "sheenKo",
+              "sheenEmb",
+              "sheenApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "10e1ae79963383225dc3e3e86d7de760e6e8c7472b6d8c3a1b366c439b1865e8",
+            "support_modes": [
+              "prerequisite",
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "81aa738ff9f9179f2b1c0c548f7b557c3ea97db83f6e4665d890f82bad3d6f7b",
+      "native_signature": "afad33f47953635fed2fc0adee5a29e5b166bc61d272637b76f96cd88f519aec",
+      "ordinal": 1265,
+      "proof_sha256": "67e6bf3ebc5f7d33b18b1e5a9d0176085e62e71673a65f2521dc012e17341e17"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "30c94c937f035c9d4e75d73796a4826ad3b946e1a475a53cb759af8784302deb",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "action",
+              "pose",
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "property": "action.holding",
+                "target": "person"
+              },
+              {
+                "dimension": "pose",
+                "property": "body.pose",
+                "target": "person"
+              },
+              {
+                "dimension": "setting",
+                "property": "setting.location",
+                "target": "scene"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "property": "entity.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "wandP",
+            "mode": "prerequisite",
+            "property": "props.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "wand",
+            "value": {
+              "type": "props.type/v1",
+              "value": "magic_wand"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "sceneP",
+            "mode": "prerequisite",
+            "property": "entity.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "scene",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "pose",
+            "id": "poseEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "body.pose",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "body.pose/v1",
+              "value": "stage_pose"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "wandEn",
+            "mode": "prerequisite",
+            "property": "props.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "wand",
+            "value": {
+              "type": "props.type/v1",
+              "value": "magic_wand"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "stageEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "stage"
+            }
+          },
+          {
+            "dimension": "pose",
+            "id": "poseKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "body.pose",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "body.pose/v1",
+              "value": "stage_pose"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "holdingKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "action.holding",
+            "realization_id": "base",
+            "receivers": [
+              "wand"
+            ],
+            "requires": [
+              "personP",
+              "wandP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.holding/v1",
+              "value": "holding_same_magic_wand"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "stageKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "stage"
+            }
+          },
+          {
+            "dimension": "pose",
+            "id": "poseApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "body.pose",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "body.pose/v1",
+              "value": "stage_pose"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "holdingApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "action.holding",
+            "realization_id": "base",
+            "receivers": [
+              "wand"
+            ],
+            "requires": [
+              "personP",
+              "wandP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.holding/v1",
+              "value": "holding_same_magic_wand"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "stageApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "stage"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ],
+                "native_guards": {
+                  "rules": [
+                    {
+                      "id": "performer_and_wand_are_distinct",
+                      "kind": "owner_relation",
+                      "left_role": "main_subject",
+                      "relation": "disjoint",
+                      "right_role": "primary_prop"
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v1"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": false,
+        "manual_role_view_bindings": {
+          "bindings": [
+            {
+              "anchors": [
+                {
+                  "facet_sha256": "54e3f0ab66524782fed8c7d92e925b39eaf5126e2de138c627972909e796d98c",
+                  "fact_id": "holdingApp",
+                  "full_field_sha256": "ea837a3be50224372e600ae93ebc3e3325d309c076311abfee5d43d7178f8928",
+                  "pointer_sha256": "7ecacd0c063591033aa7ccdad6fab5c137f5d5819d8b863978bfde936039b761",
+                  "source_unit_sha256": "219d9d4624058908006a65e3e35749d1b28e37610c67b70bad34bd470c12fb25",
+                  "start": 251,
+                  "stop": 283
+                }
+              ],
+              "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+              "endpoint_refs": [
+                {
+                  "fact_id": "holdingApp",
+                  "position": "target"
+                },
+                {
+                  "fact_id": "holdingApp",
+                  "index": 0,
+                  "position": "receiver"
+                }
+              ],
+              "fact": {
+                "dimension": "action",
+                "id": "holdingApp",
+                "mode": "effect",
+                "operation": "set_value",
+                "property": "action.holding",
+                "realization_id": "base",
+                "receivers": [
+                  "wand"
+                ],
+                "requires": [
+                  "personP",
+                  "wandP"
+                ],
+                "target": "person",
+                "value": {
+                  "type": "action.holding/v1",
+                  "value": "holding_same_magic_wand"
+                }
+              },
+              "fact_sha256": "1aa39c920cb982f8062d7287d6c39d576c22de65106e0806b9b4269e484b1369",
+              "manual_view_sha256": "a81029cc4dae9ccf54e898ca1ba8d0f2d7ddc047c9365f35721cecec07f5038f",
+              "realization_id": "base",
+              "requires_refs": [
+                "personP",
+                "wandP"
+              ],
+              "role_id": "relational_action",
+              "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+              "view_id": "same_performer_holding_wand",
+              "whole_closure_sha256": "2f4cca68388862723254c7676af3c1964249f444a003886940334b9ed59c2b61"
+            },
+            {
+              "anchors": [
+                {
+                  "facet_sha256": "66b89bec55d7d8ab5affc7826cfef9484b89bff2bbf8a5b175831efddbe9c8f0",
+                  "fact_id": "poseApp",
+                  "full_field_sha256": "ea837a3be50224372e600ae93ebc3e3325d309c076311abfee5d43d7178f8928",
+                  "pointer_sha256": "7ecacd0c063591033aa7ccdad6fab5c137f5d5819d8b863978bfde936039b761",
+                  "source_unit_sha256": "219d9d4624058908006a65e3e35749d1b28e37610c67b70bad34bd470c12fb25",
+                  "start": 234,
+                  "stop": 244
+                }
+              ],
+              "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+              "endpoint_refs": [
+                {
+                  "fact_id": "poseApp",
+                  "position": "target"
+                }
+              ],
+              "fact": {
+                "dimension": "pose",
+                "id": "poseApp",
+                "mode": "effect",
+                "operation": "set_value",
+                "property": "body.pose",
+                "realization_id": "base",
+                "receivers": [],
+                "requires": [
+                  "personP"
+                ],
+                "target": "person",
+                "value": {
+                  "type": "body.pose/v1",
+                  "value": "stage_pose"
+                }
+              },
+              "fact_sha256": "b0b1e78bc168483dc4d26358db88d0db41a7d594b078d11bd8eb2fea75f48216",
+              "manual_view_sha256": "fd320d60f4e3b0b9affa62bbc596f92b6c5239c5fa792006eaf627ca87aa28d9",
+              "realization_id": "base",
+              "requires_refs": [
+                "personP"
+              ],
+              "role_id": "staging_degree",
+              "spec_sha256": "0fe242a2405f9a49f26d2519acbc1df9ea3b98c8a95662c4c63ab73fb1b3095c",
+              "view_id": "declared_stage_posing_presentation",
+              "whole_closure_sha256": "2f4cca68388862723254c7676af3c1964249f444a003886940334b9ed59c2b61"
+            }
+          ],
+          "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+          "receipt_sha256": "a8e5c33a92eb69f7e49a6565aeff8e00412dc483db62fa244c95ce7aa0794a47",
+          "schema": "photo-manual-semantic-role-view-bindings/v1",
+          "source_contract_sha256": "39fc68c170b4e3457872b17e40798755a315457247ca0d3ff86304c186fb185c",
+          "views_sha256": "87ed8e4a4d91e3afb8384a1f39260f9831aa040a0350725344ca55b32bc3bcec"
+        },
+        "meaning_sha256": "b439a31741ce2df473f244c02d50afeefd8d453c61c83e2606ac5f5657d7d2bf",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "scene"
+                },
+                "target": "scene"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                },
+                "target": "wand"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "bbde176465696ba54631dc31a99f260f8a267089ec54ad7c482ac53336ef8753",
+        "reference_sha256": {},
+        "roles": {
+          "action": {
+            "fact_refs": [
+              "holdingKo",
+              "holdingApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "body_pose": {
+            "fact_refs": [
+              "poseEn",
+              "poseKo",
+              "poseApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "783d39f8c4eee9438d32d088733d31d980e3d2e17a591255061059316c12b33e",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "location": {
+            "fact_refs": [
+              "stageEn",
+              "stageKo",
+              "stageApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "wandP",
+              "wandEn"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          },
+          "relational_action": {
+            "fact_refs": [
+              "holdingApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+            "support_modes": [
+              "effect"
+            ],
+            "view_refs": [
+              "same_performer_holding_wand"
+            ]
+          },
+          "staging_degree": {
+            "fact_refs": [
+              "poseApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "0fe242a2405f9a49f26d2519acbc1df9ea3b98c8a95662c4c63ab73fb1b3095c",
+            "support_modes": [
+              "effect"
+            ],
+            "view_refs": [
+              "declared_stage_posing_presentation"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "227d71b26db279b3a3560679b3461be1ab4bb979c77f98c1d9156d0835ba7cb1",
+      "native_signature": "e3abd1eb235ec92ab6b5ad7d7454bf268368d7352ca7dc95c55b89e117086cf2",
+      "ordinal": 1266,
+      "proof_sha256": "bbde176465696ba54631dc31a99f260f8a267089ec54ad7c482ac53336ef8753"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "01e45061c81b4632e74ce30f69c861f8326d7142460367705230e25b6b1dfef8",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "lighting"
+            ],
+            "properties": [
+              {
+                "dimension": "lighting",
+                "property": "lighting.shape.grid_in_selected_region",
+                "target": "light"
+              },
+              {
+                "dimension": "lighting",
+                "property": "lighting.source.shrine_lantern",
+                "target": "light"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "sourceP",
+            "mode": "prerequisite",
+            "property": "props.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "lantern_source",
+            "value": {
+              "type": "props.type/v1",
+              "value": "shrine_lantern"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "lightP",
+            "mode": "prerequisite",
+            "property": "entity.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "light",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "regionP",
+            "mode": "prerequisite",
+            "property": "space.region.kind",
+            "realization_id": "base",
+            "requires": [],
+            "target": "illuminated_region",
+            "value": {
+              "type": "space.region.kind/v1",
+              "value": "spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.source.shrine_lantern",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.shape.grid_in_selected_region",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.source.shrine_lantern",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.shape.grid_in_selected_region",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceEmb",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.source.shrine_lantern",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridEmb",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.shape.grid_in_selected_region",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.source.shrine_lantern",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "lighting.shape.grid_in_selected_region",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "native_guards": {
+                  "rules": [
+                    {
+                      "dimension": "subject",
+                      "id": "common_0",
+                      "kind": "frozen_value",
+                      "owner": {
+                        "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                        "kind": "source_target",
+                        "target": "lantern_source"
+                      },
+                      "property": "props.type",
+                      "value": {
+                        "type": "props.type/v1",
+                        "value": "shrine_lantern"
+                      }
+                    },
+                    {
+                      "dimension": "setting",
+                      "id": "common_1",
+                      "kind": "frozen_value",
+                      "owner": {
+                        "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                        "kind": "source_target",
+                        "target": "illuminated_region"
+                      },
+                      "property": "space.region.kind",
+                      "value": {
+                        "type": "space.region.kind/v1",
+                        "value": "spatial_region"
+                      }
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v2"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": true,
+        "meaning_sha256": "1f6a65f5239454eb29b907f8d7caddd7b6076211586f26a585d13896f881512e",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "illuminated_region"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "lantern_source"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "light"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "87210059bea655aa5aa2bb27ccf32538bc5bbb20a14abdb410291c657dc39bab",
+        "reference_sha256": {},
+        "roles": {
+          "light_shape": {
+            "fact_refs": [
+              "gridEn",
+              "gridKo",
+              "gridEmb",
+              "gridApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "8f28fa26a0c6088cd8b61b199c8d723bf01c8f086e8bedb31e53dd6d2cbde7b5",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "light_type": {
+            "fact_refs": [
+              "sourceEn",
+              "sourceKo",
+              "sourceEmb",
+              "sourceApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "2255889e3312890d643e01abb252eac8a9a009891733112aef6d44ee157789bf",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "sourceP"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "5f200e5ee4872fbbeae3377ee55c58fb4cf7592e925bdb4de0289315a5f15cf3",
+      "native_signature": "54ee4e8861fa3e0852a757645ca84bce26a567490983f15711f9234bacf7d1b1",
+      "ordinal": 1267,
+      "proof_sha256": "87210059bea655aa5aa2bb27ccf32538bc5bbb20a14abdb410291c657dc39bab"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_1d96b13ba06053e5948f54efbde81665",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "536e3b5bf9fb0116da68c1a5691b35d4202273cc00551680a9b3b3d2bafcb625",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "appearance",
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "presentation.style",
+                "target": "person"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.context",
+                "target": "person"
+              },
+              {
+                "dimension": "subject",
+                "property": "subject.portrayal_role",
+                "target": "person"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "property": "entity.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "roleEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "subject.portrayal_role",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "subject.portrayal_role/v1",
+              "value": "gothic_doll_cosplay_portrayal"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "presentation.style",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "gothic_doll_cosplay_presentation"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "attireEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "wardrobe.context",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "wardrobe.context/v1",
+              "value": "gothic_doll_cosplay"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "roleKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "subject.portrayal_role",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "subject.portrayal_role/v1",
+              "value": "gothic_doll_cosplay_portrayal"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "presentation.style",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "gothic_doll_cosplay_presentation"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "attireKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "wardrobe.context",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "wardrobe.context/v1",
+              "value": "gothic_doll_cosplay"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "roleApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "subject.portrayal_role",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "subject.portrayal_role/v1",
+              "value": "gothic_doll_cosplay_portrayal"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "presentation.style",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "gothic_doll_cosplay_presentation"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "attireApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "wardrobe.context",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "wardrobe.context/v1",
+              "value": "gothic_doll_cosplay"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": false,
+        "meaning_sha256": "c8b656c5dadbbcf6ee6f5adfaee1eb995fcbc71261d2e3b2abed291c534bf025",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "334c2a2e67a3a99bb80aea67c3390886f76b091b4461c0874e2e59be2b5a5eb1",
+        "reference_sha256": {},
+        "roles": {
+          "attire_context": {
+            "fact_refs": [
+              "attireEn",
+              "attireKo",
+              "attireApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "bbccacf16c9cf9d7a034136350fc32b0f2e548b69dd3688ceeaf0832367b5b44",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "presentation_style": {
+            "fact_refs": [
+              "styleEn",
+              "styleKo",
+              "styleApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "18bc2932f4a4e28a6895b9f141229c2a0647fa1a088f6056c7ec681f3ed3f4ed",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "subject": {
+            "fact_refs": [
+              "roleEn",
+              "roleKo",
+              "roleApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "7a6fabe3202e933e6c4f2b052c730205960e2d3f402cc988949f5db7b6a55f93",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "2f76b765e319478c7560c35accd0ad004706d8a27afe347184ee07a95b539dd3",
+      "native_signature": "fb9cbd1cb30b3e563f83dd9816cc5ec3a038dfc6945cb96f9c794fef2573cb66",
+      "ordinal": 1268,
+      "proof_sha256": "334c2a2e67a3a99bb80aea67c3390886f76b091b4461c0874e2e59be2b5a5eb1"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_3228587d1a9353a99e4ae643ad13a9a4",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "fc43f6be63abc683203635775682907abe3187e994ba0cb52506bdc240e538c0",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "expression"
+            ],
+            "properties": [
+              {
+                "dimension": "expression",
+                "property": "expression.mouth",
+                "target": "face"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "faceP",
+            "mode": "prerequisite",
+            "property": "anatomy.face.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.face.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "mouthP",
+            "mode": "prerequisite",
+            "property": "anatomy.mouth.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.mouth.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "lipsP",
+            "mode": "prerequisite",
+            "property": "anatomy.lips.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.lips.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "poutEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "expression.mouth",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "faceP",
+              "mouthP",
+              "lipsP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.mouth/v1",
+              "value": "pursed_lips_tiny_huff_visible_expression"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "poutKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "expression.mouth",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "faceP",
+              "mouthP",
+              "lipsP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.mouth/v1",
+              "value": "pursed_lips_tiny_huff_visible_expression"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "poutApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "expression.mouth",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "faceP",
+              "mouthP",
+              "lipsP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.mouth/v1",
+              "value": "pursed_lips_tiny_huff_visible_expression"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ]
+              },
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": false,
+        "meaning_sha256": "431dd7a72dfe3207c41d6b07aff7b1d15c82918d7f2526f1615eed5728d0c713",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_face"
+                },
+                "target": "face"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "a8003d2cd4df9db3a804851db389a89ae5e60860b9f72b52c542fd8421b26625",
+        "reference_sha256": {},
+        "roles": {
+          "expression": {
+            "fact_refs": [
+              "poutEn",
+              "poutKo",
+              "poutApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "67afc20b958d23d2e75a477532d8e570347d0123513bb0241cbb5c0f107d6a44",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "e2ba4b3a727605f97edf1940f0bf169ed37b265bb14f976f96125bffa4ba1dca",
+      "native_signature": "ec34734e57a79a84c6b756867954e05b5063bbc08c8b8aa8b173bb4d0b9f3d09",
+      "ordinal": 1269,
+      "proof_sha256": "a8003d2cd4df9db3a804851db389a89ae5e60860b9f72b52c542fd8421b26625"
+    }
+  ],
+  "input_sha256": "8e55650ab768cd287b707bebeb11ba2139b475f6f3b0a3d1d17fe82ab128ea66",
+  "model": "gpt-6.1-sol",
+  "module_paths_sha256": {
+    "photo_candidate_corpus": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_candidate_corpus.py",
+      "sha256": "b00b200643fe672ba4fc84e162333d937b0ee83ddb0ab431b1a67169cda52da4"
+    },
+    "photo_candidate_realizations": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_candidate_realizations.py",
+      "sha256": "749f00eb2f6e5c219e06bcf88b90912c2bf24f7a72eb180a70a4d93d04e0dd5c"
+    },
+    "photo_contracts": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_contracts.py",
+      "sha256": "0601699a58dbaa12376fa8439fbdda852b3dc4f069a82a4909f5711419eaa866"
+    },
+    "photo_native_owner_resolution": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_native_owner_resolution.py",
+      "sha256": "cc1407f2ccfa3f00e3d6f2c73d964f934c4e33f501628b2c3c228aabbc04107f"
+    },
+    "photo_precore_bridge": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_precore_bridge.py",
+      "sha256": "714048b4c78b722347ea621506879a5fa3dd7bdae3dc5bc3d1d9d031406f45a2"
+    },
+    "photo_precore_photo_authoring_contracts": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/precore/photo_authoring_contracts.py",
+      "sha256": "c0aa73647927bd75c98605bd8ab9efcfb0c6252c7d29b9de29acf3e4d7181031"
+    },
+    "photo_precore_photo_semantic_witnesses": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/precore/photo_semantic_witnesses.py",
+      "sha256": "cc9bfca271ae1650c28a08b379bc84030b38a5cbcf9918c18d55d50a93094a58"
+    },
+    "photo_semantic_evidence": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_semantic_evidence.py",
+      "sha256": "f74a5ef91bc07048c8bf312b66680c5b92b3b7b388f31f1890f31c8578609dee"
+    },
+    "photo_semantic_role_views": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_semantic_role_views.py",
+      "sha256": "74a1b412453766de85aef2c9a22f927f5b9b23de3ea4b3bd0358d1a69ae765f4"
+    }
+  },
+  "new_worker_sourceproofs": 5,
+  "operating": 0,
+  "range": [
+    1265,
+    1270
+  ],
+  "reasoning_effort": "high",
+  "records": [
+    {
+      "candidate_id": "cand_f166a9a7610050828d5e0610cc3f8443",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Apply only to the actual existing saltwater surface explicitly selected by the caller. Preserve that independently declared surface identity and select its visible sheen. No foreground, background, garment or prop position is prescribed; do not add a water body or infer salinity, temperature, cause or a light source.",
+            "embedding_text": "saltwater sheen surface",
+            "en": "saltwater sheen surface",
+            "ko": "소금물 광택 표면",
+            "tags": [
+              "surface",
+              "texture"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "embedding_text": "saltwater sheen surface",
+            "en": "saltwater sheen surface",
+            "ko": "소금물 광택 표면",
+            "tags": [
+              "surface",
+              "texture"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/ENKOembeddingApp/exact5B/ownsurface-material.58binding/fullorigin/emptyclosure/priorfacts and full149surface/texture/moisture/thermal/light/materialform boundaries read. Caller-selected actual existing surface exact presence and saltwater material independentP, no foreground/background/garment/prop fixedscope. Same visible sheen opticalE unchanged; no roughtexture, wettingcause, salinity measurement/light source or liquid contour. Broader149 human/animal spec does not waive old object/food/plant/environment/sign categories and exact allowdomainoverride list. No materialidentity E or genericexistence fallback."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "material"
+            ],
+            "properties": [
+              {
+                "dimension": "material",
+                "property": "surface.optical_response",
+                "target": "surface"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "material"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/ENKOembeddingApp/exact5B/ownsurface-material.58binding/fullorigin/emptyclosure/priorfacts and full149surface/texture/moisture/thermal/light/materialform boundaries read. Caller-selected actual existing surface exact presence and saltwater material independentP, no foreground/background/garment/prop fixedscope. Same visible sheen opticalE unchanged; no roughtexture, wettingcause, salinity measurement/light source or liquid contour. Broader149 human/animal spec does not waive old object/food/plant/environment/sign categories and exact allowdomainoverride list. No materialidentity E or genericexistence fallback."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1265,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 16,
+        "row_sha256": "bdb79475ef302fb43c4d028488473a755e8d9c1f428403eb58100421e1c8bab1"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "material"
+            ],
+            "properties": [
+              {
+                "dimension": "material",
+                "property": "surface.optical_response",
+                "target": "surface"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "surfaceP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.presence",
+            "quote": "actual existing saltwater surface",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "surface.material",
+            "quote": "actual existing saltwater surface",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterEn",
+            "mode": "prerequisite",
+            "pointer": "/content/en",
+            "property": "surface.material",
+            "quote": "saltwater",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "surface.optical_response",
+            "quote": "sheen surface",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterKo",
+            "mode": "prerequisite",
+            "pointer": "/content/ko",
+            "property": "surface.material",
+            "quote": "소금물",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "surface.optical_response",
+            "quote": "광택 표면",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "saltwaterEmb",
+            "mode": "prerequisite",
+            "pointer": "/content/embedding_text",
+            "property": "surface.material",
+            "quote": "saltwater",
+            "realization_id": "base",
+            "requires": [],
+            "target": "surface",
+            "value": {
+              "type": "surface.material/v1",
+              "value": "saltwater"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenEmb",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/embedding_text",
+            "property": "surface.optical_response",
+            "quote": "sheen surface",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          },
+          {
+            "dimension": "material",
+            "id": "sheenApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "surface.optical_response",
+            "quote": "select its visible sheen",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "surfaceP",
+              "saltwaterP"
+            ],
+            "target": "surface",
+            "value": {
+              "type": "surface.optical_response/v1",
+              "value": "visible_sheen"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "4c2c462ec2b53c68361c301e2c0b56f5728fa20d5d0e55555922cfc4c05d730b",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "surface"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/ENKOembeddingApp/exact5B/ownsurface-material.58binding/fullorigin/emptyclosure/priorfacts and full149surface/texture/moisture/thermal/light/materialform boundaries read. Caller-selected actual existing surface exact presence and saltwater material independentP, no foreground/background/garment/prop fixedscope. Same visible sheen opticalE unchanged; no roughtexture, wettingcause, salinity measurement/light source or liquid contour. Broader149 human/animal spec does not waive old object/food/plant/environment/sign categories and exact allowdomainoverride list. No materialidentity E or genericexistence fallback.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "afad33f47953635fed2fc0adee5a29e5b166bc61d272637b76f96cd88f519aec",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=16",
+            "candidate_id": "cand_f166a9a7610050828d5e0610cc3f8443",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "bdb79475ef302fb43c4d028488473a755e8d9c1f428403eb58100421e1c8bab1",
+            "source_record_sha256": "c43c181ad8413f1d0bc2dfe6ff48c00fcc6b2206b4b3edcf3234327d3b49ea4f"
+          },
+          "source_correction": {
+            "after_sha256": "4c2c462ec2b53c68361c301e2c0b56f5728fa20d5d0e55555922cfc4c05d730b",
+            "before_sha256": "7b0919abe178790c6e4bc1aae09e8c048575e8de6015c0455461efb0873cbf3e",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/ENKOembeddingApp/exact5B/ownsurface-material.58binding/fullorigin/emptyclosure/priorfacts and full149surface/texture/moisture/thermal/light/materialform boundaries read. Caller-selected actual existing surface exact presence and saltwater material independentP, no foreground/background/garment/prop fixedscope. Same visible sheen opticalE unchanged; no roughtexture, wettingcause, salinity measurement/light source or liquid contour. Broader149 human/animal spec does not waive old object/food/plant/environment/sign categories and exact allowdomainoverride list. No materialidentity E or genericexistence fallback."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "surface_material": {
+            "fact_refs": [
+              "saltwaterP",
+              "saltwaterEn",
+              "saltwaterKo",
+              "saltwaterEmb",
+              "sheenEn",
+              "sheenKo",
+              "sheenEmb",
+              "sheenApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "10e1ae79963383225dc3e3e86d7de760e6e8c7472b6d8c3a1b366c439b1865e8",
+            "support_modes": [
+              "prerequisite",
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "saltwaterEn",
+              "sheenEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "saltwater sheen surface",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "saltwaterKo",
+              "sheenKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "소금물 광택 표면",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "saltwaterEmb",
+              "sheenEmb"
+            ],
+            "pointer": "/content/embedding_text",
+            "quote": "saltwater sheen surface",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "surfaceP",
+              "saltwaterP",
+              "sheenApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Apply only to the actual existing saltwater surface explicitly selected by the caller. Preserve that independently declared surface identity and select its visible sheen. No foreground, background, garment or prop position is prescribed; do not add a water body or infer salinity, temperature, cause or a light source.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/ENKOembeddingApp/exact5B/ownsurface-material.58binding/fullorigin/emptyclosure/priorfacts and full149surface/texture/moisture/thermal/light/materialform boundaries read. Caller-selected actual existing surface exact presence and saltwater material independentP, no foreground/background/garment/prop fixedscope. Same visible sheen opticalE unchanged; no roughtexture, wettingcause, salinity measurement/light source or liquid contour. Broader149 human/animal spec does not waive old object/food/plant/environment/sign categories and exact allowdomainoverride list. No materialidentity E or genericexistence fallback.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/15",
+          "sha256": "3afcc3c3d8abba694394b548d4645aa722520809d1edb23d5608dd787692f0eb"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/ENKOembeddingApp/exact5B/ownsurface-material.58binding/fullorigin/emptyclosure/priorfacts and full149surface/texture/moisture/thermal/light/materialform boundaries read. Caller-selected actual existing surface exact presence and saltwater material independentP, no foreground/background/garment/prop fixedscope. Same visible sheen opticalE unchanged; no roughtexture, wettingcause, salinity measurement/light source or liquid contour. Broader149 human/animal spec does not waive old object/food/plant/environment/sign categories and exact allowdomainoverride list. No materialidentity E or genericexistence fallback."
+      },
+      "source_after": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Apply only to the actual existing saltwater surface explicitly selected by the caller. Preserve that independently declared surface identity and select its visible sheen. No foreground, background, garment or prop position is prescribed; do not add a water body or infer salinity, temperature, cause or a light source.",
+          "embedding_text": "saltwater sheen surface",
+          "en": "saltwater sheen surface",
+          "ko": "소금물 광택 표면",
+          "tags": [
+            "surface",
+            "texture"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": [
+            {
+              "dimension": "material",
+              "property": "surface.optical_response",
+              "target": "surface"
+            }
+          ]
+        },
+        "id": "cand_f166a9a7610050828d5e0610cc3f8443",
+        "provenance": [
+          {
+            "sha256": "27d2aa08f55675711a17bbeb933c2d10ddacacc7812ae70c4995e1439aae977b",
+            "source": "slot:surface_material:saltwater_sheen_surface"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "saltwater sheen surface",
+          "en": "saltwater sheen surface",
+          "ko": "소금물 광택 표면",
+          "tags": [
+            "surface",
+            "texture"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_f166a9a7610050828d5e0610cc3f8443",
+        "provenance": [
+          {
+            "sha256": "27d2aa08f55675711a17bbeb933c2d10ddacacc7812ae70c4995e1439aae977b",
+            "source": "slot:surface_material:saltwater_sheen_surface"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Use the independently declared existing person bound to main_subject, the existing magic-wand prop bound to primary_prop, and the existing scene bound to scene. The person and wand are distinct actual owners. Select that same persons stage pose while that person holds that same wand, and select the stage setting. Do not add a person or wand, prescribe a particular grip or pose geometry, perform a spell or assert magic.",
+            "en": "posing on stage with a magic wand",
+            "ko": "마법봉을 들고 무대 포즈를 취하는",
+            "tags": [
+              "human",
+              "cosplay",
+              "stage"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "posing on stage with a magic wand",
+            "ko": "마법봉을 들고 무대 포즈를 취하는",
+            "tags": [
+              "human",
+              "cosplay",
+              "stage"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.5binding/fullorigin/emptyclosure/priorfacts and full149pose/staging/action/relational/prop/place/hand/reality boundaries read. Existing sameperson/wand/scene exactP, v1 performer/wand disjoint retained. Three original E groups stagepose/actualholding/stagesetting unchanged. EN withwand not holdingdirect; KO/App actualholding support. Manual samefactviews anchor complete App performed holding and stated stagepose, preserving fullvalues/modes/Rx/requirements. Stagepose view is declaredposedpresentation not inferred cameraawareness; no extra E or source rewrite. Intrinsic human retained."
+        },
+        {
+          "after": {
+            "for_any": [
+              "human"
+            ],
+            "native_guards": {
+              "rules": [
+                {
+                  "id": "performer_and_wand_are_distinct",
+                  "kind": "owner_relation",
+                  "left_role": "main_subject",
+                  "relation": "disjoint",
+                  "right_role": "primary_prop"
+                }
+              ],
+              "schema": "photo-native-source-guards/v1"
+            }
+          },
+          "after_exists": true,
+          "before": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/conditions",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.5binding/fullorigin/emptyclosure/priorfacts and full149pose/staging/action/relational/prop/place/hand/reality boundaries read. Existing sameperson/wand/scene exactP, v1 performer/wand disjoint retained. Three original E groups stagepose/actualholding/stagesetting unchanged. EN withwand not holdingdirect; KO/App actualholding support. Manual samefactviews anchor complete App performed holding and stated stagepose, preserving fullvalues/modes/Rx/requirements. Stagepose view is declaredposedpresentation not inferred cameraawareness; no extra E or source rewrite. Intrinsic human retained."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "action",
+              "pose",
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "pose",
+                "property": "body.pose",
+                "target": "person"
+              },
+              {
+                "dimension": "action",
+                "property": "action.holding",
+                "target": "person"
+              },
+              {
+                "dimension": "setting",
+                "property": "setting.location",
+                "target": "scene"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.5binding/fullorigin/emptyclosure/priorfacts and full149pose/staging/action/relational/prop/place/hand/reality boundaries read. Existing sameperson/wand/scene exactP, v1 performer/wand disjoint retained. Three original E groups stagepose/actualholding/stagesetting unchanged. EN withwand not holdingdirect; KO/App actualholding support. Manual samefactviews anchor complete App performed holding and stated stagepose, preserving fullvalues/modes/Rx/requirements. Stagepose view is declaredposedpresentation not inferred cameraawareness; no extra E or source rewrite. Intrinsic human retained."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1266,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 17,
+        "row_sha256": "74bc3fc61382ace40bc7bc475d80e79a2009d404be7ed119361c2cdbd85e3353"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "action",
+              "pose",
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "property": "action.holding",
+                "target": "person"
+              },
+              {
+                "dimension": "pose",
+                "property": "body.pose",
+                "target": "person"
+              },
+              {
+                "dimension": "setting",
+                "property": "setting.location",
+                "target": "scene"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.type",
+            "quote": "independently declared existing person",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "wandP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "props.type",
+            "quote": "existing magic-wand prop",
+            "realization_id": "base",
+            "requires": [],
+            "target": "wand",
+            "value": {
+              "type": "props.type/v1",
+              "value": "magic_wand"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "sceneP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.presence",
+            "quote": "existing scene",
+            "realization_id": "base",
+            "requires": [],
+            "target": "scene",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "pose",
+            "id": "poseEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "body.pose",
+            "quote": "posing on stage",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "body.pose/v1",
+              "value": "stage_pose"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "wandEn",
+            "mode": "prerequisite",
+            "pointer": "/content/en",
+            "property": "props.type",
+            "quote": "magic wand",
+            "realization_id": "base",
+            "requires": [],
+            "target": "wand",
+            "value": {
+              "type": "props.type/v1",
+              "value": "magic_wand"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "stageEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "setting.location",
+            "quote": "on stage",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "stage"
+            }
+          },
+          {
+            "dimension": "pose",
+            "id": "poseKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "body.pose",
+            "quote": "무대 포즈를 취하는",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "body.pose/v1",
+              "value": "stage_pose"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "holdingKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "action.holding",
+            "quote": "마법봉을 들고",
+            "realization_id": "base",
+            "receivers": [
+              "wand"
+            ],
+            "requires": [
+              "personP",
+              "wandP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.holding/v1",
+              "value": "holding_same_magic_wand"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "stageKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "setting.location",
+            "quote": "무대",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "stage"
+            }
+          },
+          {
+            "dimension": "pose",
+            "id": "poseApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "body.pose",
+            "quote": "Select that same persons stage pose",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "body.pose/v1",
+              "value": "stage_pose"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "holdingApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "action.holding",
+            "quote": "that person holds that same wand",
+            "realization_id": "base",
+            "receivers": [
+              "wand"
+            ],
+            "requires": [
+              "personP",
+              "wandP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.holding/v1",
+              "value": "holding_same_magic_wand"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "stageApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "setting.location",
+            "quote": "select the stage setting",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "stage"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ],
+                "native_guards": {
+                  "rules": [
+                    {
+                      "id": "performer_and_wand_are_distinct",
+                      "kind": "owner_relation",
+                      "left_role": "main_subject",
+                      "relation": "disjoint",
+                      "right_role": "primary_prop"
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v1"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "manual_role_views": [
+          {
+            "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+            "canonical_fact_refs": [
+              {
+                "fact_id": "holdingApp",
+                "fact_sha256": "1aa39c920cb982f8062d7287d6c39d576c22de65106e0806b9b4269e484b1369",
+                "mode": "effect"
+              }
+            ],
+            "endpoint_refs": [
+              {
+                "fact_id": "holdingApp",
+                "position": "target"
+              },
+              {
+                "fact_id": "holdingApp",
+                "index": 0,
+                "position": "receiver"
+              }
+            ],
+            "id": "same_performer_holding_wand",
+            "manual_boundary_rationale": "No new hand/grip, current spell, real magic, extra performer/wand or movement. Full149relational/action/pose/prop specs and ordinary App sourceunit reviewed.",
+            "manual_semantic_facet": "The same actual person explicitly holds the same independently existing magic-wand prop. This performed owner/object interaction supports relational_action, not the EN with-wand association alone.",
+            "normal_anchors": [
+              {
+                "facet_quote": "that person holds that same wand",
+                "fact_id": "holdingApp",
+                "full_field_sha256": "ea837a3be50224372e600ae93ebc3e3325d309c076311abfee5d43d7178f8928",
+                "pointer": "/content/application_contract",
+                "source_unit_sha256": "219d9d4624058908006a65e3e35749d1b28e37610c67b70bad34bd470c12fb25",
+                "start": 251,
+                "stop": 283
+              }
+            ],
+            "realization_id": "base",
+            "requires_refs": [
+              "personP",
+              "wandP"
+            ],
+            "role_id": "relational_action",
+            "schema": "photo-manual-semantic-role-view/v1",
+            "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+            "whole_closure_sha256": "2f4cca68388862723254c7676af3c1964249f444a003886940334b9ed59c2b61",
+            "whole_value_retained": "Retain full action.holding holding_same_magic_wand E with person target, wand receiver, set_value, independenthuman/wand P and role-disjoint guard. Retain distinct stagepose and stage-setting E and all permissions."
+          },
+          {
+            "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+            "canonical_fact_refs": [
+              {
+                "fact_id": "poseApp",
+                "fact_sha256": "b0b1e78bc168483dc4d26358db88d0db41a7d594b078d11bd8eb2fea75f48216",
+                "mode": "effect"
+              }
+            ],
+            "endpoint_refs": [
+              {
+                "fact_id": "poseApp",
+                "position": "target"
+              }
+            ],
+            "id": "declared_stage_posing_presentation",
+            "manual_boundary_rationale": "A named stage pose supplies declared posing only. Do not infer standing/support geometry, photography setup, photographer direction, performance action, realjob or candidness. Full149staging_degree and changedbody_pose reviewed.",
+            "manual_semantic_facet": "Current App explicitly selects the persons stage pose: declared posed presentation. This is an authored posing facet, without asserting camera awareness or an unseen director.",
+            "normal_anchors": [
+              {
+                "facet_quote": "stage pose",
+                "fact_id": "poseApp",
+                "full_field_sha256": "ea837a3be50224372e600ae93ebc3e3325d309c076311abfee5d43d7178f8928",
+                "pointer": "/content/application_contract",
+                "source_unit_sha256": "219d9d4624058908006a65e3e35749d1b28e37610c67b70bad34bd470c12fb25",
+                "start": 234,
+                "stop": 244
+              }
+            ],
+            "realization_id": "base",
+            "requires_refs": [
+              "personP"
+            ],
+            "role_id": "staging_degree",
+            "schema": "photo-manual-semantic-role-view/v1",
+            "spec_sha256": "0fe242a2405f9a49f26d2519acbc1df9ea3b98c8a95662c4c63ab73fb1b3095c",
+            "whole_closure_sha256": "2f4cca68388862723254c7676af3c1964249f444a003886940334b9ed59c2b61",
+            "whole_value_retained": "Retain canonical body.pose/v1 stage_pose effect in pose dimension, person target, set_value and exact human P. No style/capture/staging E, contextual no-op or extra permission is introduced for the contextual role."
+          }
+        ],
+        "meaning_sha256": "b439a31741ce2df473f244c02d50afeefd8d453c61c83e2606ac5f5657d7d2bf",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "scene"
+                },
+                "target": "scene"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                },
+                "target": "wand"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/ownaction.5binding/fullorigin/emptyclosure/priorfacts and full149pose/staging/action/relational/prop/place/hand/reality boundaries read. Existing sameperson/wand/scene exactP, v1 performer/wand disjoint retained. Three original E groups stagepose/actualholding/stagesetting unchanged. EN withwand not holdingdirect; KO/App actualholding support. Manual samefactviews anchor complete App performed holding and stated stagepose, preserving fullvalues/modes/Rx/requirements. Stagepose view is declaredposedpresentation not inferred cameraawareness; no extra E or source rewrite. Intrinsic human retained.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "e3abd1eb235ec92ab6b5ad7d7454bf268368d7352ca7dc95c55b89e117086cf2",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=17",
+            "candidate_id": "cand_06d4a24f9a385f349b339bc794060a52",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "74bc3fc61382ace40bc7bc475d80e79a2009d404be7ed119361c2cdbd85e3353",
+            "source_record_sha256": "426aa4ac9d0d1a5140e59f9b112a58591c6f2a7a44580a5fed25bbf07c3a0fd7"
+          },
+          "source_correction": {
+            "after_sha256": "b439a31741ce2df473f244c02d50afeefd8d453c61c83e2606ac5f5657d7d2bf",
+            "before_sha256": "293c1427f28aa2c7cc59b95825732033ab522b5eb26f1cf1166bb49456063c55",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownaction.5binding/fullorigin/emptyclosure/priorfacts and full149pose/staging/action/relational/prop/place/hand/reality boundaries read. Existing sameperson/wand/scene exactP, v1 performer/wand disjoint retained. Three original E groups stagepose/actualholding/stagesetting unchanged. EN withwand not holdingdirect; KO/App actualholding support. Manual samefactviews anchor complete App performed holding and stated stagepose, preserving fullvalues/modes/Rx/requirements. Stagepose view is declaredposedpresentation not inferred cameraawareness; no extra E or source rewrite. Intrinsic human retained."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "action": {
+            "fact_refs": [
+              "holdingKo",
+              "holdingApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "body_pose": {
+            "fact_refs": [
+              "poseEn",
+              "poseKo",
+              "poseApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "783d39f8c4eee9438d32d088733d31d980e3d2e17a591255061059316c12b33e",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "location": {
+            "fact_refs": [
+              "stageEn",
+              "stageKo",
+              "stageApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "wandP",
+              "wandEn"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          },
+          "relational_action": {
+            "fact_refs": [
+              "holdingApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+            "support_modes": [
+              "effect"
+            ],
+            "view_refs": [
+              "same_performer_holding_wand"
+            ]
+          },
+          "staging_degree": {
+            "fact_refs": [
+              "poseApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "0fe242a2405f9a49f26d2519acbc1df9ea3b98c8a95662c4c63ab73fb1b3095c",
+            "support_modes": [
+              "effect"
+            ],
+            "view_refs": [
+              "declared_stage_posing_presentation"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "poseEn",
+              "wandEn",
+              "stageEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "posing on stage with a magic wand",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "poseKo",
+              "holdingKo",
+              "stageKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "마법봉을 들고 무대 포즈를 취하는",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "personP",
+              "wandP",
+              "sceneP",
+              "poseApp",
+              "holdingApp",
+              "stageApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Use the independently declared existing person bound to main_subject, the existing magic-wand prop bound to primary_prop, and the existing scene bound to scene. The person and wand are distinct actual owners. Select that same persons stage pose while that person holds that same wand, and select the stage setting. Do not add a person or wand, prescribe a particular grip or pose geometry, perform a spell or assert magic.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/ownaction.5binding/fullorigin/emptyclosure/priorfacts and full149pose/staging/action/relational/prop/place/hand/reality boundaries read. Existing sameperson/wand/scene exactP, v1 performer/wand disjoint retained. Three original E groups stagepose/actualholding/stagesetting unchanged. EN withwand not holdingdirect; KO/App actualholding support. Manual samefactviews anchor complete App performed holding and stated stagepose, preserving fullvalues/modes/Rx/requirements. Stagepose view is declaredposedpresentation not inferred cameraawareness; no extra E or source rewrite. Intrinsic human retained.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/16",
+          "sha256": "4dbdea853cc358ab1a759ea06519cee37f29dc71b4195977002cd24b7500e628"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownaction.5binding/fullorigin/emptyclosure/priorfacts and full149pose/staging/action/relational/prop/place/hand/reality boundaries read. Existing sameperson/wand/scene exactP, v1 performer/wand disjoint retained. Three original E groups stagepose/actualholding/stagesetting unchanged. EN withwand not holdingdirect; KO/App actualholding support. Manual samefactviews anchor complete App performed holding and stated stagepose, preserving fullvalues/modes/Rx/requirements. Stagepose view is declaredposedpresentation not inferred cameraawareness; no extra E or source rewrite. Intrinsic human retained."
+      },
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ],
+          "native_guards": {
+            "rules": [
+              {
+                "id": "performer_and_wand_are_distinct",
+                "kind": "owner_relation",
+                "left_role": "main_subject",
+                "relation": "disjoint",
+                "right_role": "primary_prop"
+              }
+            ],
+            "schema": "photo-native-source-guards/v1"
+          }
+        },
+        "content": {
+          "application_contract": "Use the independently declared existing person bound to main_subject, the existing magic-wand prop bound to primary_prop, and the existing scene bound to scene. The person and wand are distinct actual owners. Select that same persons stage pose while that person holds that same wand, and select the stage setting. Do not add a person or wand, prescribe a particular grip or pose geometry, perform a spell or assert magic.",
+          "en": "posing on stage with a magic wand",
+          "ko": "마법봉을 들고 무대 포즈를 취하는",
+          "tags": [
+            "human",
+            "cosplay",
+            "stage"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "pose",
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "pose",
+              "property": "body.pose",
+              "target": "person"
+            },
+            {
+              "dimension": "action",
+              "property": "action.holding",
+              "target": "person"
+            },
+            {
+              "dimension": "setting",
+              "property": "setting.location",
+              "target": "scene"
+            }
+          ]
+        },
+        "id": "cand_06d4a24f9a385f349b339bc794060a52",
+        "provenance": [
+          {
+            "sha256": "c36890f6af87c20197a9e3b270e5bd4876cfbe136d8150ff897cc684928ac472",
+            "source": "slot:action:magic_wand_stage_pose"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "posing on stage with a magic wand",
+          "ko": "마법봉을 들고 무대 포즈를 취하는",
+          "tags": [
+            "human",
+            "cosplay",
+            "stage"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_06d4a24f9a385f349b339bc794060a52",
+        "provenance": [
+          {
+            "sha256": "c36890f6af87c20197a9e3b270e5bd4876cfbe136d8150ff897cc684928ac472",
+            "source": "slot:action:magic_wand_stage_pose"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "This is one root-selectable clarification, not an original OR or uniquely entailed original reading. Use the independently declared existing shrine-lantern source, existing illumination carrier and actual existing illuminated spatial region explicitly selected by the caller. Independently require exact source identity and exact region identity. Select that same source illumination with grid geometry in that same region; both source use and spatial light geometry are real lighting effects with exact source/region receivers. Do not require already-grid/already-illuminated context, add a region or surface, or infer fog, smoke, dust, a scattering mechanism, a shrine location, faith, color or intensity.",
+            "embedding_text": "shrine lantern grid light",
+            "en": "shrine lantern grid light",
+            "ko": "신단 등불 격자 빛",
+            "tags": [
+              "portrait",
+              "light_shape"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "embedding_text": "shrine lantern grid light",
+            "en": "shrine lantern grid light",
+            "ko": "신단 등불 격자 빛",
+            "tags": [
+              "portrait",
+              "light_shape"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownlightshape.62binding/fullorigin/emptyclosure/prior04null and full149lightshape/type/color/intensity/setup/materialform/medium/object boundaries read. Current rootexplicit spatialclarification chosen, no originalOR or uniqueoriginalentailment claim. Existing caller-selected shrine_lantern source/lightcarrier/spatialregion, precise source and regionP+neutralcarrierP; actualsourceuse and spatialgrid E each retain both source/region receivers. No alreadygrid/illuminated P, surface, physical lamp array/count, scatteringmedium/chemistry, shrineplace/faith/color/intensity. Genericcomplete lighting setup not inferred. Historical146singleapproval not inherited."
+        },
+        {
+          "after": {
+            "native_guards": {
+              "rules": [
+                {
+                  "dimension": "subject",
+                  "id": "common_0",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                    "kind": "source_target",
+                    "target": "lantern_source"
+                  },
+                  "property": "props.type",
+                  "value": {
+                    "type": "props.type/v1",
+                    "value": "shrine_lantern"
+                  }
+                },
+                {
+                  "dimension": "setting",
+                  "id": "common_1",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                    "kind": "source_target",
+                    "target": "illuminated_region"
+                  },
+                  "property": "space.region.kind",
+                  "value": {
+                    "type": "space.region.kind/v1",
+                    "value": "spatial_region"
+                  }
+                }
+              ],
+              "schema": "photo-native-source-guards/v2"
+            }
+          },
+          "after_exists": true,
+          "before": {},
+          "before_exists": true,
+          "pointer": "/conditions",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownlightshape.62binding/fullorigin/emptyclosure/prior04null and full149lightshape/type/color/intensity/setup/materialform/medium/object boundaries read. Current rootexplicit spatialclarification chosen, no originalOR or uniqueoriginalentailment claim. Existing caller-selected shrine_lantern source/lightcarrier/spatialregion, precise source and regionP+neutralcarrierP; actualsourceuse and spatialgrid E each retain both source/region receivers. No alreadygrid/illuminated P, surface, physical lamp array/count, scatteringmedium/chemistry, shrineplace/faith/color/intensity. Genericcomplete lighting setup not inferred. Historical146singleapproval not inherited."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "lighting"
+            ],
+            "properties": [
+              {
+                "dimension": "lighting",
+                "property": "lighting.source.shrine_lantern",
+                "target": "light"
+              },
+              {
+                "dimension": "lighting",
+                "property": "lighting.shape.grid_in_selected_region",
+                "target": "light"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "lighting"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownlightshape.62binding/fullorigin/emptyclosure/prior04null and full149lightshape/type/color/intensity/setup/materialform/medium/object boundaries read. Current rootexplicit spatialclarification chosen, no originalOR or uniqueoriginalentailment claim. Existing caller-selected shrine_lantern source/lightcarrier/spatialregion, precise source and regionP+neutralcarrierP; actualsourceuse and spatialgrid E each retain both source/region receivers. No alreadygrid/illuminated P, surface, physical lamp array/count, scatteringmedium/chemistry, shrineplace/faith/color/intensity. Genericcomplete lighting setup not inferred. Historical146singleapproval not inherited."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1267,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 18,
+        "row_sha256": "a8603173528aac09b6005c0c757d4c1fc22fc001d4c59fb8aedea15110fb2c40"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "lighting"
+            ],
+            "properties": [
+              {
+                "dimension": "lighting",
+                "property": "lighting.shape.grid_in_selected_region",
+                "target": "light"
+              },
+              {
+                "dimension": "lighting",
+                "property": "lighting.source.shrine_lantern",
+                "target": "light"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "sourceP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "props.type",
+            "quote": "independently declared existing shrine-lantern source",
+            "realization_id": "base",
+            "requires": [],
+            "target": "lantern_source",
+            "value": {
+              "type": "props.type/v1",
+              "value": "shrine_lantern"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "lightP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.presence",
+            "quote": "existing illumination carrier",
+            "realization_id": "base",
+            "requires": [],
+            "target": "light",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "regionP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "space.region.kind",
+            "quote": "actual existing illuminated spatial region",
+            "realization_id": "base",
+            "requires": [],
+            "target": "illuminated_region",
+            "value": {
+              "type": "space.region.kind/v1",
+              "value": "spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "lighting.source.shrine_lantern",
+            "quote": "shrine lantern grid light",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "lighting.shape.grid_in_selected_region",
+            "quote": "grid light",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "lighting.source.shrine_lantern",
+            "quote": "신단 등불 격자 빛",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "lighting.shape.grid_in_selected_region",
+            "quote": "격자 빛",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceEmb",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/embedding_text",
+            "property": "lighting.source.shrine_lantern",
+            "quote": "shrine lantern grid light",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridEmb",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/embedding_text",
+            "property": "lighting.shape.grid_in_selected_region",
+            "quote": "grid light",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "sourceApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "lighting.source.shrine_lantern",
+            "quote": "Select that same source illumination with grid geometry in that same region",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.source.shrine_lantern/v1",
+              "value": "shrine_lantern_illumination"
+            }
+          },
+          {
+            "dimension": "lighting",
+            "id": "gridApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "lighting.shape.grid_in_selected_region",
+            "quote": "Select that same source illumination with grid geometry in that same region",
+            "realization_id": "base",
+            "receivers": [
+              "lantern_source",
+              "illuminated_region"
+            ],
+            "requires": [
+              "sourceP",
+              "lightP",
+              "regionP"
+            ],
+            "target": "light",
+            "value": {
+              "type": "lighting.shape.grid_in_selected_region/v1",
+              "value": "grid_in_selected_spatial_region"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "native_guards": {
+                  "rules": [
+                    {
+                      "dimension": "subject",
+                      "id": "common_0",
+                      "kind": "frozen_value",
+                      "owner": {
+                        "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                        "kind": "source_target",
+                        "target": "lantern_source"
+                      },
+                      "property": "props.type",
+                      "value": {
+                        "type": "props.type/v1",
+                        "value": "shrine_lantern"
+                      }
+                    },
+                    {
+                      "dimension": "setting",
+                      "id": "common_1",
+                      "kind": "frozen_value",
+                      "owner": {
+                        "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                        "kind": "source_target",
+                        "target": "illuminated_region"
+                      },
+                      "property": "space.region.kind",
+                      "value": {
+                        "type": "space.region.kind/v1",
+                        "value": "spatial_region"
+                      }
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v2"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "1f6a65f5239454eb29b907f8d7caddd7b6076211586f26a585d13896f881512e",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "illuminated_region"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "lantern_source"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "light"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/ownlightshape.62binding/fullorigin/emptyclosure/prior04null and full149lightshape/type/color/intensity/setup/materialform/medium/object boundaries read. Current rootexplicit spatialclarification chosen, no originalOR or uniqueoriginalentailment claim. Existing caller-selected shrine_lantern source/lightcarrier/spatialregion, precise source and regionP+neutralcarrierP; actualsourceuse and spatialgrid E each retain both source/region receivers. No alreadygrid/illuminated P, surface, physical lamp array/count, scatteringmedium/chemistry, shrineplace/faith/color/intensity. Genericcomplete lighting setup not inferred. Historical146singleapproval not inherited.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "54ee4e8861fa3e0852a757645ca84bce26a567490983f15711f9234bacf7d1b1",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=18",
+            "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "a8603173528aac09b6005c0c757d4c1fc22fc001d4c59fb8aedea15110fb2c40",
+            "source_record_sha256": "9cabf8f6ce30ff65ee6dd19288210f25cca15cf5e4aa06ba3af64a5c9542478a"
+          },
+          "source_correction": {
+            "after_sha256": "1f6a65f5239454eb29b907f8d7caddd7b6076211586f26a585d13896f881512e",
+            "before_sha256": "7840b393196d1f6b492b0351aa1c2bcd84ca4652eab7cb0f04ddc177d31f99b2",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownlightshape.62binding/fullorigin/emptyclosure/prior04null and full149lightshape/type/color/intensity/setup/materialform/medium/object boundaries read. Current rootexplicit spatialclarification chosen, no originalOR or uniqueoriginalentailment claim. Existing caller-selected shrine_lantern source/lightcarrier/spatialregion, precise source and regionP+neutralcarrierP; actualsourceuse and spatialgrid E each retain both source/region receivers. No alreadygrid/illuminated P, surface, physical lamp array/count, scatteringmedium/chemistry, shrineplace/faith/color/intensity. Genericcomplete lighting setup not inferred. Historical146singleapproval not inherited."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "light_shape": {
+            "fact_refs": [
+              "gridEn",
+              "gridKo",
+              "gridEmb",
+              "gridApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "8f28fa26a0c6088cd8b61b199c8d723bf01c8f086e8bedb31e53dd6d2cbde7b5",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "light_type": {
+            "fact_refs": [
+              "sourceEn",
+              "sourceKo",
+              "sourceEmb",
+              "sourceApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "2255889e3312890d643e01abb252eac8a9a009891733112aef6d44ee157789bf",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "sourceP"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "sourceEn",
+              "gridEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "shrine lantern grid light",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "sourceKo",
+              "gridKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "신단 등불 격자 빛",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "sourceEmb",
+              "gridEmb"
+            ],
+            "pointer": "/content/embedding_text",
+            "quote": "shrine lantern grid light",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "sourceP",
+              "lightP",
+              "regionP",
+              "sourceApp",
+              "gridApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "This is one root-selectable clarification, not an original OR or uniquely entailed original reading. Use the independently declared existing shrine-lantern source, existing illumination carrier and actual existing illuminated spatial region explicitly selected by the caller. Independently require exact source identity and exact region identity. Select that same source illumination with grid geometry in that same region; both source use and spatial light geometry are real lighting effects with exact source/region receivers. Do not require already-grid/already-illuminated context, add a region or surface, or infer fog, smoke, dust, a scattering mechanism, a shrine location, faith, color or intensity.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/ownlightshape.62binding/fullorigin/emptyclosure/prior04null and full149lightshape/type/color/intensity/setup/materialform/medium/object boundaries read. Current rootexplicit spatialclarification chosen, no originalOR or uniqueoriginalentailment claim. Existing caller-selected shrine_lantern source/lightcarrier/spatialregion, precise source and regionP+neutralcarrierP; actualsourceuse and spatialgrid E each retain both source/region receivers. No alreadygrid/illuminated P, surface, physical lamp array/count, scatteringmedium/chemistry, shrineplace/faith/color/intensity. Genericcomplete lighting setup not inferred. Historical146singleapproval not inherited.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/17",
+          "sha256": "8f69aabb80978d81ee3179a7c71feae4a56497d99eed8f486881477f1a0835f3"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownlightshape.62binding/fullorigin/emptyclosure/prior04null and full149lightshape/type/color/intensity/setup/materialform/medium/object boundaries read. Current rootexplicit spatialclarification chosen, no originalOR or uniqueoriginalentailment claim. Existing caller-selected shrine_lantern source/lightcarrier/spatialregion, precise source and regionP+neutralcarrierP; actualsourceuse and spatialgrid E each retain both source/region receivers. No alreadygrid/illuminated P, surface, physical lamp array/count, scatteringmedium/chemistry, shrineplace/faith/color/intensity. Genericcomplete lighting setup not inferred. Historical146singleapproval not inherited."
+      },
+      "source_after": {
+        "conditions": {
+          "native_guards": {
+            "rules": [
+              {
+                "dimension": "subject",
+                "id": "common_0",
+                "kind": "frozen_value",
+                "owner": {
+                  "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                  "kind": "source_target",
+                  "target": "lantern_source"
+                },
+                "property": "props.type",
+                "value": {
+                  "type": "props.type/v1",
+                  "value": "shrine_lantern"
+                }
+              },
+              {
+                "dimension": "setting",
+                "id": "common_1",
+                "kind": "frozen_value",
+                "owner": {
+                  "candidate_id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+                  "kind": "source_target",
+                  "target": "illuminated_region"
+                },
+                "property": "space.region.kind",
+                "value": {
+                  "type": "space.region.kind/v1",
+                  "value": "spatial_region"
+                }
+              }
+            ],
+            "schema": "photo-native-source-guards/v2"
+          }
+        },
+        "content": {
+          "application_contract": "This is one root-selectable clarification, not an original OR or uniquely entailed original reading. Use the independently declared existing shrine-lantern source, existing illumination carrier and actual existing illuminated spatial region explicitly selected by the caller. Independently require exact source identity and exact region identity. Select that same source illumination with grid geometry in that same region; both source use and spatial light geometry are real lighting effects with exact source/region receivers. Do not require already-grid/already-illuminated context, add a region or surface, or infer fog, smoke, dust, a scattering mechanism, a shrine location, faith, color or intensity.",
+          "embedding_text": "shrine lantern grid light",
+          "en": "shrine lantern grid light",
+          "ko": "신단 등불 격자 빛",
+          "tags": [
+            "portrait",
+            "light_shape"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.shrine_lantern",
+              "target": "light"
+            },
+            {
+              "dimension": "lighting",
+              "property": "lighting.shape.grid_in_selected_region",
+              "target": "light"
+            }
+          ]
+        },
+        "id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+        "provenance": [
+          {
+            "sha256": "8216d49b5dc50820adeb2216c499c3209b3973995edad95ef927e1e21b5759dc",
+            "source": "slot:light_shape:shrine_lantern_grid"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "shrine lantern grid light",
+          "en": "shrine lantern grid light",
+          "ko": "신단 등불 격자 빛",
+          "tags": [
+            "portrait",
+            "light_shape"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_15e9a9f81dc0516aa8ddc24cdf658043",
+        "provenance": [
+          {
+            "sha256": "8216d49b5dc50820adeb2216c499c3209b3973995edad95ef927e1e21b5759dc",
+            "source": "slot:light_shape:shrine_lantern_grid"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_1d96b13ba06053e5948f54efbde81665",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Use the independently declared existing person bound to main_subject. Select the gothic-doll cosplay portrayal and presentation without changing species/identity, adding a doll, naming a costume piece or prescribing a performance action.",
+            "en": "a gothic doll cosplay performer",
+            "kind": [
+              "human"
+            ],
+            "ko": "고스 돌 코스프레 모델",
+            "tags": [
+              "human",
+              "cosplay",
+              "gothic",
+              "doll",
+              "fashion"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "a gothic doll cosplay performer",
+            "kind": [
+              "human"
+            ],
+            "ko": "고스 돌 코스프레 모델",
+            "tags": [
+              "human",
+              "cosplay",
+              "gothic",
+              "doll",
+              "fashion"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/ENKOApp/kindmetadata/exact5B/ownsubject.55binding/fullorigin/emptyclosure/priorfacts and full149subject/presentation/attire/species/action/identity boundaries read. Existing actual main_subject person precise humanP supported by positive App not kind/tags. Gothicdoll cosplay portrayal, visible presentation and attirecontext are three real E, including subject mutation, never P/context/no-op. No dollentity/specieschange, currentperformance/job or garmentpiece. Sourceproof does not open ordinary lockedsubject; actual controlledconsumer must reject that lock, no realcore retrofit."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "appearance",
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "subject",
+                "property": "subject.portrayal_role",
+                "target": "person"
+              },
+              {
+                "dimension": "appearance",
+                "property": "presentation.style",
+                "target": "person"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.context",
+                "target": "person"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "subject"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/ENKOApp/kindmetadata/exact5B/ownsubject.55binding/fullorigin/emptyclosure/priorfacts and full149subject/presentation/attire/species/action/identity boundaries read. Existing actual main_subject person precise humanP supported by positive App not kind/tags. Gothicdoll cosplay portrayal, visible presentation and attirecontext are three real E, including subject mutation, never P/context/no-op. No dollentity/specieschange, currentperformance/job or garmentpiece. Sourceproof does not open ordinary lockedsubject; actual controlledconsumer must reject that lock, no realcore retrofit."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1268,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 19,
+        "row_sha256": "765004f5d62530ede38060edd549082cc4d23c90b2b38b8c4643027e315a88e9"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "appearance",
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "presentation.style",
+                "target": "person"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.context",
+                "target": "person"
+              },
+              {
+                "dimension": "subject",
+                "property": "subject.portrayal_role",
+                "target": "person"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.type",
+            "quote": "independently declared existing person",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "roleEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "subject.portrayal_role",
+            "quote": "a gothic doll cosplay performer",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "subject.portrayal_role/v1",
+              "value": "gothic_doll_cosplay_portrayal"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "presentation.style",
+            "quote": "gothic doll cosplay",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "gothic_doll_cosplay_presentation"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "attireEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "wardrobe.context",
+            "quote": "gothic doll cosplay",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "wardrobe.context/v1",
+              "value": "gothic_doll_cosplay"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "roleKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "subject.portrayal_role",
+            "quote": "고스 돌 코스프레 모델",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "subject.portrayal_role/v1",
+              "value": "gothic_doll_cosplay_portrayal"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "presentation.style",
+            "quote": "고스 돌 코스프레",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "gothic_doll_cosplay_presentation"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "attireKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "wardrobe.context",
+            "quote": "고스 돌 코스프레",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "wardrobe.context/v1",
+              "value": "gothic_doll_cosplay"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "roleApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "subject.portrayal_role",
+            "quote": "Select the gothic-doll cosplay portrayal and presentation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "subject.portrayal_role/v1",
+              "value": "gothic_doll_cosplay_portrayal"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "presentation.style",
+            "quote": "Select the gothic-doll cosplay portrayal and presentation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "gothic_doll_cosplay_presentation"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "attireApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "wardrobe.context",
+            "quote": "gothic-doll cosplay portrayal and presentation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "wardrobe.context/v1",
+              "value": "gothic_doll_cosplay"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "c8b656c5dadbbcf6ee6f5adfaee1eb995fcbc71261d2e3b2abed291c534bf025",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/ENKOApp/kindmetadata/exact5B/ownsubject.55binding/fullorigin/emptyclosure/priorfacts and full149subject/presentation/attire/species/action/identity boundaries read. Existing actual main_subject person precise humanP supported by positive App not kind/tags. Gothicdoll cosplay portrayal, visible presentation and attirecontext are three real E, including subject mutation, never P/context/no-op. No dollentity/specieschange, currentperformance/job or garmentpiece. Sourceproof does not open ordinary lockedsubject; actual controlledconsumer must reject that lock, no realcore retrofit.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "fb9cbd1cb30b3e563f83dd9816cc5ec3a038dfc6945cb96f9c794fef2573cb66",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=19",
+            "candidate_id": "cand_1d96b13ba06053e5948f54efbde81665",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "765004f5d62530ede38060edd549082cc4d23c90b2b38b8c4643027e315a88e9",
+            "source_record_sha256": "462a8b0dc2025984a609e1fff598f9d9a0290f484eb4e2d2f6f607638323c06f"
+          },
+          "source_correction": {
+            "after_sha256": "c8b656c5dadbbcf6ee6f5adfaee1eb995fcbc71261d2e3b2abed291c534bf025",
+            "before_sha256": "e535a708399ed83d20198b471b81eca3234e002132a582f25aec50f87f752c1d",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/ENKOApp/kindmetadata/exact5B/ownsubject.55binding/fullorigin/emptyclosure/priorfacts and full149subject/presentation/attire/species/action/identity boundaries read. Existing actual main_subject person precise humanP supported by positive App not kind/tags. Gothicdoll cosplay portrayal, visible presentation and attirecontext are three real E, including subject mutation, never P/context/no-op. No dollentity/specieschange, currentperformance/job or garmentpiece. Sourceproof does not open ordinary lockedsubject; actual controlledconsumer must reject that lock, no realcore retrofit."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "attire_context": {
+            "fact_refs": [
+              "attireEn",
+              "attireKo",
+              "attireApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "bbccacf16c9cf9d7a034136350fc32b0f2e548b69dd3688ceeaf0832367b5b44",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "presentation_style": {
+            "fact_refs": [
+              "styleEn",
+              "styleKo",
+              "styleApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "18bc2932f4a4e28a6895b9f141229c2a0647fa1a088f6056c7ec681f3ed3f4ed",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "subject": {
+            "fact_refs": [
+              "roleEn",
+              "roleKo",
+              "roleApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "7a6fabe3202e933e6c4f2b052c730205960e2d3f402cc988949f5db7b6a55f93",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "roleEn",
+              "styleEn",
+              "attireEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "a gothic doll cosplay performer",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "roleKo",
+              "styleKo",
+              "attireKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "고스 돌 코스프레 모델",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "personP",
+              "roleApp",
+              "styleApp",
+              "attireApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Use the independently declared existing person bound to main_subject. Select the gothic-doll cosplay portrayal and presentation without changing species/identity, adding a doll, naming a costume piece or prescribing a performance action.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/ENKOApp/kindmetadata/exact5B/ownsubject.55binding/fullorigin/emptyclosure/priorfacts and full149subject/presentation/attire/species/action/identity boundaries read. Existing actual main_subject person precise humanP supported by positive App not kind/tags. Gothicdoll cosplay portrayal, visible presentation and attirecontext are three real E, including subject mutation, never P/context/no-op. No dollentity/specieschange, currentperformance/job or garmentpiece. Sourceproof does not open ordinary lockedsubject; actual controlledconsumer must reject that lock, no realcore retrofit.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/18",
+          "sha256": "b529a5654d4dfaad3d140bb94dcb17f569b3d6335ff2c42a0ae529251661733a"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/ENKOApp/kindmetadata/exact5B/ownsubject.55binding/fullorigin/emptyclosure/priorfacts and full149subject/presentation/attire/species/action/identity boundaries read. Existing actual main_subject person precise humanP supported by positive App not kind/tags. Gothicdoll cosplay portrayal, visible presentation and attirecontext are three real E, including subject mutation, never P/context/no-op. No dollentity/specieschange, currentperformance/job or garmentpiece. Sourceproof does not open ordinary lockedsubject; actual controlledconsumer must reject that lock, no realcore retrofit."
+      },
+      "source_after": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Use the independently declared existing person bound to main_subject. Select the gothic-doll cosplay portrayal and presentation without changing species/identity, adding a doll, naming a costume piece or prescribing a performance action.",
+          "en": "a gothic doll cosplay performer",
+          "kind": [
+            "human"
+          ],
+          "ko": "고스 돌 코스프레 모델",
+          "tags": [
+            "human",
+            "cosplay",
+            "gothic",
+            "doll",
+            "fashion"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance",
+            "subject"
+          ],
+          "properties": [
+            {
+              "dimension": "subject",
+              "property": "subject.portrayal_role",
+              "target": "person"
+            },
+            {
+              "dimension": "appearance",
+              "property": "presentation.style",
+              "target": "person"
+            },
+            {
+              "dimension": "appearance",
+              "property": "wardrobe.context",
+              "target": "person"
+            }
+          ]
+        },
+        "id": "cand_1d96b13ba06053e5948f54efbde81665",
+        "provenance": [
+          {
+            "sha256": "0490383d6f513a293f9ec0a25facf24fae9802cfe07cf6e2a2d382738a04437c",
+            "source": "slot:subject:gothic_doll_cosplayer"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "en": "a gothic doll cosplay performer",
+          "kind": [
+            "human"
+          ],
+          "ko": "고스 돌 코스프레 모델",
+          "tags": [
+            "human",
+            "cosplay",
+            "gothic",
+            "doll",
+            "fashion"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_1d96b13ba06053e5948f54efbde81665",
+        "provenance": [
+          {
+            "sha256": "0490383d6f513a293f9ec0a25facf24fae9802cfe07cf6e2a2d382738a04437c",
+            "source": "slot:subject:gothic_doll_cosplayer"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_3228587d1a9353a99e4ae643ad13a9a4",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Apply only to the independently declared existing mouth-bearing face bound to primary_face. Select pursed lips and the tiny-huff expression, without asserting audible sound, permanent lip shape or private anger.",
+            "en": "pursed lips with a tiny huff",
+            "ko": "입술을 오므린 작은 흥 표정",
+            "tags": [
+              "human",
+              "expression",
+              "tsundere"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "pursed lips with a tiny huff",
+            "ko": "입술을 오므린 작은 흥 표정",
+            "tags": [
+              "human",
+              "expression",
+              "tsundere"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownexpression.82binding/fullorigin/emptyclosure/priorfacts and full149expression/lipfinish/color/geometry/sensory/eye/body boundaries read. Existing mouthbearing primary_face and explicitly named lips need three exactneutralatomic face/mouth/lips P on same actualface, not array/subset or face→part inference. P for required lips existence does not freeze selectedpursedshape. Same visible pursedlips/tinyhuff E, no audible sound/privateanger/permanentgeometry/cosmetics/newpart. Sourcehuman and oldhuman/animaldisplay remain conjunctive."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "expression"
+            ],
+            "properties": [
+              {
+                "dimension": "expression",
+                "property": "expression.mouth",
+                "target": "face"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "expression"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownexpression.82binding/fullorigin/emptyclosure/priorfacts and full149expression/lipfinish/color/geometry/sensory/eye/body boundaries read. Existing mouthbearing primary_face and explicitly named lips need three exactneutralatomic face/mouth/lips P on same actualface, not array/subset or face→part inference. P for required lips existence does not freeze selectedpursedshape. Same visible pursedlips/tinyhuff E, no audible sound/privateanger/permanentgeometry/cosmetics/newpart. Sourcehuman and oldhuman/animaldisplay remain conjunctive."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1269,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 20,
+        "row_sha256": "4bfad1ef4c799e2a34b1e2d79e2a0c4f51b821b643f188d96eec22a1d9445165"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "expression"
+            ],
+            "properties": [
+              {
+                "dimension": "expression",
+                "property": "expression.mouth",
+                "target": "face"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "faceP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "anatomy.face.presence",
+            "quote": "independently declared existing mouth-bearing face",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.face.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "mouthP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "anatomy.mouth.presence",
+            "quote": "existing mouth-bearing face",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.mouth.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "lipsP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "anatomy.lips.presence",
+            "quote": "Select pursed lips",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.lips.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "poutEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "expression.mouth",
+            "quote": "pursed lips with a tiny huff",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "faceP",
+              "mouthP",
+              "lipsP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.mouth/v1",
+              "value": "pursed_lips_tiny_huff_visible_expression"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "poutKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "expression.mouth",
+            "quote": "입술을 오므린 작은 흥 표정",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "faceP",
+              "mouthP",
+              "lipsP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.mouth/v1",
+              "value": "pursed_lips_tiny_huff_visible_expression"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "poutApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "expression.mouth",
+            "quote": "Select pursed lips and the tiny-huff expression",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "faceP",
+              "mouthP",
+              "lipsP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.mouth/v1",
+              "value": "pursed_lips_tiny_huff_visible_expression"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ]
+              },
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "431dd7a72dfe3207c41d6b07aff7b1d15c82918d7f2526f1615eed5728d0c713",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_face"
+                },
+                "target": "face"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/ownexpression.82binding/fullorigin/emptyclosure/priorfacts and full149expression/lipfinish/color/geometry/sensory/eye/body boundaries read. Existing mouthbearing primary_face and explicitly named lips need three exactneutralatomic face/mouth/lips P on same actualface, not array/subset or face→part inference. P for required lips existence does not freeze selectedpursedshape. Same visible pursedlips/tinyhuff E, no audible sound/privateanger/permanentgeometry/cosmetics/newpart. Sourcehuman and oldhuman/animaldisplay remain conjunctive.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "ec34734e57a79a84c6b756867954e05b5063bbc08c8b8aa8b173bb4d0b9f3d09",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=20",
+            "candidate_id": "cand_3228587d1a9353a99e4ae643ad13a9a4",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "4bfad1ef4c799e2a34b1e2d79e2a0c4f51b821b643f188d96eec22a1d9445165",
+            "source_record_sha256": "1fb25e4aeb62b49ff94901ac30d91d3cde46ac3f2d2825a53111228c70c8aa2a"
+          },
+          "source_correction": {
+            "after_sha256": "431dd7a72dfe3207c41d6b07aff7b1d15c82918d7f2526f1615eed5728d0c713",
+            "before_sha256": "b98c5998e4d2fa65cc14b44d53efd9760e2fc26656903bbf09f3fb59fb8adc52",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownexpression.82binding/fullorigin/emptyclosure/priorfacts and full149expression/lipfinish/color/geometry/sensory/eye/body boundaries read. Existing mouthbearing primary_face and explicitly named lips need three exactneutralatomic face/mouth/lips P on same actualface, not array/subset or face→part inference. P for required lips existence does not freeze selectedpursedshape. Same visible pursedlips/tinyhuff E, no audible sound/privateanger/permanentgeometry/cosmetics/newpart. Sourcehuman and oldhuman/animaldisplay remain conjunctive."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "expression": {
+            "fact_refs": [
+              "poutEn",
+              "poutKo",
+              "poutApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "67afc20b958d23d2e75a477532d8e570347d0123513bb0241cbb5c0f107d6a44",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "poutEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "pursed lips with a tiny huff",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "poutKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "입술을 오므린 작은 흥 표정",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "faceP",
+              "mouthP",
+              "lipsP",
+              "poutApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Apply only to the independently declared existing mouth-bearing face bound to primary_face. Select pursed lips and the tiny-huff expression, without asserting audible sound, permanent lip shape or private anger.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/ownexpression.82binding/fullorigin/emptyclosure/priorfacts and full149expression/lipfinish/color/geometry/sensory/eye/body boundaries read. Existing mouthbearing primary_face and explicitly named lips need three exactneutralatomic face/mouth/lips P on same actualface, not array/subset or face→part inference. P for required lips existence does not freeze selectedpursedshape. Same visible pursedlips/tinyhuff E, no audible sound/privateanger/permanentgeometry/cosmetics/newpart. Sourcehuman and oldhuman/animaldisplay remain conjunctive.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/19",
+          "sha256": "835b09c07ecfbd948f159ab53753c91c568dab1ce2d1394571bf5adecb94f895"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownexpression.82binding/fullorigin/emptyclosure/priorfacts and full149expression/lipfinish/color/geometry/sensory/eye/body boundaries read. Existing mouthbearing primary_face and explicitly named lips need three exactneutralatomic face/mouth/lips P on same actualface, not array/subset or face→part inference. P for required lips existence does not freeze selectedpursedshape. Same visible pursedlips/tinyhuff E, no audible sound/privateanger/permanentgeometry/cosmetics/newpart. Sourcehuman and oldhuman/animaldisplay remain conjunctive."
+      },
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Apply only to the independently declared existing mouth-bearing face bound to primary_face. Select pursed lips and the tiny-huff expression, without asserting audible sound, permanent lip shape or private anger.",
+          "en": "pursed lips with a tiny huff",
+          "ko": "입술을 오므린 작은 흥 표정",
+          "tags": [
+            "human",
+            "expression",
+            "tsundere"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": [
+            {
+              "dimension": "expression",
+              "property": "expression.mouth",
+              "target": "face"
+            }
+          ]
+        },
+        "id": "cand_3228587d1a9353a99e4ae643ad13a9a4",
+        "provenance": [
+          {
+            "sha256": "12443d0bb6f7f9eedd456d25d50994b8744170743d2adcf8ec14e71051e853b8",
+            "source": "slot:expression:pursed_lips_tiny_huff"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "pursed lips with a tiny huff",
+          "ko": "입술을 오므린 작은 흥 표정",
+          "tags": [
+            "human",
+            "expression",
+            "tsundere"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_3228587d1a9353a99e4ae643ad13a9a4",
+        "provenance": [
+          {
+            "sha256": "12443d0bb6f7f9eedd456d25d50994b8744170743d2adcf8ec14e71051e853b8",
+            "source": "slot:expression:pursed_lips_tiny_huff"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    }
+  ],
+  "root_accepted": 0,
+  "schema": "photo-native-manual-proof-checkpoint/v1",
+  "task_name": "/root/review_11870_12250"
+}

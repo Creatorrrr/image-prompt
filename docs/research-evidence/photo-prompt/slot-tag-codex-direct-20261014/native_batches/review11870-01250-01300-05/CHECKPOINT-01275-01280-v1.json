@@ -1,0 +1,4169 @@
+{
+  "actual_complete_read_count": 30,
+  "assignment_sha256": "1b0e24167068d985eb0cfa67fed45a05c5d509b95c3fbc9e615975c9cfdfa8a1",
+  "boundary": "Five fresh manual149 sourceproofs with fullvalidate/compact; controlled actualconsumer/everyE+Rx/whole/P/guard tests separate. No prior04 status/signature conversion, no sourceedit.1299 actual05 remains pending.",
+  "full_shape_checks": [
+    {
+      "compact": {
+        "candidate_id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "680909a5ab07a9d6b65f30e2c26419abb96a771449b0e2ef98f83f321e25c1bb",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "action",
+              "relationship"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "property": "action.studying",
+                "target": "person"
+              },
+              {
+                "dimension": "relationship",
+                "property": "relationship.familiarity",
+                "target": "person"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "property": "entity.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "tabletP",
+            "mode": "prerequisite",
+            "property": "props.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "tablet",
+            "value": {
+              "type": "props.type/v1",
+              "value": "star_map_tablet"
+            }
+          },
+          {
+            "dimension": "concept",
+            "id": "contentS",
+            "mode": "preservation",
+            "property": "representation.content",
+            "realization_id": "base",
+            "requires": [],
+            "target": "tablet",
+            "value": {
+              "type": "representation.content/v1",
+              "value": "star_map"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "studyEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "action.studying",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.studying/v1",
+              "value": "studying_same_star_map_tablet"
+            }
+          },
+          {
+            "dimension": "relationship",
+            "id": "unfamiliarEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "relationship.familiarity",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "relationship.familiarity/v1",
+              "value": "unfamiliar_to_same_studier"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "studyKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "action.studying",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.studying/v1",
+              "value": "studying_same_star_map_tablet"
+            }
+          },
+          {
+            "dimension": "relationship",
+            "id": "unfamiliarKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "relationship.familiarity",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "relationship.familiarity/v1",
+              "value": "unfamiliar_to_same_studier"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "studyApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "action.studying",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.studying/v1",
+              "value": "studying_same_star_map_tablet"
+            }
+          },
+          {
+            "dimension": "relationship",
+            "id": "unfamiliarApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "relationship.familiarity",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "relationship.familiarity/v1",
+              "value": "unfamiliar_to_same_studier"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ],
+                "native_guards": {
+                  "rules": [
+                    {
+                      "id": "studier_and_tablet_are_distinct",
+                      "kind": "owner_relation",
+                      "left_role": "main_subject",
+                      "relation": "disjoint",
+                      "right_role": "primary_prop"
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v1"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": false,
+        "manual_role_view_bindings": {
+          "bindings": [
+            {
+              "anchors": [
+                {
+                  "facet_sha256": "bf9d6728c92384282a1d89d2d98fbc13690f2183a58417a1bab0c13c3d9d6fae",
+                  "fact_id": "studyApp",
+                  "full_field_sha256": "c5e42216fd31e3782b1eb729d545219bc3b54a9151c199d3e240358e4a47af1b",
+                  "pointer_sha256": "7ecacd0c063591033aa7ccdad6fab5c137f5d5819d8b863978bfde936039b761",
+                  "source_unit_sha256": "f1cc0df120b9bcbefa34b149034526529f3072c375df621a40a3a08239f83d02",
+                  "start": 248,
+                  "stop": 273
+                }
+              ],
+              "candidate_id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+              "endpoint_refs": [
+                {
+                  "fact_id": "studyApp",
+                  "position": "target"
+                },
+                {
+                  "fact_id": "studyApp",
+                  "index": 0,
+                  "position": "receiver"
+                }
+              ],
+              "fact": {
+                "dimension": "action",
+                "id": "studyApp",
+                "mode": "effect",
+                "operation": "set_value",
+                "property": "action.studying",
+                "realization_id": "base",
+                "receivers": [
+                  "tablet"
+                ],
+                "requires": [
+                  "personP",
+                  "tabletP",
+                  "contentS"
+                ],
+                "target": "person",
+                "value": {
+                  "type": "action.studying/v1",
+                  "value": "studying_same_star_map_tablet"
+                }
+              },
+              "fact_sha256": "e390c44bc6f0497995ebb9f39fde6f09305c0c363f832eaf76e6936a8a41fdbf",
+              "manual_view_sha256": "bdff2d03b4914765a3ae0ae76bebdc981f2e71e6349919e267ee57be760a65c9",
+              "realization_id": "base",
+              "requires_refs": [
+                "contentS",
+                "personP",
+                "tabletP"
+              ],
+              "role_id": "relational_action",
+              "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+              "view_id": "same_studier_inspects_same_tablet",
+              "whole_closure_sha256": "d45a520fb00971d416bf2ff846073a1d07887f674cfd22b766bcae81687e038d"
+            }
+          ],
+          "candidate_id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+          "receipt_sha256": "fc41447f5a0b209729309ec65098f90b6ee700e9f49c26cd40ac56306f9c6523",
+          "schema": "photo-manual-semantic-role-view-bindings/v1",
+          "source_contract_sha256": "bc83776831633be47f62470197e7b3cfc3d780d7b5f6fcb6d34d7e6c56763ee2",
+          "views_sha256": "74cdbf4a96eeb3b3e6df757406c2b07a8fd6fcdfd8bdae57f29e53a91877e3bd"
+        },
+        "meaning_sha256": "08069c98a799c355c479ee0f962e14cd1b0ab82c2d7f605d16bff299a13979c0",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                },
+                "target": "tablet"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "db4d2ca2bd554573be2cd81efac7fdeb30ef47bd97fb203383172033072995ac",
+        "reference_sha256": {},
+        "roles": {
+          "action": {
+            "fact_refs": [
+              "studyEn",
+              "studyKo",
+              "studyApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "tabletP"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          },
+          "relational_action": {
+            "fact_refs": [
+              "studyApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+            "support_modes": [
+              "effect"
+            ],
+            "view_refs": [
+              "same_studier_inspects_same_tablet"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "6c710894ee8c14e1d177f6f712dd823ad39b8cbbcb565e600d08dfcc6b1ed4c1",
+      "native_signature": "45c90f3ef8cccdab731a1c6791992f1aded7da069bfcc51840322c9ffd782643",
+      "ordinal": 1275,
+      "proof_sha256": "db4d2ca2bd554573be2cd81efac7fdeb30ef47bd97fb203383172033072995ac"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_5d81ae153ba852cc9545fedc54ee2cbe",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "00a31c65a55bcd340a713255c75340eba9d19bfba536b63b4e8fbbec1c1257a1",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "camera",
+              "composition"
+            ],
+            "properties": [
+              {
+                "dimension": "camera",
+                "property": "camera.direction",
+                "target": "camera"
+              },
+              {
+                "dimension": "composition",
+                "property": "composition.boundary_arrangement",
+                "target": "image"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "cameraP",
+            "mode": "prerequisite",
+            "property": "entity.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "camera",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "camera"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "imageP",
+            "mode": "prerequisite",
+            "property": "entity.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "image",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "railP",
+            "mode": "prerequisite",
+            "property": "props.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "railing",
+            "value": {
+              "type": "props.type/v1",
+              "value": "railing"
+            }
+          },
+          {
+            "dimension": "camera",
+            "id": "axisEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "camera.direction",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "cameraP"
+            ],
+            "target": "camera",
+            "value": {
+              "type": "camera.direction/v1",
+              "value": "downward"
+            }
+          },
+          {
+            "dimension": "composition",
+            "id": "frameEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "composition.boundary_arrangement",
+            "realization_id": "base",
+            "receivers": [
+              "railing"
+            ],
+            "requires": [
+              "imageP",
+              "railP"
+            ],
+            "target": "image",
+            "value": {
+              "type": "composition.boundary_arrangement/v1",
+              "value": "over_railing_framing"
+            }
+          },
+          {
+            "dimension": "camera",
+            "id": "axisKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "camera.direction",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "cameraP"
+            ],
+            "target": "camera",
+            "value": {
+              "type": "camera.direction/v1",
+              "value": "downward"
+            }
+          },
+          {
+            "dimension": "composition",
+            "id": "frameKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "composition.boundary_arrangement",
+            "realization_id": "base",
+            "receivers": [
+              "railing"
+            ],
+            "requires": [
+              "imageP",
+              "railP"
+            ],
+            "target": "image",
+            "value": {
+              "type": "composition.boundary_arrangement/v1",
+              "value": "over_railing_framing"
+            }
+          },
+          {
+            "dimension": "camera",
+            "id": "axisApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "camera.direction",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "cameraP"
+            ],
+            "target": "camera",
+            "value": {
+              "type": "camera.direction/v1",
+              "value": "downward"
+            }
+          },
+          {
+            "dimension": "composition",
+            "id": "frameApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "composition.boundary_arrangement",
+            "realization_id": "base",
+            "receivers": [
+              "railing"
+            ],
+            "requires": [
+              "imageP",
+              "railP"
+            ],
+            "target": "image",
+            "value": {
+              "type": "composition.boundary_arrangement/v1",
+              "value": "over_railing_framing"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": false,
+        "meaning_sha256": "0f6bb51263d6fab254796e59d067e96a5b5ea403f9a678d8d47fd7e3005d5219",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "recording_camera"
+                },
+                "target": "camera"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "image"
+                },
+                "target": "image"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                },
+                "target": "railing"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "cec644c796e1177b28e7fba680d3c99405b963e06f4841cfa9e3499b397caa66",
+        "reference_sha256": {},
+        "roles": {
+          "camera_direction": {
+            "fact_refs": [
+              "axisEn",
+              "axisKo",
+              "axisApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "1d87749b3f3754b5ef3bfd67fccad146f03fe928469d85769a2e1bd427220e69",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "composition": {
+            "fact_refs": [
+              "frameEn",
+              "frameKo",
+              "frameApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9927a28621a63dd112b1a73f5afeb5c73a7eac262467d477bbe3506bc4ff880f",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "railP"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "c062f02b8839cf4b87b3e8253faa391186408e8b6d4a354dffe2a4219e038fe4",
+      "native_signature": "15ac0fbbe76939811304ffa8ab22bb3db9f1d839405db45ee4d65939619ba9d6",
+      "ordinal": 1276,
+      "proof_sha256": "cec644c796e1177b28e7fba680d3c99405b963e06f4841cfa9e3499b397caa66"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_7c5289b07d675d01a816cc0f4f0e5e6f",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "7eb7f4953e24f2ced25b1c469e4fa102987185823ad2757f8759dd138d0b53ac",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "presentation.style",
+                "target": "person"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "property": "entity.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "presentation.style",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "unpolished_real_person_like"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "presentation.style",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "unpolished_real_person_like"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "presentation.style",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "unpolished_real_person_like"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ]
+              },
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": false,
+        "meaning_sha256": "98f8bd29b1929216c01c1dee6660c584dd673375560d30e41dc2c8efa9569829",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "a7289aa3771e322a8b9375321f4779f1c72e98f91e77150f2361c938b0a65132",
+        "reference_sha256": {},
+        "roles": {
+          "presentation_style": {
+            "fact_refs": [
+              "styleEn",
+              "styleKo",
+              "styleApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "18bc2932f4a4e28a6895b9f141229c2a0647fa1a088f6056c7ec681f3ed3f4ed",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "c12f4f3bd36914244f15f6dae905f4a469eba4bf5cb2d1fadd68455ac56c19c0",
+      "native_signature": "cda395cb3b9af62db477bd3519a4485e999483e2733232576da950cc8b22e720",
+      "ordinal": 1277,
+      "proof_sha256": "a7289aa3771e322a8b9375321f4779f1c72e98f91e77150f2361c938b0a65132"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "186e9b00483adf2f3dadd66a6b416c2c5a1eaa90776bc0a217667db386b09cae",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "character_response",
+              "expression"
+            ],
+            "properties": [
+              {
+                "dimension": "character_response",
+                "property": "character.contrast",
+                "target": "hands"
+              },
+              {
+                "dimension": "character_response",
+                "property": "response.presentation",
+                "target": "hands"
+              },
+              {
+                "dimension": "expression",
+                "property": "expression.face",
+                "target": "face"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "characterP",
+            "mode": "prerequisite",
+            "property": "entity.category",
+            "realization_id": "base",
+            "requires": [],
+            "target": "character",
+            "value": {
+              "type": "entity.category/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "faceP",
+            "mode": "prerequisite",
+            "property": "anatomy.face.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.face.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "handsP",
+            "mode": "prerequisite",
+            "property": "entity.type",
+            "realization_id": "base",
+            "requires": [],
+            "target": "hands",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "hands_region"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "actualHandsP",
+            "mode": "prerequisite",
+            "property": "anatomy.hands.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "hands",
+            "value": {
+              "type": "anatomy.hands.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "blankEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "expression.face",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "faceP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.face/v1",
+              "value": "blank"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "handsEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "response.presentation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "response.presentation/v1",
+              "value": "warm_helpful_hands_impression"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "contrastEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "character.contrast",
+            "realization_id": "base",
+            "receivers": [
+              "face"
+            ],
+            "requires": [
+              "characterP",
+              "faceP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "character.contrast/v1",
+              "value": "blank_face_warm_helpful_hands_contrast"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "blankKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "expression.face",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "faceP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.face/v1",
+              "value": "blank"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "handsKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "response.presentation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "response.presentation/v1",
+              "value": "warm_helpful_hands_impression"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "contrastKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "character.contrast",
+            "realization_id": "base",
+            "receivers": [
+              "face"
+            ],
+            "requires": [
+              "characterP",
+              "faceP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "character.contrast/v1",
+              "value": "blank_face_warm_helpful_hands_contrast"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "blankApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "expression.face",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "faceP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.face/v1",
+              "value": "blank"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "handsApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "response.presentation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "response.presentation/v1",
+              "value": "warm_helpful_hands_impression"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "contrastApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "character.contrast",
+            "realization_id": "base",
+            "receivers": [
+              "face"
+            ],
+            "requires": [
+              "characterP",
+              "faceP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "character.contrast/v1",
+              "value": "blank_face_warm_helpful_hands_contrast"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ],
+                "native_guards": {
+                  "rules": [
+                    {
+                      "id": "face_belongs_to_character",
+                      "kind": "owner_relation",
+                      "left": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "face"
+                      },
+                      "relation": "part_of",
+                      "right": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "character"
+                      }
+                    },
+                    {
+                      "id": "hands_region_belongs_to_character",
+                      "kind": "owner_relation",
+                      "left": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "hands"
+                      },
+                      "relation": "part_of",
+                      "right": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "character"
+                      }
+                    },
+                    {
+                      "id": "face_and_hands_are_distinct_regions",
+                      "kind": "owner_relation",
+                      "left": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "face"
+                      },
+                      "relation": "disjoint",
+                      "right": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "hands"
+                      }
+                    },
+                    {
+                      "dimension": "subject",
+                      "id": "selected_character_is_explicitly_human",
+                      "kind": "frozen_value",
+                      "owner": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "character"
+                      },
+                      "property": "entity.category",
+                      "value": {
+                        "type": "entity.category/v1",
+                        "value": "human"
+                      }
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v2"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": true,
+        "meaning_sha256": "1718b0ef8a2431bf06f51b8f4e39ed1fa59689c8600eb8b77d9f15d7e5d01ec1",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "character"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "face"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "hands"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "39441930a181d31906600f8f55fb8d299ce01f038e372b15074ab0b330fc7804",
+        "reference_sha256": {},
+        "roles": {
+          "character_contrast": {
+            "fact_refs": [
+              "contrastEn",
+              "contrastKo",
+              "contrastApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "a2ea5e6e21f796a4ec57dd40de62d9020fb173dc1882af4bb7b2c84dd1939517",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "expression": {
+            "fact_refs": [
+              "blankEn",
+              "blankKo",
+              "blankApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "67afc20b958d23d2e75a477532d8e570347d0123513bb0241cbb5c0f107d6a44",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "55a2c13985c750af14a1f2e74ebad774888a984efc620b806b56d0faf0cc283e",
+      "native_signature": "e888f29848fb9654d4e2d5b5db077b8abf63cc16a05600c5741eecd77cf6633e",
+      "ordinal": 1278,
+      "proof_sha256": "39441930a181d31906600f8f55fb8d299ce01f038e372b15074ab0b330fc7804"
+    },
+    {
+      "compact": {
+        "candidate_id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "compact_sha256": "ce2e0380e6c7d080ebc7dfe0812181025ba653cc69ec6824e61cb710acec696c",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "dependency_guards": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "setting",
+                "property": "setting.location",
+                "target": "scene"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "sceneP",
+            "mode": "prerequisite",
+            "property": "entity.presence",
+            "realization_id": "base",
+            "requires": [],
+            "target": "scene",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "placeEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "placeKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "phraseEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "phraseKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "placeApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "property": "setting.location",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "has_owner_selectors": false,
+        "meaning_sha256": "7ee1f27595419030370f89af5657ef407bf87ac0616deed3af98df5d0430dead",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "scene"
+                },
+                "target": "scene"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "qualification_sha256": "5fccb6687b40ae25054d1f7d8be639e42d9d44ca0122658314b81ecae45dac72",
+        "reference_sha256": {},
+        "roles": {
+          "location": {
+            "fact_refs": [
+              "placeEn",
+              "placeKo",
+              "phraseEn",
+              "phraseKo",
+              "placeApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4"
+      },
+      "full_source_validation": true,
+      "literal_fresh_assessment_row_sha256": "314fcc24fca432cd6df94a498018cf7d374452b661630d501cccbd6aa924a6bd",
+      "native_signature": "c081ad24eb95e58bf29ee1b6a5260eaf95f30047303817c6cccb04fd470cf606",
+      "ordinal": 1279,
+      "proof_sha256": "5fccb6687b40ae25054d1f7d8be639e42d9d44ca0122658314b81ecae45dac72"
+    }
+  ],
+  "input_sha256": "8e55650ab768cd287b707bebeb11ba2139b475f6f3b0a3d1d17fe82ab128ea66",
+  "model": "gpt-6.1-sol",
+  "module_paths_sha256": {
+    "photo_candidate_corpus": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_candidate_corpus.py",
+      "sha256": "b00b200643fe672ba4fc84e162333d937b0ee83ddb0ab431b1a67169cda52da4"
+    },
+    "photo_candidate_realizations": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_candidate_realizations.py",
+      "sha256": "749f00eb2f6e5c219e06bcf88b90912c2bf24f7a72eb180a70a4d93d04e0dd5c"
+    },
+    "photo_contracts": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_contracts.py",
+      "sha256": "0601699a58dbaa12376fa8439fbdda852b3dc4f069a82a4909f5711419eaa866"
+    },
+    "photo_native_owner_resolution": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_native_owner_resolution.py",
+      "sha256": "cc1407f2ccfa3f00e3d6f2c73d964f934c4e33f501628b2c3c228aabbc04107f"
+    },
+    "photo_precore_bridge": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_precore_bridge.py",
+      "sha256": "714048b4c78b722347ea621506879a5fa3dd7bdae3dc5bc3d1d9d031406f45a2"
+    },
+    "photo_precore_photo_authoring_contracts": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/precore/photo_authoring_contracts.py",
+      "sha256": "c0aa73647927bd75c98605bd8ab9efcfb0c6252c7d29b9de29acf3e4d7181031"
+    },
+    "photo_precore_photo_semantic_witnesses": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/precore/photo_semantic_witnesses.py",
+      "sha256": "cc9bfca271ae1650c28a08b379bc84030b38a5cbcf9918c18d55d50a93094a58"
+    },
+    "photo_semantic_evidence": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_semantic_evidence.py",
+      "sha256": "f74a5ef91bc07048c8bf312b66680c5b92b3b7b388f31f1890f31c8578609dee"
+    },
+    "photo_semantic_role_views": {
+      "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_semantic_role_views.py",
+      "sha256": "74a1b412453766de85aef2c9a22f927f5b9b23de3ea4b3bd0358d1a69ae765f4"
+    }
+  },
+  "new_worker_sourceproofs": 5,
+  "operating": 0,
+  "range": [
+    1275,
+    1280
+  ],
+  "reasoning_effort": "high",
+  "records": [
+    {
+      "candidate_id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Use the independently declared existing person bound to main_subject and the existing star-map tablet bound to primary_prop as distinct actual owners. Keep the tablet identity and declared star-map content fixed. Select that same persons action of studying that same tablet and the authored relationship in which that same person finds that same tablet unfamiliar. This unfamiliarity is selected meaning, not an already-frozen prerequisite or proof of actual intelligence, origin, experience or readable map content.",
+            "en": "studying a star-map tablet that is unfamiliar to the same person studying it",
+            "ko": "자신에게 낯선 별자리 태블릿을 살피는 인물",
+            "tags": [
+              "human",
+              "alien",
+              "sci_fi"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "studying an unfamiliar star-map tablet",
+            "ko": "낯선 별자리 태블릿을 살피는",
+            "tags": [
+              "human",
+              "alien",
+              "sci_fi"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.72binding/wholeorigin/emptyclosure/prior04wholefacts and full149action/relational/prop/character/social/gaze/identity boundaries read. Same independently existing person humanP and star-map tablet typeP with declared star-map content preserved; actualsource main_subject/primary_prop disjoint retained. Sameperson studies same tablet and finds it unfamiliar: both selected E with same actualtablet Rx, unfamiliarity not P/context/noop and stays untagged. Optional manually authored samefact studyinteraction view retains canonicalaction footprint. No successful cognition, newdevice, observer, contact or glyph/country/sci-fi invention. Exact conceptpreservation independently consumed, no genericpresence substitute."
+        },
+        {
+          "after": {
+            "for_any": [
+              "human"
+            ],
+            "native_guards": {
+              "rules": [
+                {
+                  "id": "studier_and_tablet_are_distinct",
+                  "kind": "owner_relation",
+                  "left_role": "main_subject",
+                  "relation": "disjoint",
+                  "right_role": "primary_prop"
+                }
+              ],
+              "schema": "photo-native-source-guards/v1"
+            }
+          },
+          "after_exists": true,
+          "before": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/conditions",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.72binding/wholeorigin/emptyclosure/prior04wholefacts and full149action/relational/prop/character/social/gaze/identity boundaries read. Same independently existing person humanP and star-map tablet typeP with declared star-map content preserved; actualsource main_subject/primary_prop disjoint retained. Sameperson studies same tablet and finds it unfamiliar: both selected E with same actualtablet Rx, unfamiliarity not P/context/noop and stays untagged. Optional manually authored samefact studyinteraction view retains canonicalaction footprint. No successful cognition, newdevice, observer, contact or glyph/country/sci-fi invention. Exact conceptpreservation independently consumed, no genericpresence substitute."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "action",
+              "relationship"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "property": "action.studying",
+                "target": "person"
+              },
+              {
+                "dimension": "relationship",
+                "property": "relationship.familiarity",
+                "target": "person"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.72binding/wholeorigin/emptyclosure/prior04wholefacts and full149action/relational/prop/character/social/gaze/identity boundaries read. Same independently existing person humanP and star-map tablet typeP with declared star-map content preserved; actualsource main_subject/primary_prop disjoint retained. Sameperson studies same tablet and finds it unfamiliar: both selected E with same actualtablet Rx, unfamiliarity not P/context/noop and stays untagged. Optional manually authored samefact studyinteraction view retains canonicalaction footprint. No successful cognition, newdevice, observer, contact or glyph/country/sci-fi invention. Exact conceptpreservation independently consumed, no genericpresence substitute."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1275,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 26,
+        "row_sha256": "2ca8fa3fe1e158894c3cd1b79b7a4e75b318e02913656f5be28f2962a72e159e"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "action",
+              "relationship"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "property": "action.studying",
+                "target": "person"
+              },
+              {
+                "dimension": "relationship",
+                "property": "relationship.familiarity",
+                "target": "person"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.type",
+            "quote": "independently declared existing person",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "tabletP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "props.type",
+            "quote": "existing star-map tablet",
+            "realization_id": "base",
+            "requires": [],
+            "target": "tablet",
+            "value": {
+              "type": "props.type/v1",
+              "value": "star_map_tablet"
+            }
+          },
+          {
+            "dimension": "concept",
+            "id": "contentS",
+            "mode": "preservation",
+            "pointer": "/content/application_contract",
+            "property": "representation.content",
+            "quote": "declared star-map content fixed",
+            "realization_id": "base",
+            "requires": [],
+            "target": "tablet",
+            "value": {
+              "type": "representation.content/v1",
+              "value": "star_map"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "studyEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "action.studying",
+            "quote": "studying a star-map tablet",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.studying/v1",
+              "value": "studying_same_star_map_tablet"
+            }
+          },
+          {
+            "dimension": "relationship",
+            "id": "unfamiliarEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "relationship.familiarity",
+            "quote": "unfamiliar to the same person studying it",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "relationship.familiarity/v1",
+              "value": "unfamiliar_to_same_studier"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "studyKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "action.studying",
+            "quote": "별자리 태블릿을 살피는 인물",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.studying/v1",
+              "value": "studying_same_star_map_tablet"
+            }
+          },
+          {
+            "dimension": "relationship",
+            "id": "unfamiliarKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "relationship.familiarity",
+            "quote": "자신에게 낯선 별자리 태블릿",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "relationship.familiarity/v1",
+              "value": "unfamiliar_to_same_studier"
+            }
+          },
+          {
+            "dimension": "action",
+            "id": "studyApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "action.studying",
+            "quote": "Select that same persons action of studying that same tablet",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "action.studying/v1",
+              "value": "studying_same_star_map_tablet"
+            }
+          },
+          {
+            "dimension": "relationship",
+            "id": "unfamiliarApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "relationship.familiarity",
+            "quote": "the authored relationship in which that same person finds that same tablet unfamiliar",
+            "realization_id": "base",
+            "receivers": [
+              "tablet"
+            ],
+            "requires": [
+              "personP",
+              "tabletP",
+              "contentS"
+            ],
+            "target": "person",
+            "value": {
+              "type": "relationship.familiarity/v1",
+              "value": "unfamiliar_to_same_studier"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ],
+                "native_guards": {
+                  "rules": [
+                    {
+                      "id": "studier_and_tablet_are_distinct",
+                      "kind": "owner_relation",
+                      "left_role": "main_subject",
+                      "relation": "disjoint",
+                      "right_role": "primary_prop"
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v1"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "manual_role_views": [
+          {
+            "candidate_id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+            "canonical_fact_refs": [
+              {
+                "fact_id": "studyApp",
+                "fact_sha256": "e390c44bc6f0497995ebb9f39fde6f09305c0c363f832eaf76e6936a8a41fdbf",
+                "mode": "effect"
+              }
+            ],
+            "endpoint_refs": [
+              {
+                "fact_id": "studyApp",
+                "position": "target"
+              },
+              {
+                "fact_id": "studyApp",
+                "index": 0,
+                "position": "receiver"
+              }
+            ],
+            "id": "same_studier_inspects_same_tablet",
+            "manual_boundary_rationale": "Full149 relational/action/prop and mental/social boundaries directly reviewed. Performed study activity does not establish holding/contact, readable glyphs, navigation/intelligence, alien identity, origin or already-frozen unfamiliarity; no observer substituted.",
+            "manual_semantic_facet": "The same explicitly declared actual person performs studying of the same distinct existing star-map tablet. This is the stated actor/object activity and its actual object endpoint, not an inferred gaze vector, successful cognition or mere co-presence.",
+            "normal_anchors": [
+              {
+                "facet_quote": "studying that same tablet",
+                "fact_id": "studyApp",
+                "full_field_sha256": "c5e42216fd31e3782b1eb729d545219bc3b54a9151c199d3e240358e4a47af1b",
+                "pointer": "/content/application_contract",
+                "source_unit_sha256": "f1cc0df120b9bcbefa34b149034526529f3072c375df621a40a3a08239f83d02",
+                "start": 248,
+                "stop": 273
+              }
+            ],
+            "realization_id": "base",
+            "requires_refs": [
+              "contentS",
+              "personP",
+              "tabletP"
+            ],
+            "role_id": "relational_action",
+            "schema": "photo-manual-semantic-role-view/v1",
+            "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+            "whole_closure_sha256": "d45a520fb00971d416bf2ff846073a1d07887f674cfd22b766bcae81687e038d",
+            "whole_value_retained": "Retain full studying_same_star_map_tablet action.studying effect at person target with same tablet receiver, set_value and exact person/tablet P plus representation-content preservation. Keep separate same-person unfamiliarity relationship E and all source-disjoint/permission obligations. No new interaction effect/property/dimension."
+          }
+        ],
+        "meaning_sha256": "08069c98a799c355c479ee0f962e14cd1b0ab82c2d7f605d16bff299a13979c0",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                },
+                "target": "tablet"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/ownaction.72binding/wholeorigin/emptyclosure/prior04wholefacts and full149action/relational/prop/character/social/gaze/identity boundaries read. Same independently existing person humanP and star-map tablet typeP with declared star-map content preserved; actualsource main_subject/primary_prop disjoint retained. Sameperson studies same tablet and finds it unfamiliar: both selected E with same actualtablet Rx, unfamiliarity not P/context/noop and stays untagged. Optional manually authored samefact studyinteraction view retains canonicalaction footprint. No successful cognition, newdevice, observer, contact or glyph/country/sci-fi invention. Exact conceptpreservation independently consumed, no genericpresence substitute.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "45c90f3ef8cccdab731a1c6791992f1aded7da069bfcc51840322c9ffd782643",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=26",
+            "candidate_id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "2ca8fa3fe1e158894c3cd1b79b7a4e75b318e02913656f5be28f2962a72e159e",
+            "source_record_sha256": "ed305a0691e18cdd1912045911a9ce51ebf7f495a6c0716603f821acb1119e01"
+          },
+          "source_correction": {
+            "after_sha256": "08069c98a799c355c479ee0f962e14cd1b0ab82c2d7f605d16bff299a13979c0",
+            "before_sha256": "9045ae6a08022d20abade35e8b484f9495392aee65fb70b6014b72d3209641db",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownaction.72binding/wholeorigin/emptyclosure/prior04wholefacts and full149action/relational/prop/character/social/gaze/identity boundaries read. Same independently existing person humanP and star-map tablet typeP with declared star-map content preserved; actualsource main_subject/primary_prop disjoint retained. Sameperson studies same tablet and finds it unfamiliar: both selected E with same actualtablet Rx, unfamiliarity not P/context/noop and stays untagged. Optional manually authored samefact studyinteraction view retains canonicalaction footprint. No successful cognition, newdevice, observer, contact or glyph/country/sci-fi invention. Exact conceptpreservation independently consumed, no genericpresence substitute."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "action": {
+            "fact_refs": [
+              "studyEn",
+              "studyKo",
+              "studyApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "tabletP"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          },
+          "relational_action": {
+            "fact_refs": [
+              "studyApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+            "support_modes": [
+              "effect"
+            ],
+            "view_refs": [
+              "same_studier_inspects_same_tablet"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "studyEn",
+              "unfamiliarEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "studying a star-map tablet that is unfamiliar to the same person studying it",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "studyKo",
+              "unfamiliarKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "자신에게 낯선 별자리 태블릿을 살피는 인물",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "personP",
+              "tabletP",
+              "contentS",
+              "studyApp",
+              "unfamiliarApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Use the independently declared existing person bound to main_subject and the existing star-map tablet bound to primary_prop as distinct actual owners. Keep the tablet identity and declared star-map content fixed. Select that same persons action of studying that same tablet and the authored relationship in which that same person finds that same tablet unfamiliar. This unfamiliarity is selected meaning, not an already-frozen prerequisite or proof of actual intelligence, origin, experience or readable map content.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/ownaction.72binding/wholeorigin/emptyclosure/prior04wholefacts and full149action/relational/prop/character/social/gaze/identity boundaries read. Same independently existing person humanP and star-map tablet typeP with declared star-map content preserved; actualsource main_subject/primary_prop disjoint retained. Sameperson studies same tablet and finds it unfamiliar: both selected E with same actualtablet Rx, unfamiliarity not P/context/noop and stays untagged. Optional manually authored samefact studyinteraction view retains canonicalaction footprint. No successful cognition, newdevice, observer, contact or glyph/country/sci-fi invention. Exact conceptpreservation independently consumed, no genericpresence substitute.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/25",
+          "sha256": "6a57b08bb790d01306596e8dcf438257856f6654cabb282a7a8270c3c0e88637"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownaction.72binding/wholeorigin/emptyclosure/prior04wholefacts and full149action/relational/prop/character/social/gaze/identity boundaries read. Same independently existing person humanP and star-map tablet typeP with declared star-map content preserved; actualsource main_subject/primary_prop disjoint retained. Sameperson studies same tablet and finds it unfamiliar: both selected E with same actualtablet Rx, unfamiliarity not P/context/noop and stays untagged. Optional manually authored samefact studyinteraction view retains canonicalaction footprint. No successful cognition, newdevice, observer, contact or glyph/country/sci-fi invention. Exact conceptpreservation independently consumed, no genericpresence substitute."
+      },
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ],
+          "native_guards": {
+            "rules": [
+              {
+                "id": "studier_and_tablet_are_distinct",
+                "kind": "owner_relation",
+                "left_role": "main_subject",
+                "relation": "disjoint",
+                "right_role": "primary_prop"
+              }
+            ],
+            "schema": "photo-native-source-guards/v1"
+          }
+        },
+        "content": {
+          "application_contract": "Use the independently declared existing person bound to main_subject and the existing star-map tablet bound to primary_prop as distinct actual owners. Keep the tablet identity and declared star-map content fixed. Select that same persons action of studying that same tablet and the authored relationship in which that same person finds that same tablet unfamiliar. This unfamiliarity is selected meaning, not an already-frozen prerequisite or proof of actual intelligence, origin, experience or readable map content.",
+          "en": "studying a star-map tablet that is unfamiliar to the same person studying it",
+          "ko": "자신에게 낯선 별자리 태블릿을 살피는 인물",
+          "tags": [
+            "human",
+            "alien",
+            "sci_fi"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "relationship"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "property": "action.studying",
+              "target": "person"
+            },
+            {
+              "dimension": "relationship",
+              "property": "relationship.familiarity",
+              "target": "person"
+            }
+          ]
+        },
+        "id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+        "provenance": [
+          {
+            "sha256": "97a3ad36aba7363b84e692e006c850db88bf854d28ac11938135a8a4242e5617",
+            "source": "slot:action:studying_star_map_tablet"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "studying an unfamiliar star-map tablet",
+          "ko": "낯선 별자리 태블릿을 살피는",
+          "tags": [
+            "human",
+            "alien",
+            "sci_fi"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_58fd089dfc5451be9eb2ce981b521f3c",
+        "provenance": [
+          {
+            "sha256": "97a3ad36aba7363b84e692e006c850db88bf854d28ac11938135a8a4242e5617",
+            "source": "slot:action:studying_star_map_tablet"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_5d81ae153ba852cc9545fedc54ee2cbe",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Use the independently declared existing camera, image and railing bound to recording_camera, image and primary_prop. Select the downward viewing direction and over-railing framing arrangement; do not add a railing or assert surveillance, height or a person leaning.",
+            "en": "over-railing downward observation framing",
+            "ko": "난간 너머 내려보기 구도",
+            "tags": [
+              "urban",
+              "tense",
+              "surveillance"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "over-railing downward observation framing",
+            "ko": "난간 너머 내려보기 구도",
+            "tags": [
+              "urban",
+              "tense",
+              "surveillance"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/owncomposition.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149camera_direction/height/viewer/capture/composition/prop boundaries read. Independently existing actual camera exacttypeP, existing image neutralP, actual railing exacttypeP mapped only stated recording_camera/image/primary_prop roles. Downwardaxis actualcamera E and over-railing sameimage framing E with actualrailing Rx. No exactheight/distance, leaningperson/socialobserver/surveillancepurpose/urbanplace/mood or newrailing. No indiscriminate ownerdisjoint relation fromrolelabels. Whole camera+composition and allactualRx locks required."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "camera",
+              "composition"
+            ],
+            "properties": [
+              {
+                "dimension": "camera",
+                "property": "camera.direction",
+                "target": "camera"
+              },
+              {
+                "dimension": "composition",
+                "property": "composition.boundary_arrangement",
+                "target": "image"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "composition"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/owncomposition.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149camera_direction/height/viewer/capture/composition/prop boundaries read. Independently existing actual camera exacttypeP, existing image neutralP, actual railing exacttypeP mapped only stated recording_camera/image/primary_prop roles. Downwardaxis actualcamera E and over-railing sameimage framing E with actualrailing Rx. No exactheight/distance, leaningperson/socialobserver/surveillancepurpose/urbanplace/mood or newrailing. No indiscriminate ownerdisjoint relation fromrolelabels. Whole camera+composition and allactualRx locks required."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1276,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 27,
+        "row_sha256": "b320f23d89841c1e5d36e992b42957984572f231c72140c6e218cb4fe4fccf9e"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "camera",
+              "composition"
+            ],
+            "properties": [
+              {
+                "dimension": "camera",
+                "property": "camera.direction",
+                "target": "camera"
+              },
+              {
+                "dimension": "composition",
+                "property": "composition.boundary_arrangement",
+                "target": "image"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "cameraP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.type",
+            "quote": "independently declared existing camera",
+            "realization_id": "base",
+            "requires": [],
+            "target": "camera",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "camera"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "imageP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.presence",
+            "quote": "existing camera, image and railing",
+            "realization_id": "base",
+            "requires": [],
+            "target": "image",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "railP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "props.type",
+            "quote": "existing camera, image and railing",
+            "realization_id": "base",
+            "requires": [],
+            "target": "railing",
+            "value": {
+              "type": "props.type/v1",
+              "value": "railing"
+            }
+          },
+          {
+            "dimension": "camera",
+            "id": "axisEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "camera.direction",
+            "quote": "downward observation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "cameraP"
+            ],
+            "target": "camera",
+            "value": {
+              "type": "camera.direction/v1",
+              "value": "downward"
+            }
+          },
+          {
+            "dimension": "composition",
+            "id": "frameEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "composition.boundary_arrangement",
+            "quote": "over-railing",
+            "realization_id": "base",
+            "receivers": [
+              "railing"
+            ],
+            "requires": [
+              "imageP",
+              "railP"
+            ],
+            "target": "image",
+            "value": {
+              "type": "composition.boundary_arrangement/v1",
+              "value": "over_railing_framing"
+            }
+          },
+          {
+            "dimension": "camera",
+            "id": "axisKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "camera.direction",
+            "quote": "내려보기",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "cameraP"
+            ],
+            "target": "camera",
+            "value": {
+              "type": "camera.direction/v1",
+              "value": "downward"
+            }
+          },
+          {
+            "dimension": "composition",
+            "id": "frameKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "composition.boundary_arrangement",
+            "quote": "난간 너머",
+            "realization_id": "base",
+            "receivers": [
+              "railing"
+            ],
+            "requires": [
+              "imageP",
+              "railP"
+            ],
+            "target": "image",
+            "value": {
+              "type": "composition.boundary_arrangement/v1",
+              "value": "over_railing_framing"
+            }
+          },
+          {
+            "dimension": "camera",
+            "id": "axisApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "camera.direction",
+            "quote": "Select the downward viewing direction",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "cameraP"
+            ],
+            "target": "camera",
+            "value": {
+              "type": "camera.direction/v1",
+              "value": "downward"
+            }
+          },
+          {
+            "dimension": "composition",
+            "id": "frameApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "composition.boundary_arrangement",
+            "quote": "over-railing framing arrangement",
+            "realization_id": "base",
+            "receivers": [
+              "railing"
+            ],
+            "requires": [
+              "imageP",
+              "railP"
+            ],
+            "target": "image",
+            "value": {
+              "type": "composition.boundary_arrangement/v1",
+              "value": "over_railing_framing"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "0f6bb51263d6fab254796e59d067e96a5b5ea403f9a678d8d47fd7e3005d5219",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "recording_camera"
+                },
+                "target": "camera"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "image"
+                },
+                "target": "image"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                },
+                "target": "railing"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/owncomposition.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149camera_direction/height/viewer/capture/composition/prop boundaries read. Independently existing actual camera exacttypeP, existing image neutralP, actual railing exacttypeP mapped only stated recording_camera/image/primary_prop roles. Downwardaxis actualcamera E and over-railing sameimage framing E with actualrailing Rx. No exactheight/distance, leaningperson/socialobserver/surveillancepurpose/urbanplace/mood or newrailing. No indiscriminate ownerdisjoint relation fromrolelabels. Whole camera+composition and allactualRx locks required.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "15ac0fbbe76939811304ffa8ab22bb3db9f1d839405db45ee4d65939619ba9d6",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=27",
+            "candidate_id": "cand_5d81ae153ba852cc9545fedc54ee2cbe",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "b320f23d89841c1e5d36e992b42957984572f231c72140c6e218cb4fe4fccf9e",
+            "source_record_sha256": "f0b2e2a41fd959f8fe3ed2915a2c560b1e2e67682fc09246b017d4d66b7d745d"
+          },
+          "source_correction": {
+            "after_sha256": "0f6bb51263d6fab254796e59d067e96a5b5ea403f9a678d8d47fd7e3005d5219",
+            "before_sha256": "f25fbbca603d226ab066eaafefae6b2f8351a3984cd71cfa273b06955a9e8a4e",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/owncomposition.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149camera_direction/height/viewer/capture/composition/prop boundaries read. Independently existing actual camera exacttypeP, existing image neutralP, actual railing exacttypeP mapped only stated recording_camera/image/primary_prop roles. Downwardaxis actualcamera E and over-railing sameimage framing E with actualrailing Rx. No exactheight/distance, leaningperson/socialobserver/surveillancepurpose/urbanplace/mood or newrailing. No indiscriminate ownerdisjoint relation fromrolelabels. Whole camera+composition and allactualRx locks required."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "camera_direction": {
+            "fact_refs": [
+              "axisEn",
+              "axisKo",
+              "axisApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "1d87749b3f3754b5ef3bfd67fccad146f03fe928469d85769a2e1bd427220e69",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "composition": {
+            "fact_refs": [
+              "frameEn",
+              "frameKo",
+              "frameApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9927a28621a63dd112b1a73f5afeb5c73a7eac262467d477bbe3506bc4ff880f",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "prop": {
+            "fact_refs": [
+              "railP"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "support_modes": [
+              "prerequisite"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "axisEn",
+              "frameEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "over-railing downward observation framing",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "axisKo",
+              "frameKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "난간 너머 내려보기 구도",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "cameraP",
+              "imageP",
+              "railP",
+              "axisApp",
+              "frameApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Use the independently declared existing camera, image and railing bound to recording_camera, image and primary_prop. Select the downward viewing direction and over-railing framing arrangement; do not add a railing or assert surveillance, height or a person leaning.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/owncomposition.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149camera_direction/height/viewer/capture/composition/prop boundaries read. Independently existing actual camera exacttypeP, existing image neutralP, actual railing exacttypeP mapped only stated recording_camera/image/primary_prop roles. Downwardaxis actualcamera E and over-railing sameimage framing E with actualrailing Rx. No exactheight/distance, leaningperson/socialobserver/surveillancepurpose/urbanplace/mood or newrailing. No indiscriminate ownerdisjoint relation fromrolelabels. Whole camera+composition and allactualRx locks required.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/26",
+          "sha256": "b00a1b4eaedf7e6826c64c39cf4b8732d3547da2cd5a53d5a099ef0b0779e3fc"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/owncomposition.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149camera_direction/height/viewer/capture/composition/prop boundaries read. Independently existing actual camera exacttypeP, existing image neutralP, actual railing exacttypeP mapped only stated recording_camera/image/primary_prop roles. Downwardaxis actualcamera E and over-railing sameimage framing E with actualrailing Rx. No exactheight/distance, leaningperson/socialobserver/surveillancepurpose/urbanplace/mood or newrailing. No indiscriminate ownerdisjoint relation fromrolelabels. Whole camera+composition and allactualRx locks required."
+      },
+      "source_after": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Use the independently declared existing camera, image and railing bound to recording_camera, image and primary_prop. Select the downward viewing direction and over-railing framing arrangement; do not add a railing or assert surveillance, height or a person leaning.",
+          "en": "over-railing downward observation framing",
+          "ko": "난간 너머 내려보기 구도",
+          "tags": [
+            "urban",
+            "tense",
+            "surveillance"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera",
+            "composition"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "property": "camera.direction",
+              "target": "camera"
+            },
+            {
+              "dimension": "composition",
+              "property": "composition.boundary_arrangement",
+              "target": "image"
+            }
+          ]
+        },
+        "id": "cand_5d81ae153ba852cc9545fedc54ee2cbe",
+        "provenance": [
+          {
+            "sha256": "f173f5e2b61922454279ad90e4ff5a876b5e665e14fb205717bab2b2e05115df",
+            "source": "slot:composition:over_railing_observation_frame"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "en": "over-railing downward observation framing",
+          "ko": "난간 너머 내려보기 구도",
+          "tags": [
+            "urban",
+            "tense",
+            "surveillance"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_5d81ae153ba852cc9545fedc54ee2cbe",
+        "provenance": [
+          {
+            "sha256": "f173f5e2b61922454279ad90e4ff5a876b5e665e14fb205717bab2b2e05115df",
+            "source": "slot:composition:over_railing_observation_frame"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_7c5289b07d675d01a816cc0f4f0e5e6f",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Apply to the independently declared existing person bound to main_subject. Select unpolished real-person-like presentation without claiming actual authenticity, identity, absent cosmetics or a documentary capture process.",
+            "en": "with an unpolished real-person presence",
+            "ko": "꾸미지 않은 실제 인물 같은",
+            "tags": [
+              "documentary"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "with an unpolished real-person presence",
+            "ko": "꾸미지 않은 실제 인물 같은",
+            "tags": [
+              "documentary"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownpresentation.8human-only+documentary/craft/wildlife/product/jewelry/food-deny binding/wholeorigin/emptyclosure/prior04wholefacts and full149presentation/capture/genre/makeup/identity boundaries read. Existing actual main_subject human exactP receives unpolished realperson-like presentation appearanceE. No actual authenticity/identity, documentary capturehistory/process/genre, absentcosmetics or clothing inferred. Documentary metadata does not waive actualowndomain deny; sourcehuman and precisehumanP remain conjunctive. Appearanceeffect remains actualselection, no contextdemotion."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "presentation.style",
+                "target": "person"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownpresentation.8human-only+documentary/craft/wildlife/product/jewelry/food-deny binding/wholeorigin/emptyclosure/prior04wholefacts and full149presentation/capture/genre/makeup/identity boundaries read. Existing actual main_subject human exactP receives unpolished realperson-like presentation appearanceE. No actual authenticity/identity, documentary capturehistory/process/genre, absentcosmetics or clothing inferred. Documentary metadata does not waive actualowndomain deny; sourcehuman and precisehumanP remain conjunctive. Appearanceeffect remains actualselection, no contextdemotion."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1277,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 28,
+        "row_sha256": "8fd1ba6791e49466482960f6dabba3ed0114509d8328e007e02c710b882f3c2f"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "presentation.style",
+                "target": "person"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "personP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.type",
+            "quote": "independently declared existing person",
+            "realization_id": "base",
+            "requires": [],
+            "target": "person",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "presentation.style",
+            "quote": "with an unpolished real-person presence",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "unpolished_real_person_like"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "presentation.style",
+            "quote": "꾸미지 않은 실제 인물 같은",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "unpolished_real_person_like"
+            }
+          },
+          {
+            "dimension": "appearance",
+            "id": "styleApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "presentation.style",
+            "quote": "Select unpolished real-person-like presentation",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "personP"
+            ],
+            "target": "person",
+            "value": {
+              "type": "presentation.style/v1",
+              "value": "unpolished_real_person_like"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ]
+              },
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "98f8bd29b1929216c01c1dee6660c584dd673375560d30e41dc2c8efa9569829",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "main_subject"
+                },
+                "target": "person"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/ownpresentation.8human-only+documentary/craft/wildlife/product/jewelry/food-deny binding/wholeorigin/emptyclosure/prior04wholefacts and full149presentation/capture/genre/makeup/identity boundaries read. Existing actual main_subject human exactP receives unpolished realperson-like presentation appearanceE. No actual authenticity/identity, documentary capturehistory/process/genre, absentcosmetics or clothing inferred. Documentary metadata does not waive actualowndomain deny; sourcehuman and precisehumanP remain conjunctive. Appearanceeffect remains actualselection, no contextdemotion.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "cda395cb3b9af62db477bd3519a4485e999483e2733232576da950cc8b22e720",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=28",
+            "candidate_id": "cand_7c5289b07d675d01a816cc0f4f0e5e6f",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "8fd1ba6791e49466482960f6dabba3ed0114509d8328e007e02c710b882f3c2f",
+            "source_record_sha256": "e99374b5409ce5e6f2012158d7f8265c36ca7f80e11c62e8dae0f04585f7119b"
+          },
+          "source_correction": {
+            "after_sha256": "98f8bd29b1929216c01c1dee6660c584dd673375560d30e41dc2c8efa9569829",
+            "before_sha256": "f6e278d43f4ef0b771ec2cf8be6e573c9259b412b87e352005ada09c0a9bcc7f",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownpresentation.8human-only+documentary/craft/wildlife/product/jewelry/food-deny binding/wholeorigin/emptyclosure/prior04wholefacts and full149presentation/capture/genre/makeup/identity boundaries read. Existing actual main_subject human exactP receives unpolished realperson-like presentation appearanceE. No actual authenticity/identity, documentary capturehistory/process/genre, absentcosmetics or clothing inferred. Documentary metadata does not waive actualowndomain deny; sourcehuman and precisehumanP remain conjunctive. Appearanceeffect remains actualselection, no contextdemotion."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "presentation_style": {
+            "fact_refs": [
+              "styleEn",
+              "styleKo",
+              "styleApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "18bc2932f4a4e28a6895b9f141229c2a0647fa1a088f6056c7ec681f3ed3f4ed",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "styleEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "with an unpolished real-person presence",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "styleKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "꾸미지 않은 실제 인물 같은",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "personP",
+              "styleApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Apply to the independently declared existing person bound to main_subject. Select unpolished real-person-like presentation without claiming actual authenticity, identity, absent cosmetics or a documentary capture process.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/ownpresentation.8human-only+documentary/craft/wildlife/product/jewelry/food-deny binding/wholeorigin/emptyclosure/prior04wholefacts and full149presentation/capture/genre/makeup/identity boundaries read. Existing actual main_subject human exactP receives unpolished realperson-like presentation appearanceE. No actual authenticity/identity, documentary capturehistory/process/genre, absentcosmetics or clothing inferred. Documentary metadata does not waive actualowndomain deny; sourcehuman and precisehumanP remain conjunctive. Appearanceeffect remains actualselection, no contextdemotion.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/27",
+          "sha256": "19f0b2555221e03409b1994cc522cbe476b7f0e37486ae35b64d41db04b81f5b"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownpresentation.8human-only+documentary/craft/wildlife/product/jewelry/food-deny binding/wholeorigin/emptyclosure/prior04wholefacts and full149presentation/capture/genre/makeup/identity boundaries read. Existing actual main_subject human exactP receives unpolished realperson-like presentation appearanceE. No actual authenticity/identity, documentary capturehistory/process/genre, absentcosmetics or clothing inferred. Documentary metadata does not waive actualowndomain deny; sourcehuman and precisehumanP remain conjunctive. Appearanceeffect remains actualselection, no contextdemotion."
+      },
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Apply to the independently declared existing person bound to main_subject. Select unpolished real-person-like presentation without claiming actual authenticity, identity, absent cosmetics or a documentary capture process.",
+          "en": "with an unpolished real-person presence",
+          "ko": "꾸미지 않은 실제 인물 같은",
+          "tags": [
+            "documentary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "property": "presentation.style",
+              "target": "person"
+            }
+          ]
+        },
+        "id": "cand_7c5289b07d675d01a816cc0f4f0e5e6f",
+        "provenance": [
+          {
+            "sha256": "1d601340c407abdd0e64c2287e986e67e2edc1bc7ff72d462e34b99e9a9aa600",
+            "source": "slot:appearance_type:documentary_real_person"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "with an unpolished real-person presence",
+          "ko": "꾸미지 않은 실제 인물 같은",
+          "tags": [
+            "documentary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_7c5289b07d675d01a816cc0f4f0e5e6f",
+        "provenance": [
+          {
+            "sha256": "1d601340c407abdd0e64c2287e986e67e2edc1bc7ff72d462e34b99e9a9aa600",
+            "source": "slot:appearance_type:documentary_real_person"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Apply only to the independently declared existing face and existing hands-region of the same independently declared existing human character, with all three actual owners explicitly selected by the caller. The hands-region is the already declared region containing the hands named by this cue; it neither creates a group nor specifies an exact total hand count. Select the blank facial response, the warm helpful presentation of those hands, and the contrast between that blank face and those warm helpful hands. Do not add body parts, prescribe a particular helping gesture, or assert temperature, private emotion or successful help. No main, primary or foreground role is assigned.",
+            "en": "blank face with warm helpful hands",
+            "ko": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+            "tags": [
+              "human",
+              "expression"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "blank face with warm helpful hands",
+            "ko": "무표정하지만 손은 따뜻한 인상",
+            "tags": [
+              "human",
+              "expression"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownexpression.82humananimalbinding/wholeorigin/emptyclosure/prior04wholefacts and full149expression/charactercontrast/social/thermal/sensory/hand/body boundaries read. Callerexplicitly selects three actual existing owners humancharacter/face/handsregion, exacthuman entity.category P+guard, atomicfacepresence, independently declared handsregiontype and actualhands presence P. Exactv2 face part_of samehuman, hands part_of samehuman and face/handsdisjoint retained, no roledefault or partinheritance/equivalence. Three actualeffects blankface expression, warmhelpfulhandspresentation and samecharactercontrast with actualface Rx, handspresentation E untagged notdeleted. No exacttotalhandcount/newgroup/bodypart, specifichelp gesture/success, measuredwarmth or privateemotion. Newcharactercontrast role does not waive sourcehuman/oldbinding/category/deny-domain gates. Actualindependentexistingorigin requires neutralpresence of each selected owner; no ownernode/type→existence inference."
+        },
+        {
+          "after": {
+            "for_any": [
+              "human"
+            ],
+            "native_guards": {
+              "rules": [
+                {
+                  "id": "face_belongs_to_character",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                    "kind": "source_target",
+                    "target": "face"
+                  },
+                  "relation": "part_of",
+                  "right": {
+                    "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                    "kind": "source_target",
+                    "target": "character"
+                  }
+                },
+                {
+                  "id": "hands_region_belongs_to_character",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                    "kind": "source_target",
+                    "target": "hands"
+                  },
+                  "relation": "part_of",
+                  "right": {
+                    "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                    "kind": "source_target",
+                    "target": "character"
+                  }
+                },
+                {
+                  "id": "face_and_hands_are_distinct_regions",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                    "kind": "source_target",
+                    "target": "face"
+                  },
+                  "relation": "disjoint",
+                  "right": {
+                    "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                    "kind": "source_target",
+                    "target": "hands"
+                  }
+                },
+                {
+                  "dimension": "subject",
+                  "id": "selected_character_is_explicitly_human",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                    "kind": "source_target",
+                    "target": "character"
+                  },
+                  "property": "entity.category",
+                  "value": {
+                    "type": "entity.category/v1",
+                    "value": "human"
+                  }
+                }
+              ],
+              "schema": "photo-native-source-guards/v2"
+            }
+          },
+          "after_exists": true,
+          "before": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/conditions",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownexpression.82humananimalbinding/wholeorigin/emptyclosure/prior04wholefacts and full149expression/charactercontrast/social/thermal/sensory/hand/body boundaries read. Callerexplicitly selects three actual existing owners humancharacter/face/handsregion, exacthuman entity.category P+guard, atomicfacepresence, independently declared handsregiontype and actualhands presence P. Exactv2 face part_of samehuman, hands part_of samehuman and face/handsdisjoint retained, no roledefault or partinheritance/equivalence. Three actualeffects blankface expression, warmhelpfulhandspresentation and samecharactercontrast with actualface Rx, handspresentation E untagged notdeleted. No exacttotalhandcount/newgroup/bodypart, specifichelp gesture/success, measuredwarmth or privateemotion. Newcharactercontrast role does not waive sourcehuman/oldbinding/category/deny-domain gates. Actualindependentexistingorigin requires neutralpresence of each selected owner; no ownernode/type→existence inference."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "character_response",
+              "expression"
+            ],
+            "properties": [
+              {
+                "dimension": "expression",
+                "property": "expression.face",
+                "target": "face"
+              },
+              {
+                "dimension": "character_response",
+                "property": "response.presentation",
+                "target": "hands"
+              },
+              {
+                "dimension": "character_response",
+                "property": "character.contrast",
+                "target": "hands"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "expression"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownexpression.82humananimalbinding/wholeorigin/emptyclosure/prior04wholefacts and full149expression/charactercontrast/social/thermal/sensory/hand/body boundaries read. Callerexplicitly selects three actual existing owners humancharacter/face/handsregion, exacthuman entity.category P+guard, atomicfacepresence, independently declared handsregiontype and actualhands presence P. Exactv2 face part_of samehuman, hands part_of samehuman and face/handsdisjoint retained, no roledefault or partinheritance/equivalence. Three actualeffects blankface expression, warmhelpfulhandspresentation and samecharactercontrast with actualface Rx, handspresentation E untagged notdeleted. No exacttotalhandcount/newgroup/bodypart, specifichelp gesture/success, measuredwarmth or privateemotion. Newcharactercontrast role does not waive sourcehuman/oldbinding/category/deny-domain gates. Actualindependentexistingorigin requires neutralpresence of each selected owner; no ownernode/type→existence inference."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1278,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 29,
+        "row_sha256": "3cc68e9f8ce063737f3eac2d6caff0cddade6fbd0e7f304e88acf45c4c838cd0"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "character_response",
+              "expression"
+            ],
+            "properties": [
+              {
+                "dimension": "character_response",
+                "property": "character.contrast",
+                "target": "hands"
+              },
+              {
+                "dimension": "character_response",
+                "property": "response.presentation",
+                "target": "hands"
+              },
+              {
+                "dimension": "expression",
+                "property": "expression.face",
+                "target": "face"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "characterP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.category",
+            "quote": "independently declared existing human character",
+            "realization_id": "base",
+            "requires": [],
+            "target": "character",
+            "value": {
+              "type": "entity.category/v1",
+              "value": "human"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "faceP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "anatomy.face.presence",
+            "quote": "independently declared existing face",
+            "realization_id": "base",
+            "requires": [],
+            "target": "face",
+            "value": {
+              "type": "anatomy.face.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "handsP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.type",
+            "quote": "existing hands-region",
+            "realization_id": "base",
+            "requires": [],
+            "target": "hands",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "hands_region"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "actualHandsP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "anatomy.hands.presence",
+            "quote": "already declared region containing the hands named by this cue",
+            "realization_id": "base",
+            "requires": [],
+            "target": "hands",
+            "value": {
+              "type": "anatomy.hands.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "blankEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "expression.face",
+            "quote": "blank face",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "faceP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.face/v1",
+              "value": "blank"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "handsEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "response.presentation",
+            "quote": "warm helpful hands",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "response.presentation/v1",
+              "value": "warm_helpful_hands_impression"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "contrastEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "character.contrast",
+            "quote": "blank face with warm helpful hands",
+            "realization_id": "base",
+            "receivers": [
+              "face"
+            ],
+            "requires": [
+              "characterP",
+              "faceP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "character.contrast/v1",
+              "value": "blank_face_warm_helpful_hands_contrast"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "blankKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "expression.face",
+            "quote": "무표정한 얼굴",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "faceP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.face/v1",
+              "value": "blank"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "handsKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "response.presentation",
+            "quote": "따뜻하고 도움을 주는 인상의 손",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "response.presentation/v1",
+              "value": "warm_helpful_hands_impression"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "contrastKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "character.contrast",
+            "quote": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+            "realization_id": "base",
+            "receivers": [
+              "face"
+            ],
+            "requires": [
+              "characterP",
+              "faceP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "character.contrast/v1",
+              "value": "blank_face_warm_helpful_hands_contrast"
+            }
+          },
+          {
+            "dimension": "expression",
+            "id": "blankApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "expression.face",
+            "quote": "Select the blank facial response",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "faceP"
+            ],
+            "target": "face",
+            "value": {
+              "type": "expression.face/v1",
+              "value": "blank"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "handsApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "response.presentation",
+            "quote": "the warm helpful presentation of those hands",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "characterP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "response.presentation/v1",
+              "value": "warm_helpful_hands_impression"
+            }
+          },
+          {
+            "dimension": "character_response",
+            "id": "contrastApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "character.contrast",
+            "quote": "the contrast between that blank face and those warm helpful hands",
+            "realization_id": "base",
+            "receivers": [
+              "face"
+            ],
+            "requires": [
+              "characterP",
+              "faceP",
+              "handsP",
+              "actualHandsP"
+            ],
+            "target": "hands",
+            "value": {
+              "type": "character.contrast/v1",
+              "value": "blank_face_warm_helpful_hands_contrast"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ],
+                "native_guards": {
+                  "rules": [
+                    {
+                      "id": "face_belongs_to_character",
+                      "kind": "owner_relation",
+                      "left": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "face"
+                      },
+                      "relation": "part_of",
+                      "right": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "character"
+                      }
+                    },
+                    {
+                      "id": "hands_region_belongs_to_character",
+                      "kind": "owner_relation",
+                      "left": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "hands"
+                      },
+                      "relation": "part_of",
+                      "right": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "character"
+                      }
+                    },
+                    {
+                      "id": "face_and_hands_are_distinct_regions",
+                      "kind": "owner_relation",
+                      "left": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "face"
+                      },
+                      "relation": "disjoint",
+                      "right": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "hands"
+                      }
+                    },
+                    {
+                      "dimension": "subject",
+                      "id": "selected_character_is_explicitly_human",
+                      "kind": "frozen_value",
+                      "owner": {
+                        "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                        "kind": "source_target",
+                        "target": "character"
+                      },
+                      "property": "entity.category",
+                      "value": {
+                        "type": "entity.category/v1",
+                        "value": "human"
+                      }
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v2"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "1718b0ef8a2431bf06f51b8f4e39ed1fa59689c8600eb8b77d9f15d7e5d01ec1",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "character"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "face"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "hands"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/ownexpression.82humananimalbinding/wholeorigin/emptyclosure/prior04wholefacts and full149expression/charactercontrast/social/thermal/sensory/hand/body boundaries read. Callerexplicitly selects three actual existing owners humancharacter/face/handsregion, exacthuman entity.category P+guard, atomicfacepresence, independently declared handsregiontype and actualhands presence P. Exactv2 face part_of samehuman, hands part_of samehuman and face/handsdisjoint retained, no roledefault or partinheritance/equivalence. Three actualeffects blankface expression, warmhelpfulhandspresentation and samecharactercontrast with actualface Rx, handspresentation E untagged notdeleted. No exacttotalhandcount/newgroup/bodypart, specifichelp gesture/success, measuredwarmth or privateemotion. Newcharactercontrast role does not waive sourcehuman/oldbinding/category/deny-domain gates. Actualindependentexistingorigin requires neutralpresence of each selected owner; no ownernode/type→existence inference.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "e888f29848fb9654d4e2d5b5db077b8abf63cc16a05600c5741eecd77cf6633e",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=29",
+            "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "3cc68e9f8ce063737f3eac2d6caff0cddade6fbd0e7f304e88acf45c4c838cd0",
+            "source_record_sha256": "690b386d8d6aeb930a6b4bded24c5aa5d32aba4086f13519b7ac015e01adcda3"
+          },
+          "source_correction": {
+            "after_sha256": "1718b0ef8a2431bf06f51b8f4e39ed1fa59689c8600eb8b77d9f15d7e5d01ec1",
+            "before_sha256": "305ed36ae906cf9d17b513d0242602a2799a26c1b592b8d3d2c60af539f40fbd",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownexpression.82humananimalbinding/wholeorigin/emptyclosure/prior04wholefacts and full149expression/charactercontrast/social/thermal/sensory/hand/body boundaries read. Callerexplicitly selects three actual existing owners humancharacter/face/handsregion, exacthuman entity.category P+guard, atomicfacepresence, independently declared handsregiontype and actualhands presence P. Exactv2 face part_of samehuman, hands part_of samehuman and face/handsdisjoint retained, no roledefault or partinheritance/equivalence. Three actualeffects blankface expression, warmhelpfulhandspresentation and samecharactercontrast with actualface Rx, handspresentation E untagged notdeleted. No exacttotalhandcount/newgroup/bodypart, specifichelp gesture/success, measuredwarmth or privateemotion. Newcharactercontrast role does not waive sourcehuman/oldbinding/category/deny-domain gates. Actualindependentexistingorigin requires neutralpresence of each selected owner; no ownernode/type→existence inference."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "character_contrast": {
+            "fact_refs": [
+              "contrastEn",
+              "contrastKo",
+              "contrastApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "a2ea5e6e21f796a4ec57dd40de62d9020fb173dc1882af4bb7b2c84dd1939517",
+            "support_modes": [
+              "effect"
+            ]
+          },
+          "expression": {
+            "fact_refs": [
+              "blankEn",
+              "blankKo",
+              "blankApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "67afc20b958d23d2e75a477532d8e570347d0123513bb0241cbb5c0f107d6a44",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "blankEn",
+              "handsEn",
+              "contrastEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "blank face with warm helpful hands",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "blankKo",
+              "handsKo",
+              "contrastKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "characterP",
+              "faceP",
+              "handsP",
+              "actualHandsP",
+              "blankApp",
+              "handsApp",
+              "contrastApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Apply only to the independently declared existing face and existing hands-region of the same independently declared existing human character, with all three actual owners explicitly selected by the caller. The hands-region is the already declared region containing the hands named by this cue; it neither creates a group nor specifies an exact total hand count. Select the blank facial response, the warm helpful presentation of those hands, and the contrast between that blank face and those warm helpful hands. Do not add body parts, prescribe a particular helping gesture, or assert temperature, private emotion or successful help. No main, primary or foreground role is assigned.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/ownexpression.82humananimalbinding/wholeorigin/emptyclosure/prior04wholefacts and full149expression/charactercontrast/social/thermal/sensory/hand/body boundaries read. Callerexplicitly selects three actual existing owners humancharacter/face/handsregion, exacthuman entity.category P+guard, atomicfacepresence, independently declared handsregiontype and actualhands presence P. Exactv2 face part_of samehuman, hands part_of samehuman and face/handsdisjoint retained, no roledefault or partinheritance/equivalence. Three actualeffects blankface expression, warmhelpfulhandspresentation and samecharactercontrast with actualface Rx, handspresentation E untagged notdeleted. No exacttotalhandcount/newgroup/bodypart, specifichelp gesture/success, measuredwarmth or privateemotion. Newcharactercontrast role does not waive sourcehuman/oldbinding/category/deny-domain gates. Actualindependentexistingorigin requires neutralpresence of each selected owner; no ownernode/type→existence inference.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/28",
+          "sha256": "5d03b3a2eee67ced5b87951cde8153f44b4fe36ea1734e2342af5bafacaa0af1"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownexpression.82humananimalbinding/wholeorigin/emptyclosure/prior04wholefacts and full149expression/charactercontrast/social/thermal/sensory/hand/body boundaries read. Callerexplicitly selects three actual existing owners humancharacter/face/handsregion, exacthuman entity.category P+guard, atomicfacepresence, independently declared handsregiontype and actualhands presence P. Exactv2 face part_of samehuman, hands part_of samehuman and face/handsdisjoint retained, no roledefault or partinheritance/equivalence. Three actualeffects blankface expression, warmhelpfulhandspresentation and samecharactercontrast with actualface Rx, handspresentation E untagged notdeleted. No exacttotalhandcount/newgroup/bodypart, specifichelp gesture/success, measuredwarmth or privateemotion. Newcharactercontrast role does not waive sourcehuman/oldbinding/category/deny-domain gates. Actualindependentexistingorigin requires neutralpresence of each selected owner; no ownernode/type→existence inference."
+      },
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ],
+          "native_guards": {
+            "rules": [
+              {
+                "id": "face_belongs_to_character",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "face"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                }
+              },
+              {
+                "id": "hands_region_belongs_to_character",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "hands"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                }
+              },
+              {
+                "id": "face_and_hands_are_distinct_regions",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "face"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "hands"
+                }
+              },
+              {
+                "dimension": "subject",
+                "id": "selected_character_is_explicitly_human",
+                "kind": "frozen_value",
+                "owner": {
+                  "candidate_id": "cand_7f96b80af091533cb700db081b3dbbaf",
+                  "kind": "source_target",
+                  "target": "character"
+                },
+                "property": "entity.category",
+                "value": {
+                  "type": "entity.category/v1",
+                  "value": "human"
+                }
+              }
+            ],
+            "schema": "photo-native-source-guards/v2"
+          }
+        },
+        "content": {
+          "application_contract": "Apply only to the independently declared existing face and existing hands-region of the same independently declared existing human character, with all three actual owners explicitly selected by the caller. The hands-region is the already declared region containing the hands named by this cue; it neither creates a group nor specifies an exact total hand count. Select the blank facial response, the warm helpful presentation of those hands, and the contrast between that blank face and those warm helpful hands. Do not add body parts, prescribe a particular helping gesture, or assert temperature, private emotion or successful help. No main, primary or foreground role is assigned.",
+          "en": "blank face with warm helpful hands",
+          "ko": "무표정한 얼굴과 따뜻하고 도움을 주는 인상의 손",
+          "tags": [
+            "human",
+            "expression"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "character_response",
+            "expression"
+          ],
+          "properties": [
+            {
+              "dimension": "expression",
+              "property": "expression.face",
+              "target": "face"
+            },
+            {
+              "dimension": "character_response",
+              "property": "response.presentation",
+              "target": "hands"
+            },
+            {
+              "dimension": "character_response",
+              "property": "character.contrast",
+              "target": "hands"
+            }
+          ]
+        },
+        "id": "cand_7f96b80af091533cb700db081b3dbbaf",
+        "provenance": [
+          {
+            "sha256": "5d6b0f287b1f40261fe387a0b9f8cd00e288e4043957c86edd7746b2850cc356",
+            "source": "slot:expression:blank_face_warm_hands"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "blank face with warm helpful hands",
+          "ko": "무표정하지만 손은 따뜻한 인상",
+          "tags": [
+            "human",
+            "expression"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_7f96b80af091533cb700db081b3dbbaf",
+        "provenance": [
+          {
+            "sha256": "5d6b0f287b1f40261fe387a0b9f8cd00e288e4043957c86edd7746b2850cc356",
+            "source": "slot:expression:blank_face_warm_hands"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    },
+    {
+      "candidate_id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+      "delta": [
+        {
+          "after": {
+            "application_contract": "Select the bamboo-forest path for the independently declared scene bound to scene. This is a setting choice, without adding a walker or selecting a country or season.",
+            "en": "a bamboo forest path",
+            "ko": "대나무 숲길",
+            "phrase_en": "on a bamboo forest path",
+            "phrase_ko": "대나무 숲길에서",
+            "tags": [
+              "nature",
+              "travel"
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "en": "a bamboo forest path",
+            "ko": "대나무 숲길",
+            "phrase_en": "on a bamboo forest path",
+            "phrase_ko": "대나무 숲길에서",
+            "tags": [
+              "nature",
+              "travel"
+            ]
+          },
+          "before_exists": true,
+          "pointer": "/content",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownlocation.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149place/environment/background/space/genre boundaries read. Both explicit phrase_en/phrase_ko positivefullfields directly support own locationE and ordinaryfullsourceunits, same as ENKO/App. Existing scene neutralpresenceP receives actual bamboo-forest-path settingchoice, no already-bambooP or no-opcontext. No walker/person/country/season/travelevent/ecology/climate/newbamboospecies. Exactactualsetting locks and sourceindependentP remain; no semanticreference needed for complete phrase meaning."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "setting",
+                "property": "setting.location",
+                "target": "scene"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownlocation.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149place/environment/background/space/genre boundaries read. Both explicit phrase_en/phrase_ko positivefullfields directly support own locationE and ordinaryfullsourceunits, same as ENKO/App. Existing scene neutralpresenceP receives actual bamboo-forest-path settingchoice, no already-bambooP or no-opcontext. No walker/person/country/season/travelevent/ecology/climate/newbamboospecies. Exactactualsetting locks and sourceindependentP remain; no semanticreference needed for complete phrase meaning."
+        }
+      ],
+      "dependency_records": {},
+      "ordinal": 1279,
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 30,
+        "row_sha256": "14d2a1a3a4ad983993a7e5ad6bf62a5418cc97db84ff99073b6334ccd263f5b6"
+      },
+      "proof": {
+        "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "setting",
+                "property": "setting.location",
+                "target": "scene"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "sceneP",
+            "mode": "prerequisite",
+            "pointer": "/content/application_contract",
+            "property": "entity.presence",
+            "quote": "independently declared scene",
+            "realization_id": "base",
+            "requires": [],
+            "target": "scene",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "placeEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "setting.location",
+            "quote": "a bamboo forest path",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "placeKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/ko",
+            "property": "setting.location",
+            "quote": "대나무 숲길",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "phraseEn",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/phrase_en",
+            "property": "setting.location",
+            "quote": "on a bamboo forest path",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "phraseKo",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/phrase_ko",
+            "property": "setting.location",
+            "quote": "대나무 숲길에서",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          },
+          {
+            "dimension": "setting",
+            "id": "placeApp",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/application_contract",
+            "property": "setting.location",
+            "quote": "Select the bamboo-forest path",
+            "realization_id": "base",
+            "receivers": [],
+            "requires": [
+              "sceneP"
+            ],
+            "target": "scene",
+            "value": {
+              "type": "setting.location/v1",
+              "value": "bamboo_forest_path"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {},
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "7ee1f27595419030370f89af5657ef407bf87ac0616deed3af98df5d0430dead",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "scene"
+                },
+                "target": "scene"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "Fresh whole original/current/exact5B/ownlocation.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149place/environment/background/space/genre boundaries read. Both explicit phrase_en/phrase_ko positivefullfields directly support own locationE and ordinaryfullsourceunits, same as ENKO/App. Existing scene neutralpresenceP receives actual bamboo-forest-path settingchoice, no already-bambooP or no-opcontext. No walker/person/country/season/travelevent/ecology/climate/newbamboospecies. Exactactualsetting locks and sourceindependentP remain; no semanticreference needed for complete phrase meaning.",
+          "native_review": {
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "c081ad24eb95e58bf29ee1b6a5260eaf95f30047303817c6cccb04fd470cf606",
+            "reviewer": "/root/review_11870_12250"
+          },
+          "original_review": {
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=30",
+            "candidate_id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "14d2a1a3a4ad983993a7e5ad6bf62a5418cc97db84ff99073b6334ccd263f5b6",
+            "source_record_sha256": "1ca5814281ba792ca0c6e79180d787d05ce93a1e30d7098edc03e221791df1aa"
+          },
+          "source_correction": {
+            "after_sha256": "7ee1f27595419030370f89af5657ef407bf87ac0616deed3af98df5d0430dead",
+            "before_sha256": "4fa2baed7f55b541414c0843964f704ff2f803c6596bfb70f7aae35f7e1e7456",
+            "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownlocation.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149place/environment/background/space/genre boundaries read. Both explicit phrase_en/phrase_ko positivefullfields directly support own locationE and ordinaryfullsourceunits, same as ENKO/App. Existing scene neutralpresenceP receives actual bamboo-forest-path settingchoice, no already-bambooP or no-opcontext. No walker/person/country/season/travelevent/ecology/climate/newbamboospecies. Exactactualsetting locks and sourceindependentP remain; no semanticreference needed for complete phrase meaning."
+          },
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "location": {
+            "fact_refs": [
+              "placeEn",
+              "placeKo",
+              "phraseEn",
+              "phraseKo",
+              "placeApp"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "placeEn"
+            ],
+            "pointer": "/content/en",
+            "quote": "a bamboo forest path",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "placeKo"
+            ],
+            "pointer": "/content/ko",
+            "quote": "대나무 숲길",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "phraseEn"
+            ],
+            "pointer": "/content/phrase_en",
+            "quote": "on a bamboo forest path",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "phraseKo"
+            ],
+            "pointer": "/content/phrase_ko",
+            "quote": "대나무 숲길에서",
+            "realization_id": "base"
+          },
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "sceneP",
+              "placeApp"
+            ],
+            "pointer": "/content/application_contract",
+            "quote": "Select the bamboo-forest path for the independently declared scene bound to scene. This is a setting choice, without adding a walker or selecting a country or season.",
+            "realization_id": "base"
+          }
+        ]
+      },
+      "rationale": "Fresh whole original/current/exact5B/ownlocation.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149place/environment/background/space/genre boundaries read. Both explicit phrase_en/phrase_ko positivefullfields directly support own locationE and ordinaryfullsourceunits, same as ENKO/App. Existing scene neutralpresenceP receives actual bamboo-forest-path settingchoice, no already-bambooP or no-opcontext. No walker/person/country/season/travelevent/ecology/climate/newbamboospecies. Exactactualsetting locks and sourceindependentP remain; no semanticreference needed for complete phrase meaning.",
+      "reference_bindings": {},
+      "reference_reread_complete": true,
+      "revision": {
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+            "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+            "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+          }
+        ],
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+            "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+            "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+          },
+          "pointer": "/records/29",
+          "sha256": "6c3b8c68ed697ff81a687c84b33d4bd87aa769357dbc9373b90dfc3f66af9ef5"
+        },
+        "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownlocation.9binding/wholeorigin/emptyclosure/prior04wholefacts and full149place/environment/background/space/genre boundaries read. Both explicit phrase_en/phrase_ko positivefullfields directly support own locationE and ordinaryfullsourceunits, same as ENKO/App. Existing scene neutralpresenceP receives actual bamboo-forest-path settingchoice, no already-bambooP or no-opcontext. No walker/person/country/season/travelevent/ecology/climate/newbamboospecies. Exactactualsetting locks and sourceindependentP remain; no semanticreference needed for complete phrase meaning."
+      },
+      "source_after": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Select the bamboo-forest path for the independently declared scene bound to scene. This is a setting choice, without adding a walker or selecting a country or season.",
+          "en": "a bamboo forest path",
+          "ko": "대나무 숲길",
+          "phrase_en": "on a bamboo forest path",
+          "phrase_ko": "대나무 숲길에서",
+          "tags": [
+            "nature",
+            "travel"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "property": "setting.location",
+              "target": "scene"
+            }
+          ]
+        },
+        "id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+        "provenance": [
+          {
+            "sha256": "f67fbe6fa21e99cb1f2c1f9fa70d392e6d1299385b11a11c355aff37322f7f93",
+            "source": "slot:location:bamboo_forest"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "en": "a bamboo forest path",
+          "ko": "대나무 숲길",
+          "phrase_en": "on a bamboo forest path",
+          "phrase_ko": "대나무 숲길에서",
+          "tags": [
+            "nature",
+            "travel"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_9990c28077f255bbb96ee7104a58e3a7",
+        "provenance": [
+          {
+            "sha256": "f67fbe6fa21e99cb1f2c1f9fa70d392e6d1299385b11a11c355aff37322f7f93",
+            "source": "slot:location:bamboo_forest"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_reread_complete": true,
+      "status": "approved"
+    }
+  ],
+  "root_accepted": 0,
+  "schema": "photo-native-manual-proof-checkpoint/v1",
+  "task_name": "/root/review_11870_12250"
+}

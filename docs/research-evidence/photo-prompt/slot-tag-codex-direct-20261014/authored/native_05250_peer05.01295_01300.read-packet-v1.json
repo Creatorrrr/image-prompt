@@ -1,0 +1,4490 @@
+{
+  "schema": "independent-semantic-peer-read-packet/v1",
+  "task": "/root/review_05250_06250",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "range": [
+    1295,
+    1300
+  ],
+  "prepared_count": 5,
+  "actual_read_count": 0,
+  "input_raw_sha256": "c474fad3cca843554e4b7060cf3a5eb7d9ca1c1896743b4ce47a0e9453bc47e7",
+  "source09": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/catalog149-source-pool-plan-09/CURRENT-PROPOSAL.json.gz",
+    "file_sha256": "5c31e6139d7fe256c2bd85fba9929d307202fed35cd61ab8b62c6c9746071d42",
+    "sha256": "5ee63da71e477de1d52677fa768dd715eb6589c6f0f77ac213c11825b0c2fd44"
+  },
+  "original_source": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/SOURCE.json.gz",
+    "file_sha256": "98134a3fbfb19991bb6f02575a2fdef664661ee0c7584657251e5bb8465347d0",
+    "sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b"
+  },
+  "catalog_canonical": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "files": {
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/prepared/review11870-01250-01300-05/INPUT.json": "c474fad3cca843554e4b7060cf3a5eb7d9ca1c1896743b4ce47a0e9453bc47e7",
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json": "c08d427a198ed4bb21c214118119c973e16e5b3d50584ec8a6c7c04030cff894"
+  },
+  "records": [
+    {
+      "ordinal": 1295,
+      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+      "checkpoint": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json",
+      "checkpoint_pointer": "/records/45",
+      "original": {
+        "conditions": {},
+        "content": {
+          "en": "aged skin contrasted with young skin texture",
+          "ko": "aged skin contrasted with young skin texture",
+          "tags": [
+            "texture",
+            "family",
+            "documentary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_1628276899c45e6b9f9c68717638022e",
+        "provenance": [
+          {
+            "sha256": "2f4c8bcbf45e2a37268564219d44e75d2cfa090f92dfc3d523efceb3ad4b7d62",
+            "source": "slot:texture:aged_skin_vs_baby_skin"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "current": {
+        "conditions": {
+          "native_guards": {
+            "rules": [
+              {
+                "dimension": "subject",
+                "id": "common_0",
+                "kind": "frozen_value",
+                "owner": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "aged_region"
+                },
+                "property": "body.region.kind",
+                "value": {
+                  "type": "body.region.kind/v1",
+                  "value": "skin"
+                }
+              },
+              {
+                "dimension": "subject",
+                "id": "common_1",
+                "kind": "frozen_value",
+                "owner": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "young_region"
+                },
+                "property": "body.region.kind",
+                "value": {
+                  "type": "body.region.kind/v1",
+                  "value": "skin"
+                }
+              },
+              {
+                "id": "common_2",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "aged_region"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "aged_owner"
+                }
+              },
+              {
+                "id": "common_3",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "young_region"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "young_owner"
+                }
+              },
+              {
+                "id": "common_4",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "aged_region"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                  "kind": "source_target",
+                  "target": "young_region"
+                }
+              }
+            ],
+            "schema": "photo-native-source-guards/v2"
+          }
+        },
+        "content": {
+          "application_contract": "Use two independently declared existing actual skin regions and each region independently declared actual owner. Require exact skin-region type, actual aged_region part_of aged_owner and young_region part_of young_owner edges, and explicit disjointness of the two regions. The two owners may be identical or different only as actually resolved; require no owner-owner disjointness and create no people. Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second, preserving both local skin-texture contrast and visible local age presentation as effects. Do not require selected aged/young appearance already frozen, infer chronological age, a baby, family, disease or a wrinkle/pore pattern.",
+          "en": "aged skin contrasted with young skin texture",
+          "ko": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+          "tags": [
+            "texture",
+            "family",
+            "documentary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "age",
+            "appearance"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "property": "skin.texture.age_appearance",
+              "target": "aged_region"
+            },
+            {
+              "dimension": "appearance",
+              "property": "skin.texture.age_appearance",
+              "target": "young_region"
+            },
+            {
+              "dimension": "age",
+              "property": "age.presentation.local_skin",
+              "target": "aged_region"
+            },
+            {
+              "dimension": "age",
+              "property": "age.presentation.local_skin",
+              "target": "young_region"
+            }
+          ]
+        },
+        "id": "cand_1628276899c45e6b9f9c68717638022e",
+        "provenance": [
+          {
+            "sha256": "2f4c8bcbf45e2a37268564219d44e75d2cfa090f92dfc3d523efceb3ad4b7d62",
+            "source": "slot:texture:aged_skin_vs_baby_skin"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "original_5B": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 46,
+          "sha256": "89c689db0b8ccc51dbca18157fe1584ea6966f314f59fc3950e43614bf125fce"
+        },
+        "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "skin.finish.aged_young_texture",
+            "quote": "aged skin contrasted with young skin texture",
+            "realization_id": "base",
+            "target": "skin_regions"
+          },
+          {
+            "dimension": "age",
+            "pointer": "/content/en",
+            "property": "age.presentation.aged_young_presentation",
+            "quote": "aged skin contrasted with young skin texture",
+            "realization_id": "base",
+            "target": "skin_owners"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "Aged-looking skin is contrasted with young-looking skin texture.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "Do not infer actual ages, family roles or a baby from provenance."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "skin.finish.aged_young_texture",
+                "quote": "aged skin contrasted with young skin texture",
+                "target": "skin_regions"
+              }
+            ],
+            "rationale": "Aged-looking skin is contrasted with young-looking skin texture.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "skin_finish"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "age",
+                "pointer": "/content/en",
+                "property": "age.presentation.aged_young_presentation",
+                "quote": "aged skin contrasted with young skin texture",
+                "target": "skin_owners"
+              }
+            ],
+            "rationale": "Aged-looking skin is contrasted with young-looking skin texture.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "age_presentation"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "6160ab668866f9e7868b7bccd5eab0c8347215a78417fe89deb9d25045bf53a0",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_packet_record": {
+        "conditions": {},
+        "content": {
+          "en": "aged skin contrasted with young skin texture",
+          "ko": "aged skin contrasted with young skin texture",
+          "tags": [
+            "texture",
+            "family",
+            "documentary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_1628276899c45e6b9f9c68717638022e",
+        "provenance": [
+          {
+            "sha256": "2f4c8bcbf45e2a37268564219d44e75d2cfa090f92dfc3d523efceb3ad4b7d62",
+            "source": "slot:texture:aged_skin_vs_baby_skin"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "own_original_bindings": {
+        "bind_1628276899c45e6b9f9c68717638022e": {
+          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1628276899c45e6b9f9c68717638022e",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "texture",
+          "weight": 1.0
+        }
+      },
+      "own_current_bindings": {
+        "bind_1628276899c45e6b9f9c68717638022e": {
+          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1628276899c45e6b9f9c68717638022e",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "texture",
+          "weight": 1.0
+        }
+      },
+      "checkpoint_record": {
+        "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+        "delta": [
+          {
+            "after": {
+              "application_contract": "Use two independently declared existing actual skin regions and each region independently declared actual owner. Require exact skin-region type, actual aged_region part_of aged_owner and young_region part_of young_owner edges, and explicit disjointness of the two regions. The two owners may be identical or different only as actually resolved; require no owner-owner disjointness and create no people. Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second, preserving both local skin-texture contrast and visible local age presentation as effects. Do not require selected aged/young appearance already frozen, infer chronological age, a baby, family, disease or a wrinkle/pore pattern.",
+              "en": "aged skin contrasted with young skin texture",
+              "ko": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+              "tags": [
+                "texture",
+                "family",
+                "documentary"
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "en": "aged skin contrasted with young skin texture",
+              "ko": "aged skin contrasted with young skin texture",
+              "tags": [
+                "texture",
+                "family",
+                "documentary"
+              ]
+            },
+            "before_exists": true,
+            "pointer": "/content",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/owntexture1binding/fullSHAequalorigin/emptyclosure/paged04whole16facts and full149skin/age/texture/bodyregion boundaries read. Caller selects two actual independentlyexisting skinregions and each declared actualowner, with exactskinP, ownerpresenceP, two actualpart_of guards and regionsdisjoint. Owners may be same actualowner or different; no forcedtwopeople or ownertype inferred. Select aged-looking versus young-looking local microtexture AND local visibleagepresentation as appearance+age permission projections of stated contrast. Four actual E keep opposite region Rx; no chronologicalage or wholeowneraging transfer. Normallyprotectedage remains protected despite sourcequalifiedrole. No baby/family/disease/cause, wrinklepattern or totalpersoncount inferred."
+          },
+          {
+            "after": {
+              "native_guards": {
+                "rules": [
+                  {
+                    "dimension": "subject",
+                    "id": "common_0",
+                    "kind": "frozen_value",
+                    "owner": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "aged_region"
+                    },
+                    "property": "body.region.kind",
+                    "value": {
+                      "type": "body.region.kind/v1",
+                      "value": "skin"
+                    }
+                  },
+                  {
+                    "dimension": "subject",
+                    "id": "common_1",
+                    "kind": "frozen_value",
+                    "owner": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "young_region"
+                    },
+                    "property": "body.region.kind",
+                    "value": {
+                      "type": "body.region.kind/v1",
+                      "value": "skin"
+                    }
+                  },
+                  {
+                    "id": "common_2",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "aged_region"
+                    },
+                    "relation": "part_of",
+                    "right": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "aged_owner"
+                    }
+                  },
+                  {
+                    "id": "common_3",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "young_region"
+                    },
+                    "relation": "part_of",
+                    "right": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "young_owner"
+                    }
+                  },
+                  {
+                    "id": "common_4",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "aged_region"
+                    },
+                    "relation": "disjoint",
+                    "right": {
+                      "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                      "kind": "source_target",
+                      "target": "young_region"
+                    }
+                  }
+                ],
+                "schema": "photo-native-source-guards/v2"
+              }
+            },
+            "after_exists": true,
+            "before": {},
+            "before_exists": true,
+            "pointer": "/conditions",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/owntexture1binding/fullSHAequalorigin/emptyclosure/paged04whole16facts and full149skin/age/texture/bodyregion boundaries read. Caller selects two actual independentlyexisting skinregions and each declared actualowner, with exactskinP, ownerpresenceP, two actualpart_of guards and regionsdisjoint. Owners may be same actualowner or different; no forcedtwopeople or ownertype inferred. Select aged-looking versus young-looking local microtexture AND local visibleagepresentation as appearance+age permission projections of stated contrast. Four actual E keep opposite region Rx; no chronologicalage or wholeowneraging transfer. Normallyprotectedage remains protected despite sourcequalifiedrole. No baby/family/disease/cause, wrinklepattern or totalpersoncount inferred."
+          },
+          {
+            "after": {
+              "dimensions": [
+                "age",
+                "appearance"
+              ],
+              "properties": [
+                {
+                  "dimension": "appearance",
+                  "property": "skin.texture.age_appearance",
+                  "target": "aged_region"
+                },
+                {
+                  "dimension": "appearance",
+                  "property": "skin.texture.age_appearance",
+                  "target": "young_region"
+                },
+                {
+                  "dimension": "age",
+                  "property": "age.presentation.local_skin",
+                  "target": "aged_region"
+                },
+                {
+                  "dimension": "age",
+                  "property": "age.presentation.local_skin",
+                  "target": "young_region"
+                }
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "dimensions": [
+                "material"
+              ],
+              "properties": []
+            },
+            "before_exists": true,
+            "pointer": "/effects",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/owntexture1binding/fullSHAequalorigin/emptyclosure/paged04whole16facts and full149skin/age/texture/bodyregion boundaries read. Caller selects two actual independentlyexisting skinregions and each declared actualowner, with exactskinP, ownerpresenceP, two actualpart_of guards and regionsdisjoint. Owners may be same actualowner or different; no forcedtwopeople or ownertype inferred. Select aged-looking versus young-looking local microtexture AND local visibleagepresentation as appearance+age permission projections of stated contrast. Four actual E keep opposite region Rx; no chronologicalage or wholeowneraging transfer. Normallyprotectedage remains protected despite sourcequalifiedrole. No baby/family/disease/cause, wrinklepattern or totalpersoncount inferred."
+          }
+        ],
+        "dependency_records": {},
+        "ordinal": 1295,
+        "original_compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+          "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+          "item": 46,
+          "row_sha256": "1d7a327b019f8fbe0b14c75086bb5c13dd9a667e9528d7f080e244983c2fc6b6"
+        },
+        "proof": {
+          "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+          "complete": true,
+          "dependencies": {
+            "base": []
+          },
+          "effect_sets": {
+            "base": {
+              "dimensions": [
+                "age",
+                "appearance"
+              ],
+              "properties": [
+                {
+                  "dimension": "age",
+                  "property": "age.presentation.local_skin",
+                  "target": "aged_region"
+                },
+                {
+                  "dimension": "age",
+                  "property": "age.presentation.local_skin",
+                  "target": "young_region"
+                },
+                {
+                  "dimension": "appearance",
+                  "property": "skin.texture.age_appearance",
+                  "target": "aged_region"
+                },
+                {
+                  "dimension": "appearance",
+                  "property": "skin.texture.age_appearance",
+                  "target": "young_region"
+                }
+              ]
+            }
+          },
+          "facts": [
+            {
+              "dimension": "subject",
+              "id": "agedP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "body.region.kind",
+              "quote": "two independently declared existing actual skin regions",
+              "realization_id": "base",
+              "requires": [],
+              "target": "aged_region",
+              "value": {
+                "type": "body.region.kind/v1",
+                "value": "skin"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "youngP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "body.region.kind",
+              "quote": "two independently declared existing actual skin regions",
+              "realization_id": "base",
+              "requires": [],
+              "target": "young_region",
+              "value": {
+                "type": "body.region.kind/v1",
+                "value": "skin"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "agedOwnerP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "entity.presence",
+              "quote": "each region independently declared actual owner",
+              "realization_id": "base",
+              "requires": [],
+              "target": "aged_owner",
+              "value": {
+                "type": "entity.presence/v1",
+                "value": "present"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "youngOwnerP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "entity.presence",
+              "quote": "each region independently declared actual owner",
+              "realization_id": "base",
+              "requires": [],
+              "target": "young_owner",
+              "value": {
+                "type": "entity.presence/v1",
+                "value": "present"
+              }
+            },
+            {
+              "dimension": "appearance",
+              "id": "agedTexEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "skin.texture.age_appearance",
+              "quote": "aged skin contrasted with young skin texture",
+              "realization_id": "base",
+              "receivers": [
+                "young_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "aged_region",
+              "value": {
+                "type": "skin.texture.age_appearance/v1",
+                "value": "aged_looking"
+              }
+            },
+            {
+              "dimension": "age",
+              "id": "agedAgeEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "age.presentation.local_skin",
+              "quote": "aged skin contrasted with young skin texture",
+              "realization_id": "base",
+              "receivers": [
+                "young_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "aged_region",
+              "value": {
+                "type": "age.presentation.local_skin/v1",
+                "value": "aged_looking"
+              }
+            },
+            {
+              "dimension": "appearance",
+              "id": "youngTexEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "skin.texture.age_appearance",
+              "quote": "aged skin contrasted with young skin texture",
+              "realization_id": "base",
+              "receivers": [
+                "aged_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "young_region",
+              "value": {
+                "type": "skin.texture.age_appearance/v1",
+                "value": "young_looking"
+              }
+            },
+            {
+              "dimension": "age",
+              "id": "youngAgeEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "age.presentation.local_skin",
+              "quote": "aged skin contrasted with young skin texture",
+              "realization_id": "base",
+              "receivers": [
+                "aged_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "young_region",
+              "value": {
+                "type": "age.presentation.local_skin/v1",
+                "value": "young_looking"
+              }
+            },
+            {
+              "dimension": "appearance",
+              "id": "agedTexKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "skin.texture.age_appearance",
+              "quote": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+              "realization_id": "base",
+              "receivers": [
+                "young_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "aged_region",
+              "value": {
+                "type": "skin.texture.age_appearance/v1",
+                "value": "aged_looking"
+              }
+            },
+            {
+              "dimension": "age",
+              "id": "agedAgeKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "age.presentation.local_skin",
+              "quote": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+              "realization_id": "base",
+              "receivers": [
+                "young_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "aged_region",
+              "value": {
+                "type": "age.presentation.local_skin/v1",
+                "value": "aged_looking"
+              }
+            },
+            {
+              "dimension": "appearance",
+              "id": "youngTexKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "skin.texture.age_appearance",
+              "quote": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+              "realization_id": "base",
+              "receivers": [
+                "aged_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "young_region",
+              "value": {
+                "type": "skin.texture.age_appearance/v1",
+                "value": "young_looking"
+              }
+            },
+            {
+              "dimension": "age",
+              "id": "youngAgeKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "age.presentation.local_skin",
+              "quote": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+              "realization_id": "base",
+              "receivers": [
+                "aged_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "young_region",
+              "value": {
+                "type": "age.presentation.local_skin/v1",
+                "value": "young_looking"
+              }
+            },
+            {
+              "dimension": "appearance",
+              "id": "agedTexApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "skin.texture.age_appearance",
+              "quote": "Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second",
+              "realization_id": "base",
+              "receivers": [
+                "young_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "aged_region",
+              "value": {
+                "type": "skin.texture.age_appearance/v1",
+                "value": "aged_looking"
+              }
+            },
+            {
+              "dimension": "age",
+              "id": "agedAgeApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "age.presentation.local_skin",
+              "quote": "Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second, preserving both local skin-texture contrast and visible local age presentation as effects",
+              "realization_id": "base",
+              "receivers": [
+                "young_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "aged_region",
+              "value": {
+                "type": "age.presentation.local_skin/v1",
+                "value": "aged_looking"
+              }
+            },
+            {
+              "dimension": "appearance",
+              "id": "youngTexApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "skin.texture.age_appearance",
+              "quote": "Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second",
+              "realization_id": "base",
+              "receivers": [
+                "aged_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "young_region",
+              "value": {
+                "type": "skin.texture.age_appearance/v1",
+                "value": "young_looking"
+              }
+            },
+            {
+              "dimension": "age",
+              "id": "youngAgeApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "age.presentation.local_skin",
+              "quote": "Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second, preserving both local skin-texture contrast and visible local age presentation as effects",
+              "realization_id": "base",
+              "receivers": [
+                "aged_region"
+              ],
+              "requires": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP"
+              ],
+              "target": "young_region",
+              "value": {
+                "type": "age.presentation.local_skin/v1",
+                "value": "young_looking"
+              }
+            }
+          ],
+          "guard_sets": {
+            "base": {
+              "member_conditions": {},
+              "source_conditions": [
+                {
+                  "native_guards": {
+                    "rules": [
+                      {
+                        "dimension": "subject",
+                        "id": "common_0",
+                        "kind": "frozen_value",
+                        "owner": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "aged_region"
+                        },
+                        "property": "body.region.kind",
+                        "value": {
+                          "type": "body.region.kind/v1",
+                          "value": "skin"
+                        }
+                      },
+                      {
+                        "dimension": "subject",
+                        "id": "common_1",
+                        "kind": "frozen_value",
+                        "owner": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "young_region"
+                        },
+                        "property": "body.region.kind",
+                        "value": {
+                          "type": "body.region.kind/v1",
+                          "value": "skin"
+                        }
+                      },
+                      {
+                        "id": "common_2",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "aged_region"
+                        },
+                        "relation": "part_of",
+                        "right": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "aged_owner"
+                        }
+                      },
+                      {
+                        "id": "common_3",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "young_region"
+                        },
+                        "relation": "part_of",
+                        "right": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "young_owner"
+                        }
+                      },
+                      {
+                        "id": "common_4",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "aged_region"
+                        },
+                        "relation": "disjoint",
+                        "right": {
+                          "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                          "kind": "source_target",
+                          "target": "young_region"
+                        }
+                      }
+                    ],
+                    "schema": "photo-native-source-guards/v2"
+                  }
+                },
+                {}
+              ]
+            }
+          },
+          "meaning_sha256": "7a900946668488fc9f6c7dcd1c753d28614e0a25f3afebe7b4a04c384ac58220",
+          "owner_maps": {
+            "base": {
+              "bindings": [
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "aged_owner"
+                },
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "aged_region"
+                },
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "young_owner"
+                },
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "young_region"
+                }
+              ],
+              "schema": "photo-native-owner-bindings/v3"
+            }
+          },
+          "profile_contracts": {
+            "base": null
+          },
+          "reference_sha256": {},
+          "review": {
+            "basis": "Fresh whole original/current/exact5B/owntexture1binding/fullSHAequalorigin/emptyclosure/paged04whole16facts and full149skin/age/texture/bodyregion boundaries read. Caller selects two actual independentlyexisting skinregions and each declared actualowner, with exactskinP, ownerpresenceP, two actualpart_of guards and regionsdisjoint. Owners may be same actualowner or different; no forcedtwopeople or ownertype inferred. Select aged-looking versus young-looking local microtexture AND local visibleagepresentation as appearance+age permission projections of stated contrast. Four actual E keep opposite region Rx; no chronologicalage or wholeowneraging transfer. Normallyprotectedage remains protected despite sourcequalifiedrole. No baby/family/disease/cause, wrinklepattern or totalpersoncount inferred.",
+            "native_review": {
+              "method": "codex_subagent_direct_source_read",
+              "native_contract_sha256": "1ab3d061689c9c76e02c44e60cb1fe764ffe4cc7d8944fe0e6c048be68280c94",
+              "reviewer": "/root/review_11870_12250"
+            },
+            "original_review": {
+              "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=46",
+              "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+              "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+              "decision_sha256": "1d7a327b019f8fbe0b14c75086bb5c13dd9a667e9528d7f080e244983c2fc6b6",
+              "source_record_sha256": "6160ab668866f9e7868b7bccd5eab0c8347215a78417fe89deb9d25045bf53a0"
+            },
+            "source_correction": {
+              "after_sha256": "7a900946668488fc9f6c7dcd1c753d28614e0a25f3afebe7b4a04c384ac58220",
+              "before_sha256": "6b998e9a9eeb2b605ff4960a714fa6f9e3e2db6a85d1c61b90add12e0297c6ce",
+              "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/owntexture1binding/fullSHAequalorigin/emptyclosure/paged04whole16facts and full149skin/age/texture/bodyregion boundaries read. Caller selects two actual independentlyexisting skinregions and each declared actualowner, with exactskinP, ownerpresenceP, two actualpart_of guards and regionsdisjoint. Owners may be same actualowner or different; no forcedtwopeople or ownertype inferred. Select aged-looking versus young-looking local microtexture AND local visibleagepresentation as appearance+age permission projections of stated contrast. Four actual E keep opposite region Rx; no chronologicalage or wholeowneraging transfer. Normallyprotectedage remains protected despite sourcequalifiedrole. No baby/family/disease/cause, wrinklepattern or totalpersoncount inferred."
+            },
+            "whole_source_reviewed": true
+          },
+          "roles": {
+            "age_presentation": {
+              "fact_refs": [
+                "agedAgeEn",
+                "youngAgeEn",
+                "agedAgeKo",
+                "youngAgeKo",
+                "agedAgeApp",
+                "youngAgeApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "84c1d0da6ef22e5e0598569a66903b1317a05ef021f55465cb420c8ca2b23ad9",
+              "support_modes": [
+                "effect"
+              ]
+            },
+            "skin_finish": {
+              "fact_refs": [
+                "agedTexEn",
+                "youngTexEn",
+                "agedTexKo",
+                "youngTexKo",
+                "agedTexApp",
+                "youngTexApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "21b0708969acf270f56178eb118eb09943e2ac376f468c038be5f2aeaa5533fd",
+              "support_modes": [
+                "effect"
+              ]
+            }
+          },
+          "schema": "photo-candidate-role-evidence/v4",
+          "source_units": [
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "agedTexEn",
+                "agedAgeEn",
+                "youngTexEn",
+                "youngAgeEn"
+              ],
+              "pointer": "/content/en",
+              "quote": "aged skin contrasted with young skin texture",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "agedTexKo",
+                "agedAgeKo",
+                "youngTexKo",
+                "youngAgeKo"
+              ],
+              "pointer": "/content/ko",
+              "quote": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "agedP",
+                "youngP",
+                "agedOwnerP",
+                "youngOwnerP",
+                "agedTexApp",
+                "agedAgeApp",
+                "youngTexApp",
+                "youngAgeApp"
+              ],
+              "pointer": "/content/application_contract",
+              "quote": "Use two independently declared existing actual skin regions and each region independently declared actual owner. Require exact skin-region type, actual aged_region part_of aged_owner and young_region part_of young_owner edges, and explicit disjointness of the two regions. The two owners may be identical or different only as actually resolved; require no owner-owner disjointness and create no people. Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second, preserving both local skin-texture contrast and visible local age presentation as effects. Do not require selected aged/young appearance already frozen, infer chronological age, a baby, family, disease or a wrinkle/pore pattern.",
+              "realization_id": "base"
+            }
+          ]
+        },
+        "rationale": "Fresh whole original/current/exact5B/owntexture1binding/fullSHAequalorigin/emptyclosure/paged04whole16facts and full149skin/age/texture/bodyregion boundaries read. Caller selects two actual independentlyexisting skinregions and each declared actualowner, with exactskinP, ownerpresenceP, two actualpart_of guards and regionsdisjoint. Owners may be same actualowner or different; no forcedtwopeople or ownertype inferred. Select aged-looking versus young-looking local microtexture AND local visibleagepresentation as appearance+age permission projections of stated contrast. Four actual E keep opposite region Rx; no chronologicalage or wholeowneraging transfer. Normallyprotectedage remains protected despite sourcequalifiedrole. No baby/family/disease/cause, wrinklepattern or totalpersoncount inferred.",
+        "reference_bindings": {},
+        "reference_reread_complete": true,
+        "revision": {
+          "memo_artifacts": [
+            {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+              "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+              "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+            }
+          ],
+          "prior_review": {
+            "artifact": {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+              "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+              "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+            },
+            "pointer": "/records/45",
+            "sha256": "9218fb20eb8192d8d423c5b13a297f8b34cd917c5f16447351de68d3490c58d2"
+          },
+          "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/owntexture1binding/fullSHAequalorigin/emptyclosure/paged04whole16facts and full149skin/age/texture/bodyregion boundaries read. Caller selects two actual independentlyexisting skinregions and each declared actualowner, with exactskinP, ownerpresenceP, two actualpart_of guards and regionsdisjoint. Owners may be same actualowner or different; no forcedtwopeople or ownertype inferred. Select aged-looking versus young-looking local microtexture AND local visibleagepresentation as appearance+age permission projections of stated contrast. Four actual E keep opposite region Rx; no chronologicalage or wholeowneraging transfer. Normallyprotectedage remains protected despite sourcequalifiedrole. No baby/family/disease/cause, wrinklepattern or totalpersoncount inferred."
+        },
+        "source_after": {
+          "conditions": {
+            "native_guards": {
+              "rules": [
+                {
+                  "dimension": "subject",
+                  "id": "common_0",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "aged_region"
+                  },
+                  "property": "body.region.kind",
+                  "value": {
+                    "type": "body.region.kind/v1",
+                    "value": "skin"
+                  }
+                },
+                {
+                  "dimension": "subject",
+                  "id": "common_1",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "young_region"
+                  },
+                  "property": "body.region.kind",
+                  "value": {
+                    "type": "body.region.kind/v1",
+                    "value": "skin"
+                  }
+                },
+                {
+                  "id": "common_2",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "aged_region"
+                  },
+                  "relation": "part_of",
+                  "right": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "aged_owner"
+                  }
+                },
+                {
+                  "id": "common_3",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "young_region"
+                  },
+                  "relation": "part_of",
+                  "right": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "young_owner"
+                  }
+                },
+                {
+                  "id": "common_4",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "aged_region"
+                  },
+                  "relation": "disjoint",
+                  "right": {
+                    "candidate_id": "cand_1628276899c45e6b9f9c68717638022e",
+                    "kind": "source_target",
+                    "target": "young_region"
+                  }
+                }
+              ],
+              "schema": "photo-native-source-guards/v2"
+            }
+          },
+          "content": {
+            "application_contract": "Use two independently declared existing actual skin regions and each region independently declared actual owner. Require exact skin-region type, actual aged_region part_of aged_owner and young_region part_of young_owner edges, and explicit disjointness of the two regions. The two owners may be identical or different only as actually resolved; require no owner-owner disjointness and create no people. Select aged-looking skin microtexture on the first region versus young-looking skin microtexture on the second, preserving both local skin-texture contrast and visible local age presentation as effects. Do not require selected aged/young appearance already frozen, infer chronological age, a baby, family, disease or a wrinkle/pore pattern.",
+            "en": "aged skin contrasted with young skin texture",
+            "ko": "나이 들어 보이는 피부와 젊어 보이는 피부 질감의 대비",
+            "tags": [
+              "texture",
+              "family",
+              "documentary"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "age",
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "skin.texture.age_appearance",
+                "target": "aged_region"
+              },
+              {
+                "dimension": "appearance",
+                "property": "skin.texture.age_appearance",
+                "target": "young_region"
+              },
+              {
+                "dimension": "age",
+                "property": "age.presentation.local_skin",
+                "target": "aged_region"
+              },
+              {
+                "dimension": "age",
+                "property": "age.presentation.local_skin",
+                "target": "young_region"
+              }
+            ]
+          },
+          "id": "cand_1628276899c45e6b9f9c68717638022e",
+          "provenance": [
+            {
+              "sha256": "2f4c8bcbf45e2a37268564219d44e75d2cfa090f92dfc3d523efceb3ad4b7d62",
+              "source": "slot:texture:aged_skin_vs_baby_skin"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_before": {
+          "conditions": {},
+          "content": {
+            "en": "aged skin contrasted with young skin texture",
+            "ko": "aged skin contrasted with young skin texture",
+            "tags": [
+              "texture",
+              "family",
+              "documentary"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "material"
+            ],
+            "properties": []
+          },
+          "id": "cand_1628276899c45e6b9f9c68717638022e",
+          "provenance": [
+            {
+              "sha256": "2f4c8bcbf45e2a37268564219d44e75d2cfa090f92dfc3d523efceb3ad4b7d62",
+              "source": "slot:texture:aged_skin_vs_baby_skin"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_reread_complete": true,
+        "status": "approved"
+      }
+    },
+    {
+      "ordinal": 1296,
+      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+      "checkpoint": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json",
+      "checkpoint_pointer": "/records/46",
+      "original": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "warm mug held in both hands",
+          "en": "warm mug held in both hands",
+          "ko": "두 손으로 감싼 따뜻한 머그",
+          "tags": [
+            "prop",
+            "mug",
+            "home",
+            "cafe"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_1b714a345bd35bc08d6592bf94caca29",
+        "provenance": [
+          {
+            "sha256": "cffaff26c43d18fd73d70832a72eed7ded0b87bb6de3d653c1df1db5c8675c74",
+            "source": "slot:prop:warm_mug_held_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "current": {
+        "conditions": {
+          "native_guards": {
+            "rules": [
+              {
+                "id": "first_hand_belongs_to_holder",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "hand_a"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "holder"
+                }
+              },
+              {
+                "id": "second_hand_belongs_to_holder",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "hand_b"
+                },
+                "relation": "part_of",
+                "right": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "holder"
+                }
+              },
+              {
+                "id": "participating_hands_are_distinct",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "hand_a"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "hand_b"
+                }
+              },
+              {
+                "id": "mug_is_distinct_from_first_hand",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "mug"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "hand_a"
+                }
+              },
+              {
+                "id": "mug_is_distinct_from_second_hand",
+                "kind": "owner_relation",
+                "left": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "mug"
+                },
+                "relation": "disjoint",
+                "right": {
+                  "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                  "kind": "source_target",
+                  "target": "hand_b"
+                }
+              }
+            ],
+            "schema": "photo-native-source-guards/v2"
+          }
+        },
+        "content": {
+          "application_contract": "Use only the independently declared existing mug and two independently declared existing hands of the same independently declared existing holder, all explicitly selected by the caller. The two selected hands are distinct, and the mug is distinct from either hand. Here both hands names the two participating hands in this holding action; it does not assert that the holder has exactly two hands in its entire anatomy. Select holding that same mug with both selected hands together and the mug held wrapped by both selected hands at the selected instant. Select the declared qualitative warm physical state of that mug; this is an actual selected state, not an assumed already-warm prerequisite or a numerical temperature. Do not add a mug, hands, holder, drink, steam or a heating process, and do not prescribe finger geometry or a comforting emotion. No main, primary or foreground role is assigned.",
+          "embedding_text": "warm mug held in both hands",
+          "en": "warm mug held in both hands",
+          "ko": "두 손으로 감싼 따뜻한 머그",
+          "tags": [
+            "prop",
+            "mug",
+            "home",
+            "cafe"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "material",
+            "relationship"
+          ],
+          "properties": [
+            {
+              "dimension": "material",
+              "property": "object.temperature.declared",
+              "target": "mug"
+            },
+            {
+              "dimension": "action",
+              "property": "action.holding",
+              "target": "hand_a"
+            },
+            {
+              "dimension": "action",
+              "property": "action.holding",
+              "target": "hand_b"
+            },
+            {
+              "dimension": "relationship",
+              "property": "contact.held_by",
+              "target": "mug"
+            }
+          ]
+        },
+        "id": "cand_1b714a345bd35bc08d6592bf94caca29",
+        "provenance": [
+          {
+            "sha256": "cffaff26c43d18fd73d70832a72eed7ded0b87bb6de3d653c1df1db5c8675c74",
+            "source": "slot:prop:warm_mug_held_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "original_5B": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 47,
+          "sha256": "4a0209ba18daa9a414a39cadd8261f028f5d5c6eee69d2bcf63c84f4f4f86c7d"
+        },
+        "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "props.type.mug",
+            "quote": "warm mug held in both hands",
+            "realization_id": "base",
+            "target": "mug"
+          },
+          {
+            "dimension": "role",
+            "pointer": "/content/en",
+            "property": "props.state.warm",
+            "quote": "warm mug held in both hands",
+            "realization_id": "base",
+            "target": "mug"
+          },
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "action.holding_mug",
+            "quote": "warm mug held in both hands",
+            "realization_id": "base",
+            "target": "actor"
+          },
+          {
+            "dimension": "relationship",
+            "pointer": "/content/en",
+            "property": "contact.both_hands",
+            "quote": "warm mug held in both hands",
+            "realization_id": "base",
+            "target": "hands_mug"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "A warm mug is held in both hands.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "Warmth is declared, not measured; no drink or comforting emotion is inferred."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "props.type.mug",
+                "quote": "warm mug held in both hands",
+                "target": "mug"
+              }
+            ],
+            "rationale": "A warm mug is held in both hands.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "role",
+                "pointer": "/content/en",
+                "property": "props.state.warm",
+                "quote": "warm mug held in both hands",
+                "target": "mug"
+              }
+            ],
+            "rationale": "A warm mug is held in both hands.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop_state"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/en",
+                "property": "action.holding_mug",
+                "quote": "warm mug held in both hands",
+                "target": "actor"
+              }
+            ],
+            "rationale": "A warm mug is held in both hands.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "action"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "relationship",
+                "pointer": "/content/en",
+                "property": "contact.both_hands",
+                "quote": "warm mug held in both hands",
+                "target": "hands_mug"
+              }
+            ],
+            "rationale": "A warm mug is held in both hands.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "contact_point"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "6a1960fe44859e6ab5c7e23b6e3be0af47c07daba4fdfd320798796561cb5032",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_packet_record": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "warm mug held in both hands",
+          "en": "warm mug held in both hands",
+          "ko": "두 손으로 감싼 따뜻한 머그",
+          "tags": [
+            "prop",
+            "mug",
+            "home",
+            "cafe"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_1b714a345bd35bc08d6592bf94caca29",
+        "provenance": [
+          {
+            "sha256": "cffaff26c43d18fd73d70832a72eed7ded0b87bb6de3d653c1df1db5c8675c74",
+            "source": "slot:prop:warm_mug_held_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "own_original_bindings": {
+        "bind_1b714a345bd35bc08d6592bf94caca29": {
+          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1b714a345bd35bc08d6592bf94caca29",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 0.6
+        }
+      },
+      "own_current_bindings": {
+        "bind_1b714a345bd35bc08d6592bf94caca29": {
+          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1b714a345bd35bc08d6592bf94caca29",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 0.6
+        }
+      },
+      "checkpoint_record": {
+        "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+        "delta": [
+          {
+            "after": {
+              "application_contract": "Use only the independently declared existing mug and two independently declared existing hands of the same independently declared existing holder, all explicitly selected by the caller. The two selected hands are distinct, and the mug is distinct from either hand. Here both hands names the two participating hands in this holding action; it does not assert that the holder has exactly two hands in its entire anatomy. Select holding that same mug with both selected hands together and the mug held wrapped by both selected hands at the selected instant. Select the declared qualitative warm physical state of that mug; this is an actual selected state, not an assumed already-warm prerequisite or a numerical temperature. Do not add a mug, hands, holder, drink, steam or a heating process, and do not prescribe finger geometry or a comforting emotion. No main, primary or foreground role is assigned.",
+              "embedding_text": "warm mug held in both hands",
+              "en": "warm mug held in both hands",
+              "ko": "두 손으로 감싼 따뜻한 머그",
+              "tags": [
+                "prop",
+                "mug",
+                "home",
+                "cafe"
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "embedding_text": "warm mug held in both hands",
+              "en": "warm mug held in both hands",
+              "ko": "두 손으로 감싼 따뜻한 머그",
+              "tags": [
+                "prop",
+                "mug",
+                "home",
+                "cafe"
+              ]
+            },
+            "before_exists": true,
+            "pointer": "/content",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/allENKOembeddingApp/exact5B/ownprop.6binding/fullSHAequalorigin/emptyclosure/paged04whole18facts and full149prop/thermal/action/contact/relational/hand boundaries read. Four callerselected actualexisting owners precise mug/twohands/sameholder with all exactv2 sameholderpart_of and hand/mug distinctness guards. Select actualqualitativelywarm mug, two coordinatedholding E with mug+otherhand Rx, and mugwrappedbyboth contact E supported onlyKO/App. English/embedding completepartialrefs preservewrapping without false directfact. Optional manuallyreviewed samefact coordinatedholdingview retains all canonical E/Rx/P/guards. No newentity/drink/steam/heatingprocess/fingergeometry, exacttotalhands, comfortemotion or thermalproxy. No sourcehuman/defaultowner assumption."
+          },
+          {
+            "after": {
+              "native_guards": {
+                "rules": [
+                  {
+                    "id": "first_hand_belongs_to_holder",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "hand_a"
+                    },
+                    "relation": "part_of",
+                    "right": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "holder"
+                    }
+                  },
+                  {
+                    "id": "second_hand_belongs_to_holder",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "hand_b"
+                    },
+                    "relation": "part_of",
+                    "right": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "holder"
+                    }
+                  },
+                  {
+                    "id": "participating_hands_are_distinct",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "hand_a"
+                    },
+                    "relation": "disjoint",
+                    "right": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "hand_b"
+                    }
+                  },
+                  {
+                    "id": "mug_is_distinct_from_first_hand",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "mug"
+                    },
+                    "relation": "disjoint",
+                    "right": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "hand_a"
+                    }
+                  },
+                  {
+                    "id": "mug_is_distinct_from_second_hand",
+                    "kind": "owner_relation",
+                    "left": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "mug"
+                    },
+                    "relation": "disjoint",
+                    "right": {
+                      "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                      "kind": "source_target",
+                      "target": "hand_b"
+                    }
+                  }
+                ],
+                "schema": "photo-native-source-guards/v2"
+              }
+            },
+            "after_exists": true,
+            "before": {},
+            "before_exists": true,
+            "pointer": "/conditions",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/allENKOembeddingApp/exact5B/ownprop.6binding/fullSHAequalorigin/emptyclosure/paged04whole18facts and full149prop/thermal/action/contact/relational/hand boundaries read. Four callerselected actualexisting owners precise mug/twohands/sameholder with all exactv2 sameholderpart_of and hand/mug distinctness guards. Select actualqualitativelywarm mug, two coordinatedholding E with mug+otherhand Rx, and mugwrappedbyboth contact E supported onlyKO/App. English/embedding completepartialrefs preservewrapping without false directfact. Optional manuallyreviewed samefact coordinatedholdingview retains all canonical E/Rx/P/guards. No newentity/drink/steam/heatingprocess/fingergeometry, exacttotalhands, comfortemotion or thermalproxy. No sourcehuman/defaultowner assumption."
+          },
+          {
+            "after": {
+              "dimensions": [
+                "action",
+                "material",
+                "relationship"
+              ],
+              "properties": [
+                {
+                  "dimension": "material",
+                  "property": "object.temperature.declared",
+                  "target": "mug"
+                },
+                {
+                  "dimension": "action",
+                  "property": "action.holding",
+                  "target": "hand_a"
+                },
+                {
+                  "dimension": "action",
+                  "property": "action.holding",
+                  "target": "hand_b"
+                },
+                {
+                  "dimension": "relationship",
+                  "property": "contact.held_by",
+                  "target": "mug"
+                }
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "dimensions": [],
+              "properties": []
+            },
+            "before_exists": true,
+            "pointer": "/effects",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/allENKOembeddingApp/exact5B/ownprop.6binding/fullSHAequalorigin/emptyclosure/paged04whole18facts and full149prop/thermal/action/contact/relational/hand boundaries read. Four callerselected actualexisting owners precise mug/twohands/sameholder with all exactv2 sameholderpart_of and hand/mug distinctness guards. Select actualqualitativelywarm mug, two coordinatedholding E with mug+otherhand Rx, and mugwrappedbyboth contact E supported onlyKO/App. English/embedding completepartialrefs preservewrapping without false directfact. Optional manuallyreviewed samefact coordinatedholdingview retains all canonical E/Rx/P/guards. No newentity/drink/steam/heatingprocess/fingergeometry, exacttotalhands, comfortemotion or thermalproxy. No sourcehuman/defaultowner assumption."
+          }
+        ],
+        "dependency_records": {},
+        "ordinal": 1296,
+        "original_compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+          "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+          "item": 47,
+          "row_sha256": "30e504bfcc3e31230fe60ce2b0644a431614e50de06abc1fa9f77a4516e1dbb9"
+        },
+        "proof": {
+          "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+          "complete": true,
+          "dependencies": {
+            "base": []
+          },
+          "effect_sets": {
+            "base": {
+              "dimensions": [
+                "action",
+                "material",
+                "relationship"
+              ],
+              "properties": [
+                {
+                  "dimension": "action",
+                  "property": "action.holding",
+                  "target": "hand_a"
+                },
+                {
+                  "dimension": "action",
+                  "property": "action.holding",
+                  "target": "hand_b"
+                },
+                {
+                  "dimension": "material",
+                  "property": "object.temperature.declared",
+                  "target": "mug"
+                },
+                {
+                  "dimension": "relationship",
+                  "property": "contact.held_by",
+                  "target": "mug"
+                }
+              ]
+            }
+          },
+          "facts": [
+            {
+              "dimension": "subject",
+              "id": "mugP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "props.type",
+              "quote": "independently declared existing mug",
+              "realization_id": "base",
+              "requires": [],
+              "target": "mug",
+              "value": {
+                "type": "props.type/v1",
+                "value": "mug"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "handAP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "entity.type",
+              "quote": "two independently declared existing hands",
+              "realization_id": "base",
+              "requires": [],
+              "target": "hand_a",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "hand"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "handBP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "entity.type",
+              "quote": "two independently declared existing hands",
+              "realization_id": "base",
+              "requires": [],
+              "target": "hand_b",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "hand"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "holderP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "entity.presence",
+              "quote": "same independently declared existing holder",
+              "realization_id": "base",
+              "requires": [],
+              "target": "holder",
+              "value": {
+                "type": "entity.presence/v1",
+                "value": "present"
+              }
+            },
+            {
+              "dimension": "material",
+              "id": "warmEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "object.temperature.declared",
+              "quote": "warm mug",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "mugP"
+              ],
+              "target": "mug",
+              "value": {
+                "type": "object.temperature.declared/v1",
+                "value": "qualitatively_warm"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdAEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "action.holding",
+              "quote": "held in both hands",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_b"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_a",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdBEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "action.holding",
+              "quote": "held in both hands",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_a"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_b",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "material",
+              "id": "warmKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "object.temperature.declared",
+              "quote": "따뜻한 머그",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "mugP"
+              ],
+              "target": "mug",
+              "value": {
+                "type": "object.temperature.declared/v1",
+                "value": "qualitatively_warm"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdAKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "action.holding",
+              "quote": "두 손으로 감싼",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_b"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_a",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdBKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "action.holding",
+              "quote": "두 손으로 감싼",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_a"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_b",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "relationship",
+              "id": "contactKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "contact.held_by",
+              "quote": "두 손으로 감싼",
+              "realization_id": "base",
+              "receivers": [
+                "hand_a",
+                "hand_b"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "mug",
+              "value": {
+                "type": "contact.held_by/v1",
+                "value": "held_wrapped_by_both_selected_hands"
+              }
+            },
+            {
+              "dimension": "material",
+              "id": "warmEmb",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/embedding_text",
+              "property": "object.temperature.declared",
+              "quote": "warm mug",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "mugP"
+              ],
+              "target": "mug",
+              "value": {
+                "type": "object.temperature.declared/v1",
+                "value": "qualitatively_warm"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdAEmb",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/embedding_text",
+              "property": "action.holding",
+              "quote": "held in both hands",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_b"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_a",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdBEmb",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/embedding_text",
+              "property": "action.holding",
+              "quote": "held in both hands",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_a"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_b",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "material",
+              "id": "warmApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "object.temperature.declared",
+              "quote": "Select the declared qualitative warm physical state of that mug",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "mugP"
+              ],
+              "target": "mug",
+              "value": {
+                "type": "object.temperature.declared/v1",
+                "value": "qualitatively_warm"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdAApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "action.holding",
+              "quote": "Select holding that same mug with both selected hands together",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_b"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_a",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "action",
+              "id": "holdBApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "action.holding",
+              "quote": "Select holding that same mug with both selected hands together",
+              "realization_id": "base",
+              "receivers": [
+                "mug",
+                "hand_a"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "hand_b",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "jointly_holding_same_mug_with_other_selected_hand"
+              }
+            },
+            {
+              "dimension": "relationship",
+              "id": "contactApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "contact.held_by",
+              "quote": "the mug held wrapped by both selected hands",
+              "realization_id": "base",
+              "receivers": [
+                "hand_a",
+                "hand_b"
+              ],
+              "requires": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP"
+              ],
+              "target": "mug",
+              "value": {
+                "type": "contact.held_by/v1",
+                "value": "held_wrapped_by_both_selected_hands"
+              }
+            }
+          ],
+          "guard_sets": {
+            "base": {
+              "member_conditions": {},
+              "source_conditions": [
+                {
+                  "native_guards": {
+                    "rules": [
+                      {
+                        "id": "first_hand_belongs_to_holder",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "hand_a"
+                        },
+                        "relation": "part_of",
+                        "right": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "holder"
+                        }
+                      },
+                      {
+                        "id": "second_hand_belongs_to_holder",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "hand_b"
+                        },
+                        "relation": "part_of",
+                        "right": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "holder"
+                        }
+                      },
+                      {
+                        "id": "participating_hands_are_distinct",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "hand_a"
+                        },
+                        "relation": "disjoint",
+                        "right": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "hand_b"
+                        }
+                      },
+                      {
+                        "id": "mug_is_distinct_from_first_hand",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "mug"
+                        },
+                        "relation": "disjoint",
+                        "right": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "hand_a"
+                        }
+                      },
+                      {
+                        "id": "mug_is_distinct_from_second_hand",
+                        "kind": "owner_relation",
+                        "left": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "mug"
+                        },
+                        "relation": "disjoint",
+                        "right": {
+                          "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                          "kind": "source_target",
+                          "target": "hand_b"
+                        }
+                      }
+                    ],
+                    "schema": "photo-native-source-guards/v2"
+                  }
+                },
+                {}
+              ]
+            }
+          },
+          "manual_role_views": [
+            {
+              "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+              "canonical_fact_refs": [
+                {
+                  "fact_id": "holdAApp",
+                  "fact_sha256": "ec16b95d12a63bca44b49bac922c19790fcd7ee1d7c5e9804d4dea0a363d337d",
+                  "mode": "effect"
+                },
+                {
+                  "fact_id": "holdBApp",
+                  "fact_sha256": "ad0901257d668ce57e964670499a2525bb1d27d1c7f30f40e3fa06e2d776e970",
+                  "mode": "effect"
+                }
+              ],
+              "endpoint_refs": [
+                {
+                  "fact_id": "holdAApp",
+                  "position": "target"
+                },
+                {
+                  "fact_id": "holdAApp",
+                  "index": 0,
+                  "position": "receiver"
+                },
+                {
+                  "fact_id": "holdAApp",
+                  "index": 1,
+                  "position": "receiver"
+                },
+                {
+                  "fact_id": "holdBApp",
+                  "position": "target"
+                },
+                {
+                  "fact_id": "holdBApp",
+                  "index": 0,
+                  "position": "receiver"
+                },
+                {
+                  "fact_id": "holdBApp",
+                  "index": 1,
+                  "position": "receiver"
+                }
+              ],
+              "id": "same_two_hands_hold_same_mug",
+              "manual_boundary_rationale": "Full149 relational/action/contact/prop/thermal boundaries directly reviewed. This performed coordinated holding does not infer drinking, heat transfer, pressure, finger geometry, new actor, exact total anatomical hand count or a primary/default holder.",
+              "manual_semantic_facet": "Both selected actual hands of the same declared holder jointly perform holding the same existing mug. The coordinated performed action has actual hand/mug endpoints, not mere co-presence or emotional warmth.",
+              "normal_anchors": [
+                {
+                  "facet_quote": "holding that same mug with both selected hands together",
+                  "fact_id": "holdAApp",
+                  "full_field_sha256": "89896ebbec2508bc7fd4ac65e54a35df67f23a27e27c693c6ea2e1c7913f5c76",
+                  "pointer": "/content/application_contract",
+                  "source_unit_sha256": "3cef685cf4bc9689be3b40f279f86f415dd9b34c75b5a6baacd96989b8a98018",
+                  "start": 426,
+                  "stop": 481
+                },
+                {
+                  "facet_quote": "holding that same mug with both selected hands together",
+                  "fact_id": "holdBApp",
+                  "full_field_sha256": "89896ebbec2508bc7fd4ac65e54a35df67f23a27e27c693c6ea2e1c7913f5c76",
+                  "pointer": "/content/application_contract",
+                  "source_unit_sha256": "3cef685cf4bc9689be3b40f279f86f415dd9b34c75b5a6baacd96989b8a98018",
+                  "start": 426,
+                  "stop": 481
+                }
+              ],
+              "realization_id": "base",
+              "requires_refs": [
+                "handAP",
+                "handBP",
+                "holderP",
+                "mugP"
+              ],
+              "role_id": "relational_action",
+              "schema": "photo-manual-semantic-role-view/v1",
+              "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+              "whole_closure_sha256": "87ea31e50b4aa4b93bdc03c406fdbe4ed6334dac231f9b625950755480a54303",
+              "whole_value_retained": "Retain both full canonical holding E values, set_value, exact actual targets and both mug/other-hand receivers, precise mug/hand/holder P, all same-holder part_of and three disjoint guards. Keep separate wrappedcontact and actual qualitative physical warmth E with their full permissions; no new interaction effect or property."
+            }
+          ],
+          "meaning_sha256": "867e226b8ce799069b108c1a72abd6c536338773a815a5688a46b1b0b357b7df",
+          "owner_maps": {
+            "base": {
+              "bindings": [
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "hand_a"
+                },
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "hand_b"
+                },
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "holder"
+                },
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "selected_existing_owner"
+                  },
+                  "target": "mug"
+                }
+              ],
+              "schema": "photo-native-owner-bindings/v3"
+            }
+          },
+          "profile_contracts": {
+            "base": null
+          },
+          "reference_sha256": {},
+          "review": {
+            "basis": "Fresh whole original/current/allENKOembeddingApp/exact5B/ownprop.6binding/fullSHAequalorigin/emptyclosure/paged04whole18facts and full149prop/thermal/action/contact/relational/hand boundaries read. Four callerselected actualexisting owners precise mug/twohands/sameholder with all exactv2 sameholderpart_of and hand/mug distinctness guards. Select actualqualitativelywarm mug, two coordinatedholding E with mug+otherhand Rx, and mugwrappedbyboth contact E supported onlyKO/App. English/embedding completepartialrefs preservewrapping without false directfact. Optional manuallyreviewed samefact coordinatedholdingview retains all canonical E/Rx/P/guards. No newentity/drink/steam/heatingprocess/fingergeometry, exacttotalhands, comfortemotion or thermalproxy. No sourcehuman/defaultowner assumption.",
+            "native_review": {
+              "method": "codex_subagent_direct_source_read",
+              "native_contract_sha256": "b5ad24eeae704fd916711e2209edd1aceb016bf1440335e4de37359bd5b774c3",
+              "reviewer": "/root/review_11870_12250"
+            },
+            "original_review": {
+              "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=47",
+              "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+              "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+              "decision_sha256": "30e504bfcc3e31230fe60ce2b0644a431614e50de06abc1fa9f77a4516e1dbb9",
+              "source_record_sha256": "6a1960fe44859e6ab5c7e23b6e3be0af47c07daba4fdfd320798796561cb5032"
+            },
+            "source_correction": {
+              "after_sha256": "867e226b8ce799069b108c1a72abd6c536338773a815a5688a46b1b0b357b7df",
+              "before_sha256": "6c706fe0a1cff5a86b274d2071fb94140bde35968d329b7cf5e985232cefed67",
+              "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/allENKOembeddingApp/exact5B/ownprop.6binding/fullSHAequalorigin/emptyclosure/paged04whole18facts and full149prop/thermal/action/contact/relational/hand boundaries read. Four callerselected actualexisting owners precise mug/twohands/sameholder with all exactv2 sameholderpart_of and hand/mug distinctness guards. Select actualqualitativelywarm mug, two coordinatedholding E with mug+otherhand Rx, and mugwrappedbyboth contact E supported onlyKO/App. English/embedding completepartialrefs preservewrapping without false directfact. Optional manuallyreviewed samefact coordinatedholdingview retains all canonical E/Rx/P/guards. No newentity/drink/steam/heatingprocess/fingergeometry, exacttotalhands, comfortemotion or thermalproxy. No sourcehuman/defaultowner assumption."
+            },
+            "whole_source_reviewed": true
+          },
+          "roles": {
+            "action": {
+              "fact_refs": [
+                "holdAEn",
+                "holdBEn",
+                "holdAKo",
+                "holdBKo",
+                "holdAEmb",
+                "holdBEmb",
+                "holdAApp",
+                "holdBApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+              "support_modes": [
+                "effect"
+              ]
+            },
+            "contact_point": {
+              "fact_refs": [
+                "contactKo",
+                "contactApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "cc1ed476821efda9a50e5db8a88a163bc1d1d08de58475a6f6ac2e46039115ff",
+              "support_modes": [
+                "effect"
+              ]
+            },
+            "prop": {
+              "fact_refs": [
+                "mugP"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+              "support_modes": [
+                "prerequisite"
+              ]
+            },
+            "relational_action": {
+              "fact_refs": [
+                "holdAApp",
+                "holdBApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+              "support_modes": [
+                "effect"
+              ],
+              "view_refs": [
+                "same_two_hands_hold_same_mug"
+              ]
+            },
+            "thermal_state": {
+              "fact_refs": [
+                "warmEn",
+                "warmKo",
+                "warmEmb",
+                "warmApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "5022188cce4598139a5f4e53b81b81a1307cb80f080e607fe54f6ea43c39c89e",
+              "support_modes": [
+                "effect"
+              ]
+            }
+          },
+          "schema": "photo-candidate-role-evidence/v4",
+          "source_units": [
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "warmEn",
+                "holdAEn",
+                "holdBEn"
+              ],
+              "pointer": "/content/en",
+              "quote": "warm mug held in both hands",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "warmKo",
+                "holdAKo",
+                "holdBKo",
+                "contactKo"
+              ],
+              "pointer": "/content/ko",
+              "quote": "두 손으로 감싼 따뜻한 머그",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "warmEmb",
+                "holdAEmb",
+                "holdBEmb"
+              ],
+              "pointer": "/content/embedding_text",
+              "quote": "warm mug held in both hands",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "mugP",
+                "handAP",
+                "handBP",
+                "holderP",
+                "warmApp",
+                "holdAApp",
+                "holdBApp",
+                "contactApp"
+              ],
+              "pointer": "/content/application_contract",
+              "quote": "Use only the independently declared existing mug and two independently declared existing hands of the same independently declared existing holder, all explicitly selected by the caller. The two selected hands are distinct, and the mug is distinct from either hand. Here both hands names the two participating hands in this holding action; it does not assert that the holder has exactly two hands in its entire anatomy. Select holding that same mug with both selected hands together and the mug held wrapped by both selected hands at the selected instant. Select the declared qualitative warm physical state of that mug; this is an actual selected state, not an assumed already-warm prerequisite or a numerical temperature. Do not add a mug, hands, holder, drink, steam or a heating process, and do not prescribe finger geometry or a comforting emotion. No main, primary or foreground role is assigned.",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic_reference",
+              "fact_refs": [
+                "contactApp"
+              ],
+              "pointer": "/content/en",
+              "quote": "warm mug held in both hands",
+              "realization_id": "base",
+              "reference_relation": "partial_restatement",
+              "retained_constraint_rationale": "English held in both hands directly supports both holding actions but not full wrapped-by-both contact. Retain complete selected wrapping directly in KO/App and partial reference to complete App contact fact, without invented English wrapping or source change."
+            },
+            {
+              "disposition": "semantic_reference",
+              "fact_refs": [
+                "contactApp"
+              ],
+              "pointer": "/content/embedding_text",
+              "quote": "warm mug held in both hands",
+              "realization_id": "base",
+              "reference_relation": "partial_restatement",
+              "retained_constraint_rationale": "English held in both hands directly supports both holding actions but not full wrapped-by-both contact. Retain complete selected wrapping directly in KO/App and partial reference to complete App contact fact, without invented English wrapping or source change."
+            }
+          ]
+        },
+        "rationale": "Fresh whole original/current/allENKOembeddingApp/exact5B/ownprop.6binding/fullSHAequalorigin/emptyclosure/paged04whole18facts and full149prop/thermal/action/contact/relational/hand boundaries read. Four callerselected actualexisting owners precise mug/twohands/sameholder with all exactv2 sameholderpart_of and hand/mug distinctness guards. Select actualqualitativelywarm mug, two coordinatedholding E with mug+otherhand Rx, and mugwrappedbyboth contact E supported onlyKO/App. English/embedding completepartialrefs preservewrapping without false directfact. Optional manuallyreviewed samefact coordinatedholdingview retains all canonical E/Rx/P/guards. No newentity/drink/steam/heatingprocess/fingergeometry, exacttotalhands, comfortemotion or thermalproxy. No sourcehuman/defaultowner assumption.",
+        "reference_bindings": {},
+        "reference_reread_complete": true,
+        "revision": {
+          "memo_artifacts": [
+            {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+              "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+              "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+            }
+          ],
+          "prior_review": {
+            "artifact": {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+              "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+              "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+            },
+            "pointer": "/records/46",
+            "sha256": "78048a64fe6b7fd16667663505b0e802ee8c25dfcd4e99ba836a809394bc053a"
+          },
+          "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/allENKOembeddingApp/exact5B/ownprop.6binding/fullSHAequalorigin/emptyclosure/paged04whole18facts and full149prop/thermal/action/contact/relational/hand boundaries read. Four callerselected actualexisting owners precise mug/twohands/sameholder with all exactv2 sameholderpart_of and hand/mug distinctness guards. Select actualqualitativelywarm mug, two coordinatedholding E with mug+otherhand Rx, and mugwrappedbyboth contact E supported onlyKO/App. English/embedding completepartialrefs preservewrapping without false directfact. Optional manuallyreviewed samefact coordinatedholdingview retains all canonical E/Rx/P/guards. No newentity/drink/steam/heatingprocess/fingergeometry, exacttotalhands, comfortemotion or thermalproxy. No sourcehuman/defaultowner assumption."
+        },
+        "source_after": {
+          "conditions": {
+            "native_guards": {
+              "rules": [
+                {
+                  "id": "first_hand_belongs_to_holder",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "hand_a"
+                  },
+                  "relation": "part_of",
+                  "right": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "holder"
+                  }
+                },
+                {
+                  "id": "second_hand_belongs_to_holder",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "hand_b"
+                  },
+                  "relation": "part_of",
+                  "right": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "holder"
+                  }
+                },
+                {
+                  "id": "participating_hands_are_distinct",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "hand_a"
+                  },
+                  "relation": "disjoint",
+                  "right": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "hand_b"
+                  }
+                },
+                {
+                  "id": "mug_is_distinct_from_first_hand",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "mug"
+                  },
+                  "relation": "disjoint",
+                  "right": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "hand_a"
+                  }
+                },
+                {
+                  "id": "mug_is_distinct_from_second_hand",
+                  "kind": "owner_relation",
+                  "left": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "mug"
+                  },
+                  "relation": "disjoint",
+                  "right": {
+                    "candidate_id": "cand_1b714a345bd35bc08d6592bf94caca29",
+                    "kind": "source_target",
+                    "target": "hand_b"
+                  }
+                }
+              ],
+              "schema": "photo-native-source-guards/v2"
+            }
+          },
+          "content": {
+            "application_contract": "Use only the independently declared existing mug and two independently declared existing hands of the same independently declared existing holder, all explicitly selected by the caller. The two selected hands are distinct, and the mug is distinct from either hand. Here both hands names the two participating hands in this holding action; it does not assert that the holder has exactly two hands in its entire anatomy. Select holding that same mug with both selected hands together and the mug held wrapped by both selected hands at the selected instant. Select the declared qualitative warm physical state of that mug; this is an actual selected state, not an assumed already-warm prerequisite or a numerical temperature. Do not add a mug, hands, holder, drink, steam or a heating process, and do not prescribe finger geometry or a comforting emotion. No main, primary or foreground role is assigned.",
+            "embedding_text": "warm mug held in both hands",
+            "en": "warm mug held in both hands",
+            "ko": "두 손으로 감싼 따뜻한 머그",
+            "tags": [
+              "prop",
+              "mug",
+              "home",
+              "cafe"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "action",
+              "material",
+              "relationship"
+            ],
+            "properties": [
+              {
+                "dimension": "material",
+                "property": "object.temperature.declared",
+                "target": "mug"
+              },
+              {
+                "dimension": "action",
+                "property": "action.holding",
+                "target": "hand_a"
+              },
+              {
+                "dimension": "action",
+                "property": "action.holding",
+                "target": "hand_b"
+              },
+              {
+                "dimension": "relationship",
+                "property": "contact.held_by",
+                "target": "mug"
+              }
+            ]
+          },
+          "id": "cand_1b714a345bd35bc08d6592bf94caca29",
+          "provenance": [
+            {
+              "sha256": "cffaff26c43d18fd73d70832a72eed7ded0b87bb6de3d653c1df1db5c8675c74",
+              "source": "slot:prop:warm_mug_held_prop"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_before": {
+          "conditions": {},
+          "content": {
+            "embedding_text": "warm mug held in both hands",
+            "en": "warm mug held in both hands",
+            "ko": "두 손으로 감싼 따뜻한 머그",
+            "tags": [
+              "prop",
+              "mug",
+              "home",
+              "cafe"
+            ]
+          },
+          "effects": {
+            "dimensions": [],
+            "properties": []
+          },
+          "id": "cand_1b714a345bd35bc08d6592bf94caca29",
+          "provenance": [
+            {
+              "sha256": "cffaff26c43d18fd73d70832a72eed7ded0b87bb6de3d653c1df1db5c8675c74",
+              "source": "slot:prop:warm_mug_held_prop"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_reread_complete": true,
+        "status": "approved"
+      }
+    },
+    {
+      "ordinal": 1297,
+      "candidate_id": "cand_230694daff125ad59cbc8e368313211c",
+      "checkpoint": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json",
+      "checkpoint_pointer": "/records/47",
+      "original": {
+        "conditions": {
+          "for_any": [
+            "object",
+            "product",
+            "food"
+          ]
+        },
+        "content": {
+          "en": "styled as if floating in midair",
+          "ko": "공중에 떠 있는 듯 연출된",
+          "tags": [
+            "product",
+            "studio",
+            "object"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_230694daff125ad59cbc8e368313211c",
+        "provenance": [
+          {
+            "sha256": "d5161612a7a6af15f1e028a73ae8e86961901273118f35cb601e92fb8bc7fff5",
+            "source": "slot:action:floating_product"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "current": {
+        "conditions": {
+          "for_any": [
+            "object",
+            "product",
+            "food"
+          ]
+        },
+        "content": {
+          "application_contract": "Use only the independently declared existing object bound to primary_prop under the original object/product/food eligibility. Select apparently midair-suspended placement and staged floating presentation; do not add an object, assert physical levitation or prescribe motion.",
+          "en": "styled as if floating in midair",
+          "ko": "공중에 떠 있는 듯 연출된",
+          "tags": [
+            "product",
+            "studio",
+            "object"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition",
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "composition",
+              "property": "objects.position",
+              "target": "object"
+            },
+            {
+              "dimension": "style",
+              "property": "presentation.staging",
+              "target": "object"
+            }
+          ]
+        },
+        "id": "cand_230694daff125ad59cbc8e368313211c",
+        "provenance": [
+          {
+            "sha256": "d5161612a7a6af15f1e028a73ae8e86961901273118f35cb601e92fb8bc7fff5",
+            "source": "slot:action:floating_product"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "original_5B": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 48,
+          "sha256": "26a0433aca566af732f1997fcabb66dae92fa961f104d331956e74792ecf2687"
+        },
+        "candidate_id": "cand_230694daff125ad59cbc8e368313211c",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "composition",
+            "pointer": "/content/en",
+            "property": "props.placement.midair",
+            "quote": "styled as if floating in midair",
+            "realization_id": "base",
+            "target": "object"
+          },
+          {
+            "dimension": "style",
+            "pointer": "/content/en",
+            "property": "capture.staging.styled_floating",
+            "quote": "styled as if floating in midair",
+            "realization_id": "base",
+            "target": "image"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "An object is staged to appear suspended in midair.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "Retain object/product/food scope; apparent floating does not prove impossible physics."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "composition",
+                "pointer": "/content/en",
+                "property": "props.placement.midair",
+                "quote": "styled as if floating in midair",
+                "target": "object"
+              }
+            ],
+            "rationale": "An object is staged to appear suspended in midair.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop_placement"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "style",
+                "pointer": "/content/en",
+                "property": "capture.staging.styled_floating",
+                "quote": "styled as if floating in midair",
+                "target": "image"
+              }
+            ],
+            "rationale": "An object is staged to appear suspended in midair.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "staging_degree"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "9de4b41f6146bbf14c872f4b1efc162de543ffea89f9ca0b0c07c872b452cde1",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_packet_record": {
+        "conditions": {
+          "for_any": [
+            "object",
+            "product",
+            "food"
+          ]
+        },
+        "content": {
+          "en": "styled as if floating in midair",
+          "ko": "공중에 떠 있는 듯 연출된",
+          "tags": [
+            "product",
+            "studio",
+            "object"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_230694daff125ad59cbc8e368313211c",
+        "provenance": [
+          {
+            "sha256": "d5161612a7a6af15f1e028a73ae8e86961901273118f35cb601e92fb8bc7fff5",
+            "source": "slot:action:floating_product"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "own_original_bindings": {
+        "bind_230694daff125ad59cbc8e368313211c": {
+          "candidate_id": "cand_230694daff125ad59cbc8e368313211c",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_230694daff125ad59cbc8e368313211c",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.8
+        }
+      },
+      "own_current_bindings": {
+        "bind_230694daff125ad59cbc8e368313211c": {
+          "candidate_id": "cand_230694daff125ad59cbc8e368313211c",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_230694daff125ad59cbc8e368313211c",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.8
+        }
+      },
+      "checkpoint_record": {
+        "candidate_id": "cand_230694daff125ad59cbc8e368313211c",
+        "delta": [
+          {
+            "after": {
+              "application_contract": "Use only the independently declared existing object bound to primary_prop under the original object/product/food eligibility. Select apparently midair-suspended placement and staged floating presentation; do not add an object, assert physical levitation or prescribe motion.",
+              "en": "styled as if floating in midair",
+              "ko": "공중에 떠 있는 듯 연출된",
+              "tags": [
+                "product",
+                "studio",
+                "object"
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "en": "styled as if floating in midair",
+              "ko": "공중에 떠 있는 듯 연출된",
+              "tags": [
+                "product",
+                "studio",
+                "object"
+              ]
+            },
+            "before_exists": true,
+            "pointer": "/content",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.8binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and full149placement/staging/physicalmotion/reality/surreal boundaries read. Same independentlyexisting primary_prop exactobjectP under original object/product/food eligibility receives apparentlymidair-suspended placement compositionE and stagedfloating presentation styleE. As-if and styled qualifications preserved as actual selected presentation, not physical levitation or frozencontext. No movement/action/trajectory, newobject, suspensionapparatus or surrealworldrule inferred. Historicalaction displaybinding doesnot support action role and sourceeligibility remains mandatory."
+          },
+          {
+            "after": {
+              "dimensions": [
+                "composition",
+                "style"
+              ],
+              "properties": [
+                {
+                  "dimension": "composition",
+                  "property": "objects.position",
+                  "target": "object"
+                },
+                {
+                  "dimension": "style",
+                  "property": "presentation.staging",
+                  "target": "object"
+                }
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "dimensions": [
+                "action"
+              ],
+              "properties": []
+            },
+            "before_exists": true,
+            "pointer": "/effects",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownaction.8binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and full149placement/staging/physicalmotion/reality/surreal boundaries read. Same independentlyexisting primary_prop exactobjectP under original object/product/food eligibility receives apparentlymidair-suspended placement compositionE and stagedfloating presentation styleE. As-if and styled qualifications preserved as actual selected presentation, not physical levitation or frozencontext. No movement/action/trajectory, newobject, suspensionapparatus or surrealworldrule inferred. Historicalaction displaybinding doesnot support action role and sourceeligibility remains mandatory."
+          }
+        ],
+        "dependency_records": {},
+        "ordinal": 1297,
+        "original_compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+          "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+          "item": 48,
+          "row_sha256": "cea2e53ea6a0364bf8aa1cc530238d9c29dd6f08d7e70e590b332de059208253"
+        },
+        "proof": {
+          "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+          "complete": true,
+          "dependencies": {
+            "base": []
+          },
+          "effect_sets": {
+            "base": {
+              "dimensions": [
+                "composition",
+                "style"
+              ],
+              "properties": [
+                {
+                  "dimension": "composition",
+                  "property": "objects.position",
+                  "target": "object"
+                },
+                {
+                  "dimension": "style",
+                  "property": "presentation.staging",
+                  "target": "object"
+                }
+              ]
+            }
+          },
+          "facts": [
+            {
+              "dimension": "subject",
+              "id": "objectP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "entity.type",
+              "quote": "independently declared existing object",
+              "realization_id": "base",
+              "requires": [],
+              "target": "object",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "object"
+              }
+            },
+            {
+              "dimension": "composition",
+              "id": "placeEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "objects.position",
+              "quote": "as if floating in midair",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "objectP"
+              ],
+              "target": "object",
+              "value": {
+                "type": "objects.position/v1",
+                "value": "apparently_midair_suspended"
+              }
+            },
+            {
+              "dimension": "style",
+              "id": "stageEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "presentation.staging",
+              "quote": "styled as if floating in midair",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "objectP"
+              ],
+              "target": "object",
+              "value": {
+                "type": "presentation.staging/v1",
+                "value": "staged_floating_appearance"
+              }
+            },
+            {
+              "dimension": "composition",
+              "id": "placeKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "objects.position",
+              "quote": "공중에 떠 있는 듯",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "objectP"
+              ],
+              "target": "object",
+              "value": {
+                "type": "objects.position/v1",
+                "value": "apparently_midair_suspended"
+              }
+            },
+            {
+              "dimension": "style",
+              "id": "stageKo",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/ko",
+              "property": "presentation.staging",
+              "quote": "공중에 떠 있는 듯 연출된",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "objectP"
+              ],
+              "target": "object",
+              "value": {
+                "type": "presentation.staging/v1",
+                "value": "staged_floating_appearance"
+              }
+            },
+            {
+              "dimension": "composition",
+              "id": "placeApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "objects.position",
+              "quote": "Select apparently midair-suspended placement",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "objectP"
+              ],
+              "target": "object",
+              "value": {
+                "type": "objects.position/v1",
+                "value": "apparently_midair_suspended"
+              }
+            },
+            {
+              "dimension": "style",
+              "id": "stageApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "presentation.staging",
+              "quote": "staged floating presentation",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "objectP"
+              ],
+              "target": "object",
+              "value": {
+                "type": "presentation.staging/v1",
+                "value": "staged_floating_appearance"
+              }
+            }
+          ],
+          "guard_sets": {
+            "base": {
+              "member_conditions": {},
+              "source_conditions": [
+                {
+                  "for_any": [
+                    "object",
+                    "product",
+                    "food"
+                  ]
+                },
+                {}
+              ]
+            }
+          },
+          "meaning_sha256": "fbae8444d6eb7ac94ec837e3f752a58f7cc8687b2a3afb2498cdc323bd90068a",
+          "owner_maps": {
+            "base": {
+              "bindings": [
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "core_role",
+                    "role": "primary_prop"
+                  },
+                  "target": "object"
+                }
+              ],
+              "schema": "photo-native-owner-bindings/v3"
+            }
+          },
+          "profile_contracts": {
+            "base": null
+          },
+          "reference_sha256": {},
+          "review": {
+            "basis": "Fresh whole original/current/exact5B/ownaction.8binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and full149placement/staging/physicalmotion/reality/surreal boundaries read. Same independentlyexisting primary_prop exactobjectP under original object/product/food eligibility receives apparentlymidair-suspended placement compositionE and stagedfloating presentation styleE. As-if and styled qualifications preserved as actual selected presentation, not physical levitation or frozencontext. No movement/action/trajectory, newobject, suspensionapparatus or surrealworldrule inferred. Historicalaction displaybinding doesnot support action role and sourceeligibility remains mandatory.",
+            "native_review": {
+              "method": "codex_subagent_direct_source_read",
+              "native_contract_sha256": "3efd1bb587158db00d73936e7b2f878e117b5423dca7a26640dd2e58280e357f",
+              "reviewer": "/root/review_11870_12250"
+            },
+            "original_review": {
+              "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=48",
+              "candidate_id": "cand_230694daff125ad59cbc8e368313211c",
+              "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+              "decision_sha256": "cea2e53ea6a0364bf8aa1cc530238d9c29dd6f08d7e70e590b332de059208253",
+              "source_record_sha256": "9de4b41f6146bbf14c872f4b1efc162de543ffea89f9ca0b0c07c872b452cde1"
+            },
+            "source_correction": {
+              "after_sha256": "fbae8444d6eb7ac94ec837e3f752a58f7cc8687b2a3afb2498cdc323bd90068a",
+              "before_sha256": "7781d24a3122b57e91ca54881ba6dd0a5ce3c730824cdc7d4b438e49430f847f",
+              "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownaction.8binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and full149placement/staging/physicalmotion/reality/surreal boundaries read. Same independentlyexisting primary_prop exactobjectP under original object/product/food eligibility receives apparentlymidair-suspended placement compositionE and stagedfloating presentation styleE. As-if and styled qualifications preserved as actual selected presentation, not physical levitation or frozencontext. No movement/action/trajectory, newobject, suspensionapparatus or surrealworldrule inferred. Historicalaction displaybinding doesnot support action role and sourceeligibility remains mandatory."
+            },
+            "whole_source_reviewed": true
+          },
+          "roles": {
+            "prop_placement": {
+              "fact_refs": [
+                "placeEn",
+                "placeKo",
+                "placeApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "ea4419f0141104a5cc21d865f071b6ff8cb091aaf2415de9930e6a33d2503789",
+              "support_modes": [
+                "effect"
+              ]
+            },
+            "staging_degree": {
+              "fact_refs": [
+                "stageEn",
+                "stageKo",
+                "stageApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "0fe242a2405f9a49f26d2519acbc1df9ea3b98c8a95662c4c63ab73fb1b3095c",
+              "support_modes": [
+                "effect"
+              ]
+            }
+          },
+          "schema": "photo-candidate-role-evidence/v4",
+          "source_units": [
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "placeEn",
+                "stageEn"
+              ],
+              "pointer": "/content/en",
+              "quote": "styled as if floating in midair",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "placeKo",
+                "stageKo"
+              ],
+              "pointer": "/content/ko",
+              "quote": "공중에 떠 있는 듯 연출된",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "objectP",
+                "placeApp",
+                "stageApp"
+              ],
+              "pointer": "/content/application_contract",
+              "quote": "Use only the independently declared existing object bound to primary_prop under the original object/product/food eligibility. Select apparently midair-suspended placement and staged floating presentation; do not add an object, assert physical levitation or prescribe motion.",
+              "realization_id": "base"
+            }
+          ]
+        },
+        "rationale": "Fresh whole original/current/exact5B/ownaction.8binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and full149placement/staging/physicalmotion/reality/surreal boundaries read. Same independentlyexisting primary_prop exactobjectP under original object/product/food eligibility receives apparentlymidair-suspended placement compositionE and stagedfloating presentation styleE. As-if and styled qualifications preserved as actual selected presentation, not physical levitation or frozencontext. No movement/action/trajectory, newobject, suspensionapparatus or surrealworldrule inferred. Historicalaction displaybinding doesnot support action role and sourceeligibility remains mandatory.",
+        "reference_bindings": {},
+        "reference_reread_complete": true,
+        "revision": {
+          "memo_artifacts": [
+            {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+              "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+              "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+            }
+          ],
+          "prior_review": {
+            "artifact": {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+              "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+              "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+            },
+            "pointer": "/records/47",
+            "sha256": "e2b472ba4f5ef5783c6173f36f524ce3a13efc409111eb3e28e14986285aa572"
+          },
+          "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownaction.8binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and full149placement/staging/physicalmotion/reality/surreal boundaries read. Same independentlyexisting primary_prop exactobjectP under original object/product/food eligibility receives apparentlymidair-suspended placement compositionE and stagedfloating presentation styleE. As-if and styled qualifications preserved as actual selected presentation, not physical levitation or frozencontext. No movement/action/trajectory, newobject, suspensionapparatus or surrealworldrule inferred. Historicalaction displaybinding doesnot support action role and sourceeligibility remains mandatory."
+        },
+        "source_after": {
+          "conditions": {
+            "for_any": [
+              "object",
+              "product",
+              "food"
+            ]
+          },
+          "content": {
+            "application_contract": "Use only the independently declared existing object bound to primary_prop under the original object/product/food eligibility. Select apparently midair-suspended placement and staged floating presentation; do not add an object, assert physical levitation or prescribe motion.",
+            "en": "styled as if floating in midair",
+            "ko": "공중에 떠 있는 듯 연출된",
+            "tags": [
+              "product",
+              "studio",
+              "object"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "composition",
+              "style"
+            ],
+            "properties": [
+              {
+                "dimension": "composition",
+                "property": "objects.position",
+                "target": "object"
+              },
+              {
+                "dimension": "style",
+                "property": "presentation.staging",
+                "target": "object"
+              }
+            ]
+          },
+          "id": "cand_230694daff125ad59cbc8e368313211c",
+          "provenance": [
+            {
+              "sha256": "d5161612a7a6af15f1e028a73ae8e86961901273118f35cb601e92fb8bc7fff5",
+              "source": "slot:action:floating_product"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_before": {
+          "conditions": {
+            "for_any": [
+              "object",
+              "product",
+              "food"
+            ]
+          },
+          "content": {
+            "en": "styled as if floating in midair",
+            "ko": "공중에 떠 있는 듯 연출된",
+            "tags": [
+              "product",
+              "studio",
+              "object"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": []
+          },
+          "id": "cand_230694daff125ad59cbc8e368313211c",
+          "provenance": [
+            {
+              "sha256": "d5161612a7a6af15f1e028a73ae8e86961901273118f35cb601e92fb8bc7fff5",
+              "source": "slot:action:floating_product"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_reread_complete": true,
+        "status": "approved"
+      }
+    },
+    {
+      "ordinal": 1298,
+      "candidate_id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+      "checkpoint": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json",
+      "checkpoint_pointer": "/records/48",
+      "original": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "a florist delivery box as a cover identity prop",
+          "ko": "꽃 배달 상자 위장 소품",
+          "tags": [
+            "human",
+            "prop",
+            "cover",
+            "service"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+        "provenance": [
+          {
+            "sha256": "094253f40cf155a47b73989ca1d4b58cd74bbba6b25aa0a037ea3b44234c6fa0",
+            "source": "slot:prop:florist_delivery_box_cover"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "current": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Use only the independently declared existing florist-delivery box bound to primary_prop. Keep its identity fixed and select its authored cover-identity prop function. Do not add a florist, flowers, delivery action, specific actor intention or successful deception.",
+          "en": "a florist delivery box as a cover identity prop",
+          "ko": "꽃 배달 상자 위장 소품",
+          "tags": [
+            "human",
+            "prop",
+            "cover",
+            "service"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "concept"
+          ],
+          "properties": [
+            {
+              "dimension": "concept",
+              "property": "narrative.clue.function",
+              "target": "box"
+            }
+          ]
+        },
+        "id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+        "provenance": [
+          {
+            "sha256": "094253f40cf155a47b73989ca1d4b58cd74bbba6b25aa0a037ea3b44234c6fa0",
+            "source": "slot:prop:florist_delivery_box_cover"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "original_5B": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 49,
+          "sha256": "86e50da538c64f09250edf1fdfe1f6090d731c24210482a1dc00744dc251a070"
+        },
+        "candidate_id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "props.type.florist_delivery_box",
+            "quote": "a florist delivery box as a cover identity prop",
+            "realization_id": "base",
+            "target": "box"
+          },
+          {
+            "dimension": "character_response",
+            "pointer": "/content/en",
+            "property": "character.intent.cover_identity",
+            "quote": "a florist delivery box as a cover identity prop",
+            "realization_id": "base",
+            "target": "actor"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "A florist delivery box serves a cover-identity purpose.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No actual florist, delivery action or deceptive success is proven."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "props.type.florist_delivery_box",
+                "quote": "a florist delivery box as a cover identity prop",
+                "target": "box"
+              }
+            ],
+            "rationale": "A florist delivery box serves a cover-identity purpose.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "character_response",
+                "pointer": "/content/en",
+                "property": "character.intent.cover_identity",
+                "quote": "a florist delivery box as a cover identity prop",
+                "target": "actor"
+              }
+            ],
+            "rationale": "A florist delivery box serves a cover-identity purpose.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "character_intent"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "43c28fb49a57bff32e906fe33b3591cd4500318e1f2a07a11b7cb81ddf5a4f6e",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_packet_record": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "a florist delivery box as a cover identity prop",
+          "ko": "꽃 배달 상자 위장 소품",
+          "tags": [
+            "human",
+            "prop",
+            "cover",
+            "service"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+        "provenance": [
+          {
+            "sha256": "094253f40cf155a47b73989ca1d4b58cd74bbba6b25aa0a037ea3b44234c6fa0",
+            "source": "slot:prop:florist_delivery_box_cover"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "own_original_bindings": {
+        "bind_25e6f12a8c215fa4894f4b5fd42340aa": {
+          "candidate_id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_25e6f12a8c215fa4894f4b5fd42340aa",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 0.9
+        }
+      },
+      "own_current_bindings": {
+        "bind_25e6f12a8c215fa4894f4b5fd42340aa": {
+          "candidate_id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_25e6f12a8c215fa4894f4b5fd42340aa",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 0.9
+        }
+      },
+      "checkpoint_record": {
+        "candidate_id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+        "delta": [
+          {
+            "after": {
+              "application_contract": "Use only the independently declared existing florist-delivery box bound to primary_prop. Keep its identity fixed and select its authored cover-identity prop function. Do not add a florist, flowers, delivery action, specific actor intention or successful deception.",
+              "en": "a florist delivery box as a cover identity prop",
+              "ko": "꽃 배달 상자 위장 소품",
+              "tags": [
+                "human",
+                "prop",
+                "cover",
+                "service"
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "en": "a florist delivery box as a cover identity prop",
+              "ko": "꽃 배달 상자 위장 소품",
+              "tags": [
+                "human",
+                "prop",
+                "cover",
+                "service"
+              ]
+            },
+            "before_exists": true,
+            "pointer": "/content",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownprop.9binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and rootquotehold plus full149prop/narrative/intent/action boundaries read. Existing exactfloristdeliveryboxP atprimary_prop and sameidentitypreservation consumed; selected authoredcoveridentityprop function remains actualconcept E. Rootheld KOanchor is removed as unsupported duplicate only, full E retained directEN/App and fullKOpartialref. No actualflorist/flowers/deliveryaction/newactor, actorintention or successfuldeception inferred. Sourcehuman eligibility remains, normallyprotectedconcept notopened for positiveconsumer."
+          },
+          {
+            "after": {
+              "dimensions": [
+                "concept"
+              ],
+              "properties": [
+                {
+                  "dimension": "concept",
+                  "property": "narrative.clue.function",
+                  "target": "box"
+                }
+              ]
+            },
+            "after_exists": true,
+            "before": {
+              "dimensions": [],
+              "properties": []
+            },
+            "before_exists": true,
+            "pointer": "/effects",
+            "reason": "Exactformal05 root input, no current source edit. Fresh whole original/current/exact5B/ownprop.9binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and rootquotehold plus full149prop/narrative/intent/action boundaries read. Existing exactfloristdeliveryboxP atprimary_prop and sameidentitypreservation consumed; selected authoredcoveridentityprop function remains actualconcept E. Rootheld KOanchor is removed as unsupported duplicate only, full E retained directEN/App and fullKOpartialref. No actualflorist/flowers/deliveryaction/newactor, actorintention or successfuldeception inferred. Sourcehuman eligibility remains, normallyprotectedconcept notopened for positiveconsumer."
+          }
+        ],
+        "dependency_records": {},
+        "ordinal": 1298,
+        "original_compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+          "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+          "item": 49,
+          "row_sha256": "dc5c6f2cd793571cb4bb7433cc5f45e4d8f9a9a5887710e017ae9a6446c10c01"
+        },
+        "proof": {
+          "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+          "complete": true,
+          "dependencies": {
+            "base": []
+          },
+          "effect_sets": {
+            "base": {
+              "dimensions": [
+                "concept"
+              ],
+              "properties": [
+                {
+                  "dimension": "concept",
+                  "property": "narrative.clue.function",
+                  "target": "box"
+                }
+              ]
+            }
+          },
+          "facts": [
+            {
+              "dimension": "subject",
+              "id": "boxP",
+              "mode": "prerequisite",
+              "pointer": "/content/application_contract",
+              "property": "props.type",
+              "quote": "independently declared existing florist-delivery box",
+              "realization_id": "base",
+              "requires": [],
+              "target": "box",
+              "value": {
+                "type": "props.type/v1",
+                "value": "florist_delivery_box"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "boxEnP",
+              "mode": "prerequisite",
+              "pointer": "/content/en",
+              "property": "props.type",
+              "quote": "a florist delivery box",
+              "realization_id": "base",
+              "requires": [],
+              "target": "box",
+              "value": {
+                "type": "props.type/v1",
+                "value": "florist_delivery_box"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "boxKoP",
+              "mode": "prerequisite",
+              "pointer": "/content/ko",
+              "property": "props.type",
+              "quote": "꽃 배달 상자",
+              "realization_id": "base",
+              "requires": [],
+              "target": "box",
+              "value": {
+                "type": "props.type/v1",
+                "value": "florist_delivery_box"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "boxS",
+              "mode": "preservation",
+              "pointer": "/content/application_contract",
+              "property": "props.type",
+              "quote": "existing florist-delivery box bound to primary_prop. Keep its identity fixed",
+              "realization_id": "base",
+              "requires": [
+                "boxP"
+              ],
+              "target": "box",
+              "value": {
+                "type": "props.type/v1",
+                "value": "florist_delivery_box"
+              }
+            },
+            {
+              "dimension": "concept",
+              "id": "coverEn",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "narrative.clue.function",
+              "quote": "as a cover identity prop",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "boxP",
+                "boxS"
+              ],
+              "target": "box",
+              "value": {
+                "type": "narrative.clue.function/v1",
+                "value": "authored_cover_identity_prop"
+              }
+            },
+            {
+              "dimension": "concept",
+              "id": "coverApp",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/application_contract",
+              "property": "narrative.clue.function",
+              "quote": "select its authored cover-identity prop function",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [
+                "boxP",
+                "boxS"
+              ],
+              "target": "box",
+              "value": {
+                "type": "narrative.clue.function/v1",
+                "value": "authored_cover_identity_prop"
+              }
+            }
+          ],
+          "guard_sets": {
+            "base": {
+              "member_conditions": {},
+              "source_conditions": [
+                {
+                  "for_any": [
+                    "human"
+                  ]
+                },
+                {}
+              ]
+            }
+          },
+          "meaning_sha256": "b7d3e167a9a97098ad5caf56320d3645771efaaed3e75210e0dd1cadb494848b",
+          "owner_maps": {
+            "base": {
+              "bindings": [
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "core_role",
+                    "role": "primary_prop"
+                  },
+                  "target": "box"
+                }
+              ],
+              "schema": "photo-native-owner-bindings/v3"
+            }
+          },
+          "profile_contracts": {
+            "base": null
+          },
+          "reference_sha256": {},
+          "review": {
+            "basis": "Fresh whole original/current/exact5B/ownprop.9binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and rootquotehold plus full149prop/narrative/intent/action boundaries read. Existing exactfloristdeliveryboxP atprimary_prop and sameidentitypreservation consumed; selected authoredcoveridentityprop function remains actualconcept E. Rootheld KOanchor is removed as unsupported duplicate only, full E retained directEN/App and fullKOpartialref. No actualflorist/flowers/deliveryaction/newactor, actorintention or successfuldeception inferred. Sourcehuman eligibility remains, normallyprotectedconcept notopened for positiveconsumer.",
+            "native_review": {
+              "method": "codex_subagent_direct_source_read",
+              "native_contract_sha256": "33ea0cebfc625e6b589ee13e36a5db82c6211f073ff7498c119348541e1eb919",
+              "reviewer": "/root/review_11870_12250"
+            },
+            "original_review": {
+              "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json#item=49",
+              "candidate_id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+              "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+              "decision_sha256": "dc5c6f2cd793571cb4bb7433cc5f45e4d8f9a9a5887710e017ae9a6446c10c01",
+              "source_record_sha256": "43c28fb49a57bff32e906fe33b3591cd4500318e1f2a07a11b7cb81ddf5a4f6e"
+            },
+            "source_correction": {
+              "after_sha256": "b7d3e167a9a97098ad5caf56320d3645771efaaed3e75210e0dd1cadb494848b",
+              "before_sha256": "da9170369cf124747fc3dea2a2d09f00460d37a182aaa4c57f644c8f3a366297",
+              "rationale": "Exact root selected formal05 fullafter, no further source change. Fresh whole original/current/exact5B/ownprop.9binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and rootquotehold plus full149prop/narrative/intent/action boundaries read. Existing exactfloristdeliveryboxP atprimary_prop and sameidentitypreservation consumed; selected authoredcoveridentityprop function remains actualconcept E. Rootheld KOanchor is removed as unsupported duplicate only, full E retained directEN/App and fullKOpartialref. No actualflorist/flowers/deliveryaction/newactor, actorintention or successfuldeception inferred. Sourcehuman eligibility remains, normallyprotectedconcept notopened for positiveconsumer."
+            },
+            "whole_source_reviewed": true
+          },
+          "roles": {
+            "narrative_clue": {
+              "fact_refs": [
+                "coverEn",
+                "coverApp"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "2b5fec599e9c88cec32793906b4ac68a2f7feb22231e0f5848fcf1e4e3666856",
+              "support_modes": [
+                "effect"
+              ]
+            },
+            "prop": {
+              "fact_refs": [
+                "boxP",
+                "boxEnP",
+                "boxKoP",
+                "boxS"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+              "support_modes": [
+                "prerequisite",
+                "preservation"
+              ]
+            }
+          },
+          "schema": "photo-candidate-role-evidence/v4",
+          "source_units": [
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "boxEnP",
+                "coverEn"
+              ],
+              "pointer": "/content/en",
+              "quote": "a florist delivery box as a cover identity prop",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "boxKoP"
+              ],
+              "pointer": "/content/ko",
+              "quote": "꽃 배달 상자 위장 소품",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "boxP",
+                "boxS",
+                "coverApp"
+              ],
+              "pointer": "/content/application_contract",
+              "quote": "Use only the independently declared existing florist-delivery box bound to primary_prop. Keep its identity fixed and select its authored cover-identity prop function. Do not add a florist, flowers, delivery action, specific actor intention or successful deception.",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic_reference",
+              "fact_refs": [
+                "coverApp"
+              ],
+              "pointer": "/content/ko",
+              "quote": "꽃 배달 상자 위장 소품",
+              "realization_id": "base",
+              "reference_relation": "partial_restatement",
+              "retained_constraint_rationale": "KO disguise-prop phrase directly names the florist-delivery box but does not independently prove the complete cover-identity function. Preserve complete selected EN/App function through App canonical direct fact, without bad duplicate coverKo fact, narrowed meaning or source expansion."
+            }
+          ]
+        },
+        "rationale": "Fresh whole original/current/exact5B/ownprop.9binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and rootquotehold plus full149prop/narrative/intent/action boundaries read. Existing exactfloristdeliveryboxP atprimary_prop and sameidentitypreservation consumed; selected authoredcoveridentityprop function remains actualconcept E. Rootheld KOanchor is removed as unsupported duplicate only, full E retained directEN/App and fullKOpartialref. No actualflorist/flowers/deliveryaction/newactor, actorintention or successfuldeception inferred. Sourcehuman eligibility remains, normallyprotectedconcept notopened for positiveconsumer.",
+        "reference_bindings": {},
+        "reference_reread_complete": true,
+        "revision": {
+          "memo_artifacts": [
+            {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+              "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+              "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+            }
+          ],
+          "prior_review": {
+            "artifact": {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+              "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+              "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+            },
+            "pointer": "/records/48",
+            "sha256": "5d8ac53872eb35bbe3ea9a377f7b769964ca0260fce0f027869126a323f7d5eb"
+          },
+          "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/ownprop.9binding/fullSHAequalorigin/emptyclosure/pinned04wholefacts and rootquotehold plus full149prop/narrative/intent/action boundaries read. Existing exactfloristdeliveryboxP atprimary_prop and sameidentitypreservation consumed; selected authoredcoveridentityprop function remains actualconcept E. Rootheld KOanchor is removed as unsupported duplicate only, full E retained directEN/App and fullKOpartialref. No actualflorist/flowers/deliveryaction/newactor, actorintention or successfuldeception inferred. Sourcehuman eligibility remains, normallyprotectedconcept notopened for positiveconsumer."
+        },
+        "source_after": {
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "content": {
+            "application_contract": "Use only the independently declared existing florist-delivery box bound to primary_prop. Keep its identity fixed and select its authored cover-identity prop function. Do not add a florist, flowers, delivery action, specific actor intention or successful deception.",
+            "en": "a florist delivery box as a cover identity prop",
+            "ko": "꽃 배달 상자 위장 소품",
+            "tags": [
+              "human",
+              "prop",
+              "cover",
+              "service"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "concept"
+            ],
+            "properties": [
+              {
+                "dimension": "concept",
+                "property": "narrative.clue.function",
+                "target": "box"
+              }
+            ]
+          },
+          "id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+          "provenance": [
+            {
+              "sha256": "094253f40cf155a47b73989ca1d4b58cd74bbba6b25aa0a037ea3b44234c6fa0",
+              "source": "slot:prop:florist_delivery_box_cover"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_before": {
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "content": {
+            "en": "a florist delivery box as a cover identity prop",
+            "ko": "꽃 배달 상자 위장 소품",
+            "tags": [
+              "human",
+              "prop",
+              "cover",
+              "service"
+            ]
+          },
+          "effects": {
+            "dimensions": [],
+            "properties": []
+          },
+          "id": "cand_25e6f12a8c215fa4894f4b5fd42340aa",
+          "provenance": [
+            {
+              "sha256": "094253f40cf155a47b73989ca1d4b58cd74bbba6b25aa0a037ea3b44234c6fa0",
+              "source": "slot:prop:florist_delivery_box_cover"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_reread_complete": true,
+        "status": "approved"
+      }
+    },
+    {
+      "ordinal": 1299,
+      "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+      "checkpoint": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-05/BATCH.json",
+      "checkpoint_pointer": "/records/49",
+      "original": {
+        "conditions": {},
+        "content": {
+          "en": "hands-only exchange macro composition",
+          "ko": "손만 보이는 교환 매크로 구도",
+          "tags": [
+            "portrait",
+            "relationship",
+            "macro"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+        "provenance": [
+          {
+            "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+            "source": "slot:composition:hands_only_exchange_macro"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "current": {
+        "conditions": {},
+        "content": {
+          "en": "hands-only exchange macro composition",
+          "ko": "손만 보이는 교환 매크로 구도",
+          "tags": [
+            "portrait",
+            "relationship",
+            "macro"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+        "provenance": [
+          {
+            "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+            "source": "slot:composition:hands_only_exchange_macro"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "original_5B": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 50,
+          "sha256": "d7699dfe43c33202218d4378b08e30670a9d7a2cf707feeda7dd7fb85865cf0f"
+        },
+        "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "framing",
+            "pointer": "/content/en",
+            "property": "shot.scale.macro",
+            "quote": "hands-only exchange macro composition",
+            "realization_id": "base",
+            "target": "image"
+          },
+          {
+            "dimension": "framing",
+            "pointer": "/content/en",
+            "property": "framing.coverage.hands_only",
+            "quote": "hands-only exchange macro composition",
+            "realization_id": "base",
+            "target": "hands"
+          },
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "relation.action.exchange",
+            "quote": "hands-only exchange macro composition",
+            "realization_id": "base",
+            "target": "participants"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "A macro view includes only hands during an exchange.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No whole bodies, object type, exact person count or relationship is supplied."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "framing",
+                "pointer": "/content/en",
+                "property": "shot.scale.macro",
+                "quote": "hands-only exchange macro composition",
+                "target": "image"
+              }
+            ],
+            "rationale": "A macro view includes only hands during an exchange.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "shot_scale"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "framing",
+                "pointer": "/content/en",
+                "property": "framing.coverage.hands_only",
+                "quote": "hands-only exchange macro composition",
+                "target": "hands"
+              }
+            ],
+            "rationale": "A macro view includes only hands during an exchange.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "subject_framing"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/en",
+                "property": "relation.action.exchange",
+                "quote": "hands-only exchange macro composition",
+                "target": "participants"
+              }
+            ],
+            "rationale": "A macro view includes only hands during an exchange.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "relational_action"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "08f25720f6c1c234a428db16034db49ed2a7acd0d6878fbefe643f7b56abce2a",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_packet_record": {
+        "conditions": {},
+        "content": {
+          "en": "hands-only exchange macro composition",
+          "ko": "손만 보이는 교환 매크로 구도",
+          "tags": [
+            "portrait",
+            "relationship",
+            "macro"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+        "provenance": [
+          {
+            "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+            "source": "slot:composition:hands_only_exchange_macro"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "own_original_bindings": {
+        "bind_2e72784a26885ceaa1d645d25bd9a468": {
+          "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_2e72784a26885ceaa1d645d25bd9a468",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.8
+        }
+      },
+      "own_current_bindings": {
+        "bind_2e72784a26885ceaa1d645d25bd9a468": {
+          "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_2e72784a26885ceaa1d645d25bd9a468",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.8
+        }
+      },
+      "checkpoint_record": {
+        "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+        "delta": [],
+        "dependency_records": {},
+        "ordinal": 1299,
+        "original_compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+          "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+          "item": 50,
+          "row_sha256": "708c51c1290449fd547fc490ad8a5788c4240b9b22b3d1909602e4dc81bdb4f3"
+        },
+        "proof": null,
+        "rationale": "Fresh whole original/current/exact5B/owncomposition.8binding/fullSHAequalorigin/emptyclosure/pinned04pending and full149shot/framing/hand/action/relational/contact boundaries read. Exact05 hands-only exchange macro composition remains unresolved: actual participatinghands/owners/exchangeform/actualexchangeendpoints and complete frameaffectedotherowners/regions/properties undeclared. Preserve all original positives; no physicalhandoff/count/object/defaultprimaryinvented, no fakeP or E deletion/contextdemotion. New rootselected boundededitorial06 is separate futureinput and cannotretroactively fixthisexact05. Pending proofnull, no source edits or approval.",
+        "reference_bindings": {},
+        "reference_reread_complete": true,
+        "revision": {
+          "memo_artifacts": [
+            {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/first50-catalog149-recheck-plan-10/ROOT-REQUIREMENTS.json",
+              "file_sha256": "3cbad1b72ea5c5246a75dee3f2fbdb997e8013f135a12750bc67788c0d93cf0a",
+              "sha256": "0c8a66ce8c826834d9b1fb529c1cc9b4be7ea69b8efff581fad2d8a4203abf18"
+            }
+          ],
+          "prior_review": {
+            "artifact": {
+              "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+              "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+              "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+            },
+            "pointer": "/records/49",
+            "sha256": "9036c450efb8983580f4f37cd508e55d68e1e92a52dbd6387266f9b73ddcc4fe"
+          },
+          "rationale": "Fresh manual literal source/spec/facts/RID/owners/wholeunits decision, not oldapproval/proof conversion. Fresh whole original/current/exact5B/owncomposition.8binding/fullSHAequalorigin/emptyclosure/pinned04pending and full149shot/framing/hand/action/relational/contact boundaries read. Exact05 hands-only exchange macro composition remains unresolved: actual participatinghands/owners/exchangeform/actualexchangeendpoints and complete frameaffectedotherowners/regions/properties undeclared. Preserve all original positives; no physicalhandoff/count/object/defaultprimaryinvented, no fakeP or E deletion/contextdemotion. New rootselected boundededitorial06 is separate futureinput and cannotretroactively fixthisexact05. Pending proofnull, no source edits or approval."
+        },
+        "source_after": {
+          "conditions": {},
+          "content": {
+            "en": "hands-only exchange macro composition",
+            "ko": "손만 보이는 교환 매크로 구도",
+            "tags": [
+              "portrait",
+              "relationship",
+              "macro"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "composition"
+            ],
+            "properties": []
+          },
+          "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+          "provenance": [
+            {
+              "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+              "source": "slot:composition:hands_only_exchange_macro"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_before": {
+          "conditions": {},
+          "content": {
+            "en": "hands-only exchange macro composition",
+            "ko": "손만 보이는 교환 매크로 구도",
+            "tags": [
+              "portrait",
+              "relationship",
+              "macro"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "composition"
+            ],
+            "properties": []
+          },
+          "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+          "provenance": [
+            {
+              "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+              "source": "slot:composition:hands_only_exchange_macro"
+            }
+          ],
+          "record_kind": "visual_option"
+        },
+        "source_reread_complete": true,
+        "status": "pending"
+      }
+    }
+  ]
+}
