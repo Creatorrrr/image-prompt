@@ -1,0 +1,5052 @@
+{
+  "schema": "photo-native-manual-source-fact-draft/v1",
+  "task": "/root/review_09250_10500",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "assigned_range": [
+    2250,
+    3250
+  ],
+  "draft_range": [
+    2674,
+    2682
+  ],
+  "management_batch_complete": false,
+  "actual_whole_original_and5B_after_read_count": 8,
+  "actual_whole_after_reread_count": 0,
+  "source_packet": {
+    "path": "authored/native_09250_02250_03250.02650_02700.packet.json",
+    "raw_sha256": "75ac517eb840b1fccf6b4ed37d4d4254a1ac677642651181de75f8a89ef3d632",
+    "source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b"
+  },
+  "catalog": {
+    "path": "CATALOG-FINAL-144-V4.json",
+    "canonical_sha256": "5bc5f6d185b6ef6e2d8d3a2bf6e4aa02d73e22143b0529a233fd5f98ddbed908"
+  },
+  "literal": {
+    "path": "authored/native_09250_02250_03250.02674_02682.literals.py",
+    "raw_sha256": "c0c6215d913fbbedc176d9b038b7e9b82013974b8121e46d7de90f94b175564a"
+  },
+  "mechanical_clause_expansion_only": true,
+  "automatic_semantic_classification": false,
+  "records": [
+    {
+      "ordinal": 2674,
+      "candidate_id": "cand_95ecc8d536b459bcb139c450a7ecf522",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "기존 꽃 양동이를 전경 보케로 보이게 하는 구도. KO 꽃시장 소속만 명시, 전체 장소/얼굴/꽃종 없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "flower-bucket foreground bokeh",
+          "en": "flower-bucket foreground bokeh",
+          "ko": "꽃시장 양동이가 전경 보케가 되는 구도",
+          "tags": [
+            "portrait",
+            "flower_market",
+            "foreground",
+            "bokeh"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_95ecc8d536b459bcb139c450a7ecf522",
+        "provenance": [
+          {
+            "sha256": "09d2a52a59dbeacd61ea5b23ce142f34730cb642bef3d04e2a270ec10709e360",
+            "source": "slot:composition:flower_bucket_foreground_bokeh"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "flower-bucket foreground bokeh",
+          "en": "flower-bucket foreground bokeh",
+          "ko": "꽃시장 양동이가 전경 보케가 되는 구도",
+          "tags": [
+            "portrait",
+            "flower_market",
+            "foreground",
+            "bokeh"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_95ecc8d536b459bcb139c450a7ecf522",
+        "provenance": [
+          {
+            "sha256": "09d2a52a59dbeacd61ea5b23ce142f34730cb642bef3d04e2a270ec10709e360",
+            "source": "slot:composition:flower_bucket_foreground_bokeh"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "flower-bucket foreground bokeh",
+          "en": "flower-bucket foreground bokeh",
+          "ko": "꽃시장 양동이가 전경 보케가 되는 구도",
+          "tags": [
+            "portrait",
+            "flower_market",
+            "foreground",
+            "bokeh"
+          ],
+          "application_scope": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change."
+        },
+        "effects": {
+          "dimensions": [
+            "composition",
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "composition",
+              "target": "image",
+              "property": "layout.foreground"
+            },
+            {
+              "dimension": "camera",
+              "target": "image",
+              "property": "image.depth_of_field"
+            }
+          ]
+        },
+        "id": "cand_95ecc8d536b459bcb139c450a7ecf522",
+        "provenance": [
+          {
+            "sha256": "09d2a52a59dbeacd61ea5b23ce142f34730cb642bef3d04e2a270ec10709e360",
+            "source": "slot:composition:flower_bucket_foreground_bokeh"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change.",
+          "reason": "기존 carrier P와 이미지 plane foreground/bokeh E 분리. KO market clause 삭제하지 않음."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "composition"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "composition",
+              "camera"
+            ],
+            "properties": [
+              {
+                "dimension": "composition",
+                "target": "image",
+                "property": "layout.foreground"
+              },
+              {
+                "dimension": "camera",
+                "target": "image",
+                "property": "image.depth_of_field"
+              }
+            ]
+          },
+          "reason": "physical bucket blur/movement 대신 recorded bokeh 효과와 image layout 명시."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 175,
+          "sha256": "e300d27fcfdef36c87046ca4668b214df252374359c74f3e7c7b7cec67059f14"
+        },
+        "candidate_id": "cand_95ecc8d536b459bcb139c450a7ecf522",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "composition",
+            "pointer": "/content/en",
+            "property": "layout.foreground_bokeh",
+            "quote": "flower-bucket foreground bokeh",
+            "realization_id": "base",
+            "target": "flower_bucket"
+          },
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "image.depth_of_field.foreground_bokeh",
+            "quote": "flower-bucket foreground bokeh",
+            "realization_id": "base",
+            "target": "flower_bucket"
+          },
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "props.type.flower_bucket",
+            "quote": "flower-bucket foreground bokeh",
+            "realization_id": "base",
+            "target": "bucket"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "전경 꽃 양동이 보케.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "꽃시장 장소·얼굴·꽃 종은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "composition",
+                "pointer": "/content/en",
+                "property": "layout.foreground_bokeh",
+                "quote": "flower-bucket foreground bokeh",
+                "target": "flower_bucket"
+              }
+            ],
+            "rationale": "배치.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "composition"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "image.depth_of_field.foreground_bokeh",
+                "quote": "flower-bucket foreground bokeh",
+                "target": "flower_bucket"
+              }
+            ],
+            "rationale": "흐림.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "depth_of_field"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "props.type.flower_bucket",
+                "quote": "flower-bucket foreground bokeh",
+                "target": "bucket"
+              }
+            ],
+            "rationale": "물건.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "e71435b3c5aabc532a3fd58d59970d0f2d1ae8481ddd19e0b5fe534ce605eb54",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 175,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "b1c6eaa818e929c4695869ec2fa60a8c84312c52427cdc4ec2b0d1a3649e1b57"
+      },
+      "before_full_record_sha256": "e71435b3c5aabc532a3fd58d59970d0f2d1ae8481ddd19e0b5fe534ce605eb54",
+      "fiveB_after_full_record_sha256": "e71435b3c5aabc532a3fd58d59970d0f2d1ae8481ddd19e0b5fe534ce605eb54",
+      "proposed_after_full_record_sha256": "7faa328426fe94d00a67663ddbc2d540b445f72ed6d7364af622a2a259ea65e4",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_95ecc8d536b459bcb139c450a7ecf522": {
+          "candidate_id": "cand_95ecc8d536b459bcb139c450a7ecf522",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_95ecc8d536b459bcb139c450a7ecf522",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.46
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "composition",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.46,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_95ecc8d536b459bcb139c450a7ecf522",
+          "reason": "own{} read; actual foreground layer.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "depth_of_field",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.46,
+          "conditions": {},
+          "reason": "foreground bokeh is recorded selective blur."
+        },
+        {
+          "slot_id": "prop",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.46,
+          "conditions": {},
+          "reason": "flower bucket explicit prop."
+        },
+        {
+          "slot_id": "location",
+          "role": "pending",
+          "semantic_role": "contextual",
+          "weight": 0.46,
+          "conditions": {},
+          "reason": "KO bucket market association does not specify whole scene location."
+        }
+      ],
+      "conditions_review": "source{} retained. Exact declared bucket/image projection relation and actual flower-container identity need frozen core guards; portrait tag not face existence.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "focus",
+          "reason": "no sharp focus plane selected"
+        },
+        {
+          "slot_id": "physical_motion",
+          "reason": "bokeh not moving bucket"
+        },
+        {
+          "slot_id": "lens",
+          "reason": "no focal length"
+        },
+        {
+          "slot_id": "subject",
+          "reason": "not automatically primary actor"
+        }
+      ],
+      "facts": [
+        {
+          "id": "kind_u0",
+          "dimension": "subject",
+          "target": "bucket",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "flower bucket"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "flower-bucket foreground bokeh"
+        },
+        {
+          "id": "front_u0",
+          "dimension": "composition",
+          "target": "image",
+          "property": "layout.foreground",
+          "mode": "effect",
+          "value": {
+            "type": "layout.foreground/v1",
+            "value": "the selected flower bucket in the foreground"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "flower-bucket foreground bokeh"
+        },
+        {
+          "id": "blur_u0",
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.depth_of_field",
+          "mode": "effect",
+          "value": {
+            "type": "image.depth_of_field/v1",
+            "value": "foreground flower bucket rendered as bokeh"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "flower-bucket foreground bokeh"
+        },
+        {
+          "id": "kind_u1",
+          "dimension": "subject",
+          "target": "bucket",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "flower bucket"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "꽃시장 양동이가 전경 보케가 되는 구도"
+        },
+        {
+          "id": "market_u1",
+          "dimension": "role",
+          "target": "bucket",
+          "property": "props.context",
+          "mode": "context",
+          "value": {
+            "type": "props.context/v1",
+            "value": "flower market bucket"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "꽃시장 양동이가 전경 보케가 되는 구도"
+        },
+        {
+          "id": "front_u1",
+          "dimension": "composition",
+          "target": "image",
+          "property": "layout.foreground",
+          "mode": "effect",
+          "value": {
+            "type": "layout.foreground/v1",
+            "value": "the selected flower bucket in the foreground"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "꽃시장 양동이가 전경 보케가 되는 구도"
+        },
+        {
+          "id": "blur_u1",
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.depth_of_field",
+          "mode": "effect",
+          "value": {
+            "type": "image.depth_of_field/v1",
+            "value": "foreground flower bucket rendered as bokeh"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "꽃시장 양동이가 전경 보케가 되는 구도"
+        },
+        {
+          "id": "kind_u2",
+          "dimension": "subject",
+          "target": "bucket",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "flower bucket"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "flower-bucket foreground bokeh"
+        },
+        {
+          "id": "front_u2",
+          "dimension": "composition",
+          "target": "image",
+          "property": "layout.foreground",
+          "mode": "effect",
+          "value": {
+            "type": "layout.foreground/v1",
+            "value": "the selected flower bucket in the foreground"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "flower-bucket foreground bokeh"
+        },
+        {
+          "id": "blur_u2",
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.depth_of_field",
+          "mode": "effect",
+          "value": {
+            "type": "image.depth_of_field/v1",
+            "value": "foreground flower bucket rendered as bokeh"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "flower-bucket foreground bokeh"
+        },
+        {
+          "id": "present_u3",
+          "dimension": "subject",
+          "target": "bucket",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change."
+        },
+        {
+          "id": "kind_u3",
+          "dimension": "subject",
+          "target": "bucket",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "flower bucket"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change."
+        },
+        {
+          "id": "front_u3",
+          "dimension": "composition",
+          "target": "image",
+          "property": "layout.foreground",
+          "mode": "effect",
+          "value": {
+            "type": "layout.foreground/v1",
+            "value": "the selected flower bucket in the foreground"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change."
+        },
+        {
+          "id": "blur_u3",
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.depth_of_field",
+          "mode": "effect",
+          "value": {
+            "type": "image.depth_of_field/v1",
+            "value": "foreground flower bucket rendered as bokeh"
+          },
+          "requires": [
+            "present_u3",
+            "kind_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "bucket"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change."
+        },
+        {
+          "id": "market_u3",
+          "dimension": "role",
+          "target": "bucket",
+          "property": "props.context",
+          "mode": "context",
+          "value": {
+            "type": "props.context/v1",
+            "value": "flower market bucket"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change."
+        }
+      ],
+      "roles": {
+        "composition": {
+          "spec_sha256": "9927a28621a63dd112b1a73f5afeb5c73a7eac262467d477bbe3506bc4ff880f",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "front_u0",
+            "front_u1",
+            "front_u2",
+            "front_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "depth_of_field": {
+          "spec_sha256": "66457a2f1853be98e30996d7b2aa7d6ebf18d9e612428c9ef7a2676209d4e54b",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "blur_u0",
+            "blur_u1",
+            "blur_u2",
+            "blur_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "prop": {
+          "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "kind_u0",
+            "kind_u1",
+            "kind_u2",
+            "kind_u3"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "bucket",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "image",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "core_role",
+                "role": "image"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "flower-bucket foreground bokeh",
+          "fact_refs": [
+            "kind_u0",
+            "front_u0",
+            "blur_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "꽃시장 양동이가 전경 보케가 되는 구도",
+          "fact_refs": [
+            "kind_u1",
+            "market_u1",
+            "front_u1",
+            "blur_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "flower-bucket foreground bokeh",
+          "fact_refs": [
+            "kind_u2",
+            "front_u2",
+            "blur_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Render the same explicitly selected, independently declared present flower bucket as foreground bokeh in the image. Do not add flowers, buckets, faces or a market location, choose flower species or a lens number. The Korean flower-market qualifier belongs to the bucket context, not an automatic whole-scene location change.",
+          "fact_refs": [
+            "present_u3",
+            "kind_u3",
+            "front_u3",
+            "blur_u3",
+            "market_u3"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "composition",
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "composition",
+              "target": "image",
+              "property": "layout.foreground"
+            },
+            {
+              "dimension": "camera",
+              "target": "image",
+              "property": "image.depth_of_field"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "projection/flower bucket core guards/KO market context scope/footprint/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2675,
+      "candidate_id": "cand_e8cece7ca646517d9d6135f8823b0286",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "원형 확대 시야, KO 현미경 또는 루페의 시야. 실제 장치 선택/관찰대상/배율/optical path 미정.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/ko",
+          "quote": "현미경이나 루페의 원형 확대 시야",
+          "clause": "microscope OR loupe optical path/apparatus selection and whole image/camera effect ownership",
+          "mode": "effect",
+          "operation": "set_value/select_plane pending actual path",
+          "target_intent": "independently declared selected apparatus/view and image",
+          "property_intent": "apparatus.view/lens.projection/layout.field_shape",
+          "typed_value_status": "circular/magnified known, actual apparatus OR unselected",
+          "receiver_status": "image only, no declared apparatus presence/path receiver",
+          "reason": "No camera or apparatus entity may be invented; actual choice unresolved, original camera-only coarse effects insufficient."
+        }
+      ],
+      "original_source": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "science",
+            "inspection",
+            "macro",
+            "laboratory",
+            "wildlife"
+          ]
+        },
+        "content": {
+          "en": "circular magnified field of view",
+          "ko": "현미경이나 루페의 원형 시야",
+          "tags": [
+            "pov",
+            "apparatus",
+            "macro",
+            "inspection"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_e8cece7ca646517d9d6135f8823b0286",
+        "provenance": [
+          {
+            "sha256": "774dc9b819cacb6af97a207c3b5ce907e7a6bfa72e43d10209556f93e005b724",
+            "source": "slot:apparatus_pov:microscope_field_pov"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "science",
+            "inspection",
+            "macro",
+            "laboratory",
+            "wildlife"
+          ]
+        },
+        "content": {
+          "en": "circular magnified field of view",
+          "ko": "현미경이나 루페의 원형 시야",
+          "tags": [
+            "pov",
+            "apparatus",
+            "macro",
+            "inspection"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_e8cece7ca646517d9d6135f8823b0286",
+        "provenance": [
+          {
+            "sha256": "774dc9b819cacb6af97a207c3b5ce907e7a6bfa72e43d10209556f93e005b724",
+            "source": "slot:apparatus_pov:microscope_field_pov"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "science",
+            "inspection",
+            "macro",
+            "laboratory",
+            "wildlife"
+          ]
+        },
+        "content": {
+          "en": "circular magnified field of view",
+          "ko": "현미경이나 루페의 원형 확대 시야",
+          "tags": [
+            "pov",
+            "apparatus",
+            "macro",
+            "inspection"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_e8cece7ca646517d9d6135f8823b0286",
+        "provenance": [
+          {
+            "sha256": "774dc9b819cacb6af97a207c3b5ce907e7a6bfa72e43d10209556f93e005b724",
+            "source": "slot:apparatus_pov:microscope_field_pov"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "현미경이나 루페의 원형 시야",
+          "after": "현미경이나 루페의 원형 확대 시야",
+          "reason": "EN magnified 누락 복원, 기존 장치 OR 유지."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 176,
+          "sha256": "9682ba141f22ea118dcce5ad9972ef03d72d3bc297fd5f436c31e0f3b65d9c04"
+        },
+        "candidate_id": "cand_e8cece7ca646517d9d6135f8823b0286",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "lens.projection.magnified_circular_field",
+            "quote": "circular magnified field of view",
+            "realization_id": "base",
+            "target": "camera"
+          },
+          {
+            "dimension": "composition",
+            "pointer": "/content/en",
+            "property": "layout.circular_field",
+            "quote": "circular magnified field of view",
+            "realization_id": "base",
+            "target": "image"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "원형 확대 시야.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "기존 primary 조건 유지; 현미경·루페 장치·정확한 배율은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "lens.projection.magnified_circular_field",
+                "quote": "circular magnified field of view",
+                "target": "camera"
+              }
+            ],
+            "rationale": "광학.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "lens"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "composition",
+                "pointer": "/content/en",
+                "property": "layout.circular_field",
+                "quote": "circular magnified field of view",
+                "target": "image"
+              }
+            ],
+            "rationale": "형태.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "composition"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "f9ee12833e7507447e8a85cd92672952b64ed0929b66cffd8cb6a8e2e849f140",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 176,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "2ab00a1e530b8e48d5d2453f1bea1daca2f676593730d53007b19d928e101dc2"
+      },
+      "before_full_record_sha256": "f9ee12833e7507447e8a85cd92672952b64ed0929b66cffd8cb6a8e2e849f140",
+      "fiveB_after_full_record_sha256": "f9ee12833e7507447e8a85cd92672952b64ed0929b66cffd8cb6a8e2e849f140",
+      "proposed_after_full_record_sha256": "fe315506057dc2cdca1babcac25664876886be849c6677273d907d2c96ca3965",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_e8cece7ca646517d9d6135f8823b0286": {
+          "candidate_id": "cand_e8cece7ca646517d9d6135f8823b0286",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [],
+              "subject_categories": [
+                "human",
+                "animal",
+                "food",
+                "object",
+                "plant",
+                "environment"
+              ]
+            }
+          },
+          "id": "bind_e8cece7ca646517d9d6135f8823b0286",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "apparatus_pov",
+          "weight": 0.64
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "apparatus_pov",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.64,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_e8cece7ca646517d9d6135f8823b0286",
+          "reason": "own6category/deny[] read; KO microscope OR loupe actual choice/path unselected.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [],
+              "subject_categories": [
+                "human",
+                "animal",
+                "food",
+                "object",
+                "plant",
+                "environment"
+              ]
+            }
+          }
+        },
+        {
+          "slot_id": "composition",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.64,
+          "conditions": {},
+          "reason": "explicit circular view boundary."
+        },
+        {
+          "slot_id": "lens",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.64,
+          "conditions": {},
+          "reason": "magnified field explicit, actual optical apparatus/lens owner versus image field not fixed."
+        }
+      ],
+      "conditions_review": "requires_primary_any_tags science/inspection/macro/laboratory/wildlife retained intrinsic applicability; not observed apparatus or target proof. No new microscope/loupe union, no synthetic RID. Image field partial E does not qualify camera-owned lens/apparatus facts.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "camera_type",
+          "reason": "apparatus OR not recording camera kind"
+        },
+        {
+          "slot_id": "camera_distance",
+          "reason": "magnification not distance"
+        },
+        {
+          "slot_id": "shot_scale",
+          "reason": "no specified subject coverage"
+        },
+        {
+          "slot_id": "image_artifact",
+          "reason": "circle not automatically vignette defect"
+        }
+      ],
+      "facts": [
+        {
+          "id": "circle_u0",
+          "dimension": "composition",
+          "target": "image",
+          "property": "layout.field_shape",
+          "mode": "effect",
+          "value": {
+            "type": "layout.field_shape/v1",
+            "value": "circular"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "circular magnified field of view"
+        },
+        {
+          "id": "mag_u0",
+          "dimension": "camera",
+          "target": "image",
+          "property": "lens.projection",
+          "mode": "effect",
+          "value": {
+            "type": "lens.projection/v1",
+            "value": "magnified field of view"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "circular magnified field of view"
+        },
+        {
+          "id": "circle_u1",
+          "dimension": "composition",
+          "target": "image",
+          "property": "layout.field_shape",
+          "mode": "effect",
+          "value": {
+            "type": "layout.field_shape/v1",
+            "value": "circular"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "현미경이나 루페의 원형 확대 시야"
+        },
+        {
+          "id": "mag_u1",
+          "dimension": "camera",
+          "target": "image",
+          "property": "lens.projection",
+          "mode": "effect",
+          "value": {
+            "type": "lens.projection/v1",
+            "value": "magnified field of view"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "현미경이나 루페의 원형 확대 시야"
+        }
+      ],
+      "roles": {
+        "composition": {
+          "spec_sha256": "9927a28621a63dd112b1a73f5afeb5c73a7eac262467d477bbe3506bc4ff880f",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "circle_u0",
+            "circle_u1"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "image",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "core_role",
+                "role": "image"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "circular magnified field of view",
+          "fact_refs": [
+            "circle_u0",
+            "mag_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "현미경이나 루페의 원형 확대 시야",
+          "fact_refs": [
+            "circle_u1",
+            "mag_u1"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "apparatus OR/path/receiver/whole footprint/KO source correction/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2676,
+      "candidate_id": "cand_1309f5e7588e5b91a8f73cf6afc0b752",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "표시 조사선 안에서 꽃과 눈에 보이게 접촉하는 수분매개 곤충. 실제 수분 성공/종/측정 결과 없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "a pollinating insect making a visible flower contact within a marked transect",
+          "kind": [
+            "animal"
+          ],
+          "ko": "꽃에 실제로 접촉 중인 수분매개 곤충",
+          "tags": [
+            "animal",
+            "biodiversity",
+            "pollinator_transect"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_1309f5e7588e5b91a8f73cf6afc0b752",
+        "provenance": [
+          {
+            "sha256": "34d52470c8004a38664fbaae67cb86888b8e962fb8a1d0151d0b2e4f0b8f512c",
+            "source": "slot:subject:pollinator_flower_visit_event"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "a pollinating insect making a visible flower contact within a marked transect",
+          "kind": [
+            "animal"
+          ],
+          "ko": "꽃에 실제로 접촉 중인 수분매개 곤충",
+          "tags": [
+            "animal",
+            "biodiversity",
+            "pollinator_transect"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_1309f5e7588e5b91a8f73cf6afc0b752",
+        "provenance": [
+          {
+            "sha256": "34d52470c8004a38664fbaae67cb86888b8e962fb8a1d0151d0b2e4f0b8f512c",
+            "source": "slot:subject:pollinator_flower_visit_event"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "a pollinating insect making a visible flower contact within a marked transect",
+          "kind": [
+            "animal"
+          ],
+          "ko": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충",
+          "tags": [
+            "animal",
+            "biodiversity",
+            "pollinator_transect"
+          ],
+          "application_scope": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        "effects": {
+          "dimensions": [
+            "relationship",
+            "framing",
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "relationship",
+              "target": "insect",
+              "property": "contact.point"
+            },
+            {
+              "dimension": "framing",
+              "target": "image",
+              "property": "subject.visibility"
+            },
+            {
+              "dimension": "setting",
+              "target": "insect",
+              "property": "setting.location"
+            }
+          ]
+        },
+        "id": "cand_1309f5e7588e5b91a8f73cf6afc0b752",
+        "provenance": [
+          {
+            "sha256": "34d52470c8004a38664fbaae67cb86888b8e962fb8a1d0151d0b2e4f0b8f512c",
+            "source": "slot:subject:pollinator_flower_visit_event"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "꽃에 실제로 접촉 중인 수분매개 곤충",
+          "after": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충",
+          "reason": "EN marked-transect/visible 누락 복원, actual pollination success 추가 안함."
+        },
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result.",
+          "reason": "existing declared endpoints/type P와 contact/visibility/placement E 보존."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "subject"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "relationship",
+              "framing",
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "relationship",
+                "target": "insect",
+                "property": "contact.point"
+              },
+              {
+                "dimension": "framing",
+                "target": "image",
+                "property": "subject.visibility"
+              },
+              {
+                "dimension": "setting",
+                "target": "insect",
+                "property": "setting.location"
+              }
+            ]
+          },
+          "reason": "existing insect identity case에서 actual contact/location/record visibility coarse subject 효과 교정."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 177,
+          "sha256": "0717b267d97231bcd37f62186e640fbae1d159fd8f5728fc5f851ff95f8a4a92"
+        },
+        "candidate_id": "cand_1309f5e7588e5b91a8f73cf6afc0b752",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "subject.animal.pollinating_insect",
+            "quote": "a pollinating insect making a visible flower contact within a marked transect",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "relationship",
+            "pointer": "/content/en",
+            "property": "contact.insect.flower",
+            "quote": "a pollinating insect making a visible flower contact within a marked transect",
+            "realization_id": "base",
+            "target": "insect_and_flower"
+          },
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location.marked_transect",
+            "quote": "a pollinating insect making a visible flower contact within a marked transect",
+            "realization_id": "base",
+            "target": "environment"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "표시된 조사선 안에서 꽃과 접촉하는 수분 곤충.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "실제 수분 완료·곤충 종·측정 결과는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "subject.animal.pollinating_insect",
+                "quote": "a pollinating insect making a visible flower contact within a marked transect",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "주체.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "subject"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "relationship",
+                "pointer": "/content/en",
+                "property": "contact.insect.flower",
+                "quote": "a pollinating insect making a visible flower contact within a marked transect",
+                "target": "insect_and_flower"
+              }
+            ],
+            "rationale": "접점.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "contact_point"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location.marked_transect",
+                "quote": "a pollinating insect making a visible flower contact within a marked transect",
+                "target": "environment"
+              }
+            ],
+            "rationale": "장소.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "9cbaea42e6113b2c993d745365967b92cae4f6e57dd62b19e2de6bcd9cea5d6c",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 177,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "96cc0422488f32c8087202937ed6ffcaa5214d97dc3db5695a11fb4dac87ba93"
+      },
+      "before_full_record_sha256": "9cbaea42e6113b2c993d745365967b92cae4f6e57dd62b19e2de6bcd9cea5d6c",
+      "fiveB_after_full_record_sha256": "9cbaea42e6113b2c993d745365967b92cae4f6e57dd62b19e2de6bcd9cea5d6c",
+      "proposed_after_full_record_sha256": "07fd887b40dc8ef212cd774c3eb0a410fa0be59359d98b2da8445ca8995a7863",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_1309f5e7588e5b91a8f73cf6afc0b752": {
+          "candidate_id": "cand_1309f5e7588e5b91a8f73cf6afc0b752",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1309f5e7588e5b91a8f73cf6afc0b752",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "subject",
+          "weight": 1.0
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "subject",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_1309f5e7588e5b91a8f73cf6afc0b752",
+          "reason": "own{} read; explicitly named animal identity.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "contact_point",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions": {},
+          "reason": "actual two declared local endpoints."
+        },
+        {
+          "slot_id": "relational_action",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions": {},
+          "reason": "V4 animal-flower interaction, no second human required."
+        },
+        {
+          "slot_id": "subject_framing",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions": {},
+          "reason": "explicit visible physical contact."
+        },
+        {
+          "slot_id": "location",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions": {},
+          "reason": "explicit within marked transect."
+        }
+      ],
+      "conditions_review": "source{} and kind animal retained; category not actual insect existence witness. Marked-transect class P not marker creation. Contact relation/visibility/location receivers require actual declared relation/region guards; no arbitrary main insect.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "procedure_step",
+          "reason": "no pollination workflow stage"
+        },
+        {
+          "slot_id": "event",
+          "reason": "no claimed completed transfer"
+        },
+        {
+          "slot_id": "species_marker",
+          "reason": "no diagnostic species anatomy"
+        },
+        {
+          "slot_id": "visible_text",
+          "reason": "marked transect not readable labels"
+        }
+      ],
+      "facts": [
+        {
+          "id": "kind_u0",
+          "dimension": "subject",
+          "target": "insect",
+          "property": "subject.kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.kind/v1",
+            "value": "pollinating insect"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a pollinating insect making a visible flower contact within a marked transect"
+        },
+        {
+          "id": "ftype_u0",
+          "dimension": "subject",
+          "target": "flower",
+          "property": "subject.kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.kind/v1",
+            "value": "flower"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a pollinating insect making a visible flower contact within a marked transect"
+        },
+        {
+          "id": "ttype_u0",
+          "dimension": "setting",
+          "target": "transect",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "marked transect"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a pollinating insect making a visible flower contact within a marked transect"
+        },
+        {
+          "id": "contact_u0",
+          "dimension": "relationship",
+          "target": "insect",
+          "property": "contact.point",
+          "mode": "effect",
+          "value": {
+            "type": "contact.point/v1",
+            "value": "making contact with the flower"
+          },
+          "requires": [
+            "insect_u2",
+            "kind_u0",
+            "flower_u2",
+            "ftype_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "flower"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a pollinating insect making a visible flower contact within a marked transect"
+        },
+        {
+          "id": "visible_u0",
+          "dimension": "framing",
+          "target": "image",
+          "property": "subject.visibility",
+          "mode": "effect",
+          "value": {
+            "type": "subject.visibility/v1",
+            "value": "the insect flower contact is visible"
+          },
+          "requires": [
+            "insect_u2",
+            "flower_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "insect",
+            "flower"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a pollinating insect making a visible flower contact within a marked transect"
+        },
+        {
+          "id": "within_u0",
+          "dimension": "setting",
+          "target": "insect",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "within the marked transect"
+          },
+          "requires": [
+            "insect_u2",
+            "transect_u2",
+            "ttype_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "transect"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a pollinating insect making a visible flower contact within a marked transect"
+        },
+        {
+          "id": "kind_u1",
+          "dimension": "subject",
+          "target": "insect",
+          "property": "subject.kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.kind/v1",
+            "value": "pollinating insect"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충"
+        },
+        {
+          "id": "ftype_u1",
+          "dimension": "subject",
+          "target": "flower",
+          "property": "subject.kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.kind/v1",
+            "value": "flower"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충"
+        },
+        {
+          "id": "ttype_u1",
+          "dimension": "setting",
+          "target": "transect",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "marked transect"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충"
+        },
+        {
+          "id": "contact_u1",
+          "dimension": "relationship",
+          "target": "insect",
+          "property": "contact.point",
+          "mode": "effect",
+          "value": {
+            "type": "contact.point/v1",
+            "value": "making contact with the flower"
+          },
+          "requires": [
+            "insect_u2",
+            "kind_u0",
+            "flower_u2",
+            "ftype_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "flower"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충"
+        },
+        {
+          "id": "visible_u1",
+          "dimension": "framing",
+          "target": "image",
+          "property": "subject.visibility",
+          "mode": "effect",
+          "value": {
+            "type": "subject.visibility/v1",
+            "value": "the insect flower contact is visible"
+          },
+          "requires": [
+            "insect_u2",
+            "flower_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "insect",
+            "flower"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충"
+        },
+        {
+          "id": "within_u1",
+          "dimension": "setting",
+          "target": "insect",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "within the marked transect"
+          },
+          "requires": [
+            "insect_u2",
+            "transect_u2",
+            "ttype_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "transect"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충"
+        },
+        {
+          "id": "insect_u2",
+          "dimension": "subject",
+          "target": "insect",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "kind_u2",
+          "dimension": "subject",
+          "target": "insect",
+          "property": "subject.kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.kind/v1",
+            "value": "pollinating insect"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "flower_u2",
+          "dimension": "subject",
+          "target": "flower",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "ftype_u2",
+          "dimension": "subject",
+          "target": "flower",
+          "property": "subject.kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.kind/v1",
+            "value": "flower"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "transect_u2",
+          "dimension": "subject",
+          "target": "transect",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "ttype_u2",
+          "dimension": "setting",
+          "target": "transect",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "marked transect"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "contact_u2",
+          "dimension": "relationship",
+          "target": "insect",
+          "property": "contact.point",
+          "mode": "effect",
+          "value": {
+            "type": "contact.point/v1",
+            "value": "making contact with the flower"
+          },
+          "requires": [
+            "insect_u2",
+            "kind_u0",
+            "flower_u2",
+            "ftype_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "flower"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "visible_u2",
+          "dimension": "framing",
+          "target": "image",
+          "property": "subject.visibility",
+          "mode": "effect",
+          "value": {
+            "type": "subject.visibility/v1",
+            "value": "the insect flower contact is visible"
+          },
+          "requires": [
+            "insect_u2",
+            "flower_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "insect",
+            "flower"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        },
+        {
+          "id": "within_u2",
+          "dimension": "setting",
+          "target": "insect",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "within the marked transect"
+          },
+          "requires": [
+            "insect_u2",
+            "transect_u2",
+            "ttype_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "transect"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result."
+        }
+      ],
+      "roles": {
+        "subject": {
+          "spec_sha256": "7a6fabe3202e933e6c4f2b052c730205960e2d3f402cc988949f5db7b6a55f93",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "kind_u0",
+            "kind_u1",
+            "kind_u2"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        },
+        "contact_point": {
+          "spec_sha256": "cc1ed476821efda9a50e5db8a88a163bc1d1d08de58475a6f6ac2e46039115ff",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "contact_u0",
+            "contact_u1",
+            "contact_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "relational_action": {
+          "spec_sha256": "38993a88b09cec3f22e2ffed8af2475cb30dbea819dcac87ae1f6040f6823c63",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "contact_u0",
+            "contact_u1",
+            "contact_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "subject_framing": {
+          "spec_sha256": "da05c55b9676dab684409583c175589be1379b177039a0913974d637e3f3548a",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "visible_u0",
+            "visible_u1",
+            "visible_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "location": {
+          "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "within_u0",
+            "within_u1",
+            "within_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "insect",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "flower",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "transect",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "image",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "core_role",
+                "role": "image"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a pollinating insect making a visible flower contact within a marked transect",
+          "fact_refs": [
+            "kind_u0",
+            "ftype_u0",
+            "ttype_u0",
+            "contact_u0",
+            "visible_u0",
+            "within_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표시된 조사선 안에서 꽃과 눈에 보이게 접촉 중인 수분매개 곤충",
+          "fact_refs": [
+            "kind_u1",
+            "ftype_u1",
+            "ttype_u1",
+            "contact_u1",
+            "visible_u1",
+            "within_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible flower-contact and within-transect choices using the same explicitly selected, independently declared present pollinating insect, flower and marked transect. Do not add organisms or markers, select a species, assert successful pollen transfer or fabricate a measurement result.",
+          "fact_refs": [
+            "insect_u2",
+            "kind_u2",
+            "flower_u2",
+            "ftype_u2",
+            "transect_u2",
+            "ttype_u2",
+            "contact_u2",
+            "visible_u2",
+            "within_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "relationship",
+            "framing",
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "relationship",
+              "target": "insect",
+              "property": "contact.point"
+            },
+            {
+              "dimension": "framing",
+              "target": "image",
+              "property": "subject.visibility"
+            },
+            {
+              "dimension": "setting",
+              "target": "insect",
+              "property": "setting.location"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "exact independent insect/flower/transect graph/visibility guards/source corrections/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2677,
+      "candidate_id": "cand_34238a87b2bd5af48674a27af3234df2",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "장노출로 기록된 빛 끌림. 실제 빛 종류/밤/물리 운동/카메라 움직임 없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "long-exposure light drag",
+          "ko": "long-exposure light drag",
+          "tags": [
+            "lighting",
+            "night",
+            "motion"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_34238a87b2bd5af48674a27af3234df2",
+        "provenance": [
+          {
+            "sha256": "a906b158cf17d325a5579df12d82f30dc4302a0a1cb93624fde9e995337efa20",
+            "source": "slot:lighting:long_exposure_drag"
+          },
+          {
+            "sha256": "a906b158cf17d325a5579df12d82f30dc4302a0a1cb93624fde9e995337efa20",
+            "source": "slot:light_type:long_exposure_drag"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "long-exposure light drag",
+          "ko": "long-exposure light drag",
+          "tags": [
+            "lighting",
+            "night",
+            "motion"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_34238a87b2bd5af48674a27af3234df2",
+        "provenance": [
+          {
+            "sha256": "a906b158cf17d325a5579df12d82f30dc4302a0a1cb93624fde9e995337efa20",
+            "source": "slot:lighting:long_exposure_drag"
+          },
+          {
+            "sha256": "a906b158cf17d325a5579df12d82f30dc4302a0a1cb93624fde9e995337efa20",
+            "source": "slot:light_type:long_exposure_drag"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "long-exposure light drag",
+          "ko": "장노출로 기록된 빛 끌림",
+          "tags": [
+            "lighting",
+            "night",
+            "motion"
+          ],
+          "application_scope": "Choose the long-exposure mode and recorded light-drag result for the same explicitly selected, independently declared present capture and image. Do not add a light source or camera, choose night, physical speed, an emitter type, camera movement or a numeric shutter time."
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "target": "capture",
+              "property": "capture.mode"
+            },
+            {
+              "dimension": "camera",
+              "target": "image",
+              "property": "image.motion"
+            }
+          ]
+        },
+        "id": "cand_34238a87b2bd5af48674a27af3234df2",
+        "provenance": [
+          {
+            "sha256": "a906b158cf17d325a5579df12d82f30dc4302a0a1cb93624fde9e995337efa20",
+            "source": "slot:lighting:long_exposure_drag"
+          },
+          {
+            "sha256": "a906b158cf17d325a5579df12d82f30dc4302a0a1cb93624fde9e995337efa20",
+            "source": "slot:light_type:long_exposure_drag"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "long-exposure light drag",
+          "after": "장노출로 기록된 빛 끌림",
+          "reason": "whole Korean translation, recorded drag not actual physical movement."
+        },
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Choose the long-exposure mode and recorded light-drag result for the same explicitly selected, independently declared present capture and image. Do not add a light source or camera, choose night, physical speed, an emitter type, camera movement or a numeric shutter time.",
+          "reason": "actual capture mode/image streak E 유지, existing capture P의 actual entity/core representation은 별도 미정."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "lighting"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "camera"
+            ],
+            "properties": [
+              {
+                "dimension": "camera",
+                "target": "capture",
+                "property": "capture.mode"
+              },
+              {
+                "dimension": "camera",
+                "target": "image",
+                "property": "image.motion"
+              }
+            ]
+          },
+          "reason": "physical lighting source 효과 대신 stated capture/result plane exact 교정."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 178,
+          "sha256": "5b7e4bf8dcae060ad45fddb3124d95dd91441be76ede5d02bcfc68164a687fb1"
+        },
+        "candidate_id": "cand_34238a87b2bd5af48674a27af3234df2",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "image.motion.long_exposure_drag",
+            "quote": "long-exposure light drag",
+            "realization_id": "base",
+            "target": "image_light"
+          },
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "capture.mode.long_exposure",
+            "quote": "long-exposure light drag",
+            "realization_id": "base",
+            "target": "camera"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "긴 노출의 광 궤적.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "광원 종류·밤·물리 속도는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "image.motion.long_exposure_drag",
+                "quote": "long-exposure light drag",
+                "target": "image_light"
+              }
+            ],
+            "rationale": "영상 흔적.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "motion_rendering"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "capture.mode.long_exposure",
+                "quote": "long-exposure light drag",
+                "target": "camera"
+              }
+            ],
+            "rationale": "명시 모드.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "capture_configuration"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "8c612c34e8d9d8000ff878b9bc14aa79237e2da2756a4e8d9f6f1b0ac9b91df4",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 178,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "ff08575f7d64a7576d0732afee8891f253eac5014d552f45ec93aa2289541332"
+      },
+      "before_full_record_sha256": "8c612c34e8d9d8000ff878b9bc14aa79237e2da2756a4e8d9f6f1b0ac9b91df4",
+      "fiveB_after_full_record_sha256": "8c612c34e8d9d8000ff878b9bc14aa79237e2da2756a4e8d9f6f1b0ac9b91df4",
+      "proposed_after_full_record_sha256": "2214df963226ae09faab9ab7edc4fea45c35b3c80ba9d2ab1db9f6d4c0bb01c1",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_34238a87b2bd5af48674a27af3234df2": {
+          "candidate_id": "cand_34238a87b2bd5af48674a27af3234df2",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_34238a87b2bd5af48674a27af3234df2",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "lighting",
+          "weight": 1.0
+        },
+        "bind_738f30e9207e503984c59b34daab14b0": {
+          "candidate_id": "cand_34238a87b2bd5af48674a27af3234df2",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_738f30e9207e503984c59b34daab14b0",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "light_type",
+          "weight": 1.0
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "lighting",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_34238a87b2bd5af48674a27af3234df2",
+          "reason": "own{} read; no coherent source-placement/receiver setup.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "light_type",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_738f30e9207e503984c59b34daab14b0",
+          "reason": "own{} read; long exposure is not emission mechanism.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "motion_rendering",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions": {},
+          "reason": "actual recorded light drag."
+        },
+        {
+          "slot_id": "capture_configuration",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions": {},
+          "reason": "fullspec describes arrangement yet capture.mode prefix includes exposure mode; exact mode-only qualification boundary needs root review."
+        }
+      ],
+      "conditions_review": "source{} retained. Long exposure explicitly selected, not context/P/no-op. Capture carrier entity versus image operation representation must be resolved using frozen core; no arbitrary core_role camera. Camera owner/long exposure numeric guard not supplied.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "light_shape",
+          "reason": "recorded streak not actual spatial receiving beam geometry"
+        },
+        {
+          "slot_id": "physical_motion",
+          "reason": "image streak not source speed"
+        },
+        {
+          "slot_id": "camera_movement",
+          "reason": "no moving camera"
+        },
+        {
+          "slot_id": "time_of_day",
+          "reason": "night metadata not actual time"
+        }
+      ],
+      "facts": [
+        {
+          "id": "long_u0",
+          "dimension": "camera",
+          "target": "capture",
+          "property": "capture.mode",
+          "mode": "effect",
+          "value": {
+            "type": "capture.mode/v1",
+            "value": "long exposure"
+          },
+          "requires": [
+            "capture_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "long-exposure light drag"
+        },
+        {
+          "id": "drag_u0",
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.motion",
+          "mode": "effect",
+          "value": {
+            "type": "image.motion/v1",
+            "value": "long-exposure light drag"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "long-exposure light drag"
+        },
+        {
+          "id": "long_u1",
+          "dimension": "camera",
+          "target": "capture",
+          "property": "capture.mode",
+          "mode": "effect",
+          "value": {
+            "type": "capture.mode/v1",
+            "value": "long exposure"
+          },
+          "requires": [
+            "capture_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "장노출로 기록된 빛 끌림"
+        },
+        {
+          "id": "drag_u1",
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.motion",
+          "mode": "effect",
+          "value": {
+            "type": "image.motion/v1",
+            "value": "long-exposure light drag"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "장노출로 기록된 빛 끌림"
+        },
+        {
+          "id": "capture_u2",
+          "dimension": "subject",
+          "target": "capture",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Choose the long-exposure mode and recorded light-drag result for the same explicitly selected, independently declared present capture and image. Do not add a light source or camera, choose night, physical speed, an emitter type, camera movement or a numeric shutter time."
+        },
+        {
+          "id": "long_u2",
+          "dimension": "camera",
+          "target": "capture",
+          "property": "capture.mode",
+          "mode": "effect",
+          "value": {
+            "type": "capture.mode/v1",
+            "value": "long exposure"
+          },
+          "requires": [
+            "capture_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Choose the long-exposure mode and recorded light-drag result for the same explicitly selected, independently declared present capture and image. Do not add a light source or camera, choose night, physical speed, an emitter type, camera movement or a numeric shutter time."
+        },
+        {
+          "id": "drag_u2",
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.motion",
+          "mode": "effect",
+          "value": {
+            "type": "image.motion/v1",
+            "value": "long-exposure light drag"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Choose the long-exposure mode and recorded light-drag result for the same explicitly selected, independently declared present capture and image. Do not add a light source or camera, choose night, physical speed, an emitter type, camera movement or a numeric shutter time."
+        }
+      ],
+      "roles": {
+        "motion_rendering": {
+          "spec_sha256": "96544484045d9512f3d12f83351bfe1b69b7cc990b16c4d6de98a47668a54a1b",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "drag_u0",
+            "drag_u1",
+            "drag_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "capture",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "image",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "core_role",
+                "role": "image"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "long-exposure light drag",
+          "fact_refs": [
+            "long_u0",
+            "drag_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "장노출로 기록된 빛 끌림",
+          "fact_refs": [
+            "long_u1",
+            "drag_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Choose the long-exposure mode and recorded light-drag result for the same explicitly selected, independently declared present capture and image. Do not add a light source or camera, choose night, physical speed, an emitter type, camera movement or a numeric shutter time.",
+          "fact_refs": [
+            "capture_u2",
+            "long_u2",
+            "drag_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "target": "capture",
+              "property": "capture.mode"
+            },
+            {
+              "dimension": "camera",
+              "target": "image",
+              "property": "image.motion"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "capture carrier core representation/configuration definition boundary/source corrections/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2678,
+      "candidate_id": "cand_41f8d3d7a7e454f791967a18db698545",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "다크 페미닌 검정 의복 층의 스타일. 실제 성별/성적 맥락/아이템/겹침 순서 없음.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "dark feminine black layers",
+          "clause": "actual layer identities/order/overlap and worn-outfit relationship",
+          "mode": "effect for style/color; layer baseline scope unresolved",
+          "operation": "set_value",
+          "target_intent": "selected existing outfit and independently declared constituent garments/wearer if required",
+          "property_intent": "wardrobe.style/color.local/wardrobe.layering",
+          "typed_value_status": "dark feminine and black known, actual ordered layering unselected",
+          "receiver_status": "outfit presence P not garment constituent/wearer relation proof",
+          "reason": "Do not make layer graph or no-op aesthetic; whole effect correction follows resolved carriers."
+        }
+      ],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "dark feminine"
+          ],
+          "en": "dark feminine black layers",
+          "keywords": [
+            "dark feminine",
+            "black layers"
+          ],
+          "ko": "다크 페미닌 블랙 레이어",
+          "tags": [
+            "human",
+            "fashion",
+            "dark_feminine"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_41f8d3d7a7e454f791967a18db698545",
+        "provenance": [
+          {
+            "sha256": "b8b2033352ecf1b734c643070dad9999056fce58d30c9f9b5846b742c3f11a36",
+            "source": "slot:wardrobe_style:dark_feminine_black_layers"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "dark feminine"
+          ],
+          "en": "dark feminine black layers",
+          "keywords": [
+            "dark feminine",
+            "black layers"
+          ],
+          "ko": "다크 페미닌 블랙 레이어",
+          "tags": [
+            "human",
+            "fashion",
+            "dark_feminine"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_41f8d3d7a7e454f791967a18db698545",
+        "provenance": [
+          {
+            "sha256": "b8b2033352ecf1b734c643070dad9999056fce58d30c9f9b5846b742c3f11a36",
+            "source": "slot:wardrobe_style:dark_feminine_black_layers"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "dark feminine"
+          ],
+          "en": "dark feminine black layers",
+          "keywords": [
+            "dark feminine",
+            "black layers"
+          ],
+          "ko": "다크 페미닌 블랙 레이어",
+          "tags": [
+            "human",
+            "fashion",
+            "dark_feminine"
+          ],
+          "application_scope": "Apply the dark-feminine styling and black color to the same explicitly selected, independently declared present layered outfit. Do not add garments or a wearer, choose layer order, expose body regions, infer gender identity or select sexual presentation. Existing layer identities and wearer relations remain to be resolved."
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_41f8d3d7a7e454f791967a18db698545",
+        "provenance": [
+          {
+            "sha256": "b8b2033352ecf1b734c643070dad9999056fce58d30c9f9b5846b742c3f11a36",
+            "source": "slot:wardrobe_style:dark_feminine_black_layers"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply the dark-feminine styling and black color to the same explicitly selected, independently declared present layered outfit. Do not add garments or a wearer, choose layer order, expose body regions, infer gender identity or select sexual presentation. Existing layer identities and wearer relations remain to be resolved.",
+          "reason": "actual style/color E 유지, layered identity scope P proposal only. Unspecified layer relations not fabricated."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 179,
+          "sha256": "f28d3cccbdbebbfea1bd2682f0826975648092870b1806f5bab3f7b904a69a71"
+        },
+        "candidate_id": "cand_41f8d3d7a7e454f791967a18db698545",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "wardrobe.style.dark_feminine",
+            "quote": "dark feminine black layers",
+            "realization_id": "base",
+            "target": "outfit"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "wardrobe.layers.black",
+            "quote": "dark feminine black layers",
+            "realization_id": "base",
+            "target": "outfit"
+          },
+          {
+            "dimension": "color",
+            "pointer": "/content/en",
+            "property": "color.local.black",
+            "quote": "dark feminine black layers",
+            "realization_id": "base",
+            "target": "outfit"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "다크 페미닌 검정 의복 층.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "성별 정체·성적 맥락·정확한 층 순서는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "wardrobe.style.dark_feminine",
+                "quote": "dark feminine black layers",
+                "target": "outfit"
+              }
+            ],
+            "rationale": "스타일.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_style"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "wardrobe.layers.black",
+                "quote": "dark feminine black layers",
+                "target": "outfit"
+              }
+            ],
+            "rationale": "층.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_layering"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "color",
+                "pointer": "/content/en",
+                "property": "color.local.black",
+                "quote": "dark feminine black layers",
+                "target": "outfit"
+              }
+            ],
+            "rationale": "색.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "color"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "7ff7dba6da59dae7bbcb7b9e1b4ca54a5aa4aca6deb337c61950437a3257b023",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 179,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "b5148ab329089a4d911f6e2bc86a6556ec73965a04f7bb70cd7a7984a33368cc"
+      },
+      "before_full_record_sha256": "7ff7dba6da59dae7bbcb7b9e1b4ca54a5aa4aca6deb337c61950437a3257b023",
+      "fiveB_after_full_record_sha256": "7ff7dba6da59dae7bbcb7b9e1b4ca54a5aa4aca6deb337c61950437a3257b023",
+      "proposed_after_full_record_sha256": "32cf5107d1e2220c025d4a984785c3b719d15cde07c751beb2ad7b7fffdee689",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_41f8d3d7a7e454f791967a18db698545": {
+          "candidate_id": "cand_41f8d3d7a7e454f791967a18db698545",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_41f8d3d7a7e454f791967a18db698545",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "wardrobe_style",
+          "weight": 0.78
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "wardrobe_style",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.78,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_41f8d3d7a7e454f791967a18db698545",
+          "reason": "own human6deny read; outfit styling actual but required wearer relation unprovided.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          }
+        },
+        {
+          "slot_id": "color",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.78,
+          "conditions": {},
+          "reason": "black physical wardrobe color, not dark illumination."
+        },
+        {
+          "slot_id": "wardrobe_layering",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.78,
+          "conditions": {},
+          "reason": "layer class named, no explicit owner-specific order/overlap/exposure."
+        }
+      ],
+      "conditions_review": "sourcehuman intrinsic retained, no wearer automatically exists from sourcefor_any. Dark feminine styling E not context-only workaround. Exact clothes/part graph and selected wardrobe carrier needed; old appearance footprint does not cover literal color E.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "gender_presentation",
+          "reason": "style phrase not declared gender"
+        },
+        {
+          "slot_id": "adult_presentation_context",
+          "reason": "no sexual coding beyond fashion label"
+        },
+        {
+          "slot_id": "garment_detail",
+          "reason": "no seams/construction"
+        },
+        {
+          "slot_id": "light_intensity",
+          "reason": "dark style not dim illumination"
+        }
+      ],
+      "facts": [
+        {
+          "id": "type_u0",
+          "dimension": "subject",
+          "target": "outfit",
+          "property": "wardrobe.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "wardrobe.type/v1",
+            "value": "layered outfit"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "dark feminine black layers"
+        },
+        {
+          "id": "style_u0",
+          "dimension": "appearance",
+          "target": "outfit",
+          "property": "wardrobe.style",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.style/v1",
+            "value": "dark feminine"
+          },
+          "requires": [
+            "present_u2",
+            "type_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "dark feminine black layers"
+        },
+        {
+          "id": "black_u0",
+          "dimension": "color",
+          "target": "outfit",
+          "property": "color.local",
+          "mode": "effect",
+          "value": {
+            "type": "color.local/v1",
+            "value": "black"
+          },
+          "requires": [
+            "present_u2",
+            "type_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "dark feminine black layers"
+        },
+        {
+          "id": "type_u1",
+          "dimension": "subject",
+          "target": "outfit",
+          "property": "wardrobe.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "wardrobe.type/v1",
+            "value": "layered outfit"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다크 페미닌 블랙 레이어"
+        },
+        {
+          "id": "style_u1",
+          "dimension": "appearance",
+          "target": "outfit",
+          "property": "wardrobe.style",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.style/v1",
+            "value": "dark feminine"
+          },
+          "requires": [
+            "present_u2",
+            "type_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다크 페미닌 블랙 레이어"
+        },
+        {
+          "id": "black_u1",
+          "dimension": "color",
+          "target": "outfit",
+          "property": "color.local",
+          "mode": "effect",
+          "value": {
+            "type": "color.local/v1",
+            "value": "black"
+          },
+          "requires": [
+            "present_u2",
+            "type_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다크 페미닌 블랙 레이어"
+        },
+        {
+          "id": "present_u2",
+          "dimension": "subject",
+          "target": "outfit",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the dark-feminine styling and black color to the same explicitly selected, independently declared present layered outfit. Do not add garments or a wearer, choose layer order, expose body regions, infer gender identity or select sexual presentation. Existing layer identities and wearer relations remain to be resolved."
+        },
+        {
+          "id": "type_u2",
+          "dimension": "subject",
+          "target": "outfit",
+          "property": "wardrobe.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "wardrobe.type/v1",
+            "value": "layered outfit"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the dark-feminine styling and black color to the same explicitly selected, independently declared present layered outfit. Do not add garments or a wearer, choose layer order, expose body regions, infer gender identity or select sexual presentation. Existing layer identities and wearer relations remain to be resolved."
+        },
+        {
+          "id": "style_u2",
+          "dimension": "appearance",
+          "target": "outfit",
+          "property": "wardrobe.style",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.style/v1",
+            "value": "dark feminine"
+          },
+          "requires": [
+            "present_u2",
+            "type_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the dark-feminine styling and black color to the same explicitly selected, independently declared present layered outfit. Do not add garments or a wearer, choose layer order, expose body regions, infer gender identity or select sexual presentation. Existing layer identities and wearer relations remain to be resolved."
+        },
+        {
+          "id": "black_u2",
+          "dimension": "color",
+          "target": "outfit",
+          "property": "color.local",
+          "mode": "effect",
+          "value": {
+            "type": "color.local/v1",
+            "value": "black"
+          },
+          "requires": [
+            "present_u2",
+            "type_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the dark-feminine styling and black color to the same explicitly selected, independently declared present layered outfit. Do not add garments or a wearer, choose layer order, expose body regions, infer gender identity or select sexual presentation. Existing layer identities and wearer relations remain to be resolved."
+        }
+      ],
+      "roles": {
+        "color": {
+          "spec_sha256": "4e8c16b3614678775dcc0bac4c7ccf275c0bf6a488d22ca79fec85fc3e82a309",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "black_u0",
+            "black_u1",
+            "black_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "outfit",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "dark feminine black layers",
+          "fact_refs": [
+            "type_u0",
+            "style_u0",
+            "black_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다크 페미닌 블랙 레이어",
+          "fact_refs": [
+            "type_u1",
+            "style_u1",
+            "black_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the dark-feminine styling and black color to the same explicitly selected, independently declared present layered outfit. Do not add garments or a wearer, choose layer order, expose body regions, infer gender identity or select sexual presentation. Existing layer identities and wearer relations remain to be resolved.",
+          "fact_refs": [
+            "present_u2",
+            "type_u2",
+            "style_u2",
+            "black_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "layer/wearer graph/whole footprint/source scope/core/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2679,
+      "candidate_id": "cand_68f88a0267e25f0eab9b178c98163d22",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "따뜻하고 낮은 등잔 빛. EN actual oil-lamp와 KO 같은 비교 차이, low 광량/높이도 확정 안됨.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "warm low oil-lamp light",
+          "clause": "actual oil-lamp source vs imitated look, low intensity vs placement height",
+          "mode": "effect",
+          "operation": "set_value/relocate pending physical interpretation",
+          "target_intent": "selected existing illumination and actual emitter only if source confirmed",
+          "property_intent": "lighting.type/lighting.intensity/lighting.direction or image look",
+          "typed_value_status": "warm known, source/low axes not resolved",
+          "receiver_status": "illumination P not actual emitter/height/receiving plane proof",
+          "reason": "Do not resolve bilingual contrast using source metadata/effects or invent lamp/brightness."
+        }
+      ],
+      "original_source": {
+        "conditions": {
+          "requires_any_tags": [
+            "traditional",
+            "historical",
+            "joseon",
+            "hanfu",
+            "gothic",
+            "academia",
+            "library",
+            "pojangmacha"
+          ]
+        },
+        "content": {
+          "en": "warm low oil-lamp light",
+          "ko": "기름 등잔 같은 따뜻한 낮은 빛",
+          "tags": [
+            "traditional",
+            "warm",
+            "interior"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_68f88a0267e25f0eab9b178c98163d22",
+        "provenance": [
+          {
+            "sha256": "12120b0bd94e182b606dbefcec5db28b251014f2f6f55ee5d351c4811b8a1d7a",
+            "source": "slot:lighting:oil_lamp_warm"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "requires_any_tags": [
+            "traditional",
+            "historical",
+            "joseon",
+            "hanfu",
+            "gothic",
+            "academia",
+            "library",
+            "pojangmacha"
+          ]
+        },
+        "content": {
+          "en": "warm low oil-lamp light",
+          "ko": "기름 등잔 같은 따뜻한 낮은 빛",
+          "tags": [
+            "traditional",
+            "warm",
+            "interior"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_68f88a0267e25f0eab9b178c98163d22",
+        "provenance": [
+          {
+            "sha256": "12120b0bd94e182b606dbefcec5db28b251014f2f6f55ee5d351c4811b8a1d7a",
+            "source": "slot:lighting:oil_lamp_warm"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "requires_any_tags": [
+            "traditional",
+            "historical",
+            "joseon",
+            "hanfu",
+            "gothic",
+            "academia",
+            "library",
+            "pojangmacha"
+          ]
+        },
+        "content": {
+          "en": "warm low oil-lamp light",
+          "ko": "기름 등잔 같은 따뜻한 낮은 빛",
+          "tags": [
+            "traditional",
+            "warm",
+            "interior"
+          ],
+          "application_scope": "Apply the stated warm illumination choice to the same explicitly selected, independently declared present illumination. Preserve the unresolved oil-lamp-source versus oil-lamp-like-look distinction and low-light meaning until explicitly resolved; do not add a lamp, choose its fuel or height, set a temperature or assert a historical period."
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_68f88a0267e25f0eab9b178c98163d22",
+        "provenance": [
+          {
+            "sha256": "12120b0bd94e182b606dbefcec5db28b251014f2f6f55ee5d351c4811b8a1d7a",
+            "source": "slot:lighting:oil_lamp_warm"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply the stated warm illumination choice to the same explicitly selected, independently declared present illumination. Preserve the unresolved oil-lamp-source versus oil-lamp-like-look distinction and low-light meaning until explicitly resolved; do not add a lamp, choose its fuel or height, set a temperature or assert a historical period.",
+          "reason": "warm E 확실부분 보존, source/low ambiguity not erased or silently guessed."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 180,
+          "sha256": "089b147c1f845e1229d0994179e1be8a4966bbdf7518cb07f5bbdbb796e520ee"
+        },
+        "candidate_id": "cand_68f88a0267e25f0eab9b178c98163d22",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.source.oil_lamp",
+            "quote": "warm low oil-lamp light",
+            "realization_id": "base",
+            "target": "illumination"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.color.warm",
+            "quote": "warm low oil-lamp light",
+            "realization_id": "base",
+            "target": "illumination"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.level.low",
+            "quote": "warm low oil-lamp light",
+            "realization_id": "base",
+            "target": "illumination"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "따뜻하고 낮은 광량의 등잔 빛.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "기존 조건 유지; 광원 높이·실제 온도·시대는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.source.oil_lamp",
+                "quote": "warm low oil-lamp light",
+                "target": "illumination"
+              }
+            ],
+            "rationale": "광원.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_type"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.color.warm",
+                "quote": "warm low oil-lamp light",
+                "target": "illumination"
+              }
+            ],
+            "rationale": "색.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_color"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.level.low",
+                "quote": "warm low oil-lamp light",
+                "target": "illumination"
+              }
+            ],
+            "rationale": "수준.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_intensity"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "3af0a045d416a5422822bae0acf4dbca7adecad9ae78258ebf06e857efae05a8",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 180,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "e1f661dd9206c34dc0e5633c09362afb8b38cd7fd8fec8972e95c62e4e3398df"
+      },
+      "before_full_record_sha256": "3af0a045d416a5422822bae0acf4dbca7adecad9ae78258ebf06e857efae05a8",
+      "fiveB_after_full_record_sha256": "3af0a045d416a5422822bae0acf4dbca7adecad9ae78258ebf06e857efae05a8",
+      "proposed_after_full_record_sha256": "a1c302aa5a6631811ca921ee5b31ebf1c9b8e7f3bc4271082557f5bdddc9b401",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_68f88a0267e25f0eab9b178c98163d22": {
+          "candidate_id": "cand_68f88a0267e25f0eab9b178c98163d22",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_68f88a0267e25f0eab9b178c98163d22",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "lighting",
+          "weight": 0.45
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "lighting",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.45,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_68f88a0267e25f0eab9b178c98163d22",
+          "reason": "own{} read; source intention/placement/receivers incomplete.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "light_color",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.45,
+          "conditions": {},
+          "reason": "warm explicitly modifies light."
+        },
+        {
+          "slot_id": "light_type",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.45,
+          "conditions": {},
+          "reason": "EN actual source vs KO oil-lamp-like wording unresolved."
+        },
+        {
+          "slot_id": "light_intensity",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.45,
+          "conditions": {},
+          "reason": "low potentially amount or height; no intensity from old5Bfact."
+        },
+        {
+          "slot_id": "light_direction",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.45,
+          "conditions": {},
+          "reason": "low source height/axis alternative also not selected."
+        }
+      ],
+      "conditions_review": "requires_any_tags traditional/historical/joseon/hanfu/gothic/academia/library/pojangmacha retained intrinsic; none proves actual historical period/oil lamp. Actual carrier emission/type/source-location relation pending, warm not physical heat.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "thermal_state",
+          "reason": "warm light not material temperature"
+        },
+        {
+          "slot_id": "historical_period",
+          "reason": "tags not era claim"
+        },
+        {
+          "slot_id": "prop",
+          "reason": "oil lamp like does not create lamp"
+        },
+        {
+          "slot_id": "location",
+          "reason": "interior tag not actual room"
+        }
+      ],
+      "facts": [
+        {
+          "id": "warm_u0",
+          "dimension": "lighting",
+          "target": "light",
+          "property": "lighting.color",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.color/v1",
+            "value": "warm"
+          },
+          "requires": [
+            "light_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "warm low oil-lamp light"
+        },
+        {
+          "id": "warm_u1",
+          "dimension": "lighting",
+          "target": "light",
+          "property": "lighting.color",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.color/v1",
+            "value": "warm"
+          },
+          "requires": [
+            "light_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "기름 등잔 같은 따뜻한 낮은 빛"
+        },
+        {
+          "id": "light_u2",
+          "dimension": "subject",
+          "target": "light",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the stated warm illumination choice to the same explicitly selected, independently declared present illumination. Preserve the unresolved oil-lamp-source versus oil-lamp-like-look distinction and low-light meaning until explicitly resolved; do not add a lamp, choose its fuel or height, set a temperature or assert a historical period."
+        },
+        {
+          "id": "warm_u2",
+          "dimension": "lighting",
+          "target": "light",
+          "property": "lighting.color",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.color/v1",
+            "value": "warm"
+          },
+          "requires": [
+            "light_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the stated warm illumination choice to the same explicitly selected, independently declared present illumination. Preserve the unresolved oil-lamp-source versus oil-lamp-like-look distinction and low-light meaning until explicitly resolved; do not add a lamp, choose its fuel or height, set a temperature or assert a historical period."
+        }
+      ],
+      "roles": {
+        "light_color": {
+          "spec_sha256": "cc3cd1fa1a23c088f995873802ecb49699d24f1db65c5079fc18a71a30494fc1",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "warm_u0",
+            "warm_u1",
+            "warm_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "light",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "warm low oil-lamp light",
+          "fact_refs": [
+            "warm_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "기름 등잔 같은 따뜻한 낮은 빛",
+          "fact_refs": [
+            "warm_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the stated warm illumination choice to the same explicitly selected, independently declared present illumination. Preserve the unresolved oil-lamp-source versus oil-lamp-like-look distinction and low-light meaning until explicitly resolved; do not add a lamp, choose its fuel or height, set a temperature or assert a historical period.",
+          "fact_refs": [
+            "light_u2",
+            "warm_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "bilingual actual source/low-axis intent/whole footprint/selected core/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2680,
+      "candidate_id": "cand_88a8ed0381f35539bea8cc11ebd4f2ee",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "말끔히 면도된 얼굴 털의 보이는 상태 선택. 실제 면도 사건/수염 존재/성별/나이 없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "clean",
+            "shaven"
+          ],
+          "embedding_text": "clean-shaven face",
+          "en": "clean-shaven face",
+          "keywords": [
+            "human",
+            "facial_hair",
+            "clean"
+          ],
+          "ko": "말끔히 면도한 얼굴",
+          "tags": [
+            "human",
+            "facial_hair",
+            "clean"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_88a8ed0381f35539bea8cc11ebd4f2ee",
+        "provenance": [
+          {
+            "sha256": "43cb39a7dea606f2786811de948d90fcae45404c9b620b4bac5e0eebb06b6162",
+            "source": "slot:facial_hair:clean_shaven"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "clean",
+            "shaven"
+          ],
+          "embedding_text": "clean-shaven face",
+          "en": "clean-shaven face",
+          "keywords": [
+            "human",
+            "facial_hair",
+            "clean"
+          ],
+          "ko": "말끔히 면도한 얼굴",
+          "tags": [
+            "human",
+            "facial_hair",
+            "clean"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_88a8ed0381f35539bea8cc11ebd4f2ee",
+        "provenance": [
+          {
+            "sha256": "43cb39a7dea606f2786811de948d90fcae45404c9b620b4bac5e0eebb06b6162",
+            "source": "slot:facial_hair:clean_shaven"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "clean",
+            "shaven"
+          ],
+          "embedding_text": "clean-shaven face",
+          "en": "clean-shaven face",
+          "keywords": [
+            "human",
+            "facial_hair",
+            "clean"
+          ],
+          "ko": "말끔히 면도한 얼굴",
+          "tags": [
+            "human",
+            "facial_hair",
+            "clean"
+          ],
+          "application_scope": "Apply the visible clean-shaven facial-hair appearance to the same explicitly selected, independently declared present human subject with that subject existing face. Do not add facial hair or a face, perform or date a shaving event, remove an entity, infer age or gender, or change skin texture."
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "target": "actor",
+              "property": "facial_hair.appearance"
+            }
+          ]
+        },
+        "id": "cand_88a8ed0381f35539bea8cc11ebd4f2ee",
+        "provenance": [
+          {
+            "sha256": "43cb39a7dea606f2786811de948d90fcae45404c9b620b4bac5e0eebb06b6162",
+            "source": "slot:facial_hair:clean_shaven"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply the visible clean-shaven facial-hair appearance to the same explicitly selected, independently declared present human subject with that subject existing face. Do not add facial hair or a face, perform or date a shaving event, remove an entity, infer age or gender, or change skin texture.",
+          "reason": "explicit shaven visible state E, face P. Facial-hair role does not require hair presence when value is shaven."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "target": "actor",
+                "property": "facial_hair.appearance"
+              }
+            ]
+          },
+          "reason": "same existing face owner exact appearance effect, not skin smoothing or actual shaving action."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 181,
+          "sha256": "0afb2c26aea8ab2b8d3be997d4258d60e302db5c5f19d687e91f06a49d04ba8e"
+        },
+        "candidate_id": "cand_88a8ed0381f35539bea8cc11ebd4f2ee",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "facial_hair.clean_shaven",
+            "quote": "clean-shaven face",
+            "realization_id": "base",
+            "target": "face"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "면도된 듯 수염 없는 얼굴.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "실제 면도 시점·성별·연령은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "facial_hair.clean_shaven",
+                "quote": "clean-shaven face",
+                "target": "face"
+              }
+            ],
+            "rationale": "털 상태.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "facial_hair"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "f3f9fc7d25d8fe47e7688e616215f2e7c7b51c1d0732dc6a5c4c55583ffc68d3",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 181,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "27e7b829831f890aa9f51c505c3b389722d5462f0a9a802f29807d1a87e5c078"
+      },
+      "before_full_record_sha256": "f3f9fc7d25d8fe47e7688e616215f2e7c7b51c1d0732dc6a5c4c55583ffc68d3",
+      "fiveB_after_full_record_sha256": "f3f9fc7d25d8fe47e7688e616215f2e7c7b51c1d0732dc6a5c4c55583ffc68d3",
+      "proposed_after_full_record_sha256": "a38b120a12eba5de2fb908d8069a83b5b6c8408bf1757d98c7c8cb07970dbccb",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_88a8ed0381f35539bea8cc11ebd4f2ee": {
+          "candidate_id": "cand_88a8ed0381f35539bea8cc11ebd4f2ee",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_88a8ed0381f35539bea8cc11ebd4f2ee",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "facial_hair",
+          "weight": 1.0
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "facial_hair",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_88a8ed0381f35539bea8cc11ebd4f2ee",
+          "reason": "own human4deny read, fullspec expressly includes visible shaved state.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          }
+        }
+      ],
+      "conditions_review": "sourcehuman retained intrinsic; common face presence P exact and independently required, not inferred from slot label. Hair absence appearance does not imply prior beard/removal event.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "action",
+          "reason": "no shaving performance"
+        },
+        {
+          "slot_id": "skin_finish",
+          "reason": "no smoothing"
+        },
+        {
+          "slot_id": "age_presentation",
+          "reason": "not age"
+        },
+        {
+          "slot_id": "gender_presentation",
+          "reason": "not gender"
+        }
+      ],
+      "facts": [
+        {
+          "id": "shaven_u0",
+          "dimension": "appearance",
+          "target": "actor",
+          "property": "facial_hair.appearance",
+          "mode": "effect",
+          "value": {
+            "type": "facial_hair.appearance/v1",
+            "value": "clean-shaven face"
+          },
+          "requires": [
+            "present_u3",
+            "face_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "clean-shaven face"
+        },
+        {
+          "id": "shaven_u1",
+          "dimension": "appearance",
+          "target": "actor",
+          "property": "facial_hair.appearance",
+          "mode": "effect",
+          "value": {
+            "type": "facial_hair.appearance/v1",
+            "value": "clean-shaven face"
+          },
+          "requires": [
+            "present_u3",
+            "face_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "말끔히 면도한 얼굴"
+        },
+        {
+          "id": "shaven_u2",
+          "dimension": "appearance",
+          "target": "actor",
+          "property": "facial_hair.appearance",
+          "mode": "effect",
+          "value": {
+            "type": "facial_hair.appearance/v1",
+            "value": "clean-shaven face"
+          },
+          "requires": [
+            "present_u3",
+            "face_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "clean-shaven face"
+        },
+        {
+          "id": "present_u3",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible clean-shaven facial-hair appearance to the same explicitly selected, independently declared present human subject with that subject existing face. Do not add facial hair or a face, perform or date a shaving event, remove an entity, infer age or gender, or change skin texture."
+        },
+        {
+          "id": "face_u3",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "anatomy.face.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "anatomy.face.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible clean-shaven facial-hair appearance to the same explicitly selected, independently declared present human subject with that subject existing face. Do not add facial hair or a face, perform or date a shaving event, remove an entity, infer age or gender, or change skin texture."
+        },
+        {
+          "id": "shaven_u3",
+          "dimension": "appearance",
+          "target": "actor",
+          "property": "facial_hair.appearance",
+          "mode": "effect",
+          "value": {
+            "type": "facial_hair.appearance/v1",
+            "value": "clean-shaven face"
+          },
+          "requires": [
+            "present_u3",
+            "face_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible clean-shaven facial-hair appearance to the same explicitly selected, independently declared present human subject with that subject existing face. Do not add facial hair or a face, perform or date a shaving event, remove an entity, infer age or gender, or change skin texture."
+        }
+      ],
+      "roles": {
+        "facial_hair": {
+          "spec_sha256": "cf3d84f76c099578530ef9a74dcb627aab5a84c594a7c863270b98b0a37528bb",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "shaven_u0",
+            "shaven_u1",
+            "shaven_u2",
+            "shaven_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "actor",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "clean-shaven face",
+          "fact_refs": [
+            "shaven_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "말끔히 면도한 얼굴",
+          "fact_refs": [
+            "shaven_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "clean-shaven face",
+          "fact_refs": [
+            "shaven_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply the visible clean-shaven facial-hair appearance to the same explicitly selected, independently declared present human subject with that subject existing face. Do not add facial hair or a face, perform or date a shaving event, remove an entity, infer age or gender, or change skin texture.",
+          "fact_refs": [
+            "present_u3",
+            "face_u3",
+            "shaven_u3"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "target": "actor",
+              "property": "facial_hair.appearance"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "same actor face guards/exact source footprint/core/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2681,
+      "candidate_id": "cand_8cb90fb2174858d9b016ca28191cff26",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "호텔 세탁 서비스실 내부 위치 선택. 직원/세탁행동/장비/위장/숙박객 없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "a hotel laundry service room",
+          "ko": "호텔 세탁 서비스실",
+          "phrase_en": "inside a hotel laundry service room",
+          "phrase_ko": "호텔 세탁 서비스실에서",
+          "tags": [
+            "interior",
+            "commercial",
+            "service",
+            "cover"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_8cb90fb2174858d9b016ca28191cff26",
+        "provenance": [
+          {
+            "sha256": "c143b6d2a3e30420d5ffd0c24029f7a71ea9c266f18477fb8737b8e62efb721b",
+            "source": "slot:location:hotel_laundry_service_room"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "a hotel laundry service room",
+          "ko": "호텔 세탁 서비스실",
+          "phrase_en": "inside a hotel laundry service room",
+          "phrase_ko": "호텔 세탁 서비스실에서",
+          "tags": [
+            "interior",
+            "commercial",
+            "service",
+            "cover"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_8cb90fb2174858d9b016ca28191cff26",
+        "provenance": [
+          {
+            "sha256": "c143b6d2a3e30420d5ffd0c24029f7a71ea9c266f18477fb8737b8e62efb721b",
+            "source": "slot:location:hotel_laundry_service_room"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "a hotel laundry service room",
+          "ko": "호텔 세탁 서비스실",
+          "phrase_en": "inside a hotel laundry service room",
+          "phrase_ko": "호텔 세탁 서비스실에서",
+          "tags": [
+            "interior",
+            "commercial",
+            "service",
+            "cover"
+          ],
+          "application_scope": "Set the interior placement in the same explicitly selected, independently declared present hotel laundry service room. Do not add a room, staff, guests, machines or laundry, perform washing, or infer a cover story."
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        },
+        "id": "cand_8cb90fb2174858d9b016ca28191cff26",
+        "provenance": [
+          {
+            "sha256": "c143b6d2a3e30420d5ffd0c24029f7a71ea9c266f18477fb8737b8e62efb721b",
+            "source": "slot:location:hotel_laundry_service_room"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Set the interior placement in the same explicitly selected, independently declared present hotel laundry service room. Do not add a room, staff, guests, machines or laundry, perform washing, or infer a cover story.",
+          "reason": "phrase actual inside placement E, same existing room identity/presence P."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "setting",
+                "target": "scene",
+                "property": "setting.location"
+              }
+            ]
+          },
+          "reason": "exact source location receiver, not room/staff creation."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 182,
+          "sha256": "a2ec97ea5957d9dcd9e0e53cd1d30b99314925370ed704fd12b9041d8033cb4f"
+        },
+        "candidate_id": "cand_8cb90fb2174858d9b016ca28191cff26",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location.hotel_laundry_service_room",
+            "quote": "a hotel laundry service room",
+            "realization_id": "base",
+            "target": "environment"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "호텔 세탁 서비스실.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "작업자·세탁 행동·위장·장비는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location.hotel_laundry_service_room",
+                "quote": "a hotel laundry service room",
+                "target": "environment"
+              }
+            ],
+            "rationale": "장소.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "b6f7681cb6e52e10e6242c73e107a54ed6d3d85afb6286a33e64179deed52110",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 182,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "5713059417af9e669aa2d452e093c64b5e3ee507ff5935d3ca08be5131a58e75"
+      },
+      "before_full_record_sha256": "b6f7681cb6e52e10e6242c73e107a54ed6d3d85afb6286a33e64179deed52110",
+      "fiveB_after_full_record_sha256": "b6f7681cb6e52e10e6242c73e107a54ed6d3d85afb6286a33e64179deed52110",
+      "proposed_after_full_record_sha256": "7ab51c60e9acbd890c558d24c9bd1b1b68172442e0fe5990b83af54abd593a0d",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_8cb90fb2174858d9b016ca28191cff26": {
+          "candidate_id": "cand_8cb90fb2174858d9b016ca28191cff26",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_8cb90fb2174858d9b016ca28191cff26",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 0.95
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "location",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.95,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_8cb90fb2174858d9b016ca28191cff26",
+          "reason": "own{} read; explicit inside location.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        }
+      ],
+      "conditions_review": "source{} retained. Room functional identity not performed service; selected room presence/type guards must match actual core.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "action",
+          "reason": "service room not laundry action"
+        },
+        {
+          "slot_id": "prop",
+          "reason": "no equipment specified"
+        },
+        {
+          "slot_id": "character_intent",
+          "reason": "cover tag not plan"
+        },
+        {
+          "slot_id": "capture_context",
+          "reason": "location not recording purpose"
+        }
+      ],
+      "facts": [
+        {
+          "id": "type_u0",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "hotel laundry service room"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a hotel laundry service room"
+        },
+        {
+          "id": "type_u1",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "hotel laundry service room"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "호텔 세탁 서비스실"
+        },
+        {
+          "id": "type_u2",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "hotel laundry service room"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a hotel laundry service room"
+        },
+        {
+          "id": "inside_u2",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "inside the hotel laundry service room"
+          },
+          "requires": [
+            "present_u4",
+            "type_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "room"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a hotel laundry service room"
+        },
+        {
+          "id": "type_u3",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "hotel laundry service room"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "호텔 세탁 서비스실에서"
+        },
+        {
+          "id": "inside_u3",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "inside the hotel laundry service room"
+          },
+          "requires": [
+            "present_u4",
+            "type_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "room"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "호텔 세탁 서비스실에서"
+        },
+        {
+          "id": "present_u4",
+          "dimension": "subject",
+          "target": "room",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the interior placement in the same explicitly selected, independently declared present hotel laundry service room. Do not add a room, staff, guests, machines or laundry, perform washing, or infer a cover story."
+        },
+        {
+          "id": "type_u4",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "hotel laundry service room"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the interior placement in the same explicitly selected, independently declared present hotel laundry service room. Do not add a room, staff, guests, machines or laundry, perform washing, or infer a cover story."
+        },
+        {
+          "id": "inside_u4",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "inside the hotel laundry service room"
+          },
+          "requires": [
+            "present_u4",
+            "type_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "room"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the interior placement in the same explicitly selected, independently declared present hotel laundry service room. Do not add a room, staff, guests, machines or laundry, perform washing, or infer a cover story."
+        }
+      ],
+      "roles": {
+        "location": {
+          "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "inside_u2",
+            "inside_u3",
+            "inside_u4"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "room",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "scene",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "core_role",
+                "role": "scene"
+              }
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a hotel laundry service room",
+          "fact_refs": [
+            "type_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "호텔 세탁 서비스실",
+          "fact_refs": [
+            "type_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a hotel laundry service room",
+          "fact_refs": [
+            "type_u2",
+            "inside_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "호텔 세탁 서비스실에서",
+          "fact_refs": [
+            "type_u3",
+            "inside_u3"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the interior placement in the same explicitly selected, independently declared present hotel laundry service room. Do not add a room, staff, guests, machines or laundry, perform washing, or infer a cover story.",
+          "fact_refs": [
+            "present_u4",
+            "type_u4",
+            "inside_u4"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "selected room/core location guards/exact source correction/formal input pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    }
+  ],
+  "registration_global_git_network_model_calls": 0
+}

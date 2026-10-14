@@ -1,0 +1,69 @@
+import json,hashlib,gzip
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];A=R/'authored';J=json.loads((A/'native_08250_06250_07250.prepared.json').read_text());S={r['ordinal']:r for r in J['records']};D=[]
+def f(p,q,d,t,prop,m,v):return dict(pointer=p,quote=q,dimension=d,target=t,property=prop,mode=m,value={'type':prop+'/v1','value':v},operation='set_value' if m=='effect' else None,receivers=[],requires=[],requires_status='pending_exact_actual_carriers_and_branch_guards')
+def row(o,meaning,facts,roles,owners,pending,correction=None):
+ s=S[o]
+ for x in facts:
+  v=s['exact_5B_after']
+  for k in x['pointer'][1:].split('/'):v=v[int(k)] if isinstance(v,list) else v[k]
+  assert x['quote'] in v
+ D.append(dict(ordinal=o,candidate_id=s['candidate_id'],source_before=s['original_record'],exact_5B_after=s['exact_5B_after'],compiled_locator=s['compiled_review_locator'],source_bindings=s['all_own_source_bindings'],references=s['complete_reference_records'],reference_bindings=s['complete_reference_bindings'],actual_rids=s['actual_realization_ids'],meaning=meaning,manual_fact_drafts=facts,roles=roles,owner_and_receiver_intents=owners,pending=pending,correction_proposal=correction,proof=None,status='pending',whole_source_and_full_compiled_5B_directly_read=True))
+E='effect';C='context';K='preservation'
+row(6625,'Delivery-hub drying bay, with earlier unrelated hair-state Korean alias corrected by exact5B.',[
+ f('/content/en','the drying bay of a delivery hub','setting','bay','setting.location.delivery_hub_drying_bay',E,'delivery_hub_drying_bay'),
+ f('/content/ko','배송 거점의 건조 작업 구역','setting','bay','setting.location.delivery_hub_drying_bay',E,'delivery_hub_drying_bay')],
+ {'location':'actual work area, no added character','action':'drying-bay function does not declare active hair drying','hair_style':'hair-continuity guard/tags not positive hairstyle','surface_moisture':'no actual wet hair/material stated'},
+ ['Actual bay/location owner, no arbitrary subject/garment/dryer object. Declared drying purpose is contained in location type; no measured operation or separate unsupported device.'],
+ ['Use corrected aliases/0 from exact5B, not stale before-string or stale rejected-boundary wording. Whole exact5B-after directly reread.','Source requires character_hair_state_continuity_scene_atomic_scene and optional location1 empty binding remain exact. No wet-hair action or character created by metadata.'])
+row(6626,'Fictional operation node visually connects criminal roles/logistics/proceeds to one serious illegal objective.',[
+ f('/content/en','fictional operation node where criminal roles logistics and proceeds converge','setting','operation_node','setting.location.fictional_operation',E,'fictional_operation_node_linking_roles_logistics_proceeds'),
+ f('/content/embedding_text','command surveillance transport enforcement storage resale and proceeds records visibly converge','composition','operational_evidence','composition.operational_convergence',E,'named_command_surveillance_transport_enforcement_storage_resale_and_proceeds_records_converge'),
+ f('/content/embedding_text','proceeds records','subject','records','props.proceeds_records',E,'proceeds_records'),
+ f('/content/embedding_text','one serious illegal objective','event','context','narrative.core.illegal_objective',C,'one_declared_serious_illegal_objective'),
+ f('/content/embedding_text','declared fictional operational location','concept','context','record.context.fictional_operation',C,'declared_fictional_operation_not_real_guilt')],
+ {'location':'actual operational place','composition':'visible convergence/evidence arrangement','prop':'proceeds records explicitly named','narrative_core':'one declared serious illegal goal','participant_role':'only actual differentiated carriers, not seven automatically created people','action':'named operational functions/records are not automatically simultaneous enacted crimes','narrative_clue':'declared records/logistics relation can support scene interpretation, exact evidence endpoints pending'},
+ ['Operation node, actual records and differentiated role/logistics endpoints need explicit independent owners.','The command/.../proceeds-records grammar is ambiguous about coordinated records versus functions; no arbitrary separate seven scenes/actors or fabricated contraband.'],
+ ['Setting-only footprint omits operational-evidence relation and central objective. Old5B no-every-role boundary does not authorize dropping conjunctively named source terms; it may correctly avoid seven human role carriers. Exact scope remains pending.','Source organized_crime_operation guard and optional location0.84 binding remain conjunctive. No real guilt, specific contraband, operational crime instructions or dark-room-only substitution.'])
+row(6627,'One adult presenter reveals concrete result/work to several individually responding audience members in one visible presentation.',[
+ f('/content/embedding_text','one adult presenter and multiple identifiable audience members','subject','cast','subject.participants',E,'one_presenter_and_multiple_individually_identifiable_audience'),
+ f('/content/embedding_text','one adult presenter','count','presenter','subject.count.presenters',E,'one'),
+ f('/content/embedding_text','multiple identifiable audience members','count','audience','subject.count.audience',E,'multiple_unspecified_exact_count'),
+ f('/content/en','adult presenter','age','presenter','age.presentation',E,'adult'),
+ f('/content/en','publicly revealing a concrete result','action','presenter','action.interaction.public_reveal',E,'public_reveal_of_concrete_result_to_actual_audience'),
+ f('/content/en','several independently responding audience members','relationship','audience','response.social.independent_audience_response',E,'separate_actual_audience_responses_not_admiration_guarantee'),
+ f('/content/ko','이를 독립적으로 바라보는 여러 청중','expression','audience','gaze.target.presentation_result',E,'independent_audience_attention_to_shown_result_or_presentation'),
+ f('/content/embedding_text','a specific work achievement or role marker','subject','presented_evidence','props.presented_result_evidence',E,'selected_specific_work_achievement_or_role_marker')],
+ {'subject':'actual cast','subject_count':'one presenter plus multiple audience, no exact audience number','age_presentation':'presenter only; audience adulthood not inherited','participant_role':'declared presenter/audience roles','action':'actual public reveal','relational_action':'presenter-to-audience actual interaction','social_cue':'actual independent reactions/attention, not conferred recognition','gaze_target':'KO actual 바라보는 supports audience visual target, exact result/event scope pending','prop':'selected concrete result/evidence carrier, no random trophy/type'},
+ ['Actual presenter, individually identified audience participants and specific result carrier; no fused collective owner or arbitrary secondary_subject for every audience.','Every reveal/attention receiver needs actual owner binding; several audience cannot be reduced to one person.'],
+ ['Subject-only effects omit actual reveal/independent responses/gaze/result evidence and counts. Work/achievement/role-marker alternative and exact recipient graph need actual RID design.','Source public_recognition_bid and optional subject0.9 binding retained. No private ambition, guaranteed admiration, grant of status, specific text or all audience adults.'])
+row(6628,'Prepared fictional observation room preserves complete source boundary, clear sightline/floor and selected dust-or-markers; no actual arrival forced.',[
+ f('/content/en','a textless summoning observation chamber','setting','chamber','setting.location.observation_chamber',E,'fictional_summoning_observation_chamber'),
+ f('/content/en','a complete source boundary and arrival-clearance zone','composition','source_zone','composition.source_boundary_arrival_clearance',E,'complete_source_boundary_and_actual_arrival_clearance_zone'),
+ f('/content/embedding_text','an unobstructed operator-to-arrival sightline','setting','chamber','space.state.clear_sightline',E,'unobstructed_operator_position_to_arrival_zone_sightline'),
+ f('/content/embedding_text','enough floor for a new contact shadow','setting','floor_zone','space.state.arrival_shadow_clearance',E,'reserved_floor_capacity_for_future_contact_shadow'),
+ f('/content/embedding_text','loose dust or markers that can record a localized arrival','subject','arrival_recording_carrier','props.arrival_recording_medium',E,'selected_loose_dust_or_markers_with_declared_recording_capacity'),
+ f('/content/en','textless','text','chamber_surfaces','text.presence',E,'no_text'),
+ f('/content/embedding_text','all writing remains unreadable','text','chamber_surfaces','text.legibility',K,'unreadable_if_any_independently_established_writing')],
+ {'location':'fictional room','composition':'complete boundary/zone relation','space_condition':'actual preparation/sightline/floor clearance','prop':'selected markers; dust owner/material alternative separate','visible_text':'source textlessness/unreadability guard scope, not readable glyph creation','shadow_relation':'capacity for future shadow is not a currently cast shadow','surreal_physics_detail':'summoning-room label does not by itself create arrival entity or local impossible event'},
+ ['Actual bounded source, room, floor and selected dust/marker carrier; operator sightline describes a position/path, not a newly visible operator.','Arrival zone affordance and recording capacity are actual declared preparation properties; no summoned creature/current displaced dust/contact shadow automatically added.'],
+ ['Setting-only E needs preparation/source/selected carrier/text footprint. Textless EN/KO is stricter than simply unreadable text; do not add illegible letters as though absence/unreadability were identical.','KO 도착흔적 확보 wording versus EN clearance/embedding can-record affordance requires precise source-scope judgement, not a completed-arrival claim. Writing conditional preservation and text-absence mutation permissions remain pending. optional location0.4 empty binding preserved.'])
+row(6629,'Adult-shoe T-strap construction joins vertical strap to horizontal ankle strap at T junction; no wearer age/material selected.',[
+ f('/content/concept_units/1','세로끈과 발목 가로끈의 T접점','appearance','shoe','footwear.structure.t_junction',E,'vertical_strap_joins_horizontal_ankle_strap_as_T'),
+ f('/content/relations/0/object','성인용 신발','appearance','shoe','footwear.declared_use_class',E,'adult_use_shoe_not_wearer_age')],
+ {'footwear':'actual shoe-owned construction','object_structure':'same specialized shoe construction should not receive generic duplicate role solely for new catalog','age_presentation':'adult-use shoe does not witness actual wearer adulthood','surface_material':'no material identity/response supplied','wearable_accessory':'no actual worn state asserted','prop_state':'T-junction construction alone not separate current-use/attachment state'},
+ ['Actual shoe carrier owns straps/junction. No anatomical ankle/foot or main_subject/declared-wearer ownership from a field default.','Standalone shoe versus existing worn-shoe application needs explicit source owner mapping; current intrinsic/binding human restrictions are not silently removed to enable product scenes.'],
+ ['Coarse appearance/material/main_subject effects need exact shoe-owned geometry and removal of unsupported material dimension via explicit proposal; no material/color/heel inferred.','for_any human and own optional footwear0.42 human deny documentary/craft/wildlife/product/jewelry/food retained. No X-crossing, living wearer age or sensual/fetish meaning from tags. URL is unaccessed source metadata.'])
+# Source-path enumeration is mechanical coverage inventory, never semantic classification.
+import sys
+GEN=Path('/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/e54254ce78fde43d717a5c6e1670a0ffa5b50050fdafcf4b813930e42ecd0a7f')
+sys.path[:0]=[str(GEN/'scripts'),str(GEN/'precore')]
+import photo_semantic_evidence as native
+frozen=json.loads(gzip.decompress((R/'SOURCE.json.gz').read_bytes()))
+for x in D:
+ cid=x['candidate_id'];assert x['source_before']==frozen['candidates'][cid]
+ assert x['source_bindings']=={k:v for k,v in frozen['slot_bindings'].items() if v['candidate_id']==cid}
+ spec=S[x['ordinal']]['compiled_review_locator'];current=json.loads(Path(spec['file']).read_text());actual=current['decisions'][spec['item']-1]
+ assert hashlib.sha256(json.dumps(actual,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()==spec['row_sha256']
+ x['whole_source_unit_inventory']=[dict(realization_id='base',pointer=p,quote=native.positive_string(x['exact_5B_after'],p,realization_id='base'),literal_fact_draft_indices=[i for i,fact in enumerate(x['manual_fact_drafts']) if fact['pointer']==p],clause_support_disposition='pending_complete_manual_clause_mapping') for p in sorted(native.primary_paths(x['exact_5B_after'],'base'))]
+out=dict(schema='photo-native-manual-bulk-checkpoint/v1',task_name='/root/review_08250_09250',model='gpt-6.1-sol',reasoning_effort='high',prepared_total=1000,read_range=[6625,6630],actual_direct_read_count=5,records=D,complete_native_proof_count=0,operating_native_qualified_count=0,source_unit_inventory_only_not_full_semantic_disposition=True,limitations='Pending drafts only. Whole contract source-path inventory is enumerated exactly; it is not complete clause entailment/native qualification. Aggregate/conditional values and empty requires/receivers remain pending.');p=A/'native_08250_06250_07250.06625_06630.checkpoint.json';assert not p.exists();p.write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(hashlib.sha256(p.read_bytes()).hexdigest(),sum(len(x['manual_fact_drafts']) for x in D),sum(len(x['whole_source_unit_inventory']) for x in D))
