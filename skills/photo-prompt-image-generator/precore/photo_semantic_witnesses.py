@@ -28,6 +28,7 @@ KINDS = {
     'part_of': {'left', 'right'},
     'disjoint': {'left', 'right'},
     'scope_inventory': {'owner', 'scope_kind', 'inventory'},
+    'existing_member_scope': {'scope_id', 'inventory'},
 }
 
 
@@ -65,7 +66,7 @@ def read(assertions, spans, baseline, *, intent_lock=None, request_binding=None)
               if isinstance(row, dict) and concrete(row.get('source_span_id', row.get('span_id')))
               and isinstance(row.get('text'), str) and row['text'].strip()}
     graph = {'schema': SCHEMA, 'owners': {}, 'roles': {}, 'equivalent': [], 'part_of': [], 'disjoint': []}
-    facts, fact_ids, row_ids, scopes = [], set(), set(), []
+    facts, fact_ids, row_ids, scopes, member_scopes = [], set(), set(), [], []
     for row in native:
         axes = row['axes']; kind = axes.get('kind')
         if (set(row) != ROW_FIELDS or axes.get('native_schema') != SCHEMA or not isinstance(kind,str) or kind not in KINDS
@@ -100,6 +101,14 @@ def read(assertions, spans, baseline, *, intent_lock=None, request_binding=None)
                 raise ValueError('invalid explicit scope inventory owner/kind')
             scopes.append({'assertion_id':row['assertion_id'],'owner':axes['owner'],
                            'scope_kind':axes['scope_kind'],'inventory':decode_inventory(axes['inventory'])})
+        elif kind == 'existing_member_scope':
+            if not concrete(axes['scope_id']):
+                raise ValueError('existing member scope needs an explicit inventory address')
+            text = axes['inventory']
+            if not isinstance(text, str) or len(text.encode('utf-8')) > MAX_MEMBER_INVENTORY_BYTES:
+                raise ValueError('existing member inventory exceeds its exact UTF-8 byte bound')
+            member_scopes.append({'assertion_id':row['assertion_id'], 'scope_id':axes['scope_id'],
+                'source_span_ids':copy.deepcopy(row['source_span_ids']), 'inventory':decode_inventory(text)})
         elif kind == 'fact':
             value = {'type': axes['value_type'], 'value': axes['value']}
             if not concrete(axes['owner']) or not concrete(axes['property']) or not typed_value(value):
@@ -136,6 +145,12 @@ def read(assertions, spans, baseline, *, intent_lock=None, request_binding=None)
         known.add(key)
     validate_scope_inventories(scopes,facts,graph,request_binding)
     result={'schema': SCHEMA, 'graph': graph, 'facts': facts, 'scope_inventories':scopes}
+    if member_scopes:
+        if len(assertions) > MAX_ROWS:
+            raise ValueError('member scopes retain the total frozen assertion row bound')
+        validate_existing_member_scopes(member_scopes, facts, graph, spans, request_binding)
+        # Absence preserves the original no-member-scope result bytes exactly.
+        result['member_scopes'] = member_scopes
     if intent_lock is not None:validate_lock_support(assertions,result,intent_lock)
     return result
 
@@ -318,6 +333,83 @@ def decode_inventory(text):
 def is_scope_inventory(row):
     axes=row.get('axes') if isinstance(row,dict) else None
     return isinstance(axes,dict) and axes.get('native_schema')==SCHEMA and axes.get('kind')=='scope_inventory'
+
+
+def is_existing_member_scope(row):
+    axes = row.get('axes') if isinstance(row, dict) else None
+    return (isinstance(axes, dict) and axes.get('native_schema') == SCHEMA
+            and axes.get('kind') == 'existing_member_scope')
+
+
+MEMBER_SCOPE_SCHEMA = 'photo-frozen-existing-member-scope/v1'
+MAX_MEMBER_SCOPES = 8
+MAX_MEMBERS = 32
+MAX_MEMBER_INVENTORY_BYTES = 65536
+
+
+def validate_existing_member_scopes(scopes, facts, graph, spans, request_binding):
+    """Freeze an explicitly closed local inventory, never a synthetic entity.
+
+    Membership/completeness are authored before discovery, not independently
+    observed by this function. No kinds, anatomy, counts, descendants or scope
+    applicability are inferred. Runtime set resolution is a separate contract.
+    """
+    if len(scopes) > MAX_MEMBER_SCOPES:
+        raise ValueError('too many existing member scopes')
+    if not isinstance(request_binding, dict) or 'input_inventory' not in request_binding:
+        raise ValueError('existing members require independently pinned complete request inputs')
+    host = validate_input_inventory(request_binding['input_inventory'], request_binding.get('request_sha256'))
+    bound = input_binding(request_binding)
+    if (not host['complete'] or set(bound) != {'request_sha256', 'request_envelope_sha256', 'input_inventory_sha256'}
+            or any(not isinstance(value, str) or re.fullmatch(r'[0-9a-f]{64}', value) is None
+                   for value in bound.values())):
+        raise ValueError('existing members require complete exact request/envelope/input binding')
+    input_ids = [item['id'] for item in host['items']]
+    request_id = next(item['id'] for item in host['items'] if item['kind'] == 'request_text')
+    active = {row.get('source_span_id', row.get('span_id')) for row in spans
+              if isinstance(row, dict) and concrete(row.get('source_span_id', row.get('span_id')))}
+    canonical_owners, _ = validate_graph(graph)
+    presence = {canonical_owners[fact['target']] for fact in facts
+                if fact['dimension'] == 'subject' and fact['property'] == 'entity.presence'
+                and fact['value'] == {'type':'entity.presence/v1', 'value':'present'}}
+    seen = set()
+    for scope in scopes:
+        sid, inv = scope['scope_id'], scope['inventory']
+        if sid in seen or sid in graph['owners'] or sid in graph['roles']:
+            raise ValueError('duplicate member scope or scope address used as an owner/role')
+        seen.add(sid)
+        if (not isinstance(inv, dict)
+                or set(inv) != {'schema', 'complete', 'state', 'input_binding', 'reviewed_input_ids', 'members'}
+                or inv['schema'] != MEMBER_SCOPE_SCHEMA or inv['complete'] is not True
+                or inv['state'] != 'known_present' or inv['input_binding'] != bound
+                or inv['reviewed_input_ids'] != input_ids
+                or not isinstance(inv['members'], list) or not 1 <= len(inv['members']) <= MAX_MEMBERS):
+            raise ValueError('existing member scope must be complete, present, nonempty and input-bound')
+        members = set()
+        for member in inv['members']:
+            if (not isinstance(member, dict) or set(member) != {'owner_id', 'source_span_ids', 'source_input_ids'}
+                    or not concrete(member['owner_id']) or member['owner_id'] not in canonical_owners):
+                raise ValueError('existing scope members must be flat declared actual owners')
+            owner = canonical_owners[member['owner_id']]
+            if owner in members:
+                raise ValueError('duplicate canonical member; aliases are not additional members')
+            members.add(owner)
+            if owner not in presence:
+                raise ValueError('each existing member needs an independent exact atomic presence fact')
+            span_ids, ids = member['source_span_ids'], member['source_input_ids']
+            if (not isinstance(span_ids, list) or not span_ids or any(not concrete(x) for x in span_ids)
+                    or len(span_ids) != len(set(span_ids)) or not set(span_ids) <= active
+                    or not set(span_ids) <= set(scope['source_span_ids'])
+                    or not isinstance(ids, list) or not 1 <= len(ids) <= MAX_INPUTS
+                    or any(not concrete(x) for x in ids) or len(ids) != len(set(ids))
+                    or not set(ids) <= set(input_ids) or request_id not in ids):
+                raise ValueError('each member needs exact active membership spans and pinned input provenance')
+    for fact in facts:
+        value = fact['value']
+        if value['type'] == 'entity.owner_id/v1':
+            values = value['value'] if isinstance(value['value'], list) else [value['value']]
+            if any(item in seen for item in values):
+                raise ValueError('a member scope address cannot be an entity relation endpoint')
 
 
 def validate_scope_inventories(scopes, facts, graph, request_binding):
