@@ -95,6 +95,17 @@ def packet_binding(review, path, data, cid, *, cache=None):
     return result
 
 
+def exact_references(review, value):
+    """Identity bookkeeping includes temporary explicit presentation bindings."""
+    if isinstance(value, str) and (review.c.ID.fullmatch(value) or review.c.BINDING_ID.fullmatch(value)):
+        return {value}
+    if isinstance(value, dict):
+        return set().union(*(exact_references(review, item) for pair in value.items() for item in pair)) if value else set()
+    if isinstance(value, list):
+        return set().union(*(exact_references(review, item) for item in value)) if value else set()
+    return set()
+
+
 def origins(review, authored_path, note_path, data):
     """Interpret only the two frozen explicit worker formats, without rewriting."""
     authored_path = review.run_path(str(authored_path), 'authored')
@@ -196,23 +207,47 @@ def origins(review, authored_path, note_path, data):
         pending = note['pending_retained_ordinals']
         approved_count, pending_count = note['approved_amendment_count'], note['pending_retained_count']
     elif document.get('schema') == 'photo-codex-direct-review-amendment/v1':
+        source_sha = review.c.digest(data)
+        note_source = note.get('source_sha256')
         if (note.get('complete_source_read') is not True
-                or note['source_sha256'] != review.c.digest(data)
-                or document['source_sha256'] != review.c.digest(data)):
+                or note_source is not None and note_source != source_sha
+                or document['source_sha256'] != source_sha):
             raise ValueError('explicit full reread/source binding required')
+        if note_source is None and (document.get('source_snapshot_file_sha256') !=
+                hashlib.sha256((review.HERE / 'SOURCE.json.gz').read_bytes()).hexdigest()
+                or note.get('catalog_sha256') != review.c.digest(data['slot_catalog'])):
+            raise ValueError('document-bound full snapshot and note catalog required')
         entries = document['amendments']
         if (len(set(note['reread_ids'])) != len(note['reread_ids'])
                 or [e['reread_id'] for e in entries] != note['reread_ids']):
             raise ValueError('exact sparse reread IDs disagree')
         for n, entry in enumerate(entries, 1):
             decision, cid = entry['decision'], entry['candidate_id']
+            source_binding = review.binding(data, cid)
             if (decision['candidate_id'] != cid or entry['model'] != note['model']
                     or entry['reasoning_effort'] != note['reasoning_effort']
                     or entry['source_reread_complete'] is not True
                     or entry['reference_reread_complete'] is not True
-                    or entry['source_record_sha256'] != review.binding(data, cid)['source_record_sha256']
-                    or entry['after_proposal_reference_sha256'] != review.binding(data, cid)['reference_sha256']):
+                    or entry['source_record_sha256'] != source_binding['source_record_sha256']):
                 raise ValueError('per-CID source reread attestation differs')
+            resolution = {}
+            if 'after_proposal_reference_sha256' in entry:
+                if entry['after_proposal_reference_sha256'] != source_binding['reference_sha256']:
+                    raise ValueError('per-CID source reread attestation differs')
+            else:
+                # These later notes attest original references and exact source
+                # edits. Root proves that the edits preserve references; it does
+                # not pretend the worker supplied a missing after-reference hash.
+                proposed = review.corrected_record(data['candidates'][cid], decision['corrections'])
+                if (entry.get('reference_sha256') != source_binding['reference_sha256']
+                        or entry.get('catalog_sha256') != source_binding['catalog_sha256']
+                        or exact_references(review, proposed) != exact_references(review, data['candidates'][cid])
+                        or 'full_after_proposal_record' in entry
+                        and entry['full_after_proposal_record'] != proposed):
+                    raise ValueError('explicit original references or unchanged corrected references differ')
+                resolution['reference_binding_resolution'] = 'root_verified_exact_edits_preserve_worker_attested_original_references'
+            if note_source is None:
+                resolution['source_binding_resolution'] = 'root_verified_worker_document_full_snapshot_and_per_record_bindings'
             matches = [packet_binding(review, path, data, cid, cache=packet_cache) for path in note['packet_paths']
                        if cid in read(review, review.run_path(path, 'packets'))['ids']]
             if len(matches) != 1 or matches[0]['sha256'] != note['packet_sha256'] or document['packet_sha256'] != note['packet_sha256']:
@@ -221,7 +256,7 @@ def origins(review, authored_path, note_path, data):
                 'decision': decision, 'previous_authored': authored_tuple(review,
                     entry['before_authored_file'], cid, entry['before_authored_row_sha256']),
                 'worker_before_row_sha256': None, 'packet': matches[0],
-                'reread_id': entry['reread_id']})
+                'reread_id': entry['reread_id'], **resolution})
         pending = note['unresolved_ordinals']
         approved_count, pending_count = note['approved_count'], note['still_pending_count']
         if sorted(note['approved_ordinals']) != sorted(e['ordinal'] for e in result if e['decision']['status'] in APPROVED):

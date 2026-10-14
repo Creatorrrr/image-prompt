@@ -125,6 +125,43 @@ class AmendmentsTests(unittest.TestCase):
                 self.assertEqual(result['progress']['pending_decisions'], 0)
                 self.assertEqual(result['progress']['errors'], {})
 
+    def test_later_wrapper_keeps_original_reference_attestation_distinct(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, data, authored, note = self.setup_run(directory)
+            with self.context(root, here, data):
+                document = amend.read(review, authored)
+                entry = document['amendments'][0]
+                entry.pop('after_proposal_reference_sha256')
+                entry.update(reference_sha256={}, catalog_sha256=review.c.digest(data['slot_catalog']),
+                             full_after_proposal_record=copy.deepcopy(data['candidates'][A]))
+                review.write(authored, document)
+                before = authored.read_bytes()
+                _, manifest = self.prepare(here, authored, note)
+                self.assertIn('root_verified', manifest['replacements'][0]['reference_binding_resolution'])
+                self.assertEqual(before, authored.read_bytes())
+                document['amendments'][0]['reference_sha256'] = {B: '0' * 64}
+                review.write(authored, document)
+                with self.assertRaisesRegex(ValueError, 'original references'):
+                    amend.normalize(review, authored, note, actor='/root')
+
+    def test_document_snapshot_binding_does_not_rewrite_missing_note_field(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, data, authored, note_path = self.setup_run(directory)
+            with self.context(root, here, data):
+                snapshot = here / 'SOURCE.json.gz'; snapshot.write_bytes(b'explicit frozen snapshot fixture')
+                document = amend.read(review, authored)
+                document['source_snapshot_file_sha256'] = hashlib.sha256(snapshot.read_bytes()).hexdigest()
+                note = amend.read(review, note_path); note.pop('source_sha256')
+                note['catalog_sha256'] = review.c.digest(data['slot_catalog'])
+                review.write(authored, document); review.write(note_path, note)
+                before = note_path.read_bytes()
+                _, manifest = self.prepare(here, authored, note_path)
+                self.assertIn('document_full_snapshot', manifest['replacements'][0]['source_binding_resolution'])
+                self.assertEqual(before, note_path.read_bytes())
+                snapshot.write_bytes(b'changed snapshot')
+                with self.assertRaisesRegex(ValueError, 'full snapshot'):
+                    amend.normalize(review, authored, note_path, actor='/root')
+
     def test_repeated_rereview_binds_the_previous_immutable_wrapper_item(self):
         with tempfile.TemporaryDirectory() as directory:
             root, here, data, authored, note = self.setup_run(directory)
