@@ -36,6 +36,64 @@ def decision(data):
 
 
 class DirectReviewTests(unittest.TestCase):
+    def primitive_proposal(self):
+        from tests.test_photo_realization_content import source
+        data = source(); row = decision(data)
+        proposed = source()['candidates'][A]
+        original = data['candidates'][A]
+        original['effects'] = {'dimensions': [], 'properties': []}
+        row.update(review.binding(data, A))
+        row['corrections'] = [
+            {'pointer': '/effects', 'before': copy.deepcopy(original['effects']),
+             'after': copy.deepcopy(proposed['effects']), 'reason': 'Explicitly split two source alternatives.'},
+            {'pointer': '/content/realization_content', 'before': None,
+             'after': copy.deepcopy(proposed['content']['realization_content']),
+             'reason': 'Select the corresponding positive body without another choice.'}]
+        fact = {'pointer': '/content/realization_content/standing/en', 'quote': 'standing adult',
+                'dimension': 'appearance', 'target': 'main_subject', 'property': 'wardrobe.style'}
+        row['roles'][0].update(scope='positive_alternative', realization_ids=['standing'], evidence=[fact])
+        row['facts'] = [{**fact, 'realization_id': 'standing'}]
+        return data, row
+
+    def test_structured_proposals_bind_exact_before_and_leave_sources_immutable(self):
+        data, row = self.primitive_proposal(); before = copy.deepcopy(data)
+        review.validate_decision(row, data)
+        self.assertEqual(data, before)
+        row['corrections'][0]['before']['dimensions'] = ['pose']
+        with self.assertRaisesRegex(ValueError, 'exact source value'):
+            review.validate_decision(row, data)
+
+    def test_branch_positive_evidence_cannot_qualify_another_branch(self):
+        data, row = self.primitive_proposal()
+        row['roles'][0]['realization_ids'] = ['walking']
+        row['facts'][0]['realization_id'] = 'walking'
+        with self.assertRaisesRegex(ValueError, 'different realization'):
+            review.validate_decision(row, data)
+        # This also applies to facts not selected as role evidence.
+        row['roles'][0]['realization_ids'] = ['standing']
+        row['facts'] = [{**row['roles'][0]['evidence'][0], 'realization_id': 'standing'},
+                        row['facts'][0]]
+        with self.assertRaisesRegex(ValueError, 'different realization'):
+            review.validate_decision(row, data)
+
+    def test_structured_proposals_cannot_invent_a_reference_or_replace_metadata(self):
+        for defect in ['candidate', 'component', 'identity', 'guard', 'unknown_conditions', 'untyped']:
+            data, row = self.primitive_proposal()
+            effects, content = row['corrections']
+            if defect == 'candidate':
+                effects['after']['realizations']['branches'][0]['member_candidate_ids'] = [B]
+            elif defect == 'component':
+                effects['after']['realizations']['branches'][0]['component_units'] = {'invented': ['new']}
+            elif defect in {'identity', 'guard'}:
+                content['after']['standing']['id' if defect == 'identity' else 'conditions'] = 'foreign'
+            elif defect == 'unknown_conditions':
+                row['corrections'].append({'pointer': '/conditions', 'before': {},
+                    'after': {'id': B}, 'reason': 'Fixture foreign metadata.'})
+            else:
+                effects['after'] = ['pose']
+            with self.subTest(defect=defect), self.assertRaises(ValueError):
+                review.validate_decision(row, data)
+
     def delegated_fixture(self, directory):
         root = Path(directory).resolve()
         here = root / 'run'

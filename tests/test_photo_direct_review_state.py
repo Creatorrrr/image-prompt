@@ -15,6 +15,14 @@ spec.loader.exec_module(integrator)
 
 
 class ReviewStateTests(unittest.TestCase):
+    def test_structured_proposals_are_not_reported_as_text_corrections(self):
+        rows = [{'corrections': [
+            {'before': 'old', 'after': 'new'}, {'before': None, 'after': {'standing': {}}}]},
+            {'corrections': [{'before': {}, 'after': {'dimensions': ['pose']}}]},
+            {'corrections': []}]
+        self.assertEqual(state.correction_counts(rows), {
+            'text_records': 1, 'text_fields': 1, 'structured_records': 2, 'structured_values': 2})
+
     def test_pending_and_diagnostic_have_distinct_completion_meanings(self):
         rows = [{'candidate_id': cid, 'status': status} for cid, status in
                 [('a', 'approved'), ('b', 'needs_boundary_review'), ('d', 'diagnostic_reviewed')]]
