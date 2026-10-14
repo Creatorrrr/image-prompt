@@ -147,6 +147,8 @@ def validate(corpus):
             raise ValueError(f'{candidate_id}: intrinsic conditions have one canonical owner')
         validate_conditions(row['conditions'], candidate_id)
         validate_effects(row['effects'], candidate_id)
+        import photo_candidate_realizations
+        photo_candidate_realizations.validate_content(row)
         for branch in row['effects'].get('realizations', {}).get('branches', []):
             available = {p['candidate_id'] for p in row['content'].get('member_candidates', [])}
             if not set(branch.get('member_candidate_ids', [])) <= available:
@@ -275,6 +277,8 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None):
         effects = realizations.effects(record, realization_id)
         selected = realizations.branch(record, realization_id)
         result['_realization_id'] = realization_id
+        result.update(realizations.project_content(record, realization_id))
+        result.pop('realization_content', None)
         if selected:
             if 'concept_units' in selected:
                 result['concept_units'] = copy.deepcopy(selected['concept_units'])
