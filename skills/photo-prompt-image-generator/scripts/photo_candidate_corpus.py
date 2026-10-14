@@ -164,7 +164,7 @@ def validate(corpus):
                     or not origin['source'] or not re.fullmatch(r'[0-9a-f]{64}', str(origin.get('sha256', '')))):
                 raise ValueError(f'{candidate_id}: invalid source provenance')
         import photo_semantic_evidence
-        photo_semantic_evidence.validate(row, catalog, catalog_sha256=catalog_sha256)
+        photo_semantic_evidence.validate(row, catalog, catalog_sha256=catalog_sha256, corpus=corpus)
     import photo_slot_semantics
     for tag, row in catalog.items():
         if (not isinstance(tag, str) or not TAG_ID.fullmatch(tag) or not isinstance(row, dict) or row.get('id') != tag
@@ -267,14 +267,20 @@ def load(assets, manifest_name=MANIFEST_NAME):
     return validate(corpus)
 
 
-def entry(corpus, candidate_id, binding_id=None, *, realization_id=None):
+def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, dependency_selections=None):
     """Native semantic record, optionally with an explicitly selected role."""
     record = corpus['candidates'][candidate_id]
     result = copy.deepcopy(record['content'])
     result['id'] = candidate_id
     result['record_kind'] = record['record_kind']
+    import photo_semantic_evidence
+    result['_native_qualification'] = photo_semantic_evidence.native_status(record)
     if '_semantic_evidence_guard' in record:
         result['_semantic_evidence_guard'] = copy.deepcopy(record['_semantic_evidence_guard'])
+    elif result['_native_qualification'] == 'qualified':
+        result['_semantic_evidence_guard'] = photo_semantic_evidence.compact(record, corpus)
+    if dependency_selections is not None:
+        result['_native_dependency_selections'] = copy.deepcopy(dependency_selections)
     result.update(copy.deepcopy(record['conditions']))
     effects = record['effects']
     if realization_id is not None:
@@ -302,6 +308,11 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None):
         result['_semantic_role'] = binding['semantic_role']
         result['binding_id'] = binding_id
         result['weight'] = binding['weight']
+    if result['_native_qualification'] == 'qualified':
+        selected_rid = realization_id or 'base'
+        proof = result['_semantic_evidence_guard']
+        if selected_rid in proof['effect_sets']:
+            effects = copy.deepcopy(proof['effect_sets'][selected_rid])
     result['affected_dimensions'] = list(effects['dimensions'])
     result['affected_properties'] = copy.deepcopy(effects['properties'])
     return result

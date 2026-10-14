@@ -70,7 +70,7 @@ def intent_property_locks(intent_lock: dict) -> list[dict]:
 
 
 
-def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
+def property_effects_allowed(intent_lock: dict, dimensions, effects, *, owner_graph=None) -> bool:
     """Check declared property effects; semantic truth still needs agent review.
 
     Unknown/broad effects cannot claim compatibility with a partial lock.
@@ -104,8 +104,17 @@ def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
     # A carrier dimension does not change which semantic property is affected.
     # For example, declaring wardrobe.color as a material effect cannot bypass
     # a wardrobe.color anchor recorded under appearance.
-    if any(overlaps(effect["target"], lock["target"]) and overlaps(effect["property"], lock["property"])
-           for effect in effects for lock in locks):
+    from photo_precore_bridge import load
+    owner_witnesses = load('photo_semantic_witnesses')
+    try:
+        for effect in effects:
+            for lock in locks:
+                if overlaps(effect['property'], lock['property']):
+                    # A different spelling proves neither another entity nor
+                    # disjoint receiver scope. Only grounded separation does.
+                    if owner_witnesses.owner_relation(owner_graph, effect['target'], lock['target']) != 'disjoint':
+                        return False
+    except (ValueError, KeyError, TypeError):
         return False
     return True
 

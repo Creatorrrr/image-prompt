@@ -8,6 +8,7 @@ import copy
 import hashlib
 import json
 import re
+from photo_semantic_witnesses import normalize_check as _native_witness_check, is_native_fact as _native_fact_row
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Set
 import creative_controls
 import photo_camera_authoring as photo_camera_evidence
@@ -450,9 +451,9 @@ def normalize_semantic_assertions(
 ) -> List[JsonDict]:
     """Validate typed, source-grounded meaning without re-parsing raw text."""
 
-    if not isinstance(payload, list) or len(payload) > 16:
+    if not isinstance(payload, list) or len(payload) > 64:
         raise ValueError(
-            "authorial core v3 semantic_assertions must be a list of at most sixteen rows"
+            "authorial core v3 semantic_assertions must be a list of at most sixty-four rows"
         )
     span_ids = {
         str(item.get("source_span_id", item.get("span_id")) or "")
@@ -528,7 +529,7 @@ def normalize_semantic_assertions(
             )
         if polarity == "required" and not set(affected_dimensions).issubset(
             locked_dimensions
-        ):
+        ) and not _native_fact_row(item):
             raise ValueError(
                 f"required semantic assertion {assertion_id!r} must affect only locked dimensions"
             )
@@ -723,6 +724,8 @@ def normalize_semantic_assertions(
         raise ValueError(
             "authorial core v3 allows at most one required character_response assertion"
         )
+    # Candidate-free native witnesses cannot pass through generic axis coercion.
+    _native_witness_check(payload, normalized, envelope.get("active_spans") or [], baseline_prompt_en, intent_lock)
     return normalized
 
 def normalize_request_lineage(

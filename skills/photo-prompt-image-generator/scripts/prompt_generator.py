@@ -1453,7 +1453,7 @@ def candidate_pack_assertion_discovery(
         dimensions = normalize_list(source.get("affected_dimensions"))
         if (source.get("core_assertion_discovery") is not True
                 or not dimensions or not set(dimensions) <= open_dimensions
-                or not property_effects_allowed(lock, dimensions, source.get("affected_properties"))):
+                or not native_property_scope_allowed(core, dimensions, source.get("affected_properties"), entry=source)):
             continue
         blob = candidate_pack_entry_blob(source, extra=[
             *normalize_list(source.get("concept_units")), *normalize_list(source.get("concept_terms")),
@@ -2912,8 +2912,8 @@ def candidate_pack_contextual_adult_appeal(
                 if (
                     not dimensions
                     or not set(dimensions).issubset(allowed)
-                    or not property_effects_allowed(
-                        lock, dimensions, entry.get("affected_properties", [])
+                    or not native_property_scope_allowed(
+                        core, dimensions, entry.get("affected_properties", []), entry=entry
                     )
                     or entry_block_reason(entry, slot, constraints, catalog=data["slot_catalog"])
                     or not compatible_with_facet_guards(entry, {})
@@ -4992,7 +4992,7 @@ def candidate_pack_visual_concept_candidates(
                  if key in concept_candidate}
         if scope and (
             not set(scope.get("affected_dimensions") or []) <= set((core.get("intent_lock") or {}).get("open_dimensions") or [])
-            or not property_effects_allowed(core.get("intent_lock") or {}, scope.get("affected_dimensions") or [], scope.get("affected_properties"))
+            or not native_property_scope_allowed(core, scope.get("affected_dimensions") or [], scope.get("affected_properties"), entry=profile)
         ):
             continue
         obligation = candidate_pack_visual_profile_obligation(
@@ -7430,6 +7430,8 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     for bundle in [variant for source_bundle in data.get("candidate_bundles") or []
                    for variant in photo_candidate_semantics.bundle_variants(data,source_bundle,pack)]:
         if bundle["id"] not in getattr(data,"admitted_ids",set()):continue
+        if bundle.get("native_bundle_contract") == photo_candidate_semantics.NATIVE_BUNDLE_CONTRACT:
+            continue  # Native full scope is independently recomputed in public_bundles.
         members = bundle["member_candidates"]
         dimensions = {dimension for member in members for dimension in member.get("affected_dimensions") or []}
         if (len(members) > policy["maximum_members_per_bundle"]
@@ -7437,9 +7439,9 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
                 or any(not member.get("affected_dimensions") for member in members)
                 or not dimensions.issubset(opened)):
             continue
-        if any(not property_effects_allowed(core.get("intent_lock") or {},
-                                           member.get("affected_dimensions") or [],
-                                           member.get("affected_properties", [])) for member in members):
+        if any(not native_property_scope_allowed(core, member.get("affected_dimensions") or [],
+                                           member.get("affected_properties", []), data=data, candidate_id=member.get("id"),
+                                           realization_id=member.get("realization_id")) for member in members):
             continue
         units = [unit for member in members for unit in member.get("concept_units") or []]
         tokens = candidate_pack_relevance_tokens(" ".join(units))
@@ -7701,9 +7703,9 @@ def build_candidate_pack(
                     entry, slot, data.get("candidate_semantic_policy")
                 )
                 source = candidate["_native_semantic_source"]
-                if not property_effects_allowed(
-                    authorial_core.get("intent_lock") or {}, source.get("affected_dimensions") or [],
-                    source.get("affected_properties", [])
+                if not native_property_scope_allowed(
+                    authorial_core, source.get("affected_dimensions") or [],
+                    source.get("affected_properties", []), entry=entry
                 ):
                     candidate["applicability"] = {
                         "status": "ineligible", "source": "authored_property_scope",
@@ -8211,9 +8213,19 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
     picked["subject"]["facets"] = {key: sorted(values) for key, values in facets.items()}
     return contract, picked
 
+def native_property_scope_allowed(core, dimensions, properties, *, entry=None, data=None, candidate_id=None, realization_id=None):
+    import photo_semantic_evidence as native
+    if data is not None and candidate_id in data['candidates']:
+        entry = data['candidates'][candidate_id]
+    if entry is not None and 'authored_record' in entry:
+        entry = entry['authored_record']
+    return native.property_scope_allowed(core, dimensions, properties, record=entry, realization_id=realization_id)
+
+
 def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True) -> bool:
     import photo_semantic_evidence
-    if not photo_semantic_evidence.existing_owner_allowed(entry,core,contract,data['slot_catalog']):
+    native_admission = photo_semantic_evidence.admission(entry, core, allow_unselected=not check_effect_scope)
+    if not native_admission['allowed']:
         return False
     if entry.get("requires_adult_context") and not contract.get("adult_allowed"):
         return False
@@ -8224,11 +8236,18 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
     dimensions = entry.get("affected_dimensions") or []
     lock = core.get("intent_lock") or {}
     properties = entry.get("affected_properties") or []
-    if check_effect_scope and dimensions and not set(dimensions) <= set(lock.get("open_dimensions") or []):
-        return False
-    if (check_effect_scope and properties
-            and not property_effects_allowed(lock, dimensions, properties)):
-        return False
+    if check_effect_scope:
+        try:
+            dimensions, scoped_properties, owner_graph = photo_semantic_evidence.permission_scope(entry, core)
+        except (ValueError, KeyError, TypeError):
+            return False
+        if not set(dimensions) <= set(lock.get('open_dimensions') or []):
+            return False
+        # Stage 5C keeps the existing unqualified search pool. Native v3 cannot
+        # claim dimension-only effects: its complete coverage validator rejects
+        # them before admission. Empty legacy properties are not certification.
+        if scoped_properties and not property_effects_allowed(lock, dimensions, scoped_properties, owner_graph=owner_graph):
+            return False
     reason = entry_block_reason(entry, slot, contract, catalog=data["slot_catalog"])
     if reason and not (reason == "adult_not_allowed"
                        and candidate_pack_age_only_subject_match(entry, slot, core)):

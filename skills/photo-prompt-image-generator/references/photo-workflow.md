@@ -38,6 +38,30 @@ an incomplete or failed pair requires reconciliation. It cannot silently publish
 a new seed/pack. Only one public pack and its exact private receipt are admitted.
 The receipt fixes the immutable generation for all subsequent audits.
 
+Discovery and adoption have separate contracts. Before selecting a cue, read its
+complete source, actual realization and whole native v3 facts, prerequisites,
+preservation duties, owner bindings and effects. Every selected candidate,
+including a transformed choice, must pass whole-cue admission against the frozen
+core and its property locks. An unqualified source may remain discoverable during
+the corpus migration; it cannot be adopted as a qualified cue. A score or role
+tag cannot supply a missing frozen owner, anatomy, age or property fact.
+
+Use exact candidate IDs and presented realization IDs. For compound choices,
+provide `dependency_selections` by child CID and actual RID when selecting an
+optional child or choosing among child alternatives. The parent's own effects
+remain in force. Unselected optional members add no adoption, conditions or
+effects; required members remain required. A source binding is a presentation
+relationship, not child identity. Do not choose an arbitrary replacement binding
+when the requested role changes or a source needs correction.
+
+For an actually selected member with positive source requirements, provide its
+literal `member_requirement_evidence[parentCID][childCID]` as
+`{concept_units: {index: literal}, relations: {relationID: literal}}`. Keep the
+source-defined requirement separate from the child's body. Its manually reviewed
+native binding must match a fact on the actual selected child RID; a new mutation
+outside that child's declared effects needs source correction and rereview.
+Unselected optional edges require no member render evidence.
+
 Compose accepts the existing authored composed schema. It stamps pack/core/lock
 and review SHA bindings; it does not create interpretations, decisions, reasons
 or evidence. It preserves quality warnings separately from blocking failures.

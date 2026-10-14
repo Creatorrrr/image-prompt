@@ -68,7 +68,7 @@ def posting_bytes(postings, ordinals):
     return zlib.compress(struct.pack('<I',len(raw))+raw+body)
 
 
-def guard_record(record):
+def guard_record(record, corpus=None):
     content = record['content']
     # Keep all filtering fields; large realization bodies belong to the payload.
     removed = {'components', 'semantics', 'concept_candidate', 'render_requirements', 'render_hard_gates',
@@ -78,9 +78,12 @@ def guard_record(record):
     value = {key: value for key, value in record.items() if key not in {'content', 'provenance'}}
     value['content'] = {key: value for key, value in content.items() if key not in removed}
     import photo_semantic_evidence
-    proof = photo_semantic_evidence.compact(record)
+    proof = photo_semantic_evidence.compact(record, corpus)
     if proof is not None:
         value['_semantic_evidence_guard'] = proof
+        base = photo_semantic_evidence.with_projection(record, record['effects'])
+        value['effects'] = {**base, **({'realizations':record['effects']['realizations']}
+                                      if record['effects'].get('realizations') else {})}
     return value
 
 
@@ -101,6 +104,7 @@ def _tf(document, term, lexical):
 def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
     """Never invokes a provider. Default output cannot replace the live manifest."""
     assets = Path(assets)
+    c.validate(corpus)
     documents.validate(vectors, corpus)
     lexical = documents.lexical(corpus)
     identity = c.digest({'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'posting_codec':POSTING_CODEC, 'source': c.digest(corpus), 'vectors': c.digest(vectors),
@@ -163,7 +167,7 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
         keys = all_ids[offset:offset+64]; block = len(payloads)
         payloads.append(json_file(f'payload-{block:05d}.json.gz', {cid:corpus['candidates'][cid] for cid in keys}, len(keys)))
         for cid in keys:
-            record = corpus['candidates'][cid]; locators[cid] = block; guards[cid] = guard_record(record)
+            record = corpus['candidates'][cid]; locators[cid] = block; guards[cid] = guard_record(record, corpus)
             record_hashes[cid] = c.digest(record)
             blobs[cid] = ' '.join(v for values in documents.fields(record).values() for v in values)
             if record['record_kind'] == 'visual_profile':
@@ -268,7 +272,7 @@ def verify(assets, corpus, manifest, vectors=None):
         seen.update(payload)
         for cid,record in payload.items():
             if record!=corpus['candidates'][cid] or meta['payload_locator'][cid]!=block or meta['record_sha256'][cid]!=c.digest(record): raise ValueError('payload locator/source changed')
-            if meta['guards'][cid]!=guard_record(record): raise ValueError('guard projection changed')
+            if meta['guards'][cid]!=guard_record(record, corpus): raise ValueError('guard projection changed')
     if seen!=set(corpus['candidates']): raise ValueError('payload coverage mismatch')
     leaf_paths={}
     quant=meta['quantization'];codes=base64.b64decode(quant['codes_base64'],validate=True);positions={cid:i for i,cid in enumerate(meta['positive_ids'])}
