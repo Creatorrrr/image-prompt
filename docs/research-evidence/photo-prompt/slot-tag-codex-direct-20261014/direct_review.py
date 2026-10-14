@@ -26,7 +26,8 @@ DELEGATED_SCHEMA = 'photo-codex-direct-review/v2'
 NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounders',
     'failure_modes', 'excluded', 'exclusions', 'forbidden', 'avoid', 'negative',
     'research_source_urls', 'tags', 'facets', 'reject_substitutes', 'contrast_examples',
-    'forbidden_prompt_terms', 'runtime_forbidden_labels', 'role_evidence', 'semantic_review'})
+    'forbidden_prompt_terms', 'runtime_forbidden_labels', 'role_evidence', 'semantic_review',
+    'claim_limits', 'research_claim_limits'})
 
 
 def write(path, value):
@@ -62,11 +63,21 @@ def closure(data, cid):
     return dict(sorted(found.items()))
 
 
-def binding(data, cid):
+def binding(data, cid, *, cache=None):
+    key = (id(data), cid)
+    if cache is not None and key in cache:
+        return cache[key]
     record = data['candidates'][cid]
-    return {'candidate_id': cid, 'source_record_sha256': c.digest(record),
-        'catalog_sha256': c.digest(data['slot_catalog']),
+    catalog_key = (id(data), 'catalog_sha256')
+    catalog_sha256 = (cache[catalog_key] if cache is not None and catalog_key in cache
+                      else c.digest(data['slot_catalog']))
+    result = {'candidate_id': cid, 'source_record_sha256': c.digest(record),
+        'catalog_sha256': catalog_sha256,
         'reference_sha256': {key: c.digest(row) for key, row in closure(data, cid).items()}}
+    if cache is not None:
+        cache[catalog_key] = catalog_sha256
+        cache[key] = result
+    return result
 
 
 def pointer(record, path, *, positive=False):
@@ -105,7 +116,9 @@ def corrected_record(record, corrections):
                 for k in ('before', 'after', 'reason')):
             raise ValueError('duplicate or empty source correction')
         seen.add(path)
-        if pointer(result, path, positive=True) != change['before']:
+        # Exact source corrections may repair a negative/claim-limit clause;
+        # that clause still cannot qualify a positive fact or role.
+        if pointer(result, path) != change['before']:
             raise ValueError('source correction is not bound to exact current text')
         keys = [key.replace('~1', '/').replace('~0', '~') for key in path[1:].split('/')]
         value = result
@@ -138,7 +151,7 @@ def validate_fact(fact, record, catalog, slot=None):
             raise ValueError('fact is outside role property contract')
 
 
-def validate_decision(row, data, *, provenance_cache=None):
+def validate_decision(row, data, *, provenance_cache=None, binding_cache=None):
     required = {'schema', 'reviewer', 'review_method', 'independent_human_review',
         'candidate_id', 'source_record_sha256', 'catalog_sha256', 'reference_sha256',
         'meaning_summary', 'recommended_kind', 'corrections', 'roles', 'facts',
@@ -159,7 +172,7 @@ def validate_decision(row, data, *, provenance_cache=None):
     cid = row['candidate_id']
     if cid not in data['candidates']:
         raise ValueError('unknown candidate')
-    expected = binding(data, cid)
+    expected = binding(data, cid, cache=binding_cache)
     if any(row[key] != value for key, value in expected.items()):
         raise ValueError('source, references or catalog changed after review')
     if (not isinstance(row['meaning_summary'], str) or not row['meaning_summary'].strip()
@@ -255,14 +268,23 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid, *, cache=
             cache[path] = c.decode(path.read_bytes())
         return cache[path]
     note = read(note_path)
-    registry = read(HERE / 'DELEGATION-ASSIGNMENTS.json')['assignments']
+    registry_document = read(HERE / 'DELEGATION-ASSIGNMENTS.json')
+    registry = registry_document['assignments']
+    start, stop = note['start'], note['stop']
+    if not isinstance(start, int) or not isinstance(stop, int):
+        raise ValueError('worker review range must be integer ordinals')
     matches = [(key, assignment) for key, assignment in registry.items()
-               if note['task_name'] in {key, assignment['task_name']}]
+               if note['task_name'] in {key, assignment['task_name']}
+               and assignment['start'] <= start < stop <= assignment['stop']]
     if len(matches) != 1:
         raise ValueError('worker has no unique dispatched assignment')
     assignment_id, assignment = matches[0]
-    start, stop = note['start'], note['stop']
     order = read(HERE / 'ORDER.json')
+    ordinal = order.index(cid)
+    if any(transfer['from_assignment'] == assignment_id
+           and transfer['start'] <= ordinal < transfer['stop']
+           for transfer in registry_document.get('reassignments', [])):
+        raise ValueError('review range was explicitly reassigned to another worker')
     unresolved = note['unresolved_ordinals']
     if (not isinstance(start, int) or not isinstance(stop, int)
             or not assignment['start'] <= start < stop <= assignment['stop']
@@ -306,6 +328,16 @@ def validate_review_provenance(row, *, cache=None):
 
 def source():
     return c.decode(gzip.decompress((HERE / 'SOURCE.json.gz').read_bytes()))
+
+
+def assert_source_snapshot(data, current, baseline, order):
+    if (c.digest(data) != baseline['source_sha256']
+            or c.digest(current) != baseline['source_sha256']
+            or c.digest(data['slot_catalog']) != baseline['catalog_sha256']):
+        raise ValueError('complete frozen/current source or binding snapshot changed')
+    if (len(order) != len(set(order)) or set(order) != set(data['candidates'])
+            or len(order) != baseline['candidate_count']):
+        raise ValueError('frozen order does not cover canonical IDs exactly once')
 
 
 def initialize():
@@ -360,9 +392,13 @@ def prepare(start, count):
 def verify():
     data = source()
     current = c.load(SKILL / 'assets')
+    baseline = c.decode((HERE / 'BASELINE.json').read_bytes())
+    order = c.decode((HERE / 'ORDER.json').read_bytes())
+    assert_source_snapshot(data, current, baseline, order)
     accepted, pending, errors = {}, [], {}
     packets = {}
     provenance_cache = {}
+    binding_cache, authored_documents = {}, {}
     for path in sorted((HERE / 'packets').glob('*.json')):
         packet = c.decode(path.read_bytes())
         key = c.digest(packet)
@@ -373,15 +409,19 @@ def verify():
         document = c.decode(path.read_bytes())
         for number, row in enumerate(document['decisions'], 1):
             try:
-                validate_decision(row, data, provenance_cache=provenance_cache)
-                validate_decision(row, current, provenance_cache=provenance_cache)
+                # Complete current/frozen source equality above includes every
+                # record, catalog, policy and binding, even outside reviewed IDs.
+                validate_decision(row, data, provenance_cache=provenance_cache,
+                                  binding_cache=binding_cache)
                 if row['candidate_id'] in accepted or row['candidate_id'] in pending:
                     raise ValueError('duplicate decision for one canonical candidate')
                 location = row['authored_decision']
                 authored_path = (ROOT / location['file']).resolve()
                 if not authored_path.is_relative_to(HERE / 'authored'):
                     raise ValueError('authored judgement must be stored in this direct-review run')
-                authored_document = c.decode(authored_path.read_bytes())
+                if authored_path not in authored_documents:
+                    authored_documents[authored_path] = c.decode(authored_path.read_bytes())
+                authored_document = authored_documents[authored_path]
                 authored = authored_document['decisions'][location['item'] - 1]
                 if location['sha256'] != c.digest(authored) or any(row[k] != v for k, v in authored.items()):
                     raise ValueError('compiled row differs from explicitly authored decision')
@@ -423,11 +463,12 @@ def register(packet_path, authored_path, worker_note=None):
         'roles', 'facts', 'rejected_boundaries', 'uncertainties', 'status', 'all_roles_considered'}
     rows = []
     provenance_cache = {}
+    binding_cache = {}
     for number, decision in enumerate(authored['decisions'], 1):
         if set(decision) != required or decision['candidate_id'] not in packet['ids']:
             raise ValueError('explicit authored meaning, roles and status required for packet ID')
         cid = decision['candidate_id']
-        row = {**binding(data, cid), **decision, 'schema': SCHEMA, 'reviewer': 'Codex',
+        row = {**binding(data, cid, cache=binding_cache), **decision, 'schema': SCHEMA, 'reviewer': 'Codex',
             'review_method': 'codex_direct_source_read', 'independent_human_review': False,
             'packet_sha256': c.digest(packet), 'authored_decision': {
                 'file': str(authored_path.relative_to(ROOT)), 'item': number, 'sha256': c.digest(decision)}}
@@ -435,7 +476,7 @@ def register(packet_path, authored_path, worker_note=None):
             row.update(schema=DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read',
                 review_provenance=delegated_provenance(worker_note, authored_path, c.digest(packet), cid,
                                                        cache=provenance_cache))
-        validate_decision(row, data, provenance_cache=provenance_cache)
+        validate_decision(row, data, provenance_cache=provenance_cache, binding_cache=binding_cache)
         rows.append(row)
     if len({row['candidate_id'] for row in rows}) != len(rows):
         raise ValueError('duplicate authored candidate')

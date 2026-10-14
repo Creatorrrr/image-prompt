@@ -1,0 +1,29 @@
+{
+  "schema": "photo-direct-ledger-infrastructure-verification/v1",
+  "registered_source_judgements": 5000,
+  "direct_root": 1250,
+  "authorized_worker": 3750,
+  "full_frozen_and_current_source_equal": true,
+  "candidate_count": 18250,
+  "full_source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b",
+  "tests": {
+    "command": "pytest -q tests/test_photo_direct_review.py tests/test_photo_direct_review_coverage.py",
+    "passed": 26,
+    "subtests_passed": 2,
+    "network": "OS denied",
+    "provider_api_keys": "unset"
+  },
+  "checks": [
+    "Full source, bindings, catalog and unreviewed candidates match frozen baseline.",
+    "No duplicate ORDER IDs or missed canonical IDs.",
+    "Same worker disjoint assignments resolve by contained range.",
+    "Transferred source ranges reject old worker registration.",
+    "Claim-limit fields cannot prove positive facts; exact source corrections remain allowed.",
+    "Source-binding and authored-document caches are scoped to one immutable verification invocation."
+  ],
+  "stage05_complete": false,
+  "native_changes_applied": false,
+  "gemini_calls": 0,
+  "local_embedding_inferences": 0,
+  "source_semantic_accuracy_certified_by_mechanical_checks": false
+}
