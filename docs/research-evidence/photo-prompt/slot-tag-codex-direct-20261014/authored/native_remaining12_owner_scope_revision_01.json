@@ -1,0 +1,3072 @@
+{
+  "schema": "photo-native-source-owner-scope-revision/v1",
+  "author": "/root/native_evidence",
+  "batch": 1,
+  "input_proposal": {
+    "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_11870_formal03_remaining_pending_source_proposals_v1.json",
+    "raw_sha256": "c961d3db79e11e0e5cea008733eca78089937c3e9b77fcb46899a12d41db88d3"
+  },
+  "current_source_canonical_sha256": "30924a72de7d3011af26b7ef7c0192ff12edd732131f3c18ed29748e805d5477",
+  "catalog_canonical_sha256": "5bc5f6d185b6ef6e2d8d3a2bf6e4aa02d73e22143b0529a233fd5f98ddbed908",
+  "actual_read_ordinals": [
+    1255,
+    1256,
+    1258,
+    1273,
+    1284
+  ],
+  "whole_full_specs_read": {
+    "action": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "A declared actor or object performing one concrete activity at the selected instant.",
+      "description_ko": "소유자가 특정 시점에 수행하는 동작: 시선·연속 절차·정지 자세가 섞임; 과정 단계와 순간 동작 구별",
+      "dimensions": [
+        "action"
+      ],
+      "evidence_terms": [
+        "holding",
+        "playing",
+        "walking",
+        "working",
+        "performing",
+        "hand"
+      ],
+      "excludes": [
+        "시선·연속 절차·정지 자세가 섞임; 과정 단계와 순간 동작 구별"
+      ],
+      "id": "action",
+      "includes": [
+        "A declared actor or object performing one concrete activity at the selected instant."
+      ],
+      "neighbors": [
+        "body_pose",
+        "camera_movement",
+        "contact_point",
+        "hand_pose",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "action.",
+        "activity.",
+        "operation."
+      ],
+      "semantic_role": "direct"
+    },
+    "contact_point": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Explicit contact, support or occlusion relation with each endpoint and owner identified.",
+      "description_ko": "연결된 소유자·신체 부위·물건의 접촉 관계: 행동명과 구별; 지지·가림·압력 표현은 실제 연결과 상태 근거 필요",
+      "dimensions": [
+        "relationship"
+      ],
+      "evidence_terms": [
+        "contact",
+        "touch",
+        "rests on",
+        "support",
+        "holds",
+        "occludes"
+      ],
+      "excludes": [
+        "행동명과 구별; 지지·가림·압력 표현은 실제 연결과 상태 근거 필요"
+      ],
+      "id": "contact_point",
+      "includes": [
+        "Explicit contact, support or occlusion relation with each endpoint and owner identified."
+      ],
+      "neighbors": [
+        "action",
+        "body_pose",
+        "camera_movement",
+        "hand_pose",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "contact.",
+        "body.contact",
+        "support.",
+        "relation.contact"
+      ],
+      "semantic_role": "direct"
+    },
+    "depth_of_field": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Depth extent of acceptable sharpness and background or foreground blur, separate from focus-plane selection.",
+      "description_ko": "심도: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "camera"
+      ],
+      "evidence_terms": [
+        "depth of field",
+        "deep focus",
+        "shallow",
+        "background blur",
+        "bokeh"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "depth_of_field",
+      "includes": [
+        "Depth extent of acceptable sharpness and background or foreground blur, separate from focus-plane selection."
+      ],
+      "neighbors": [
+        "focus",
+        "image_detail",
+        "lens"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "camera.depth_of_field",
+        "image.depth_of_field"
+      ],
+      "semantic_role": "direct"
+    },
+    "eye_detail": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Owned local eye structure, iris color and surface appearance, distinct from gaze and surrounding cosmetics.",
+      "description_ko": "눈의 색·구조·관찰 가능한 국소 속성: 대체 안구 연결·충혈·눈물은 추가 역할; 일반 외모와 시선 관계를 구별",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "iris",
+        "pupil",
+        "eye",
+        "안구"
+      ],
+      "excludes": [
+        "대체 안구 연결·충혈·눈물은 추가 역할; 일반 외모와 시선 관계를 구별"
+      ],
+      "id": "eye_detail",
+      "includes": [
+        "Owned local eye structure, iris color and surface appearance, distinct from gaze and surrounding cosmetics."
+      ],
+      "neighbors": [
+        "expression",
+        "gaze_engagement",
+        "gaze_target"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "eyes.structure",
+        "eyes.iris",
+        "eyes.color",
+        "eye."
+      ],
+      "semantic_role": "direct"
+    },
+    "focus": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Placement and priority of the focus plane and relative sharpness of named planes.",
+      "description_ko": "선명도 우선순위와 초점면 관계: 시선 목표·감각적 주목과 구별; 두 깊이 평면의 상대 선명도 명시",
+      "dimensions": [
+        "camera"
+      ],
+      "evidence_terms": [
+        "focus",
+        "sharp",
+        "blurred",
+        "softer",
+        "선명"
+      ],
+      "excludes": [
+        "시선 목표·감각적 주목과 구별; 두 깊이 평면의 상대 선명도 명시"
+      ],
+      "id": "focus",
+      "includes": [
+        "Placement and priority of the focus plane and relative sharpness of named planes."
+      ],
+      "neighbors": [
+        "depth_of_field",
+        "image_detail",
+        "lens"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "focus.",
+        "camera.focus",
+        "image.focus"
+      ],
+      "semantic_role": "direct"
+    },
+    "gaze_direction": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Owned eye or iris orientation toward a direction in the selected frame, independent of head orientation, a named gaze target and viewer engagement.",
+      "description_ko": "같은 주체 눈·홍채의 선택 프레임 내 방향. 머리 방향·시선의 명명 대상·눈맞춤 여부와 독립하며 감은 눈이나 동공 모양으로 방향을 추정하지 않는다.",
+      "dimensions": [
+        "expression"
+      ],
+      "evidence_terms": [
+        "iris",
+        "irises",
+        "eye direction",
+        "eyeline",
+        "looking back",
+        "시선 방향",
+        "홍채"
+      ],
+      "excludes": [
+        "Head or body turn alone.",
+        "Eye closure, pupil shape or private intent.",
+        "Named gaze target or engagement alone."
+      ],
+      "id": "gaze_direction",
+      "includes": [
+        "Upward iris direction without a named target.",
+        "An authored over-shoulder eye direction when that branch is selected."
+      ],
+      "neighbors": [
+        "body_orientation",
+        "eye_detail",
+        "expression",
+        "gaze_engagement",
+        "gaze_target"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "gaze.direction",
+        "eyes.direction",
+        "eyes.eyeline"
+      ],
+      "semantic_role": "direct"
+    },
+    "gaze_target": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Target of the declared actor's gaze, with head orientation and eye state treated separately.",
+      "description_ko": "지정 눈·머리의 관찰 목표: 시선 방향·대상 위치·눈 감음을 구별; 몸 방향은 별도 소유 속성",
+      "dimensions": [
+        "expression"
+      ],
+      "evidence_terms": [
+        "gaze toward",
+        "looking at",
+        "gaze tracking",
+        "시선 대상"
+      ],
+      "excludes": [
+        "시선 방향·대상 위치·눈 감음을 구별; 몸 방향은 별도 소유 속성"
+      ],
+      "id": "gaze_target",
+      "includes": [
+        "Target of the declared actor's gaze, with head orientation and eye state treated separately."
+      ],
+      "neighbors": [
+        "expression",
+        "eye_detail",
+        "gaze_engagement"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "gaze.target",
+        "eyes.gaze_target"
+      ],
+      "semantic_role": "direct"
+    },
+    "image_detail": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Recorded detail, acuity and edge rendering, distinct from physical realism claims and focus-plane placement.",
+      "description_ko": "영상 세부와 선명도: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "camera",
+        "style"
+      ],
+      "evidence_terms": [
+        "detail",
+        "sharpness",
+        "acuity",
+        "oversharpen",
+        "readable contours"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "image_detail",
+      "includes": [
+        "Recorded detail, acuity and edge rendering, distinct from physical realism claims and focus-plane placement."
+      ],
+      "neighbors": [
+        "depth_of_field",
+        "focus",
+        "lens"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "image.detail",
+        "image.acuity",
+        "image.sharpness"
+      ],
+      "semantic_role": "direct"
+    },
+    "object_structure": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Visible non-anatomical geometry, bounded parts and structural connections owned by one declared physical object or fixture, independent of its scene role, frame placement and current use state.",
+      "description_ko": "선언된 물리적 물체·설비 자체의 비해부학적 형상, 경계가 있는 부품과 구조적 연결. 장면에서 맡는 용도·프레임 배치·현재 사용 상태와 구별하며, 몸·의복 특화 구조의 소유 범위를 보존한다.",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "bounded edge",
+        "part",
+        "hinge",
+        "connection",
+        "recess",
+        "strap path",
+        "부품",
+        "가장자리",
+        "힌지",
+        "연결",
+        "홈",
+        "끈 경로"
+      ],
+      "excludes": [
+        "Anatomical form, pose or continuity, including depicted anatomy whose representation ownership must remain explicit.",
+        "Frame arrangement, camera viewpoint, relative prop placement or image acuity alone.",
+        "Current open/closed, use, damage or readiness state without a separately evidenced structural feature.",
+        "Material identity or repeated surface microstructure alone; abstract two-dimensional graphic-path geometry alone.",
+        "A garment-specific construction fact already fully owned by garment_detail does not receive a duplicate generic role for that same fact. Simultaneous roles require separately evidenced properties or distinct owned components.",
+        "An optional garment member/profile cannot supply unconditional garment ownership or garment type to a generic parent."
+      ],
+      "id": "object_structure",
+      "includes": [
+        "A declared case hinge and separately bounded disc recess; phone halves joined at their hinge.",
+        "A named strap assembly with a bar and incoming/returning strap path; a generic attached textile panel with its own bounded edge.",
+        "An identified fixture part and its structural joint; no claim of hidden manufacture or performance."
+      ],
+      "neighbors": [
+        "garment_detail",
+        "anatomical_connection",
+        "prop",
+        "prop_state",
+        "prop_placement",
+        "composition",
+        "contact_point",
+        "texture",
+        "surface_material"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "object.structure",
+        "object.geometry",
+        "object.connection"
+      ],
+      "semantic_role": "direct"
+    },
+    "procedure_step": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "setting"
+      ],
+      "description": "One identified step in a declared procedure, not a claim that a sequence was observed in one still image.",
+      "description_ko": "명시된 작업 과정에서 선택한 단계: 여러 단계의 완료·시간 흐름을 한 픽셀 사실로 취급하지 않음",
+      "dimensions": [
+        "action",
+        "timing"
+      ],
+      "evidence_terms": [
+        "step",
+        "verify",
+        "inspect",
+        "record",
+        "measure",
+        "process"
+      ],
+      "excludes": [
+        "여러 단계의 완료·시간 흐름을 한 픽셀 사실로 취급하지 않음"
+      ],
+      "id": "procedure_step",
+      "includes": [
+        "One identified step in a declared procedure, not a claim that a sequence was observed in one still image."
+      ],
+      "neighbors": [
+        "calendar_context",
+        "historical_period",
+        "narrative_phase",
+        "season",
+        "time_of_day",
+        "transformation_stage"
+      ],
+      "owners": [
+        "context"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "procedure.",
+        "process.step"
+      ],
+      "semantic_role": "contextual"
+    },
+    "prop": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "An explicitly owned scene object serving a declared role; placement and state are separate properties.",
+      "description_ko": "장면 안에서 특정 역할을 갖는 물건: 주체·착용물·기록 장치와 소유 범위 구별; 빈 dimensions를 자동 통과로 바꾸지 않음",
+      "dimensions": [
+        "subject",
+        "role"
+      ],
+      "evidence_terms": [
+        "object",
+        "prop",
+        "tool",
+        "device",
+        "instrument",
+        "cabinet"
+      ],
+      "excludes": [
+        "주체·착용물·기록 장치와 소유 범위 구별; 빈 dimensions를 자동 통과로 바꾸지 않음"
+      ],
+      "id": "prop",
+      "includes": [
+        "An explicitly owned scene object serving a declared role; placement and state are separate properties."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "prop_placement",
+        "prop_state",
+        "wardrobe_layering"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "props.",
+        "prop.",
+        "objects.",
+        "object_inventory"
+      ],
+      "semantic_role": "direct"
+    },
+    "prop_placement": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Position and orientation of owned props relative to named actors, surfaces and boundaries.",
+      "description_ko": "소품의 방향·배치·주체와의 공간 관계: 막대 방향뿐 아니라 장벽·주머니·둘레가 섞임; 물건 상태는 prop_state",
+      "dimensions": [
+        "composition",
+        "pose"
+      ],
+      "evidence_terms": [
+        "held",
+        "beside",
+        "between",
+        "horizontal",
+        "pocket",
+        "encircles"
+      ],
+      "excludes": [
+        "막대 방향뿐 아니라 장벽·주머니·둘레가 섞임; 물건 상태는 prop_state"
+      ],
+      "id": "prop_placement",
+      "includes": [
+        "Position and orientation of owned props relative to named actors, surfaces and boundaries."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "prop",
+        "prop_state",
+        "wardrobe_layering"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "props.placement",
+        "prop.position",
+        "prop.orientation",
+        "objects.position"
+      ],
+      "semantic_role": "direct"
+    },
+    "prop_state": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Owned object's current use, attachment, readiness, damage or arrangement state, with occupational context optional.",
+      "description_ko": "물건의 사용·정리·고정·손상 상태: 업무 소품으로만 한정할 근거가 약함; duty는 맥락 조건으로 보존",
+      "dimensions": [
+        "role"
+      ],
+      "evidence_terms": [
+        "in use",
+        "secured",
+        "set-down",
+        "worn",
+        "sorted",
+        "folded",
+        "open"
+      ],
+      "excludes": [
+        "업무 소품으로만 한정할 근거가 약함; duty는 맥락 조건으로 보존"
+      ],
+      "id": "prop_state",
+      "includes": [
+        "Owned object's current use, attachment, readiness, damage or arrangement state, with occupational context optional."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "prop",
+        "prop_placement",
+        "wardrobe_layering"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "props.state",
+        "prop.state",
+        "objects.state"
+      ],
+      "semantic_role": "direct"
+    },
+    "relational_action": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Concrete interaction with explicitly declared action endpoints, including biological, mechanical or represented participants and their objects.",
+      "description_ko": "명시된 행위 주체와 상대·물체 사이의 구체적 상호 동작. 인간·동물·기계·묘사된 대상을 포함하며 실제 행위와 소유·접촉 관계를 구별한다.",
+      "dimensions": [
+        "action",
+        "relationship"
+      ],
+      "evidence_terms": [
+        "handoff",
+        "offering",
+        "conversation",
+        "together",
+        "listener",
+        "contact"
+      ],
+      "excludes": [
+        "A role label, co-presence, proximity or an isolated hand pose does not supply a performed interaction.",
+        "Do not add a counterpart, helper, contact, tool or action endpoint from a verb category alone.",
+        "Do not split one actual self-owned body into two people or merge explicitly distinct participants."
+      ],
+      "id": "relational_action",
+      "includes": [
+        "The source explicitly describes the participants or a participant and an object interacting; each endpoint must be independently supported.",
+        "Self-directed interaction can address an explicitly owned part or object while retaining its actual part/whole relationship.",
+        "A human participant is not compulsory. Intrinsic source conditions, distinctness or part ownership, and actual performed action remain mandatory."
+      ],
+      "neighbors": [
+        "action",
+        "aftermath_trace",
+        "color",
+        "companion_animal",
+        "contact_point",
+        "crowd_density",
+        "physical_motion",
+        "proxemics",
+        "reality_anchor",
+        "reflection_logic",
+        "scale_relation",
+        "sensory_cue",
+        "shadow_relation",
+        "subject",
+        "subject_count",
+        "surreal_physics_detail",
+        "transformation_stage",
+        "visible_text"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "action.interaction",
+        "relation.action",
+        "interaction."
+      ],
+      "semantic_role": "direct"
+    },
+    "scale_relation": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event"
+      ],
+      "description": "Comparative size relation between explicitly identified entities with a stated depth or perspective basis.",
+      "description_ko": "둘 이상의 명시된 대상 간 크기 관계: 절대 크기·원근 왜곡과 구별; 비교 기준과 깊이 관계를 보존",
+      "dimensions": [
+        "body_geometry"
+      ],
+      "evidence_terms": [
+        "larger",
+        "smaller",
+        "scale",
+        "height",
+        "size",
+        "giant"
+      ],
+      "excludes": [
+        "절대 크기·원근 왜곡과 구별; 비교 기준과 깊이 관계를 보존"
+      ],
+      "id": "scale_relation",
+      "includes": [
+        "Comparative size relation between explicitly identified entities with a stated depth or perspective basis."
+      ],
+      "neighbors": [
+        "action",
+        "aftermath_trace",
+        "color",
+        "companion_animal",
+        "contact_point",
+        "crowd_density",
+        "physical_motion",
+        "proxemics",
+        "reality_anchor",
+        "reflection_logic",
+        "relational_action",
+        "sensory_cue",
+        "shadow_relation",
+        "subject",
+        "subject_count",
+        "surreal_physics_detail",
+        "transformation_stage",
+        "visible_text"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "scale.",
+        "size.relation",
+        "body.scale"
+      ],
+      "semantic_role": "direct"
+    },
+    "visible_text": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Explicit visible lettering, symbols and placement within the photograph, distinct from an external publication caption.",
+      "description_ko": "이미지 안의 글자: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "text"
+      ],
+      "evidence_terms": [
+        "lettering",
+        "text",
+        "sign",
+        "menu",
+        "label",
+        "글자"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "visible_text",
+      "includes": [
+        "Explicit visible lettering, symbols and placement within the photograph, distinct from an external publication caption."
+      ],
+      "neighbors": [
+        "background_element",
+        "environment_detail",
+        "location",
+        "publication_caption_context",
+        "space_condition"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "text.",
+        "lettering.",
+        "sign.content"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "records": [
+    {
+      "ordinal": 1255,
+      "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+      "prior_option_id": "same_holder_existing_item",
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "en": "held neutrally near the subject",
+          "ko": "자기 쪽에 중립적으로 들고 있는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+        "provenance": [
+          {
+            "sha256": "abd151c2d0b74a96885af2992c766fa2ea6eff8acadb025171f9ff6c8774bdd6",
+            "source": "slot:prop_direction:neutral_held_self"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before_sha256": "1398fc9e3ae894639b7112db10f96d56c510c8982bea5ac19024599ec244765f",
+      "prior_source_after": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Use only the independently declared existing holder and the existing held object explicitly selected by the caller, as distinct actual owners. The subject in the English phrase and 자기 in the Korean phrase refer to that same holder. Select that holder holding that same object neutrally near their own side. Holding, near-self placement and neutral presentation remain selected effects. Do not add an object or person, choose an object type, prescribe hand/finger geometry, aim it at another person or infer a private intention.",
+          "en": "held neutrally near the subject",
+          "ko": "자기 쪽에 중립적으로 들고 있는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "composition",
+            "role"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "property": "action.holding",
+              "target": "holder"
+            },
+            {
+              "dimension": "composition",
+              "property": "props.placement.near_same_holder",
+              "target": "held_object"
+            },
+            {
+              "dimension": "role",
+              "property": "prop.state.neutral_presentation",
+              "target": "held_object"
+            }
+          ]
+        },
+        "id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+        "provenance": [
+          {
+            "sha256": "abd151c2d0b74a96885af2992c766fa2ea6eff8acadb025171f9ff6c8774bdd6",
+            "source": "slot:prop_direction:neutral_held_self"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "prior_source_after_sha256": "7e14b1ffee0a70add8fbeb1e0afb026c1bcaddcf5fd18a6320260713a15a343e",
+      "source_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v2",
+            "rules": [
+              {
+                "id": "common_0",
+                "kind": "owner_relation",
+                "relation": "disjoint",
+                "left": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                  "target": "holder"
+                },
+                "right": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                  "target": "held_object"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "Use the independently declared existing holder and held object explicitly selected by the caller. They must be explicitly disjoint actual owners in the frozen graph. The subject in English and 자기 in Korean denote that same holder. Select that holder holding that same object neutrally near their own side. Holding, near-self placement and neutral presentation are all chosen effects, not already-held or already-placed prerequisites. The holder/object E receiver addresses must be reciprocal as specified below. Do not invent a hand, finger, object type, other person, threat, offering or private intent.",
+          "en": "held neutrally near the subject",
+          "ko": "자기 쪽에 중립적으로 들고 있는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "composition",
+            "role"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "holder",
+              "property": "action.holding"
+            },
+            {
+              "dimension": "composition",
+              "target": "held_object",
+              "property": "props.placement.near_same_holder"
+            },
+            {
+              "dimension": "role",
+              "target": "held_object",
+              "property": "prop.state.neutral_presentation"
+            }
+          ]
+        },
+        "id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+        "provenance": [
+          {
+            "sha256": "abd151c2d0b74a96885af2992c766fa2ea6eff8acadb025171f9ff6c8774bdd6",
+            "source": "slot:prop_direction:neutral_held_self"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_after_sha256": "a39f615b60661334be7d1f5e5f93e4833b9daab2e5aebda6d912d9563d099c35",
+      "exact_top_delta": [
+        {
+          "pointer": "/content/application_contract",
+          "before_exists": false,
+          "after_exists": true,
+          "before": null,
+          "after": "Use the independently declared existing holder and held object explicitly selected by the caller. They must be explicitly disjoint actual owners in the frozen graph. The subject in English and 자기 in Korean denote that same holder. Select that holder holding that same object neutrally near their own side. Holding, near-self placement and neutral presentation are all chosen effects, not already-held or already-placed prerequisites. The holder/object E receiver addresses must be reciprocal as specified below. Do not invent a hand, finger, object type, other person, threat, offering or private intent.",
+          "reason": "The Korean co-reference supports one same holder; it does not supply specific hands or an object type. Disjoint graph scope is an explicit existing-application restriction, not a string-inequality inference."
+        },
+        {
+          "pointer": "/conditions",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v2",
+              "rules": [
+                {
+                  "id": "common_0",
+                  "kind": "owner_relation",
+                  "relation": "disjoint",
+                  "left": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                    "target": "holder"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+                    "target": "held_object"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Consume explicit existing-carrier/topology guards; intrinsic conditions remain ANDed."
+        },
+        {
+          "pointer": "/effects",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "dimensions": [],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "action",
+              "composition",
+              "role"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "target": "holder",
+                "property": "action.holding"
+              },
+              {
+                "dimension": "composition",
+                "target": "held_object",
+                "property": "props.placement.near_same_holder"
+              },
+              {
+                "dimension": "role",
+                "target": "held_object",
+                "property": "prop.state.neutral_presentation"
+              }
+            ]
+          },
+          "reason": "Keep every manually reviewed actual selected E and its per-RID footprint."
+        }
+      ],
+      "complete_own_bindings_unchanged": [
+        {
+          "candidate_id": "cand_80faa15b56f65a9582a40ab2b6e94101",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_80faa15b56f65a9582a40ab2b6e94101",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop_placement",
+          "weight": 0.82
+        }
+      ],
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 6,
+        "row_sha256": "949e1917792aad575cf6708317f94c123e9d8c3703b429bbb03b359d840777d7"
+      },
+      "original_compiled_row_sha256": "949e1917792aad575cf6708317f94c123e9d8c3703b429bbb03b359d840777d7",
+      "owner_plans": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "holder",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "held_object",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "manual_P_E_receiver_intent_not_a_native_proof": {
+        "base": {
+          "targets": [
+            "holder",
+            "held_object"
+          ],
+          "guards": [],
+          "effects": [
+            {
+              "mode": "effect",
+              "dimension": "action",
+              "target": "holder",
+              "property": "action.holding",
+              "value": {
+                "type": "action.holding/v1",
+                "value": "holding_same_selected_object"
+              },
+              "operation": "set_value",
+              "receivers": [
+                "held_object"
+              ]
+            },
+            {
+              "mode": "effect",
+              "dimension": "composition",
+              "target": "held_object",
+              "property": "props.placement.near_same_holder",
+              "value": {
+                "type": "props.placement.near_same_holder/v1",
+                "value": "near_same_selected_holder"
+              },
+              "operation": "relocate",
+              "receivers": [
+                "holder"
+              ]
+            },
+            {
+              "mode": "effect",
+              "dimension": "role",
+              "target": "held_object",
+              "property": "prop.state.neutral_presentation",
+              "value": {
+                "type": "prop.state.neutral_presentation/v1",
+                "value": "neutral_presentation"
+              },
+              "operation": "set_value",
+              "receivers": []
+            }
+          ]
+        }
+      },
+      "independent_reading": "The Korean co-reference supports one same holder; it does not supply specific hands or an object type. Disjoint graph scope is an explicit existing-application restriction, not a string-inequality inference.",
+      "remaining_limits": "No pre-frozen holding/placement/state relation is required. Those are the mutable meaning and remain E. No new part_of or assigned-owner relation is fabricated."
+    },
+    {
+      "ordinal": 1256,
+      "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+      "prior_option_id": "blank_badge_or_text_unspecified_access_card",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "gaze toward a blank badge or access card",
+          "ko": "글자 없는 배지를 향한 시선",
+          "tags": [
+            "human",
+            "gaze",
+            "office",
+            "procedural"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_889c808625b75663930fa207c56fa553",
+        "provenance": [
+          {
+            "sha256": "dc0018de5f926e4b006a5cb8881ec6f4399acefe72450d6ecdc9d1ef5bc33717",
+            "source": "slot:gaze_target:to_blank_badge"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before_sha256": "5406921b58157e2814bfef47093f95bf9d691cbfa95f0998b6617fd073333c29",
+      "prior_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Use only the independently declared existing gaze owner and existing target explicitly selected for the actual realization. Require actual owned eyes on that same gaze carrier; a role name does not create eyes. Select its gaze toward that same branch target. The badge branch selects blankness without lettering; the access-card branch makes no lettering claim. Add no person, badge or card, office, access authority, readable name or head/body orientation. The actual target and gaze remain effects rather than already frozen gaze context.",
+          "en": "gaze toward a blank badge or access card",
+          "ko": "글자 없는 배지 또는 출입 카드를 향한 시선",
+          "realization_content": {
+            "access_card": {
+              "concept_units": [
+                "gaze toward an access card"
+              ],
+              "embedding_text": "gaze toward an access card",
+              "en": "gaze toward an access card",
+              "ko": "출입 카드를 향한 시선",
+              "relations": []
+            },
+            "blank_badge": {
+              "concept_units": [
+                "gaze toward a blank badge"
+              ],
+              "embedding_text": "gaze toward a blank badge",
+              "en": "gaze toward a blank badge",
+              "ko": "글자 없는 배지를 향한 시선",
+              "relations": []
+            }
+          },
+          "tags": [
+            "human",
+            "gaze",
+            "office",
+            "procedural"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": [
+            {
+              "dimension": "expression",
+              "property": "gaze.target",
+              "target": "gaze_owner"
+            }
+          ],
+          "realizations": {
+            "branches": [
+              {
+                "conditions": {},
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [
+                    "role"
+                  ],
+                  "properties": [
+                    {
+                      "dimension": "role",
+                      "property": "prop.state.blank_without_lettering",
+                      "target": "target"
+                    }
+                  ]
+                },
+                "id": "blank_badge"
+              },
+              {
+                "conditions": {},
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [],
+                  "properties": []
+                },
+                "id": "access_card"
+              }
+            ],
+            "mode": "one"
+          }
+        },
+        "id": "cand_889c808625b75663930fa207c56fa553",
+        "provenance": [
+          {
+            "sha256": "dc0018de5f926e4b006a5cb8881ec6f4399acefe72450d6ecdc9d1ef5bc33717",
+            "source": "slot:gaze_target:to_blank_badge"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "prior_source_after_sha256": "9b1d12970154ef60778ea7b3f9981c845debf4ee026f77686e9eeb2743d38f6a",
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ],
+          "native_guards": {
+            "schema": "photo-native-source-guards/v2",
+            "rules": [
+              {
+                "id": "common_0",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                  "target": "gaze_owner"
+                },
+                "dimension": "subject",
+                "property": "entity.category",
+                "value": {
+                  "type": "entity.category/v1",
+                  "value": "human"
+                }
+              },
+              {
+                "id": "common_1",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                  "target": "gaze_owner"
+                },
+                "dimension": "subject",
+                "property": "anatomy.eyes.presence",
+                "value": {
+                  "type": "anatomy.eyes.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "common_2",
+                "kind": "owner_relation",
+                "relation": "disjoint",
+                "left": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                  "target": "gaze_owner"
+                },
+                "right": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                  "target": "target"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "Use the independently declared existing human gaze carrier with independently declared actual eyes on that same carrier. Select exactly one existing target of the actual branch: a badge or an access card, not an invented combined access-token type. Require explicit frozen disjointness between this gaze carrier and that selected target for this application. Select gaze toward that exact target. On blank_badge only, also select absence of lettering on that badge as a real text-state effect. On access_card make no lettering or blankness selection. Preserve the intrinsic human guard and the independent old presentation restrictions. Add no eye, actor, target, office, access authority or head orientation.",
+          "en": "gaze toward a blank badge or access card",
+          "ko": "글자 없는 배지 또는 출입 카드를 향한 시선",
+          "realization_content": {
+            "access_card": {
+              "concept_units": [
+                "gaze toward an access card"
+              ],
+              "embedding_text": "gaze toward an access card",
+              "en": "gaze toward an access card",
+              "ko": "출입 카드를 향한 시선",
+              "relations": []
+            },
+            "blank_badge": {
+              "concept_units": [
+                "gaze toward a blank badge"
+              ],
+              "embedding_text": "gaze toward a blank badge",
+              "en": "gaze toward a blank badge",
+              "ko": "글자 없는 배지를 향한 시선",
+              "relations": []
+            }
+          },
+          "tags": [
+            "human",
+            "gaze",
+            "office",
+            "procedural"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": [],
+          "realizations": {
+            "branches": [
+              {
+                "conditions": {
+                  "native_guards": {
+                    "schema": "photo-native-source-guards/v2",
+                    "rules": [
+                      {
+                        "id": "branch_0",
+                        "kind": "frozen_value",
+                        "owner": {
+                          "kind": "source_target",
+                          "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                          "target": "target"
+                        },
+                        "dimension": "subject",
+                        "property": "props.type",
+                        "value": {
+                          "type": "props.type/v1",
+                          "value": "badge"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [
+                    "expression",
+                    "text"
+                  ],
+                  "properties": [
+                    {
+                      "dimension": "expression",
+                      "target": "gaze_owner",
+                      "property": "gaze.target"
+                    },
+                    {
+                      "dimension": "text",
+                      "target": "target",
+                      "property": "text.lettering.presence"
+                    }
+                  ]
+                },
+                "id": "blank_badge"
+              },
+              {
+                "conditions": {
+                  "native_guards": {
+                    "schema": "photo-native-source-guards/v2",
+                    "rules": [
+                      {
+                        "id": "branch_0",
+                        "kind": "frozen_value",
+                        "owner": {
+                          "kind": "source_target",
+                          "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                          "target": "target"
+                        },
+                        "dimension": "subject",
+                        "property": "props.type",
+                        "value": {
+                          "type": "props.type/v1",
+                          "value": "access_card"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [
+                    "expression"
+                  ],
+                  "properties": [
+                    {
+                      "dimension": "expression",
+                      "target": "gaze_owner",
+                      "property": "gaze.target"
+                    }
+                  ]
+                },
+                "id": "access_card"
+              }
+            ],
+            "mode": "one"
+          }
+        },
+        "id": "cand_889c808625b75663930fa207c56fa553",
+        "provenance": [
+          {
+            "sha256": "dc0018de5f926e4b006a5cb8881ec6f4399acefe72450d6ecdc9d1ef5bc33717",
+            "source": "slot:gaze_target:to_blank_badge"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_after_sha256": "8e752abb0b96af19f8f62d473f951995694218b8be72222dc904456c456d7508",
+      "exact_top_delta": [
+        {
+          "pointer": "/content/application_contract",
+          "before_exists": false,
+          "after_exists": true,
+          "before": null,
+          "after": "Use the independently declared existing human gaze carrier with independently declared actual eyes on that same carrier. Select exactly one existing target of the actual branch: a badge or an access card, not an invented combined access-token type. Require explicit frozen disjointness between this gaze carrier and that selected target for this application. Select gaze toward that exact target. On blank_badge only, also select absence of lettering on that badge as a real text-state effect. On access_card make no lettering or blankness selection. Preserve the intrinsic human guard and the independent old presentation restrictions. Add no eye, actor, target, office, access authority or head orientation.",
+          "reason": "Root-preferred least-added modifier scope retained. Blankness is not imposed on the access-card branch. Lettering absence is an actual text footprint; it must not pass a frozen text lock merely because a prior proposal placed it only under role/prop.state."
+        },
+        {
+          "pointer": "/conditions",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "after": {
+            "for_any": [
+              "human"
+            ],
+            "native_guards": {
+              "schema": "photo-native-source-guards/v2",
+              "rules": [
+                {
+                  "id": "common_0",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                    "target": "gaze_owner"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.category",
+                  "value": {
+                    "type": "entity.category/v1",
+                    "value": "human"
+                  }
+                },
+                {
+                  "id": "common_1",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                    "target": "gaze_owner"
+                  },
+                  "dimension": "subject",
+                  "property": "anatomy.eyes.presence",
+                  "value": {
+                    "type": "anatomy.eyes.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "common_2",
+                  "kind": "owner_relation",
+                  "relation": "disjoint",
+                  "left": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                    "target": "gaze_owner"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                    "target": "target"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Consume explicit existing-carrier/topology guards; intrinsic conditions remain ANDed."
+        },
+        {
+          "pointer": "/effects",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "dimensions": [],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [],
+            "properties": [],
+            "realizations": {
+              "branches": [
+                {
+                  "conditions": {
+                    "native_guards": {
+                      "schema": "photo-native-source-guards/v2",
+                      "rules": [
+                        {
+                          "id": "branch_0",
+                          "kind": "frozen_value",
+                          "owner": {
+                            "kind": "source_target",
+                            "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                            "target": "target"
+                          },
+                          "dimension": "subject",
+                          "property": "props.type",
+                          "value": {
+                            "type": "props.type/v1",
+                            "value": "badge"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "context_terms": [],
+                  "effects": {
+                    "dimensions": [
+                      "expression",
+                      "text"
+                    ],
+                    "properties": [
+                      {
+                        "dimension": "expression",
+                        "target": "gaze_owner",
+                        "property": "gaze.target"
+                      },
+                      {
+                        "dimension": "text",
+                        "target": "target",
+                        "property": "text.lettering.presence"
+                      }
+                    ]
+                  },
+                  "id": "blank_badge"
+                },
+                {
+                  "conditions": {
+                    "native_guards": {
+                      "schema": "photo-native-source-guards/v2",
+                      "rules": [
+                        {
+                          "id": "branch_0",
+                          "kind": "frozen_value",
+                          "owner": {
+                            "kind": "source_target",
+                            "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+                            "target": "target"
+                          },
+                          "dimension": "subject",
+                          "property": "props.type",
+                          "value": {
+                            "type": "props.type/v1",
+                            "value": "access_card"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "context_terms": [],
+                  "effects": {
+                    "dimensions": [
+                      "expression"
+                    ],
+                    "properties": [
+                      {
+                        "dimension": "expression",
+                        "target": "gaze_owner",
+                        "property": "gaze.target"
+                      }
+                    ]
+                  },
+                  "id": "access_card"
+                }
+              ],
+              "mode": "one"
+            }
+          },
+          "reason": "Keep every manually reviewed actual selected E and its per-RID footprint."
+        },
+        {
+          "pointer": "/content/ko",
+          "before_exists": true,
+          "after_exists": true,
+          "before": "글자 없는 배지를 향한 시선",
+          "after": "글자 없는 배지 또는 출입 카드를 향한 시선",
+          "reason": "Preserve the explicitly chosen original OR / translation clarification from the prior source proposal."
+        },
+        {
+          "pointer": "/content/realization_content",
+          "before_exists": false,
+          "after_exists": true,
+          "before": null,
+          "after": {
+            "access_card": {
+              "concept_units": [
+                "gaze toward an access card"
+              ],
+              "embedding_text": "gaze toward an access card",
+              "en": "gaze toward an access card",
+              "ko": "출입 카드를 향한 시선",
+              "relations": []
+            },
+            "blank_badge": {
+              "concept_units": [
+                "gaze toward a blank badge"
+              ],
+              "embedding_text": "gaze toward a blank badge",
+              "en": "gaze toward a blank badge",
+              "ko": "글자 없는 배지를 향한 시선",
+              "relations": []
+            }
+          },
+          "reason": "Preserve the explicitly chosen original OR / translation clarification from the prior source proposal."
+        }
+      ],
+      "complete_own_bindings_unchanged": [
+        {
+          "candidate_id": "cand_889c808625b75663930fa207c56fa553",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_889c808625b75663930fa207c56fa553",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "gaze_target",
+          "weight": 0.74
+        }
+      ],
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 7,
+        "row_sha256": "03850a0f8941b408d73e20669aa7dcd82a7099e4274bd664ac4477a9021de376"
+      },
+      "original_compiled_row_sha256": "03850a0f8941b408d73e20669aa7dcd82a7099e4274bd664ac4477a9021de376",
+      "owner_plans": {
+        "blank_badge": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "gaze_owner",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "target",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        },
+        "access_card": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "gaze_owner",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "target",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "manual_P_E_receiver_intent_not_a_native_proof": {
+        "blank_badge": {
+          "targets": [
+            "gaze_owner",
+            "target"
+          ],
+          "guards": [
+            {
+              "kind": "frozen_value",
+              "owner": "target",
+              "dimension": "subject",
+              "property": "props.type",
+              "value": {
+                "type": "props.type/v1",
+                "value": "badge"
+              }
+            }
+          ],
+          "effects": [
+            {
+              "mode": "effect",
+              "dimension": "expression",
+              "target": "gaze_owner",
+              "property": "gaze.target",
+              "value": {
+                "type": "gaze.target/v1",
+                "value": "same_selected_branch_target"
+              },
+              "operation": "set_value",
+              "receivers": [
+                "target"
+              ]
+            },
+            {
+              "mode": "effect",
+              "dimension": "text",
+              "target": "target",
+              "property": "text.lettering.presence",
+              "value": {
+                "type": "text.lettering.presence/v1",
+                "value": "absent"
+              },
+              "operation": "set_value",
+              "receivers": []
+            }
+          ]
+        },
+        "access_card": {
+          "targets": [
+            "gaze_owner",
+            "target"
+          ],
+          "guards": [
+            {
+              "kind": "frozen_value",
+              "owner": "target",
+              "dimension": "subject",
+              "property": "props.type",
+              "value": {
+                "type": "props.type/v1",
+                "value": "access_card"
+              }
+            }
+          ],
+          "effects": [
+            {
+              "mode": "effect",
+              "dimension": "expression",
+              "target": "gaze_owner",
+              "property": "gaze.target",
+              "value": {
+                "type": "gaze.target/v1",
+                "value": "same_selected_branch_target"
+              },
+              "operation": "set_value",
+              "receivers": [
+                "target"
+              ]
+            }
+          ]
+        }
+      },
+      "independent_reading": "Root-preferred least-added modifier scope retained. Blankness is not imposed on the access-card branch. Lettering absence is an actual text footprint; it must not pass a frozen text lock merely because a prior proposal placed it only under role/prop.state.",
+      "remaining_limits": "No extra face-presence, separate eye node or part_of relation is inferred from gaze. Atomic eyes is on the selected gaze carrier. Disjointness is an explicit bounded application; an actually overlapping/part-owned target requires separate adjudication, not fake disjoint metadata. Absence of lettering is not automatically a positive visible_text tag."
+    },
+    {
+      "ordinal": 1258,
+      "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+      "prior_option_id": "same_operator_tester_actual_voltage_check",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "checking voltage safely with a tester",
+          "ko": "테스터로 전압을 안전하게 확인하는",
+          "tags": [
+            "human",
+            "technical",
+            "safety"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+        "provenance": [
+          {
+            "sha256": "500fbe1492c115438ed804470e1a7e25c4dd4f4b213f1fb8535befe820486fd1",
+            "source": "slot:action:testing_voltage_safely"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before_sha256": "a8d7f8621e64ac24aba866e55a35710a9911f3bd551a1622bd74b3948cf9e5ff",
+      "prior_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Use only the independently declared existing human operator, existing voltage tester and actual existing tested endpoint explicitly selected by the caller. Select that same operator checking voltage safely using that same tester at that same tested endpoint. Preserve safely as a qualification of the selected checking activity; do not replace the activity or its safety qualification with frozen context or certify real-world safety from a still image. The actual endpoint topology must be supplied by the request. Do not add equipment or an operator, choose voltage/result, prescribe wiring, contact, PPE or a safety procedure, or assert successful completion.",
+          "en": "checking voltage safely with a tester",
+          "ko": "테스터로 전압을 안전하게 확인하는",
+          "tags": [
+            "human",
+            "technical",
+            "safety"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "property": "action.checking_voltage_safely_with_same_tester",
+              "target": "operator"
+            }
+          ]
+        },
+        "id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+        "provenance": [
+          {
+            "sha256": "500fbe1492c115438ed804470e1a7e25c4dd4f4b213f1fb8535befe820486fd1",
+            "source": "slot:action:testing_voltage_safely"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "prior_source_after_sha256": "85fb3ea9a3a209f18974553e1142c86e71082552fe11d0913e823f36438d228f",
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ],
+          "native_guards": {
+            "schema": "photo-native-source-guards/v2",
+            "rules": [
+              {
+                "id": "common_0",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                  "target": "operator"
+                },
+                "dimension": "subject",
+                "property": "entity.category",
+                "value": {
+                  "type": "entity.category/v1",
+                  "value": "human"
+                }
+              },
+              {
+                "id": "common_1",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                  "target": "tester"
+                },
+                "dimension": "subject",
+                "property": "props.type",
+                "value": {
+                  "type": "props.type/v1",
+                  "value": "voltage_tester"
+                }
+              },
+              {
+                "id": "common_2",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                  "target": "tested_endpoint"
+                },
+                "dimension": "concept",
+                "property": "measurement.target_domain",
+                "value": {
+                  "type": "measurement.target_domain/v1",
+                  "value": "electrical_potential"
+                }
+              },
+              {
+                "id": "common_3",
+                "kind": "owner_relation",
+                "relation": "disjoint",
+                "left": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                  "target": "operator"
+                },
+                "right": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                  "target": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "Use the independently declared existing human operator, existing voltage tester and existing electrical-potential measurement target explicitly selected by the caller. The operator and tester must have independently declared disjoint actual scope. Select that same operator checking voltage safely with that same tester at that same selected target; the action receivers bind the tester and measurement target jointly. Safely remains a qualification of the actual selected checking E, not a frozen safety-context substitute or real-world safety certification. No pre-existing use/holding/checking relation is assumed. The selected target may be a whole or part only as independently declared; do not invent disjointness or part_of between tester and measurement target, wiring, contact geometry, probes, PPE, a voltage, result or completion.",
+          "en": "checking voltage safely with a tester",
+          "ko": "테스터로 전압을 안전하게 확인하는",
+          "tags": [
+            "human",
+            "technical",
+            "safety"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "operator",
+              "property": "action.checking_voltage_safely_with_same_tester"
+            }
+          ]
+        },
+        "id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+        "provenance": [
+          {
+            "sha256": "500fbe1492c115438ed804470e1a7e25c4dd4f4b213f1fb8535befe820486fd1",
+            "source": "slot:action:testing_voltage_safely"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_after_sha256": "cc5fcca327c30092ade8996964650b414ba869a729e73081ce44d0c645759452",
+      "exact_top_delta": [
+        {
+          "pointer": "/content/application_contract",
+          "before_exists": false,
+          "after_exists": true,
+          "before": null,
+          "after": "Use the independently declared existing human operator, existing voltage tester and existing electrical-potential measurement target explicitly selected by the caller. The operator and tester must have independently declared disjoint actual scope. Select that same operator checking voltage safely with that same tester at that same selected target; the action receivers bind the tester and measurement target jointly. Safely remains a qualification of the actual selected checking E, not a frozen safety-context substitute or real-world safety certification. No pre-existing use/holding/checking relation is assumed. The selected target may be a whole or part only as independently declared; do not invent disjointness or part_of between tester and measurement target, wiring, contact geometry, probes, PPE, a voltage, result or completion.",
+          "reason": "The performed operator/tool/target relation belongs to this E and its exact receiver SET. A pre-frozen currently-testing/using relation would improperly hide the action. An independently declared electrical measurement target is a new explicit applicability condition, not supplied by a tester noun."
+        },
+        {
+          "pointer": "/conditions",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "after": {
+            "for_any": [
+              "human"
+            ],
+            "native_guards": {
+              "schema": "photo-native-source-guards/v2",
+              "rules": [
+                {
+                  "id": "common_0",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                    "target": "operator"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.category",
+                  "value": {
+                    "type": "entity.category/v1",
+                    "value": "human"
+                  }
+                },
+                {
+                  "id": "common_1",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                    "target": "tester"
+                  },
+                  "dimension": "subject",
+                  "property": "props.type",
+                  "value": {
+                    "type": "props.type/v1",
+                    "value": "voltage_tester"
+                  }
+                },
+                {
+                  "id": "common_2",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                    "target": "tested_endpoint"
+                  },
+                  "dimension": "concept",
+                  "property": "measurement.target_domain",
+                  "value": {
+                    "type": "measurement.target_domain/v1",
+                    "value": "electrical_potential"
+                  }
+                },
+                {
+                  "id": "common_3",
+                  "kind": "owner_relation",
+                  "relation": "disjoint",
+                  "left": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                    "target": "operator"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+                    "target": "tester"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Consume explicit existing-carrier/topology guards; intrinsic conditions remain ANDed."
+        },
+        {
+          "pointer": "/effects",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "target": "operator",
+                "property": "action.checking_voltage_safely_with_same_tester"
+              }
+            ]
+          },
+          "reason": "Keep every manually reviewed actual selected E and its per-RID footprint."
+        }
+      ],
+      "complete_own_bindings_unchanged": [
+        {
+          "candidate_id": "cand_a10e55c9a5735f9b84c89e54fbdb4c8b",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_a10e55c9a5735f9b84c89e54fbdb4c8b",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 1
+        }
+      ],
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 9,
+        "row_sha256": "d33fab06b34af4bc99e78253064e6f401908713f63aee533cd470db9fd9e91fd"
+      },
+      "original_compiled_row_sha256": "d33fab06b34af4bc99e78253064e6f401908713f63aee533cd470db9fd9e91fd",
+      "owner_plans": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "operator",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "tester",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            },
+            {
+              "target": "tested_endpoint",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "manual_P_E_receiver_intent_not_a_native_proof": {
+        "base": {
+          "targets": [
+            "operator",
+            "tester",
+            "tested_endpoint"
+          ],
+          "guards": [],
+          "effects": [
+            {
+              "mode": "effect",
+              "dimension": "action",
+              "target": "operator",
+              "property": "action.checking_voltage_safely_with_same_tester",
+              "value": {
+                "type": "action.checking_voltage_safely_with_same_tester/v1",
+                "value": "safe_voltage_check_with_same_selected_tester_and_target"
+              },
+              "operation": "set_value",
+              "receivers": [
+                "tester",
+                "tested_endpoint"
+              ]
+            }
+          ]
+        }
+      },
+      "independent_reading": "The performed operator/tool/target relation belongs to this E and its exact receiver SET. A pre-frozen currently-testing/using relation would improperly hide the action. An independently declared electrical measurement target is a new explicit applicability condition, not supplied by a tester noun.",
+      "remaining_limits": "The body does not prescribe tester-to-target contact or a particular whole/part topology. Do not guess it. If a concrete request requires further port/system/part relations for the performed action, author those exact requested witnesses in a new literal before native review; this source proposal does not assert unknown topology is valid. A frozen designated-target relation can be added only if the new source explicitly makes that extra precondition, not as a default."
+    },
+    {
+      "ordinal": 1273,
+      "candidate_id": "cand_4ec482ddc5985c25a539fdb006516d82",
+      "prior_option_id": "existing_small_toy_or_branches",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "a small action figure or doll prop",
+          "ko": "작은 액션 피규어나 인형 소품",
+          "tags": [
+            "human",
+            "prop",
+            "toy",
+            "collectible",
+            "social"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_4ec482ddc5985c25a539fdb006516d82",
+        "provenance": [
+          {
+            "sha256": "ee469a62886275b3dbb263aa146195a5c41d921cb1345086864e4ad69a9b5db9",
+            "source": "slot:prop:action_figure_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before_sha256": "48c3f3c885a68db87de9296be6e4b43a614b28aa6f250281056ac6678da25b51",
+      "prior_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Use only the independently declared existing object explicitly selected for the actual realization. Independently require the precise identity stated by that branch. Select that same object as a small scene prop; smallness and scene-prop presentation remain effects rather than frozen context. Choose exactly one actual realization, retaining the source action-figure OR doll alternative. Do not add a toy, living actor, child, body, holder, comparative size ratio, count or motion. Original human applicability remains mandatory.",
+          "en": "a small action figure or doll prop",
+          "ko": "작은 액션 피규어나 인형 소품",
+          "realization_content": {
+            "small_action_figure": {
+              "concept_units": [
+                "a small action figure prop"
+              ],
+              "embedding_text": "a small action figure prop",
+              "en": "a small action figure prop",
+              "ko": "작은 액션 피규어 소품",
+              "relations": []
+            },
+            "small_doll": {
+              "concept_units": [
+                "a small doll prop"
+              ],
+              "embedding_text": "a small doll prop",
+              "en": "a small doll prop",
+              "ko": "작은 인형 소품",
+              "relations": []
+            }
+          },
+          "tags": [
+            "human",
+            "prop",
+            "toy",
+            "collectible",
+            "social"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance",
+            "role"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "property": "object.geometry.size",
+              "target": "toy"
+            },
+            {
+              "dimension": "role",
+              "property": "props.scene_role",
+              "target": "toy"
+            }
+          ],
+          "realizations": {
+            "branches": [
+              {
+                "conditions": {},
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [],
+                  "properties": []
+                },
+                "id": "small_action_figure"
+              },
+              {
+                "conditions": {},
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [],
+                  "properties": []
+                },
+                "id": "small_doll"
+              }
+            ],
+            "mode": "one"
+          }
+        },
+        "id": "cand_4ec482ddc5985c25a539fdb006516d82",
+        "provenance": [
+          {
+            "sha256": "ee469a62886275b3dbb263aa146195a5c41d921cb1345086864e4ad69a9b5db9",
+            "source": "slot:prop:action_figure_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "prior_source_after_sha256": "58f55cf255797cb44adffd044e13163fd37a90456664858eec6693ea9fd4a6b1",
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Select exactly one actual realization of the original action-figure OR doll alternative. Independently require the precise already-existing identity of that same selected object for its branch. Select that same object as a small scene prop. Smallness and scene-prop role are real mutable E, not pre-frozen small/prop-state conditions. Do not add a toy, actor, child, body part, holder, comparative size ratio, count, manufacture or motion. Preserve intrinsic human applicability separately; it does not classify the toy as a human.",
+          "en": "a small action figure or doll prop",
+          "ko": "작은 액션 피규어나 인형 소품",
+          "realization_content": {
+            "small_action_figure": {
+              "concept_units": [
+                "a small action figure prop"
+              ],
+              "embedding_text": "a small action figure prop",
+              "en": "a small action figure prop",
+              "ko": "작은 액션 피규어 소품",
+              "relations": []
+            },
+            "small_doll": {
+              "concept_units": [
+                "a small doll prop"
+              ],
+              "embedding_text": "a small doll prop",
+              "en": "a small doll prop",
+              "ko": "작은 인형 소품",
+              "relations": []
+            }
+          },
+          "tags": [
+            "human",
+            "prop",
+            "toy",
+            "collectible",
+            "social"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": [],
+          "realizations": {
+            "branches": [
+              {
+                "conditions": {
+                  "native_guards": {
+                    "schema": "photo-native-source-guards/v2",
+                    "rules": [
+                      {
+                        "id": "branch_0",
+                        "kind": "frozen_value",
+                        "owner": {
+                          "kind": "source_target",
+                          "candidate_id": "cand_4ec482ddc5985c25a539fdb006516d82",
+                          "target": "toy"
+                        },
+                        "dimension": "subject",
+                        "property": "props.type",
+                        "value": {
+                          "type": "props.type/v1",
+                          "value": "action_figure"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [
+                    "appearance",
+                    "role"
+                  ],
+                  "properties": [
+                    {
+                      "dimension": "appearance",
+                      "target": "toy",
+                      "property": "object.geometry.size"
+                    },
+                    {
+                      "dimension": "role",
+                      "target": "toy",
+                      "property": "props.scene_role"
+                    }
+                  ]
+                },
+                "id": "small_action_figure"
+              },
+              {
+                "conditions": {
+                  "native_guards": {
+                    "schema": "photo-native-source-guards/v2",
+                    "rules": [
+                      {
+                        "id": "branch_0",
+                        "kind": "frozen_value",
+                        "owner": {
+                          "kind": "source_target",
+                          "candidate_id": "cand_4ec482ddc5985c25a539fdb006516d82",
+                          "target": "toy"
+                        },
+                        "dimension": "subject",
+                        "property": "props.type",
+                        "value": {
+                          "type": "props.type/v1",
+                          "value": "doll"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "context_terms": [],
+                "effects": {
+                  "dimensions": [
+                    "appearance",
+                    "role"
+                  ],
+                  "properties": [
+                    {
+                      "dimension": "appearance",
+                      "target": "toy",
+                      "property": "object.geometry.size"
+                    },
+                    {
+                      "dimension": "role",
+                      "target": "toy",
+                      "property": "props.scene_role"
+                    }
+                  ]
+                },
+                "id": "small_doll"
+              }
+            ],
+            "mode": "one"
+          }
+        },
+        "id": "cand_4ec482ddc5985c25a539fdb006516d82",
+        "provenance": [
+          {
+            "sha256": "ee469a62886275b3dbb263aa146195a5c41d921cb1345086864e4ad69a9b5db9",
+            "source": "slot:prop:action_figure_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_after_sha256": "db9f2e41f61c15b5f0c708070ebbc6072be76bc657962978df4e919b006788a2",
+      "exact_top_delta": [
+        {
+          "pointer": "/content/application_contract",
+          "before_exists": false,
+          "after_exists": true,
+          "before": null,
+          "after": "Select exactly one actual realization of the original action-figure OR doll alternative. Independently require the precise already-existing identity of that same selected object for its branch. Select that same object as a small scene prop. Smallness and scene-prop role are real mutable E, not pre-frozen small/prop-state conditions. Do not add a toy, actor, child, body part, holder, comparative size ratio, count, manufacture or motion. Preserve intrinsic human applicability separately; it does not classify the toy as a human.",
+          "reason": "The OR is retained with precise per-RID type P. Current object_structure actually owns non-anatomical object.geometry under appearance, so size keeps that dimension. Small alone supplies no comparative scale_relation basis."
+        },
+        {
+          "pointer": "/conditions",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "after": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "reason": "Consume explicit existing-carrier/topology guards; intrinsic conditions remain ANDed."
+        },
+        {
+          "pointer": "/effects",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "dimensions": [],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [],
+            "properties": [],
+            "realizations": {
+              "branches": [
+                {
+                  "conditions": {
+                    "native_guards": {
+                      "schema": "photo-native-source-guards/v2",
+                      "rules": [
+                        {
+                          "id": "branch_0",
+                          "kind": "frozen_value",
+                          "owner": {
+                            "kind": "source_target",
+                            "candidate_id": "cand_4ec482ddc5985c25a539fdb006516d82",
+                            "target": "toy"
+                          },
+                          "dimension": "subject",
+                          "property": "props.type",
+                          "value": {
+                            "type": "props.type/v1",
+                            "value": "action_figure"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "context_terms": [],
+                  "effects": {
+                    "dimensions": [
+                      "appearance",
+                      "role"
+                    ],
+                    "properties": [
+                      {
+                        "dimension": "appearance",
+                        "target": "toy",
+                        "property": "object.geometry.size"
+                      },
+                      {
+                        "dimension": "role",
+                        "target": "toy",
+                        "property": "props.scene_role"
+                      }
+                    ]
+                  },
+                  "id": "small_action_figure"
+                },
+                {
+                  "conditions": {
+                    "native_guards": {
+                      "schema": "photo-native-source-guards/v2",
+                      "rules": [
+                        {
+                          "id": "branch_0",
+                          "kind": "frozen_value",
+                          "owner": {
+                            "kind": "source_target",
+                            "candidate_id": "cand_4ec482ddc5985c25a539fdb006516d82",
+                            "target": "toy"
+                          },
+                          "dimension": "subject",
+                          "property": "props.type",
+                          "value": {
+                            "type": "props.type/v1",
+                            "value": "doll"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "context_terms": [],
+                  "effects": {
+                    "dimensions": [
+                      "appearance",
+                      "role"
+                    ],
+                    "properties": [
+                      {
+                        "dimension": "appearance",
+                        "target": "toy",
+                        "property": "object.geometry.size"
+                      },
+                      {
+                        "dimension": "role",
+                        "target": "toy",
+                        "property": "props.scene_role"
+                      }
+                    ]
+                  },
+                  "id": "small_doll"
+                }
+              ],
+              "mode": "one"
+            }
+          },
+          "reason": "Keep every manually reviewed actual selected E and its per-RID footprint."
+        },
+        {
+          "pointer": "/content/realization_content",
+          "before_exists": false,
+          "after_exists": true,
+          "before": null,
+          "after": {
+            "small_action_figure": {
+              "concept_units": [
+                "a small action figure prop"
+              ],
+              "embedding_text": "a small action figure prop",
+              "en": "a small action figure prop",
+              "ko": "작은 액션 피규어 소품",
+              "relations": []
+            },
+            "small_doll": {
+              "concept_units": [
+                "a small doll prop"
+              ],
+              "embedding_text": "a small doll prop",
+              "en": "a small doll prop",
+              "ko": "작은 인형 소품",
+              "relations": []
+            }
+          },
+          "reason": "Preserve the explicitly chosen original OR / translation clarification from the prior source proposal."
+        }
+      ],
+      "complete_own_bindings_unchanged": [
+        {
+          "candidate_id": "cand_4ec482ddc5985c25a539fdb006516d82",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_4ec482ddc5985c25a539fdb006516d82",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 0.55
+        }
+      ],
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 24,
+        "row_sha256": "14137c856385a7924b9ae0053f0ceedda43b1ab9b3cc1701e65f52d88875c9f7"
+      },
+      "original_compiled_row_sha256": "14137c856385a7924b9ae0053f0ceedda43b1ab9b3cc1701e65f52d88875c9f7",
+      "owner_plans": {
+        "small_action_figure": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "toy",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        },
+        "small_doll": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "toy",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "manual_P_E_receiver_intent_not_a_native_proof": {
+        "small_action_figure": {
+          "targets": [
+            "toy"
+          ],
+          "guards": [
+            {
+              "kind": "frozen_value",
+              "owner": "toy",
+              "dimension": "subject",
+              "property": "props.type",
+              "value": {
+                "type": "props.type/v1",
+                "value": "action_figure"
+              }
+            }
+          ],
+          "effects": [
+            {
+              "mode": "effect",
+              "dimension": "appearance",
+              "target": "toy",
+              "property": "object.geometry.size",
+              "value": {
+                "type": "object.geometry.size/v1",
+                "value": "small"
+              },
+              "operation": "set_value",
+              "receivers": []
+            },
+            {
+              "mode": "effect",
+              "dimension": "role",
+              "target": "toy",
+              "property": "props.scene_role",
+              "value": {
+                "type": "props.scene_role/v1",
+                "value": "scene_prop"
+              },
+              "operation": "set_value",
+              "receivers": []
+            }
+          ]
+        },
+        "small_doll": {
+          "targets": [
+            "toy"
+          ],
+          "guards": [
+            {
+              "kind": "frozen_value",
+              "owner": "toy",
+              "dimension": "subject",
+              "property": "props.type",
+              "value": {
+                "type": "props.type/v1",
+                "value": "doll"
+              }
+            }
+          ],
+          "effects": [
+            {
+              "mode": "effect",
+              "dimension": "appearance",
+              "target": "toy",
+              "property": "object.geometry.size",
+              "value": {
+                "type": "object.geometry.size/v1",
+                "value": "small"
+              },
+              "operation": "set_value",
+              "receivers": []
+            },
+            {
+              "mode": "effect",
+              "dimension": "role",
+              "target": "toy",
+              "property": "props.scene_role",
+              "value": {
+                "type": "props.scene_role/v1",
+                "value": "scene_prop"
+              },
+              "operation": "set_value",
+              "receivers": []
+            }
+          ]
+        }
+      },
+      "independent_reading": "The OR is retained with precise per-RID type P. Current object_structure actually owns non-anatomical object.geometry under appearance, so size keeps that dimension. Small alone supplies no comparative scale_relation basis.",
+      "remaining_limits": "No synthetic generic figure_or_doll type, no simultaneous type conjunction and no inferred represented face/eyes/body anatomy. Introducing a toy is a separate source application with actual entity/count/subject effects; not covered here."
+    },
+    {
+      "ordinal": 1284,
+      "candidate_id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+      "prior_option_id": "same_face_carrier_owned_eyes",
+      "source_before": {
+        "conditions": {
+          "requires_any_tags": [
+            "kpop",
+            "album"
+          ]
+        },
+        "content": {
+          "application_contract": "Use the independently declared existing image and actual eyes bound to image and primary_face. Select the focal plane on those eyes. Keep the original kpop-or-album eligibility guard; album-cover styling does not prove release format or an actual album.",
+          "en": "album-cover eye focus",
+          "ko": "앨범 자켓처럼 눈에 정확히 맞춘 초점",
+          "tags": [
+            "portrait",
+            "kpop"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "property": "focus.selected_plane",
+              "target": "image"
+            }
+          ]
+        },
+        "id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+        "provenance": [
+          {
+            "sha256": "bcb9671b1ab52270f124dd4f52aefc9e8aa9a0b2ec8c69f33f30f29573e73601",
+            "source": "slot:focus:album_cover_eye_focus"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_before_sha256": "5d58469dfdffa31fe8c58d4178bd02c83d181e9c17de21f0e803fd222cef2057",
+      "prior_source_after": {
+        "conditions": {
+          "requires_any_tags": [
+            "kpop",
+            "album"
+          ]
+        },
+        "content": {
+          "application_contract": "Use only the independently declared existing image bound to image and actual existing face carrier bound to primary_face. Independently require subject/anatomy.face.presence/anatomy.face.presence/v1/present and subject/anatomy.eyes.presence/anatomy.eyes.presence/v1/present on that same actual face carrier. Select the image focal plane precisely on the owned eye region of that same face, in the stated album-cover style. The focal-plane effect receiver is that face carrier with its explicitly identified eye-region scope; this does not rename the face owner into a separate eyes owner. Keep the original kpop-or-album eligibility guard. Do not add eyes, another face, lens, depth extent, album release or publication format.",
+          "en": "album-cover eye focus",
+          "ko": "앨범 자켓처럼 눈에 정확히 맞춘 초점",
+          "tags": [
+            "portrait",
+            "kpop"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "property": "focus.selected_plane",
+              "target": "image"
+            }
+          ]
+        },
+        "id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+        "provenance": [
+          {
+            "sha256": "bcb9671b1ab52270f124dd4f52aefc9e8aa9a0b2ec8c69f33f30f29573e73601",
+            "source": "slot:focus:album_cover_eye_focus"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "prior_source_after_sha256": "88b69b49d5d317c6214561c7f9a05d7771c3e82f18b33c8cca3d15e050abe503",
+      "source_after": {
+        "conditions": {
+          "requires_any_tags": [
+            "kpop",
+            "album"
+          ],
+          "native_guards": {
+            "schema": "photo-native-source-guards/v2",
+            "rules": [
+              {
+                "id": "common_0",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+                  "target": "face"
+                },
+                "dimension": "subject",
+                "property": "anatomy.face.presence",
+                "value": {
+                  "type": "anatomy.face.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "common_1",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+                  "target": "face"
+                },
+                "dimension": "subject",
+                "property": "anatomy.eyes.presence",
+                "value": {
+                  "type": "anatomy.eyes.presence/v1",
+                  "value": "present"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "Use the independently declared existing image bound explicitly to the common image role and the existing face carrier explicitly selected by the caller. There is no automatic primary-face selection. Independently require subject/anatomy.face.presence/anatomy.face.presence/v1/present and subject/anatomy.eyes.presence/anatomy.eyes.presence/v1/present on that same actual face carrier. Select the image focal plane precisely on that carrier own eye region in the stated album-cover style. The E receiver is that same face carrier, with eye-region scope encoded in the chosen focal-plane value; no separate eye owner is created. Preserve the original kpop-or-album eligibility condition. Add no eyes, face, lens, depth extent, actual album release or publication format.",
+          "en": "album-cover eye focus",
+          "ko": "앨범 자켓처럼 눈에 정확히 맞춘 초점",
+          "tags": [
+            "portrait",
+            "kpop"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "target": "image",
+              "property": "focus.selected_plane"
+            }
+          ]
+        },
+        "id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+        "provenance": [
+          {
+            "sha256": "bcb9671b1ab52270f124dd4f52aefc9e8aa9a0b2ec8c69f33f30f29573e73601",
+            "source": "slot:focus:album_cover_eye_focus"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_after_sha256": "49fbb863da94b02cd4b58bf18d05e6f04a5307e3ec399375bef665dfce467009",
+      "exact_top_delta": [
+        {
+          "pointer": "/content/application_contract",
+          "before_exists": true,
+          "after_exists": true,
+          "before": "Use the independently declared existing image and actual eyes bound to image and primary_face. Select the focal plane on those eyes. Keep the original kpop-or-album eligibility guard; album-cover styling does not prove release format or an actual album.",
+          "after": "Use the independently declared existing image bound explicitly to the common image role and the existing face carrier explicitly selected by the caller. There is no automatic primary-face selection. Independently require subject/anatomy.face.presence/anatomy.face.presence/v1/present and subject/anatomy.eyes.presence/anatomy.eyes.presence/v1/present on that same actual face carrier. Select the image focal plane precisely on that carrier own eye region in the stated album-cover style. The E receiver is that same face carrier, with eye-region scope encoded in the chosen focal-plane value; no separate eye owner is created. Preserve the original kpop-or-album eligibility condition. Add no eyes, face, lens, depth extent, actual album release or publication format.",
+          "reason": "The original positive phrase does not choose primary_face. This revision removes that prior application-only narrowing and preserves atomic eyes on the exact selected face carrier. It is an actual focal-plane E, not sharpness postprocessing or preserved existing focus."
+        },
+        {
+          "pointer": "/conditions",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "requires_any_tags": [
+              "kpop",
+              "album"
+            ]
+          },
+          "after": {
+            "requires_any_tags": [
+              "kpop",
+              "album"
+            ],
+            "native_guards": {
+              "schema": "photo-native-source-guards/v2",
+              "rules": [
+                {
+                  "id": "common_0",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+                    "target": "face"
+                  },
+                  "dimension": "subject",
+                  "property": "anatomy.face.presence",
+                  "value": {
+                    "type": "anatomy.face.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "common_1",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+                    "target": "face"
+                  },
+                  "dimension": "subject",
+                  "property": "anatomy.eyes.presence",
+                  "value": {
+                    "type": "anatomy.eyes.presence/v1",
+                    "value": "present"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Consume explicit existing-carrier/topology guards; intrinsic conditions remain ANDed."
+        },
+        {
+          "pointer": "/effects",
+          "before_exists": true,
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "camera"
+            ],
+            "properties": [
+              {
+                "dimension": "camera",
+                "property": "focus.selected_plane",
+                "target": "image"
+              }
+            ]
+          },
+          "after": {
+            "dimensions": [
+              "camera"
+            ],
+            "properties": [
+              {
+                "dimension": "camera",
+                "target": "image",
+                "property": "focus.selected_plane"
+              }
+            ]
+          },
+          "reason": "Keep every manually reviewed actual selected E and its per-RID footprint."
+        }
+      ],
+      "complete_own_bindings_unchanged": [
+        {
+          "candidate_id": "cand_abd51e5b558c560b9e1b7975c2ce2cbc",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_abd51e5b558c560b9e1b7975c2ce2cbc",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "focus",
+          "weight": 0.45
+        }
+      ],
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 35,
+        "row_sha256": "70e2b04f64e9da6be547a35696fccf64898ad2be89f4e24ad69518030e6c9142"
+      },
+      "original_compiled_row_sha256": "70e2b04f64e9da6be547a35696fccf64898ad2be89f4e24ad69518030e6c9142",
+      "owner_plans": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v3",
+          "bindings": [
+            {
+              "target": "image",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "core_role",
+                "role": "image"
+              }
+            },
+            {
+              "target": "face",
+              "origin": "existing",
+              "introduced_by": null,
+              "selector": {
+                "kind": "selected_existing_owner"
+              }
+            }
+          ]
+        }
+      },
+      "manual_P_E_receiver_intent_not_a_native_proof": {
+        "base": {
+          "targets": [
+            "image:core_role=image",
+            "face"
+          ],
+          "guards": [],
+          "effects": [
+            {
+              "mode": "effect",
+              "dimension": "camera",
+              "target": "image",
+              "property": "focus.selected_plane",
+              "value": {
+                "type": "focus.selected_plane/v1",
+                "value": "precise_owned_eyes_of_same_selected_face_in_album_cover_style"
+              },
+              "operation": "select_plane",
+              "receivers": [
+                "face"
+              ]
+            }
+          ]
+        }
+      },
+      "independent_reading": "The original positive phrase does not choose primary_face. This revision removes that prior application-only narrowing and preserves atomic eyes on the exact selected face carrier. It is an actual focal-plane E, not sharpness postprocessing or preserved existing focus.",
+      "remaining_limits": "Atomic eyes presence on a face carrier is not a separate eye owner or automatic anatomical part edge. A core that only describes a separate eyes node cannot silently inherit this tuple onto the face; it needs a separately explicit application/witness. Album-cover qualifier is preserved in the chosen focal-plane value and original eligibility, not expanded into a new release format."
+    }
+  ],
+  "source_choices_not_applied": true,
+  "proof_or_signature_or_status_updates": 0,
+  "new_custom_witnesses": "entity.category/props.type/measurement.target_domain remain new exact candidate-free core authoring obligations; common atomic face/eyes presence use the current neutral protocol, never inferred from roles or category.",
+  "limits": [
+    "Source-only proposals require root whole-after semantic selection and a fresh immutable input before native review.",
+    "No actual source, binding, catalog, code, runtime, registry or Git mutation; no provider/network/inference call.",
+    "Disjoint and other new prerequisites are explicit bounded application conditions, not names-based graph inferences. Unknown remains unsatisfied."
+  ]
+}
