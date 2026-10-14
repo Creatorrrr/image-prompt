@@ -3,7 +3,9 @@ import copy
 import importlib.util
 from pathlib import Path
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / 'docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/direct_review.py'
@@ -34,6 +36,80 @@ def decision(data):
 
 
 class DirectReviewTests(unittest.TestCase):
+    def delegated_fixture(self, directory):
+        root = Path(directory).resolve()
+        here = root / 'run'
+        for name in ('authored', 'packets', 'worker-notes'):
+            (here / name).mkdir(parents=True)
+        assignment = {'task_name': '/root/review_test', 'model': 'gpt-6.1-sol',
+            'reasoning_effort': 'high', 'start': 0, 'stop': 2}
+        note = {'task_name': '/root/review_test', 'model': 'gpt-6.1-sol',
+            'reasoning_effort': 'high', 'start': 0, 'stop': 1,
+            'complete_source_read': True, 'directly_reviewed_count': 1,
+            'unresolved_ordinals': [], 'packet_paths': ['run/packets/test.json'],
+            'authored_paths': ['run/authored/test.json']}
+        packet = {'ids': [A]}
+        review.write(here / 'DELEGATION-ASSIGNMENTS.json', {'assignments': {'review_test': assignment}})
+        review.write(here / 'ORDER.json', [A, B])
+        review.write(here / 'packets/test.json', packet)
+        review.write(here / 'worker-notes/test.json', note)
+        return root, here, note, packet
+
+    def test_delegated_review_is_attributed_and_source_range_bound(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                data = fixture(); row = decision(data)
+                row['authored_decision']['file'] = 'run/authored/test.json'
+                row['packet_sha256'] = review.c.digest(packet)
+                row.update(schema=review.DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read')
+                row['review_provenance'] = review.delegated_provenance(
+                    'run/worker-notes/test.json', 'run/authored/test.json', row['packet_sha256'], A)
+                review.validate_decision(row, data)
+                self.assertEqual(row['review_provenance']['task_name'], '/root/review_test')
+                with self.assertRaisesRegex(ValueError, 'assigned range'):
+                    review.delegated_provenance('run/worker-notes/test.json',
+                        'run/authored/test.json', row['packet_sha256'], B)
+
+    def test_delegated_worker_cannot_claim_another_model_or_incomplete_read(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                for key, value in [('model', 'gemini'), ('complete_source_read', False),
+                                   ('directly_reviewed_count', 0), ('unresolved_ordinals', [0]),
+                                   ('stop', 3)]:
+                    changed = {**note, key: value}
+                    review.write(here / 'worker-notes/test.json', changed)
+                    with self.assertRaisesRegex(ValueError, 'identity, assigned range'):
+                        review.delegated_provenance('run/worker-notes/test.json',
+                            'run/authored/test.json', review.c.digest(packet), A)
+
+    def test_changed_worker_attestation_invalidates_compiled_review(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                data = fixture(); row = decision(data)
+                row['authored_decision']['file'] = 'run/authored/test.json'
+                row['packet_sha256'] = review.c.digest(packet)
+                row.update(schema=review.DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read')
+                row['review_provenance'] = review.delegated_provenance(
+                    'run/worker-notes/test.json', 'run/authored/test.json', row['packet_sha256'], A)
+                review.write(here / 'worker-notes/test.json', {**note, 'extra_note': 'changed'})
+                with self.assertRaisesRegex(ValueError, 'changed after review'):
+                    review.validate_decision(row, data)
+
+    def test_delegated_document_cannot_escape_run_or_omit_attribution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                with self.assertRaisesRegex(ValueError, 'outside'):
+                    review.delegated_provenance('run/worker-notes/test.json',
+                        'elsewhere.json', review.c.digest(packet), A)
+                data = fixture(); row = decision(data)
+                row.update(schema=review.DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read')
+                with self.assertRaisesRegex(ValueError, 'invalid direct decision'):
+                    review.validate_decision(row, data)
+
     def test_source_mutation_invalidates_decision(self):
         data = fixture(); row = decision(data)
         review.validate_decision(row, data)

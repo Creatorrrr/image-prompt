@@ -21,6 +21,7 @@ sys.path.insert(0, str(SKILL / 'scripts'))
 import photo_candidate_corpus as c
 
 SCHEMA = 'photo-codex-direct-review/v1'
+DELEGATED_SCHEMA = 'photo-codex-direct-review/v2'
 NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounders',
     'failure_modes', 'excluded', 'exclusions', 'forbidden', 'avoid', 'negative',
     'research_source_urls', 'tags', 'facets', 'reject_substitutes', 'contrast_examples',
@@ -142,12 +143,18 @@ def validate_decision(row, data):
         'meaning_summary', 'recommended_kind', 'corrections', 'roles', 'facts',
         'rejected_boundaries', 'uncertainties', 'status', 'all_roles_considered',
         'authored_decision', 'packet_sha256'}
+    delegated = isinstance(row, dict) and row.get('schema') == DELEGATED_SCHEMA
+    if delegated:
+        required.add('review_provenance')
     if not isinstance(row, dict) or set(row) != required:
         raise ValueError('invalid direct decision fields')
-    if (row['schema'] != SCHEMA or row['reviewer'] != 'Codex'
-            or row['review_method'] != 'codex_direct_source_read'
+    if (row['schema'] != (DELEGATED_SCHEMA if delegated else SCHEMA) or row['reviewer'] != 'Codex'
+            or row['review_method'] != ('codex_subagent_direct_source_read' if delegated
+                                       else 'codex_direct_source_read')
             or row['independent_human_review'] is not False):
         raise ValueError('direct reviewer identity/method required')
+    if delegated:
+        validate_review_provenance(row)
     cid = row['candidate_id']
     if cid not in data['candidates']:
         raise ValueError('unknown candidate')
@@ -217,6 +224,68 @@ def validate_decision(row, data):
             raise ValueError('fact must name an actual source realization')
         validate_fact({k: v for k, v in fact.items() if k != 'realization_id'}, record, catalog)
     return row
+
+
+def run_path(value, directory):
+    if not isinstance(value, str):
+        raise ValueError('review artifact path must be a string')
+    path = Path(value)
+    if not path.is_absolute():
+        path = (HERE / path if path.parts and path.parts[0] in
+                {'authored', 'packets', 'worker-notes'} else ROOT / path)
+    path = path.resolve()
+    if not path.is_relative_to(HERE / directory):
+        raise ValueError('review artifact is outside its assigned directory')
+    return path
+
+
+def delegated_provenance(note_path, authored_path, packet_sha256, cid):
+    """Bind an explicit worker attestation to a real dispatched assignment.
+
+    This proves attribution and range integrity, not semantic accuracy or that
+    the writer actually read the source. The writer must perform that review.
+    """
+    note_path = run_path(str(note_path), 'worker-notes')
+    authored_path = run_path(str(authored_path), 'authored')
+    note = c.decode(note_path.read_bytes())
+    registry = c.decode((HERE / 'DELEGATION-ASSIGNMENTS.json').read_bytes())['assignments']
+    matches = [(key, assignment) for key, assignment in registry.items()
+               if note['task_name'] in {key, assignment['task_name']}]
+    if len(matches) != 1:
+        raise ValueError('worker has no unique dispatched assignment')
+    assignment_id, assignment = matches[0]
+    start, stop = note['start'], note['stop']
+    order = c.decode((HERE / 'ORDER.json').read_bytes())
+    if (not isinstance(start, int) or not isinstance(stop, int)
+            or not assignment['start'] <= start < stop <= assignment['stop']
+            or cid not in order[start:stop]
+            or note['model'] != assignment['model'] or note['model'] != 'gpt-6.1-sol'
+            or note['reasoning_effort'] != assignment['reasoning_effort']
+            or note['complete_source_read'] is not True
+            or note['directly_reviewed_count'] != stop - start
+            or note['unresolved_ordinals']):
+        raise ValueError('worker identity, assigned range or complete review does not match')
+    if authored_path not in {run_path(value, 'authored') for value in note['authored_paths']}:
+        raise ValueError('authored document is not attested by this worker')
+    packets = [c.decode(run_path(value, 'packets').read_bytes()) for value in note['packet_paths']]
+    if not any(c.digest(packet) == packet_sha256 and cid in packet['ids'] for packet in packets):
+        raise ValueError('complete source packet is not attested by this worker')
+    return {'assignment_id': assignment_id, 'task_name': assignment['task_name'],
+        'model': assignment['model'], 'reasoning_effort': assignment['reasoning_effort'],
+        'range': [start, stop], 'assignment_sha256': c.digest(assignment),
+        'worker_note': {'file': str(note_path.relative_to(ROOT)), 'sha256': c.digest(note)}}
+
+
+def validate_review_provenance(row):
+    provenance = row['review_provenance']
+    if not isinstance(provenance, dict) or set(provenance) != {
+            'assignment_id', 'task_name', 'model', 'reasoning_effort', 'range',
+            'assignment_sha256', 'worker_note'}:
+        raise ValueError('delegated review attribution is required')
+    expected = delegated_provenance(provenance['worker_note']['file'],
+        row['authored_decision']['file'], row['packet_sha256'], row['candidate_id'])
+    if provenance != expected:
+        raise ValueError('worker note or dispatched assignment changed after review')
 
 
 def source():
@@ -324,7 +393,7 @@ def verify():
     return {key: value for key, value in result.items() if key not in {'approved_ids', 'pending_ids'}}
 
 
-def register(packet_path, authored_path):
+def register(packet_path, authored_path, worker_note=None):
     """Bind authored semantic decisions to sources; no missing judgement defaults."""
     data = source()
     packet_path, authored_path = Path(packet_path).resolve(), Path(authored_path).resolve()
@@ -343,6 +412,9 @@ def register(packet_path, authored_path):
             'review_method': 'codex_direct_source_read', 'independent_human_review': False,
             'packet_sha256': c.digest(packet), 'authored_decision': {
                 'file': str(authored_path.relative_to(ROOT)), 'item': number, 'sha256': c.digest(decision)}}
+        if worker_note is not None:
+            row.update(schema=DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read',
+                review_provenance=delegated_provenance(worker_note, authored_path, c.digest(packet), cid))
         validate_decision(row, data)
         rows.append(row)
     if len({row['candidate_id'] for row in rows}) != len(rows):
@@ -366,9 +438,10 @@ def main():
     registration = sub.add_parser('register')
     registration.add_argument('--packet', required=True)
     registration.add_argument('--authored', required=True)
+    registration.add_argument('--worker-note')
     args = parser.parse_args()
     result = (initialize() if args.command == 'init' else prepare(args.start, args.count)
-        if args.command == 'prepare' else register(args.packet, args.authored)
+        if args.command == 'prepare' else register(args.packet, args.authored, args.worker_note)
         if args.command == 'register' else verify())
     print(json.dumps(result, ensure_ascii=False))
 
