@@ -1,0 +1,1197 @@
+{
+  "schema": "photo-native-manual-bulk-checkpoint/v1",
+  "task_name": "/root/review_08250_09250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "prepared_total": 1000,
+  "read_range": [
+    6760,
+    6765
+  ],
+  "actual_direct_read_count": 5,
+  "records": [
+    {
+      "ordinal": 6760,
+      "candidate_id": "cand_ff284c8b30b2555b93b4fb17db307a65",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "capri trouser length",
+            "pedal pusher length",
+            "카프리 팬츠 길이"
+          ],
+          "embedding_text": "two independently readable casual trouser legs stop below both knees around the calves while bare lower legs continue to the ankles and shoes, distinct from Bermuda shorts or seven-eighth trousers",
+          "en": "two casual trouser hems ending below the knees with clear bare gaps before the ankles",
+          "keywords": [
+            "paired below-knee hems",
+            "mid-calf landmark",
+            "bare lower-leg gap",
+            "not ankle crop"
+          ],
+          "ko": "두 바지 밑단이 무릎 아래 종아리에서 끝나 발목까지 맨다리가 이어지는 카프리 비례",
+          "tags": [
+            "human",
+            "garment",
+            "silhouette",
+            "capri",
+            "landmark",
+            "dailywear"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "body_geometry"
+          ],
+          "properties": []
+        },
+        "id": "cand_ff284c8b30b2555b93b4fb17db307a65",
+        "provenance": [
+          {
+            "sha256": "757e7a8a39c0f131bc550b0f24ee357319dd4b9aa9d19cd9a9b6512cc8213dcf",
+            "source": "slot:silhouette_proportion:casual_capri_below_knee_clear_ankle_gap"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "capri trouser length",
+            "pedal pusher length",
+            "카프리 팬츠 길이"
+          ],
+          "embedding_text": "two independently readable casual trouser legs stop below both knees around the calves while bare lower legs continue to the ankles and shoes, distinct from Bermuda shorts or seven-eighth trousers",
+          "en": "two casual trouser hems ending below the knees with clear bare gaps before the ankles",
+          "keywords": [
+            "paired below-knee hems",
+            "mid-calf landmark",
+            "bare lower-leg gap",
+            "not ankle crop"
+          ],
+          "ko": "두 바지 밑단이 무릎 아래 종아리에서 끝나 발목까지 맨다리가 이어지는 카프리 비례",
+          "tags": [
+            "human",
+            "garment",
+            "silhouette",
+            "capri",
+            "landmark",
+            "dailywear"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "body_geometry"
+          ],
+          "properties": []
+        },
+        "id": "cand_ff284c8b30b2555b93b4fb17db307a65",
+        "provenance": [
+          {
+            "sha256": "757e7a8a39c0f131bc550b0f24ee357319dd4b9aa9d19cd9a9b6512cc8213dcf",
+            "source": "slot:silhouette_proportion:casual_capri_below_knee_clear_ankle_gap"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 11,
+        "json_pointer": "/decisions/10",
+        "row_sha256": "758943f1ede3bb4fbe20fb0dc15315129bd57f9180b7d675ef5407fc312baf47"
+      },
+      "source_bindings": {
+        "bind_ff284c8b30b2555b93b4fb17db307a65": {
+          "candidate_id": "cand_ff284c8b30b2555b93b4fb17db307a65",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_ff284c8b30b2555b93b4fb17db307a65",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "silhouette_proportion",
+          "weight": 0.64
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Both actual casual trouser legs independently end below knees at calf landmarks, leaving bare lower-leg gaps to ankles/shoes; this changes garment length/exposure relation rather than wearer anatomy.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "two casual trouser hems ending below the knees",
+          "dimension": "appearance",
+          "target": "actual_capri_trousers",
+          "property": "garment.detail.paired_below_knee_hems",
+          "mode": "effect",
+          "value": {
+            "type": "garment.detail.paired_below_knee_hems/v1",
+            "value": "two_independently_readable_below_knee_trouser_hems"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "two independently readable casual trouser legs stop below both knees around the calves",
+          "dimension": "body_geometry",
+          "target": "actual_capri_trousers",
+          "property": "wardrobe.silhouette.calf_length",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.silhouette.calf_length/v1",
+            "value": "both_trouser_legs_end_below_same_wearer_knees_at_calves"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "clear bare gaps before the ankles",
+          "dimension": "appearance",
+          "target": "actual_wearer_lower_leg_regions",
+          "property": "body.visibility.bare_lower_leg_gap",
+          "mode": "effect",
+          "value": {
+            "type": "body.visibility.bare_lower_leg_gap/v1",
+            "value": "bare_lower_leg_gaps_below_both_hems_to_ankles"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "bare lower legs continue to the ankles and shoes",
+          "dimension": "body_geometry",
+          "target": "actual_garment_body_landmark_relation",
+          "property": "wardrobe.silhouette.hem_ankle_shoe_gap",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.silhouette.hem_ankle_shoe_gap/v1",
+            "value": "same_owned_lower_leg_landmarks_continue_from_both_hems_to_ankles_AND_shoes"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "garment_detail": "actual paired trouser hem construction/length",
+        "silhouette_proportion": "garment-to-same-wearer knee/calf/ankle relative lengths, not bodymass/proportion change",
+        "body_region": "actual named lower-leg regions support local bare gap scope only, no anatomical creation",
+        "garment_fit": "no tight/loose contour-to-wearer volume relation",
+        "body_form": "no new calf muscle/contour or leg anatomy",
+        "footwear": "shoes are endpoint landmarks with no shoe type/style selected",
+        "wardrobe_style": "casual explicit context, no complete outfit forced"
+      },
+      "owner_and_receiver_intents": [
+        "Actual human wearer, both existing trouserlegs, actual own knee/calf/lowerleg/ankle landmarks and shoes independently bind; source human gate does not itself prove parts.",
+        "Selected bare gaps have actual visibility/appearance permission scope besides garment length; no bodypart addition, physical leg shortening or stance invention."
+      ],
+      "pending": [
+        "Bermuda/ankle-crop alternatives explicitly rejected. No exact centimetreratio, symmetrical body shape, sandals, heels or gender inferred.",
+        "for_any human and optional silhouette_proportion/direct0.64 human with documentary/craft/wildlife/product/jewelry/food denials preserved. Empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "two independently readable casual trouser legs stop below both knees around the calves while bare lower legs continue to the ankles and shoes, distinct from Bermuda shorts or seven-eighth trousers",
+          "literal_fact_draft_indices": [
+            1,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "two casual trouser hems ending below the knees with clear bare gaps before the ankles",
+          "literal_fact_draft_indices": [
+            0,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "두 바지 밑단이 무릎 아래 종아리에서 끝나 발목까지 맨다리가 이어지는 카프리 비례",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6761,
+      "candidate_id": "cand_077999163a6b521fb528ad099375d757",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "coercive_capture_property"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "강도 납치 인질 역할군",
+            "robber victim captor hostage roles"
+          ],
+          "embedding_text": "adult coercive-crime cast keeping offender, property holder or captive, and when relevant a distinct outside negotiator visually separable across taking relocation captivity demand or forced-entry relations",
+          "en": "coercive-crime roles distinguishing offender property holder captive hostage and outside negotiator",
+          "keywords": [
+            "robber",
+            "victim",
+            "abductor",
+            "captive",
+            "hostage",
+            "negotiator",
+            "intruder"
+          ],
+          "ko": "재물 보유자·가해자·피랍자·인질·외부 협상자가 구분된 역할군",
+          "tags": [
+            "violence_crime_visual_semantics",
+            "coercive_capture_property",
+            "subject"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_077999163a6b521fb528ad099375d757",
+        "provenance": [
+          {
+            "sha256": "53640ef51a8a09ba6d938fbc841721086540d57fcfe350fef5a8d8b1cb662cb1",
+            "source": "slot:subject:vc_coercive_roles_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "coercive_capture_property"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "강도 납치 인질 역할군",
+            "robber victim captor hostage roles"
+          ],
+          "embedding_text": "adult coercive-crime cast keeping offender, property holder or captive, and when relevant a distinct outside negotiator visually separable across taking relocation captivity demand or forced-entry relations",
+          "en": "coercive-crime roles distinguishing offender property holder captive hostage and outside negotiator",
+          "keywords": [
+            "robber",
+            "victim",
+            "abductor",
+            "captive",
+            "hostage",
+            "negotiator",
+            "intruder"
+          ],
+          "ko": "재물 보유자·가해자·피랍자·인질·외부 협상자가 구분된 역할군",
+          "tags": [
+            "violence_crime_visual_semantics",
+            "coercive_capture_property",
+            "subject"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_077999163a6b521fb528ad099375d757",
+        "provenance": [
+          {
+            "sha256": "53640ef51a8a09ba6d938fbc841721086540d57fcfe350fef5a8d8b1cb662cb1",
+            "source": "slot:subject:vc_coercive_roles_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 12,
+        "json_pointer": "/decisions/11",
+        "row_sha256": "ec7ad16c720a87897ea1e5f082217f146201a521df13c2d714744c21a179bf7d"
+      },
+      "source_bindings": {
+        "bind_077999163a6b521fb528ad099375d757": {
+          "candidate_id": "cand_077999163a6b521fb528ad099375d757",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_077999163a6b521fb528ad099375d757",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "subject",
+          "weight": 0.9
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Adult declared coercive-crime cast distinguishes offender and property holder OR captive; outside negotiator is conditional and visual separability does not prove a real crime.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "adult coercive-crime cast",
+          "dimension": "age",
+          "target": "actual_selected_cast_members",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult_for_each_actual_selected_participant"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "keeping offender, property holder or captive",
+          "dimension": "role",
+          "target": "actual_selected_cast_role_configuration",
+          "property": "participant.role.coercive_cast_configuration",
+          "mode": "effect",
+          "value": {
+            "type": "participant.role.coercive_cast_configuration/v1",
+            "value": "offender_AND_property_holder_OR_captive_without_instantiating_all_role_labels"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "when relevant a distinct outside negotiator",
+          "dimension": "role",
+          "target": "actual_selected_outside_negotiator",
+          "property": "participant.role.outside_negotiator",
+          "mode": "effect",
+          "value": {
+            "type": "participant.role.outside_negotiator/v1",
+            "value": "outside_negotiator_only_when_selected_relevant"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "visually separable across taking relocation captivity demand or forced-entry relations",
+          "dimension": "composition",
+          "target": "actual_selected_cast_configuration",
+          "property": "composition.role_separability",
+          "mode": "effect",
+          "value": {
+            "type": "composition.role_separability/v1",
+            "value": "selected_role_carriers_visually_separable_in_actual_declared_relation"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "subject": "primary declared cast actual inclusion/selection scope; no one opaque group substitutes independent carriers",
+        "participant_role": "explicit offender/holder/captive/hostage/conditional negotiator labels; no real criminal identity inferred",
+        "age_presentation": "adult P individually per actual selected cast member, no age change",
+        "subject_count": "no exact total from role vocabulary; same participant may fill compatible victim/captive roles",
+        "relational_action": "taking/relocation/captivity/demand/forcedentry remain declared relation alternatives, not every performed act",
+        "proxemics": "visually separable alone supplies no distance/barrier fact"
+      },
+      "owner_and_receiver_intents": [
+        "Actual alternative cast and each chosen rolecarrier independently mapped; do not introduce every keyword person or unconditionally require negotiator. Distinct outside negotiator only actual selected branch.",
+        "Current role configuration/inclusion footprint remains actual E when selecting it; existing-role application restriction is not silently approved. Individual age, presence, branch dependencies and source conditions need qualification."
+      ],
+      "pending": [
+        "Source role relations do not authorize weapons, binding, injury, forced-entry damage or a specific performed crime. Actual event/history not inferred from clothing or expression.",
+        "coercive_capture_property primary condition and optional subject/direct0.9 unrestricted ownbinding retained; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "adult coercive-crime cast keeping offender, property holder or captive, and when relevant a distinct outside negotiator visually separable across taking relocation captivity demand or forced-entry relations",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "coercive-crime roles distinguishing offender property holder captive hostage and outside negotiator",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "재물 보유자·가해자·피랍자·인질·외부 협상자가 구분된 역할군",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6762,
+      "candidate_id": "cand_0fe30f6d2c0e5577bbc51ecef71530ef",
+      "source_before": {
+        "conditions": {
+          "requires_any_tags": [
+            "blue_hour_city_practical"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "하늘과 실내등이 모두 디테일을 갖는 노출",
+            "exposure balance preserving both sky and practical detail"
+          ],
+          "embedding_text": "exposure balance preserving both sky and practical detail; part of the blue hour city practical lighting cluster; remains source-owned and rejects cyan night grade, black night with warm lamps, daylight blue filter",
+          "en": "exposure balance preserving both sky and practical detail",
+          "keywords": [
+            "lit",
+            "blue",
+            "ambient",
+            "practical",
+            "exposure",
+            "balance",
+            "hour",
+            "city"
+          ],
+          "ko": "하늘과 실내등이 모두 디테일을 갖는 노출",
+          "tags": [
+            "lighting_visual_semantics",
+            "blue_hour_city_practical",
+            "light_intensity"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_0fe30f6d2c0e5577bbc51ecef71530ef",
+        "provenance": [
+          {
+            "sha256": "204c5294530ba56cfc083315e5c989c448e84e5af922cb3a6357a567137d1866",
+            "source": "slot:light_intensity:lit_blue_ambient_practical_exposure_balance"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_any_tags": [
+            "blue_hour_city_practical"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "하늘과 실내등이 모두 디테일을 갖는 노출",
+            "exposure balance preserving both sky and practical detail"
+          ],
+          "embedding_text": "exposure balance preserving both sky and practical detail; part of the blue hour city practical lighting cluster; remains source-owned and rejects cyan night grade, black night with warm lamps, daylight blue filter",
+          "en": "exposure balance preserving both sky and practical detail",
+          "keywords": [
+            "lit",
+            "blue",
+            "ambient",
+            "practical",
+            "exposure",
+            "balance",
+            "hour",
+            "city"
+          ],
+          "ko": "하늘과 실내등이 모두 디테일을 갖는 노출",
+          "tags": [
+            "lighting_visual_semantics",
+            "blue_hour_city_practical",
+            "light_intensity"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_0fe30f6d2c0e5577bbc51ecef71530ef",
+        "provenance": [
+          {
+            "sha256": "204c5294530ba56cfc083315e5c989c448e84e5af922cb3a6357a567137d1866",
+            "source": "slot:light_intensity:lit_blue_ambient_practical_exposure_balance"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 13,
+        "json_pointer": "/decisions/12",
+        "row_sha256": "6c0a716318a4e1a21f5f0b10535509da6444dee1e4e6c40ef651cb9010049cc7"
+      },
+      "source_bindings": {
+        "bind_0fe30f6d2c0e5577bbc51ecef71530ef": {
+          "candidate_id": "cand_0fe30f6d2c0e5577bbc51ecef71530ef",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_0fe30f6d2c0e5577bbc51ecef71530ef",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "exposure",
+          "weight": 0.72
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Recorded exposure retains tonal detail in both sky and practical regions within source-owned blue-hour practical context; it is not incident light intensity or a cyan filter.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "exposure balance preserving both sky and practical detail",
+          "dimension": "camera",
+          "target": "actual_image_tonal_relation",
+          "property": "image.dynamic_range.sky_practical_detail",
+          "mode": "effect",
+          "value": {
+            "type": "image.dynamic_range.sky_practical_detail/v1",
+            "value": "both_sky_AND_practical_regions_keep_recorded_tonal_detail"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/ko",
+          "quote": "하늘과 실내등이 모두 디테일을 갖는 노출",
+          "dimension": "camera",
+          "target": "actual_sky_AND_interior_practical_image_regions",
+          "property": "image.detail.tonal_information",
+          "mode": "effect",
+          "value": {
+            "type": "image.detail.tonal_information/v1",
+            "value": "retained_recorded_detail_in_both_named_regions"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "remains source-owned",
+          "dimension": "lighting",
+          "target": "actual_cluster_illumination_owner_relation",
+          "property": "lighting.configuration.source_ownership",
+          "mode": "preservation",
+          "value": {
+            "type": "frozen_property_reference/v1",
+            "value": "same"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "rejects cyan night grade, black night with warm lamps, daylight blue filter",
+          "dimension": "concept",
+          "target": "actual_cluster_selection_constraints",
+          "property": "selection.excluded_lighting_surrogates",
+          "mode": "context",
+          "value": {
+            "type": "selection.excluded_lighting_surrogates/v1",
+            "value": "cyan_night_grade_OR_black_night_warm_lamps_OR_daylight_blue_filter_do_not_satisfy_cue"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "exposure": "actual recorded tonal balance/retained information, exact canonical EN/KO anchors",
+        "image_detail": "actual detail in both bounded named image regions; no resolution or sharper focus claim",
+        "light_intensity": "no incident illumination value; old slot provenance cannot make exposure intensity",
+        "light_color": "source cluster color context not free-standing exact Kelvin/receiver color fact",
+        "lighting": "source-owned conditional setup guard, no complete independent source placement from cluster label",
+        "time_of_day": "bluehour cluster requires actual declared context; no exact clock time inferred"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actual image, sky region, interior/practical region and independently established source-owned lighting relation. Recorded info selection E cannot become existing-image P merely because wording says preserving.",
+        "Negative surrogate exclusions must be consumed as actual selection constraints; C draft does not make them ignorable. Source-owned PR requires independent actual relation, exact native contract pending."
+      ],
+      "pending": [
+        "Lighting-only source effects miss camera tonal footprint; no measured dynamicrange/stops, lamppower, HDRprocessing or exact time.",
+        "requires_any_tags blue_hour_city_practical and optional exposure/direct0.72 unrestricted ownbinding preserved; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "exposure balance preserving both sky and practical detail; part of the blue hour city practical lighting cluster; remains source-owned and rejects cyan night grade, black night with warm lamps, daylight blue filter",
+          "literal_fact_draft_indices": [
+            2,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "exposure balance preserving both sky and practical detail",
+          "literal_fact_draft_indices": [
+            0
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "하늘과 실내등이 모두 디테일을 갖는 노출",
+          "literal_fact_draft_indices": [
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6763,
+      "candidate_id": "cand_1e6e86671c925ace84a3c15ab8eae0d0",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "metamorphosis",
+            "transformation",
+            "mid_transition"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "contiguous metamorphosis gradient",
+            "연속 변신 구조 구배"
+          ],
+          "embedding_text": "transformation detail: surface texture joints silhouette and material progressively connect recognizable source and target regions through one intermediate bridge on the same subject",
+          "en": "an unbroken topology and material gradient connecting source, intermediate and target states",
+          "keywords": [
+            "source texture",
+            "intermediate bridge",
+            "target anatomy",
+            "one subject"
+          ],
+          "ko": "출발·중간·도착 상태의 표면과 구조가 한 몸에서 끊김 없이 이어지는",
+          "tags": [
+            "imaginal",
+            "metamorphosis",
+            "physics",
+            "transition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "concept"
+          ],
+          "properties": []
+        },
+        "id": "cand_1e6e86671c925ace84a3c15ab8eae0d0",
+        "provenance": [
+          {
+            "sha256": "b482956e9f72cd729341bedc10b47596c9ed44fc277ee89ddcb0a751764b9407",
+            "source": "slot:surreal_physics_detail:metamorphosis_contiguous_topology_gradient"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "metamorphosis",
+            "transformation",
+            "mid_transition"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "contiguous metamorphosis gradient",
+            "연속 변신 구조 구배"
+          ],
+          "embedding_text": "transformation detail: surface texture joints silhouette and material progressively connect recognizable source and target regions through one intermediate bridge on the same subject",
+          "en": "an unbroken topology and material gradient connecting source, intermediate and target states",
+          "keywords": [
+            "source texture",
+            "intermediate bridge",
+            "target anatomy",
+            "one subject"
+          ],
+          "ko": "출발·중간·도착 상태의 표면과 구조가 한 몸에서 끊김 없이 이어지는",
+          "tags": [
+            "imaginal",
+            "metamorphosis",
+            "physics",
+            "transition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "concept"
+          ],
+          "properties": []
+        },
+        "id": "cand_1e6e86671c925ace84a3c15ab8eae0d0",
+        "provenance": [
+          {
+            "sha256": "b482956e9f72cd729341bedc10b47596c9ed44fc277ee89ddcb0a751764b9407",
+            "source": "slot:surreal_physics_detail:metamorphosis_contiguous_topology_gradient"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 14,
+        "json_pointer": "/decisions/13",
+        "row_sha256": "08ffc0f0e996ddf2cb4ec3e0ad66fe50d2f6fb8631aaf1dbf22a799b9188ac36"
+      },
+      "source_bindings": {
+        "bind_1e6e86671c925ace84a3c15ab8eae0d0": {
+          "candidate_id": "cand_1e6e86671c925ace84a3c15ab8eae0d0",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1e6e86671c925ace84a3c15ab8eae0d0",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "surreal_physics_detail",
+          "weight": 0.44
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "One transforming subject has continuous source/intermediate/target regions joined by one bridge, with connected surface texture/joints/silhouette/material gradient; source does not select species or a specific impossible mechanism.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "an unbroken topology and material gradient connecting source, intermediate and target states",
+          "dimension": "body_geometry",
+          "target": "actual_transforming_subject_regions",
+          "property": "transformation.contiguous_three_stage_regions",
+          "mode": "effect",
+          "value": {
+            "type": "transformation.contiguous_three_stage_regions/v1",
+            "value": "source_AND_intermediate_AND_target_contiguous_on_one_subject"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "surface texture joints silhouette and material progressively connect recognizable source and target regions through one intermediate bridge on the same subject",
+          "dimension": "body_geometry",
+          "target": "actual_transforming_subject_regions",
+          "property": "topology.transformation_bridge",
+          "mode": "effect",
+          "value": {
+            "type": "topology.transformation_bridge/v1",
+            "value": "one_same_subject_intermediate_bridge_connects_recognizable_source_AND_target_regions"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "surface texture joints silhouette and material progressively connect",
+          "dimension": "material",
+          "target": "actual_transition_surface",
+          "property": "surface.texture.progressive_transition",
+          "mode": "effect",
+          "value": {
+            "type": "surface.texture.progressive_transition/v1",
+            "value": "progressive_connected_surface_texture_along_same_transition"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "material gradient",
+          "dimension": "material",
+          "target": "actual_transition_material_regions",
+          "property": "material.transition.gradient",
+          "mode": "effect",
+          "value": {
+            "type": "material.transition.gradient/v1",
+            "value": "continuous_material_gradient_without_selected_exact_materials"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "transformation_stage": "explicit source/intermediate/target simultaneous transition structure",
+        "anatomical_connection": "possible only if actual selected carrier is explicitly anatomical biological/represented body; same subject/joints alone cannot establish anatomy category",
+        "texture": "explicit surface texture progressivity owned transition surface",
+        "surface_material": "material gradient requires actual declared source/target material values, no exact chemistry inferred",
+        "body_form": "silhouette mentioned without independent local anatomical contour/volume values",
+        "object_structure": "generic joint topology not automatically constructed-object structure either",
+        "surreal_physics_detail": "continuity alone is coherence constraint, no selected impossible law consequence"
+      },
+      "owner_and_receiver_intents": [
+        "Actual one subject, source/target owned regions and intermediate bridge must be independently established without adding before/after duplicate subjects. Existing anatomy category/parts not inferred from actor target label.",
+        "Body versus nonanatomical matter/representation ambiguity remains pending: do not automatically certify historical anatomical_connection on generic same subject/joints wording; if source intended anatomy, exact source/application clarification needed.",
+        "Current gradient/connection remains E, not incoming already-transforming P/no-op; no arbitrary biological main-subject restriction."
+      ],
+      "pending": [
+        "Original concept-only footprint misses actual topology/material/texture. No new species, mechanism, elapsed sequence, dismemberment or source/target identities.",
+        "requires_primary_any_tags metamorphosis/transformation/mid_transition, optional surreal_physics_detail/direct0.44 unrestricted ownbinding retained despite rolefit boundary. Empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "transformation detail: surface texture joints silhouette and material progressively connect recognizable source and target regions through one intermediate bridge on the same subject",
+          "literal_fact_draft_indices": [
+            1,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "an unbroken topology and material gradient connecting source, intermediate and target states",
+          "literal_fact_draft_indices": [
+            0,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "출발·중간·도착 상태의 표면과 구조가 한 몸에서 끊김 없이 이어지는",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6764,
+      "candidate_id": "cand_2e8f151caba1532f8fc2e1ad709feeda",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "irregular lighter ribbon hair placement",
+            "selected balayage ribbon pattern",
+            "불규칙한 밝은 리본 헤어 배색"
+          ],
+          "embedding_text": "irregular lighter ribbons follow the selected hair lengths through soft root transitions and varied mid-length and end placement; base-colored gaps remain visible beside the same ribbons",
+          "en": "irregular lighter hair ribbons with soft root transitions and base-colored gaps",
+          "keywords": [
+            "irregular lighter hair ribbons",
+            "soft root transition",
+            "varied mid-length and end placement",
+            "visible base color between ribbons",
+            "nonuniform ribbon widths"
+          ],
+          "ko": "불규칙한 밝은 리본 헤어 배색",
+          "tags": [
+            "human",
+            "hair",
+            "color_hair",
+            "highlight",
+            "fashion"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e8f151caba1532f8fc2e1ad709feeda",
+        "provenance": [
+          {
+            "sha256": "d759f026f1ad5e94bb2ed2afb1072306175ad8f9aa3716dde5404271146851f0",
+            "source": "slot:hair_color:balayage_ribbon_color_placement"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "irregular lighter ribbon hair placement",
+            "selected balayage ribbon pattern",
+            "불규칙한 밝은 리본 헤어 배색"
+          ],
+          "embedding_text": "irregular lighter ribbons follow the selected hair lengths through soft root transitions and varied mid-length and end placement; base-colored gaps remain visible beside the same ribbons",
+          "en": "irregular lighter hair ribbons with soft root transitions and base-colored gaps",
+          "keywords": [
+            "irregular lighter hair ribbons",
+            "soft root transition",
+            "varied mid-length and end placement",
+            "visible base color between ribbons",
+            "nonuniform ribbon widths"
+          ],
+          "ko": "불규칙한 밝은 리본 헤어 배색",
+          "tags": [
+            "human",
+            "hair",
+            "color_hair",
+            "highlight",
+            "fashion"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e8f151caba1532f8fc2e1ad709feeda",
+        "provenance": [
+          {
+            "sha256": "d759f026f1ad5e94bb2ed2afb1072306175ad8f9aa3716dde5404271146851f0",
+            "source": "slot:hair_color:balayage_ribbon_color_placement"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 15,
+        "json_pointer": "/decisions/14",
+        "row_sha256": "a7992ea2255abce7b6a35842904aa714a01c563b8dd191dc44af4cf2d0470ce2"
+      },
+      "source_bindings": {
+        "bind_2e8f151caba1532f8fc2e1ad709feeda": {
+          "candidate_id": "cand_2e8f151caba1532f8fc2e1ad709feeda",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_2e8f151caba1532f8fc2e1ad709feeda",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "hair_color",
+          "weight": 0.58
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Irregular lighter color ribbons run along selected hair lengths with soft root color transitions, varied mid/end placement and base-colored gaps; colored strands are not tied ribbons or a selected hairstyle.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "irregular lighter hair ribbons with soft root transitions and base-colored gaps",
+          "dimension": "appearance",
+          "target": "actual_hair_region",
+          "property": "hair.color.irregular_ribbon_placement",
+          "mode": "effect",
+          "value": {
+            "type": "hair.color.irregular_ribbon_placement/v1",
+            "value": "irregular_lighter_color_ribbons_with_soft_root_color_transition_AND_base_color_gaps"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "varied mid-length and end placement",
+          "dimension": "appearance",
+          "target": "actual_hair_midlength_and_end_regions",
+          "property": "hair.color.mid_end_placement",
+          "mode": "effect",
+          "value": {
+            "type": "hair.color.mid_end_placement/v1",
+            "value": "varied_midlength_AND_end_color_placement"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "base-colored gaps remain visible beside the same ribbons",
+          "dimension": "appearance",
+          "target": "actual_hair_region",
+          "property": "hair.base_color.visible_gaps",
+          "mode": "effect",
+          "value": {
+            "type": "hair.base_color.visible_gaps/v1",
+            "value": "base_colored_gaps_visible_beside_same_lighter_ribbons"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "hair_color": "bounded relative lighter/base color placement on actual selected hair",
+        "hair_style": "lengths/root/mid/end are color-region landmarks; no new hair shape/length/strand topology",
+        "wearable_accessory": "ribbon metaphor is not tied textile accessory",
+        "surface_pattern": "hair color bands retain specialized hair owner, not nonanatomical surface motif",
+        "light_color": "not illumination color; no reflected-light surrogate",
+        "surface_material": "no bleaching/dye chemistry or natural pigment inference"
+      },
+      "owner_and_receiver_intents": [
+        "Actual human source restriction remains; independently bind existing owned selected hair region and its color-placement subregions. Human category alone does not prove hair/scalp/follicles.",
+        "Visible base gaps are selected color arrangement E rather than preservation sentinel automatically; no old base hue value inferred or new strand identity."
+      ],
+      "pending": [
+        "No exact hue, salon process, identity, degree of lightening, haircut, texture or follicle/root creation. Keyword nonuniformwidth is not used as independent canonical primary fact.",
+        "for_any human plus optional hair_color/direct0.58 human and product/jewelry/food/wildlife denials preserved; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "irregular lighter ribbons follow the selected hair lengths through soft root transitions and varied mid-length and end placement; base-colored gaps remain visible beside the same ribbons",
+          "literal_fact_draft_indices": [
+            1,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "irregular lighter hair ribbons with soft root transitions and base-colored gaps",
+          "literal_fact_draft_indices": [
+            0
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "불규칙한 밝은 리본 헤어 배색",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    }
+  ],
+  "complete_native_proof_count": 0,
+  "operating_native_qualified_count": 0,
+  "source_unit_inventory_only_not_full_semantic_disposition": true,
+  "validation_generation": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb",
+  "actual_semantic_module": {
+    "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/scripts/photo_semantic_evidence.py",
+    "sha256": "6833e00c03ee4aa1222ea1a9e7c5304d8a98d62ad1d3d0e3ff6a3d666bb313e9"
+  },
+  "limitations": "All five whole source and full compiled5B rows directly read. Literal facts/roles are manual pending drafts; field enumeration/hash/quote checks are not semantic classification, source correction approval, complete requires/receivers or native qualification. Prepared snapshot and earlier frozen files unchanged."
+}

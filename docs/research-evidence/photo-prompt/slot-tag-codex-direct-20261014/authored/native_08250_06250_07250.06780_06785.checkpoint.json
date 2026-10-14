@@ -1,0 +1,1324 @@
+{
+  "schema": "photo-native-manual-bulk-checkpoint/v1",
+  "task_name": "/root/review_08250_09250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "prepared_total": 1000,
+  "read_range": [
+    6780,
+    6785
+  ],
+  "actual_direct_read_count": 5,
+  "records": [
+    {
+      "ordinal": 6780,
+      "candidate_id": "cand_e7fcb8e05ea058f797c3e410d882aae0",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "adult"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "mid-turn returned gaze",
+            "unfinished turnaround gaze",
+            "회전 중 되돌아보는 시선"
+          ],
+          "embedding_text": "the torso remains between start and destination while the irises return toward the same target, preserving a visible unfinished turn rather than a settled over-the-shoulder pose or implied walking duration",
+          "en": "returned gaze toward the same target during an unfinished partial turn",
+          "facets": {
+            "safety_tier": [
+              "general"
+            ]
+          },
+          "keywords": [
+            "partial turn",
+            "returned irises",
+            "unfinished destination",
+            "same target"
+          ],
+          "ko": "몸이 아직 회전 중인 상태에서 같은 상대에게 되돌아오는 시선",
+          "tags": [
+            "human",
+            "gaze",
+            "turn",
+            "transition",
+            "relational",
+            "narrative_safe"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_e7fcb8e05ea058f797c3e410d882aae0",
+        "provenance": [
+          {
+            "sha256": "f250124caaf18937677e20244a6a459d3fb3cefd9e8dddf77ab4d3e1506dc2e3",
+            "source": "slot:gaze_engagement:returned_gaze_mid_partial_turn"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "adult"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "mid-turn returned gaze",
+            "unfinished turnaround gaze",
+            "회전 중 되돌아보는 시선"
+          ],
+          "embedding_text": "the torso remains between start and destination while the irises return toward the same target, preserving a visible unfinished turn rather than a settled over-the-shoulder pose or implied walking duration",
+          "en": "returned gaze toward the same target during an unfinished partial turn",
+          "facets": {
+            "safety_tier": [
+              "general"
+            ]
+          },
+          "keywords": [
+            "partial turn",
+            "returned irises",
+            "unfinished destination",
+            "same target"
+          ],
+          "ko": "몸이 아직 회전 중인 상태에서 같은 상대에게 되돌아오는 시선",
+          "tags": [
+            "human",
+            "gaze",
+            "turn",
+            "transition",
+            "relational",
+            "narrative_safe"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_e7fcb8e05ea058f797c3e410d882aae0",
+        "provenance": [
+          {
+            "sha256": "f250124caaf18937677e20244a6a459d3fb3cefd9e8dddf77ab4d3e1506dc2e3",
+            "source": "slot:gaze_engagement:returned_gaze_mid_partial_turn"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 31,
+        "json_pointer": "/decisions/30",
+        "row_sha256": "e738992d76f138b134cd04a97367f1736b14cb7000203e8ce375029de22ce0fa"
+      },
+      "source_bindings": {
+        "bind_e7fcb8e05ea058f797c3e410d882aae0": {
+          "candidate_id": "cand_e7fcb8e05ea058f797c3e410d882aae0",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_e7fcb8e05ea058f797c3e410d882aae0",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "gaze_engagement",
+          "weight": 0.64
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Irises return toward the same independently grounded target while torso stays visibly between turn start and destination; unfinished turn/gaze are distinct properties, not a settled shoulder pose.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "returned gaze toward the same target",
+          "dimension": "expression",
+          "target": "actual_gaze_carrier",
+          "property": "gaze.target.returned_same_target",
+          "mode": "effect",
+          "value": {
+            "type": "gaze.target.returned_same_target/v1",
+            "value": "gaze_returns_toward_same_declared_target"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "the torso remains between start and destination",
+          "dimension": "pose",
+          "target": "actual_owned_torso",
+          "property": "body.rotation.partial_turn",
+          "mode": "effect",
+          "value": {
+            "type": "body.rotation.partial_turn/v1",
+            "value": "torso_at_unfinished_intermediate_turn_orientation"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "visible unfinished turn",
+          "dimension": "action",
+          "target": "actual_turning_body",
+          "property": "body.motion.unfinished_turn",
+          "mode": "effect",
+          "value": {
+            "type": "body.motion.unfinished_turn/v1",
+            "value": "ongoing_unfinished_turn_not_settled_pose"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "during an unfinished partial turn",
+          "dimension": "timing",
+          "target": "actual_turn_event",
+          "property": "narrative.phase.partial_turn",
+          "mode": "effect",
+          "value": {
+            "type": "narrative.phase.partial_turn/v1",
+            "value": "selected_unfinished_turn_instant"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "irises return toward the same target",
+          "dimension": "subject",
+          "target": "actual_owned_eye_regions",
+          "property": "anatomy.eyes.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "anatomy.eyes.presence/v1",
+            "value": "present"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "gaze_target": "actual same target gaze direction, target and gaze-bearing scope independently bound",
+        "gaze_engagement": "returning direction alone no reciprocal eyecontact/cameraawareness relation",
+        "body_orientation": "torso intermediate rotation distinct from eye direction",
+        "physical_motion": "explicit unfinished torso turn actual motion",
+        "narrative_phase": "during unfinishedturn, no walkingduration or sequenceobserved",
+        "eye_detail": "irises named as gaze carriers, no independent iriscolor/structure effect",
+        "body_pose": "no independent fullbody support/stance pose",
+        "age_presentation": "intrinsic for_any adult condition is not positive age appearance scalar witness"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actual body/torso, independently existing own eye/gaze scope and same actual target. No human category→eyes/torso inheritance or automatic main/person/camera target.",
+        "Same target must be independently identified; EN generic target and KO 상대 do not justify inventing new counterpart. Targetcategory/owner/application exactscope pending.",
+        "Remaining between endpoints selects intermediate state E, not preservation sentinel for arbitrary old pose."
+      ],
+      "pending": [
+        "Expression-only effects miss pose/action/timing. No completed turn, settled over-shoulder, flirtation, intent, exactangle or cameraengagement.",
+        "for_any human/adult exact sourcecondition plus optional gaze_engagement/direct0.64 human/product/jewelry/food/wildlife denials retained; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "the torso remains between start and destination while the irises return toward the same target, preserving a visible unfinished turn rather than a settled over-the-shoulder pose or implied walking duration",
+          "literal_fact_draft_indices": [
+            1,
+            2,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "returned gaze toward the same target during an unfinished partial turn",
+          "literal_fact_draft_indices": [
+            0,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "몸이 아직 회전 중인 상태에서 같은 상대에게 되돌아오는 시선",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6781,
+      "candidate_id": "cand_76a589f8b39a5d6faa41aea76cf83f87",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "clinical"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "EMT transport-care uniform",
+            "응급구조사 이송 근무복"
+          ],
+          "embedding_text": "adult emergency medical technician in coherent high-visibility clinical field workwear with gloves radio medical pack and transport-equipment interfaces, distinct from generic nurse firefighter or ambulance fashion",
+          "en": "a high-visibility emergency-medical transport uniform integrated with gloves radio and medical pack",
+          "keywords": [
+            "high visibility clinical workwear",
+            "gloves",
+            "radio",
+            "medical pack"
+          ],
+          "ko": "고시인성 상의·바지·장갑·무전·의료가방이 연결된 응급의료 이송 근무복",
+          "tags": [
+            "human",
+            "professional",
+            "emt",
+            "clinical",
+            "field",
+            "uniform",
+            "transport"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_76a589f8b39a5d6faa41aea76cf83f87",
+        "provenance": [
+          {
+            "sha256": "eb79b5ad6df1e77083eecefb4478c6a6af7fa79a02fa22a59690654f9825392f",
+            "source": "slot:costume_style:emt_high_visibility_transport_uniform"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "clinical"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "EMT transport-care uniform",
+            "응급구조사 이송 근무복"
+          ],
+          "embedding_text": "adult emergency medical technician in coherent high-visibility clinical field workwear with gloves radio medical pack and transport-equipment interfaces, distinct from generic nurse firefighter or ambulance fashion",
+          "en": "a high-visibility emergency-medical transport uniform integrated with gloves radio and medical pack",
+          "keywords": [
+            "high visibility clinical workwear",
+            "gloves",
+            "radio",
+            "medical pack"
+          ],
+          "ko": "고시인성 상의·바지·장갑·무전·의료가방이 연결된 응급의료 이송 근무복",
+          "tags": [
+            "human",
+            "professional",
+            "emt",
+            "clinical",
+            "field",
+            "uniform",
+            "transport"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_76a589f8b39a5d6faa41aea76cf83f87",
+        "provenance": [
+          {
+            "sha256": "eb79b5ad6df1e77083eecefb4478c6a6af7fa79a02fa22a59690654f9825392f",
+            "source": "slot:costume_style:emt_high_visibility_transport_uniform"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 32,
+        "json_pointer": "/decisions/31",
+        "row_sha256": "fee158c0bd5d6d42c551d1c3f931d2f66832c9d7485b8d433a60e7121d23b1a4"
+      },
+      "source_bindings": {
+        "bind_76a589f8b39a5d6faa41aea76cf83f87": {
+          "candidate_id": "cand_76a589f8b39a5d6faa41aea76cf83f87",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_76a589f8b39a5d6faa41aea76cf83f87",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "attire_context",
+          "weight": 0.56
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Adult emergency-medical field workwear combines high-visibility top/trousers/gloves with radio, medical pack and transport-equipment interfaces; no actual credential, medical action or safety performance is proved.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "adult emergency medical technician",
+          "dimension": "age",
+          "target": "actual_declared_wearer",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "a high-visibility emergency-medical transport uniform integrated with gloves radio and medical pack",
+          "dimension": "appearance",
+          "target": "actual_worn_ensemble",
+          "property": "wardrobe.ensemble.emt_transport",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.ensemble.emt_transport/v1",
+            "value": "high_visibility_EMT_transport_uniform_integrated_with_gloves_radio_AND_medical_pack"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/ko",
+          "quote": "고시인성 상의·바지·장갑·무전·의료가방",
+          "dimension": "appearance",
+          "target": "actual_ensemble_components",
+          "property": "wardrobe.ensemble.top_trousers_gloves_equipment",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.ensemble.top_trousers_gloves_equipment/v1",
+            "value": "high_visibility_top_AND_trousers_AND_gloves_AND_radio_AND_medical_pack"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "transport-equipment interfaces",
+          "dimension": "role",
+          "target": "actual_transport_equipment_interfaces",
+          "property": "props.role.transport_interface",
+          "mode": "effect",
+          "value": {
+            "type": "props.role.transport_interface/v1",
+            "value": "declared_transport_equipment_interfaces_in_same_field_workwear_system"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "emergency-medical transport uniform",
+          "dimension": "role",
+          "target": "actual_attire_context",
+          "property": "wardrobe.role.emergency_medical_transport",
+          "mode": "context",
+          "value": {
+            "type": "wardrobe.role.emergency_medical_transport/v1",
+            "value": "declared_EMT_transport_uniform_context_not_proven_credentials"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "wardrobe_style": "actual coherent clinical field ensemble, not generic nurse/firefighter/ambulancefashion",
+        "attire_context": "explicit emergency-medical transport role/context",
+        "prop": "radio/medicalpack/transportinterfaces actual functional object roles",
+        "wearable_accessory": "gloves integration may support actual worn item only with exact wearer/attachment; radio/pack integration does not unconditionally prove each visiblyworn",
+        "participant_role": "authorial EMT context not profession inferred from appearance or reallicensedcredential",
+        "age_presentation": "adult P exact embedding, not adultallowed permission or agechangingE",
+        "action": "no actual medicalcare, transportmovement or currentcommunication"
+      },
+      "owner_and_receiver_intents": [
+        "Actual adult wearer, garmentpieces/gloves/radio/pack and transportinterface ownership independently bind. Source human/clinical guard remains; no new patient, ambulance or stretcher from uniformpurpose.",
+        "Integrated equipment may be worn/held/attached according actual source application; no arbitrary wornlocation/fakeattachment or whole all-accessory role from one generic quote."
+      ],
+      "pending": [
+        "Appearanceonly coarseeffects need actual inventory/attachment/role scopes. No visibilitycertification, reflective stripe pattern, equipmentbrand, actualemergency/medicalefficacy or occupationtruth.",
+        "for_any human/clinical and optional attire_context/contextual0.56 human with documentary/craft/wildlife/product/jewelry/food denials preserved; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "adult emergency medical technician in coherent high-visibility clinical field workwear with gloves radio medical pack and transport-equipment interfaces, distinct from generic nurse firefighter or ambulance fashion",
+          "literal_fact_draft_indices": [
+            0,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a high-visibility emergency-medical transport uniform integrated with gloves radio and medical pack",
+          "literal_fact_draft_indices": [
+            1,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "고시인성 상의·바지·장갑·무전·의료가방이 연결된 응급의료 이송 근무복",
+          "literal_fact_draft_indices": [
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6782,
+      "candidate_id": "cand_7d5b31cc36215f9db4d18901159c6916",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "character_signature_object_scene_atomic_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "시그니처 소품과 캐릭터-물건 관계의 행동 결과를 보여 주는 비고유 소품",
+            "a compact weather instrument with contact patina and repairs from different times"
+          ],
+          "embedding_text": "a compact weather instrument with contact patina and repairs from different times",
+          "en": "a compact weather instrument with contact patina and repairs from different times",
+          "facets": {},
+          "ko": "시그니처 소품과 캐릭터-물건 관계의 행동 결과를 보여 주는 비고유 소품",
+          "tags": [
+            "character_scene_grammar",
+            "signature_prop_character_bond",
+            "object_daily_care",
+            "character_signature_object_scene_atomic_scene",
+            "original_character"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_7d5b31cc36215f9db4d18901159c6916",
+        "provenance": [
+          {
+            "sha256": "e54684632804f78e18dcc2df5c1e796db63592848e24e4760eac000938510376",
+            "source": "slot:prop:character_signature_object_scene_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "character_signature_object_scene_atomic_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "서로 다른 시기의 접촉 파티나와 수선이 남은 소형 기상 장비",
+            "a compact weather instrument with contact patina and repairs from different times"
+          ],
+          "embedding_text": "a compact weather instrument with contact patina and repairs from different times",
+          "en": "a compact weather instrument with contact patina and repairs from different times",
+          "facets": {},
+          "ko": "서로 다른 시기의 접촉 파티나와 수선이 남은 소형 기상 장비",
+          "tags": [
+            "character_scene_grammar",
+            "signature_prop_character_bond",
+            "object_daily_care",
+            "character_signature_object_scene_atomic_scene",
+            "original_character"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_7d5b31cc36215f9db4d18901159c6916",
+        "provenance": [
+          {
+            "sha256": "e54684632804f78e18dcc2df5c1e796db63592848e24e4760eac000938510376",
+            "source": "slot:prop:character_signature_object_scene_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 33,
+        "json_pointer": "/decisions/32",
+        "row_sha256": "f90f0d3902a0232396bd2c5ec73cfcc39e682f0188a7a908b6f2467c572ac6d1"
+      },
+      "source_bindings": {
+        "bind_7d5b31cc36215f9db4d18901159c6916": {
+          "candidate_id": "cand_7d5b31cc36215f9db4d18901159c6916",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_7d5b31cc36215f9db4d18901159c6916",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 1
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "A compact weather instrument has contact patina and visible repairs from different times; old generic bond/action boilerplate was exact-corrected in KO and alias and supplies no private attachment claim.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a compact weather instrument",
+          "dimension": "role",
+          "target": "actual_weather_instrument",
+          "property": "props.role.weather_instrument",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.role.weather_instrument/v1",
+            "value": "weather_instrument_existing_carrier_application_proposal"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "compact weather instrument",
+          "dimension": "appearance",
+          "target": "actual_weather_instrument",
+          "property": "object.geometry.compact",
+          "mode": "effect",
+          "value": {
+            "type": "object.geometry.compact/v1",
+            "value": "compact_instrument_without_absolute_size_or_comparison_ratio"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "contact patina",
+          "dimension": "material",
+          "target": "actual_instrument_contact_surfaces",
+          "property": "surface.event_trace.contact_patina",
+          "mode": "effect",
+          "value": {
+            "type": "surface.event_trace.contact_patina/v1",
+            "value": "visible_contact_use_patina_without_selected_chemistry"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "repairs from different times",
+          "dimension": "role",
+          "target": "actual_instrument",
+          "property": "props.state.repair_traces",
+          "mode": "effect",
+          "value": {
+            "type": "props.state.repair_traces/v1",
+            "value": "visible_repairs_associated_with_different_declared_times"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "repairs from different times",
+          "dimension": "timing",
+          "target": "actual_instrument_repair_history",
+          "property": "narrative.context.prior_repairs",
+          "mode": "prerequisite",
+          "value": {
+            "type": "narrative.context.prior_repairs/v1",
+            "value": "declared_prior_repairs_at_different_times_without_exact_dates"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "prop": "actual weatherinstrument role, not a created environmentweather",
+        "prop_state": "visible current repaired condition and compactartifact scope",
+        "aftermath_trace": "explicit contactpatina/repair traces with declared prior events, no arbitrary wear→eventdiagnosis",
+        "object_structure": "compact actual objectgeometry, no specific internalmechanism",
+        "surface_material": "no exact material/chemicalpatina identity",
+        "character_intent": "no attachment/personality/private ownerbond from oldgenericlabel",
+        "weather": "instrument noun no measured weatherstate or accuracy",
+        "procedure_step": "repair traces not current repairactivity"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actual instrument and owned contact/repair surfaces, independently declared repairhistory if traceinterpretation requires it. Existinginstrument P is proposal only; no restrictionapproved to erase inclusionE.",
+        "Differenttimes is qualitative history; retain without exactchronology, actualowneridentity or medical/safety condition inference. Current patina/repair selectedstate E remains."
+      ],
+      "pending": [
+        "Emptyeffects cannot erase compactform/trace/state. Full exact5B corrected KO/alias after reread; no further source edit.",
+        "character_signature_object_scene_atomic_scene primary plus optional prop/direct1 unrestricted ownbinding preserved; empty refs/baseRID."
+      ],
+      "correction_proposal": {
+        "existing_5B_pointers": [
+          "/content/ko",
+          "/content/aliases/0"
+        ],
+        "whole_exact_after_directly_reread": true,
+        "further_worker_edit": false
+      },
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "a compact weather instrument with contact patina and repairs from different times",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a compact weather instrument with contact patina and repairs from different times",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "서로 다른 시기의 접촉 파티나와 수선이 남은 소형 기상 장비",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6783,
+      "candidate_id": "cand_91889da2939f51edae1efbdcb3435a35",
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "complete convective storm cell",
+            "적란운 폭풍 셀"
+          ],
+          "embedding_text": "environmental subject: the full convective cloud from vertically developed tower and fibrous anvil through dark base and rain shaft to ground outflow effects",
+          "en": "a complete cumulonimbus storm cell with vertical tower, fibrous anvil, precipitation shaft and outflow",
+          "facets": {
+            "subject_kind": [
+              "environment"
+            ]
+          },
+          "keywords": [
+            "towering convection",
+            "anvil",
+            "dark base",
+            "rain shaft"
+          ],
+          "kind": [
+            "environment"
+          ],
+          "ko": "수직 대류탑과 모루·강수축·저층 유출이 연결된 적란운 셀",
+          "primary_context_alternatives": [
+            [
+              "subject:cumulonimbus"
+            ],
+            [
+              "subject:storm",
+              "subject:cell"
+            ]
+          ],
+          "tags": [
+            "natural_environment",
+            "cumulonimbus",
+            "storm_structure"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_91889da2939f51edae1efbdcb3435a35",
+        "provenance": [
+          {
+            "sha256": "e0c91efb83fb885c84b752a74ff22404c0ea5ab8d902ae58eef9bbc22f04a1b0",
+            "source": "slot:subject:cumulonimbus_storm_cell_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "complete convective storm cell",
+            "적란운 폭풍 셀"
+          ],
+          "embedding_text": "environmental subject: the full convective cloud from vertically developed tower and fibrous anvil through dark base and rain shaft to ground outflow effects",
+          "en": "a complete cumulonimbus storm cell with vertical tower, fibrous anvil, precipitation shaft and outflow",
+          "facets": {
+            "subject_kind": [
+              "environment"
+            ]
+          },
+          "keywords": [
+            "towering convection",
+            "anvil",
+            "dark base",
+            "rain shaft"
+          ],
+          "kind": [
+            "environment"
+          ],
+          "ko": "수직 대류탑과 모루·강수축·저층 유출이 연결된 적란운 셀",
+          "primary_context_alternatives": [
+            [
+              "subject:cumulonimbus"
+            ],
+            [
+              "subject:storm",
+              "subject:cell"
+            ]
+          ],
+          "tags": [
+            "natural_environment",
+            "cumulonimbus",
+            "storm_structure"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_91889da2939f51edae1efbdcb3435a35",
+        "provenance": [
+          {
+            "sha256": "e0c91efb83fb885c84b752a74ff22404c0ea5ab8d902ae58eef9bbc22f04a1b0",
+            "source": "slot:subject:cumulonimbus_storm_cell_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 34,
+        "json_pointer": "/decisions/33",
+        "row_sha256": "86832d19c23fa8b116f3e63e9f5ecd2a4dc272852456edf32973a14c2449fcad"
+      },
+      "source_bindings": {
+        "bind_91889da2939f51edae1efbdcb3435a35": {
+          "candidate_id": "cand_91889da2939f51edae1efbdcb3435a35",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_91889da2939f51edae1efbdcb3435a35",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "subject",
+          "weight": 0.92
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "One environmental cumulonimbus cell spans vertical tower/fibrous anvil/dark base/precipitation shaft through ground outflow; a rain shaft alone does not establish individually resolved airborne droplets.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a complete cumulonimbus storm cell",
+          "dimension": "subject",
+          "target": "actual_storm_cell",
+          "property": "subject.environment.cumulonimbus_cell",
+          "mode": "effect",
+          "value": {
+            "type": "subject.environment.cumulonimbus_cell/v1",
+            "value": "one_declared_complete_cumulonimbus_cell_not_all_visible_clouds"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "vertical tower, fibrous anvil, precipitation shaft and outflow",
+          "dimension": "atmosphere",
+          "target": "actual_storm_cell",
+          "property": "weather.convective_storm_structure",
+          "mode": "effect",
+          "value": {
+            "type": "weather.convective_storm_structure/v1",
+            "value": "same_cell_vertical_tower_AND_fibrous_anvil_AND_precipitation_shaft_AND_outflow"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "dark base and rain shaft to ground outflow effects",
+          "dimension": "atmosphere",
+          "target": "actual_storm_precipitation_and_base_regions",
+          "property": "weather.rain_shaft_ground_outflow",
+          "mode": "effect",
+          "value": {
+            "type": "weather.rain_shaft_ground_outflow/v1",
+            "value": "dark_base_rain_shaft_AND_ground_outflow_effects_in_same_cell"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "outflow",
+          "dimension": "action",
+          "target": "actual_storm_outflow",
+          "property": "motion.convective_outflow",
+          "mode": "effect",
+          "value": {
+            "type": "motion.convective_outflow/v1",
+            "value": "declared_outflow_without_measured_speed_or_hazard"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "the full convective cloud from vertically developed tower and fibrous anvil",
+          "dimension": "framing",
+          "target": "actual_storm_cell_image",
+          "property": "framing.full_convective_cloud",
+          "mode": "effect",
+          "value": {
+            "type": "framing.full_convective_cloud/v1",
+            "value": "full_connected_cloud_extent_from_tower_AND_anvil_to_ground_outflow"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "subject": "actual environmentalstorm cell primary entity",
+        "weather": "explicit convective cloud/precipitation/outflow configuration",
+        "physical_motion": "actual outflow, not recordedstreak",
+        "subject_framing": "fullcell extent explicit inembedding",
+        "ambient_particle": "historical rainshaft role not automatically valid: full146V5 requires individually distinguishable units, absent from source",
+        "atmospheric_medium": "cloud/rainshaft alone no stated opticalattenuation/contrastfield; do not auto attach",
+        "material_form": "actual tower/anvil cloudmacroform may fit if coherent actual materialbody scope independently grounded; not biologicalbodyform",
+        "body_form": "no anatomy from cloudform metaphor"
+      },
+      "owner_and_receiver_intents": [
+        "Actual same cell, tower/anvil/base/precipitation/outflow owned regions and groundeffects independently bind; no additionalclouds or livingpart inheritance.",
+        "Preserve fullstorm configuration and outflow effect, but individualraindrops/lightning/tornado/hail not added. Exact cloudmaterial/form role/properties pending, no technical slotrename to force fit."
+      ],
+      "pending": [
+        "Subject-only effects miss actual atmosphere/motion/framing. No forecast, numeric rainfall/wind, hazardlevel, atmosphericphysics diagnosis or exactstormcause.",
+        "No intrinsic condition; optional subject/direct0.92 unrestricted ownbinding preserved; source primarycontext alternatives cumulonimbus OR storm+cell remain same scope; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "environmental subject: the full convective cloud from vertically developed tower and fibrous anvil through dark base and rain shaft to ground outflow effects",
+          "literal_fact_draft_indices": [
+            2,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a complete cumulonimbus storm cell with vertical tower, fibrous anvil, precipitation shaft and outflow",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "수직 대류탑과 모루·강수축·저층 유출이 연결된 적란운 셀",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6784,
+      "candidate_id": "cand_9b5e889c98355418a71f02c18eb91117",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "가림의 소유자와 범위",
+            "occlusion owner",
+            "partial occlusion"
+          ],
+          "concept_units": [
+            "the occluder overlaps only the requested image region"
+          ],
+          "embedding_text": "the occluder overlaps only the requested image region | 가림의 소유자와 범위 | occlusion owner | partial occlusion",
+          "en": "the occluder overlaps only the requested image region",
+          "keywords": [
+            "가림의 소유자와 범위",
+            "occlusion owner",
+            "partial occlusion"
+          ],
+          "ko": "가림의 소유자와 범위: 구성요소 2",
+          "relations": [
+            {
+              "id": "pc_px05_component_2_owner",
+              "object": "the requester-supported main portrait and frame",
+              "subject": "occluder and target region",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "portrait",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_9b5e889c98355418a71f02c18eb91117",
+        "provenance": [
+          {
+            "sha256": "a45b7c39cc3404f325b1f16ca8c332fbae64f22b24adc547a9c8797bf9d36cff",
+            "source": "slot:composition:pc_px05_component_2"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "가림의 소유자와 범위",
+            "occlusion owner",
+            "partial occlusion"
+          ],
+          "concept_units": [
+            "the occluder overlaps only the requested image region"
+          ],
+          "embedding_text": "the occluder overlaps only the requested image region | 가림의 소유자와 범위 | occlusion owner | partial occlusion",
+          "en": "the occluder overlaps only the requested image region",
+          "keywords": [
+            "가림의 소유자와 범위",
+            "occlusion owner",
+            "partial occlusion"
+          ],
+          "ko": "가림물은 요청된 영상 영역에만 겹친다",
+          "relations": [
+            {
+              "id": "pc_px05_component_2_owner",
+              "object": "the requester-supported main portrait and frame",
+              "subject": "occluder and target region",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "portrait",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_9b5e889c98355418a71f02c18eb91117",
+        "provenance": [
+          {
+            "sha256": "a45b7c39cc3404f325b1f16ca8c332fbae64f22b24adc547a9c8797bf9d36cff",
+            "source": "slot:composition:pc_px05_component_2"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 35,
+        "json_pointer": "/decisions/34",
+        "row_sha256": "ac17fe8d7289854b572f6e78bd622bc51f69270b55421f22cb2877f66a1d4e2f"
+      },
+      "source_bindings": {
+        "bind_9b5e889c98355418a71f02c18eb91117": {
+          "candidate_id": "cand_9b5e889c98355418a71f02c18eb91117",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_9b5e889c98355418a71f02c18eb91117",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.45
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "The actual occluder overlaps only the requester-selected image region, within source-declared requester-supported main portrait/frame scope; this limits overlap, not hidden anatomy or occluder identity.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "the occluder overlaps only the requested image region",
+          "dimension": "composition",
+          "target": "actual_occluder_target_image_relation",
+          "property": "composition.bounded_overlap",
+          "mode": "effect",
+          "value": {
+            "type": "composition.bounded_overlap/v1",
+            "value": "actual_occluder_overlaps_only_requester_declared_image_region"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "only the requested image region",
+          "dimension": "framing",
+          "target": "actual_requester_selected_image_region",
+          "property": "framing.requested_occlusion_scope",
+          "mode": "effect",
+          "value": {
+            "type": "framing.requested_occlusion_scope/v1",
+            "value": "occlusion_exclusively_within_same_requested_region"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "composition": "actual bounded overlap relation",
+        "subject_framing": "explicit occlusion inclusion/coverage scope, actual requesterregion retained",
+        "contact_point": "occlusion meaning can support relation if actual independent endpoints/owners qualified; image overlap is not physical touch",
+        "prop_placement": "occluder need not be a prop; no arbitrary newforegroundobject",
+        "body_region": "requested image region need not be anatomy; no face/bodypart default",
+        "body_form": "occluded hiddenbodyform unobserved and unrequested",
+        "action": "overlap alone no performed placement/holding action"
+      },
+      "owner_and_receiver_intents": [
+        "Source declared_owner_scope explicitly names requester-supported mainportrait/frame and occluder/targetregion. Bind those actual independently established owners, never newlyinventedoccluder/mainforegound.",
+        "Requestedregion must exist in independentcore with exact bounds/owner; selecting boundedoverlap remains E rather than context/noop. Exact fullregion and relationalowner guard/permission contract pending."
+      ],
+      "pending": [
+        "Composition-only effects need coverage/receiver effects review. No enlarged coveredregion, newprop, hiddenanatomy, touch or deletion of target. Exact5B KO correction reread; other embedding owner/scope fragments align no extra geometricattribute.",
+        "for_any human and optional composition/direct0.45 unrestricted ownbinding preserved; empty refs/baseRID."
+      ],
+      "correction_proposal": {
+        "existing_5B_pointer": "/content/ko",
+        "whole_exact_after_directly_reread": true,
+        "further_worker_edit": false
+      },
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "the occluder overlaps only the requested image region",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "the occluder overlaps only the requested image region | 가림의 소유자와 범위 | occlusion owner | partial occlusion",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "the occluder overlaps only the requested image region",
+          "literal_fact_draft_indices": [
+            0,
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "가림물은 요청된 영상 영역에만 겹친다",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/object",
+          "quote": "the requester-supported main portrait and frame",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/subject",
+          "quote": "occluder and target region",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/type",
+          "quote": "declared_owner_scope",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    }
+  ],
+  "complete_native_proof_count": 0,
+  "operating_native_qualified_count": 0,
+  "source_unit_inventory_only_not_full_semantic_disposition": true,
+  "validation_generation": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb",
+  "actual_semantic_module": {
+    "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/scripts/photo_semantic_evidence.py",
+    "sha256": "6833e00c03ee4aa1222ea1a9e7c5304d8a98d62ad1d3d0e3ff6a3d666bb313e9"
+  },
+  "limitations": "All five whole source and full compiled5B rows directly read. Literal facts/roles are manual pending drafts; field enumeration/hash/quote checks are not semantic classification, source correction approval, complete requires/receivers or native qualification. Prepared snapshot and earlier frozen files unchanged."
+}

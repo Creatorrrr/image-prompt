@@ -1,0 +1,1271 @@
+{
+  "research_catalog": {
+    "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/CATALOG-FINAL-149-V6.json",
+    "canonical_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+    "new_fullspecs_directly_read": [
+      "material_mechanics",
+      "material_thickness",
+      "physical_mass",
+      "body_pose"
+    ],
+    "old_records_not_rebased": true
+  },
+  "schema": "photo-native-manual-bulk-checkpoint/v1",
+  "task_name": "/root/review_08250_09250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "prepared_total": 1000,
+  "read_range": [
+    6945,
+    6950
+  ],
+  "actual_direct_read_count": 5,
+  "records": [
+    {
+      "ordinal": 6945,
+      "candidate_id": "cand_d55b24cdc0945f76a453d32af382f6aa",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "object"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "biaoju convoy departure",
+            "escort bureau guarded cargo",
+            "표국 호송 출발",
+            "표행 호송 장면"
+          ],
+          "embedding_text": "adult armed escorts check sealed cargo boxes and form a protective distribution around a cart or pack transport as it moves from an escort-bureau loading yard onto a visible road; merchant military and adventuring roles remain visually distinct",
+          "en": "departing an escort bureau with guards visibly organized around loaded cargo",
+          "keywords": [
+            "loaded boxes",
+            "cart or pack transport",
+            "guard ring",
+            "bureau gate to road path"
+          ],
+          "ko": "표국 뜰에서 적재 화물을 확인하고 호송대가 길로 출발하는",
+          "tags": [
+            "human",
+            "adult",
+            "wuxia",
+            "jianghu",
+            "biaoju",
+            "escort",
+            "cargo",
+            "departure"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_d55b24cdc0945f76a453d32af382f6aa",
+        "provenance": [
+          {
+            "sha256": "d2864697b4e1145f1e82c33c8d19bd5013deeacd0e027f51a130c85930d127c5",
+            "source": "slot:action:biaoju_guarded_convoy_departure"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "object"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "biaoju convoy departure",
+            "escort bureau guarded cargo",
+            "표국 호송 출발",
+            "표행 호송 장면"
+          ],
+          "embedding_text": "adult armed escorts check sealed cargo boxes and form a protective distribution around a cart or pack transport as it moves from an escort-bureau loading yard onto a visible road; merchant military and adventuring roles remain visually distinct",
+          "en": "departing an escort bureau with guards visibly organized around loaded cargo",
+          "keywords": [
+            "loaded boxes",
+            "cart or pack transport",
+            "guard ring",
+            "bureau gate to road path"
+          ],
+          "ko": "표국 뜰에서 적재 화물을 확인하고 호송대가 길로 출발하는",
+          "tags": [
+            "human",
+            "adult",
+            "wuxia",
+            "jianghu",
+            "biaoju",
+            "escort",
+            "cargo",
+            "departure"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_d55b24cdc0945f76a453d32af382f6aa",
+        "provenance": [
+          {
+            "sha256": "d2864697b4e1145f1e82c33c8d19bd5013deeacd0e027f51a130c85930d127c5",
+            "source": "slot:action:biaoju_guarded_convoy_departure"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 196,
+        "json_pointer": "/decisions/195",
+        "row_sha256": "c34d0de2c138f5ec906df986a027937fc4f94f27d8ac0148c5770916ba00f28e"
+      },
+      "source_bindings": {
+        "bind_d55b24cdc0945f76a453d32af382f6aa": {
+          "candidate_id": "cand_d55b24cdc0945f76a453d32af382f6aa",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_d55b24cdc0945f76a453d32af382f6aa",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.46
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Adult armed escorts check sealed loaded cargo and depart bureau yard toward visible road in protective formation around cart OR pack transport. Armed status, route, motion and role distinction survive beyond genericdeparture.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "adult armed escorts",
+          "dimension": "age",
+          "target": "each_actual_escort",
+          "property": "age.declared",
+          "mode": "effect",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "armed escorts",
+          "dimension": "role",
+          "target": "actual_escorts_armament_state",
+          "property": "participant.role.armed_escort",
+          "mode": "effect",
+          "value": {
+            "type": "participant.role.armed_escort/v1",
+            "value": "armed_escort_with_actual_available_armament_no_invented_weapon_type"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "check sealed cargo boxes",
+          "dimension": "role",
+          "target": "actual_available_cargo_boxes",
+          "property": "prop.state.sealed",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.state.sealed/v1",
+            "value": "independently_available_sealed_cargo_boxes"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "loaded cargo",
+          "dimension": "role",
+          "target": "actual_available_cargo",
+          "property": "prop.state.loaded",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.state.loaded/v1",
+            "value": "already_loaded_cargo_as_departure_input"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "check sealed cargo boxes",
+          "dimension": "action",
+          "target": "actual_escorts_and_cargo_boxes",
+          "property": "action.checks_cargo",
+          "mode": "effect",
+          "value": {
+            "type": "action.checks_cargo/v1",
+            "value": "checks_same_sealed_cargo_boxes"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "form a protective distribution around a cart or pack transport as it moves from an escort-bureau loading yard onto a visible road",
+          "dimension": "action",
+          "target": "actual_escorts_transport_route",
+          "property": "action.interaction.guarded_departure",
+          "mode": "effect",
+          "value": {
+            "type": "action.interaction.guarded_departure/v1",
+            "value": "protective_distribution_around_selected_cart_OR_pack_transport_moving_from_bureau_loading_yard_TO_visible_road"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "merchant military and adventuring roles remain visually distinct",
+          "dimension": "composition",
+          "target": "actual_role_distinction_scope",
+          "property": "composition.distinct_escort_roles",
+          "mode": "effect",
+          "value": {
+            "type": "composition.distinct_escort_roles/v1",
+            "value": "merchant_military_AND_adventuring_role_categories_visually_distinct_without_forcing_all_extra_cast"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "action": "actualcheck/departure/formation",
+        "relational_action": "actualprotectiveescort aroundtransport/cargo",
+        "composition": "visibleprotectivedistribution/role-distinction/route",
+        "age_presentation": "eachescortadult explicit",
+        "participant_role": "armedescort declared no realmilitaryidentity",
+        "prop": "sealedloadedcargo/selectedtransport and actualarmament needindependentowners",
+        "prop_state": "inputsealed/loaded not newsealing/loadingverbs",
+        "physical_motion": "transportmoving explicit",
+        "location": "bureauloadingyard tovisibleroad",
+        "contact_point": "checking/protectivedistribution no compulsorycargo-handcontact"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actualescorts/eachadult/armament/loadedsealedcargo/selectedcartORpack/yard-roadpath and exactroles. No sword/firearm/horse/porternamedfromarmed/pack nouns; no arbitrarymainowner.",
+        "Actualcheck andmotion E retained. Sealed/loaded actioninputs require independentexistingstates/finalretention, no hiddenunsealing/unloading. Role-distinction constraint doesnotforceallmerchant/military/adventurer groups."
+      ],
+      "pending": [
+        "Action-only footprint misses age/armedstatus/route/formation/inputguards. No actualsafearrival/fighting/tacticalinstruction/sourceweaponfabrication or wholetripsequence.",
+        "for_any human/object plus optional action/direct0.46 unrestricted binding retained; emptyclosure/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "adult armed escorts check sealed cargo boxes and form a protective distribution around a cart or pack transport as it moves from an escort-bureau loading yard onto a visible road; merchant military and adventuring roles remain visually distinct",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "departing an escort bureau with guards visibly organized around loaded cargo",
+          "literal_fact_draft_indices": [
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "표국 뜰에서 적재 화물을 확인하고 호송대가 길로 출발하는",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6946,
+      "candidate_id": "cand_f34e920492f653a7885f544c49f03c75",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "relaxed wrist offset",
+            "soft wrist line",
+            "이완된 손목 선"
+          ],
+          "embedding_text": "a relaxed wrist makes a small visible offset from the forearm line while fingers remain naturally separated and the joint stays anatomically continuous",
+          "en": "relaxed wrist offset from the forearm line",
+          "facets": {
+            "safety_tier": [
+              "general"
+            ],
+            "soft_body_role": [
+              "narrative_safe"
+            ]
+          },
+          "keywords": [
+            "wrist offset",
+            "forearm line",
+            "relaxed fingers",
+            "joint continuity"
+          ],
+          "ko": "전완에서 손으로 이어지는 선을 살짝 비껴 놓은 이완된 손목",
+          "paraphrases": [
+            "The hand rests at a soft offset from the forearm line.",
+            "손이 전완의 선에서 부드럽게 비낀 각도로 놓인다."
+          ],
+          "tags": [
+            "human",
+            "hand",
+            "wrist",
+            "pose",
+            "narrative_safe"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "pose"
+          ],
+          "properties": []
+        },
+        "id": "cand_f34e920492f653a7885f544c49f03c75",
+        "provenance": [
+          {
+            "sha256": "77b326725ffa7e060080dc177540f6fd005c1ab26312ef6130b7f964508cbb87",
+            "source": "slot:hand_pose:relaxed_wrist_offset_line"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "relaxed wrist offset",
+            "soft wrist line",
+            "이완된 손목 선"
+          ],
+          "embedding_text": "a relaxed wrist makes a small visible offset from the forearm line while fingers remain naturally separated and the joint stays anatomically continuous",
+          "en": "relaxed wrist offset from the forearm line",
+          "facets": {
+            "safety_tier": [
+              "general"
+            ],
+            "soft_body_role": [
+              "narrative_safe"
+            ]
+          },
+          "keywords": [
+            "wrist offset",
+            "forearm line",
+            "relaxed fingers",
+            "joint continuity"
+          ],
+          "ko": "전완에서 손으로 이어지는 선을 살짝 비껴 놓은 이완된 손목",
+          "paraphrases": [
+            "The hand rests at a soft offset from the forearm line.",
+            "손이 전완의 선에서 부드럽게 비낀 각도로 놓인다."
+          ],
+          "tags": [
+            "human",
+            "hand",
+            "wrist",
+            "pose",
+            "narrative_safe"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "pose"
+          ],
+          "properties": []
+        },
+        "id": "cand_f34e920492f653a7885f544c49f03c75",
+        "provenance": [
+          {
+            "sha256": "77b326725ffa7e060080dc177540f6fd005c1ab26312ef6130b7f964508cbb87",
+            "source": "slot:hand_pose:relaxed_wrist_offset_line"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 197,
+        "json_pointer": "/decisions/196",
+        "row_sha256": "0248797e236db1b5b8548353b68da8e812aea5a74d6927ba7490c71806819b52"
+      },
+      "source_bindings": {
+        "bind_f34e920492f653a7885f544c49f03c75": {
+          "candidate_id": "cand_f34e920492f653a7885f544c49f03c75",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_f34e920492f653a7885f544c49f03c75",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "hand_pose",
+          "weight": 0.56
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Relaxed wrist has small visible offset from same forearm line with naturally separated fingers; owned joint continuity stays intact as an independently grounded anatomical constraint, not newly reattached geometry.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "a relaxed wrist makes a small visible offset from the forearm line",
+          "dimension": "pose",
+          "target": "actual_same_wrist_hand_forearm_relation",
+          "property": "hands.pose.relaxed_wrist_offset",
+          "mode": "effect",
+          "value": {
+            "type": "hands.pose.relaxed_wrist_offset/v1",
+            "value": "relaxed_wrist_small_visible_offset_from_same_forearm_line"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "fingers remain naturally separated",
+          "dimension": "pose",
+          "target": "actual_same_hand_fingers",
+          "property": "fingers.pose.natural_separation",
+          "mode": "effect",
+          "value": {
+            "type": "fingers.pose.natural_separation/v1",
+            "value": "fingers_naturally_separated"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "the joint stays anatomically continuous",
+          "dimension": "body_geometry",
+          "target": "actual_existing_wrist_hand_forearm_joint",
+          "property": "body.connection.wrist_continuity",
+          "mode": "preservation",
+          "value": {
+            "type": "frozen_property_reference/v1",
+            "value": "same_independently_frozen_anatomical_joint_continuity"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "hand_pose": "actualwrist/hand/fingerarticulation",
+        "anatomical_connection": "explicitjointcontinuity guard/P-PR not fabricatednewattachment",
+        "body_pose": "hand-specificpose no fullbodystance",
+        "body_orientation": "samehandarticulation not duplicateaxisrole solelyrename",
+        "material_mechanics": "relaxed/softline no materialsoftness",
+        "mood": "relaxedposture no privateemotion",
+        "contact_point": "no support/touchendpoint"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actualsamehand/wrist/forearm/fingers/joint and originalpartownership; no fivefingerscount/newlimb/missinganatomy from humantag. Continuity needs actualsourceguard and core anatomy, no scalaractualentityID P.",
+        "Smalloffset/naturalfingerseparation E retained without degree/rotation/speed. Stayscontinuous preserves anatomy ratherthan reattaches/dislocates/changesbodygeometry to satisfypose."
+      ],
+      "pending": [
+        "Pose-only footprint needs exactcontinuitypreservation plus sameowner/partguards; actualclosedanatomy mustnot be mutated. No medicalcondition/strength/sexualmeaning from offset.",
+        "for_any human plus optional hand_pose/direct0.56 human denyproduct/jewelry/food/wildlife binding retained; emptyclosure/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "a relaxed wrist makes a small visible offset from the forearm line while fingers remain naturally separated and the joint stays anatomically continuous",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "relaxed wrist offset from the forearm line",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "전완에서 손으로 이어지는 선을 살짝 비껴 놓은 이완된 손목",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/paraphrases/0",
+          "quote": "The hand rests at a soft offset from the forearm line.",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/paraphrases/1",
+          "quote": "손이 전완의 선에서 부드럽게 비낀 각도로 놓인다.",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6947,
+      "candidate_id": "cand_fad419522de35bbf8d82026eb192f63d",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "demoscene_world_restore_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "부식된 매체의 build를 기준 기기·emulator·capture 화면에서 비교 복원하는",
+            "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output"
+          ],
+          "embedding_text": "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output",
+          "en": "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output",
+          "facets": {
+            "manifestation_mode": [
+              "diegetic_world_system"
+            ]
+          },
+          "ko": "부식된 매체의 build를 기준 기기·emulator·capture 화면에서 비교 복원하는",
+          "tags": [
+            "worldbuilding_system",
+            "demoscene_world",
+            "demoscene_world_restore_scene"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_fad419522de35bbf8d82026eb192f63d",
+        "provenance": [
+          {
+            "sha256": "c632a5309124f3615ac414ca1166eaeaecfc949ca5152bf5629a3a34d9b9ce16",
+            "source": "slot:action:demoscene_world_restore_action"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "demoscene_world_restore_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "부식된 매체의 build를 기준 기기·emulator·capture 화면에서 비교 복원하는",
+            "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output"
+          ],
+          "embedding_text": "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output",
+          "en": "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output",
+          "facets": {
+            "manifestation_mode": [
+              "diegetic_world_system"
+            ]
+          },
+          "ko": "부식된 매체의 build를 기준 기기·emulator·capture 화면에서 비교 복원하는",
+          "tags": [
+            "worldbuilding_system",
+            "demoscene_world",
+            "demoscene_world_restore_scene"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_fad419522de35bbf8d82026eb192f63d",
+        "provenance": [
+          {
+            "sha256": "c632a5309124f3615ac414ca1166eaeaecfc949ca5152bf5629a3a34d9b9ce16",
+            "source": "slot:action:demoscene_world_restore_action"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 198,
+        "json_pointer": "/decisions/197",
+        "row_sha256": "bc1da416dad1c1c6a52b676da1984142bc3d2db2075464779f5df0ff35140ccd"
+      },
+      "source_bindings": {
+        "bind_fad419522de35bbf8d82026eb192f63d": {
+          "candidate_id": "cand_fad419522de35bbf8d82026eb192f63d",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_fad419522de35bbf8d82026eb192f63d",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 1
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Build restoration proceeds from corroded media while reference hardware, emulator and captured output are compared. Actual restore/comparison operation and its nonvisible build effect are retained without claiming successful completed recovery.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "restoring a build from corroded media",
+          "dimension": "action",
+          "target": "actual_restorer_build_media",
+          "property": "operation.restores_build",
+          "mode": "effect",
+          "value": {
+            "type": "operation.restores_build/v1",
+            "value": "restoration_process_on_same_build_from_corroded_media_no_success_flag"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "corroded media",
+          "dimension": "role",
+          "target": "actual_input_storage_media",
+          "property": "prop.state.corroded",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.state.corroded/v1",
+            "value": "independently_existing_corroded_media_input"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "while comparing canonical hardware, emulator, and captured output",
+          "dimension": "action",
+          "target": "actual_comparison_operator_and_three_references",
+          "property": "action.compares_hardware_emulator_capture",
+          "mode": "effect",
+          "value": {
+            "type": "action.compares_hardware_emulator_capture/v1",
+            "value": "while_restoring_compares_reference_hardware_AND_emulator_AND_captured_output"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "comparing canonical hardware, emulator, and captured output",
+          "dimension": "composition",
+          "target": "actual_comparison_views_or_information",
+          "property": "composition.comparable_hardware_emulator_capture",
+          "mode": "effect",
+          "value": {
+            "type": "composition.comparable_hardware_emulator_capture/v1",
+            "value": "three_reference_modalities_available_for_same_build_comparison_no_forced_three_monitors"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "action": "actualrestoring/comparing operations",
+        "procedure_step": "currentrestoration step not successcompletion",
+        "prop": "inputmedia/referencehardware conditionalactualcarriers not extraequipmentbydefault",
+        "prop_state": "corrodedinputP no newlycorrodingaction",
+        "composition": "comparableactualreferenceoutputs/information",
+        "image_artifact": "capturedoutput no exactglitch/compression selected",
+        "visible_text": "no readablecode/hash/versionnumber supplied",
+        "physical_motion": "restoringdata no bodymotionsequence required"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actualbuild/media/restorer and referencehardware/emulator/capturedoutput independently with samebuild comparisonclosure. Nonvisiblebuildrestorationintent E mustbe audited, not onlyhandgesture/noop.",
+        "Inputcorrosion P not newdamagingeffect; no newdevices/threephysicalscreens/cables/keyboard fromcomparisonnoun. No actualexecutionsuccess/fullyrecoveredbytes or codecontent from depiction."
+      ],
+      "pending": [
+        "Action-only footprint maymiss actualdata-state/input/representationeffects; exactbuildproperty/receiver/sourceintentcontract pending no fabricatedhashes.",
+        "demoscene_world_restore_scene primary plus optional action/direct1 unrestricted binding retained; emptyclosure/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "restoring a build from corroded media while comparing canonical hardware, emulator, and captured output",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "부식된 매체의 build를 기준 기기·emulator·capture 화면에서 비교 복원하는",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6948,
+      "candidate_id": "cand_1d2182fcd6f25fa48913184bc7ac50ca",
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "Color Anchor",
+            "Chromatic Focal Point",
+            "Focal Color",
+            "Key Color",
+            "Highlight Color"
+          ],
+          "concept_units": [
+            "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas."
+          ],
+          "embedding_text": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+          "en": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+          "keywords": [
+            "Color Anchor",
+            "Chromatic Focal Point",
+            "Focal Color",
+            "Key Color",
+            "Highlight Color",
+            "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas."
+          ],
+          "ko": "색의 초점과 균형점",
+          "tags": [
+            "color_relations_visual_semantics",
+            "color"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "color"
+          ],
+          "properties": []
+        },
+        "id": "cand_1d2182fcd6f25fa48913184bc7ac50ca",
+        "provenance": [
+          {
+            "sha256": "d590d25f96422adea3de524ab9d9f3ebbb08b82d3809a9d46bb18d1a52105fb3",
+            "source": "slot:color:cr_advisory_color_anchor"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "Color Anchor",
+            "Chromatic Focal Point",
+            "Focal Color",
+            "Key Color",
+            "Highlight Color"
+          ],
+          "concept_units": [
+            "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas."
+          ],
+          "embedding_text": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+          "en": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+          "keywords": [
+            "Color Anchor",
+            "Chromatic Focal Point",
+            "Focal Color",
+            "Key Color",
+            "Highlight Color",
+            "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas."
+          ],
+          "ko": "색의 초점과 균형점",
+          "tags": [
+            "color_relations_visual_semantics",
+            "color"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "color"
+          ],
+          "properties": []
+        },
+        "id": "cand_1d2182fcd6f25fa48913184bc7ac50ca",
+        "provenance": [
+          {
+            "sha256": "d590d25f96422adea3de524ab9d9f3ebbb08b82d3809a9d46bb18d1a52105fb3",
+            "source": "slot:color:cr_advisory_color_anchor"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 199,
+        "json_pointer": "/decisions/198",
+        "row_sha256": "23a93b6cf649126331217020baa7f6b0cb475660ed3a9bc18725ff2ef2ba043f"
+      },
+      "source_bindings": {
+        "bind_1d2182fcd6f25fa48913184bc7ac50ca": {
+          "candidate_id": "cand_1d2182fcd6f25fa48913184bc7ac50ca",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1d2182fcd6f25fa48913184bc7ac50ca",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "color",
+          "weight": 0.25
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Named region acts as chromatic focal cue while its independently intended relation to surrounding areas is preserved. Shared color/hierarchy meaning does not require duplicate composition mutation or a new object/hue.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/concept_units/0",
+          "quote": "Use the named region as the chromatic focal cue",
+          "dimension": "color",
+          "target": "actual_independently_named_region",
+          "property": "color.relation.focal_anchor",
+          "mode": "effect",
+          "value": {
+            "type": "color.relation.focal_anchor/v1",
+            "value": "same_named_region_is_chromatic_focal_cue"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/concept_units/0",
+          "quote": "preserving its intended relation to surrounding areas",
+          "dimension": "color",
+          "target": "actual_region_surroundings_relation",
+          "property": "color.relation.intended_surroundings",
+          "mode": "preservation",
+          "value": {
+            "type": "frozen_property_reference/v1",
+            "value": "same_independently_frozen_intended_relation_between_named_region_AND_surrounding_areas"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "color": "actuallocalchromaticfocalrelation",
+        "visual_hierarchy": "samecanonicalcolorcue focalprominence semanticview, not extraEforprefix",
+        "composition": "no positional/reframing change independentlyselected",
+        "color_grading": "not wholeimagegrade",
+        "light_color": "no illuminationhue",
+        "prop": "namedregion no newlycreatedfocalobject"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actualindependentlynamedregion/surroundingregions and actualintendedrelation; no arbitraryprimaryprop/skin/foreground/hue choice suppliedbycandidate. Exactpreservation baseline required, not sourcewordonly.",
+        "Singlefocalcue selection retains actualcolorpermission evenifalreadyfocal/samevalue; no E0/noop lockedcolorbypass. No duplicatecompositionE solelytoobtainhierarchytag."
+      ],
+      "pending": [
+        "Colorfootprint matchesmutationdimension but exactrelation/value/owners/PR/allowedoperator pending. No saturation/Kelvin/exactcolorvalue or newregion/object.",
+        "Optional color/direct0.25 unrestricted ownbinding retained; emptyclosure/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+          "literal_fact_draft_indices": [
+            0,
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "색의 초점과 균형점",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6949,
+      "candidate_id": "cand_2cc82ab2c232540b85a5e034a6dbbdf3",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "speculative_space_systems"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "megastructure service inspection",
+            "우주 거대구조 점검"
+          ],
+          "embedding_text": "explicit speculative artist-concept action with a small service vehicle inspecting original rotating habitat segments, construction joints and energy systems so function and enormous scale remain physically comparative",
+          "en": "small service craft inspecting a rotating megastructure's assembly and habitat systems",
+          "keywords": [
+            "service craft",
+            "rotation",
+            "assembly joints",
+            "habitat scale"
+          ],
+          "ko": "소형 작업선이 회전하는 거대구조의 조립·에너지·거주 구획을 점검하기",
+          "tags": [
+            "space_visual_semantics",
+            "speculative_space_systems",
+            "action",
+            "artist_concept_or_fiction"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_2cc82ab2c232540b85a5e034a6dbbdf3",
+        "provenance": [
+          {
+            "sha256": "48f93ddd93b9c3386588c05fc2eb0b304b64553264b254218b5b26d544d04638",
+            "source": "slot:action:inspecting_rotating_megastructure_action"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "speculative_space_systems"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "megastructure service inspection",
+            "우주 거대구조 점검"
+          ],
+          "embedding_text": "explicit speculative artist-concept action with a small service vehicle inspecting original rotating habitat segments, construction joints and energy systems so function and enormous scale remain physically comparative",
+          "en": "small service craft inspecting a rotating megastructure's assembly and habitat systems",
+          "keywords": [
+            "service craft",
+            "rotation",
+            "assembly joints",
+            "habitat scale"
+          ],
+          "ko": "소형 작업선이 회전하는 거대구조의 조립·에너지·거주 구획을 점검하기",
+          "tags": [
+            "space_visual_semantics",
+            "speculative_space_systems",
+            "action",
+            "artist_concept_or_fiction"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_2cc82ab2c232540b85a5e034a6dbbdf3",
+        "provenance": [
+          {
+            "sha256": "48f93ddd93b9c3386588c05fc2eb0b304b64553264b254218b5b26d544d04638",
+            "source": "slot:action:inspecting_rotating_megastructure_action"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 200,
+        "json_pointer": "/decisions/199",
+        "row_sha256": "53a7e06f4bfadf0082da9b9f99d2bf7a7e37ec617242737be40d82f9d83a7532"
+      },
+      "source_bindings": {
+        "bind_2cc82ab2c232540b85a5e034a6dbbdf3": {
+          "candidate_id": "cand_2cc82ab2c232540b85a5e034a6dbbdf3",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_2cc82ab2c232540b85a5e034a6dbbdf3",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.82
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Small service craft inspects rotating megastructure habitat segments, construction joints and energy systems in explicitly speculative artist concept, preserving physically comparative enormous-scale/function meaning.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "small service craft inspecting a rotating megastructure's assembly and habitat systems",
+          "dimension": "action",
+          "target": "actual_service_craft_and_structure_systems",
+          "property": "action.interaction.inspects_megastructure",
+          "mode": "effect",
+          "value": {
+            "type": "action.interaction.inspects_megastructure/v1",
+            "value": "small_service_craft_inspects_same_rotating_structure_assembly_AND_habitat_systems"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "original rotating habitat segments, construction joints and energy systems",
+          "dimension": "action",
+          "target": "actual_rotating_structure_segments",
+          "property": "motion.structure_rotation",
+          "mode": "effect",
+          "value": {
+            "type": "motion.structure_rotation/v1",
+            "value": "original_structure_habitat_segments_rotating"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "habitat segments, construction joints and energy systems",
+          "dimension": "appearance",
+          "target": "actual_inspected_structure_parts",
+          "property": "object.structure.habitat_joints_energy_systems",
+          "mode": "effect",
+          "value": {
+            "type": "object.structure.habitat_joints_energy_systems/v1",
+            "value": "habitat_segments_construction_joints_AND_energy_systems_inspected"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "function and enormous scale remain physically comparative",
+          "dimension": "body_geometry",
+          "target": "actual_small_craft_structure_reference",
+          "property": "size.relation.small_craft_enormous_structure",
+          "mode": "effect",
+          "value": {
+            "type": "size.relation.small_craft_enormous_structure/v1",
+            "value": "small_craft_AND_enormous_structure_physically_comparative_with_function_legible"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "explicit speculative artist-concept action",
+          "dimension": "concept",
+          "target": "actual_design_context",
+          "property": "world.context.speculative_artist_concept",
+          "mode": "context",
+          "value": {
+            "type": "world.context.speculative_artist_concept/v1",
+            "value": "explicit_speculative_artist_concept_not_verified_mission"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "action": "actualmachineinspection withstructuretargets",
+        "relational_action": "declaredcraft inspectsidentifiedsystems actualendpoints",
+        "physical_motion": "rotation explicitnot inferredorbit",
+        "subject": "actualsmallservicecraft no humanpilot",
+        "object_structure": "actualassemblyjoints/habitat/energy ownercomponents",
+        "scale_relation": "explicitcomparativesize but stateddepthbasis stillunresolved149fit",
+        "world": "declaredspeculativedesign no engineeringcertificate",
+        "gaze_target": "machineinspection no biologicaleye/gaze",
+        "light_type": "energysystem no actualglow"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actualcraft/rotatingstructure/segments/joints/energy/habitatsystems and actualscale/function comparisonbasis. No operator/eyes/sensorbeams/fixedcameradevice createdfrominspection.",
+        "Actualrotation/inspection/targetsystem/function-scale E retained despitefictionalcontext; not P/C/noop because cannotcertifyfeasibility. No exactratio/depthvalue/actualorbit/realflight/inspectionresult."
+      ],
+      "pending": [
+        "Action-only footprint misses structure/scale/function/representation scope; selectedoutputendpoints andlocks require nativeclosure. No successfulrealmission/biologicalinhabitants fromhabitatnoun.",
+        "speculative_space_systems primary plus optional action/direct0.82 unrestricted binding retained; emptyclosure/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "explicit speculative artist-concept action with a small service vehicle inspecting original rotating habitat segments, construction joints and energy systems so function and enormous scale remain physically comparative",
+          "literal_fact_draft_indices": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "small service craft inspecting a rotating megastructure's assembly and habitat systems",
+          "literal_fact_draft_indices": [
+            0
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "소형 작업선이 회전하는 거대구조의 조립·에너지·거주 구획을 점검하기",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    }
+  ],
+  "complete_native_proof_count": 0,
+  "operating_native_qualified_count": 0,
+  "source_unit_inventory_only_not_full_semantic_disposition": true,
+  "validation_generation": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb",
+  "actual_semantic_module": {
+    "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/scripts/photo_semantic_evidence.py",
+    "sha256": "6833e00c03ee4aa1222ea1a9e7c5304d8a98d62ad1d3d0e3ff6a3d666bb313e9"
+  },
+  "limitations": "All five whole source and full compiled5B rows directly read. Literal facts/roles are manual pending drafts; field enumeration/hash/quote checks are not semantic classification, source correction approval, complete requires/receivers or native qualification. Prepared snapshot and earlier frozen files unchanged."
+}

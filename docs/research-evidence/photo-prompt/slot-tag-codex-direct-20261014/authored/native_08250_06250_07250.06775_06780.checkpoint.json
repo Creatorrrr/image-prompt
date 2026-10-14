@@ -1,0 +1,1339 @@
+{
+  "schema": "photo-native-manual-bulk-checkpoint/v1",
+  "task_name": "/root/review_08250_09250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "prepared_total": 1000,
+  "read_range": [
+    6775,
+    6780
+  ],
+  "actual_direct_read_count": 5,
+  "records": [
+    {
+      "ordinal": 6775,
+      "candidate_id": "cand_21de548d63df54b8adb1d245c1c1653a",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "object",
+            "robot"
+          ],
+          "requires_primary_any_tags": [
+            "parcel",
+            "conveyor",
+            "logistics"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "routing parcel totes",
+            "conveyor sorting",
+            "소포 경로 분류"
+          ],
+          "embedding_text": "routing separated parcels through a scanner-controlled conveyor junction with the handoff path readable from motion and spacing",
+          "en": "routing parcels through a scanner-controlled conveyor junction",
+          "facets": {
+            "event_phase": [
+              "active_process"
+            ],
+            "movement_type": [
+              "mechanical_cycle"
+            ],
+            "process_stage": [
+              "transfer"
+            ],
+            "relation_type": [
+              "handoff"
+            ]
+          },
+          "keywords": [
+            "parcel transfer",
+            "route sorting",
+            "warehouse flow"
+          ],
+          "ko": "스캐너 분기점에서 소포를 경로별로 이송하는",
+          "tags": [
+            "object",
+            "logistics",
+            "warehouse",
+            "parcel",
+            "conveyor",
+            "scanner",
+            "transfer"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_21de548d63df54b8adb1d245c1c1653a",
+        "provenance": [
+          {
+            "sha256": "2ce23acb82024b5b8faf645a98363bc852225514d230e32e722caaebdad0c801",
+            "source": "slot:action:routing_parcels_conveyor"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "object",
+            "robot"
+          ],
+          "requires_primary_any_tags": [
+            "parcel",
+            "conveyor",
+            "logistics"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "routing parcel totes",
+            "conveyor sorting",
+            "소포 경로 분류"
+          ],
+          "embedding_text": "routing separated parcels through a scanner-controlled conveyor junction with the handoff path readable from motion and spacing",
+          "en": "routing parcels through a scanner-controlled conveyor junction",
+          "facets": {
+            "event_phase": [
+              "active_process"
+            ],
+            "movement_type": [
+              "mechanical_cycle"
+            ],
+            "process_stage": [
+              "transfer"
+            ],
+            "relation_type": [
+              "handoff"
+            ]
+          },
+          "keywords": [
+            "parcel transfer",
+            "route sorting",
+            "warehouse flow"
+          ],
+          "ko": "스캐너 분기점에서 소포를 경로별로 이송하는",
+          "tags": [
+            "object",
+            "logistics",
+            "warehouse",
+            "parcel",
+            "conveyor",
+            "scanner",
+            "transfer"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_21de548d63df54b8adb1d245c1c1653a",
+        "provenance": [
+          {
+            "sha256": "2ce23acb82024b5b8faf645a98363bc852225514d230e32e722caaebdad0c801",
+            "source": "slot:action:routing_parcels_conveyor"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 26,
+        "json_pointer": "/decisions/25",
+        "row_sha256": "c0c2aacdbf1e275cabe240ad1accb8770e1ac6f39ab7a29133db89a5e889c49c"
+      },
+      "source_bindings": {
+        "bind_21de548d63df54b8adb1d245c1c1653a": {
+          "candidate_id": "cand_21de548d63df54b8adb1d245c1c1653a",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_21de548d63df54b8adb1d245c1c1653a",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.7
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Separated parcels are routed through a scanner-controlled conveyor junction; actual motion and spacing keep the handoff path legible without a human or robot body requirement.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "routing parcels through a scanner-controlled conveyor junction",
+          "dimension": "action",
+          "target": "actual_conveyor_routing_system",
+          "property": "operation.routing_parcels",
+          "mode": "effect",
+          "value": {
+            "type": "operation.routing_parcels/v1",
+            "value": "routes_actual_parcels_through_same_scanner_controlled_junction"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "routing separated parcels",
+          "dimension": "action",
+          "target": "actual_parcels",
+          "property": "motion.conveyor_transfer",
+          "mode": "effect",
+          "value": {
+            "type": "motion.conveyor_transfer/v1",
+            "value": "actual_separated_parcels_in_transfer_motion"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "handoff path readable from motion and spacing",
+          "dimension": "composition",
+          "target": "actual_parcel_handoff_path",
+          "property": "composition.routing_path_legibility",
+          "mode": "effect",
+          "value": {
+            "type": "composition.routing_path_legibility/v1",
+            "value": "handoff_path_legible_through_actual_parcel_motion_AND_spacing"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "separated parcels",
+          "dimension": "composition",
+          "target": "actual_parcels",
+          "property": "objects.position.separated_on_path",
+          "mode": "effect",
+          "value": {
+            "type": "objects.position.separated_on_path/v1",
+            "value": "parcels_separated_along_same_declared_routing_path"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "scanner-controlled conveyor junction",
+          "dimension": "role",
+          "target": "actual_conveyor_scanner",
+          "property": "props.role.scanner_controlled_junction",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.role.scanner_controlled_junction/v1",
+            "value": "actual_scanner_controls_same_conveyor_junction"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "action": "actual routing mechanical operation",
+        "physical_motion": "parcels actually transfer, not imageblur proxy",
+        "relational_action": "scanner/conveyor/parcel routing interaction explicit endpoints, no human handoff inferred",
+        "prop": "actual parcels/conveyor/scanner roles need independently bounded owners",
+        "composition": "readable handoff path from actual motion/spacing",
+        "prop_placement": "separated parcels actual route-relative arrangement",
+        "procedure_step": "transfer context named facets, no completed scan/whole procedure proof",
+        "visible_text": "scanner does not require actual barcode text",
+        "subject": "object/robot intrinsic applicability does not create robot body"
+      },
+      "owner_and_receiver_intents": [
+        "Actual parcels, conveyor junction, scanner/control relation and path independently bound. No arbitrary humanoperator, robotbody or exact count from plural.",
+        "Source-controlled scanner relation prerequisite draft needs actual independently frozen control linkage; positive operation/motion/spacing remains E. Exact machine/receiver scope pending."
+      ],
+      "pending": [
+        "Action-only coarseeffects miss arrangement/receiver scope. No speed, scanaccuracy, successful sort, throughput, address, shippingbrand or barcode invented.",
+        "for_any object/robot and primary parcel/conveyor/logistics tags plus optional action/direct0.7 unrestricted ownbinding retained; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "routing separated parcels through a scanner-controlled conveyor junction with the handoff path readable from motion and spacing",
+          "literal_fact_draft_indices": [
+            1,
+            2,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "routing parcels through a scanner-controlled conveyor junction",
+          "literal_fact_draft_indices": [
+            0,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "스캐너 분기점에서 소포를 경로별로 이송하는",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6776,
+      "candidate_id": "cand_2c8c0f1883b752c28d4902cfd745b512",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "excess_accumulation_overflow"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "추가 항목이 들어오는 가득 찬 용기",
+            "full bounded capacity with incoming item"
+          ],
+          "embedding_text": "one concrete capacity boundary is already occupied to its limit before the adult's additional matching resource enters and produces a physical consequence",
+          "en": "storage structure with a clear rim door or compartment boundary already full as another matching item arrives",
+          "keywords": [
+            "full container",
+            "visible limit",
+            "incoming item",
+            "same category"
+          ],
+          "ko": "윗선·문·칸막이로 용량이 명확하고 이미 채워졌으며 같은 계열 새 항목이 들어오는 저장 구조",
+          "tags": [
+            "desire_visual_semantics",
+            "excess_accumulation_overflow",
+            "prop"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_2c8c0f1883b752c28d4902cfd745b512",
+        "provenance": [
+          {
+            "sha256": "aee45e1779eed0457d9189e23d3dd1afa623dc7c7a9a118f9ee8fa5d76a6f4f2",
+            "source": "slot:prop:des_overflow_full_capacity_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "excess_accumulation_overflow"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "추가 항목이 들어오는 가득 찬 용기",
+            "full bounded capacity with incoming item"
+          ],
+          "embedding_text": "one concrete capacity boundary is already occupied to its limit before the adult's additional matching resource enters and produces a physical consequence",
+          "en": "storage structure with a clear rim door or compartment boundary already full as another matching item arrives",
+          "keywords": [
+            "full container",
+            "visible limit",
+            "incoming item",
+            "same category"
+          ],
+          "ko": "윗선·문·칸막이로 용량이 명확하고 이미 채워졌으며 같은 계열 새 항목이 들어오는 저장 구조",
+          "tags": [
+            "desire_visual_semantics",
+            "excess_accumulation_overflow",
+            "prop"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_2c8c0f1883b752c28d4902cfd745b512",
+        "provenance": [
+          {
+            "sha256": "aee45e1779eed0457d9189e23d3dd1afa623dc7c7a9a118f9ee8fa5d76a6f4f2",
+            "source": "slot:prop:des_overflow_full_capacity_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 27,
+        "json_pointer": "/decisions/26",
+        "row_sha256": "3b6da0edfefd1624a7912a720506496f494afa242dfa44d50a503673dbf8d460"
+      },
+      "source_bindings": {
+        "bind_2c8c0f1883b752c28d4902cfd745b512": {
+          "candidate_id": "cand_2c8c0f1883b752c28d4902cfd745b512",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_2c8c0f1883b752c28d4902cfd745b512",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 0.9
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "A concrete storage boundary is already full before an adult-owned additional matching resource enters and produces some physical consequence; consequence type remains unspecified and cannot be dropped.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "clear rim door or compartment boundary",
+          "dimension": "appearance",
+          "target": "actual_storage_structure",
+          "property": "object.structure.bounded_capacity",
+          "mode": "effect",
+          "value": {
+            "type": "object.structure.bounded_capacity/v1",
+            "value": "one_clear_rim_OR_door_OR_compartment_capacity_boundary"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "already occupied to its limit before",
+          "dimension": "role",
+          "target": "actual_storage_structure",
+          "property": "props.state.capacity_occupied",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.state.capacity_occupied/v1",
+            "value": "already_full_before_additional_item_entry"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "another matching item arrives",
+          "dimension": "action",
+          "target": "actual_additional_item",
+          "property": "motion.arriving_same_category",
+          "mode": "effect",
+          "value": {
+            "type": "motion.arriving_same_category/v1",
+            "value": "additional_matching_item_arrives_at_same_full_structure"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "enters and produces a physical consequence",
+          "dimension": "event",
+          "target": "actual_item_storage_event",
+          "property": "scene.situation.capacity_entry_consequence",
+          "mode": "effect",
+          "value": {
+            "type": "scene.situation.capacity_entry_consequence/v1",
+            "value": "additional_resource_entry_has_physical_consequence_type_unspecified"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "adult's additional matching resource",
+          "dimension": "age",
+          "target": "actual_declared_resource_owner",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult_resource_owner_without_compulsory_in_frame_person"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "prop": "actual bounded storage and distinct additional samecategoryitem",
+        "object_structure": "visible capacity boundary rim/door/compartment alternatives",
+        "prop_state": "alreadyfull is pre-entry incoming condition, not result inferred from current item",
+        "physical_motion": "incoming/entering item actual motion E",
+        "narrative_phase": "explicit before-arrival full state and current entry relation",
+        "situation_context": "physical entryconsequence actual event, not private compulsion",
+        "narrative_clue": "capacity pressure readable relation not diagnosis of desire",
+        "age_presentation": "adult owner literal only, no age mutation or visible new actor"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actual storage, occupied contents, distinct additional matching item and declared adult resourceowner independently. Owner may remain offscreen; noun ownership does not force visible human count.",
+        "Alreadyfull P requires independent actual state; matchingcategory relation/endpoints and unspecified consequence need exact bounded source/native realization. Do not convert active entry/consequence to context/noop."
+      ],
+      "pending": [
+        "Empty effects invalidates no-op interpretation: actual boundary/motion/event scope needed. No invented spill/crack/injury/explosion, precise capacity, compulsive trait or objectcount.",
+        "excess_accumulation_overflow primary and optional prop/direct0.9 unrestricted ownbinding preserved; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "one concrete capacity boundary is already occupied to its limit before the adult's additional matching resource enters and produces a physical consequence",
+          "literal_fact_draft_indices": [
+            1,
+            3,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "storage structure with a clear rim door or compartment boundary already full as another matching item arrives",
+          "literal_fact_draft_indices": [
+            0,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "윗선·문·칸막이로 용량이 명확하고 이미 채워졌으며 같은 계열 새 항목이 들어오는 저장 구조",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6777,
+      "candidate_id": "cand_722f12c11b625f8caf239922c675cb07",
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "aliases": [],
+          "concept_units": [
+            "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing"
+          ],
+          "embedding_text": "신고전주의 실내의 연결된 장식: a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "en": "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "keywords": [
+            "신고전주의 실내의 연결된 장식",
+            "neoclassical interior",
+            "Adam interior",
+            "신고전주의",
+            "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing"
+          ],
+          "ko": "신고전주의 실내의 연결된 장식 관찰 구도",
+          "tags": [
+            "palace_fortification_visual_semantics",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_722f12c11b625f8caf239922c675cb07",
+        "provenance": [
+          {
+            "sha256": "e5902080f14aa8cab40e3346e798dc1a78cd379589848b969b35d8dc29d7f892",
+            "source": "slot:composition:pf_neoclassical_room_composition"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [],
+          "concept_units": [
+            "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing"
+          ],
+          "embedding_text": "신고전주의 실내의 연결된 장식: a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "en": "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "keywords": [
+            "신고전주의 실내의 연결된 장식",
+            "neoclassical interior",
+            "Adam interior",
+            "신고전주의",
+            "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing"
+          ],
+          "ko": "신고전주의 실내의 연결된 장식 관찰 구도",
+          "tags": [
+            "palace_fortification_visual_semantics",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_722f12c11b625f8caf239922c675cb07",
+        "provenance": [
+          {
+            "sha256": "e5902080f14aa8cab40e3346e798dc1a78cd379589848b969b35d8dc29d7f892",
+            "source": "slot:composition:pf_neoclassical_room_composition"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 28,
+        "json_pointer": "/decisions/27",
+        "row_sha256": "03e068cc248de3a78510a2bb01548304f9b5aadc132a62eca136867f276034c7"
+      },
+      "source_bindings": {
+        "bind_722f12c11b625f8caf239922c675cb07": {
+          "candidate_id": "cand_722f12c11b625f8caf239922c675cb07",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_722f12c11b625f8caf239922c675cb07",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.55
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Room-corner view retains both actual wall-ceiling junctions and one corresponding furnishing; architectural heading does not prove architect, era or an unstated ornament set.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "dimension": "composition",
+          "target": "actual_room_corner_frame",
+          "property": "composition.corner_junction_furnishing_view",
+          "mode": "effect",
+          "value": {
+            "type": "composition.corner_junction_furnishing_view/v1",
+            "value": "both_wall_ceiling_junctions_AND_one_corresponding_furnishing_co_visible_from_corner"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "both wall-to-ceiling junctions and one corresponding furnishing",
+          "dimension": "framing",
+          "target": "actual_named_room_features",
+          "property": "framing.junctions_and_furnishing",
+          "mode": "effect",
+          "value": {
+            "type": "framing.junctions_and_furnishing/v1",
+            "value": "include_both_actual_junctions_AND_one_corresponding_furnishing"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "room-corner",
+          "dimension": "setting",
+          "target": "actual_interior",
+          "property": "setting.location.room_corner",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location.room_corner/v1",
+            "value": "actual_room_corner_structural_setting"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "composition": "actual paired junction/furnishing arrangement in corner view",
+        "subject_framing": "explicit required inclusion of bothjunctions and one furnishing, actual owners distinct",
+        "location": "room corner physical structure",
+        "prop": "corresponding furnishing noun does not name type or require arbitrary chair",
+        "object_structure": "wall-ceiling joins architectural setting, not automatically separate decorative object anatomy",
+        "historical_period": "neoclassical/Adam retrievalheading no actual date/architect claim",
+        "surface_pattern": "connected decoration heading lacks actual motif shape/layout detail"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actual walls/ceiling junctions and corresponding furnishing. Retaining in selectedview is inclusion E rather than independent frozen-statePR.",
+        "Both junctions not new two buildings/rooms. One furnishing selected inclusion count not total sceneinventory. No exact molding/ornament/color/material."
+      ],
+      "pending": [
+        "Coarse composition scope needs actual framing/setting footprints. Heading existingneoclassicalcontext may be preserved without invented ornament checklist.",
+        "No intrinsic condition; optional composition/direct0.55 unrestricted ownbinding retained; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "신고전주의 실내의 연결된 장식: a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a room-corner view retaining both wall-to-ceiling junctions and one corresponding furnishing",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "신고전주의 실내의 연결된 장식 관찰 구도",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6778,
+      "candidate_id": "cand_979eca914d545ab8ad3e0500c888433a",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "비스듬히 걸어 들어오기",
+            "walking portrait",
+            "diagonal movement"
+          ],
+          "concept_units": [
+            "one subject step establishes a readable walking phase"
+          ],
+          "embedding_text": "one subject step establishes a readable walking phase | 비스듬히 걸어 들어오기 | walking portrait | diagonal movement",
+          "en": "one subject step establishes a readable walking phase",
+          "keywords": [
+            "비스듬히 걸어 들어오기",
+            "walking portrait",
+            "diagonal movement"
+          ],
+          "ko": "비스듬히 걸어 들어오기: 구성요소 1",
+          "relations": [
+            {
+              "id": "pc_pc14_component_1_owner",
+              "object": "the requester-supported main portrait and frame",
+              "subject": "main walker",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "portrait",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "timing"
+          ],
+          "properties": []
+        },
+        "id": "cand_979eca914d545ab8ad3e0500c888433a",
+        "provenance": [
+          {
+            "sha256": "264b019848c01cdbce362f78685753cdb74813e387372845db4bb72bc9723cae",
+            "source": "slot:action:pc_pc14_component_1"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "비스듬히 걸어 들어오기",
+            "walking portrait",
+            "diagonal movement"
+          ],
+          "concept_units": [
+            "one subject step establishes a readable walking phase"
+          ],
+          "embedding_text": "one subject step establishes a readable walking phase | 비스듬히 걸어 들어오기 | walking portrait | diagonal movement",
+          "en": "one subject step establishes a readable walking phase",
+          "keywords": [
+            "비스듬히 걸어 들어오기",
+            "walking portrait",
+            "diagonal movement"
+          ],
+          "ko": "한 번의 보이는 발걸음이 읽을 수 있는 보행 단계를 나타낸다",
+          "relations": [
+            {
+              "id": "pc_pc14_component_1_owner",
+              "object": "the requester-supported main portrait and frame",
+              "subject": "main walker",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "portrait",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "timing"
+          ],
+          "properties": []
+        },
+        "id": "cand_979eca914d545ab8ad3e0500c888433a",
+        "provenance": [
+          {
+            "sha256": "264b019848c01cdbce362f78685753cdb74813e387372845db4bb72bc9723cae",
+            "source": "slot:action:pc_pc14_component_1"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 29,
+        "json_pointer": "/decisions/28",
+        "row_sha256": "afb1c6fc8314922d6105cb0503a38211dea41a6f6e29cefcb9020c17ec771ca2"
+      },
+      "source_bindings": {
+        "bind_979eca914d545ab8ad3e0500c888433a": {
+          "candidate_id": "cand_979eca914d545ab8ad3e0500c888433a",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_979eca914d545ab8ad3e0500c888433a",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.45
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Concrete component EN and correctedKO require one visible step/readable walking phase; current positive embedding additionally repeats diagonal/portrait labels, so broader motion cannot silently be ignored before exact source clarification.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "one subject step establishes a readable walking phase",
+          "dimension": "action",
+          "target": "actual_requester_supported_main_walker",
+          "property": "action.walking_step",
+          "mode": "effect",
+          "value": {
+            "type": "action.walking_step/v1",
+            "value": "one_readable_subject_step"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "readable walking phase",
+          "dimension": "timing",
+          "target": "actual_walking_event",
+          "property": "narrative.phase.current_step",
+          "mode": "effect",
+          "value": {
+            "type": "narrative.phase.current_step/v1",
+            "value": "selected_readable_walking_phase"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "diagonal movement",
+          "dimension": "action",
+          "target": "actual_requester_supported_main_walker",
+          "property": "motion.direction.diagonal",
+          "mode": "effect",
+          "value": {
+            "type": "motion.direction.diagonal/v1",
+            "value": "diagonal_movement_from_current_positive_embedding_pending_source_resolution"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "action": "actual single visible walking step",
+        "physical_motion": "walking movement explicit, current embedding diagonal qualifier unresolved",
+        "narrative_phase": "readable selected step instant, not sequence observed",
+        "body_pose": "no exact arm/leg/foot jointpose supplied",
+        "composition": "portrait/composition tags alone no diagonal frame geometry",
+        "subject_count": "one subject step is one event step, no compulsory whole image one-person count",
+        "body_orientation": "diagonal movement trajectory is not body facing orientation"
+      },
+      "owner_and_receiver_intents": [
+        "Actual source declared_owner_scope names requester-supported main portrait/frame and mainwalker; retain as deliberate actual existing owner restriction, not arbitrary new main designation.",
+        "Current positive embedding must be read wholly: diagonal fragment cannot be dismissed solely because old5B called inherited label generic. Exact sourceonlyproposal01 aligns embedding to EN/component/currentKO; until rootinput approval broader current E remains pending."
+      ],
+      "pending": [
+        "ExistingKO5B correction reread in wholeafter. No new feet/stance/anatomical parts, fixed gaitjoint angles, fullroute, completed stepsequence or gender/age.",
+        "for_any human and optional action/direct0.45 unrestricted ownbinding preserved; empty refs/baseRID."
+      ],
+      "correction_proposal": {
+        "existing_5B_KO_correction_preserved": true,
+        "proposal_file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_08250_06250_07250.06778.source-proposal-01.json",
+        "whole_proposed_after_directly_reread": true,
+        "status": "pending_root_exact_input"
+      },
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "one subject step establishes a readable walking phase",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "one subject step establishes a readable walking phase | 비스듬히 걸어 들어오기 | walking portrait | diagonal movement",
+          "literal_fact_draft_indices": [
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "one subject step establishes a readable walking phase",
+          "literal_fact_draft_indices": [
+            0,
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "한 번의 보이는 발걸음이 읽을 수 있는 보행 단계를 나타낸다",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/object",
+          "quote": "the requester-supported main portrait and frame",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/subject",
+          "quote": "main walker",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/type",
+          "quote": "declared_owner_scope",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6779,
+      "candidate_id": "cand_adbfd31ce4845d2394a79a8fa8decd96",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "human_remains",
+            "mortuary"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "respectful remains documentation",
+            "시신 존중 기록 촬영"
+          ],
+          "embedding_text": "restrained medium-wide documentation capture showing full support human contour transfer context and dignified covered handling rather than injury detail",
+          "en": "a respectful documentary distance for covered fictional human remains",
+          "facets": {
+            "camera_register": [
+              "inspection",
+              "professional"
+            ],
+            "capture_modality": [
+              "inspection",
+              "visible_light"
+            ]
+          },
+          "keywords": [
+            "medium-wide distance",
+            "covered handling",
+            "context over spectacle"
+          ],
+          "ko": "가려진 허구 유해를 존중하는 기록 거리의 촬영",
+          "tags": [
+            "capture",
+            "human_remains",
+            "mortuary",
+            "documentation",
+            "non_graphic"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_adbfd31ce4845d2394a79a8fa8decd96",
+        "provenance": [
+          {
+            "sha256": "49ae168721ee33f60a22dd7a9e747365e78f30da2e9523502edda08ff88902ce",
+            "source": "slot:capture_context:respectful_forensic_documentation_distance"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "human_remains",
+            "mortuary"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "respectful remains documentation",
+            "시신 존중 기록 촬영"
+          ],
+          "embedding_text": "restrained medium-wide documentation capture showing full support human contour transfer context and dignified covered handling rather than injury detail",
+          "en": "a respectful documentary distance for covered fictional human remains",
+          "facets": {
+            "camera_register": [
+              "inspection",
+              "professional"
+            ],
+            "capture_modality": [
+              "inspection",
+              "visible_light"
+            ]
+          },
+          "keywords": [
+            "medium-wide distance",
+            "covered handling",
+            "context over spectacle"
+          ],
+          "ko": "가려진 허구 유해를 존중하는 기록 거리의 촬영",
+          "tags": [
+            "capture",
+            "human_remains",
+            "mortuary",
+            "documentation",
+            "non_graphic"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_adbfd31ce4845d2394a79a8fa8decd96",
+        "provenance": [
+          {
+            "sha256": "49ae168721ee33f60a22dd7a9e747365e78f30da2e9523502edda08ff88902ce",
+            "source": "slot:capture_context:respectful_forensic_documentation_distance"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06750_07000.json",
+        "item": 30,
+        "json_pointer": "/decisions/29",
+        "row_sha256": "67c3b171d781e17ae6fb71002980a20957ac3edbabe1bcece863c8ca74a6ed6c"
+      },
+      "source_bindings": {
+        "bind_adbfd31ce4845d2394a79a8fa8decd96": {
+          "candidate_id": "cand_adbfd31ce4845d2394a79a8fa8decd96",
+          "conditions": {
+            "subject_applicability": {
+              "allow_domains": [
+                "portrait",
+                "fashion",
+                "beauty",
+                "social",
+                "adult",
+                "science_inspection",
+                "mobility_logistics",
+                "climate_adaptation",
+                "biodiversity_monitoring",
+                "agriculture_food_systems",
+                "circular_materials",
+                "heritage_documentation",
+                "health_access",
+                "sports_motion",
+                "education_training",
+                "disaster_risk_operations",
+                "natural_process",
+                "longitudinal_place_state",
+                "subculture_practice",
+                "worldbuilding_system",
+                "cjk_narrative_world",
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food",
+                "architecture"
+              ],
+              "deny_domains": [],
+              "require_domain_match": true,
+              "subject_categories": [
+                "human",
+                "animal",
+                "food",
+                "object",
+                "plant",
+                "environment"
+              ]
+            }
+          },
+          "id": "bind_adbfd31ce4845d2394a79a8fa8decd96",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "capture_context",
+          "weight": 0.64
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Respectful non-graphic documentation selects medium-wide context of covered fictional human remains, retaining full support, human contour and transfer/covered handling rather than injury detail.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "covered fictional human remains",
+          "dimension": "subject",
+          "target": "actual_declared_covered_fictional_remains",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "declared_fictional_human_remains_existing_covered_application_proposal"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "respectful documentary distance",
+          "dimension": "camera",
+          "target": "actual_capture_purpose",
+          "property": "capture.purpose.respectful_documentation",
+          "mode": "context",
+          "value": {
+            "type": "capture.purpose.respectful_documentation/v1",
+            "value": "declared_documentation_treatment_without_proven_viewer_response"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "restrained medium-wide documentation capture",
+          "dimension": "framing",
+          "target": "actual_remains_image",
+          "property": "shot.scale.medium_wide",
+          "mode": "effect",
+          "value": {
+            "type": "shot.scale.medium_wide/v1",
+            "value": "restrained_medium_wide_subject_coverage_not_meter_distance"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "showing full support human contour transfer context",
+          "dimension": "framing",
+          "target": "actual_covered_remains_and_support",
+          "property": "framing.support_contour_transfer_context",
+          "mode": "effect",
+          "value": {
+            "type": "framing.support_contour_transfer_context/v1",
+            "value": "full_support_AND_covered_human_contour_AND_transfer_context_visible"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "dignified covered handling rather than injury detail",
+          "dimension": "action",
+          "target": "actual_declared_handling_activity",
+          "property": "action.covered_handling",
+          "mode": "effect",
+          "value": {
+            "type": "action.covered_handling/v1",
+            "value": "covered_handling_with_injury_detail_excluded"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "capture_context": "declared respectful documentary purpose, not apparatusgeometry or realforensiccertification",
+        "shot_scale": "literal medium-wide coverage, not physical camera meters",
+        "subject_framing": "fullsupport/coveredcontour/transfercontext explicit bounded inclusion",
+        "action": "covered handling actualactivity in positive embedding, actor/endpoint exactscope pending",
+        "contact_point": "fullsupport names actual support relation if independently established, no hidden grasp/pressure inferred",
+        "camera_distance": "respectful distance alone not numeric or exact physical separation",
+        "body_form": "covered human contour is coverage cue, no anatomy/health/deathcause form",
+        "character_intent": "respectful treatment not proven handler private feeling or audience response"
+      },
+      "owner_and_receiver_intents": [
+        "Bind actual fictional remains, actual covering/support and independently declared handlingowner/endpoints; no new handler/person/medicalstaff from forensicpurpose. Existing-covered-remains P is only proposed restricted application, not accepted erasure of cover/subjectselection E.",
+        "Retain non-graphic covered handling/injury-detail exclusion as actually consumed sourceconstraint; context treatment does not authorize omission. Actual support/coveredstate footprint and guard contract pending."
+      ],
+      "pending": [
+        "Empty effects cannot cover mediumwide/framing/handling E. No injuries, realidentity, biologicalage, actualdeathcause, trauma detail, personcount or medicalefficacy.",
+        "human_remains/mortuary primary plus optional capture_context/contextual0.64 broad explicit domainmatch condition retained; empty refs/baseRID."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "restrained medium-wide documentation capture showing full support human contour transfer context and dignified covered handling rather than injury detail",
+          "literal_fact_draft_indices": [
+            2,
+            3,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a respectful documentary distance for covered fictional human remains",
+          "literal_fact_draft_indices": [
+            0,
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "가려진 허구 유해를 존중하는 기록 거리의 촬영",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    }
+  ],
+  "complete_native_proof_count": 0,
+  "operating_native_qualified_count": 0,
+  "source_unit_inventory_only_not_full_semantic_disposition": true,
+  "validation_generation": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb",
+  "actual_semantic_module": {
+    "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/scripts/photo_semantic_evidence.py",
+    "sha256": "6833e00c03ee4aa1222ea1a9e7c5304d8a98d62ad1d3d0e3ff6a3d666bb313e9"
+  },
+  "limitations": "All five whole source and full compiled5B rows directly read. Literal facts/roles are manual pending drafts; field enumeration/hash/quote checks are not semantic classification, source correction approval, complete requires/receivers or native qualification. Prepared snapshot and earlier frozen files unchanged."
+}
