@@ -106,6 +106,45 @@ def exact_references(review, value):
     return set()
 
 
+def wrapper_attestation(note, entries):
+    """Read explicitly authored note metadata; never manufacture a status.
+
+    The later corrected-source format records exact reread bindings per row
+    and explicit status_counts instead of three redundant summary lists.
+    Both representations remain immutable and conflicting aliases fail.
+    """
+    if 'reread_ids' in note:
+        return (note['reread_ids'], note['unresolved_ordinals'],
+                note['approved_count'], note['still_pending_count'],
+                note['approved_ordinals'], None)
+    bindings = note.get('reread_candidates')
+    if (note.get('complete_corrected_source_read') is not True
+            or not isinstance(bindings, list) or len(bindings) != len(entries)
+            or any(key in note for key in ('approved_count', 'still_pending_count', 'approved_ordinals'))):
+        raise ValueError('explicit corrected-source reread bindings and counts required')
+    counts = {}
+    for binding, entry in zip(bindings, entries):
+        for key in ('candidate_id', 'ordinal', 'reread_id', 'before_authored_row_sha256',
+                    'source_record_sha256', 'after_proposal_sha256', 'role_spec_sha256',
+                    'reference_sha256'):
+            if key not in binding or key not in entry or binding[key] != entry[key]:
+                raise ValueError('per-row note/document reread binding differs')
+        if (entry.get('full_corrected_source_reread') is not True
+                or not isinstance(entry.get('full_after_proposal_record'), dict)):
+            raise ValueError('explicit complete corrected source reread required')
+        status = entry['decision']['status']
+        counts[status] = counts.get(status, 0) + 1
+    if note.get('status_counts') != counts:
+        raise ValueError('explicit worker status counts differ from authored statuses')
+    approved = [entry['ordinal'] for entry in entries if entry['decision']['status'] in APPROVED]
+    pending = [entry['ordinal'] for entry in entries if entry['decision']['status'] not in APPROVED]
+    if sorted(note.get('unresolved_ordinals', [])) != sorted(pending):
+        raise ValueError('explicit unresolved ordinal list differs')
+    return ([entry['reread_id'] for entry in bindings], pending,
+            len(approved), len(pending), approved,
+            'root_verified_worker_per_row_reread_bindings_and_explicit_status_counts')
+
+
 def origins(review, authored_path, note_path, data):
     """Interpret only the two frozen explicit worker formats, without rewriting."""
     authored_path = review.run_path(str(authored_path), 'authored')
@@ -218,8 +257,9 @@ def origins(review, authored_path, note_path, data):
                 or note.get('catalog_sha256') != review.c.digest(data['slot_catalog'])):
             raise ValueError('document-bound full snapshot and note catalog required')
         entries = document['amendments']
-        if (len(set(note['reread_ids'])) != len(note['reread_ids'])
-                or [e['reread_id'] for e in entries] != note['reread_ids']):
+        reread_ids, pending, approved_count, pending_count, approved_ordinals, summary_resolution = wrapper_attestation(note, entries)
+        if (len(set(reread_ids)) != len(reread_ids)
+                or [e['reread_id'] for e in entries] != reread_ids):
             raise ValueError('exact sparse reread IDs disagree')
         for n, entry in enumerate(entries, 1):
             decision, cid = entry['decision'], entry['candidate_id']
@@ -231,6 +271,8 @@ def origins(review, authored_path, note_path, data):
                     or entry['source_record_sha256'] != source_binding['source_record_sha256']):
                 raise ValueError('per-CID source reread attestation differs')
             resolution = {}
+            if summary_resolution is not None:
+                resolution['reread_metadata_resolution'] = summary_resolution
             if 'after_proposal_reference_sha256' in entry:
                 if entry['after_proposal_reference_sha256'] != source_binding['reference_sha256']:
                     raise ValueError('per-CID source reread attestation differs')
@@ -246,6 +288,13 @@ def origins(review, authored_path, note_path, data):
                         and entry['full_after_proposal_record'] != proposed):
                     raise ValueError('explicit original references or unchanged corrected references differ')
                 resolution['reference_binding_resolution'] = 'root_verified_exact_edits_preserve_worker_attested_original_references'
+            if ('after_proposal_sha256' in entry and entry['after_proposal_sha256'] !=
+                    review.c.digest(review.corrected_record(data['candidates'][cid], decision['corrections']))):
+                raise ValueError('explicit corrected full-source digest differs')
+            if ('role_spec_sha256' in entry and entry['role_spec_sha256'] !=
+                    {role['slot_id']: review.c.digest(data['slot_catalog'][role['slot_id']])
+                     for role in decision['roles']}):
+                raise ValueError('explicit selected role spec digests differ')
             if note_source is None:
                 resolution['source_binding_resolution'] = 'root_verified_worker_document_full_snapshot_and_per_record_bindings'
             matches = [packet_binding(review, path, data, cid, cache=packet_cache) for path in note['packet_paths']
@@ -257,9 +306,7 @@ def origins(review, authored_path, note_path, data):
                     entry['before_authored_file'], cid, entry['before_authored_row_sha256']),
                 'worker_before_row_sha256': None, 'packet': matches[0],
                 'reread_id': entry['reread_id'], **resolution})
-        pending = note['unresolved_ordinals']
-        approved_count, pending_count = note['approved_count'], note['still_pending_count']
-        if sorted(note['approved_ordinals']) != sorted(e['ordinal'] for e in result if e['decision']['status'] in APPROVED):
+        if sorted(approved_ordinals) != sorted(e['ordinal'] for e in result if e['decision']['status'] in APPROVED):
             raise ValueError('explicit approved ordinals disagree')
     else:
         raise ValueError('unsupported worker amendment attestation format')

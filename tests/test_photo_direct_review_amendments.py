@@ -17,6 +17,54 @@ spec.loader.exec_module(amend)
 
 
 class AmendmentsTests(unittest.TestCase):
+    def corrected_note_fixture(self):
+        row = {'candidate_id': A, 'ordinal': 0, 'reread_id': 'fresh-A',
+            'before_authored_row_sha256': 'a' * 64, 'source_record_sha256': 'b' * 64,
+            'after_proposal_sha256': 'c' * 64, 'role_spec_sha256': {'color': 'd' * 64},
+            'reference_sha256': {}, 'full_corrected_source_reread': True,
+            'full_after_proposal_record': {'id': A}, 'decision': {'status': 'approved'}}
+        binding = {key: row[key] for key in ('candidate_id', 'ordinal', 'reread_id',
+            'before_authored_row_sha256', 'source_record_sha256', 'after_proposal_sha256',
+            'role_spec_sha256', 'reference_sha256')}
+        note = {'complete_corrected_source_read': True, 'reread_candidates': [binding],
+                'status_counts': {'approved': 1}, 'unresolved_ordinals': []}
+        return row, note
+
+    def test_corrected_per_row_note_binds_existing_authored_status_without_rewriting(self):
+        row, note = self.corrected_note_fixture()
+        before = copy.deepcopy((row, note))
+        result = amend.wrapper_attestation(note, [row])
+        self.assertEqual(result[:5], (['fresh-A'], [], 1, 0, [0]))
+        self.assertEqual((row, note), before)
+        row['decision']['status'] = 'needs_boundary_review'
+        note.update(status_counts={'needs_boundary_review': 1}, unresolved_ordinals=[0])
+        result = amend.wrapper_attestation(note, [row])
+        self.assertEqual(result[:5], (['fresh-A'], [0], 0, 1, []))
+        self.assertEqual(row['decision']['status'], 'needs_boundary_review')
+
+    def test_corrected_per_row_note_rejects_changed_identity_source_or_status(self):
+        row, note = self.corrected_note_fixture()
+        for key, value in [('candidate_id', B), ('after_proposal_sha256', 'e' * 64),
+                           ('reread_id', 'another-read'), ('reference_sha256', {B: 'f' * 64})]:
+            with self.subTest(key=key):
+                bad = copy.deepcopy(note); bad['reread_candidates'][0][key] = value
+                with self.assertRaisesRegex(ValueError, 'binding differs'):
+                    amend.wrapper_attestation(bad, [row])
+        bad = copy.deepcopy(note); bad['status_counts'] = {'approved': 2}
+        with self.assertRaisesRegex(ValueError, 'status counts'):
+            amend.wrapper_attestation(bad, [row])
+
+    def test_corrected_per_row_note_rejects_missing_read_or_mixed_summary(self):
+        row, note = self.corrected_note_fixture()
+        for field, value in [('complete_corrected_source_read', False), ('approved_count', 1)]:
+            with self.subTest(field=field):
+                bad = copy.deepcopy(note); bad[field] = value
+                with self.assertRaisesRegex(ValueError, 'bindings and counts'):
+                    amend.wrapper_attestation(bad, [row])
+        row['full_corrected_source_reread'] = False
+        with self.assertRaisesRegex(ValueError, 'complete corrected source reread'):
+            amend.wrapper_attestation(note, [row])
+
     def setup_run(self, directory):
         root = Path(directory).resolve()
         here = root / 'run'
