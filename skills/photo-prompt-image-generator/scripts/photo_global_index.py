@@ -12,6 +12,7 @@ from bm25f_retrieval import build_bm25f_index
 
 SCHEMA='photo-offline-vector-map/v1'
 RECIPE='photo-global-visual-text/v1'
+PHRASE_RECIPE='photo-global-visual-phrase-text/v1'
 PROFILE_RECIPE='photo-visual-profile-text/v2'
 QUERY_RECIPE='photo-independent-slot-query/v2'
 POSITIVE_KINDS=corpus.KINDS-{'diagnostic'}
@@ -32,7 +33,8 @@ def fields(record):
         return {'aliases':positive['aliases'],'definition':positive['definition'],'paraphrases':positive['paraphrases'],
             'concept_units':positive['visual_components'],'keywords':positive['support_cues']}
 
-    result={'aliases':strings(c.get('aliases')),'labels':[c[k] for k in ('en','ko','ja') if c.get(k)],
+    result={'aliases':strings(c.get('aliases')),'labels':[c[k] for k in ('en','ko','ja') if c.get(k)]+
+      [c[k] for k in ('phrase_en','phrase_ko') if isinstance(c.get(k),str) and c[k].strip()],
       'definition':strings(c.get('definition')),'paraphrases':strings(c.get('paraphrases')),
       'concept_units':strings(c.get('concept_units')),'manifestations':strings(c.get('manifestations')),
       'keywords':sum((strings(c.get(k)) for k in ('keywords','terms','embedding_text')),[]),'semantic_relations':[],
@@ -50,7 +52,9 @@ def text(record):
     for name in ('labels','definition','aliases','paraphrases','concept_units','semantic_relations','manifestations','keywords'):
         values=list(dict.fromkeys(f.get(name) or []))
         if values:parts.append(name.replace('_',' ')+': '+'; '.join(values))
-    return RECIPE,'\n'.join(parts)
+    recipe=PHRASE_RECIPE if any(isinstance(record['content'].get(k),str) and record['content'][k].strip()
+      for k in ('phrase_en','phrase_ko')) else RECIPE
+    return recipe,'\n'.join(parts)
 
 def documents(c):return {cid:fields(r) for cid,r in c['candidates'].items() if r['record_kind'] in POSITIVE_KINDS}
 

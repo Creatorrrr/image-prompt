@@ -1,0 +1,473 @@
+{
+  "schema": "photo-named-phrase-consumer-patch-review/v1",
+  "task_name": "/root/review_06250_07250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "date": "2026-10-15",
+  "status": "final-ready within the exact two-field production edit allowlist; root acceptance/publication/commit pending",
+  "read_attestation": {
+    "audit": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-08250-phrase-field-consumer-audit-20261015.md",
+    "inventory": {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-08250-phrase-fields-inventory-20261015.json",
+      "raw_sha256": "2b3364c936f31b55d3911433946b37d1c7543f6ddd1d5e236e52571051a01a13",
+      "canonical_sha256": "feaa722a2ad34481a98b31b851924fefa8bf3756d0a854dcb72ddadda36c45fc"
+    },
+    "inventory_whole_rows_read": 381,
+    "whole_examples_and_ownbindings_direct_read": [
+      {
+        "ordinal": 6673,
+        "candidate_id": "cand_ac39d8f9844c5239a4e7f3937233fd91"
+      },
+      {
+        "ordinal": 5151,
+        "candidate_id": "cand_026d3eebda735d5694be80bf4a721013"
+      },
+      {
+        "ordinal": 2667,
+        "candidate_id": "cand_022b574a012054e4b42424a06662bdb2"
+      }
+    ],
+    "new_native_candidate_approvals": 0,
+    "boundary": "This is a consumer-contract and structural projection audit, not native semantic rereview. Inventory hashes/counts and ordinary-unit shape do not prove meaning."
+  },
+  "production_paths": {
+    "skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py": {
+      "before_raw_sha256": "0f4a974435f7cb9e71a23a726f092bff73d0dd61bb9deb3df2537f59d5be15e4",
+      "after_raw_sha256": "309876bbe95adcddbf9d4c84d7b68791f7d5f731a10d0a2cab42913482168ac7"
+    },
+    "skills/photo-prompt-image-generator/scripts/photo_global_index.py": {
+      "before_raw_sha256": "6a8efe0ea5bd20e4176a402079f19f5b0c2c60e7cb9c9aed33b78ad3238f0492",
+      "after_raw_sha256": "905ba7178acc49fd2ecbd7350a3c88d7b467273b05ae3221077590e59aff7275"
+    }
+  },
+  "new_test": {
+    "file": "tests/test_photo_named_phrase_fields.py",
+    "raw_sha256": "41107c204afef7be1999b39497f95d767d5ad1a9bd5f000cf06b46207148ffdf",
+    "test_methods": 11
+  },
+  "implementation": [
+    "photo_semantic_evidence.POSITIVE_FIELDS adds only the exact top-level names phrase_en and phrase_ko. All other AST nodes are identical to the captured 0f4a974435f7cb9e71a23a726f092bff73d0dd61bb9deb3df2537f59d5be15e4 module, including semantic_reference validation/signatures, guards, owners, fact modes, dependencies and role policy.",
+    "photo_global_index.fields appends only nonblank string values from those exact two top-level fields to the existing labels lane. Existing aliases/keywords retrieval policy is unchanged; none becomes a native positive field.",
+    "Only non-profile records with at least one such explicit nonblank string use photo-global-visual-phrase-text/v1. The existing label deduplication/text algorithm is unchanged; no text or recipe change occurs for records without those named strings. Profile positive projection and photo-visual-profile-text/v2 remain unchanged.",
+    "Query recipe, embedding space/provider/model/dimension, source records, source/proof signatures, role assignments, entry and pack code, and selected realization projections are unchanged. No vectors were created or reused by this worker."
+  ],
+  "actual18250_structural_comparison": {
+    "source": {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/SOURCE.json.gz",
+      "raw_sha256": "98134a3fbfb19991bb6f02575a2fdef664661ee0c7584657251e5bb8465347d0",
+      "canonical_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b"
+    },
+    "source_candidate_count": 18250,
+    "phrase_candidate_count": 381,
+    "added_positive_string_count": 762,
+    "changed_fields_count": 381,
+    "changed_text_count": 362,
+    "changed_recipe_count": 381,
+    "unaffected_count": 17869,
+    "unaffected_byte_identity": true,
+    "unaffected_exact_projection_manifest_sha256": "5473797204495401f9343b2e88792fb6a378de7314c5b305d8ff900592254f5d",
+    "source_unmodified_in_memory": true,
+    "source_raw_file_unchanged": true,
+    "semantic_evidence_ast_except_positive_fields_unchanged": true,
+    "query_recipe_unchanged": true,
+    "embedding_space_unchanged": true,
+    "same_space_projection_reuse_identity_counts": {
+      "exact_cid_recipe_text_sha_preserved": 17869,
+      "changed_recipe_requires_new_vector": 381
+    }
+  },
+  "same_text_phrase_documents": 19,
+  "vector_boundary": "For 19 phrase-bearing records, text deduplicates to identical bytes but the new explicit phrase projection recipe still differs. All 381 require current projection qualification/re-embedding under the existing recipe+text identity gate; 17,869 retain the exact old CID/recipe/text SHA and are eligible for reuse only in the identical verified embedding space. Actual vector reuse/re-embedding/build/publication was not executed. Existing build_shared_candidate_index.py was read only, including its same-space and exact recipe/text_sha checks.",
+  "validation": {
+    "test_report": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-regressions-20261015.json",
+    "tests_passed": 139,
+    "successful_subtests": 488,
+    "test_modules": [
+      "tests.test_photo_named_phrase_fields",
+      "tests.test_photo_semantic_evidence",
+      "tests.test_photo_semantic_reference_units",
+      "tests.test_photo_semantic_reference_workflow",
+      "tests.test_photo_native_v4_guards",
+      "tests.test_photo_native_owner_selection",
+      "tests.test_photo_native_object_ownership",
+      "tests.test_photo_native_wardrobe_owners",
+      "tests.test_photo_global_index"
+    ],
+    "actual_loaded_modules": {
+      "photo_authoring_contracts": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_authoring_contracts.py",
+        "raw_sha256": "c0aa73647927bd75c98605bd8ab9efcfb0c6252c7d29b9de29acf3e4d7181031"
+      },
+      "photo_authoring_wire": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_authoring_wire.py",
+        "raw_sha256": "6a0b55830d171a8be46e225c226c15f0cd95ca41cbfba3ee68180c4cebe35964"
+      },
+      "photo_camera_authoring": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_camera_authoring.py",
+        "raw_sha256": "f5cccdf9ac9fc1a56db72aaf69ab9dc210c56c5e928c85c5e0d64c402fb80cbc"
+      },
+      "photo_camera_clauses": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_camera_clauses.py",
+        "raw_sha256": "d706c94cf7317981addc6d7e45fb6d3e3fdbe42cd1b9aab40030c85952c8b056"
+      },
+      "photo_camera_evidence": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_camera_evidence.py",
+        "raw_sha256": "0b8fc2c5b9186c83037377abc03c6ef52994791874c19230f0faa95b1c6b8581"
+      },
+      "photo_candidate_context": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_context.py",
+        "raw_sha256": "73468104117f128394bc28ce86a64c7d4eeb69f582b02a2daf6d683e93c72bab"
+      },
+      "photo_candidate_corpus": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py",
+        "raw_sha256": "b00b200643fe672ba4fc84e162333d937b0ee83ddb0ab431b1a67169cda52da4"
+      },
+      "photo_candidate_realizations": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_realizations.py",
+        "raw_sha256": "749f00eb2f6e5c219e06bcf88b90912c2bf24f7a72eb180a70a4d93d04e0dd5c"
+      },
+      "photo_candidate_semantics": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py",
+        "raw_sha256": "0a2a1fa6cec5d0e79a0a8d272eb81dc7853bc0c96ac87ce853c540feeb064215"
+      },
+      "photo_candidate_sources": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_sources.py",
+        "raw_sha256": "8fa4c129929d06398b1904cfea83e353d1cff7050cfe5979679cb764cce639d5"
+      },
+      "photo_contextual_appeal": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py",
+        "raw_sha256": "85d226bfe59cec3ccaa7d3cd0129466a42741564fe4f2ed216143c0578a435ee"
+      },
+      "photo_contracts": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_contracts.py",
+        "raw_sha256": "0601699a58dbaa12376fa8439fbdda852b3dc4f069a82a4909f5711419eaa866"
+      },
+      "photo_creative_controls": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_creative_controls.py",
+        "raw_sha256": "d69d8a6c90de1d983749373f5e92afcb7e5854ce2d2a28009c94c1be533c2092"
+      },
+      "photo_embedding_provider": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_embedding_provider.py",
+        "raw_sha256": "bdd281891f059ba382681586314059bc06ce18890a6364e91408545d05e52c94"
+      },
+      "photo_embodiment": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_embodiment.py",
+        "raw_sha256": "c0a3efc28feaecbe9ab196a7cd3ec66c48f41526e96dfeafa3e11ab3e7cc4eb1"
+      },
+      "photo_embodiment_review": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_embodiment_review.py",
+        "raw_sha256": "c968ce2ade0825bdaff3ee36899f2120756b40e96e1e9d37e2eeec855f4e5dd6"
+      },
+      "photo_feature_selection": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_feature_selection.py",
+        "raw_sha256": "91e4e3d5c4dd8f3189fbe42f27b0361c6bee34a2cddf7956ecf8f6c0c91b1481"
+      },
+      "photo_global_index": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_index.py",
+        "raw_sha256": "905ba7178acc49fd2ecbd7350a3c88d7b467273b05ae3221077590e59aff7275"
+      },
+      "photo_global_index_storage": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_index_storage.py",
+        "raw_sha256": "ff8551cdcc1a3fdf8cdbd1df26509c2936a46c266b3fc0fd3bee01437362f155"
+      },
+      "photo_global_retrieval": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_retrieval.py",
+        "raw_sha256": "01bdd8ccb8a63a4fdcaf30b42cc6f713086957d1e0ed7f666975a2ea4ffb3f08"
+      },
+      "photo_meaning_diagnostics": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_meaning_diagnostics.py",
+        "raw_sha256": "b2f1d8c5f669045b3c03428ebbbd4b71849b3fcb83a1ad4a15d43c1368e22d16"
+      },
+      "photo_native_pack": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_native_pack.py",
+        "raw_sha256": "93703b12ff48613cee8779dccbe56512eab352882837cefb8a5f15373a681e35"
+      },
+      "photo_precore_bridge": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_precore_bridge.py",
+        "raw_sha256": "714048b4c78b722347ea621506879a5fa3dd7bdae3dc5bc3d1d9d031406f45a2"
+      },
+      "photo_precore_photo_authoring_contracts": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_authoring_contracts.py",
+        "raw_sha256": "c0aa73647927bd75c98605bd8ab9efcfb0c6252c7d29b9de29acf3e4d7181031"
+      },
+      "photo_precore_photo_authoring_wire": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_authoring_wire.py",
+        "raw_sha256": "6a0b55830d171a8be46e225c226c15f0cd95ca41cbfba3ee68180c4cebe35964"
+      },
+      "photo_precore_photo_camera_authoring": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_camera_authoring.py",
+        "raw_sha256": "f5cccdf9ac9fc1a56db72aaf69ab9dc210c56c5e928c85c5e0d64c402fb80cbc"
+      },
+      "photo_precore_photo_embodiment_review": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_embodiment_review.py",
+        "raw_sha256": "c968ce2ade0825bdaff3ee36899f2120756b40e96e1e9d37e2eeec855f4e5dd6"
+      },
+      "photo_precore_photo_run_files": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_run_files.py",
+        "raw_sha256": "cf1e731d8ec27ad74ce800c63edbf05c3265dfb7fa22ab30bc224cd92ccdc4f6"
+      },
+      "photo_precore_photo_semantic_witnesses": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_semantic_witnesses.py",
+        "raw_sha256": "cc9bfca271ae1650c28a08b379bc84030b38a5cbcf9918c18d55d50a93094a58"
+      },
+      "photo_role_proposals": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_role_proposals.py",
+        "raw_sha256": "276f14055944773f647028a2159f7fa3624efe975321f67e2eb6b7041fc76c9a"
+      },
+      "photo_run_files": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_run_files.py",
+        "raw_sha256": "cf1e731d8ec27ad74ce800c63edbf05c3265dfb7fa22ab30bc224cd92ccdc4f6"
+      },
+      "photo_runtime_sources": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py",
+        "raw_sha256": "4677829bdb86a607b3f567d433f0ca1f77e1863d107500bffce72aa99e0af264"
+      },
+      "photo_search_layout": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_search_layout.py",
+        "raw_sha256": "f7760546dd1374e90af57e0f5d286ed7bb1c7be45960ad1524454c79d869c69f"
+      },
+      "photo_search_reader": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_search_reader.py",
+        "raw_sha256": "2d47912fbe8eed893f901aafa9393b0edfdb9816ce2d7649ac8d34a37d85a920"
+      },
+      "photo_semantic_evidence": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py",
+        "raw_sha256": "309876bbe95adcddbf9d4c84d7b68791f7d5f731a10d0a2cab42913482168ac7"
+      },
+      "photo_semantic_witnesses": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/precore/photo_semantic_witnesses.py",
+        "raw_sha256": "cc9bfca271ae1650c28a08b379bc84030b38a5cbcf9918c18d55d50a93094a58"
+      },
+      "photo_sharded_search": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_sharded_search.py",
+        "raw_sha256": "99874e3c266a535de9af0d119afbb00fdabb3fba476b7b3a30ed4f0a7eaf485a"
+      },
+      "photo_shared_views": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_shared_views.py",
+        "raw_sha256": "561823b22b7bfc9ccdc5a8a6b4f778d471d37b1deb8eddbd0d56e7cff2168733"
+      },
+      "photo_slot_queries": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_slot_queries.py",
+        "raw_sha256": "e838a0053b076810c05fdbb2fa3dc2c66506c7491bc1b563cad80f1075f56514"
+      },
+      "photo_slot_retrieval": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_slot_retrieval.py",
+        "raw_sha256": "617be19647e57fff35c98b74cc24b887a65cf09dbb02570fcf4111cb63006252"
+      },
+      "photo_slot_semantics": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_slot_semantics.py",
+        "raw_sha256": "6c99bf62f5bb155c4514c7e0c125bac506fe338c1ed9d2aab6f17fcee48d73f8"
+      },
+      "photo_visual_retrieval": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_visual_retrieval.py",
+        "raw_sha256": "2f6e36330eeb988e3b69742f9feb716c7395e46b45b93121a066c56194a61257"
+      },
+      "photo_workflow": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_workflow.py",
+        "raw_sha256": "f68f82ccea2c05d7f49e8b21e45f89c7d1ad1451670ebe0293c52a05a1c31df8"
+      },
+      "photo_workflow_state": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_workflow_state.py",
+        "raw_sha256": "44948acd42803c738b89f5c959c70e86f03701341f9f2bf8d4e268b52ba35b0a"
+      },
+      "photo_workflow_worker": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_workflow_worker.py",
+        "raw_sha256": "a7b61ce9545234d583eb5363c70e42e5529835179eb60db075b6e0bc7ce717a1"
+      },
+      "prompt_generator": {
+        "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+        "raw_sha256": "cfbdc7d66f0d065fedc111d8bac9a47b13a7c891e59c95261ed4f170b1f9671a"
+      },
+      "tests.test_photo_candidate_corpus": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_corpus.py",
+        "raw_sha256": "535782ff3cb80b22788e35eb3027923898b9c175ba58f385da536bb64e3d917d"
+      },
+      "tests.test_photo_global_index": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_global_index.py",
+        "raw_sha256": "38f96748620688be800bce18ec41857cf2db7c786aaadd3c06586761fba863e0"
+      },
+      "tests.test_photo_global_retrieval": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_global_retrieval.py",
+        "raw_sha256": "9124e0ae0156bc4f91dea59e8bfa7f6291361c828ebcc776d0534dc64d6ac37b"
+      },
+      "tests.test_photo_named_phrase_fields": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_named_phrase_fields.py",
+        "raw_sha256": "41107c204afef7be1999b39497f95d767d5ad1a9bd5f000cf06b46207148ffdf"
+      },
+      "tests.test_photo_native_adoption": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_adoption.py",
+        "raw_sha256": "990f5a18e901113cadef271509293887cbc847c188fdd755a60392706ca5ba6f"
+      },
+      "tests.test_photo_native_compound_evidence": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_compound_evidence.py",
+        "raw_sha256": "05f9f80dc01b84a9d9cac839e2c9d029373eeab7d2192de629c00604a30f747b"
+      },
+      "tests.test_photo_native_fact_wire": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_fact_wire.py",
+        "raw_sha256": "cc0bf8d2de1158db0705e5987205c873f8f5c87122fe70729a2b87f5dfe30961"
+      },
+      "tests.test_photo_native_joint_assignments": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_joint_assignments.py",
+        "raw_sha256": "7a9b1e7c55c1b22ae87d1365db94e2f08e6eef50ef3cfdee0430ec0224eb4743"
+      },
+      "tests.test_photo_native_object_ownership": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_object_ownership.py",
+        "raw_sha256": "0591af3037223162748996bd43454e088c38fc32a04d455eb0d877a8e02fb838"
+      },
+      "tests.test_photo_native_owner_selection": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_owner_selection.py",
+        "raw_sha256": "8306b58a9844d18ad157b2b961bc7c7a5f8567328fee48f5462cbbeb3962f5ce"
+      },
+      "tests.test_photo_native_source_guards_v2": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_source_guards_v2.py",
+        "raw_sha256": "2748f9110b239ed9e59ac544ec235268a940e159a168cb68a683a0a4b4faa7fd"
+      },
+      "tests.test_photo_native_v4_guards": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_v4_guards.py",
+        "raw_sha256": "d94aab11d704429079cb2ed78d59d2b915388eb4a94b809c76b01cb132fc5b3f"
+      },
+      "tests.test_photo_native_wardrobe_owners": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_native_wardrobe_owners.py",
+        "raw_sha256": "b66b862457a43f4ef11ff6bbc602dcd1e194c1e18561dbfc487be6d9fd46557e"
+      },
+      "tests.test_photo_semantic_evidence": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_semantic_evidence.py",
+        "raw_sha256": "509411ce043ca09384fa1532d5cc8c48511c90cc6735ca7c21ed5662fe02b0e9"
+      },
+      "tests.test_photo_semantic_reference_units": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_semantic_reference_units.py",
+        "raw_sha256": "0326c450c7931ad473020e4bac4b469ecf675d97a22b7368781d39c6dc91823f"
+      },
+      "tests.test_photo_semantic_reference_workflow": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_semantic_reference_workflow.py",
+        "raw_sha256": "da885d7ede0fa43c7d6b4a570ccba9c2c01d63ab7aea3ab75aeffa7f2f3b6fe7"
+      },
+      "tests.test_photo_slot_queries": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_slot_queries.py",
+        "raw_sha256": "c27205d1ff5d22a2d640ddc1a3dcf1393b0e10c66a82c099821a605d44ee1a81"
+      },
+      "tests.test_photo_workflow_precore": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_workflow_precore.py",
+        "raw_sha256": "e1094c75b45ff622c8f14e599cfdea0b356e4a0230e6d177838d54663f8323c5"
+      },
+      "tests.test_photo_workflow_state": {
+        "path": "/Users/chasoik/Projects/image-prompt/tests/test_photo_workflow_state.py",
+        "raw_sha256": "1162ade2aa26f322e639f0894756d170ac472aedf0ac03980bf256da1f90bf00"
+      }
+    },
+    "loaded_modules_unchanged_during_run": true,
+    "os_network_denied": true,
+    "provider_environment_removed": true,
+    "temporary_fixture_only": "Existing global-index/workflow regressions write isolated temporary fixtures; no real index/runtime/assets are opened or built."
+  },
+  "manual_meaning_boundaries": [
+    "New named-field coverage requires explicit whole-string source-unit disposition. The patch does not auto-generate facts, references, nonsemantic classifications, approvals, guards, owner assignments, modes or effects, and does not re-sign any frozen proof.",
+    "Ordinary fact quotes and semantic_reference links remain manually authored with the existing exact same-RID, exact own-field direct anchor requirements. Alias/tag/metadata/unrecognized fields remain outside automatic primary_paths; sibling pointers cannot satisfy selected-RID references. No generic unknown-field allowlisting or old-runtime shim was added.",
+    "The actual orchard phrase adds deep-inside meaning that the old en/ko do not fully state; the refill example also retains the distinct unlabeled/unreadable language. Coverage/retrieval inclusion does not resolve translation or semantic consistency and cannot approve either candidate.",
+    "Selected realization content continues to set phrase_en/phrase_ko from its own explicitly selected en/ko. Common/sibling discovery phrases do not replace selected render text.",
+    "Existing full-source proofs which omitted an actual phrase source-unit now fail the completeness gate; no source/proof artifact has been edited to make them pass."
+  ],
+  "application_contract_read_only_followup": {
+    "production_change": false,
+    "original_count": 0,
+    "current_source": {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/11870-01250-01300-plan-04/CURRENT-PROPOSAL.json.gz",
+      "raw_sha256": "08b4b0cbfcc1e26d1f3ab97d7732c6442871b3274f5f7f8ffddcd230bc932065",
+      "canonical_sha256": "88614a52f5e4148efc57806c641717107c2b045acfc205e934f96246af8a81d8"
+    },
+    "current_exact_key_count": 46,
+    "current_primary_paths_missing_count": 46,
+    "explicit_formal_artifact_scope": [
+      {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-03/BATCH.json",
+        "raw_sha256": "9124a53c724f485ad29bf3509d64cc3ad19dc117397bb66dc08fc77042418e65",
+        "canonical_sha256": "f8c9e872b6032a22284197ac7c12058013dea80993e11dff287a74caddf37808"
+      },
+      {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/CHECKPOINT-01250-01255.json",
+        "raw_sha256": "033bfc4ef0d40935b2ac685252a8340a0e6acaa7279c955e05852015406d00ed",
+        "canonical_sha256": "c0e6d78d10288014cf59ef04bf9e49bb1690b725e5bb99c4f5f914ceeec327dd"
+      },
+      {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/CHECKPOINT-01255-01260.json",
+        "raw_sha256": "6d60be69bdd346fa59a5220f79f278848003fdeac19a29a95e77cad64f650010",
+        "canonical_sha256": "cf8d944d9c1f70a15ec9fee43745e3b44f8aa8b01d198c6dc8b8d97ce3bb43e8"
+      },
+      {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/CHECKPOINT-01260-01265.json",
+        "raw_sha256": "35857172ad7d125870d83df3c4e0448a79e38382bc433f47ad0898477f2033a3",
+        "canonical_sha256": "85a307c272e4744f332ca06fd3a202b123c9ad6041d2acfd51baf73960c4075f"
+      },
+      {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/CHECKPOINT-01265-01270.json",
+        "raw_sha256": "cc645eb16fec5fd2252ca77a27c33e79185e7aeb9c1a2c987f71d5e9ee751638",
+        "canonical_sha256": "9b40a41e4b3a5a79f561f40fa364dccced97940d59fba4eea5ce43fb22db9dae"
+      }
+    ],
+    "reopen_override": {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/REOPEN-01257-QUOTE-v1.json",
+      "raw_sha256": "5ba26216809ab1c97c033a1f761ea0252c5245a3b550932c5c040ff476a14438",
+      "canonical_sha256": "b29f5abc705a5e525689f01538116841ca4b6f23ca6c0ef4d7daf0e31ad0bf69"
+    },
+    "historical03": {
+      "rows": 50,
+      "exact_current_source_records": 34,
+      "proof_present": 33,
+      "exact_current_source_proof_pairs": 30,
+      "historical_source_proof_pairs": 3,
+      "proof_records_with_exact_ordinary_app_unit": 33
+    },
+    "effective04_first20": {
+      "rows": 20,
+      "exact_current_source_records": 20,
+      "proof_present_after_1257_reopen": 17,
+      "pending_after_1257_reopen": 3,
+      "proof_records_with_exact_ordinary_app_unit": 17,
+      "ordinary_app_units": 18,
+      "two_rid_unit_record_ordinal": 1256
+    },
+    "combined_latest_explicit_rows": {
+      "rows": 50,
+      "exact_current_source_records": 40,
+      "exact_current_source_proof_pairs": 35,
+      "historical_source_proof_pairs": 2,
+      "pending_as_authored": 13,
+      "authored_approved_statuses": 37,
+      "new_approvals_created": 0
+    },
+    "count_boundary": "All source/proof pair counts use the exact complete source_after canonical bytes versus current88614 CID values. No dictionary merge, proof synthesis, catalog validity or native acceptance is inferred. Historical proofs remain historical, even where an earlier authored status says approved; 1257 reopen proof null/pending overrides the older checkpoint. 18 exact ordinary units occur in 17 effective04 proofs because ordinal1256 has two actual RIDs.",
+    "finding": "application_contract is absent from POSITIVE_FIELDS, so none of the 46 current exact top-level fields is automatically required by primary_paths. Existing explicit normal source_units can cover it, and all 17 effective04 present proofs already include complete ordinary units. That existing coverage does not prevent a future proof from omitting the named field while satisfying only automatic primary coverage.",
+    "proposed_separate_native_only_patch": "With separate root approval, explicitly add only application_contract to native POSITIVE_FIELDS and require a whole-string manual disposition per actual RID. Do not add it to global retrieval labels, BM25F, embedding text or generic unknown-field traversal. Its positive application/ownership restrictions and negative bounds require source-local manual facts/references/retained constraints; the code must not convert every clause to a positive fact/effect.",
+    "proposed_tests_only": [
+      "A complete manual application_contract ordinary unit validates; removing that exact unit fails whole-source coverage even if en/ko are covered.",
+      "Exact own-pointer P/E facts and same-RID semantic references retain their source-local value and owner requirements; a source-local reference cannot borrow another CID/RID/unknown field.",
+      "Mixed negative bounds stay intact without becoming positive entities/effects, while native meaning/signature binds the full string.",
+      "Application-contract presence, additions and changes do not change retrieval fields/text/recipe/vector identity.",
+      "Aliases, arbitrary metadata and unknown_extra remain outside automatic native primary coverage."
+    ],
+    "no_extra_production_patch": "Only the approved phrase2 patch was implemented; application_contract recommendation and fixtures remain proposals."
+  },
+  "artifacts": {
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-consumer-before-20261015.json": "08481078e131f8aa75e33fbccfa1c38e7b611e8d40381aa3ce06d86a4ed73654",
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-consumer-20261015.patch": "11c9f066b939ed5eeed7d54d8ae933bb03ae77582a4e80681a40d6704d5193e9",
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-new-test-20261015.patch": "fc5f76aa7e0946e174e84db562349aab27a38a1ed450b4e12bc6bdc9fefc30e1",
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-structural-check-20261015.py": "01cf04440260c4e6d964bd637a5ffd136b1185dcb5225e0c86e62ddabab2550e",
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-structural-report-20261015.json": "cca58c1f4bbbb8accda58f4774f92dda344cb6a8a7fe22125cf5a18b4e7d0c4a",
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-regressions-20261015.py": "f74d3b99a6eab60df7da3e7c012e25ebb0de214dae21e0b51e10b6e9f5edecdd",
+    "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-06250-phrase-regressions-20261015.json": "a14547d3b9f9153761fe28c2eb9f41138096eca15f2e8799c37c07350c7d399a",
+    "tests/test_photo_named_phrase_fields.py": "41107c204afef7be1999b39497f95d767d5ad1a9bd5f000cf06b46207148ffdf"
+  },
+  "forbidden_actions_performed": {
+    "Git": 0,
+    "registration": 0,
+    "global_report_mutation": 0,
+    "source_or_proof_edits": 0,
+    "catalog_edits": 0,
+    "assets_edits": 0,
+    "actual_index_runtime_build_or_execution": 0,
+    "model_calls": 0,
+    "network_calls": 0,
+    "downloads": 0,
+    "delegation": 0
+  }
+}

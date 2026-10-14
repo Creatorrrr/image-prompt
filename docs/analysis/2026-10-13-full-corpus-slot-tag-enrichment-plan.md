@@ -214,6 +214,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 기존 대상 집합 계약의 A단계는 독립 선언된 구성원 목록을 neutral core에 고정하고 wire→freeze→독립 감사→raw replay로 운반하는 데까지 구현했다. 각 실제 구성원은 존재 근거·입력/구간 출처를 따로 가지며, 목록 주소를 가짜 인물·집합 개체·수량으로 만들지 않는다. 별칭 중복을 거부하고 part_of 대상은 합치지 않는다. 기존 목록 없는 core 바이트와 64행·32소유자 한도는 유지한다. 담당자 검증 64개·155 subtest와 문구 필드 수정까지 함께 고정한 루트 회귀 203회·고유 197개·592개 subtest가 통과했다. [A단계 통합 근거](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MEMBER-SCOPE-STAGEA-ROOT-INTEGRATION-01.json)는 이 범위와 아직 구현하지 않은 공유 resolver·native 집합 선택·전체 E 확장·compose/runtime 집합 채택을 구분한다.
 
+`phrase_en`·`phrase_ko`가 있는 실제 381개 후보의 762개 문자열을 자동 의미 단위 목록과 전체 풀 검색 labels에 포함했다. 구조 전수 대조에서 381개 문서 recipe와 362개 검색 텍스트가 바뀌었으며, 문구가 중복되어 텍스트가 같은 19개도 새 projection recipe로 재자격화했다. 나머지 17,869개 원본의 필드·텍스트·recipe는 그대로이고, positive 문서 중 기존 같은 공간 벡터 17,799개를 정확히 재사용했다. 네트워크·API 키 없이 문서 381개와 캐시 없는 새 질의 1개를 설치된 로컬 모델로 임베딩했다. 전체 원본·파생 closure 검증, 세대 `e9a03bb489e8b03cb7846787fcbe6c0f6e6ede02ac106a998ecbc6c57f6e9942` publication·실제 acquire·원본 payload 일치와 새 문구의 BM25F/코사인/RRF·샤드 pruning 검증을 통과했다. [문구 필드 통합 근거](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-NAMED-PHRASE-INTEGRATION-REPORT-01.json)는 이 기능 검색 검증을 최종 146개 슬롯의 실제 core-bound 품질 평가·태그 승인과 구분한다. Gemini는 0회이며 운영 원본·catalog 139개·native 자격 0개는 유지한다. 연구 원본의 `application_contract` 46개는 별도의 명명된 native coverage 보완 대상으로 남겨 두었다.
+
 ## 6단계 — 확정 연결 적용과 무결성 검증
 
 5단계의 직접 검토 승인 대장과 현재 source/catalog hash가 일치하는 추가·제거 관계만 native 원본에 적용한다. Gemini 초안·단순 유사도·규칙 출력에서 관계를 자동 수입하지 않는다. 기존 후보 ID와 계속 유효한 binding ID는 유지한다. 새로운 binding ID는 후보·슬롯 관계와 검토한 계약에 따라 안정적으로 생성하고 재실행해도 같은 관계가 중복되지 않도록 한다. 동일 후보·동일 슬롯의 불필요한 다중 관계는 허용하지 않는다. 조건별 변형이 필요하면 한 관계 안에 명시적인 적용 대안을 기록하며 검색 투표를 추가하지 않는다.
