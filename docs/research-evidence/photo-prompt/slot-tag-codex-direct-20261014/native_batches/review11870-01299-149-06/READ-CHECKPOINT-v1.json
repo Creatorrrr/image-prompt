@@ -1,0 +1,1075 @@
+{
+  "CID_closure": {},
+  "actual_whole_original_current_5B_binding_closure_read": 1,
+  "assignment": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/prepared/review11870-01299-149-06/ASSIGNMENT.json",
+    "file_sha256": "fbb0c16503e76c409adff8a4f2985cfe16a339ed0b27a453333022094a693e52",
+    "sha256": "e99f1a87234154e04ffbc7b265985a75d76f6631975e60182bfc36536b56ee78"
+  },
+  "binding_closure": {},
+  "current_after": {
+    "conditions": {
+      "native_guards": {
+        "rules": [
+          {
+            "dimension": "subject",
+            "id": "initiating_hand_kind",
+            "kind": "frozen_value",
+            "owner": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            },
+            "property": "entity.type",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "hand"
+            }
+          },
+          {
+            "id": "item_not_initiating_hand",
+            "kind": "owner_relation",
+            "left": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "exchange_item"
+            },
+            "relation": "disjoint",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            }
+          },
+          {
+            "id": "each_other_hand_kind",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "dimension": "subject",
+              "id": "kind",
+              "kind": "frozen_value",
+              "owner": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "hand"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          },
+          {
+            "id": "each_other_hand_separate",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "id": "separate_hand",
+              "kind": "owner_relation",
+              "left": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "relation": "disjoint",
+              "right": {
+                "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+                "kind": "source_target",
+                "target": "initiating_hand"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          },
+          {
+            "id": "each_other_hand_not_item",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "id": "separate_item",
+              "kind": "owner_relation",
+              "left": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "relation": "disjoint",
+              "right": {
+                "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+                "kind": "source_target",
+                "target": "exchange_item"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          }
+        ],
+        "schema": "photo-native-source-guards/v3"
+      }
+    },
+    "content": {
+      "application_contract": "This revised candidate deliberately selects one bounded physical-handoff application of the former ambiguous exchange label. It does not claim that the old label uniquely established an item handoff, and it does not qualify gesture-only or information exchanges. Use one independently declared existing initiating hand, the complete nonempty independently declared existing other-hands scope, and one independently declared existing generic physical item. Select these exact targets from the frozen request/input/core before discovery. Each hand must have independently declared entity presence and the exact entity.type/v1 value hand. The item must have independent entity presence and the exact entity.kind/v1 value physical_item. The initiating hand must be explicitly disjoint from each other hand, and the item explicitly disjoint from every hand. These are application prerequisites, not new entities, a fixed anatomical count, a subtype inferred from a label or a category-to-owner default. Retain every independently declared ownership and part relationship. Neither human identity, a common carrier nor different people is required. Select macro shot scale and hands-only participant framing. Only the participating hands are visible as participant anatomy; the existing item remains visible, and this does not require deletion of unrelated background. Perform the physical handoff in progress on the selected item with every selected hand as an actual receiver. Keep that performed action as an effect rather than a frozen-action prerequisite, context or preservation. Both image framing effects require the separately selected complete framing_affected_owners inventory. That inventory must already be explicitly authored from all actual frozen request inputs before discovery, with exact existing presence for every member. It must name every actual owner affected by this macro coverage and crop, including the selected item and hands and each separately declared affected carrier, body region or other scene object. Its membership must be directly reviewed against the actual request, topology and selected framing. An inventory label, complete flag, hash or successful selector validation does not establish that semantic completeness. Do not invent a carrier, equate a hand with its carrier, infer descendants or construct this inventory from a discovered candidate. Both framing effects have the item, every selected hand and every member of that complete framing inventory as actual receivers. The independent framing scope may overlap the explicitly repeated hand/item endpoints; expand the exact union without inventing another entity or omitting an actual receiver. If any affected carrier or body region cannot be independently addressed and included, this application is not eligible. Apply all actual owner, ancestor, partial-property and whole-dimension locks to this complete union. No exact finger pose, contact configuration, support geometry, item coordinate, trajectory, completed ownership transfer, item subtype, camera hardware, focal length, focus plane or depth of field is selected here. If an actual selected application adds any such mutation, it requires its own complete source/effect/receiver review before use. Preserve independent identity and topology.",
+      "en": "Macro framing of existing hands physically handing off one existing item, with only their hands visible as participant anatomy.",
+      "ko": "기존 물체 하나를 실제로 주고받는 여러 기존 손의 매크로 구도. 참여자의 신체 부위는 그 손들만 보인다.",
+      "tags": [
+        "portrait",
+        "relationship",
+        "macro"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "framing",
+        "action"
+      ],
+      "properties": [
+        {
+          "dimension": "framing",
+          "property": "shot.scale",
+          "target": "image"
+        },
+        {
+          "dimension": "framing",
+          "property": "framing.coverage",
+          "target": "image"
+        },
+        {
+          "dimension": "action",
+          "property": "action.interaction.exchange",
+          "target": "exchange_item"
+        }
+      ]
+    },
+    "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+    "provenance": [
+      {
+        "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+        "source": "slot:composition:hands_only_exchange_macro"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "exact_5B": {
+    "all_roles_considered": true,
+    "authored_decision": {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+      "item": 50,
+      "sha256": "d7699dfe43c33202218d4378b08e30670a9d7a2cf707feeda7dd7fb85865cf0f"
+    },
+    "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+    "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+    "corrections": [],
+    "facts": [
+      {
+        "dimension": "framing",
+        "pointer": "/content/en",
+        "property": "shot.scale.macro",
+        "quote": "hands-only exchange macro composition",
+        "realization_id": "base",
+        "target": "image"
+      },
+      {
+        "dimension": "framing",
+        "pointer": "/content/en",
+        "property": "framing.coverage.hands_only",
+        "quote": "hands-only exchange macro composition",
+        "realization_id": "base",
+        "target": "hands"
+      },
+      {
+        "dimension": "action",
+        "pointer": "/content/en",
+        "property": "relation.action.exchange",
+        "quote": "hands-only exchange macro composition",
+        "realization_id": "base",
+        "target": "participants"
+      }
+    ],
+    "independent_human_review": false,
+    "meaning_summary": "A macro view includes only hands during an exchange.",
+    "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+    "recommended_kind": "visual_option",
+    "reference_sha256": {},
+    "rejected_boundaries": [
+      "No whole bodies, object type, exact person count or relationship is supplied."
+    ],
+    "review_method": "codex_subagent_direct_source_read",
+    "review_provenance": {
+      "assignment_id": "review_01250_02250",
+      "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+      "model": "gpt-6.1-sol",
+      "range": [
+        1250,
+        1500
+      ],
+      "reasoning_effort": "high",
+      "task_name": "/root/review_01250_02250",
+      "worker_note": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+        "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+      }
+    },
+    "reviewer": "Codex",
+    "roles": [
+      {
+        "evidence": [
+          {
+            "dimension": "framing",
+            "pointer": "/content/en",
+            "property": "shot.scale.macro",
+            "quote": "hands-only exchange macro composition",
+            "target": "image"
+          }
+        ],
+        "rationale": "A macro view includes only hands during an exchange.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "direct",
+        "slot_id": "shot_scale"
+      },
+      {
+        "evidence": [
+          {
+            "dimension": "framing",
+            "pointer": "/content/en",
+            "property": "framing.coverage.hands_only",
+            "quote": "hands-only exchange macro composition",
+            "target": "hands"
+          }
+        ],
+        "rationale": "A macro view includes only hands during an exchange.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "direct",
+        "slot_id": "subject_framing"
+      },
+      {
+        "evidence": [
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "relation.action.exchange",
+            "quote": "hands-only exchange macro composition",
+            "target": "participants"
+          }
+        ],
+        "rationale": "A macro view includes only hands during an exchange.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "direct",
+        "slot_id": "relational_action"
+      }
+    ],
+    "schema": "photo-codex-direct-review/v2",
+    "source_record_sha256": "08f25720f6c1c234a428db16034db49ed2a7acd0d6878fbefe643f7b56abce2a",
+    "status": "approved",
+    "uncertainties": []
+  },
+  "fullspecs_actual_fresh_read": {
+    "action": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "A declared actor or object performing one concrete activity at the selected instant.",
+      "description_ko": "소유자가 특정 시점에 수행하는 동작: 시선·연속 절차·정지 자세가 섞임; 과정 단계와 순간 동작 구별",
+      "dimensions": [
+        "action"
+      ],
+      "evidence_terms": [
+        "holding",
+        "playing",
+        "walking",
+        "working",
+        "performing",
+        "hand"
+      ],
+      "excludes": [
+        "시선·연속 절차·정지 자세가 섞임; 과정 단계와 순간 동작 구별"
+      ],
+      "id": "action",
+      "includes": [
+        "A declared actor or object performing one concrete activity at the selected instant."
+      ],
+      "neighbors": [
+        "body_pose",
+        "camera_movement",
+        "contact_point",
+        "hand_pose",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "action.",
+        "activity.",
+        "operation."
+      ],
+      "semantic_role": "direct"
+    },
+    "anatomical_connection": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event"
+      ],
+      "description": "Ownership and continuity, articulation, attachment or explicitly intended separation of anatomical parts of a declared biological subject, including a plant or declared botanical part. Explicitly depicted anatomy remains owned by its representation; non-anatomical artifact joins remain separate.",
+      "description_ko": "선언된 생물 주체의 해부학적 부위 소유·연속·관절·부착 또는 명시적으로 의도된 분리이며, 식물 또는 명시된 식물 부위의 꽃·잎·자기 줄기 연결도 포함한다. 명시된 해부학적 묘사는 그 표현물의 소유 범위에 머문다. 형태·비율·단순 접촉·비해부학적 공예물 접합과 구별하며 생존·성장·종을 추정하지 않는다.",
+      "dimensions": [
+        "body_geometry"
+      ],
+      "evidence_terms": [
+        "joins",
+        "connect",
+        "root",
+        "emerging",
+        "continuous",
+        "attached",
+        "bloom attached to its own stem",
+        "leaf on the same branch",
+        "꽃과 자기 줄기 연결",
+        "같은 가지의 잎"
+      ],
+      "excludes": [
+        "Anatomical contour, regional volume, relative proportion or part names alone without an actual ownership, continuity, articulation, attachment or intended-separation proposition.",
+        "Touching, nearness, overlap or visual alignment of separately owned subjects/objects alone; contact does not merge anatomy or establish a shared biological owner.",
+        "Object hinges, hardware branches, textile/lace/paper flower assemblies and floral graphic-path joins alone. Depicted anatomical connection requires an explicitly declared anatomical depiction and remains scoped there, never inferred live continuity.",
+        "Continuity/attachment does not prove that an owner is alive, growing, functional, healthy, a particular species or made by a particular process; a cut or depicted botanical part does not gain a hidden whole plant.",
+        "An artifact or picture cannot alter/add a living actor or plant merely because its design resembles a biological part. Actor/plant/representation owner labels, source effects and optional members/profiles are not independent anatomical evidence."
+      ],
+      "id": "anatomical_connection",
+      "includes": [
+        "Ownership and continuity, articulation or explicitly intended separation of declared human or other animal anatomical parts, retaining each actual owner and endpoint.",
+        "The declared botanical bloom remaining attached to its own woody stem; separate blossoms attaching along the same continuous branch; leaves belonging to that same declared plant/branch. Source-stated absence or separation is retained without inventing extra organs.",
+        "Explicit anatomical attachment/continuity within a declared representation remains on the represented anatomy. A flat ornament path or assembled craft junction alone does not establish an anatomical relation.",
+        "Where a fabric rosette and a separate existing biological flower coexist, their distinct owners remain distinct: the flower own petal/stem relation cannot be donated to the garment, and cloth attachment cannot be recast as plant growth."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "body_region",
+        "brow_style",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_geometry",
+        "facial_hair",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hair_style",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "species_marker",
+        "wardrobe_style",
+        "wearable_accessory",
+        "body_form",
+        "object_structure",
+        "surface_pattern"
+      ],
+      "owners": [
+        "actor",
+        "plant",
+        "representation"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "body.connection",
+        "body.topology",
+        "anatomy.connection",
+        "topology."
+      ],
+      "semantic_role": "direct"
+    },
+    "body_form": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Owned non-facial anatomical contour, regional volume or visible muscle and tendon form of a declared biological subject, including a plant or declared botanical part. Explicitly depicted anatomy remains owned by its representation. Independent of connection topology, relative proportions, pose, garment fit and non-anatomical artifact construction.",
+      "description_ko": "선언된 생물 주체의 얼굴 이외 해부학적 윤곽·국소 부피·근육·힘줄 형태이며, 식물 또는 명시된 식물 부위의 기관 형태도 포함한다. 명시된 해부학적 묘사는 그 표현물의 소유 범위에 머문다. 연결 구조·상대 비율·자세·의복 부피·비해부학적 물건 구조와 구별하며 생존 상태·종·건강·능력·정체성을 추정하지 않는다.",
+      "dimensions": [
+        "body_geometry",
+        "appearance"
+      ],
+      "evidence_terms": [
+        "muscle",
+        "tendon",
+        "contour",
+        "body build",
+        "body form",
+        "vein contour",
+        "botanical organ form",
+        "bloom form",
+        "leaf contour",
+        "근육",
+        "힘줄",
+        "윤곽",
+        "꽃 기관 형태",
+        "잎 윤곽"
+      ],
+      "excludes": [
+        "Body/plant region names, biological class words or connection topology alone without an independently stated anatomical contour or regional form.",
+        "Relative proportions, pose, facial geometry, garment fit or non-anatomical object/garment construction alone.",
+        "Floral graphic paths, repeating vegetal ornament, branch-shaped hardware or fabric/paper/lace flower parts do not become biological anatomy from resemblance or petal/stem labels. An explicitly declared anatomical depiction may describe represented organs only; its physical carrier remains an artifact.",
+        "A represented or artificial anatomical form does not alter or add a living actor/plant, and does not establish that its carrier is alive or that any depicted species exists physically.",
+        "Body weight, health, strength, biological age, origin, species, growth capacity, material chemistry or fabrication inferred from form.",
+        "Source owner, positive form and actual application scope must be explicit; metadata, source effects, an optional member/profile or an actor/plant/representation role word alone is not a form fact."
+      ],
+      "id": "body_form",
+      "includes": [
+        "Restrained visible muscle planes on a declared human or other animal; a localized neck vein contour or gluteal-thigh surface fold.",
+        "Large distinct floral segments forming an open cup on the declared botanical bloom; broad bounded leaf form or layered flower-organ form on its own declared plant owner. Plant form is not a claim of physiological life, growth capacity or species identification.",
+        "Explicitly depicted biological anatomy, including represented botanical organ form, stays on its declared representation. The source must actually describe anatomical form, not merely a floral style, motif or generic craft part.",
+        "A biological flower and a fabric rosette may occur in the same record, but anatomical form is assessed only on the declared biological flower or explicit anatomical depiction; cloth-fold form remains on the garment/craft owner."
+      ],
+      "neighbors": [
+        "anatomical_connection",
+        "body_pose",
+        "body_region",
+        "facial_geometry",
+        "garment_fit",
+        "silhouette_proportion",
+        "skin_finish",
+        "texture",
+        "object_structure",
+        "surface_pattern"
+      ],
+      "owners": [
+        "actor",
+        "plant",
+        "representation"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "body.form",
+        "body.contour",
+        "body.morphology",
+        "body.muscle",
+        "body.tendon",
+        "body.build",
+        "body.gluteal_thigh_boundary"
+      ],
+      "semantic_role": "direct"
+    },
+    "composition": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Arrangement of declared elements and negative space within one frame.",
+      "description_ko": "프레임 안의 요소 배치와 공간 관계: 촬영 범위·플랫폼 안전 영역을 구별; 각 역할을 실제로 표현할 때만 다중 연결",
+      "dimensions": [
+        "composition"
+      ],
+      "evidence_terms": [
+        "frame",
+        "arrangement",
+        "negative space",
+        "composition",
+        "layer"
+      ],
+      "excludes": [
+        "촬영 범위·플랫폼 안전 영역을 구별; 각 역할을 실제로 표현할 때만 다중 연결"
+      ],
+      "id": "composition",
+      "includes": [
+        "Arrangement of declared elements and negative space within one frame."
+      ],
+      "neighbors": [
+        "format",
+        "platform_framing",
+        "shot_scale",
+        "spatial_depth",
+        "subject_framing",
+        "visual_density",
+        "visual_hierarchy"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "layout.",
+        "composition.",
+        "placement."
+      ],
+      "semantic_role": "direct"
+    },
+    "contact_point": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Explicit contact, support or occlusion relation with each endpoint and owner identified.",
+      "description_ko": "연결된 소유자·신체 부위·물건의 접촉 관계: 행동명과 구별; 지지·가림·압력 표현은 실제 연결과 상태 근거 필요",
+      "dimensions": [
+        "relationship"
+      ],
+      "evidence_terms": [
+        "contact",
+        "touch",
+        "rests on",
+        "support",
+        "holds",
+        "occludes"
+      ],
+      "excludes": [
+        "행동명과 구별; 지지·가림·압력 표현은 실제 연결과 상태 근거 필요"
+      ],
+      "id": "contact_point",
+      "includes": [
+        "Explicit contact, support or occlusion relation with each endpoint and owner identified."
+      ],
+      "neighbors": [
+        "action",
+        "body_pose",
+        "camera_movement",
+        "hand_pose",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "contact.",
+        "body.contact",
+        "support.",
+        "relation.contact"
+      ],
+      "semantic_role": "direct"
+    },
+    "hand_pose": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Static shape and articulation of owned hands and fingers, with support and contact represented separately.",
+      "description_ko": "소유 손의 정적 형태와 연결: 물건 사용 동작·손 접촉과 구별; 실제로 둘을 표현하면 다중 역할 허용",
+      "dimensions": [
+        "pose"
+      ],
+      "evidence_terms": [
+        "hand",
+        "finger",
+        "palm",
+        "thumb",
+        "손"
+      ],
+      "excludes": [
+        "물건 사용 동작·손 접촉과 구별; 실제로 둘을 표현하면 다중 역할 허용"
+      ],
+      "id": "hand_pose",
+      "includes": [
+        "Static shape and articulation of owned hands and fingers, with support and contact represented separately."
+      ],
+      "neighbors": [
+        "action",
+        "body_pose",
+        "camera_movement",
+        "contact_point",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "hands.pose",
+        "hand.pose",
+        "fingers.pose",
+        "body.hand_pose"
+      ],
+      "semantic_role": "direct"
+    },
+    "object_structure": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Visible non-anatomical geometry, bounded parts and structural connections owned by one declared physical object or fixture, independent of its scene role, frame placement and current use state.",
+      "description_ko": "선언된 물리적 물체·설비 자체의 비해부학적 형상, 경계가 있는 부품과 구조적 연결. 장면에서 맡는 용도·프레임 배치·현재 사용 상태와 구별하며, 몸·의복 특화 구조의 소유 범위를 보존한다.",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "bounded edge",
+        "part",
+        "hinge",
+        "connection",
+        "recess",
+        "strap path",
+        "부품",
+        "가장자리",
+        "힌지",
+        "연결",
+        "홈",
+        "끈 경로"
+      ],
+      "excludes": [
+        "Anatomical form, pose or continuity, including depicted anatomy whose representation ownership must remain explicit.",
+        "Frame arrangement, camera viewpoint, relative prop placement or image acuity alone.",
+        "Current open/closed, use, damage or readiness state without a separately evidenced structural feature.",
+        "Material identity or repeated surface microstructure alone; abstract two-dimensional graphic-path geometry alone.",
+        "A garment-specific construction fact already fully owned by garment_detail does not receive a duplicate generic role for that same fact. Simultaneous roles require separately evidenced properties or distinct owned components.",
+        "An optional garment member/profile cannot supply unconditional garment ownership or garment type to a generic parent.",
+        "Macroscopic form of a free fluid, coherent material mass or transient material body is material_form when that material body is the actual declared carrier. A separately identified vessel, fixture, discrete object or constructed item keeps its own object_structure scope. Do not duplicate the same contour merely by renaming its carrier object or matter."
+      ],
+      "id": "object_structure",
+      "includes": [
+        "A declared case hinge and separately bounded disc recess; phone halves joined at their hinge.",
+        "A named strap assembly with a bar and incoming/returning strap path; a generic attached textile panel with its own bounded edge.",
+        "An identified fixture part and its structural joint; no claim of hidden manufacture or performance."
+      ],
+      "neighbors": [
+        "garment_detail",
+        "anatomical_connection",
+        "prop",
+        "prop_state",
+        "prop_placement",
+        "composition",
+        "contact_point",
+        "texture",
+        "surface_material",
+        "material_form"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "object.structure",
+        "object.geometry",
+        "object.connection"
+      ],
+      "semantic_role": "direct"
+    },
+    "physical_motion": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Physical motion or rest of declared actors, objects and materials, separate from recorded streaks or shake.",
+      "description_ko": "물리 움직임 상태와 촬영된 움직임 표현: 정지·깜빡임·카메라 흔들림·영상 궤적이 섞임; owner와 image plane별 분리 여부 결정",
+      "dimensions": [
+        "action"
+      ],
+      "evidence_terms": [
+        "motion",
+        "moving",
+        "rest",
+        "still",
+        "wind",
+        "flow"
+      ],
+      "excludes": [
+        "정지·깜빡임·카메라 흔들림·영상 궤적이 섞임; owner와 image plane별 분리 여부 결정"
+      ],
+      "id": "physical_motion",
+      "includes": [
+        "Physical motion or rest of declared actors, objects and materials, separate from recorded streaks or shake."
+      ],
+      "neighbors": [
+        "action",
+        "body_pose",
+        "camera_movement",
+        "contact_point",
+        "hand_pose",
+        "motion_rendering"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "motion.",
+        "movement.",
+        "body.motion",
+        "material.motion"
+      ],
+      "semantic_role": "direct"
+    },
+    "prop_placement": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Position and orientation of owned props relative to named actors, surfaces and boundaries.",
+      "description_ko": "소품의 방향·배치·주체와의 공간 관계: 막대 방향뿐 아니라 장벽·주머니·둘레가 섞임; 물건 상태는 prop_state",
+      "dimensions": [
+        "composition",
+        "pose"
+      ],
+      "evidence_terms": [
+        "held",
+        "beside",
+        "between",
+        "horizontal",
+        "pocket",
+        "encircles"
+      ],
+      "excludes": [
+        "막대 방향뿐 아니라 장벽·주머니·둘레가 섞임; 물건 상태는 prop_state"
+      ],
+      "id": "prop_placement",
+      "includes": [
+        "Position and orientation of owned props relative to named actors, surfaces and boundaries."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "prop",
+        "prop_state",
+        "wardrobe_layering"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "props.placement",
+        "prop.position",
+        "prop.orientation",
+        "objects.position"
+      ],
+      "semantic_role": "direct"
+    },
+    "prop_state": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Owned object's current use, attachment, readiness, damage or arrangement state, with occupational context optional.",
+      "description_ko": "물건의 사용·정리·고정·손상 상태: 업무 소품으로만 한정할 근거가 약함; duty는 맥락 조건으로 보존",
+      "dimensions": [
+        "role"
+      ],
+      "evidence_terms": [
+        "in use",
+        "secured",
+        "set-down",
+        "worn",
+        "sorted",
+        "folded",
+        "open"
+      ],
+      "excludes": [
+        "업무 소품으로만 한정할 근거가 약함; duty는 맥락 조건으로 보존"
+      ],
+      "id": "prop_state",
+      "includes": [
+        "Owned object's current use, attachment, readiness, damage or arrangement state, with occupational context optional."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "prop",
+        "prop_placement",
+        "wardrobe_layering"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "props.state",
+        "prop.state",
+        "objects.state"
+      ],
+      "semantic_role": "direct"
+    },
+    "relational_action": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Concrete interaction with explicitly declared action endpoints, including biological, mechanical or represented participants and their objects.",
+      "description_ko": "명시된 행위 주체와 상대·물체 사이의 구체적 상호 동작. 인간·동물·기계·묘사된 대상을 포함하며 실제 행위와 소유·접촉 관계를 구별한다.",
+      "dimensions": [
+        "action",
+        "relationship"
+      ],
+      "evidence_terms": [
+        "handoff",
+        "offering",
+        "conversation",
+        "together",
+        "listener",
+        "contact"
+      ],
+      "excludes": [
+        "A role label, co-presence, proximity or an isolated hand pose does not supply a performed interaction.",
+        "Do not add a counterpart, helper, contact, tool or action endpoint from a verb category alone.",
+        "Do not split one actual self-owned body into two people or merge explicitly distinct participants."
+      ],
+      "id": "relational_action",
+      "includes": [
+        "The source explicitly describes the participants or a participant and an object interacting; each endpoint must be independently supported.",
+        "Self-directed interaction can address an explicitly owned part or object while retaining its actual part/whole relationship.",
+        "A human participant is not compulsory. Intrinsic source conditions, distinctness or part ownership, and actual performed action remain mandatory."
+      ],
+      "neighbors": [
+        "action",
+        "aftermath_trace",
+        "color",
+        "companion_animal",
+        "contact_point",
+        "crowd_density",
+        "physical_motion",
+        "proxemics",
+        "reality_anchor",
+        "reflection_logic",
+        "scale_relation",
+        "sensory_cue",
+        "shadow_relation",
+        "subject",
+        "subject_count",
+        "surreal_physics_detail",
+        "transformation_stage",
+        "visible_text"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "action.interaction",
+        "relation.action",
+        "interaction."
+      ],
+      "semantic_role": "direct"
+    },
+    "shot_scale": {
+      "applicability": {
+        "deny_domains": []
+      },
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Extent of subject coverage relative to the photograph's field, without equating it to focal length or physical distance.",
+      "description_ko": "대상 대비 촬영 범위의 규모: 포함해야 할 부위의 목적은 subject_framing; 렌즈·거리를 범위만으로 확정하지 않음",
+      "dimensions": [
+        "framing"
+      ],
+      "evidence_terms": [
+        "shot",
+        "close-up",
+        "wide",
+        "full-length",
+        "waist-up"
+      ],
+      "excludes": [
+        "포함해야 할 부위의 목적은 subject_framing; 렌즈·거리를 범위만으로 확정하지 않음"
+      ],
+      "id": "shot_scale",
+      "includes": [
+        "Extent of subject coverage relative to the photograph's field, without equating it to focal length or physical distance."
+      ],
+      "neighbors": [
+        "composition",
+        "format",
+        "platform_framing",
+        "spatial_depth",
+        "subject_framing",
+        "visual_density",
+        "visual_hierarchy"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "shot.scale",
+        "framing.shot_scale"
+      ],
+      "semantic_role": "direct"
+    },
+    "subject_framing": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Inclusion, crop and visibility of named subjects or body regions, with explicit owner and participant count.",
+      "description_ko": "지정 주체와 필요한 부위의 프레임 포함 범위: body_framing·partner_framing은 소유자·범위로 통합 검토; shot_scale과 목적 구별",
+      "dimensions": [
+        "framing"
+      ],
+      "evidence_terms": [
+        "frame",
+        "crop",
+        "visible",
+        "includes",
+        "preserving"
+      ],
+      "excludes": [
+        "body_framing·partner_framing은 소유자·범위로 통합 검토; shot_scale과 목적 구별"
+      ],
+      "id": "subject_framing",
+      "includes": [
+        "Inclusion, crop and visibility of named subjects or body regions, with explicit owner and participant count."
+      ],
+      "neighbors": [
+        "composition",
+        "format",
+        "platform_framing",
+        "shot_scale",
+        "spatial_depth",
+        "visual_density",
+        "visual_hierarchy"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "framing.",
+        "frame.coverage",
+        "body.framing",
+        "subject.visibility"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "input": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/prepared/review11870-01299-149-06/INPUT.json",
+    "file_sha256": "adc0f035be70505485b2088772187fa4181954f51f7180214610ec2188d3aa5a",
+    "sha256": "4421cd91364eff2790761439ce4b473038ea15fc09ec1edb1a034369c2dfafc5"
+  },
+  "manual_findings": [
+    "Selected editorialphysicalhandoff source is not the unique/allmeaning oldexchange interpretation.",
+    "Initiatingexistinghand plus completeotherhandsscope and physicalitem require independentpresence/types/exactdisjointness, actualcarriers can same/different; completeframinginventory is a separate actualrequest reviewed union, not candidatecreated.",
+    "App item remains visible may support precise preservation only when sameitem actualimage visibility is independentlyfrozen; genericentitypresence does not supplyvisibility. No visibility P/PR may be fabricated fromexistence.",
+    "Current effectcanonicalprops shot.scale/framing.coverage/action.interaction.exchange preserve actualselection, but completeRx expansion only repeats these propertynames. Different actualvisibility/framing locks may remainunrepresented; sourceeffectpositive and permission completeness must be separatelytested.",
+    "No nativeproof/fullcompact/admission success claimed. Next actual readonly primitive repro and minimumcontract candidate remain unexecuted/unwritten at this checkpoint."
+  ],
+  "model": "gpt-6.1-sol",
+  "native_proof": null,
+  "operating": 0,
+  "original": {
+    "conditions": {},
+    "content": {
+      "en": "hands-only exchange macro composition",
+      "ko": "손만 보이는 교환 매크로 구도",
+      "tags": [
+        "portrait",
+        "relationship",
+        "macro"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "composition"
+      ],
+      "properties": []
+    },
+    "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+    "provenance": [
+      {
+        "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+        "source": "slot:composition:hands_only_exchange_macro"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "ownbindings": {
+    "bind_2e72784a26885ceaa1d645d25bd9a468": {
+      "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+      "conditions": {
+        "subject_applicability": {}
+      },
+      "id": "bind_2e72784a26885ceaa1d645d25bd9a468",
+      "role": "optional",
+      "semantic_role": "direct",
+      "slot_id": "composition",
+      "weight": 0.8
+    }
+  },
+  "paused_for": "Root priority: exactfirst50-06 single1255anchor repair; preserve this intermediate06read checkpoint and resume1299repro afterward.",
+  "prepared": 1,
+  "prepared_packet": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/prepared/review11870-01299-149-06/PREPARED-PACKET.json",
+    "file_sha256": "3775572b023809c1b64b652427310a84012aed67a17e7bdf8e0e19d17f7f1171",
+    "sha256": "9aa8aa232c103f59ccd0f21bef890408630fb1f3e538c903b2eeac001d1f5a61"
+  },
+  "reasoning_effort": "high",
+  "root_acceptance": 0,
+  "root_selection": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/root-hands-exchange-source-plan-14/ROOT-SOURCE-SELECTION.json",
+    "file_sha256": "78dac667da08a74560a0379d361162d0f3b2082b10075f9be31a114a027cb7ac",
+    "sha256": "767f91a79a44844063ab2f83bef5723d20e59aff18a190a02d2a501b599c7b41"
+  },
+  "schema": "photo-manual-source-read-intermediate-checkpoint/v1",
+  "signature": null,
+  "source_code_Git_model_network_mutations": 0,
+  "task_name": "/root/review_11870_12250",
+  "utc": "2026-10-14T22:41:56.586967+00:00",
+  "whole_catalog_review_lossless_reuse": "06catalog_review entireobject equals formal05 INPUT catalog_review exactly; thirteen related fullspecs freshly read explicitly, no new149fullcatalog claim. Original1299/wholecontrolledorigin and04pending exactsame read formal05, hashbound source original125d. Current06ENKO/App allfulltext and5v3guards/3E directly freshlyread."
+}

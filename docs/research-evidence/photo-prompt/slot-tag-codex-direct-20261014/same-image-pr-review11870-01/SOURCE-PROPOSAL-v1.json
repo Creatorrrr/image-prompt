@@ -1,0 +1,604 @@
+{
+  "actual_1299_qualified": false,
+  "actual_realization_id": "base",
+  "actual_validation": "Frozen source-guard grammar only; current pseudo source/fact sketch is not upgraded into qualified proof. Fresh root ASSIGNMENT/INPUT and full proof review required.",
+  "after_full": {
+    "conditions": {
+      "native_guards": {
+        "rules": [
+          {
+            "dimension": "subject",
+            "id": "initiating_hand_kind",
+            "kind": "frozen_value",
+            "owner": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            },
+            "property": "entity.type",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "hand"
+            }
+          },
+          {
+            "id": "item_not_initiating_hand",
+            "kind": "owner_relation",
+            "left": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "exchange_item"
+            },
+            "relation": "disjoint",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            }
+          },
+          {
+            "id": "each_other_hand_kind",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "dimension": "subject",
+              "id": "kind",
+              "kind": "frozen_value",
+              "owner": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "hand"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          },
+          {
+            "id": "each_other_hand_separate",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "id": "separate_hand",
+              "kind": "owner_relation",
+              "left": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "relation": "disjoint",
+              "right": {
+                "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+                "kind": "source_target",
+                "target": "initiating_hand"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          },
+          {
+            "id": "each_other_hand_not_item",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "id": "separate_item",
+              "kind": "owner_relation",
+              "left": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "relation": "disjoint",
+              "right": {
+                "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+                "kind": "source_target",
+                "target": "exchange_item"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          },
+          {
+            "dimension": "framing",
+            "id": "item_visible_in_selected_image",
+            "kind": "frozen_entity_relation",
+            "left": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "exchange_item"
+            },
+            "property": "framing.visible_in",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "image"
+            },
+            "value_type": "entity.owner_id/v1"
+          }
+        ],
+        "schema": "photo-native-source-guards/v3"
+      }
+    },
+    "content": {
+      "application_contract": "This revised candidate deliberately selects one bounded physical-handoff application of the former ambiguous exchange label. It does not claim that the old label uniquely established an item handoff, and it does not qualify gesture-only or information exchanges. Use one independently declared existing initiating hand, the complete nonempty independently declared existing other-hands scope, and one independently declared existing generic physical item. Select these exact targets from the frozen request/input/core before discovery. Each hand must have independently declared entity presence and the exact entity.type/v1 value hand. The item must have independent entity presence and the exact entity.kind/v1 value physical_item. The initiating hand must be explicitly disjoint from each other hand, and the item explicitly disjoint from every hand. These are application prerequisites, not new entities, a fixed anatomical count, a subtype inferred from a label or a category-to-owner default. Retain every independently declared ownership and part relationship. Neither human identity, a common carrier nor different people is required. Select macro shot scale and hands-only participant framing. Only the participating hands are visible as participant anatomy; the existing item remains visible, and this does not require deletion of unrelated background. Perform the physical handoff in progress on the selected item with every selected hand as an actual receiver. Keep that performed action as an effect rather than a frozen-action prerequisite, context or preservation. Both image framing effects require the separately selected complete framing_affected_owners inventory. That inventory must already be explicitly authored from all actual frozen request inputs before discovery, with exact existing presence for every member. It must name every actual owner affected by this macro coverage and crop, including the selected item and hands and each separately declared affected carrier, body region or other scene object. Its membership must be directly reviewed against the actual request, topology and selected framing. An inventory label, complete flag, hash or successful selector validation does not establish that semantic completeness. Do not invent a carrier, equate a hand with its carrier, infer descendants or construct this inventory from a discovered candidate. Both framing effects have the item, every selected hand and every member of that complete framing inventory as actual receivers. The independent framing scope may overlap the explicitly repeated hand/item endpoints; expand the exact union without inventing another entity or omitting an actual receiver. If any affected carrier or body region cannot be independently addressed and included, this application is not eligible. Apply all actual owner, ancestor, partial-property and whole-dimension locks to this complete union. No exact finger pose, contact configuration, support geometry, item coordinate, trajectory, completed ownership transfer, item subtype, camera hardware, focal length, focus plane or depth of field is selected here. If an actual selected application adds any such mutation, it requires its own complete source/effect/receiver review before use. Preserve independent identity and topology. The clause that the existing item remains visible means preservation of that same independently declared item in the same actual image selected as the image target, not visibility in another image or mere physical existence. Before discovery require the independently frozen framing.visible_in relation on that item with exact entity.owner_id/v1 value equal to that selected actual image, together with the separate literal framing/subject.visibility/subject.visibility/v1 value visible on the same item. These are existing input obligations, not visibility-creation effects or a pre-frozen hands-only result. A missing relation, relation to another non-equivalent image, missing literal visibility or contradictory hidden state does not satisfy this application. The actual request/source spans must independently support both declarations; a relabeled supplement or self-hash cannot supply that truth. Preserve the same item and image correspondence throughout the selected result.",
+      "en": "Macro framing of existing hands physically handing off one existing item, with only their hands visible as participant anatomy.",
+      "ko": "기존 물체 하나를 실제로 주고받는 여러 기존 손의 매크로 구도. 참여자의 신체 부위는 그 손들만 보인다.",
+      "tags": [
+        "portrait",
+        "relationship",
+        "macro"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "framing",
+        "action"
+      ],
+      "properties": [
+        {
+          "dimension": "framing",
+          "property": "shot.scale",
+          "target": "image"
+        },
+        {
+          "dimension": "framing",
+          "property": "framing.coverage",
+          "target": "image"
+        },
+        {
+          "dimension": "action",
+          "property": "action.interaction.exchange",
+          "target": "exchange_item"
+        }
+      ]
+    },
+    "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+    "provenance": [
+      {
+        "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+        "source": "slot:composition:hands_only_exchange_macro"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "after_source_record_sha256": "86a9180d68eda67e038a2a5950263585a1eac74f5c4c67f85b33d09cd8cf95ef",
+  "before_full": {
+    "conditions": {
+      "native_guards": {
+        "rules": [
+          {
+            "dimension": "subject",
+            "id": "initiating_hand_kind",
+            "kind": "frozen_value",
+            "owner": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            },
+            "property": "entity.type",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "hand"
+            }
+          },
+          {
+            "id": "item_not_initiating_hand",
+            "kind": "owner_relation",
+            "left": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "exchange_item"
+            },
+            "relation": "disjoint",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            }
+          },
+          {
+            "id": "each_other_hand_kind",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "dimension": "subject",
+              "id": "kind",
+              "kind": "frozen_value",
+              "owner": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "hand"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          },
+          {
+            "id": "each_other_hand_separate",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "id": "separate_hand",
+              "kind": "owner_relation",
+              "left": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "relation": "disjoint",
+              "right": {
+                "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+                "kind": "source_target",
+                "target": "initiating_hand"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          },
+          {
+            "id": "each_other_hand_not_item",
+            "kind": "for_each_member",
+            "member_variable": "hand",
+            "rule": {
+              "id": "separate_item",
+              "kind": "owner_relation",
+              "left": {
+                "kind": "bound_member",
+                "variable": "hand"
+              },
+              "relation": "disjoint",
+              "right": {
+                "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+                "kind": "source_target",
+                "target": "exchange_item"
+              }
+            },
+            "scope": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "other_hands"
+            }
+          }
+        ],
+        "schema": "photo-native-source-guards/v3"
+      }
+    },
+    "content": {
+      "application_contract": "This revised candidate deliberately selects one bounded physical-handoff application of the former ambiguous exchange label. It does not claim that the old label uniquely established an item handoff, and it does not qualify gesture-only or information exchanges. Use one independently declared existing initiating hand, the complete nonempty independently declared existing other-hands scope, and one independently declared existing generic physical item. Select these exact targets from the frozen request/input/core before discovery. Each hand must have independently declared entity presence and the exact entity.type/v1 value hand. The item must have independent entity presence and the exact entity.kind/v1 value physical_item. The initiating hand must be explicitly disjoint from each other hand, and the item explicitly disjoint from every hand. These are application prerequisites, not new entities, a fixed anatomical count, a subtype inferred from a label or a category-to-owner default. Retain every independently declared ownership and part relationship. Neither human identity, a common carrier nor different people is required. Select macro shot scale and hands-only participant framing. Only the participating hands are visible as participant anatomy; the existing item remains visible, and this does not require deletion of unrelated background. Perform the physical handoff in progress on the selected item with every selected hand as an actual receiver. Keep that performed action as an effect rather than a frozen-action prerequisite, context or preservation. Both image framing effects require the separately selected complete framing_affected_owners inventory. That inventory must already be explicitly authored from all actual frozen request inputs before discovery, with exact existing presence for every member. It must name every actual owner affected by this macro coverage and crop, including the selected item and hands and each separately declared affected carrier, body region or other scene object. Its membership must be directly reviewed against the actual request, topology and selected framing. An inventory label, complete flag, hash or successful selector validation does not establish that semantic completeness. Do not invent a carrier, equate a hand with its carrier, infer descendants or construct this inventory from a discovered candidate. Both framing effects have the item, every selected hand and every member of that complete framing inventory as actual receivers. The independent framing scope may overlap the explicitly repeated hand/item endpoints; expand the exact union without inventing another entity or omitting an actual receiver. If any affected carrier or body region cannot be independently addressed and included, this application is not eligible. Apply all actual owner, ancestor, partial-property and whole-dimension locks to this complete union. No exact finger pose, contact configuration, support geometry, item coordinate, trajectory, completed ownership transfer, item subtype, camera hardware, focal length, focus plane or depth of field is selected here. If an actual selected application adds any such mutation, it requires its own complete source/effect/receiver review before use. Preserve independent identity and topology.",
+      "en": "Macro framing of existing hands physically handing off one existing item, with only their hands visible as participant anatomy.",
+      "ko": "기존 물체 하나를 실제로 주고받는 여러 기존 손의 매크로 구도. 참여자의 신체 부위는 그 손들만 보인다.",
+      "tags": [
+        "portrait",
+        "relationship",
+        "macro"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "framing",
+        "action"
+      ],
+      "properties": [
+        {
+          "dimension": "framing",
+          "property": "shot.scale",
+          "target": "image"
+        },
+        {
+          "dimension": "framing",
+          "property": "framing.coverage",
+          "target": "image"
+        },
+        {
+          "dimension": "action",
+          "property": "action.interaction.exchange",
+          "target": "exchange_item"
+        }
+      ]
+    },
+    "id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+    "provenance": [
+      {
+        "sha256": "3dc099b4b94269a8800de4c55568d4edb73e41cf39be093d9cfedcf39d222cbe",
+        "source": "slot:composition:hands_only_exchange_macro"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "before_source_record_sha256": "e9870bd290b1bd682d9d79001c29a4affa65a4618ce2ed0cd43d46b0d15cfd33",
+  "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+  "exact_corrections": [
+    {
+      "after": "This revised candidate deliberately selects one bounded physical-handoff application of the former ambiguous exchange label. It does not claim that the old label uniquely established an item handoff, and it does not qualify gesture-only or information exchanges. Use one independently declared existing initiating hand, the complete nonempty independently declared existing other-hands scope, and one independently declared existing generic physical item. Select these exact targets from the frozen request/input/core before discovery. Each hand must have independently declared entity presence and the exact entity.type/v1 value hand. The item must have independent entity presence and the exact entity.kind/v1 value physical_item. The initiating hand must be explicitly disjoint from each other hand, and the item explicitly disjoint from every hand. These are application prerequisites, not new entities, a fixed anatomical count, a subtype inferred from a label or a category-to-owner default. Retain every independently declared ownership and part relationship. Neither human identity, a common carrier nor different people is required. Select macro shot scale and hands-only participant framing. Only the participating hands are visible as participant anatomy; the existing item remains visible, and this does not require deletion of unrelated background. Perform the physical handoff in progress on the selected item with every selected hand as an actual receiver. Keep that performed action as an effect rather than a frozen-action prerequisite, context or preservation. Both image framing effects require the separately selected complete framing_affected_owners inventory. That inventory must already be explicitly authored from all actual frozen request inputs before discovery, with exact existing presence for every member. It must name every actual owner affected by this macro coverage and crop, including the selected item and hands and each separately declared affected carrier, body region or other scene object. Its membership must be directly reviewed against the actual request, topology and selected framing. An inventory label, complete flag, hash or successful selector validation does not establish that semantic completeness. Do not invent a carrier, equate a hand with its carrier, infer descendants or construct this inventory from a discovered candidate. Both framing effects have the item, every selected hand and every member of that complete framing inventory as actual receivers. The independent framing scope may overlap the explicitly repeated hand/item endpoints; expand the exact union without inventing another entity or omitting an actual receiver. If any affected carrier or body region cannot be independently addressed and included, this application is not eligible. Apply all actual owner, ancestor, partial-property and whole-dimension locks to this complete union. No exact finger pose, contact configuration, support geometry, item coordinate, trajectory, completed ownership transfer, item subtype, camera hardware, focal length, focus plane or depth of field is selected here. If an actual selected application adds any such mutation, it requires its own complete source/effect/receiver review before use. Preserve independent identity and topology. The clause that the existing item remains visible means preservation of that same independently declared item in the same actual image selected as the image target, not visibility in another image or mere physical existence. Before discovery require the independently frozen framing.visible_in relation on that item with exact entity.owner_id/v1 value equal to that selected actual image, together with the separate literal framing/subject.visibility/subject.visibility/v1 value visible on the same item. These are existing input obligations, not visibility-creation effects or a pre-frozen hands-only result. A missing relation, relation to another non-equivalent image, missing literal visibility or contradictory hidden state does not satisfy this application. The actual request/source spans must independently support both declarations; a relabeled supplement or self-hash cannot supply that truth. Preserve the same item and image correspondence throughout the selected result.",
+      "before": "This revised candidate deliberately selects one bounded physical-handoff application of the former ambiguous exchange label. It does not claim that the old label uniquely established an item handoff, and it does not qualify gesture-only or information exchanges. Use one independently declared existing initiating hand, the complete nonempty independently declared existing other-hands scope, and one independently declared existing generic physical item. Select these exact targets from the frozen request/input/core before discovery. Each hand must have independently declared entity presence and the exact entity.type/v1 value hand. The item must have independent entity presence and the exact entity.kind/v1 value physical_item. The initiating hand must be explicitly disjoint from each other hand, and the item explicitly disjoint from every hand. These are application prerequisites, not new entities, a fixed anatomical count, a subtype inferred from a label or a category-to-owner default. Retain every independently declared ownership and part relationship. Neither human identity, a common carrier nor different people is required. Select macro shot scale and hands-only participant framing. Only the participating hands are visible as participant anatomy; the existing item remains visible, and this does not require deletion of unrelated background. Perform the physical handoff in progress on the selected item with every selected hand as an actual receiver. Keep that performed action as an effect rather than a frozen-action prerequisite, context or preservation. Both image framing effects require the separately selected complete framing_affected_owners inventory. That inventory must already be explicitly authored from all actual frozen request inputs before discovery, with exact existing presence for every member. It must name every actual owner affected by this macro coverage and crop, including the selected item and hands and each separately declared affected carrier, body region or other scene object. Its membership must be directly reviewed against the actual request, topology and selected framing. An inventory label, complete flag, hash or successful selector validation does not establish that semantic completeness. Do not invent a carrier, equate a hand with its carrier, infer descendants or construct this inventory from a discovered candidate. Both framing effects have the item, every selected hand and every member of that complete framing inventory as actual receivers. The independent framing scope may overlap the explicitly repeated hand/item endpoints; expand the exact union without inventing another entity or omitting an actual receiver. If any affected carrier or body region cannot be independently addressed and included, this application is not eligible. Apply all actual owner, ancestor, partial-property and whole-dimension locks to this complete union. No exact finger pose, contact configuration, support geometry, item coordinate, trajectory, completed ownership transfer, item subtype, camera hardware, focal length, focus plane or depth of field is selected here. If an actual selected application adds any such mutation, it requires its own complete source/effect/receiver review before use. Preserve independent identity and topology.",
+      "pointer": "/content/application_contract",
+      "reason": "Precisely bind existing item remains visible to same selected actual image, retaining literal PR and no new visibility E."
+    },
+    {
+      "after": [
+        {
+          "dimension": "subject",
+          "id": "initiating_hand_kind",
+          "kind": "frozen_value",
+          "owner": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "initiating_hand"
+          },
+          "property": "entity.type",
+          "value": {
+            "type": "entity.type/v1",
+            "value": "hand"
+          }
+        },
+        {
+          "id": "item_not_initiating_hand",
+          "kind": "owner_relation",
+          "left": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "exchange_item"
+          },
+          "relation": "disjoint",
+          "right": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "initiating_hand"
+          }
+        },
+        {
+          "id": "each_other_hand_kind",
+          "kind": "for_each_member",
+          "member_variable": "hand",
+          "rule": {
+            "dimension": "subject",
+            "id": "kind",
+            "kind": "frozen_value",
+            "owner": {
+              "kind": "bound_member",
+              "variable": "hand"
+            },
+            "property": "entity.type",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "hand"
+            }
+          },
+          "scope": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "other_hands"
+          }
+        },
+        {
+          "id": "each_other_hand_separate",
+          "kind": "for_each_member",
+          "member_variable": "hand",
+          "rule": {
+            "id": "separate_hand",
+            "kind": "owner_relation",
+            "left": {
+              "kind": "bound_member",
+              "variable": "hand"
+            },
+            "relation": "disjoint",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            }
+          },
+          "scope": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "other_hands"
+          }
+        },
+        {
+          "id": "each_other_hand_not_item",
+          "kind": "for_each_member",
+          "member_variable": "hand",
+          "rule": {
+            "id": "separate_item",
+            "kind": "owner_relation",
+            "left": {
+              "kind": "bound_member",
+              "variable": "hand"
+            },
+            "relation": "disjoint",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "exchange_item"
+            }
+          },
+          "scope": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "other_hands"
+          }
+        },
+        {
+          "dimension": "framing",
+          "id": "item_visible_in_selected_image",
+          "kind": "frozen_entity_relation",
+          "left": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "exchange_item"
+          },
+          "property": "framing.visible_in",
+          "right": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "image"
+          },
+          "value_type": "entity.owner_id/v1"
+        }
+      ],
+      "before": [
+        {
+          "dimension": "subject",
+          "id": "initiating_hand_kind",
+          "kind": "frozen_value",
+          "owner": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "initiating_hand"
+          },
+          "property": "entity.type",
+          "value": {
+            "type": "entity.type/v1",
+            "value": "hand"
+          }
+        },
+        {
+          "id": "item_not_initiating_hand",
+          "kind": "owner_relation",
+          "left": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "exchange_item"
+          },
+          "relation": "disjoint",
+          "right": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "initiating_hand"
+          }
+        },
+        {
+          "id": "each_other_hand_kind",
+          "kind": "for_each_member",
+          "member_variable": "hand",
+          "rule": {
+            "dimension": "subject",
+            "id": "kind",
+            "kind": "frozen_value",
+            "owner": {
+              "kind": "bound_member",
+              "variable": "hand"
+            },
+            "property": "entity.type",
+            "value": {
+              "type": "entity.type/v1",
+              "value": "hand"
+            }
+          },
+          "scope": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "other_hands"
+          }
+        },
+        {
+          "id": "each_other_hand_separate",
+          "kind": "for_each_member",
+          "member_variable": "hand",
+          "rule": {
+            "id": "separate_hand",
+            "kind": "owner_relation",
+            "left": {
+              "kind": "bound_member",
+              "variable": "hand"
+            },
+            "relation": "disjoint",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "initiating_hand"
+            }
+          },
+          "scope": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "other_hands"
+          }
+        },
+        {
+          "id": "each_other_hand_not_item",
+          "kind": "for_each_member",
+          "member_variable": "hand",
+          "rule": {
+            "id": "separate_item",
+            "kind": "owner_relation",
+            "left": {
+              "kind": "bound_member",
+              "variable": "hand"
+            },
+            "relation": "disjoint",
+            "right": {
+              "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+              "kind": "source_target",
+              "target": "exchange_item"
+            }
+          },
+          "scope": {
+            "candidate_id": "cand_2e72784a26885ceaa1d645d25bd9a468",
+            "kind": "source_target",
+            "target": "other_hands"
+          }
+        }
+      ],
+      "pointer": "/conditions/native_guards/rules",
+      "reason": "Retain existing five v3 guards and add independently consumed exact same-item/same-image frozen relation; no name/default/image supplement proxy."
+    }
+  ],
+  "frozen_native_file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_semantic_evidence.py",
+  "frozen_native_raw_sha256": "f74a5ef91bc07048c8bf312b66680c5b92b3b7b388f31f1890f31c8578609dee",
+  "fullproof_or_signature_created": false,
+  "literal_PR_unchanged_sketch": {
+    "dimension": "framing",
+    "id": "itemVisiblePreservation",
+    "mode": "preservation",
+    "pointer": "/content/application_contract",
+    "property": "subject.visibility",
+    "quote": "the existing item remains visible",
+    "realization_id": "base",
+    "requires": [
+      "itemPresence"
+    ],
+    "target": "exchange_item",
+    "value": {
+      "type": "subject.visibility/v1",
+      "value": "visible"
+    }
+  },
+  "model": "gpt-6.1-sol",
+  "operating": false,
+  "original_canonical_E3_Rx_modes_values_operations_P_unchanged": true,
+  "original_five_guards_unchanged": true,
+  "pending": [
+    "Independent exact image/type/owner selection and true core source-span semantics remain prerequisites; source-target names do not supply actual image identity.",
+    "Frozen v3 guards execute scalar frozen_entity_relation, but guard_support role-evidence opt-in supports v1/v2 only. Do not claim this v3 guard provides a display role or create a scalar owner-valued fact by guessing the image.",
+    "Literal PR and relation are preselection obligations; final output preservation still needs independently checked result evidence.",
+    "Visibility/framing footprint/envelope native integration remains separate and unresolved; no E/property/receiver lock is waived."
+  ],
+  "reasoning_effort": "high",
+  "root_selected": false,
+  "schema": "same-image-PR-source-only-proposal/v1",
+  "source_assessment_file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01299-149-06/SOURCE-ASSESSMENT-v1.json",
+  "source_assessment_raw_sha256": "bb37900f0156ca6ce541f12e7145123013b8df615f477e3b24894393bd26e23b",
+  "source_snapshot_before_canonical_sha256": "8acdd741cdb846c8bb33b53ded16471363ece5747280b5b4893c25acdeed302d",
+  "task": "/root/review_11870_12250",
+  "whole_before_after_direct_read_required": true
+}
