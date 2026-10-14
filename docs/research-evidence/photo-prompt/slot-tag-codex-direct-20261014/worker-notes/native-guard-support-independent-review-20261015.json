@@ -1,0 +1,209 @@
+{
+  "schema": "photo-native-independent-guard-support-review/v1",
+  "task": "/root/native_evidence",
+  "date": "2026-10-15",
+  "status": "frozen_read_only_review_no_blocking_finding_in_inspected_scope",
+  "reviewed_files": [
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py",
+      "raw_sha256": "3e8888ab36e3f77d2495fc952cbd33beae2382883be4c943abd2633204dd4c96",
+      "bytes": 113969,
+      "whole_code_read_lines": [
+        1,
+        1778
+      ]
+    },
+    {
+      "path": "tests/test_photo_native_guard_role_support.py",
+      "raw_sha256": "3b2d4af1b139c8fcd2406963b709fd2a22eb7aa3cd157f4406a9cf4c05ddab24",
+      "bytes": 30777,
+      "whole_test_read_lines": [
+        1,
+        409
+      ]
+    }
+  ],
+  "review_basis": {
+    "diff": {
+      "path": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-07250-guard-role-support-implementation-20261015.patch",
+      "raw_sha256": "ccbb5a0715ab4a11aab12fd8b9080469eb04b31de38280c974541be1aed45ce4",
+      "bytes": 57987
+    },
+    "portable_revision_diff": {
+      "path": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-07250-guard-role-support-implementation-20261015.portable-test-revision.patch",
+      "raw_sha256": "912172f735ff8c6abecbfe96f845f23375ad4926f8b4e29230de1a9771b079f5",
+      "bytes": 4053
+    },
+    "old_baseline_provenance": {
+      "path": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-07250-guard-role-support-implementation-20261015.portable-baseline.json",
+      "raw_sha256": "15ddb26b3b4b04d1491a47a727bb72abdbf05a58f396715952d239cd8b460226",
+      "bytes": 18763
+    },
+    "baseline_raw_sha256_reported_by_guard_worker": "7d9f7e7c69bc1f8186af9a289eb46defd0e953de9c27d1b0b770142ad2660205",
+    "head_relationship_boundary": "Parent requested changes after HEAD 2a04813e2. The supplied unified patch and complete current module were read; this independent review ran no Git command and does not independently attest the baseline commit/blob relationship."
+  },
+  "actual_tests": {
+    "executions": 21,
+    "unique_tests": 21,
+    "subtests": 53,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "successful": true,
+    "elapsed_seconds": 0.30652241688221693,
+    "bytes_unchanged": true,
+    "embedding_attempts": [],
+    "model_modules_loaded": []
+  },
+  "evidence": [
+    {
+      "path": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-guard-support-independent-review-20261015.repro.py",
+      "raw_sha256": "9e2b9326c3b6e87816ad9421c975b0c48f2e982b1f3286fa021ac92bd239ff6e",
+      "bytes": 10073
+    },
+    {
+      "path": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-guard-support-independent-review-20261015.repro.results.json",
+      "raw_sha256": "41c64800d5512292b222970d477aa791d6d2d2cbcee044eb32acb1122c51cc02",
+      "bytes": 5905
+    },
+    {
+      "path": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-guard-support-independent-review-20261015.repro.log",
+      "raw_sha256": "d9cae6c70434a1bd7a3bf5b48153e5a67957fc1ae718711a2786a0c6cfc08b99",
+      "bytes": 4410
+    }
+  ],
+  "command": "/usr/bin/env -i HOME=/Users/chasoik PATH=/opt/homebrew/bin:/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)' python3 docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-guard-support-independent-review-20261015.repro.py > docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-guard-support-independent-review-20261015.repro.log 2>&1",
+  "findings": [],
+  "protection_boundaries": [
+    {
+      "area": "direct source provenance",
+      "read": "_guard_support_rule/_validate_guard_supports/_validate_source_units/validate",
+      "conclusion": "Exact own CID/RID, source common or actual branch condition index, full condition/rule hashes and schema are checked. Direct same-positive-field source unit covers each support; reference-only, routing/negative pointer and scalar-ID borrowing are rejected."
+    },
+    {
+      "area": "sealed compact",
+      "read": "compact/_selected_contract",
+      "conclusion": "Only full validated source can produce the compact seal. Pointer/quote are removed but guard locator, endpoints, semantic projection, role refs and exact source/qualification/reference closure remain seal-bound. Source/projection/locator/endpoint tamper negatives executed."
+    },
+    {
+      "area": "actual predicate execution",
+      "read": "_guard_execution_metadata/_guard_support_admission/_evaluate_role_guards/_evaluate_target_guards",
+      "conclusion": "Eligible role fit explicitly requires subsequent guard admission. Admission matches one freshly executed verified source predicate, condition/rule/CID/RID/schema/source-layer/graph/proof/reference bindings; allowed=True alone is insufficient. v1 raw owner-valued relation semantics and v2 canonical equivalence semantics remain distinct."
+    },
+    {
+      "area": "owner namespace and selected closure",
+      "read": "_own_guard_targets/validate_guard_namespaces/_guard_context/selected_dependencies/admission",
+      "conclusion": "Guard-only targets are exact own support endpoints with existing origin. Parent common guards can refer to direct required child owner maps, not an optional child or sibling injection. Selected optional children add their own obligations; unselected optional children do not contribute roles/effects. Added required-to-optional namespace adversary rejected."
+    },
+    {
+      "area": "frozen facts versus relation evidence",
+      "read": "_fact_valid/_selected_contract/admission",
+      "conclusion": "New supports are prerequisite-only relations and cannot supply typed scalar facts, scalar requires IDs, E coverage, preservation values or introduced ownership. Additional missing-E/scalar-requires/effect-mode adversaries rejected."
+    },
+    {
+      "area": "permission footprint and locks",
+      "read": "owner_resolution/validate_joint_effect_assignments/_collect_permission_scope/property_scope_allowed/permission_scope",
+      "conclusion": "guard_refs add no dimensions, mutable properties, operations or receivers. Whole E footprint, actual owner consistency and receiver lock checks remain driven by explicitly authored actual facts/selected dependencies. Existing focused test executes missing P and receiver-only locked property controls. A relation support itself does not grant mutation permission."
+    },
+    {
+      "area": "absence byte preservation",
+      "read": "_proof_fields_valid/compact/qualification/admission and final portable baseline test",
+      "conclusion": "No optional keys are inserted into absent-field proofs. Independent fixed old scalar record/native-contract/compact digests and literal fit/admission outputs, including original v1 receipt shape, pass. This finite fixture evidence is not a universal byte-equivalence proof."
+    }
+  ],
+  "additional_executed_adversaries": [
+    {
+      "case": "presentation_predicate_has_no_own_common_support_locator",
+      "full_validate": "rejected"
+    },
+    {
+      "case": "unused_guard_only_owner_map_entry",
+      "full_validate": "rejected"
+    },
+    {
+      "case": "guard_relation_not_scalar_fact_or_requires_value",
+      "full_validate": "rejected"
+    },
+    {
+      "case": "missing_E_cannot_be_replaced_by_guard_only_positive_unit",
+      "full_validate": "rejected"
+    },
+    {
+      "case": "actual_v1_raw_vs_v2_canonical_selected_point",
+      "observed": [
+        {
+          "schema": "v1",
+          "selected_alias": false,
+          "full_compact_allowed": [
+            true,
+            true
+          ]
+        },
+        {
+          "schema": "v1",
+          "selected_alias": true,
+          "full_compact_allowed": [
+            false,
+            false
+          ]
+        },
+        {
+          "schema": "v2",
+          "selected_alias": false,
+          "full_compact_allowed": [
+            true,
+            true
+          ]
+        },
+        {
+          "schema": "v2",
+          "selected_alias": true,
+          "full_compact_allowed": [
+            true,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "case": "projection_mode_cannot_be_effect",
+      "full_validate": "both schemas rejected"
+    },
+    {
+      "case": "optional_child_is_not_parent_common_guard_namespace",
+      "full_validate": "rejected"
+    }
+  ],
+  "not_claimed_or_remaining_limits": [
+    "No blocker was reproduced in this inspected frozen change. Manual semantic_projection entails human judgment: prefix/dimension/schema checks do not prove a relation quote semantically entails a catalog role, nor the completeness of natural language clauses.",
+    "No actual candidate source/spec/catalog/native-proof approval was performed. No actual corpus qualification or pixel truth claim.",
+    "Whole new guard test source, including real lazy/public-pack/compose/runtime transport wrapper, was read. This independent run executed only the 14 non-runtime focused tests plus seven own synthetic adversaries. It did not rerun that one real transport test, runtime build, publication, acquire, full root broad regression, or final render request. Its existing public-pack test does execute a synthetic final audit with explicitly mocked frozen_core_context.",
+    "The complete semantic_evidence module and focused test were read. Other modules were inspected only at helper/source declarations or selected call sites; no whole consumer-module read claim.",
+    "Portable baseline revision was already complete when this review began; only final test SHA 3b2d4a... was executed/pinned. Historical cache-dependent test and prior broad failures were not overwritten or treated as new independent success.",
+    "Existing B1 resolver and its test remain unchanged and unconnected to consumers. B2 is not started or approved by this note."
+  ],
+  "unchanged_pins": {
+    "skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py": "3e8888ab36e3f77d2495fc952cbd33beae2382883be4c943abd2633204dd4c96",
+    "tests/test_photo_native_guard_role_support.py": "3b2d4af1b139c8fcd2406963b709fd2a22eb7aa3cd157f4406a9cf4c05ddab24",
+    "skills/photo-prompt-image-generator/scripts/photo_native_owner_resolution.py": "cc1407f2ccfa3f00e3d6f2c73d964f934c4e33f501628b2c3c228aabbc04107f",
+    "tests/test_photo_native_member_scope_resolution.py": "f8e5e0dd3fbf7bc0de283a0b6c0c19b7d028cc598f88a9e61347a3d565baa074"
+  },
+  "operations": {
+    "existing_production_edits": 0,
+    "existing_or_new_repository_test_edits": 0,
+    "B1_edits": 0,
+    "canonical_source_catalog_proof_status_edits": 0,
+    "runtime_build_publish_acquire": 0,
+    "Git_commands": 0,
+    "model_or_embedding_execution": 0,
+    "provider_API_calls": 0,
+    "Gemini_calls": 0,
+    "network": "sandbox deny network*; no network tool invoked",
+    "own_new_files_only": true
+  },
+  "summary_markdown": {
+    "path": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-guard-support-independent-review-20261015.md",
+    "raw_sha256": "9816255517bd49e30b56814eb1853a28bf8632c537a420a3d1570bb954a7ecbd",
+    "bytes": 2488
+  }
+}
