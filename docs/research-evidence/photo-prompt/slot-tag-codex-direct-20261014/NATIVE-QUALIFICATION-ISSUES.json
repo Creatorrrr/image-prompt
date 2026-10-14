@@ -13,7 +13,12 @@
         {"order_offset": 351, "source": "cold breath fog texture", "carrier": "existing breath source"},
         {"order_offset": 443, "source": "view through a gap in the crowd", "carrier": "declared crowd"},
         {"order_offset": 467, "source": "wet mud caked skin texture", "carrier": "existing skin"},
-        {"order_offset": 477, "source": "a hairline rim glow", "carrier": "existing hairline"}
+        {"order_offset": 477, "source": "a hairline rim glow", "carrier": "existing hairline"},
+        {"order_offset": 611, "source": "first-person task POV led by hands", "carrier": "existing visible hands"},
+        {"order_offset": 653, "source": "UI projection cast onto skin", "carrier": "existing receiving skin"},
+        {"order_offset": 710, "source": "precise focus on the eyes", "carrier": "existing eyes"},
+        {"order_offset": 722, "source": "texture felt under fingertips", "carrier": "existing fingertips and receiving surface"},
+        {"order_offset": 742, "source": "turning through a dusty canter", "carrier": "explicit moving owner compatible with the current human guard; never synthesize a horse"}
       ]
     },
     {
@@ -35,7 +40,7 @@
       "status": "open",
       "candidate_id": "cand_957dbd14de775085ba9b6a47912d7a88",
       "source": "station staff uniform",
-      "requirement": "The garment can be an unworn object. A role's human-only applicability or another role's actor-owned fact must not become an intrinsic requirement that creates a wearer or rejects the existing garment role. Review object/actor/context owners independently, including product-domain exclusions in garment_detail and attire_context. Revisit inherited source guards explicitly rather than silently widening them."
+      "requirement": "The garment can be an unworn object. A role's human-only applicability or another role's actor-owned fact must not become an intrinsic requirement that creates a wearer or rejects the existing garment role. Review object/actor/context owners independently, including product-domain exclusions in garment_detail and attire_context. Revisit inherited source guards explicitly rather than silently widening them. Personal idol-like styling (673) and athletic presence (715) must retain the actor scope rather than changing an entire image's aesthetic."
     },
     {
       "id": "fungus-subject-kind",
@@ -53,6 +58,18 @@
       "id": "binding-addressed-native-dependencies",
       "status": "open",
       "requirement": "Before removing a role link or changing a referenced candidate to diagnostic, resolve every bundle/profile/member dependency that addresses its existing binding. Preserve candidate identity, conditions, ordering and branch semantics; do not redirect to an arbitrary replacement role or retain an operating legacy adapter."
+    },
+    {
+      "id": "aspect-ratio-is-not-platform-safety",
+      "status": "open",
+      "order_offsets": [643, 719],
+      "requirement": "Square 1:1 and vertical 9:16 are explicit aspect ratios; platform_frame facets claim a safe area that their positive text does not state. Audit facet routing, role qualification and final metadata so these facets cannot substitute for actual UI/crop-safe placement evidence. Preserve the valid format meaning."
+    },
+    {
+      "id": "depicted-equipment-versus-recording-apparatus",
+      "status": "open",
+      "order_offsets": [608, 637, 696, 740],
+      "requirement": "A camera pictured as the subject or a visible prop is distinct from the recording camera. A light-producing device class does not prove that the device is switched on. Conversely, virtual camera/operator support references must not create an extra visible actor. Native qualification must bind each owner and usage separately, reject wrong-owner intent changes and account for emitted state before using an object as an illumination cue."
     }
   ]
 }

@@ -30,7 +30,7 @@ def summarize(start, stop, expected_total):
     previous = defaultdict(set)
     for binding in frozen['slot_bindings'].values():
         previous[binding['candidate_id']].add(binding['slot_id'])
-    proposals, roles, links = [], Counter(), Counter()
+    proposals, roles, links, kind_changes = [], Counter(), Counter(), []
     for cid in order[start:stop]:
         row = rows[cid]
         if row['status'] not in {'approved', 'diagnostic_reviewed'}:
@@ -42,6 +42,12 @@ def summarize(start, stop, expected_total):
         proposal = {'candidate_id': cid,
             'retain': sorted(tags & previous[cid]), 'add': sorted(tags - previous[cid]),
             'remove': sorted(previous[cid] - tags), 'corrections': row['corrections']}
+        original_kind = frozen['candidates'][cid]['record_kind']
+        if row['recommended_kind'] != original_kind:
+            change = {'candidate_id': cid, 'before': original_kind,
+                      'after': row['recommended_kind'], 'reason': row['meaning_summary']}
+            proposal['record_kind_change'] = change
+            kind_changes.append(change)
         proposals.append(proposal)
         links.update({key: len(proposal[key]) for key in ('retain', 'add', 'remove')})
     defaults = json.loads((review.SKILL / 'embedding-default.json').read_text())
@@ -89,6 +95,13 @@ def summarize(start, stop, expected_total):
         'external_model_calls': 0, 'local_embedding_inferences': 0,
         'stage05_complete': False, 'stages06_08_complete': False,
         'remaining_unreviewed': len(order) - expected_total, 'next_order_offset': expected_total}
+    if kind_changes:
+        summary['record_kind_change_proposals'] = kind_changes
+        summary['reviewed_diagnostic_records'] = sum(
+            rows[cid]['recommended_kind'] == 'diagnostic' for cid in order[start:stop])
+        summary['reviewed_positive_records'] = count - summary['reviewed_diagnostic_records']
+        verification['record_kind_changes_proposed'] = len(kind_changes)
+        verification['record_kind_changes_applied'] = False
     stem = f'{start:05d}-{stop:05d}'
     for name, value in [(f'BATCH-{stem}-SUMMARY.json', summary),
                         (f'BATCH-{stem}-CHANGE-PROPOSALS.json', proposals),

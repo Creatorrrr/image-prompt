@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 
-def save(name, packet_name, decisions, corrections):
+def save(name, packet_name, decisions, corrections, *, kind_overrides=None):
     here = Path(__file__).resolve().parent
     packet = json.loads((here.parent / 'packets' / packet_name).read_text())
     catalog = json.loads((here.parent / 'CATALOG.json').read_text())
@@ -18,7 +18,7 @@ def save(name, packet_name, decisions, corrections):
                     raise ValueError('authored English correction no longer matches source')
                 english = change['after']
         selected, facts = {}, []
-        for declaration in properties.split(';'):
+        for declaration in properties.split(';') if properties else []:
             tag, dimension, target, prop, rationale = declaration.split('|')
             fact = {'pointer': '/content/en', 'quote': english,
                 'dimension': dimension, 'target': target, 'property': prop}
@@ -29,7 +29,8 @@ def save(name, packet_name, decisions, corrections):
             selected[tag]['evidence'].append(fact)
             facts.append({**fact, 'realization_id': 'base'})
         rows.append({'candidate_id': cid, 'meaning_summary': meaning,
-            'recommended_kind': 'visual_option', 'corrections': corrections.get(ordinal, []),
+            'recommended_kind': (kind_overrides or {}).get(ordinal, 'visual_option'),
+            'corrections': corrections.get(ordinal, []),
             'roles': list(selected.values()), 'facts': facts, 'rejected_boundaries': [boundary],
             'uncertainties': [], 'status': status, 'all_roles_considered': True})
     assert len(rows) == len({row['candidate_id'] for row in rows})
