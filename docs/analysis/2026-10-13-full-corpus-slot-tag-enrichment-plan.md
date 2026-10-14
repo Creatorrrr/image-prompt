@@ -260,6 +260,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 첫 20건 중 보류됐던 13건은 14개 전체 after 대안과 관련 명세 15개를 루트가 직접 읽고 [한정된 적용문을 선택](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-FIRST20-SOURCE-CHOICES-01.json)했다. 조명은 기존 광원·전체 수광 범위·관계의 독립 근거를 요구하며, hard flash와 soft window의 두 의미를 각각 보존한다. golden hour는 실제 자연광 시점 해석을 선택해 기존 lighting에 timing 권한을 추가하고 모사 조명 대안은 선택하지 않았다. 여행·반려동물·음식·거리·실내 사진은 전체 장르 수식어를 유지하고 장르로부터 새 대상을 만들지 않는다. dieselpunk는 미적 해석을 선택해도 기존 setting 권한을 style로 치환하지 않는다. 연구 보정은 누계 84개이며, 바뀐 13건의 native 심사는 새로 진행한다. 이미 승인된 7개 원본·proof 쌍은 현재 후보·명세·closure가 같다는 대조 후에만 그대로 재사용하며 새 서명이나 새 승인 수로 세지 않는다. 운영 데이터 적용은 아직 없다.
 
+이어 조명 7건은 [실제 광원·수광 범위를 묶는 조건](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-FIRST20-ILLUMINATION-GUARDS-01.json)을 명시해 새 입력으로 고정했다. 미리 검토한 완전한 수광 목록의 각 원소가 같은 실제 광원에서 빛을 받고 있음을 실제 owner ID 관계로 결합하며, lab 용도·golden hour의 동일 장면·soft window의 기존 경로도 따로 보존한다. 기존 효과·EN·KO·출처는 모두 동일하고, 연구 보정 후보의 고유 수는 84개로 유지된다. 이는 조건의 원본 선택과 입력 검증이며 native 소비자 검증·최종 승인은 별도다.
+
 ## 6단계 — 확정 연결 적용과 무결성 검증
 
 5단계의 직접 검토 승인 대장과 현재 source/catalog hash가 일치하는 추가·제거 관계만 native 원본에 적용한다. Gemini 초안·단순 유사도·규칙 출력에서 관계를 자동 수입하지 않는다. 기존 후보 ID와 계속 유효한 binding ID는 유지한다. 새로운 binding ID는 후보·슬롯 관계와 검토한 계약에 따라 안정적으로 생성하고 재실행해도 같은 관계가 중복되지 않도록 한다. 동일 후보·동일 슬롯의 불필요한 다중 관계는 허용하지 않는다. 조건별 변형이 필요하면 한 관계 안에 명시적인 적용 대안을 기록하며 검색 투표를 추가하지 않는다.

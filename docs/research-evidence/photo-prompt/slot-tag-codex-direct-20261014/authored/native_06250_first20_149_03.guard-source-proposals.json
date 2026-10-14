@@ -1,0 +1,1990 @@
+{
+  "schema": "photo-manual-native-source-guard-proposals/v1",
+  "task_name": "/root/review_06250_07250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "input_sha256": "527ac249399d1ee509f68db0aa3f8a4cf47d0562d962f39aaf8ad55c6a8b3bde",
+  "current_source_sha256": "609e72864631ffccd711d2a6601ac060bea0a92f86985c7633a3fbea59d82ae5",
+  "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "actual_source_records_fresh_read": 13,
+  "prepared_count": 20,
+  "unchanged_prior_proofs_exact_reusable_count": 7,
+  "new_proposed_after_count": 7,
+  "new_proposed_after_actual_reread_count": 0,
+  "root_selected_count": 0,
+  "formal_native_proof_count_for_proposals": 0,
+  "proposals": [
+    {
+      "ordinal": 0,
+      "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+      "status": "unselected_root_source_review_required",
+      "whole_before": {
+        "conditions": {},
+        "content": {
+          "application_contract": "For this explicitly bounded application, select neon-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to neon. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, visible neon sign, text, person, object, place, color, intensity or direction.",
+          "en": "neon",
+          "ko": "neon",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_2643798d36ed5870b1681a5c89eade9f",
+        "provenance": [
+          {
+            "sha256": "2b4c05bcd7302c9459eb91bea346e0d7dbfa857432fa523ff482e0901df99571",
+            "source": "slot:light_type:neon"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "whole_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v3",
+            "rules": [
+              {
+                "id": "existing_illumination",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_carrier",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_source"
+                }
+              },
+              {
+                "id": "every_receiver_already_illuminated_by_that_source",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_from_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_from",
+                  "value_type": "entity.owner_id/v1"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "For this explicitly bounded application, select neon-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to neon. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, visible neon sign, text, person, object, place, color, intensity or direction. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "en": "neon",
+          "ko": "neon",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_2643798d36ed5870b1681a5c89eade9f",
+        "provenance": [
+          {
+            "sha256": "2b4c05bcd7302c9459eb91bea346e0d7dbfa857432fa523ff482e0901df99571",
+            "source": "slot:light_type:neon"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "before_sha256": "02bd0e5a3be8ae0344815027adf47182440047b7ba1085a7755a9b5d5497b94d",
+      "after_sha256": "439813fa010e9bbde471e1eb4d3e1988247a57007f1378a066181b300d5b1912",
+      "delta": [
+        {
+          "pointer": "/conditions",
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v3",
+              "rules": [
+                {
+                  "id": "existing_illumination",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_carrier",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_source"
+                  }
+                },
+                {
+                  "id": "every_receiver_already_illuminated_by_that_source",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_from_source",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_2643798d36ed5870b1681a5c89eade9f",
+                      "target": "illuminating_light"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_from",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Explicit actual source/receiver/path/scene relational guards preserve the selected application; no desired effect value is P."
+        },
+        {
+          "pointer": "/content/application_contract",
+          "before": "For this explicitly bounded application, select neon-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to neon. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, visible neon sign, text, person, object, place, color, intensity or direction.",
+          "after": "For this explicitly bounded application, select neon-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to neon. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, visible neon sign, text, person, object, place, color, intensity or direction. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "reason": "Disclose exact complete independently reviewed scope/actual relation and no fallback, without changing original positive EN/KO or effects."
+        }
+      ],
+      "manual_owner_plan": {
+        "illuminating_light": "selected_existing_owner; existing illumination_source, never newly introduced",
+        "illuminated_receivers": "selected_existing_member_scope; each_member target semantics/all_members receiver semantics, existing complete inventory; not a synthetic entity"
+      },
+      "manual_effects_and_receivers": {
+        "all_original_lighting_effects": {
+          "operation": "set_value",
+          "receivers": [
+            "illuminated_receivers"
+          ]
+        }
+      },
+      "manual_P_PR_boundary": "Existing source presence/type, all receiver presence from complete independently input-bound inventory, exact actual received_from relation and optional lab-use/path/scene qualifiers are independent obligations. Preserve actual relation values and membership. No selected neon/LED/softbox/flash/hard/fluorescent/golden-hour/soft value becomes P. Old ownbinding conditions remain exact in prepared input. Proof not authored for this unselected after.",
+      "shape_checks_only": {
+        "source_guard_schema": true,
+        "full_native_proof": false,
+        "full_compact_controlled_admission": false
+      },
+      "root_selected": false
+    },
+    {
+      "ordinal": 1,
+      "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+      "status": "unselected_root_source_review_required",
+      "whole_before": {
+        "conditions": {},
+        "content": {
+          "application_contract": "For this explicitly bounded application, select LED illumination designated for laboratory use on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to LED and retain the laboratory-use designation as external application context for that same source. Preserve their established illumination relation and receiving scope. This selection does not add a laboratory room, research worker, medical purpose, person, fixture, other object, color, intensity or direction.",
+          "en": "lab led",
+          "ko": "lab led",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+        "provenance": [
+          {
+            "sha256": "e27acfc628e9e9f7d9de0804395103f74b4a7a533a5466375879a7599e525400",
+            "source": "slot:light_type:lab_led"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "whole_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v3",
+            "rules": [
+              {
+                "id": "existing_illumination",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_carrier",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_source"
+                }
+              },
+              {
+                "id": "every_receiver_already_illuminated_by_that_source",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_from_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_from",
+                  "value_type": "entity.owner_id/v1"
+                }
+              },
+              {
+                "id": "actual_lab_use_designation",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                  "target": "illuminating_light"
+                },
+                "dimension": "concept",
+                "property": "context.application.laboratory_use",
+                "value": {
+                  "type": "context.application.laboratory_use/v1",
+                  "value": "designated"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "For this explicitly bounded application, select LED illumination designated for laboratory use on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to LED and retain the laboratory-use designation as external application context for that same source. Preserve their established illumination relation and receiving scope. This selection does not add a laboratory room, research worker, medical purpose, person, fixture, other object, color, intensity or direction. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value. Independently freeze the laboratory-use designation of this same actual source as external application context; generic light presence or a room label cannot establish it.",
+          "en": "lab led",
+          "ko": "lab led",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+        "provenance": [
+          {
+            "sha256": "e27acfc628e9e9f7d9de0804395103f74b4a7a533a5466375879a7599e525400",
+            "source": "slot:light_type:lab_led"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "before_sha256": "024198f8fd4333c5d280ae405faa715a64096b33117e33af72566c2413ffe745",
+      "after_sha256": "2f09a04debd4a87490d3f2007acd3d54813dff2c639c2d4937ca68986bd4c33e",
+      "delta": [
+        {
+          "pointer": "/conditions",
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v3",
+              "rules": [
+                {
+                  "id": "existing_illumination",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_carrier",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_source"
+                  }
+                },
+                {
+                  "id": "every_receiver_already_illuminated_by_that_source",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_from_source",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                      "target": "illuminating_light"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_from",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                },
+                {
+                  "id": "actual_lab_use_designation",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_a2222d0026ed5e5899704a50b63dd4ce",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "concept",
+                  "property": "context.application.laboratory_use",
+                  "value": {
+                    "type": "context.application.laboratory_use/v1",
+                    "value": "designated"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Explicit actual source/receiver/path/scene relational guards preserve the selected application; no desired effect value is P."
+        },
+        {
+          "pointer": "/content/application_contract",
+          "before": "For this explicitly bounded application, select LED illumination designated for laboratory use on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to LED and retain the laboratory-use designation as external application context for that same source. Preserve their established illumination relation and receiving scope. This selection does not add a laboratory room, research worker, medical purpose, person, fixture, other object, color, intensity or direction.",
+          "after": "For this explicitly bounded application, select LED illumination designated for laboratory use on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to LED and retain the laboratory-use designation as external application context for that same source. Preserve their established illumination relation and receiving scope. This selection does not add a laboratory room, research worker, medical purpose, person, fixture, other object, color, intensity or direction. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value. Independently freeze the laboratory-use designation of this same actual source as external application context; generic light presence or a room label cannot establish it.",
+          "reason": "Disclose exact complete independently reviewed scope/actual relation and no fallback, without changing original positive EN/KO or effects."
+        }
+      ],
+      "manual_owner_plan": {
+        "illuminating_light": "selected_existing_owner; existing illumination_source, never newly introduced",
+        "illuminated_receivers": "selected_existing_member_scope; each_member target semantics/all_members receiver semantics, existing complete inventory; not a synthetic entity"
+      },
+      "manual_effects_and_receivers": {
+        "all_original_lighting_effects": {
+          "operation": "set_value",
+          "receivers": [
+            "illuminated_receivers"
+          ]
+        }
+      },
+      "manual_P_PR_boundary": "Existing source presence/type, all receiver presence from complete independently input-bound inventory, exact actual received_from relation and optional lab-use/path/scene qualifiers are independent obligations. Preserve actual relation values and membership. No selected neon/LED/softbox/flash/hard/fluorescent/golden-hour/soft value becomes P. Old ownbinding conditions remain exact in prepared input. Proof not authored for this unselected after.",
+      "shape_checks_only": {
+        "source_guard_schema": true,
+        "full_native_proof": false,
+        "full_compact_controlled_admission": false
+      },
+      "root_selected": false
+    },
+    {
+      "ordinal": 2,
+      "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+      "status": "unselected_root_source_review_required",
+      "whole_before": {
+        "conditions": {},
+        "content": {
+          "application_contract": "For this explicitly bounded application, select a softbox modifier for an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared illumination source modifier to softbox. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, support, window, room, person or other object, and does not assert a measured softness, direction, intensity, distance, color or shadow transition.",
+          "en": "softbox",
+          "ko": "softbox",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.modifier",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+        "provenance": [
+          {
+            "sha256": "4e0469fd92be3ed36fd9546860a11a1c2f87aac26fe691efcde56a12551de194",
+            "source": "slot:light_type:softbox"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "whole_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v3",
+            "rules": [
+              {
+                "id": "existing_illumination",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_carrier",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_source"
+                }
+              },
+              {
+                "id": "every_receiver_already_illuminated_by_that_source",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_from_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_from",
+                  "value_type": "entity.owner_id/v1"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "For this explicitly bounded application, select a softbox modifier for an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared illumination source modifier to softbox. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, support, window, room, person or other object, and does not assert a measured softness, direction, intensity, distance, color or shadow transition. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "en": "softbox",
+          "ko": "softbox",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.modifier",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+        "provenance": [
+          {
+            "sha256": "4e0469fd92be3ed36fd9546860a11a1c2f87aac26fe691efcde56a12551de194",
+            "source": "slot:light_type:softbox"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "before_sha256": "c54fe8a3b595d98e2206544d3411225d49e8320527c77321dcd3a70ed208e4e7",
+      "after_sha256": "72885bf02da428036b671d961dbb75155faa64b90dec933bd9eaaa2160abd178",
+      "delta": [
+        {
+          "pointer": "/conditions",
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v3",
+              "rules": [
+                {
+                  "id": "existing_illumination",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_carrier",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_source"
+                  }
+                },
+                {
+                  "id": "every_receiver_already_illuminated_by_that_source",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_from_source",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_fe0b63338ad0587f8c53181f2f26fd24",
+                      "target": "illuminating_light"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_from",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Explicit actual source/receiver/path/scene relational guards preserve the selected application; no desired effect value is P."
+        },
+        {
+          "pointer": "/content/application_contract",
+          "before": "For this explicitly bounded application, select a softbox modifier for an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared illumination source modifier to softbox. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, support, window, room, person or other object, and does not assert a measured softness, direction, intensity, distance, color or shadow transition.",
+          "after": "For this explicitly bounded application, select a softbox modifier for an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared illumination source modifier to softbox. Preserve their established illumination relation and receiving scope. This selection does not add a light fixture, support, window, room, person or other object, and does not assert a measured softness, direction, intensity, distance, color or shadow transition. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "reason": "Disclose exact complete independently reviewed scope/actual relation and no fallback, without changing original positive EN/KO or effects."
+        }
+      ],
+      "manual_owner_plan": {
+        "illuminating_light": "selected_existing_owner; existing illumination_source, never newly introduced",
+        "illuminated_receivers": "selected_existing_member_scope; each_member target semantics/all_members receiver semantics, existing complete inventory; not a synthetic entity"
+      },
+      "manual_effects_and_receivers": {
+        "all_original_lighting_effects": {
+          "operation": "set_value",
+          "receivers": [
+            "illuminated_receivers"
+          ]
+        }
+      },
+      "manual_P_PR_boundary": "Existing source presence/type, all receiver presence from complete independently input-bound inventory, exact actual received_from relation and optional lab-use/path/scene qualifiers are independent obligations. Preserve actual relation values and membership. No selected neon/LED/softbox/flash/hard/fluorescent/golden-hour/soft value becomes P. Old ownbinding conditions remain exact in prepared input. Proof not authored for this unselected after.",
+      "shape_checks_only": {
+        "source_guard_schema": true,
+        "full_native_proof": false,
+        "full_compact_controlled_admission": false
+      },
+      "root_selected": false
+    },
+    {
+      "ordinal": 6,
+      "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+      "status": "unselected_root_source_review_required",
+      "whole_before": {
+        "conditions": {},
+        "content": {
+          "application_contract": "For this explicitly bounded application, select flash illumination with hard light quality on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to flash and the received illumination quality to hard. Preserve their established illumination relation and receiving scope. This selection does not add a flash unit, person, place or other object, or assert frontal direction, color, power, exposure, numeric angular extent or a complete lighting setup.",
+          "en": "hard flash",
+          "ko": "hard flash",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.quality.hardness",
+              "target": "illuminating_light"
+            },
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+        "provenance": [
+          {
+            "sha256": "1abe4e18daf63dd1fa3613ea0067f4d0960e3246558d1dcc6fb30c9ea92c39f6",
+            "source": "slot:light_type:hard_flash"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "whole_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v3",
+            "rules": [
+              {
+                "id": "existing_illumination",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_carrier",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_source"
+                }
+              },
+              {
+                "id": "every_receiver_already_illuminated_by_that_source",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_from_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_from",
+                  "value_type": "entity.owner_id/v1"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "For this explicitly bounded application, select flash illumination with hard light quality on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to flash and the received illumination quality to hard. Preserve their established illumination relation and receiving scope. This selection does not add a flash unit, person, place or other object, or assert frontal direction, color, power, exposure, numeric angular extent or a complete lighting setup. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "en": "hard flash",
+          "ko": "hard flash",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.quality.hardness",
+              "target": "illuminating_light"
+            },
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+        "provenance": [
+          {
+            "sha256": "1abe4e18daf63dd1fa3613ea0067f4d0960e3246558d1dcc6fb30c9ea92c39f6",
+            "source": "slot:light_type:hard_flash"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "before_sha256": "244fdab0d5ca28254a405d4f3f8e25e186537d11ec0c2336e61f02be83cb1c7b",
+      "after_sha256": "a3e65c8df0a1e400e792620ebe689fa6c3eb20a8c5d060705333586edcc24bd4",
+      "delta": [
+        {
+          "pointer": "/conditions",
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v3",
+              "rules": [
+                {
+                  "id": "existing_illumination",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_carrier",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_source"
+                  }
+                },
+                {
+                  "id": "every_receiver_already_illuminated_by_that_source",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_from_source",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+                      "target": "illuminating_light"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_from",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Explicit actual source/receiver/path/scene relational guards preserve the selected application; no desired effect value is P."
+        },
+        {
+          "pointer": "/content/application_contract",
+          "before": "For this explicitly bounded application, select flash illumination with hard light quality on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to flash and the received illumination quality to hard. Preserve their established illumination relation and receiving scope. This selection does not add a flash unit, person, place or other object, or assert frontal direction, color, power, exposure, numeric angular extent or a complete lighting setup.",
+          "after": "For this explicitly bounded application, select flash illumination with hard light quality on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared source type to flash and the received illumination quality to hard. Preserve their established illumination relation and receiving scope. This selection does not add a flash unit, person, place or other object, or assert frontal direction, color, power, exposure, numeric angular extent or a complete lighting setup. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "reason": "Disclose exact complete independently reviewed scope/actual relation and no fallback, without changing original positive EN/KO or effects."
+        }
+      ],
+      "manual_owner_plan": {
+        "illuminating_light": "selected_existing_owner; existing illumination_source, never newly introduced",
+        "illuminated_receivers": "selected_existing_member_scope; each_member target semantics/all_members receiver semantics, existing complete inventory; not a synthetic entity"
+      },
+      "manual_effects_and_receivers": {
+        "all_original_lighting_effects": {
+          "operation": "set_value",
+          "receivers": [
+            "illuminated_receivers"
+          ]
+        }
+      },
+      "manual_P_PR_boundary": "Existing source presence/type, all receiver presence from complete independently input-bound inventory, exact actual received_from relation and optional lab-use/path/scene qualifiers are independent obligations. Preserve actual relation values and membership. No selected neon/LED/softbox/flash/hard/fluorescent/golden-hour/soft value becomes P. Old ownbinding conditions remain exact in prepared input. Proof not authored for this unselected after.",
+      "shape_checks_only": {
+        "source_guard_schema": true,
+        "full_native_proof": false,
+        "full_compact_controlled_admission": false
+      },
+      "root_selected": false
+    },
+    {
+      "ordinal": 7,
+      "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+      "status": "unselected_root_source_review_required",
+      "whole_before": {
+        "conditions": {},
+        "content": {
+          "application_contract": "For this explicitly bounded application, fluorescent means fluorescent-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared light source type to fluorescent. Preserve their established illumination relation and receiving scope. This selection does not add a lamp, fixture, fluorescent material, dye, person, laboratory, hospital, room or other object, and does not assert green color, flicker, intensity or direction.",
+          "en": "fluorescent",
+          "ko": "fluorescent",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_4d4eb9c701575c6190bb6000f28431da",
+        "provenance": [
+          {
+            "sha256": "63f29a8e23c741a74b882dc5cffcf9cfcbbab4739cc7b8500bb29a9fdf16b717",
+            "source": "slot:light_type:fluorescent"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "whole_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v3",
+            "rules": [
+              {
+                "id": "existing_illumination",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_carrier",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_source"
+                }
+              },
+              {
+                "id": "every_receiver_already_illuminated_by_that_source",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_from_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_from",
+                  "value_type": "entity.owner_id/v1"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "For this explicitly bounded application, fluorescent means fluorescent-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared light source type to fluorescent. Preserve their established illumination relation and receiving scope. This selection does not add a lamp, fixture, fluorescent material, dye, person, laboratory, hospital, room or other object, and does not assert green color, flicker, intensity or direction. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "en": "fluorescent",
+          "ko": "fluorescent",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.type",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_4d4eb9c701575c6190bb6000f28431da",
+        "provenance": [
+          {
+            "sha256": "63f29a8e23c741a74b882dc5cffcf9cfcbbab4739cc7b8500bb29a9fdf16b717",
+            "source": "slot:light_type:fluorescent"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "before_sha256": "361c3826809a17a1af96f15aec2284a53f6519fb14edc63b2dc4a0f1a558201f",
+      "after_sha256": "7c7ad1aa4c5231c391709a425ac410371a8d82c988df7d2327da006c67f7dd2c",
+      "delta": [
+        {
+          "pointer": "/conditions",
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v3",
+              "rules": [
+                {
+                  "id": "existing_illumination",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_carrier",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_source"
+                  }
+                },
+                {
+                  "id": "every_receiver_already_illuminated_by_that_source",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_from_source",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_4d4eb9c701575c6190bb6000f28431da",
+                      "target": "illuminating_light"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_from",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Explicit actual source/receiver/path/scene relational guards preserve the selected application; no desired effect value is P."
+        },
+        {
+          "pointer": "/content/application_contract",
+          "before": "For this explicitly bounded application, fluorescent means fluorescent-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared light source type to fluorescent. Preserve their established illumination relation and receiving scope. This selection does not add a lamp, fixture, fluorescent material, dye, person, laboratory, hospital, room or other object, and does not assert green color, flicker, intensity or direction.",
+          "after": "For this explicitly bounded application, fluorescent means fluorescent-source illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver. Change the declared light source type to fluorescent. Preserve their established illumination relation and receiving scope. This selection does not add a lamp, fixture, fluorescent material, dye, person, laboratory, hospital, room or other object, and does not assert green color, flicker, intensity or direction. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value.",
+          "reason": "Disclose exact complete independently reviewed scope/actual relation and no fallback, without changing original positive EN/KO or effects."
+        }
+      ],
+      "manual_owner_plan": {
+        "illuminating_light": "selected_existing_owner; existing illumination_source, never newly introduced",
+        "illuminated_receivers": "selected_existing_member_scope; each_member target semantics/all_members receiver semantics, existing complete inventory; not a synthetic entity"
+      },
+      "manual_effects_and_receivers": {
+        "all_original_lighting_effects": {
+          "operation": "set_value",
+          "receivers": [
+            "illuminated_receivers"
+          ]
+        }
+      },
+      "manual_P_PR_boundary": "Existing source presence/type, all receiver presence from complete independently input-bound inventory, exact actual received_from relation and optional lab-use/path/scene qualifiers are independent obligations. Preserve actual relation values and membership. No selected neon/LED/softbox/flash/hard/fluorescent/golden-hour/soft value becomes P. Old ownbinding conditions remain exact in prepared input. Proof not authored for this unselected after.",
+      "shape_checks_only": {
+        "source_guard_schema": true,
+        "full_native_proof": false,
+        "full_compact_controlled_admission": false
+      },
+      "root_selected": false
+    },
+    {
+      "ordinal": 11,
+      "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+      "status": "unselected_root_source_review_required",
+      "whole_before": {
+        "conditions": {},
+        "content": {
+          "application_contract": "For this explicitly selected interpretation, golden hour declares the actual natural-light day phase of this same scene and the corresponding golden-hour illumination of its independently identified existing illumination and receiver scope. Select the scene day phase as golden hour and the declared illumination phase treatment as natural golden hour. Preserve the established illumination relation and receiving scope. This application adds no light fixture, person, place or other object, and does not specify sunrise versus sunset, a clock time, weather, hue, numeric color temperature, direction, intensity or a complete lighting arrangement.",
+          "en": "golden hour",
+          "ko": "golden hour",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting",
+            "timing"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.phase_treatment",
+              "target": "illuminating_light"
+            },
+            {
+              "dimension": "timing",
+              "property": "timing.time_of_day",
+              "target": "scene"
+            }
+          ]
+        },
+        "id": "cand_bd01df735ed657ad9de867732480416e",
+        "provenance": [
+          {
+            "sha256": "b2d7ad74e72b792b11793ce8d366423317f7c9c884b00fcd934a7a0d585f9edd",
+            "source": "slot:light_type:golden_hour"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "whole_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v3",
+            "rules": [
+              {
+                "id": "existing_illumination",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_carrier",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_source"
+                }
+              },
+              {
+                "id": "every_receiver_already_illuminated_by_that_source",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_from_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_from",
+                  "value_type": "entity.owner_id/v1"
+                }
+              },
+              {
+                "id": "existing_scene",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "scene"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_scene",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "scene"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "scene"
+                }
+              },
+              {
+                "id": "source_of_same_scene",
+                "kind": "frozen_entity_relation",
+                "left": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "illuminating_light"
+                },
+                "right": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "scene"
+                },
+                "dimension": "setting",
+                "property": "setting.scene_owner",
+                "value_type": "entity.owner_id/v1"
+              },
+              {
+                "id": "receivers_of_same_scene",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "receiver_scene_owner",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "scene"
+                  },
+                  "dimension": "setting",
+                  "property": "setting.scene_owner",
+                  "value_type": "entity.owner_id/v1"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "For this explicitly selected interpretation, golden hour declares the actual natural-light day phase of this same scene and the corresponding golden-hour illumination of its independently identified existing illumination and receiver scope. Select the scene day phase as golden hour and the declared illumination phase treatment as natural golden hour. Preserve the established illumination relation and receiving scope. This application adds no light fixture, person, place or other object, and does not specify sunrise versus sunset, a clock time, weather, hue, numeric color temperature, direction, intensity or a complete lighting arrangement. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value. Independently select the actual existing scene containing this source and every receiver, binding their setting.scene_owner facts to that same actual scene owner ID. The scene day-phase effect remains timing/scene/timing.time_of_day and the illumination phase-treatment effect remains lighting/illuminating_light/lighting.phase_treatment. This does not require golden hour to be an already frozen value.",
+          "en": "golden hour",
+          "ko": "golden hour",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting",
+            "timing"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.phase_treatment",
+              "target": "illuminating_light"
+            },
+            {
+              "dimension": "timing",
+              "property": "timing.time_of_day",
+              "target": "scene"
+            }
+          ]
+        },
+        "id": "cand_bd01df735ed657ad9de867732480416e",
+        "provenance": [
+          {
+            "sha256": "b2d7ad74e72b792b11793ce8d366423317f7c9c884b00fcd934a7a0d585f9edd",
+            "source": "slot:light_type:golden_hour"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "before_sha256": "e0975eb543dd91e628eb1d0fd4449da42377f845d25691064e4a81ed2a5889b6",
+      "after_sha256": "e9f544337d447c6937905640eb0cb7b8c847125f878c34dc71267cb4622fe3c9",
+      "delta": [
+        {
+          "pointer": "/conditions",
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v3",
+              "rules": [
+                {
+                  "id": "existing_illumination",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_carrier",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_source"
+                  }
+                },
+                {
+                  "id": "every_receiver_already_illuminated_by_that_source",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_from_source",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                      "target": "illuminating_light"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_from",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                },
+                {
+                  "id": "existing_scene",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "scene"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_scene",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "scene"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "scene"
+                  }
+                },
+                {
+                  "id": "source_of_same_scene",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "illuminating_light"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "scene"
+                  },
+                  "dimension": "setting",
+                  "property": "setting.scene_owner",
+                  "value_type": "entity.owner_id/v1"
+                },
+                {
+                  "id": "receivers_of_same_scene",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "receiver_scene_owner",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_bd01df735ed657ad9de867732480416e",
+                      "target": "scene"
+                    },
+                    "dimension": "setting",
+                    "property": "setting.scene_owner",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Explicit actual source/receiver/path/scene relational guards preserve the selected application; no desired effect value is P."
+        },
+        {
+          "pointer": "/content/application_contract",
+          "before": "For this explicitly selected interpretation, golden hour declares the actual natural-light day phase of this same scene and the corresponding golden-hour illumination of its independently identified existing illumination and receiver scope. Select the scene day phase as golden hour and the declared illumination phase treatment as natural golden hour. Preserve the established illumination relation and receiving scope. This application adds no light fixture, person, place or other object, and does not specify sunrise versus sunset, a clock time, weather, hue, numeric color temperature, direction, intensity or a complete lighting arrangement.",
+          "after": "For this explicitly selected interpretation, golden hour declares the actual natural-light day phase of this same scene and the corresponding golden-hour illumination of its independently identified existing illumination and receiver scope. Select the scene day phase as golden hour and the declared illumination phase treatment as natural golden hour. Preserve the established illumination relation and receiving scope. This application adds no light fixture, person, place or other object, and does not specify sunrise versus sunset, a clock time, weather, hue, numeric color temperature, direction, intensity or a complete lighting arrangement. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value. Independently select the actual existing scene containing this source and every receiver, binding their setting.scene_owner facts to that same actual scene owner ID. The scene day-phase effect remains timing/scene/timing.time_of_day and the illumination phase-treatment effect remains lighting/illuminating_light/lighting.phase_treatment. This does not require golden hour to be an already frozen value.",
+          "reason": "Disclose exact complete independently reviewed scope/actual relation and no fallback, without changing original positive EN/KO or effects."
+        }
+      ],
+      "manual_owner_plan": {
+        "illuminating_light": "selected_existing_owner; existing illumination_source, never newly introduced",
+        "illuminated_receivers": "selected_existing_member_scope; each_member target semantics/all_members receiver semantics, existing complete inventory; not a synthetic entity",
+        "scene": "selected_existing_owner; same actual existing scene"
+      },
+      "manual_effects_and_receivers": {
+        "all_original_lighting_effects": {
+          "operation": "set_value",
+          "receivers": [
+            "illuminated_receivers"
+          ]
+        },
+        "timing/scene/timing.time_of_day": {
+          "operation": "set_value",
+          "receivers": []
+        }
+      },
+      "manual_P_PR_boundary": "Existing source presence/type, all receiver presence from complete independently input-bound inventory, exact actual received_from relation and optional lab-use/path/scene qualifiers are independent obligations. Preserve actual relation values and membership. No selected neon/LED/softbox/flash/hard/fluorescent/golden-hour/soft value becomes P. Old ownbinding conditions remain exact in prepared input. Proof not authored for this unselected after.",
+      "shape_checks_only": {
+        "source_guard_schema": true,
+        "full_native_proof": false,
+        "full_compact_controlled_admission": false
+      },
+      "root_selected": false
+    },
+    {
+      "ordinal": 12,
+      "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+      "status": "unselected_root_source_review_required",
+      "whole_before": {
+        "conditions": {},
+        "content": {
+          "application_contract": "For this explicitly bounded application, select soft window-mediated illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver, with an independently established window-mediated illumination path. Change the declared source route to window-mediated light and the received illumination quality to soft. Preserve the established light, path, receiver and receiving scope. This selection does not add a window, room, curtain, fixture, person or other object, or choose a window location, numeric softness, light direction, color or intensity.",
+          "en": "soft window",
+          "ko": "soft window",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.quality.hardness",
+              "target": "illuminating_light"
+            },
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.route",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_f5de9f2d17165939999bbde4efc539ea",
+        "provenance": [
+          {
+            "sha256": "6e34efa9acd3ce8abf232dd6adc641d220b6ef54d03421a4770a0229cdfd58b2",
+            "source": "slot:light_type:soft_window"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "whole_after": {
+        "conditions": {
+          "native_guards": {
+            "schema": "photo-native-source-guards/v3",
+            "rules": [
+              {
+                "id": "existing_illumination",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_carrier",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illuminating_light"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_source"
+                }
+              },
+              {
+                "id": "every_receiver_already_illuminated_by_that_source",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_from_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_from",
+                  "value_type": "entity.owner_id/v1"
+                }
+              },
+              {
+                "id": "existing_window_path",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illumination_path"
+                },
+                "dimension": "subject",
+                "property": "entity.presence",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "id": "actual_illumination_path",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illumination_path"
+                },
+                "dimension": "subject",
+                "property": "entity.type",
+                "value": {
+                  "type": "entity.type/v1",
+                  "value": "illumination_path"
+                }
+              },
+              {
+                "id": "established_window_route",
+                "kind": "frozen_value",
+                "owner": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illumination_path"
+                },
+                "dimension": "lighting",
+                "property": "lighting.path.route",
+                "value": {
+                  "type": "lighting.path.route/v1",
+                  "value": "window_mediated"
+                }
+              },
+              {
+                "id": "path_from_same_source",
+                "kind": "frozen_entity_relation",
+                "left": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illumination_path"
+                },
+                "right": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illuminating_light"
+                },
+                "dimension": "lighting",
+                "property": "lighting.path.source",
+                "value_type": "entity.owner_id/v1"
+              },
+              {
+                "id": "every_receiver_on_same_window_path",
+                "kind": "for_each_member",
+                "scope": {
+                  "kind": "source_target",
+                  "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                  "target": "illuminated_receivers"
+                },
+                "member_variable": "receiver",
+                "rule": {
+                  "id": "actual_received_via_path",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "bound_member",
+                    "variable": "receiver"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illumination_path"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.received_via",
+                  "value_type": "entity.owner_id/v1"
+                }
+              }
+            ]
+          }
+        },
+        "content": {
+          "application_contract": "For this explicitly bounded application, select soft window-mediated illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver, with an independently established window-mediated illumination path. Change the declared source route to window-mediated light and the received illumination quality to soft. Preserve the established light, path, receiver and receiving scope. This selection does not add a window, room, curtain, fixture, person or other object, or choose a window location, numeric softness, light direction, color or intensity. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value. Independently select the actual existing window-mediated illumination path already declared above. Its source endpoint must be that same actual source and every receiver must already receive via that same actual path, bound through lighting.path.source and lighting.received_via actual-owner facts. The already established path route is window-mediated; the selected source-route and soft-quality effects remain effects. No window, path or other entity is introduced.",
+          "en": "soft window",
+          "ko": "soft window",
+          "tags": [
+            "lighting"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "property": "lighting.quality.hardness",
+              "target": "illuminating_light"
+            },
+            {
+              "dimension": "lighting",
+              "property": "lighting.source.route",
+              "target": "illuminating_light"
+            }
+          ]
+        },
+        "id": "cand_f5de9f2d17165939999bbde4efc539ea",
+        "provenance": [
+          {
+            "sha256": "6e34efa9acd3ce8abf232dd6adc641d220b6ef54d03421a4770a0229cdfd58b2",
+            "source": "slot:light_type:soft_window"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "before_sha256": "38ef0ac712c6fdca882608ffa28c5c1abf65682fd0f6db8c53f4478a77430caa",
+      "after_sha256": "7d9a81565539c663ff6780916a0719ec7c1a54f513c7b211c6dd59bcecb1b7cc",
+      "delta": [
+        {
+          "pointer": "/conditions",
+          "before": {},
+          "after": {
+            "native_guards": {
+              "schema": "photo-native-source-guards/v3",
+              "rules": [
+                {
+                  "id": "existing_illumination",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_carrier",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_source"
+                  }
+                },
+                {
+                  "id": "every_receiver_already_illuminated_by_that_source",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_from_source",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                      "target": "illuminating_light"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_from",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                },
+                {
+                  "id": "existing_window_path",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illumination_path"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.presence",
+                  "value": {
+                    "type": "entity.presence/v1",
+                    "value": "present"
+                  }
+                },
+                {
+                  "id": "actual_illumination_path",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illumination_path"
+                  },
+                  "dimension": "subject",
+                  "property": "entity.type",
+                  "value": {
+                    "type": "entity.type/v1",
+                    "value": "illumination_path"
+                  }
+                },
+                {
+                  "id": "established_window_route",
+                  "kind": "frozen_value",
+                  "owner": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illumination_path"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.path.route",
+                  "value": {
+                    "type": "lighting.path.route/v1",
+                    "value": "window_mediated"
+                  }
+                },
+                {
+                  "id": "path_from_same_source",
+                  "kind": "frozen_entity_relation",
+                  "left": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illumination_path"
+                  },
+                  "right": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illuminating_light"
+                  },
+                  "dimension": "lighting",
+                  "property": "lighting.path.source",
+                  "value_type": "entity.owner_id/v1"
+                },
+                {
+                  "id": "every_receiver_on_same_window_path",
+                  "kind": "for_each_member",
+                  "scope": {
+                    "kind": "source_target",
+                    "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                    "target": "illuminated_receivers"
+                  },
+                  "member_variable": "receiver",
+                  "rule": {
+                    "id": "actual_received_via_path",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "kind": "bound_member",
+                      "variable": "receiver"
+                    },
+                    "right": {
+                      "kind": "source_target",
+                      "candidate_id": "cand_f5de9f2d17165939999bbde4efc539ea",
+                      "target": "illumination_path"
+                    },
+                    "dimension": "lighting",
+                    "property": "lighting.received_via",
+                    "value_type": "entity.owner_id/v1"
+                  }
+                }
+              ]
+            }
+          },
+          "reason": "Explicit actual source/receiver/path/scene relational guards preserve the selected application; no desired effect value is P."
+        },
+        {
+          "pointer": "/content/application_contract",
+          "before": "For this explicitly bounded application, select soft window-mediated illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver, with an independently established window-mediated illumination path. Change the declared source route to window-mediated light and the received illumination quality to soft. Preserve the established light, path, receiver and receiving scope. This selection does not add a window, room, curtain, fixture, person or other object, or choose a window location, numeric softness, light direction, color or intensity.",
+          "after": "For this explicitly bounded application, select soft window-mediated illumination on an independently identified existing illuminating light and its independently identified existing illuminated receiver, with an independently established window-mediated illumination path. Change the declared source route to window-mediated light and the received illumination quality to soft. Preserve the established light, path, receiver and receiving scope. This selection does not add a window, room, curtain, fixture, person or other object, or choose a window location, numeric softness, light direction, color or intensity. For the explicitly selected existing-carrier application, independently select the actual existing illumination source and a complete, nonempty, flat inventory of all existing actual receivers in its established receiving scope, grounded in the complete reviewed request inputs before discovery. This is the existing receiving scope named above, not a candidate-chosen subset or a newly created aggregate object. Each actual receiver must already receive illumination from that same actual selected source; bind each receiver lighting.received_from fact to that actual source owner ID. Preserve that relation and the exact complete receiver membership. Apply every declared lighting effect to the same source with all inventory members as receivers. Select owners independently without requiring a fixed primary/main or light-role address. Missing source, missing/wrong relation, absent receiver, incomplete or unknown membership, or a substituted subset requires review and cannot fall back to another owner. The desired selected source type, modifier, quality, phase treatment or scene time is an effect and must not be pre-required as an existing value. Independently select the actual existing window-mediated illumination path already declared above. Its source endpoint must be that same actual source and every receiver must already receive via that same actual path, bound through lighting.path.source and lighting.received_via actual-owner facts. The already established path route is window-mediated; the selected source-route and soft-quality effects remain effects. No window, path or other entity is introduced.",
+          "reason": "Disclose exact complete independently reviewed scope/actual relation and no fallback, without changing original positive EN/KO or effects."
+        }
+      ],
+      "manual_owner_plan": {
+        "illuminating_light": "selected_existing_owner; existing illumination_source, never newly introduced",
+        "illuminated_receivers": "selected_existing_member_scope; each_member target semantics/all_members receiver semantics, existing complete inventory; not a synthetic entity",
+        "illumination_path": "selected_existing_owner; same actual existing window-mediated path"
+      },
+      "manual_effects_and_receivers": {
+        "all_original_lighting_effects": {
+          "operation": "set_value",
+          "receivers": [
+            "illuminated_receivers"
+          ]
+        }
+      },
+      "manual_P_PR_boundary": "Existing source presence/type, all receiver presence from complete independently input-bound inventory, exact actual received_from relation and optional lab-use/path/scene qualifiers are independent obligations. Preserve actual relation values and membership. No selected neon/LED/softbox/flash/hard/fluorescent/golden-hour/soft value becomes P. Old ownbinding conditions remain exact in prepared input. Proof not authored for this unselected after.",
+      "shape_checks_only": {
+        "source_guard_schema": true,
+        "full_native_proof": false,
+        "full_compact_controlled_admission": false
+      },
+      "root_selected": false
+    }
+  ]
+}
