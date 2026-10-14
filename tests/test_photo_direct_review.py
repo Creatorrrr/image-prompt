@@ -84,6 +84,35 @@ class DirectReviewTests(unittest.TestCase):
                     'run/authored/test.json', review.c.digest(packet), A)
                 self.assertEqual(provenance['assignment_id'], 'review_test')
 
+    def test_short_worker_task_name_resolves_its_later_range(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                path = here / 'DELEGATION-ASSIGNMENTS.json'
+                registry = review.c.decode(path.read_bytes())
+                first = registry['assignments']['review_test'];first['stop'] = 1
+                registry['assignments']['review_next'] = {**first, 'start': 1, 'stop': 2}
+                review.write(path, registry)
+                note.update(task_name='review_test', start=1, stop=2)
+                packet['ids'] = [B]
+                review.write(here / 'worker-notes/test.json', note)
+                review.write(here / 'packets/test.json', packet)
+                provenance = review.delegated_provenance('run/worker-notes/test.json',
+                    'run/authored/test.json', review.c.digest(packet), B)
+                self.assertEqual(provenance['assignment_id'], 'review_next')
+
+    def test_immutable_invocation_cache_hashes_the_complete_packet_once(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            packet_sha = review.c.digest(packet)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here), \
+                    patch.object(review.c, 'digest', wraps=review.c.digest) as digest:
+                cache = {}
+                for _ in range(2):
+                    review.delegated_provenance('run/worker-notes/test.json',
+                        'run/authored/test.json', packet_sha, A, cache=cache)
+                self.assertEqual(sum(call.args[0] == packet for call in digest.call_args_list), 1)
+
     def test_reassigned_tail_cannot_be_registered_by_the_old_worker(self):
         with tempfile.TemporaryDirectory() as directory:
             root, here, note, packet = self.delegated_fixture(directory)

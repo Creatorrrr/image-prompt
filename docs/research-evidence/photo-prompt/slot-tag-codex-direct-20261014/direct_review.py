@@ -267,6 +267,14 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid, *, cache=
         if path not in cache:
             cache[path] = c.decode(path.read_bytes())
         return cache[path]
+    def document_digest(path):
+        key = ('document_digest', path)
+        if cache is not None and key in cache:
+            return cache[key]
+        value = c.digest(read(path))
+        if cache is not None:
+            cache[key] = value
+        return value
     note = read(note_path)
     registry_document = read(HERE / 'DELEGATION-ASSIGNMENTS.json')
     registry = registry_document['assignments']
@@ -274,13 +282,17 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid, *, cache=
     if not isinstance(start, int) or not isinstance(stop, int):
         raise ValueError('worker review range must be integer ordinals')
     matches = [(key, assignment) for key, assignment in registry.items()
-               if note['task_name'] in {key, assignment['task_name']}
+               if note['task_name'] in {key, assignment['task_name'],
+                                       assignment['task_name'].rsplit('/', 1)[-1]}
                and assignment['start'] <= start < stop <= assignment['stop']]
     if len(matches) != 1:
         raise ValueError('worker has no unique dispatched assignment')
     assignment_id, assignment = matches[0]
     order = read(HERE / 'ORDER.json')
-    ordinal = order.index(cid)
+    order_key = ('order_ordinals', HERE / 'ORDER.json')
+    if cache is not None and order_key not in cache:
+        cache[order_key] = {value: n for n, value in enumerate(order)}
+    ordinal = cache[order_key][cid] if cache is not None else order.index(cid)
     if any(transfer['from_assignment'] == assignment_id
            and transfer['start'] <= ordinal < transfer['stop']
            for transfer in registry_document.get('reassignments', [])):
@@ -298,13 +310,14 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid, *, cache=
         raise ValueError('worker identity, assigned range or complete review does not match')
     if authored_path not in {run_path(value, 'authored') for value in note['authored_paths']}:
         raise ValueError('authored document is not attested by this worker')
-    packets = [read(run_path(value, 'packets')) for value in note['packet_paths']]
-    if not any(c.digest(packet) == packet_sha256 and cid in packet['ids'] for packet in packets):
+    packet_paths = [run_path(value, 'packets') for value in note['packet_paths']]
+    if not any(document_digest(path) == packet_sha256 and cid in read(path)['ids']
+               for path in packet_paths):
         raise ValueError('complete source packet is not attested by this worker')
     return {'assignment_id': assignment_id, 'task_name': assignment['task_name'],
         'model': assignment['model'], 'reasoning_effort': assignment['reasoning_effort'],
         'range': [start, stop], 'assignment_sha256': c.digest(assignment),
-        'worker_note': {'file': str(note_path.relative_to(ROOT)), 'sha256': c.digest(note)}}
+        'worker_note': {'file': str(note_path.relative_to(ROOT)), 'sha256': document_digest(note_path)}}
 
 
 def validate_review_provenance(row, *, cache=None):
@@ -321,7 +334,9 @@ def validate_review_provenance(row, *, cache=None):
     note = (cache[note_path] if cache is not None else c.decode(note_path.read_bytes()))
     order_path = HERE / 'ORDER.json'
     order = (cache[order_path] if cache is not None else c.decode(order_path.read_bytes()))
-    pending = order.index(row['candidate_id']) in note['unresolved_ordinals']
+    ordinal = (cache[('order_ordinals', order_path)][row['candidate_id']]
+               if cache is not None else order.index(row['candidate_id']))
+    pending = ordinal in note['unresolved_ordinals']
     if pending != (row['status'] not in {'approved', 'diagnostic_reviewed'}):
         raise ValueError('unresolved worker judgement cannot be counted as approved')
 
@@ -464,17 +479,18 @@ def register(packet_path, authored_path, worker_note=None):
     rows = []
     provenance_cache = {}
     binding_cache = {}
+    packet_sha256 = c.digest(packet)
     for number, decision in enumerate(authored['decisions'], 1):
         if set(decision) != required or decision['candidate_id'] not in packet['ids']:
             raise ValueError('explicit authored meaning, roles and status required for packet ID')
         cid = decision['candidate_id']
         row = {**binding(data, cid, cache=binding_cache), **decision, 'schema': SCHEMA, 'reviewer': 'Codex',
             'review_method': 'codex_direct_source_read', 'independent_human_review': False,
-            'packet_sha256': c.digest(packet), 'authored_decision': {
+            'packet_sha256': packet_sha256, 'authored_decision': {
                 'file': str(authored_path.relative_to(ROOT)), 'item': number, 'sha256': c.digest(decision)}}
         if worker_note is not None:
             row.update(schema=DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read',
-                review_provenance=delegated_provenance(worker_note, authored_path, c.digest(packet), cid,
+                review_provenance=delegated_provenance(worker_note, authored_path, packet_sha256, cid,
                                                        cache=provenance_cache))
         validate_decision(row, data, provenance_cache=provenance_cache, binding_cache=binding_cache)
         rows.append(row)
