@@ -2,6 +2,7 @@
 import importlib.util
 from pathlib import Path
 import subprocess
+import json
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -18,6 +19,27 @@ spec.loader.exec_module(integrator)
 
 
 class ReviewStateTests(unittest.TestCase):
+    def test_execution_accounting_preserves_unknown_after_start_or_failure(self):
+        from local_execution_ledger import Ledger
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with patch.object(integrator.review, 'HERE', root):
+                self.assertEqual(integrator.local_execution_counts()['exact_total'], 0)
+                (root/'LOCAL-INFERENCE-LEDGERS.json').write_text(json.dumps({'directories': ['inverse/ledger']}))
+                ledger = Ledger(root/'inverse/ledger')
+                ledger.plan('fixture', ['explicit fixture input'], binding={},
+                            space={'provider': 'embeddinggemma2-local'})
+                self.assertEqual(integrator.local_execution_counts()['exact_total'], 0)
+                ledger.start('fixture')
+                result = integrator.local_execution_counts()
+                self.assertIsNone(result['exact_total'])
+                self.assertEqual(result['unknown_run_ids'], ['inverse/ledger/fixture'])
+                ledger.finish('fixture', state='failed', receipts=[], error_type='FixtureFailure')
+                self.assertIsNone(integrator.local_execution_counts()['exact_total'])
+                (root/'LOCAL-INFERENCE-LEDGERS.json').write_text(json.dumps({'directories': ['../outside']}))
+                with self.assertRaisesRegex(ValueError, 'inside this evidence run'):
+                    integrator.local_execution_counts()
+
     def test_shared_tracked_packet_and_new_batch_have_an_exact_commit_boundary(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
