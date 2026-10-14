@@ -52,6 +52,18 @@ def finalize(pack,data,selected_ids,query_context):
         value={k:copy.deepcopy(v) for k,v in row.items() if k not in {'slot','entry_id','binding_id','proposal_id','axis','carrier'}}
         value['id']=cid;value['record_kind']=data['candidates'][cid]['record_kind']
         value['authored_record']=copy.deepcopy(data['candidates'][cid])
+        import photo_semantic_evidence as native
+        import photo_candidate_realizations as realizations
+        if native.native_status(data['candidates'][cid])=='qualified':
+            proof=native.compact(data['candidates'][cid],data)
+            descriptors=[native.owner_selection_descriptors(proof,rid) for rid in realizations.ids(data['candidates'][cid])]
+            nodes={ (row['candidate_id'],row['realization_id']):row for descriptor in descriptors if descriptor for row in descriptor['nodes']}
+            if nodes:
+                value['owner_selection_requirements']={'schema':'photo-owner-selection-requirements/v1','nodes':[nodes[key] for key in sorted(nodes)]}
+                selected_entry=c.entry(data,cid,realization_id=value.get('realization_id'),
+                    dependency_selections=value.get('native_dependency_selections'))
+                if native.pending_owner_selection(selected_entry):
+                    value['applicability']={'status':'review_required','source':'explicit_existing_owner_selection_required','search_only':True}
         conditional=data['candidates'][cid]['effects'].get('realizations')
         if not conditional:value.pop('realization_id',None)
         rid=value.get('realization_id') if conditional else None

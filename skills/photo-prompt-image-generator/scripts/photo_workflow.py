@@ -116,6 +116,10 @@ def compose_audit(args):
             raise WorkflowError("composition_revision_requires_new_run")
         pack = one(value(state, "pack"))
         composed = one(read_json(args.composed))
+        if 'composed' in state['artifacts']:
+            previous=one(value(state,'composed'))
+            if previous.get('owner_selections')!=composed.get('owner_selections'):
+                raise WorkflowError('owner_selection_rebinding_requires_new_run')
         # Choice and evidence are always authored, including explicit zero choices.
         for key in ("chosen_candidate_ids", "chosen_visual_concept_ids"):
             if key not in composed:
@@ -167,6 +171,11 @@ def prepare_render(args):
             "runtime_prompt_en": prompt, "runtime_negative_en": composed.get("negative_en"),
             "audit_boundary": {"composed_prompt_audit_status": "pass", "runtime_prompt_audit_status": "not_run", "inherits_composed_prompt_pass": False},
             **parameters}
+        owner_resolution=value(state,'composed_audit').get('native_owner_resolution')
+        if 'owner_selections' in composed:
+            if not isinstance(owner_resolution,dict):raise WorkflowError('audited_owner_resolution_required')
+            request['native_owner_resolution_sha256']=owner_resolution['canonical_sha256']
+            request['source_composed_sha256']=owner_resolution['composed_sha256']
         if pack.get("render_repair"):
             request["render_repair_contract_sha256"] = pack["render_repair"]["canonical_sha256"]
         if composed.get("chosen_visual_concept_ids"):

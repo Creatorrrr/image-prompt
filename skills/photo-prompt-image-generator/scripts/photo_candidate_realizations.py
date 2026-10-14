@@ -163,7 +163,7 @@ def selected_view(candidate, interpretation):
 
 
 def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id=None,
-                 *, check_effect_scope=True, dependency_selections=None):
+                 *, check_effect_scope=True, dependency_selections=None,owner_selections=None,allow_owner_selection_pending=False):
     import photo_candidate_corpus as c
     import prompt_generator as g
     record = data['candidates'][candidate_id]
@@ -172,15 +172,15 @@ def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id
         selected = branch(record, rid)
         if not context_satisfied(selected, core):
             continue
-        entry = c.entry(data, candidate_id, binding_id, realization_id=rid, dependency_selections=dependency_selections)
+        entry = c.entry(data, candidate_id, binding_id, realization_id=rid, dependency_selections=dependency_selections,owner_selections=owner_selections)
         if not g.core_entry_eligible(data, core, contract, picked, slot, entry,
-                                     check_effect_scope=check_effect_scope):
+                                     check_effect_scope=check_effect_scope,allow_owner_selection_pending=allow_owner_selection_pending):
             continue
         if selected and selected.get('conditions'):
             guard = {**copy.deepcopy(entry), **copy.deepcopy(selected['conditions'])}
             # AND with the canonical guard, already checked above.
             if not g.core_entry_eligible(data, core, contract, picked, slot, guard,
-                                         check_effect_scope=False):
+                                         check_effect_scope=False,allow_owner_selection_pending=allow_owner_selection_pending):
                 continue
         pointers = record['content'].get('member_candidates', [])
         wanted = member_ids(record, rid)
@@ -210,7 +210,7 @@ def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id
                     for cid in native.dependency_choices(child_guard, child_rid)}
                 child_selections = {cid:value for cid,value in selected_choices.items() if cid in descendant_ids}
             choices = eligible_ids(data, child_id, core, contract, picked, role, bid,
-                check_effect_scope=check_effect_scope, dependency_selections=child_selections)
+                check_effect_scope=check_effect_scope, dependency_selections=child_selections,owner_selections=owner_selections,allow_owner_selection_pending=allow_owner_selection_pending)
             actual_choice = selected_choices.get(child_id)
             if not choices or actual_choice is not None and actual_choice not in choices:
                 member_failed = True; break

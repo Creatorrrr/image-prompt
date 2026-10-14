@@ -58,13 +58,13 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
                 break
             for hit in fused:
                 cid=hit['document_id']
-                possible=realizations.eligible_ids(guard_data,cid,core,contract,picked,slot)
+                possible=realizations.eligible_ids(guard_data,cid,core,contract,picked,slot,allow_owner_selection_pending=True)
                 if not possible:
                     rejected.add(cid);continue
                 proposal=roles.propose(data,slot,cid,source_roles[cid],bindings_by_candidate.get(cid,[]),realization_ids=possible)
                 entry=roles.entry(guard_data,proposal)
                 if (blocked or proposal['applicability_status']=='incompatible'
-                        or not g.core_entry_eligible(data,core,contract,picked,slot,entry)):
+                        or not g.core_entry_eligible(data,core,contract,picked,slot,entry,allow_owner_selection_pending=True)):
                     rejected.add(cid);continue
                 proposals[proposal['proposal_id']]=proposal
                 chosen.append((cid,proposal['proposal_id'],hit))

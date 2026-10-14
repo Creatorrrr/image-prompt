@@ -69,6 +69,53 @@ Use the resulting judgment with these reasoning outcomes and existing fields, no
 
 For example, a daylight-only scene may use an independently justified gentle transition from its existing window light without adopting a softbox candidate or adding that apparatus. Required meanings remain binding; uncertain optional additions can be withheld without inventing new exclusions or claiming that mechanical audit guarantees semantic or image quality.
 
+### Explicit existing-owner selection
+
+An `owner_selection_requirements` descriptor identifies a manually reviewed
+source target that can apply to a compatible existing owner. Read its full source
+and choose the actual entity from the independently frozen owner graph. Required
+`subject/entity.presence` uses type `entity.presence/v1`, value `present`; each
+specific material, anatomy or other prerequisite still needs its own exact
+frozen fact. Presence and a property lock never grant permission to change that
+property. A descriptor may include optional children; those children contribute
+no duty until explicitly selected.
+
+For actually adopted selector nodes, add this composed field before audit:
+
+```json
+{"owner_selections": {
+  "schema": "photo-request-owner-selections/v1",
+  "core_sha256": "<frozen core canonical_sha256>",
+  "owner_graph_sha256": "<canonical frozen witness graph SHA256>",
+  "entries": [{
+    "candidate_id": "<source CID>",
+    "realization_id": "<selected actual RID>",
+    "meaning_sha256": "<descriptor meaning_sha256>",
+    "qualification_sha256": "<descriptor full-proof qualification_sha256>",
+    "bindings": [{"target": "<source target>", "owner_id": "<actual frozen owner ID>"}]
+  }]
+}}
+```
+
+The graph hash is
+`photo_candidate_corpus.digest(photo_semantic_evidence.frozen_witnesses(core)['graph'])`.
+Entries must exactly cover the actually selected selector-node closure, with
+1–64 entries and 1–32 unique target bindings per entry. Use the full-proof hash
+from the descriptor. Keep fixed-role bindings unchanged and omit unused optional
+children. All selected effects and receivers resolve through this same mapping;
+explicit owner equivalence identifies one actual entity, while `part_of` retains
+distinct part ownership. Repeated assignments within one source realization on
+one actual property must agree in typed value, operation and actual receiver
+set. A different owner mapping
+does not turn a conflicting assignment or a locked mutation into permission.
+
+Keep the original public pack unchanged. A passing audit emits its own
+`native_owner_resolution`, bound to the exact pack, composed text, source
+qualifications, core and owner graph. Do not supply that receipt as composed
+input. After a successful `compose-audit`, a different owner mapping requires a
+new run; a failed audit can be corrected. The workflow binds the receipt to the
+render request and independently recomputes it before execution.
+
 ### Authorial binding shape
 
 The example below retains a complete baseline without additional refinements under the v2 policy. Add a decision only for a material final refinement.

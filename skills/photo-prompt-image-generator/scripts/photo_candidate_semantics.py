@@ -106,7 +106,7 @@ def semantic_source(entry: dict[str, Any], slot: str = "", policy: dict[str, Any
 NATIVE_BUNDLE_CONTRACT = 'photo-native-selected-members/v1'
 
 
-def native_bundle_view(data, bundle, pack, realization_id, dependency_selections=None):
+def native_bundle_view(data, bundle, pack, realization_id, dependency_selections=None,owner_selections=None):
     """Expose root obligations separately from explicitly adopted child choices."""
     import photo_candidate_corpus as c
     import photo_candidate_realizations as realizations
@@ -116,7 +116,7 @@ def native_bundle_view(data, bundle, pack, realization_id, dependency_selections
     cid=bundle['id'];core=pack['authorial_core'];selections=copy.deepcopy(dependency_selections or {})
     if not isinstance(selections,dict) or any(not isinstance(key,str) or not isinstance(value,str) for key,value in selections.items()):
         raise ValueError('explicit native dependency selections must map CID strings to actual RID strings')
-    entry=c.entry(data,cid,realization_id=realization_id,dependency_selections=selections)
+    entry=c.entry(data,cid,realization_id=realization_id,dependency_selections=selections,owner_selections=owner_selections)
     proof=native.proof_of(entry);choices=native.dependency_choices(proof,realization_id)
     if not set(selections)<=set(choices):raise ValueError('unknown native member selection')
     row={**copy.deepcopy(bundle),**entry}
@@ -137,7 +137,7 @@ def native_bundle_view(data, bundle, pack, realization_id, dependency_selections
             child_guard=native.compact(data['candidates'][child_id],data)
             child_choices=native.dependency_choices(child_guard,rid)
             member=views.materialize_member(data,pointers[child_id],realization_id=rid,
-                dependency_selections={key:value for key,value in selections.items() if key in child_choices})
+                dependency_selections={key:value for key,value in selections.items() if key in child_choices},owner_selections=owner_selections)
             if not g.core_entry_eligible(data,core,constraints,picked,member['slot'],member):
                 allowed=False
             row['member_candidates'].append(member)
@@ -289,7 +289,10 @@ def apply_public_semantics(pack: dict[str, Any], sources: dict[str, dict[str, An
         elif isinstance(value, dict):
             candidate_id = str(value.get("id") or value.get("candidate_id") or "")
             source = sources.get(candidate_id)
-            if source and value.get("content_form") == "unordered_inspiration_terms":
+            # Native bundles already carry their exact selected closure and
+            # resolved owner effects. A role's local surface is not that view.
+            if (source and value.get("content_form") == "unordered_inspiration_terms"
+                    and value.get('native_bundle_contract') != NATIVE_BUNDLE_CONTRACT):
                 value.update(copy.deepcopy(source))
                 value["semantic_surface_version"] = SURFACE_VERSION
                 value["concept_terms"] = list(source["concept_units"])

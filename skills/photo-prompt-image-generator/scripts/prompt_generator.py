@@ -1348,6 +1348,8 @@ def candidate_pack_summarize_slot_candidate(
         },
         "conflicts_with": [],
     }
+    if entry.get('owner_selection_requirements'):
+        candidate['owner_selection_requirements']=copy.deepcopy(entry['owner_selection_requirements'])
     if entry.get("primary_context_alternatives"):
         candidate.update(photo_candidate_context.compile_context(entry, candidate["id"],
             quality_layer_primary_context_requirement_sources(data, slot, entry)))
@@ -4784,7 +4786,7 @@ def candidate_pack_native_profile_choices(data, result, trace, resolution):
         if not required and cid not in selected:continue
         record=data['candidates'][cid]
         choices=[]
-        for rid in realizations.eligible_ids(data,cid,core,contract,picked,check_effect_scope=False):
+        for rid in realizations.eligible_ids(data,cid,core,contract,picked,check_effect_scope=False,allow_owner_selection_pending=True):
             entry=corpus.entry(data,cid,realization_id=rid)
             # Absent native proof remains discoverable. It cannot supply a
             # completed source/meaning/obligation qualification certificate.
@@ -4792,7 +4794,7 @@ def candidate_pack_native_profile_choices(data, result, trace, resolution):
             obligation=candidate_pack_visual_profile_obligation(entry,registry,
                 activation_source='native_actual_realization',source_intent_ids=[]) if qualified else None
             import photo_semantic_evidence as native
-            dimensions,properties=(native.permission_scope(entry,core)[:2] if qualified else
+            dimensions,properties=(native.permission_scope(entry,core)[:2] if qualified and not native.pending_owner_selection(entry) else
                 (entry['affected_dimensions'],entry['affected_properties']))
             choices.append({'realization_id':rid,'qualification':entry.get('_native_qualification'),
                 'selected_profile_contract':copy.deepcopy(entry.get('_selected_profile_contract')),
@@ -4801,6 +4803,8 @@ def candidate_pack_native_profile_choices(data, result, trace, resolution):
                 'relations':copy.deepcopy(entry.get('relations') or []),
                 'affected_dimensions':copy.deepcopy(dimensions),
                 'affected_properties':copy.deepcopy(properties)})
+            if entry.get('owner_selection_requirements'):
+                choices[-1]['owner_selection_requirements']=copy.deepcopy(entry['owner_selection_requirements'])
         if required and not choices:
             raise ValueError('required native profile has no compatible actual realization; explicit review required')
         rows.append({'candidate_id':cid,'required':bool(required),
@@ -7793,10 +7797,11 @@ def build_candidate_pack(
                     entry, slot, data.get("candidate_semantic_policy")
                 )
                 source = candidate["_native_semantic_source"]
-                if not native_property_scope_allowed(
+                import photo_semantic_evidence
+                if (not photo_semantic_evidence.pending_owner_selection(entry) and not native_property_scope_allowed(
                     authorial_core, source.get("affected_dimensions") or [],
                     source.get("affected_properties", []), entry=entry
-                ):
+                )):
                     candidate["applicability"] = {
                         "status": "ineligible", "source": "authored_property_scope",
                         "reason": "effect overlaps a protected requester property",
@@ -8317,10 +8322,10 @@ def native_property_scope_allowed(core, dimensions, properties, *, entry=None, d
     return native.property_scope_allowed(core, dimensions, properties, record=entry, realization_id=realization_id)
 
 
-def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True, _condition_layer=False) -> bool:
+def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True, _condition_layer=False,allow_owner_selection_pending=False) -> bool:
     import photo_semantic_evidence
     if not _condition_layer:
-        native_admission = photo_semantic_evidence.admission(entry, core, allow_unselected=not check_effect_scope)
+        native_admission = photo_semantic_evidence.admission(entry, core, allow_unselected=not check_effect_scope or allow_owner_selection_pending)
         if not native_admission['allowed']:
             return False
         try:
@@ -8340,7 +8345,9 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
     dimensions = entry.get("affected_dimensions") or []
     lock = core.get("intent_lock") or {}
     properties = entry.get("affected_properties") or []
-    if check_effect_scope:
+    owner_pending=allow_owner_selection_pending and photo_semantic_evidence.pending_owner_selection(entry)
+    if owner_pending and not set(dimensions)<=set(lock.get('open_dimensions') or []):return False
+    if check_effect_scope and not owner_pending:
         try:
             dimensions, scoped_properties, owner_graph = photo_semantic_evidence.permission_scope(entry, core)
         except (ValueError, KeyError, TypeError):

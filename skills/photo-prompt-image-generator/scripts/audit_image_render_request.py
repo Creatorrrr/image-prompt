@@ -62,8 +62,21 @@ def audit_image_render_request(
     *,
     request_path: Path | None = None,
 ) -> dict[str, Any]:
+    public_pack=pack
     pack=photo_native_pack.read_view(pack)
     failures: list[dict[str, Any]] = []
+    if 'owner_selections' in composed:
+        try:
+            fresh=audit_composed_prompt.audit_composed_prompt(public_pack,composed)
+            resolution=fresh.get('native_owner_resolution')
+            if (fresh['status']!='pass' or not isinstance(resolution,dict)
+                    or request.get('native_owner_resolution_sha256')!=resolution['canonical_sha256']
+                    or request.get('source_composed_sha256')!=resolution['composed_sha256']):
+                raise ValueError('runtime request must bind the same successfully audited composed owner mapping/hash')
+        except (ValueError,KeyError,TypeError) as exc:
+            failures.append({'check':'native_owner_resolution','reason':str(exc)})
+    elif request.get('native_owner_resolution_sha256') is not None or request.get('source_composed_sha256') is not None:
+        failures.append({'check':'native_owner_resolution','reason':'owner resolution supplied without explicit composed selections'})
     expected_retrieval_sha = (pack.get("global_retrieval") or {}).get("canonical_sha256")
     if not expected_retrieval_sha or request.get("global_retrieval_sha256") != expected_retrieval_sha:
         failures.append({"check": "global_retrieval_sha256", "reason": "runtime request must bind the exact core retrieval contract"})

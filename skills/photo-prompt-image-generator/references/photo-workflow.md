@@ -46,6 +46,17 @@ core and its property locks. An unqualified source may remain discoverable durin
 the corpus migration; it cannot be adopted as a qualified cue. A score or role
 tag cannot supply a missing frozen owner, anatomy, age or property fact.
 
+For an adopted source with `owner_selection_requirements`, author the composed
+`owner_selections` described in
+[composition-contract.md](composition-contract.md#explicit-existing-owner-selection).
+Choose only compatible actual owners already declared before retrieval. Keep
+the single public pack and frozen core unchanged; optional unselected children
+need no mapping. A successful composition audit stores a source/core/graph and
+composed-bound owner-resolution receipt. A changed owner mapping after that pass
+requires a new run, while a failed audit can be corrected normally. Render
+preparation copies the audited receipt and composed hashes; transport parameters
+cannot supply or override them, and runtime recomputes the same resolution.
+
 Intrinsic, selected-branch, explicit presentation and selected dependency
 conditions remain cumulative. Conditional reference or identity preservation
 uses the exact caller input inventory and frozen scope inventory: known absent
