@@ -38,7 +38,7 @@ PROOF_FIELDS = frozenset({'schema', 'meaning_sha256', 'catalog_sha256', 'complet
 POSITIVE_FIELDS = frozenset({'en', 'ko', 'ja', 'phrase_en', 'phrase_ko', 'embedding_text', 'concept_units', 'relations',
     'definition', 'definitions_by_topic', 'paraphrases', 'manifestations', 'components',
     'semantics', 'authored_components', 'composition_instruction', 'concept_candidate',
-    'render_requirements', 'render_gates', 'render_hard_gates'})
+    'render_requirements', 'render_gates', 'render_hard_gates', 'application_contract'})
 MISSING = object()
 MAX_FACTS = 4096
 MAX_UNITS = 2048
