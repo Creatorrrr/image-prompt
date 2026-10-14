@@ -44,6 +44,9 @@ MAX_FACTS = 4096
 MAX_UNITS = 2048
 MAX_REALIZATIONS = 32
 MAX_DEPENDENCY_DEPTH = 8
+SOURCE_UNIT_FIELDS = frozenset({'realization_id', 'pointer', 'quote', 'fact_refs', 'disposition'})
+REFERENCE_UNIT_FIELDS = SOURCE_UNIT_FIELDS | {'reference_relation', 'retained_constraint_rationale'}
+REFERENCE_RELATIONS = frozenset({'partial_restatement', 'selected_output_constraint', 'same_selected_owner'})
 
 
 def meaning_material(record):
@@ -136,6 +139,60 @@ def primary_paths(record, rid):
     if choices:
         visit(choices[rid], '/content/realization_content/'+rid.replace('~', '~0').replace('/', '~1'))
     return result
+
+
+def _validate_source_units(record, proof, facts, rid):
+    """References retain manual local constraints; only direct units ground facts.
+
+    A reference has one hop to a fact already supported at its exact primary
+    field by a normal semantic unit in this CID/RID. It never supplies facts,
+    roles, effects, owners or permissions. Natural-language entailment and the
+    chosen relation remain explicit human review judgements.
+    """
+    units = [unit for unit in proof['source_units']
+             if isinstance(unit, dict) and unit.get('realization_id') == rid]
+    primary = primary_paths(record, rid)
+    normal, references, direct = {}, {}, set()
+    for unit in units:
+        reference = unit.get('disposition') == 'semantic_reference'
+        expected = REFERENCE_UNIT_FIELDS if reference else SOURCE_UNIT_FIELDS
+        if (set(unit) != expected or not isinstance(unit['pointer'], str)
+                or not isinstance(unit['disposition'], str)
+                or unit['disposition'] not in {'semantic', 'nonsemantic', 'semantic_reference'}
+                or unit['quote'] != positive_string(record, unit['pointer'], realization_id=rid)):
+            raise ValueError('invalid full-string source-unit disposition')
+        _strings(unit['fact_refs'], 'source unit facts', empty=unit['disposition'] == 'nonsemantic')
+        if reference:
+            if (unit['pointer'] not in primary or unit['pointer'] in references
+                    or not isinstance(unit['reference_relation'], str)
+                    or unit['reference_relation'] not in REFERENCE_RELATIONS
+                    or not isinstance(unit['retained_constraint_rationale'], str)
+                    or not unit['retained_constraint_rationale'].strip()):
+                raise ValueError('invalid bounded semantic reference relation or rationale')
+            references[unit['pointer']] = unit
+            continue
+        if unit['pointer'] in normal:
+            raise ValueError('invalid full-string source-unit disposition')
+        if unit['disposition'] == 'nonsemantic' and unit['fact_refs']:
+            raise ValueError('nonsemantic unit cannot supply facts')
+        if any(ref not in facts or facts[ref]['realization_id'] != rid
+               or facts[ref]['pointer'] != unit['pointer'] or facts[ref]['quote'] not in unit['quote']
+               for ref in unit['fact_refs']):
+            raise ValueError('unit borrows a foreign fact/source')
+        normal[unit['pointer']] = unit
+        direct.update(unit['fact_refs'])
+    for pointer, unit in references.items():
+        # A direct unit may cover distinct local clauses at this same field.
+        # Calling the field nonsemantic at the same time is contradictory.
+        if pointer in normal and normal[pointer]['disposition'] != 'semantic':
+            raise ValueError('semantic reference conflicts with nonsemantic disposition')
+        if any(ref not in direct or facts[ref]['realization_id'] != rid
+               or facts[ref]['pointer'] not in primary or facts[ref]['pointer'] == pointer
+               for ref in unit['fact_refs']):
+            raise ValueError('semantic reference needs a distinct same-RID direct semantic anchor')
+    if (not primary <= normal.keys() | references.keys()
+            or direct != {fact['id'] for fact in facts.values() if fact['realization_id'] == rid}):
+        raise ValueError('complete source-unit/fact disposition required')
 
 
 def effect_set(record, rid):
@@ -522,23 +579,7 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
         if set(actual['dimensions']) != {fact['dimension'] for fact in selected if fact['mode'] == 'effect'}:
             raise ValueError('coarse/dimension-only effects need explicit source refinement before qualification')
         _selected_contract(proof, rid, actual)
-        units = [unit for unit in proof['source_units'] if isinstance(unit, dict) and unit.get('realization_id') == rid]
-        covered, referenced = set(), set()
-        for unit in units:
-            if (not isinstance(unit, dict) or set(unit) != {'realization_id', 'pointer', 'quote', 'fact_refs', 'disposition'}
-                    or unit['pointer'] in covered or unit['disposition'] not in {'semantic', 'nonsemantic'}
-                    or unit['quote'] != positive_string(record, unit['pointer'], realization_id=rid)):
-                raise ValueError('invalid full-string source-unit disposition')
-            _strings(unit['fact_refs'], 'source unit facts', empty=unit['disposition'] == 'nonsemantic')
-            if unit['disposition'] == 'nonsemantic' and unit['fact_refs']:
-                raise ValueError('nonsemantic unit cannot supply facts')
-            if any(ref not in facts or facts[ref]['realization_id'] != rid
-                   or facts[ref]['pointer'] != unit['pointer'] or facts[ref]['quote'] not in unit['quote']
-                   for ref in unit['fact_refs']):
-                raise ValueError('unit borrows a foreign fact/source')
-            covered.add(unit['pointer']); referenced.update(unit['fact_refs'])
-        if not primary_paths(record, rid) <= covered or referenced != {fact['id'] for fact in selected}:
-            raise ValueError('complete source-unit/fact disposition required')
+        _validate_source_units(record, proof, facts, rid)
     if any(not isinstance(unit, dict) or unit.get('realization_id') not in ids for unit in proof['source_units']):
         raise ValueError('source unit names a foreign RID')
     if record['record_kind'] == 'diagnostic' and (proof['roles'] or proof['facts']):
