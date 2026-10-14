@@ -51,12 +51,17 @@ def _owner_fit(owners, target):
     return "compatible"
 
 
-def fit(spec, record, positive_text):
+def fit(spec, record, positive_text, *, realization_id='base'):
     """Dimensions, tags and source membership cannot establish semantic approval.
 
 Specific effect paths name a carrier property. Text provides corroboration,
 not an independent semantic certification. Wildcards remain review_required.
     """
+    import photo_semantic_evidence
+    reviewed = photo_semantic_evidence.qualification(spec, record, realization_id)
+    if reviewed is not None:
+        return {**reviewed, 'semantic_role':spec['semantic_role'],
+                'owner_scope':list(spec['owners'])}
     text = positive_text.casefold()
     terms = [term for term in spec["evidence_terms"] if term.casefold() in text]
     properties = record["effects"]["properties"]

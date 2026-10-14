@@ -23,7 +23,8 @@ def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, reali
     choices=[]
     for rid in ids:
         effects=realizations.effects(record,rid)
-        fit=semantics.fit(data['slot_catalog'][slot],{**record,'effects':effects},positive)
+        fit=semantics.fit(data['slot_catalog'][slot],{**record,'effects':effects},positive,
+                          realization_id=rid)
         choices.append(({'eligible':0,'review_required':1,'incompatible':2}[fit['status']],rid,fit,effects))
     _,rid,fit,effects=min(choices,key=lambda row:(row[0],row[1]))
     if declared and not preferred:

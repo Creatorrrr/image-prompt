@@ -73,9 +73,14 @@ def guard_record(record):
     # Keep all filtering fields; large realization bodies belong to the payload.
     removed = {'components', 'semantics', 'concept_candidate', 'render_requirements', 'render_hard_gates',
                'paraphrases', 'definition', 'definitions_by_topic', 'relations', 'concept_units',
-               'manifestations', 'provenance', 'acceptance', 'failure_modes', 'confounders'}
+               'manifestations', 'provenance', 'acceptance', 'failure_modes', 'confounders',
+               'role_evidence', 'semantic_review'}
     value = {key: value for key, value in record.items() if key not in {'content', 'provenance'}}
     value['content'] = {key: value for key, value in content.items() if key not in removed}
+    import photo_semantic_evidence
+    proof = photo_semantic_evidence.compact(record)
+    if proof is not None:
+        value['_semantic_evidence_guard'] = proof
     return value
 
 
