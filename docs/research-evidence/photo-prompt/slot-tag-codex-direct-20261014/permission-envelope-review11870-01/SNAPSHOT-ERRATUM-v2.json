@@ -1,0 +1,33 @@
+{
+  "after": [
+    {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/permission-envelope-review11870-01/counterexamples_v2.py",
+      "raw_sha256": "7e7ac14f74d7e53594be637177eca3b72ef3a0dc0c6a0f21ca0dc1fa6eedfb4c"
+    },
+    {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/permission-envelope-review11870-01/COUNTEREXAMPLES-v2.json",
+      "raw_sha256": "f3316ba8a84722c60e8ad75df82010058a4355ed70ab005001900982055a3f10"
+    }
+  ],
+  "before": [
+    {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/permission-envelope-review11870-01/counterexamples_v1.py",
+      "raw_sha256": "06d6340ed1e0f290f30a8c04c2d2f5e0c84d75682df5e620c763619709222efc"
+    },
+    {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/permission-envelope-review11870-01/COUNTEREXAMPLES-v1.json",
+      "raw_sha256": "7176d9167c177743c15cf95a3ed7ce9e49d494d4a7121e3a2e50987b269f7b76"
+    },
+    {
+      "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/permission-envelope-review11870-01/REPORT-v1.json",
+      "raw_sha256": "8fdcc898356656c37636f821ca3823cfc0861bc6b55d017a1e100572d204bd69"
+    }
+  ],
+  "correction": "New counterexamples_v2.py takes deepcopy at the actual wrong-I checkpoint. COUNTEREXAMPLES-v2.json is independently re-executed with same15 outcomes, not an old status/hash conversion. Prototype02 run_tests_v2.py independently verifies the serialized inventory digest and replays this actual complete example.",
+  "issue": "counterexamples_v1.py appended the two-image fixture by reference, then changed its supplement image to I2 for the next honest-negative probe. The old serialized full example thus retained old I pins with the later I2 table. Actual previously observed wrong-I outcome was valid but that example could not independently replay against its pins.",
+  "old_files_unchanged": true,
+  "schema": "independent-probe-snapshot-erratum/v1",
+  "scope": "Serialized complete two-image example only; actual executed fifteen outcome rows and all joint examples unchanged.",
+  "source_native_or_production_changes": 0,
+  "task": "/root/review_11870_12250"
+}

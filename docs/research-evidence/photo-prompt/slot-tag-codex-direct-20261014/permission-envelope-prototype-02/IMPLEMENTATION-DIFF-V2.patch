@@ -1,0 +1,48 @@
+--- prototype01/envelope.py
++++ prototype02/envelope.py
+@@ -135,6 +135,25 @@
+         result.append({'kind':'whole_dimension','dimension':d,'target':'*','property':None})
+     require(len(result) <= MAX_ANCHORS and len({digest(a) for a in result}) == len(result), 'bounded unique actual anchors required')
+     return sorted(result, key=digest)
++
++
++def joint_properties_allowed(left, right, *, owner_graph, property_primitive):
++    """Permission-only comparison of two unchanged expanded E owner unions.
++
++    Reuse the independently pinned property primitive's exact/parent/child/
++    wildcard and grounded owner-overlap protocol. These temporary comparison
++    rows are neither source E facts nor assignments or receiver expansions.
++    Distinct property spellings are not aliases; the manual joint review still
++    independently decides semantic influence between unrelated property paths.
++    """
++    left_owners = sorted({left['target']['canonical_owner_id'], *left['canonical_receivers']})
++    right_owners = sorted({right['target']['canonical_owner_id'], *right['canonical_receivers']})
++    lock = {'contract_version':'photo-intent-lock/v2', 'semantic_anchors':[
++        {'dimension':right['dimension'], 'target':owner, 'property':right['property']}
++        for owner in right_owners]}
++    comparison = [{'dimension':left['dimension'], 'target':owner, 'property':left['property']}
++                  for owner in left_owners]
++    return property_primitive(lock, [left['dimension']], comparison, owner_graph=owner_graph)
+ 
+ 
+ def _compare(bound_sources, *, core, resolved_view, inventory, assessment, expected, primitives):
+@@ -277,13 +296,14 @@
+     # Exact B1 scope is never weakened, even if the manual plan falsely says disjoint.
+     require(scope['properties']==sorted([dict(zip(('dimension','target','property'),v)) for v in
+         {(f['dimension'],t,f['property']) for f in full_original for t in [f['target']['canonical_owner_id'],*f['canonical_receivers']]}], key=lambda v:(v['dimension'],v['target'],v['property'])), 'B1 original permission union missing or changed')
+-    # Known overlapping cross-candidate assignments cannot be waived by a manual row.
++    # Known overlapping cross-candidate paths cannot be waived by a manual row.
++    # Compare every actual target/Rx on both sides with the same pinned primitive
++    # used for original locks, including aliases, part ancestors and unknown
++    # owner separation. No new source fact, property alias or permission waiver.
+     for a,b in joint_wanted:
+         left,right=effects[a],effects[b]
+-        if left['property']==right['property']:
+-            for l in [left['target']['canonical_owner_id'],*left['canonical_receivers']]:
+-                for r in [right['target']['canonical_owner_id'],*right['canonical_receivers']]:
+-                    if primitives['owner_relation'](graph,l,r)!='disjoint':reasons.append('actual joint exact-property overlap')
++        if not joint_properties_allowed(left, right, owner_graph=graph, property_primitive=primitive):
++            reasons.append('actual joint property-path overlap')
+     return {'schema':'research-permission-only-result/v1','permission_only_pass':not reasons,'reasons':sorted(set(reasons)),
+             'original_expanded_effects':json.loads(canonical(full_original)), 'original_permission_scope':json.loads(canonical(scope)),
+             'additional_anchor_comparisons':extra,'preservation_obligations':preservations,

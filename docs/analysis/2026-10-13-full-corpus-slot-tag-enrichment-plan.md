@@ -264,6 +264,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 [열다섯 번째 직접 검토 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-15.json)는 비중복 500건을 추가해 누계 9,000건을 보존한다. 새 범위 12250~12294의 45건과 기존 범위의 후속 완독·초안을 포함하며, 준비된 1,000건이나 중첩된 하위 기록을 추가로 세지 않는다. 11341의 비접촉 간격과 contact_point 명세 경계, 12267·12268의 보존 문구와 원래 효과 간 충돌은 보류다. 담당자의 fullspec 중복 집계 정정도 원 기록을 지우지 않고 보존한다. 이 체크포인트는 새 native 승인·태그 적용·운영 자격을 만들지 않는다.
 
+[구도 변경의 추가 권한 비교 도구](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-PERMISSION-PROTOTYPE-INTEGRATION-02.json)는 연구용 새 버전에서 속성의 상위·하위 경로가 겹치는 joint 효과 누락을 고쳤다. 원 55 tests·141 시나리오는 모두 통과했지만 독립 검토가 8개 허용 오류를 추가로 찾았고, 새 버전은 양쪽 실제 target·모든 receiver를 같은 동결 property primitive로 비교한다. 담당자와 루트가 각각 원 검사와 새 9 tests·81 시나리오를 합쳐 64 tests·222 시나리오를 통과했다. 새 81개는 실제 B1+비교 31개, 직접 primitive 47개, 기존 B1 wildcard 거부 3개로 구분한다. 잘못된 신뢰 이미지 주석을 실제 native visibility 사실과 결합하는 문제는 미해결로 별도 보존하며 통과 222개에 포함하지 않는다. 원본 효과·권한·이전 도구와 실패 이력은 유지하고 source1299·native·B2·full/compact 소비자·운영 적용은 아직 승인하지 않았다.
+
 ## 6단계 — 확정 연결 적용과 무결성 검증
 
 5단계의 직접 검토 승인 대장과 현재 source/catalog hash가 일치하는 추가·제거 관계만 native 원본에 적용한다. Gemini 초안·단순 유사도·규칙 출력에서 관계를 자동 수입하지 않는다. 기존 후보 ID와 계속 유효한 binding ID는 유지한다. 새로운 binding ID는 후보·슬롯 관계와 검토한 계약에 따라 안정적으로 생성하고 재실행해도 같은 관계가 중복되지 않도록 한다. 동일 후보·동일 슬롯의 불필요한 다중 관계는 허용하지 않는다. 조건별 변형이 필요하면 한 관계 안에 명시적인 적용 대안을 기록하며 검색 투표를 추가하지 않는다.
