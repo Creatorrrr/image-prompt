@@ -172,6 +172,10 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 후속 식물 후보 검토로 142개 카탈로그의 `body_form`, `anatomical_connection` 두 명세에서 식물과 명시된 해부학적 표현물의 소유 범위를 명료화했다. 다음 정식 재심사에는 [142개 v2 명세](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/CATALOG-FINAL-142-V2.json), canonical SHA-256 `0d7cab7b4add7279b0faa629bb5df72829da0c756adc6db21dcd7c09d56b971f`를 사용한다. 앞선 `e7ad…a3e28` 파일은 역사 입력으로 보존한다. 직물 꽃장식·가지 모양 공예물·식물 문양을 살아 있는 식물이나 해부 구조로 확대하지 않으며, 생존·성장·종을 형태에서 추론하지 않는다. 명세 확정은 해당 후보 사실의 자동 승인이나 운영 적용을 뜻하지 않는다.
 
+추가 직접 검토 중 실제 온도·냉각과 표면 수분을 담는 역할의 공백, `participant_role`의 주·보조 참여자 제한, `narrative_phase`의 인간 전용 적용 제한을 발견했다. [144개 v3 제안](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/CATALOG-PROPOSED-144-V3.json)은 `thermal_state`, `surface_moisture` 추가와 두 기존 역할 정비를 독립적으로 검토하는 입력이며 아직 확정 명세나 운영 catalog가 아니다. 명시된 로봇 자세와 공간 광형상도 기존 정의·적용 범위와 대조한다. 원 후보의 intrinsic 조건은 보존하며, 새 명세를 승인하면 그 명세에 결합된 새 입력·직접 판정·최종 전체 슬롯 질의를 검증한다. 이전 proof의 catalog hash나 승인 상태를 자동으로 고치지 않는다.
+
+동시에 [직접 검토 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-01.json)에 서로 겹치지 않는 1,300개 후보의 담당자 원문·기존 5B·자기 binding 읽기와 불변 산출물 hash를 보존했다. 이는 운영 native 승인 1,300건을 뜻하지 않는다. 얼굴·신체 부위의 중립 witness 표기, 동일 효과 값, 실제 적용 대상·별칭의 충돌을 별도 검증하고 보류된 판정은 정확한 이전 행과 사유를 결합한 새 revision으로 심사한다. 전체 18,250개의 최종 명세 직접 판정과 보류 0건이라는 5단계 종료 조건은 유지한다.
+
 검증: 각 배치의 ID·긍정 인용·원본/수정 후 hash·선택 분기·owner/property·효과·조건을 대조하고, 의미 변경은 관련 옵션·프로필·묶음·참조에 전파한다. 운영 원본을 고친 배치는 새 local index closure·runtime publication·실제 acquire까지 검증한 뒤 커밋한다. 대장만 작성한 배치는 운영 데이터를 바꾸지 않는다. 5단계 종료 조건은 직접 검토 승인 집합이 18,250/18,250, 누락·미검토·미해결 보류 0건, Gemini 신규 호출 0건이다.
 
 산출물: 직접 검토 기준 snapshot·입력/검증 보조 도구, 전체 확정 태그안·긍정 인용·소유자·분기 근거 대장, 필요한 source 보정과 native 검증, 배치별 검증·커밋, 실제 직접 검토 coverage.
