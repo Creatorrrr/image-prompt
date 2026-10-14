@@ -1,0 +1,607 @@
+{
+  "schema": "native-direct-manual-draft-amendment/v1",
+  "task_name": "/root/review_11870_12250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "ordinal": 1288,
+  "candidate_id": "cand_db0564755fee574ab3bf360d59b5c032",
+  "before_authored_file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_11870_01250_02250.01250_01300.draft_v1.json",
+  "before_authored_file_bytes_sha256": "78b85ff916d60bff1b98382443f5ab13da27f46a14029d9d3603ac189c7abd32",
+  "before_authored_row_sha256": "a0e72a2ce1f7cd22809fbe6c8d100b172effdc625b28ae613a48be9486aad6ea",
+  "source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b",
+  "catalog_sha256": "0d7cab7b4add7279b0faa629bb5df72829da0c756adc6db21dcd7c09d56b971f",
+  "original_source_full": {
+    "conditions": {},
+    "content": {
+      "en": "panning motion blur with the subject sharp",
+      "ko": "panning motion blur with the subject sharp",
+      "tags": [
+        "composition",
+        "motion",
+        "sports"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "composition"
+      ],
+      "properties": []
+    },
+    "id": "cand_db0564755fee574ab3bf360d59b5c032",
+    "provenance": [
+      {
+        "sha256": "cf9a13bde2f05be9025d7c4ee5393809e682bb3425d0a6d6c96620aafc66e874",
+        "source": "slot:composition:panning_motion_blur"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "previous_frozen_source_proposal_full": {
+    "conditions": {},
+    "content": {
+      "en": "panning motion blur with the subject sharp",
+      "ko": "panning motion blur with the subject sharp",
+      "tags": [
+        "composition",
+        "motion",
+        "sports"
+      ],
+      "application_contract": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation."
+    },
+    "effects": {
+      "dimensions": [
+        "camera"
+      ],
+      "properties": [
+        {
+          "dimension": "camera",
+          "property": "camera.movement",
+          "target": "camera"
+        },
+        {
+          "dimension": "camera",
+          "property": "image.motion.blur",
+          "target": "image"
+        },
+        {
+          "dimension": "camera",
+          "property": "focus.subject_sharpness",
+          "target": "image"
+        }
+      ]
+    },
+    "id": "cand_db0564755fee574ab3bf360d59b5c032",
+    "provenance": [
+      {
+        "sha256": "cf9a13bde2f05be9025d7c4ee5393809e682bb3425d0a6d6c96620aafc66e874",
+        "source": "slot:composition:panning_motion_blur"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "new_exact_source_after": {
+    "conditions": {},
+    "content": {
+      "en": "panning motion blur with the subject sharp",
+      "ko": "panning motion blur with the subject sharp",
+      "tags": [
+        "composition",
+        "motion",
+        "sports"
+      ],
+      "application_contract": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation."
+    },
+    "effects": {
+      "dimensions": [
+        "camera"
+      ],
+      "properties": [
+        {
+          "dimension": "camera",
+          "target": "camera",
+          "property": "camera.movement"
+        },
+        {
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.motion.blur"
+        },
+        {
+          "dimension": "camera",
+          "target": "image",
+          "property": "image.sharpness.subject"
+        }
+      ]
+    },
+    "id": "cand_db0564755fee574ab3bf360d59b5c032",
+    "provenance": [
+      {
+        "sha256": "cf9a13bde2f05be9025d7c4ee5393809e682bb3425d0a6d6c96620aafc66e874",
+        "source": "slot:composition:panning_motion_blur"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "new_exact_source_after_sha256": "753cec0234889a76fc520e4ed155389085d8b718e7c01b059729cc1deb67d3df",
+  "source_corrections_from_before5B": [
+    {
+      "pointer": "/content/application_contract",
+      "before": null,
+      "after": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "reason": "Explicitly require independently declared existing camera/image/subject addresses; no added entity or subject movement. These still require actual prerequisite/core-role consumption in the later full-v4 proof."
+    },
+    {
+      "pointer": "/effects",
+      "before": {
+        "dimensions": [
+          "composition"
+        ],
+        "properties": []
+      },
+      "after": {
+        "dimensions": [
+          "camera"
+        ],
+        "properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "camera.movement"
+          },
+          {
+            "dimension": "camera",
+            "target": "image",
+            "property": "image.motion.blur"
+          },
+          {
+            "dimension": "camera",
+            "target": "image",
+            "property": "image.sharpness.subject"
+          }
+        ]
+      },
+      "reason": "Original composition-only routing footprint is refined to actual panning camera movement, image motion blur and subject-bounded recorded acuity. Sharpness is set_value, not optical plane selection or preservation."
+    }
+  ],
+  "source_delta_from_previous_frozen_proposal": [
+    {
+      "pointer": "/effects",
+      "before": {
+        "dimensions": [
+          "camera"
+        ],
+        "properties": [
+          {
+            "dimension": "camera",
+            "property": "camera.movement",
+            "target": "camera"
+          },
+          {
+            "dimension": "camera",
+            "property": "image.motion.blur",
+            "target": "image"
+          },
+          {
+            "dimension": "camera",
+            "property": "focus.subject_sharpness",
+            "target": "image"
+          }
+        ]
+      },
+      "after": {
+        "dimensions": [
+          "camera"
+        ],
+        "properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "camera.movement"
+          },
+          {
+            "dimension": "camera",
+            "target": "image",
+            "property": "image.motion.blur"
+          },
+          {
+            "dimension": "camera",
+            "target": "image",
+            "property": "image.sharpness.subject"
+          }
+        ]
+      },
+      "reason": "Remove focal-plane claim while retaining panning/blur and subject receiver; record subject image acuity explicitly."
+    }
+  ],
+  "native_fact_draft": [
+    {
+      "id": "camera__application_contract",
+      "realization_id": "base",
+      "pointer": "/content/application_contract",
+      "quote": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "dimension": "camera",
+      "target": "camera",
+      "property": "camera.presence",
+      "mode": "prerequisite",
+      "value": {
+        "type": "camera.presence/v1",
+        "value": "present"
+      },
+      "requires": []
+    },
+    {
+      "id": "image__application_contract",
+      "realization_id": "base",
+      "pointer": "/content/application_contract",
+      "quote": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "dimension": "composition",
+      "target": "image",
+      "property": "image.presence",
+      "mode": "prerequisite",
+      "value": {
+        "type": "image.presence/v1",
+        "value": "present"
+      },
+      "requires": []
+    },
+    {
+      "id": "subject__application_contract",
+      "realization_id": "base",
+      "pointer": "/content/application_contract",
+      "quote": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "dimension": "subject",
+      "target": "subject",
+      "property": "entity.presence",
+      "mode": "prerequisite",
+      "value": {
+        "type": "entity.presence/v1",
+        "value": "present"
+      },
+      "requires": []
+    },
+    {
+      "id": "pan__en",
+      "realization_id": "base",
+      "pointer": "/content/en",
+      "quote": "panning motion blur with the subject sharp",
+      "dimension": "camera",
+      "target": "camera",
+      "property": "camera.movement",
+      "mode": "effect",
+      "value": {
+        "type": "camera.movement/v1",
+        "value": "panning"
+      },
+      "requires": [
+        "camera__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "blur__en",
+      "realization_id": "base",
+      "pointer": "/content/en",
+      "quote": "panning motion blur with the subject sharp",
+      "dimension": "camera",
+      "target": "image",
+      "property": "image.motion.blur",
+      "mode": "effect",
+      "value": {
+        "type": "image.motion.blur/v1",
+        "value": "panning_motion_blur"
+      },
+      "requires": [
+        "camera__application_contract",
+        "image__application_contract",
+        "subject__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "sharp__en",
+      "realization_id": "base",
+      "pointer": "/content/en",
+      "quote": "panning motion blur with the subject sharp",
+      "dimension": "camera",
+      "target": "image",
+      "property": "image.sharpness.subject",
+      "mode": "effect",
+      "value": {
+        "type": "image.sharpness.subject/v1",
+        "value": "declared_subject_sharp"
+      },
+      "requires": [
+        "image__application_contract",
+        "subject__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": [
+        "subject"
+      ]
+    },
+    {
+      "id": "pan__ko",
+      "realization_id": "base",
+      "pointer": "/content/ko",
+      "quote": "panning motion blur with the subject sharp",
+      "dimension": "camera",
+      "target": "camera",
+      "property": "camera.movement",
+      "mode": "effect",
+      "value": {
+        "type": "camera.movement/v1",
+        "value": "panning"
+      },
+      "requires": [
+        "camera__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "blur__ko",
+      "realization_id": "base",
+      "pointer": "/content/ko",
+      "quote": "panning motion blur with the subject sharp",
+      "dimension": "camera",
+      "target": "image",
+      "property": "image.motion.blur",
+      "mode": "effect",
+      "value": {
+        "type": "image.motion.blur/v1",
+        "value": "panning_motion_blur"
+      },
+      "requires": [
+        "camera__application_contract",
+        "image__application_contract",
+        "subject__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "sharp__ko",
+      "realization_id": "base",
+      "pointer": "/content/ko",
+      "quote": "panning motion blur with the subject sharp",
+      "dimension": "camera",
+      "target": "image",
+      "property": "image.sharpness.subject",
+      "mode": "effect",
+      "value": {
+        "type": "image.sharpness.subject/v1",
+        "value": "declared_subject_sharp"
+      },
+      "requires": [
+        "image__application_contract",
+        "subject__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": [
+        "subject"
+      ]
+    },
+    {
+      "id": "pan__application_contract",
+      "realization_id": "base",
+      "pointer": "/content/application_contract",
+      "quote": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "dimension": "camera",
+      "target": "camera",
+      "property": "camera.movement",
+      "mode": "effect",
+      "value": {
+        "type": "camera.movement/v1",
+        "value": "panning"
+      },
+      "requires": [
+        "camera__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "blur__application_contract",
+      "realization_id": "base",
+      "pointer": "/content/application_contract",
+      "quote": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "dimension": "camera",
+      "target": "image",
+      "property": "image.motion.blur",
+      "mode": "effect",
+      "value": {
+        "type": "image.motion.blur/v1",
+        "value": "panning_motion_blur"
+      },
+      "requires": [
+        "camera__application_contract",
+        "image__application_contract",
+        "subject__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "sharp__application_contract",
+      "realization_id": "base",
+      "pointer": "/content/application_contract",
+      "quote": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "dimension": "camera",
+      "target": "image",
+      "property": "image.sharpness.subject",
+      "mode": "effect",
+      "value": {
+        "type": "image.sharpness.subject/v1",
+        "value": "declared_subject_sharp"
+      },
+      "requires": [
+        "image__application_contract",
+        "subject__application_contract"
+      ],
+      "operation": "set_value",
+      "receivers": [
+        "subject"
+      ]
+    }
+  ],
+  "owner_maps_draft": {
+    "base": {
+      "schema": "photo-native-owner-bindings/v2",
+      "bindings": [
+        {
+          "target": "camera",
+          "core_role": "recording_camera",
+          "origin": "existing",
+          "introduced_by": null
+        },
+        {
+          "target": "image",
+          "core_role": "image",
+          "origin": "existing",
+          "introduced_by": null
+        },
+        {
+          "target": "subject",
+          "core_role": "main_subject",
+          "origin": "existing",
+          "introduced_by": null
+        }
+      ]
+    }
+  },
+  "source_units_draft": [
+    {
+      "realization_id": "base",
+      "pointer": "/content/en",
+      "quote": "panning motion blur with the subject sharp",
+      "fact_refs": [
+        "pan__en",
+        "blur__en",
+        "sharp__en"
+      ],
+      "disposition": "semantic"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/ko",
+      "quote": "panning motion blur with the subject sharp",
+      "fact_refs": [
+        "pan__ko",
+        "blur__ko",
+        "sharp__ko"
+      ],
+      "disposition": "semantic"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/application_contract",
+      "quote": "Use the independently declared existing camera, image and subject bound to recording_camera, image and main_subject. Select panning capture movement, panning motion blur and the subject-sharp image result; do not prescribe subject movement, shutter speed or reinterpret sharpness as preservation.",
+      "fact_refs": [
+        "camera__application_contract",
+        "image__application_contract",
+        "subject__application_contract",
+        "pan__application_contract",
+        "blur__application_contract",
+        "sharp__application_contract"
+      ],
+      "disposition": "semantic"
+    }
+  ],
+  "proposed_roles_and_binding_intent": [
+    {
+      "tag": "camera_movement",
+      "spec_sha256": "fa403c443ab34a6b29dda987d51f466d60482c1a71d2bd6961d9f9251200f083",
+      "scope": "whole_record",
+      "realization_ids": [
+        "base"
+      ],
+      "fact_refs": [
+        "pan__en"
+      ],
+      "support_modes": [
+        "effect"
+      ],
+      "conditions": {
+        "subject_applicability": {}
+      },
+      "role": "optional",
+      "semantic_role": "direct",
+      "weight": 0.9,
+      "intent": "Explicit panning capture movement, distinct from subject motion and image blur."
+    },
+    {
+      "tag": "motion_rendering",
+      "spec_sha256": "96544484045d9512f3d12f83351bfe1b69b7cc990b16c4d6de98a47668a54a1b",
+      "scope": "whole_record",
+      "realization_ids": [
+        "base"
+      ],
+      "fact_refs": [
+        "blur__en"
+      ],
+      "support_modes": [
+        "effect"
+      ],
+      "conditions": {
+        "subject_applicability": {}
+      },
+      "role": "optional",
+      "semantic_role": "direct",
+      "weight": 0.9,
+      "intent": "Explicit recorded panning motion blur on image, not a physical subject trajectory."
+    },
+    {
+      "tag": "image_detail",
+      "spec_sha256": "4582e06ce33f6c5cc2dd1cd36b9586882ef06b51d6e8e16445a7c32448c9bc1a",
+      "scope": "whole_record",
+      "realization_ids": [
+        "base"
+      ],
+      "fact_refs": [
+        "sharp__en"
+      ],
+      "support_modes": [
+        "effect"
+      ],
+      "conditions": {
+        "subject_applicability": {}
+      },
+      "role": "optional",
+      "semantic_role": "direct",
+      "weight": 0.85,
+      "intent": "Subject sharp states image acuity/edge result on the existing image. No optical focal-plane mechanism or named-plane priority is added."
+    }
+  ],
+  "rejected_roles": {
+    "focus": "No focal plane or priority/relative sharpness of named planes is declared. Sharp subject alone names a recorded acuity result.",
+    "composition": "No independent arrangement clause is stated in the positive source."
+  },
+  "actual_rids": [
+    "base"
+  ],
+  "required_cid_closure": {},
+  "member_binding_closure": {},
+  "old_own_binding_full": {
+    "bind_db0564755fee574ab3bf360d59b5c032": {
+      "candidate_id": "cand_db0564755fee574ab3bf360d59b5c032",
+      "conditions": {
+        "subject_applicability": {}
+      },
+      "id": "bind_db0564755fee574ab3bf360d59b5c032",
+      "role": "optional",
+      "semantic_role": "direct",
+      "slot_id": "composition",
+      "weight": 1.0
+    }
+  },
+  "own_binding_review": "Old composition optional/direct/weight1/empty applicability is display policy, not intrinsic source meaning. The three newly proposed roles each have deliberately unrestricted current applicability; no original source guard is removed. Existing typed camera/image/subject and receiver linkage remain mandatory.",
+  "source_proposal_whole_reread_complete": true,
+  "full_native_proof": null,
+  "native_signature": null,
+  "formal_root_input_rebind_required": true,
+  "local_checks": "Only explicit source/fact quote, dependency, effect and spec-dimension/prefix shape checks; no full-v4 proof validation, core witness, parity, registration or operation.",
+  "reread_id": "native-11870-1288-sharpness-20261014-v1",
+  "source_review_status": "manual_source_fact_revision_ready_for_root_formal_input_binding"
+}
