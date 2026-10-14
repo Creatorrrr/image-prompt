@@ -43,6 +43,18 @@ class RealizationTests(unittest.TestCase):
   core=copy.deepcopy(self.core);core['intent_lock']['open_dimensions']=['lighting']
   contract,picked=g.frozen_core_context(data,core,self.controls)
   self.assertEqual(r.eligible_ids(data,cid,core,contract,picked),[])
+ def test_unknown_original_owner_cannot_disable_a_locked_property_check(self):
+  data,cid=self.source();core=copy.deepcopy(self.core)
+  core['intent_lock']['open_dimensions']=['lighting']
+  core['intent_lock']['contract_version']='photo-intent-lock/v2'
+  core['intent_lock']['semantic_anchors']=[{'dimension':'lighting','target':'cup','property':'lighting.direction.right'}]
+  x=data['candidates'][cid]
+  x['effects']={'dimensions':['lighting'],'properties':[
+   {'dimension':'lighting','target':'cup','property':'lighting.direction.left'},
+   {'dimension':'lighting','target':'*','property':'lighting.direction.*'}]}
+  contract,picked=g.frozen_core_context(data,core,self.controls);entry=c.entry(data,cid)
+  self.assertTrue(g.core_entry_eligible(data,core,contract,picked,'',entry,check_effect_scope=False))
+  self.assertFalse(g.core_entry_eligible(data,core,contract,picked,'',entry))
  def test_optional_playback_requires_an_existing_positive_witness(self):
   data,cid=self.source();x=data['candidates'][cid];x['effects']['realizations']['mode']='optional';x['effects']['realizations']['branches']=x['effects']['realizations']['branches'][:1]
   x['effects']['realizations']['branches'][0]['context_terms']=['recorded playback'];x['content']['en']='recorded playback'

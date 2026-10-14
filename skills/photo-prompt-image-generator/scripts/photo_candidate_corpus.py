@@ -134,6 +134,7 @@ def validate(corpus):
             raise ValueError(f'{field} must be an object')
     canonical_bytes(corpus)  # Reject NaN/Infinity anywhere, including policy metadata.
     candidates, catalog, bindings = (corpus[k] for k in ('candidates', 'slot_catalog', 'slot_bindings'))
+    catalog_sha256 = digest(catalog)
     for candidate_id, row in candidates.items():
         if (not isinstance(candidate_id, str) or not ID.fullmatch(candidate_id) or not isinstance(row, dict)
                 or set(row) != {'id', 'record_kind', 'content', 'conditions', 'effects', 'provenance'}
@@ -162,6 +163,8 @@ def validate(corpus):
             if (not isinstance(origin, dict) or not isinstance(origin.get('source'), str)
                     or not origin['source'] or not re.fullmatch(r'[0-9a-f]{64}', str(origin.get('sha256', '')))):
                 raise ValueError(f'{candidate_id}: invalid source provenance')
+        import photo_semantic_evidence
+        photo_semantic_evidence.validate(row, catalog, catalog_sha256=catalog_sha256)
     import photo_slot_semantics
     for tag, row in catalog.items():
         if (not isinstance(tag, str) or not TAG_ID.fullmatch(tag) or not isinstance(row, dict) or row.get('id') != tag
@@ -270,6 +273,8 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None):
     result = copy.deepcopy(record['content'])
     result['id'] = candidate_id
     result['record_kind'] = record['record_kind']
+    if '_semantic_evidence_guard' in record:
+        result['_semantic_evidence_guard'] = copy.deepcopy(record['_semantic_evidence_guard'])
     result.update(copy.deepcopy(record['conditions']))
     effects = record['effects']
     if realization_id is not None:

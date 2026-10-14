@@ -91,6 +91,11 @@ def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
             return False
         seen.add(key)
     def overlaps(left, right):
+        # Authored uncertainty can be a path wildcard, not only the literal
+        # "*". It must never bypass a lock on a child of that known prefix.
+        if "*" in left or "*" in right:
+            left_prefix, right_prefix = left.split("*",1)[0], right.split("*",1)[0]
+            return left_prefix.startswith(right_prefix) or right_prefix.startswith(left_prefix)
         return left == "*" or right == "*" or left == right or left.startswith(right + ".") or right.startswith(left + ".")
     for dimension in set(dimensions) & {row["dimension"] for row in locks}:
         declared = [row for row in effects if row["dimension"] == dimension]

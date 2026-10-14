@@ -8212,6 +8212,9 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
     return contract, picked
 
 def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True) -> bool:
+    import photo_semantic_evidence
+    if not photo_semantic_evidence.existing_owner_allowed(entry,core,contract,data['slot_catalog']):
+        return False
     if entry.get("requires_adult_context") and not contract.get("adult_allowed"):
         return False
     if not photo_global_retrieval.guard_policy(entry.get("subject_applicability") or {}, contract):
@@ -8223,7 +8226,7 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
     properties = entry.get("affected_properties") or []
     if check_effect_scope and dimensions and not set(dimensions) <= set(lock.get("open_dimensions") or []):
         return False
-    if (check_effect_scope and properties and all("*" not in row["property"] and row["target"] != "*" for row in properties)
+    if (check_effect_scope and properties
             and not property_effects_allowed(lock, dimensions, properties)):
         return False
     reason = entry_block_reason(entry, slot, contract, catalog=data["slot_catalog"])
