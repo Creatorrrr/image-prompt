@@ -1,0 +1,370 @@
+{
+  "schema": "photo-codex-native-review-batch/v1",
+  "task_name": "/root/review_06250_07250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "assignment_sha256": "470ec65aee8e4e62ad5680458a9e2de4fff461a6ea572c5ad8f2a02c76e4724b",
+  "input_sha256": "85bc5f24f0ed890c789fb76571e8fb2bf7904eafbe845dbd3b1bd2f64d2876c7",
+  "prepared_count": 1,
+  "actual_read_count": 1,
+  "records": [
+    {
+      "candidate_id": "cand_10d19d91b6a25bcea28c91b56d04705d",
+      "ordinal": 807,
+      "status": "approved",
+      "rationale": "The expressly selected application adds one new stethoscope prop, without doctor/patient/person, examination/contact, medical result, worn state, material, color or placement. Each original field names only the type; the explicit application alone grounds addition, existence and local one-object count.",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "a stethoscope prop",
+          "en": "a stethoscope prop",
+          "ko": "청진기 소품",
+          "tags": [
+            "human",
+            "prop",
+            "medical"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_10d19d91b6a25bcea28c91b56d04705d",
+        "provenance": [
+          {
+            "sha256": "0e815506b6ec0795df2b2e8ad973d778b87e5c206b6e76134b5d9e227187c6f9",
+            "source": "slot:prop:stethoscope_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Add one new stethoscope prop as a single additional object. The new prop is present and has stethoscope-prop identity; do not reuse an existing stethoscope as this added object. This adds no doctor, patient or other person and selects no examination, contact, medical result, worn state, material, color or placement.",
+          "embedding_text": "a stethoscope prop",
+          "en": "a stethoscope prop",
+          "ko": "청진기 소품",
+          "tags": [
+            "human",
+            "prop",
+            "medical"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "count",
+            "subject"
+          ],
+          "properties": [
+            {
+              "dimension": "subject",
+              "property": "entity.presence",
+              "target": "stethoscope"
+            },
+            {
+              "dimension": "subject",
+              "property": "props.type",
+              "target": "stethoscope"
+            },
+            {
+              "dimension": "count",
+              "property": "entity.count",
+              "target": "stethoscope"
+            }
+          ]
+        },
+        "id": "cand_10d19d91b6a25bcea28c91b56d04705d",
+        "provenance": [
+          {
+            "sha256": "0e815506b6ec0795df2b2e8ad973d778b87e5c206b6e76134b5d9e227187c6f9",
+            "source": "slot:prop:stethoscope_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "delta": [
+        {
+          "pointer": "/content/application_contract",
+          "before_exists": false,
+          "before": null,
+          "after_exists": true,
+          "after": "Add one new stethoscope prop as a single additional object. The new prop is present and has stethoscope-prop identity; do not reuse an existing stethoscope as this added object. This adds no doctor, patient or other person and selects no examination, contact, medical result, worn state, material, color or placement.",
+          "reason": "The expressly selected application adds one new stethoscope prop, without doctor/patient/person, examination/contact, medical result, worn state, material, color or placement. Each original field names only the type; the explicit application alone grounds addition, existence and local one-object count."
+        },
+        {
+          "pointer": "/effects",
+          "before_exists": true,
+          "before": {
+            "dimensions": [],
+            "properties": []
+          },
+          "after_exists": true,
+          "after": {
+            "dimensions": [
+              "count",
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "subject",
+                "property": "entity.presence",
+                "target": "stethoscope"
+              },
+              {
+                "dimension": "subject",
+                "property": "props.type",
+                "target": "stethoscope"
+              },
+              {
+                "dimension": "count",
+                "property": "entity.count",
+                "target": "stethoscope"
+              }
+            ]
+          },
+          "reason": "Explicit selected new-object application has presence/add_entity, type/set_value and local one-object count/set_value; retain all subject/count permission footprints."
+        }
+      ],
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/batch_00800_00850.json",
+        "file_sha256": "26f901c66e96ad898f9798059b4cdc7ee6d7672fe6467d44137ef4f3f2a64744",
+        "item": 8,
+        "row_sha256": "42f99f43b9bdc484ce9ff8fac5d4f0b2fe3396f160f05bbbcd2cf935fa4bc850"
+      },
+      "proof": {
+        "schema": "photo-candidate-role-evidence/v4",
+        "meaning_sha256": "0338e8283889e02c276b9ad06127e3dd4d32185509e0a63e4e8750119b3dd34f",
+        "catalog_sha256": "3655a006e69500662987c829361711a7194c3e297bfc4c408297bcf94f35d645",
+        "complete": true,
+        "facts": [
+          {
+            "id": "add_stethoscope",
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "Add one new stethoscope prop as a single additional object. The new prop is present",
+            "dimension": "subject",
+            "target": "stethoscope",
+            "property": "entity.presence",
+            "mode": "effect",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            },
+            "requires": [],
+            "operation": "add_entity",
+            "receivers": []
+          },
+          {
+            "id": "new_type",
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "has stethoscope-prop identity",
+            "dimension": "subject",
+            "target": "stethoscope",
+            "property": "props.type",
+            "mode": "effect",
+            "value": {
+              "type": "props.type/v1",
+              "value": "stethoscope"
+            },
+            "requires": [],
+            "operation": "set_value",
+            "receivers": []
+          },
+          {
+            "id": "new_one",
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "one new stethoscope prop as a single additional object",
+            "dimension": "count",
+            "target": "stethoscope",
+            "property": "entity.count",
+            "mode": "effect",
+            "value": {
+              "type": "entity.count/v1",
+              "value": "one"
+            },
+            "requires": [],
+            "operation": "set_value",
+            "receivers": []
+          }
+        ],
+        "source_units": [
+          {
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "Add one new stethoscope prop as a single additional object. The new prop is present and has stethoscope-prop identity; do not reuse an existing stethoscope as this added object. This adds no doctor, patient or other person and selects no examination, contact, medical result, worn state, material, color or placement.",
+            "fact_refs": [
+              "add_stethoscope",
+              "new_type",
+              "new_one"
+            ],
+            "disposition": "semantic"
+          },
+          {
+            "realization_id": "base",
+            "pointer": "/content/en",
+            "quote": "a stethoscope prop",
+            "fact_refs": [
+              "new_type"
+            ],
+            "disposition": "semantic_reference",
+            "reference_relation": "partial_restatement",
+            "retained_constraint_rationale": "English, Korean and embedding each name the stethoscope prop type. They partially restate only new_type, not new/add/presence/count. Application adds one prop without a doctor, patient, worn state, examination, contact or medical outcome."
+          },
+          {
+            "realization_id": "base",
+            "pointer": "/content/ko",
+            "quote": "청진기 소품",
+            "fact_refs": [
+              "new_type"
+            ],
+            "disposition": "semantic_reference",
+            "reference_relation": "partial_restatement",
+            "retained_constraint_rationale": "English, Korean and embedding each name the stethoscope prop type. They partially restate only new_type, not new/add/presence/count. Application adds one prop without a doctor, patient, worn state, examination, contact or medical outcome."
+          },
+          {
+            "realization_id": "base",
+            "pointer": "/content/embedding_text",
+            "quote": "a stethoscope prop",
+            "fact_refs": [
+              "new_type"
+            ],
+            "disposition": "semantic_reference",
+            "reference_relation": "partial_restatement",
+            "retained_constraint_rationale": "English, Korean and embedding each name the stethoscope prop type. They partially restate only new_type, not new/add/presence/count. Application adds one prop without a doctor, patient, worn state, examination, contact or medical outcome."
+          }
+        ],
+        "roles": {
+          "prop": {
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "scope": "whole_record",
+            "realization_ids": [
+              "base"
+            ],
+            "fact_refs": [
+              "new_type"
+            ],
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "owner_maps": {
+          "base": {
+            "schema": "photo-native-owner-bindings/v3",
+            "bindings": [
+              {
+                "target": "stethoscope",
+                "origin": "introduced",
+                "introduced_by": "add_stethoscope",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                }
+              }
+            ]
+          }
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "count",
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "count",
+                "property": "entity.count",
+                "target": "stethoscope"
+              },
+              {
+                "dimension": "subject",
+                "property": "entity.presence",
+                "target": "stethoscope"
+              },
+              {
+                "dimension": "subject",
+                "property": "props.type",
+                "target": "stethoscope"
+              }
+            ]
+          }
+        },
+        "dependencies": {
+          "base": []
+        },
+        "reference_sha256": {},
+        "guard_sets": {
+          "base": {
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ]
+              },
+              {}
+            ],
+            "member_conditions": {}
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "review": {
+          "basis": "The expressly selected application adds one new stethoscope prop, without doctor/patient/person, examination/contact, medical result, worn state, material, color or placement. Each original field names only the type; the explicit application alone grounds addition, existence and local one-object count. Fresh exact root06 input and whole original/current/5B/ownbinding/empty dependency closure reread. All three E remain permission-visible under subject/count locks. This approves the individually selected bounded application for root research review only.",
+          "whole_source_reviewed": true,
+          "source_correction": {
+            "before_sha256": "5a1624a0fc5c0033ccc23e12ffdf9cdc2fae523536543eb8fd5b9411467f0c33",
+            "after_sha256": "0338e8283889e02c276b9ad06127e3dd4d32185509e0a63e4e8750119b3dd34f",
+            "rationale": "The expressly selected application adds one new stethoscope prop, without doctor/patient/person, examination/contact, medical result, worn state, material, color or placement. Each original field names only the type; the explicit application alone grounds addition, existence and local one-object count. This is the explicit root-selected new application, preserving original fields/guards/provenance, rather than a claim about the original noun's unique interpretation."
+          },
+          "original_review": {
+            "candidate_id": "cand_10d19d91b6a25bcea28c91b56d04705d",
+            "source_record_sha256": "b1b37a3d34ecd8fc96a93ef6161fc5c6883abdda1aad7bda2f8e46cf1106876b",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "42f99f43b9bdc484ce9ff8fac5d4f0b2fe3396f160f05bbbcd2cf935fa4bc850",
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/batch_00800_00850.json#item=8"
+          },
+          "native_review": {
+            "reviewer": "/root/review_06250_07250",
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "0291624b5cafc2073fd79ef228ef8d97b16dd8b27bcb0f85c1550845b9e54a2a"
+          }
+        }
+      },
+      "dependency_records": {},
+      "reference_bindings": {},
+      "source_reread_complete": true,
+      "reference_reread_complete": true,
+      "revision": {
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_06250_bare_props_01236_00259_00807_00924_C_20261015.json",
+            "file_sha256": "a327680e9a9370f7dce922a61b26ffe4cf630088b28c331d521af1a6919db2f7",
+            "sha256": "6d35452477e36c67c734732fcfb42ab115102ea9c98fb6130806a88a2075fe29"
+          },
+          "pointer": "/records/2",
+          "sha256": "47b684ba44e87c05b4fce33408dcfbce04e995f769daa5b2b7dfc1a56dd961a9"
+        },
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/bare-prop-applications-plan-06/ROOT-REQUIREMENTS.json",
+            "file_sha256": "9baeb5d7bc8d5e053e7ad739b0c778fd412d8d9c55a4fb8d63cb0a60991597cf",
+            "sha256": "04fce7c76fd3d5a3d6734a7806c79ca3ff4b23ec25e13043644dc14e2b874a73"
+          }
+        ],
+        "rationale": "Fresh direct rereview after individual root C application selection and exact root06 input; complete current v4 facts/units/owners/three E, independent human policy and strict vacant introduced address. A/B/C historical drafts and source interpretation boundaries remain unchanged."
+      }
+    }
+  ]
+}

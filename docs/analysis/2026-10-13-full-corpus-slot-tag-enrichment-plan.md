@@ -232,6 +232,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 동일 canonical 사실의 [수동 역할 view 기반](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-PURE-ROLE-VIEW-INTEGRATION-01.json)도 별도 구현·검토했다. 전체 명세·원래 사실/모드·ordinary 근거·canonical 인용 안의 정확한 의미 구절·모든 실제 끝점·전제/guard closure에 결합하며 가짜 속성이나 효과를 만들지 않는다. 맥락을 직접 근거로 바꾸거나 보존 sentinel로 새 자질을 증명하지 않는다. 담당자와 루트의 각각 22개·41개 subtest는 순수 형상·불변성·외부 고정 binding 검증이며, 잘 생긴 거짓 해석을 기계가 판정한다는 뜻은 아니다. 실제 native 역할 조회·compact/lazy/pack 소비자·전체 E 잠금·runtime 연결은 아직 완료하지 않았다.
 
+추가로 이슬비 1257, 명사형 소품 네 건, 상대 의자 1285의 새 근거를 연구 범위에서 루트가 승인했다. [여섯 건 통합 기록](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-SIX-RESEARCH-ACCEPTANCES-01.json)에 원문 읽기와 담당자·루트 검증의 차이를 명시한다. 1257은 루트의 독립 요청 검사도 통과했다. 1285는 짧은 ‘상대 의자’ 문구에 완전한 관계 의미를 중복 부여한 사실 네 개를 제거하고, 전체 적용문을 직접 근거로 삼았다. 모든 실제 효과·수신자·조건·소유 관계는 유지했다. 첫 루트 검사의 import 순서 문제는 이력을 보존하고 발행된 188c 모듈만 사용한 새 검사로 재확인했다. 운영 원본·catalog·태그·자격·runtime을 적용한 결과가 아니며 전수 심사는 계속 진행한다.
+
 ## 6단계 — 확정 연결 적용과 무결성 검증
 
 5단계의 직접 검토 승인 대장과 현재 source/catalog hash가 일치하는 추가·제거 관계만 native 원본에 적용한다. Gemini 초안·단순 유사도·규칙 출력에서 관계를 자동 수입하지 않는다. 기존 후보 ID와 계속 유효한 binding ID는 유지한다. 새로운 binding ID는 후보·슬롯 관계와 검토한 계약에 따라 안정적으로 생성하고 재실행해도 같은 관계가 중복되지 않도록 한다. 동일 후보·동일 슬롯의 불필요한 다중 관계는 허용하지 않는다. 조건별 변형이 필요하면 한 관계 안에 명시적인 적용 대안을 기록하며 검색 투표를 추가하지 않는다.

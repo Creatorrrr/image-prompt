@@ -1,0 +1,370 @@
+{
+  "schema": "photo-codex-native-review-batch/v1",
+  "task_name": "/root/review_06250_07250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "assignment_sha256": "97d6384d4abab95371c73ed5cc2368f3ace2a14f78b064d5176c55539c38b3e0",
+  "input_sha256": "0b6d1d55d2ad7597e15874909fd906ebc174d81faf1150fea5b7c81d7e2f7cc0",
+  "prepared_count": 1,
+  "actual_read_count": 1,
+  "records": [
+    {
+      "candidate_id": "cand_693d2c560610561cb3af43e40c2c42de",
+      "ordinal": 924,
+      "status": "approved",
+      "rationale": "The expressly selected application adds one new conch-shell prop, without living conch, mermaid/animal/person, sea setting, sound, detailed shell structure, material, color or placement. Shell identity does not add an animal. Each bare field restates type only; explicit application grounds new/add/existence/local count.",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "a conch shell prop",
+          "en": "a conch shell prop",
+          "ko": "소라껍데기 소품",
+          "tags": [
+            "human",
+            "prop",
+            "mermaid"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_693d2c560610561cb3af43e40c2c42de",
+        "provenance": [
+          {
+            "sha256": "0ce8ea7ebf99a24915623ac6a33984f19598538a0701bdb862669c53d1dfb15b",
+            "source": "slot:prop:conch_shell_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Add one new conch-shell prop as a single additional object. The new prop is present and has conch-shell prop identity; do not reuse an existing shell as this added object. This adds no living conch, mermaid, other animal or person and selects no sea location, sound, detailed shell structure, material, color or placement.",
+          "embedding_text": "a conch shell prop",
+          "en": "a conch shell prop",
+          "ko": "소라껍데기 소품",
+          "tags": [
+            "human",
+            "prop",
+            "mermaid"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "count",
+            "subject"
+          ],
+          "properties": [
+            {
+              "dimension": "subject",
+              "property": "entity.presence",
+              "target": "shell"
+            },
+            {
+              "dimension": "subject",
+              "property": "props.type",
+              "target": "shell"
+            },
+            {
+              "dimension": "count",
+              "property": "entity.count",
+              "target": "shell"
+            }
+          ]
+        },
+        "id": "cand_693d2c560610561cb3af43e40c2c42de",
+        "provenance": [
+          {
+            "sha256": "0ce8ea7ebf99a24915623ac6a33984f19598538a0701bdb862669c53d1dfb15b",
+            "source": "slot:prop:conch_shell_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "delta": [
+        {
+          "pointer": "/content/application_contract",
+          "before_exists": false,
+          "before": null,
+          "after_exists": true,
+          "after": "Add one new conch-shell prop as a single additional object. The new prop is present and has conch-shell prop identity; do not reuse an existing shell as this added object. This adds no living conch, mermaid, other animal or person and selects no sea location, sound, detailed shell structure, material, color or placement.",
+          "reason": "The expressly selected application adds one new conch-shell prop, without living conch, mermaid/animal/person, sea setting, sound, detailed shell structure, material, color or placement. Shell identity does not add an animal. Each bare field restates type only; explicit application grounds new/add/existence/local count."
+        },
+        {
+          "pointer": "/effects",
+          "before_exists": true,
+          "before": {
+            "dimensions": [],
+            "properties": []
+          },
+          "after_exists": true,
+          "after": {
+            "dimensions": [
+              "count",
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "subject",
+                "property": "entity.presence",
+                "target": "shell"
+              },
+              {
+                "dimension": "subject",
+                "property": "props.type",
+                "target": "shell"
+              },
+              {
+                "dimension": "count",
+                "property": "entity.count",
+                "target": "shell"
+              }
+            ]
+          },
+          "reason": "Explicit selected new-object application has presence/add_entity, type/set_value and local one-object count/set_value; retain all subject/count permission footprints."
+        }
+      ],
+      "original_compiled": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/batch_00900_00950.json",
+        "file_sha256": "aa34807e83fc2627e1c393c4b8e9cec16f19bdf55944b88dfd96334e9e9a42b1",
+        "item": 25,
+        "row_sha256": "3cf3a674a85d346493153779c92545b5f464388c9221d3a7c4eefc728bf410c6"
+      },
+      "proof": {
+        "schema": "photo-candidate-role-evidence/v4",
+        "meaning_sha256": "09a21b9e31ff37c4580082dc5b51da5b854e9e538730ed86baf82a5c4ff7a4b0",
+        "catalog_sha256": "3655a006e69500662987c829361711a7194c3e297bfc4c408297bcf94f35d645",
+        "complete": true,
+        "facts": [
+          {
+            "id": "add_shell",
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "Add one new conch-shell prop as a single additional object. The new prop is present",
+            "dimension": "subject",
+            "target": "shell",
+            "property": "entity.presence",
+            "mode": "effect",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            },
+            "requires": [],
+            "operation": "add_entity",
+            "receivers": []
+          },
+          {
+            "id": "new_type",
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "has conch-shell prop identity",
+            "dimension": "subject",
+            "target": "shell",
+            "property": "props.type",
+            "mode": "effect",
+            "value": {
+              "type": "props.type/v1",
+              "value": "conch shell"
+            },
+            "requires": [],
+            "operation": "set_value",
+            "receivers": []
+          },
+          {
+            "id": "new_one",
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "one new conch-shell prop as a single additional object",
+            "dimension": "count",
+            "target": "shell",
+            "property": "entity.count",
+            "mode": "effect",
+            "value": {
+              "type": "entity.count/v1",
+              "value": "one"
+            },
+            "requires": [],
+            "operation": "set_value",
+            "receivers": []
+          }
+        ],
+        "source_units": [
+          {
+            "realization_id": "base",
+            "pointer": "/content/application_contract",
+            "quote": "Add one new conch-shell prop as a single additional object. The new prop is present and has conch-shell prop identity; do not reuse an existing shell as this added object. This adds no living conch, mermaid, other animal or person and selects no sea location, sound, detailed shell structure, material, color or placement.",
+            "fact_refs": [
+              "add_shell",
+              "new_type",
+              "new_one"
+            ],
+            "disposition": "semantic"
+          },
+          {
+            "realization_id": "base",
+            "pointer": "/content/en",
+            "quote": "a conch shell prop",
+            "fact_refs": [
+              "new_type"
+            ],
+            "disposition": "semantic_reference",
+            "reference_relation": "partial_restatement",
+            "retained_constraint_rationale": "English, Korean and embedding each name the conch-shell prop type. They partially restate only new_type; no new/add/presence/count is donated by the bare noun. A new shell prop is not a living conch, mermaid or inferred sea scene."
+          },
+          {
+            "realization_id": "base",
+            "pointer": "/content/ko",
+            "quote": "소라껍데기 소품",
+            "fact_refs": [
+              "new_type"
+            ],
+            "disposition": "semantic_reference",
+            "reference_relation": "partial_restatement",
+            "retained_constraint_rationale": "English, Korean and embedding each name the conch-shell prop type. They partially restate only new_type; no new/add/presence/count is donated by the bare noun. A new shell prop is not a living conch, mermaid or inferred sea scene."
+          },
+          {
+            "realization_id": "base",
+            "pointer": "/content/embedding_text",
+            "quote": "a conch shell prop",
+            "fact_refs": [
+              "new_type"
+            ],
+            "disposition": "semantic_reference",
+            "reference_relation": "partial_restatement",
+            "retained_constraint_rationale": "English, Korean and embedding each name the conch-shell prop type. They partially restate only new_type; no new/add/presence/count is donated by the bare noun. A new shell prop is not a living conch, mermaid or inferred sea scene."
+          }
+        ],
+        "roles": {
+          "prop": {
+            "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+            "scope": "whole_record",
+            "realization_ids": [
+              "base"
+            ],
+            "fact_refs": [
+              "new_type"
+            ],
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "owner_maps": {
+          "base": {
+            "schema": "photo-native-owner-bindings/v3",
+            "bindings": [
+              {
+                "target": "shell",
+                "origin": "introduced",
+                "introduced_by": "add_shell",
+                "selector": {
+                  "kind": "core_role",
+                  "role": "primary_prop"
+                }
+              }
+            ]
+          }
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "count",
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "count",
+                "property": "entity.count",
+                "target": "shell"
+              },
+              {
+                "dimension": "subject",
+                "property": "entity.presence",
+                "target": "shell"
+              },
+              {
+                "dimension": "subject",
+                "property": "props.type",
+                "target": "shell"
+              }
+            ]
+          }
+        },
+        "dependencies": {
+          "base": []
+        },
+        "reference_sha256": {},
+        "guard_sets": {
+          "base": {
+            "source_conditions": [
+              {
+                "for_any": [
+                  "human"
+                ]
+              },
+              {}
+            ],
+            "member_conditions": {}
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "review": {
+          "basis": "The expressly selected application adds one new conch-shell prop, without living conch, mermaid/animal/person, sea setting, sound, detailed shell structure, material, color or placement. Shell identity does not add an animal. Each bare field restates type only; explicit application grounds new/add/existence/local count. Fresh exact root06 input and whole original/current/5B/ownbinding/empty dependency closure reread. All three E remain permission-visible under subject/count locks. This approves the individually selected bounded application for root research review only.",
+          "whole_source_reviewed": true,
+          "source_correction": {
+            "before_sha256": "384b0754c97b713139f42645bf5a36212bf5494372e607c010890f52f2809b57",
+            "after_sha256": "09a21b9e31ff37c4580082dc5b51da5b854e9e538730ed86baf82a5c4ff7a4b0",
+            "rationale": "The expressly selected application adds one new conch-shell prop, without living conch, mermaid/animal/person, sea setting, sound, detailed shell structure, material, color or placement. Shell identity does not add an animal. Each bare field restates type only; explicit application grounds new/add/existence/local count. This is the explicit root-selected new application, preserving original fields/guards/provenance, rather than a claim about the original noun's unique interpretation."
+          },
+          "original_review": {
+            "candidate_id": "cand_693d2c560610561cb3af43e40c2c42de",
+            "source_record_sha256": "c9e12843027ea227486f8fe08242b1b01fcba9c762f6600f9cecbbd260594283",
+            "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+            "decision_sha256": "3cf3a674a85d346493153779c92545b5f464388c9221d3a7c4eefc728bf410c6",
+            "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/batch_00900_00950.json#item=25"
+          },
+          "native_review": {
+            "reviewer": "/root/review_06250_07250",
+            "method": "codex_subagent_direct_source_read",
+            "native_contract_sha256": "2b0db336bc1d9bf494558fe1312cd8af393ac7906d3777f4f4df7637512101aa"
+          }
+        }
+      },
+      "dependency_records": {},
+      "reference_bindings": {},
+      "source_reread_complete": true,
+      "reference_reread_complete": true,
+      "revision": {
+        "prior_review": {
+          "artifact": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_06250_bare_props_01236_00259_00807_00924_C_20261015.json",
+            "file_sha256": "a327680e9a9370f7dce922a61b26ffe4cf630088b28c331d521af1a6919db2f7",
+            "sha256": "6d35452477e36c67c734732fcfb42ab115102ea9c98fb6130806a88a2075fe29"
+          },
+          "pointer": "/records/3",
+          "sha256": "93e7e0a94d6a1daa9466bdcd5eeddd1a9773aa968249f62efbf4ee894fb822bb"
+        },
+        "memo_artifacts": [
+          {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native-inputs/bare-prop-applications-plan-06/ROOT-REQUIREMENTS.json",
+            "file_sha256": "9baeb5d7bc8d5e053e7ad739b0c778fd412d8d9c55a4fb8d63cb0a60991597cf",
+            "sha256": "04fce7c76fd3d5a3d6734a7806c79ca3ff4b23ec25e13043644dc14e2b874a73"
+          }
+        ],
+        "rationale": "Fresh direct rereview after individual root C application selection and exact root06 input; complete current v4 facts/units/owners/three E, independent human policy and strict vacant introduced address. A/B/C historical drafts and source interpretation boundaries remain unchanged."
+      }
+    }
+  ]
+}
