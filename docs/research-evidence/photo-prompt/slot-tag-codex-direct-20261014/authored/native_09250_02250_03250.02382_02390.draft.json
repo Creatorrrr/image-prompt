@@ -1,0 +1,4822 @@
+{
+  "schema": "photo-native-manual-source-fact-draft/v1",
+  "task": "/root/review_09250_10500",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "assigned_range": [
+    2250,
+    3250
+  ],
+  "draft_range": [
+    2382,
+    2390
+  ],
+  "management_batch_complete": false,
+  "actual_whole_original_and5B_after_read_count": 8,
+  "actual_whole_after_reread_count": 0,
+  "source_packet": {
+    "path": "authored/native_09250_02250_03250.02350_02400.packet.json",
+    "raw_sha256": "92e13bbd70288b60de0c06adca3f516f534ae0dbc4273234511b68ea78054740",
+    "source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b"
+  },
+  "catalog": {
+    "path": "CATALOG-FINAL-142-V2.json",
+    "canonical_sha256": "0d7cab7b4add7279b0faa629bb5df72829da0c756adc6db21dcd7c09d56b971f"
+  },
+  "literal": {
+    "path": "authored/native_09250_02250_03250.02382_02390.literals.py",
+    "raw_sha256": "5ff2ce160ecfbd855015505449ebc15d593a5e5110542c6dadded390de3100f8"
+  },
+  "mechanical_clause_expansion_only": true,
+  "automatic_semantic_classification": false,
+  "records": [
+    {
+      "ordinal": 2382,
+      "candidate_id": "cand_79667a338bdf5df58a9e05b2956f7ad9",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "기존 상대가 떨어뜨린 기존 물건을 받는 행동과 그drop 이후의 선택시점. 물건종류/파지자세/친밀감/수령완료는 미정이다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "catching an object the partner dropped",
+          "ko": "상대가 떨어뜨린 물건을 받아주는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "care"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_79667a338bdf5df58a9e05b2956f7ad9",
+        "provenance": [
+          {
+            "sha256": "cd05bf9541fca7900d23886c286b86234c8fd09a8e03897cbf49c7953ace0914",
+            "source": "slot:relational_action:catching_partner_falling_object"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "catching an object the partner dropped",
+          "ko": "상대가 떨어뜨린 물건을 받아주는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "care"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_79667a338bdf5df58a9e05b2956f7ad9",
+        "provenance": [
+          {
+            "sha256": "cd05bf9541fca7900d23886c286b86234c8fd09a8e03897cbf49c7953ace0914",
+            "source": "slot:relational_action:catching_partner_falling_object"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "catching an object the partner dropped",
+          "ko": "상대가 떨어뜨린 물건을 받아주는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "care"
+          ],
+          "application_scope": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop."
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "timing"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "actor",
+              "property": "relation.action"
+            },
+            {
+              "dimension": "timing",
+              "target": "event",
+              "property": "timing.event_phase"
+            }
+          ]
+        },
+        "id": "cand_79667a338bdf5df58a9e05b2956f7ad9",
+        "provenance": [
+          {
+            "sha256": "cd05bf9541fca7900d23886c286b86234c8fd09a8e03897cbf49c7953ace0914",
+            "source": "slot:relational_action:catching_partner_falling_object"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop.",
+          "reason": "actualcatch선택과 explicitdrop참조 분리. 새물건/사람/현재drop행위 추가없음."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "action",
+              "timing"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "target": "actor",
+                "property": "relation.action"
+              },
+              {
+                "dimension": "timing",
+                "target": "event",
+                "property": "timing.event_phase"
+              }
+            ]
+          },
+          "reason": "원action유지 및 sourceexplicitafterdrop selectedphase를 노출. Actualcatchsuccess/정밀시간 없음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 133,
+          "sha256": "bcc79d49cda6195d22ea3684266725ab8a3c7a85ac73f485c743817a06a2279a"
+        },
+        "candidate_id": "cand_79667a338bdf5df58a9e05b2956f7ad9",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "relation.action.catching_dropped_object",
+            "quote": "catching an object the partner dropped",
+            "realization_id": "base",
+            "target": "actor_partner_object"
+          },
+          {
+            "dimension": "timing",
+            "pointer": "/content/en",
+            "property": "timing.event_phase.catch_after_partner_drop",
+            "quote": "catching an object the partner dropped",
+            "realization_id": "base",
+            "target": "object_drop"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "상대가 떨어뜨린 물건을 받음.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "물건 종류·친밀감·현재 파지 자세는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/en",
+                "property": "relation.action.catching_dropped_object",
+                "quote": "catching an object the partner dropped",
+                "target": "actor_partner_object"
+              }
+            ],
+            "rationale": "상호 행위.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "relational_action"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "timing",
+                "pointer": "/content/en",
+                "property": "timing.event_phase.catch_after_partner_drop",
+                "quote": "catching an object the partner dropped",
+                "target": "object_drop"
+              }
+            ],
+            "rationale": "단계.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "narrative_phase"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "d50c7777bc580a09190edd183db09d41905dda3bfb0c5de95bfd4cf1d723790e",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 133,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "da089ac6d8a8b0049f47d8c19bc637144c43e33ec7f8ce58453bfce759f6acd5"
+      },
+      "before_full_record_sha256": "d50c7777bc580a09190edd183db09d41905dda3bfb0c5de95bfd4cf1d723790e",
+      "fiveB_after_full_record_sha256": "d50c7777bc580a09190edd183db09d41905dda3bfb0c5de95bfd4cf1d723790e",
+      "proposed_after_full_record_sha256": "c9d81793ac65b2f7f6e7ed7783a14cc4b755f75501ae98f4e69e605197123236",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_79667a338bdf5df58a9e05b2956f7ad9": {
+          "candidate_id": "cand_79667a338bdf5df58a9e05b2956f7ad9",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_79667a338bdf5df58a9e05b2956f7ad9",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "relational_action",
+          "weight": 0.82
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "relational_action",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.82,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_79667a338bdf5df58a9e05b2956f7ad9",
+          "reason": "ownhuman4deny142interaction contractretained.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          }
+        },
+        {
+          "slot_id": "narrative_phase",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 0.82,
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "reason": "actualprior-drop/currentcatch relation explicit; notinferredtimeline."
+        }
+      ],
+      "conditions_review": "sourcehuman retained. Partnerpriorrole/event prerequisite and currentaffecteditem separate. Noautomaticrecipientcompletion ornewhandgeometry.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "hand_pose",
+          "reason": "staticfingerconfiguration absent"
+        },
+        {
+          "slot_id": "prop_placement",
+          "reason": "specificflightpath absent"
+        },
+        {
+          "slot_id": "social_cue",
+          "reason": "actualgratitude absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "item_u0",
+          "dimension": "subject",
+          "target": "item",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "declared object"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "catching an object the partner dropped"
+        },
+        {
+          "id": "partner_u0",
+          "dimension": "subject",
+          "target": "partner",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "participant.presence/v1",
+            "value": "declared partner"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "catching an object the partner dropped"
+        },
+        {
+          "id": "drop_u0",
+          "dimension": "timing",
+          "target": "event",
+          "property": "scene.referenced_event",
+          "mode": "prerequisite",
+          "value": {
+            "type": "referenced.event/v1",
+            "value": "the same partner dropped the same object"
+          },
+          "requires": [
+            "partner_u0",
+            "item_u0"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "catching an object the partner dropped"
+        },
+        {
+          "id": "catch_u0",
+          "dimension": "action",
+          "target": "actor",
+          "property": "relation.action",
+          "mode": "effect",
+          "value": {
+            "type": "interaction.action/v1",
+            "value": "catching the same object the partner dropped"
+          },
+          "requires": [
+            "actor_u2",
+            "partner_u0",
+            "item_u0",
+            "drop_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "item"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "catching an object the partner dropped"
+        },
+        {
+          "id": "phase_u0",
+          "dimension": "timing",
+          "target": "event",
+          "property": "timing.event_phase",
+          "mode": "effect",
+          "value": {
+            "type": "event.phase/v1",
+            "value": "catching after the partner drop"
+          },
+          "requires": [
+            "drop_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "catching an object the partner dropped"
+        },
+        {
+          "id": "item_u1",
+          "dimension": "subject",
+          "target": "item",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "declared object"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "상대가 떨어뜨린 물건을 받아주는"
+        },
+        {
+          "id": "partner_u1",
+          "dimension": "subject",
+          "target": "partner",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "participant.presence/v1",
+            "value": "declared partner"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "상대가 떨어뜨린 물건을 받아주는"
+        },
+        {
+          "id": "drop_u1",
+          "dimension": "timing",
+          "target": "event",
+          "property": "scene.referenced_event",
+          "mode": "prerequisite",
+          "value": {
+            "type": "referenced.event/v1",
+            "value": "the same partner dropped the same object"
+          },
+          "requires": [
+            "partner_u0",
+            "item_u0"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "상대가 떨어뜨린 물건을 받아주는"
+        },
+        {
+          "id": "catch_u1",
+          "dimension": "action",
+          "target": "actor",
+          "property": "relation.action",
+          "mode": "effect",
+          "value": {
+            "type": "interaction.action/v1",
+            "value": "catching the same object the partner dropped"
+          },
+          "requires": [
+            "actor_u2",
+            "partner_u0",
+            "item_u0",
+            "drop_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "item"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "상대가 떨어뜨린 물건을 받아주는"
+        },
+        {
+          "id": "phase_u1",
+          "dimension": "timing",
+          "target": "event",
+          "property": "timing.event_phase",
+          "mode": "effect",
+          "value": {
+            "type": "event.phase/v1",
+            "value": "catching after the partner drop"
+          },
+          "requires": [
+            "drop_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "상대가 떨어뜨린 물건을 받아주는"
+        },
+        {
+          "id": "actor_u2",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "declared catcher"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop."
+        },
+        {
+          "id": "partner_u2",
+          "dimension": "subject",
+          "target": "partner",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "participant.presence/v1",
+            "value": "declared partner"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop."
+        },
+        {
+          "id": "item_u2",
+          "dimension": "subject",
+          "target": "item",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "declared object"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop."
+        },
+        {
+          "id": "drop_u2",
+          "dimension": "timing",
+          "target": "event",
+          "property": "scene.referenced_event",
+          "mode": "prerequisite",
+          "value": {
+            "type": "referenced.event/v1",
+            "value": "the same partner dropped the same object"
+          },
+          "requires": [
+            "partner_u0",
+            "item_u0"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop."
+        },
+        {
+          "id": "catch_u2",
+          "dimension": "action",
+          "target": "actor",
+          "property": "relation.action",
+          "mode": "effect",
+          "value": {
+            "type": "interaction.action/v1",
+            "value": "catching the same object the partner dropped"
+          },
+          "requires": [
+            "actor_u2",
+            "partner_u0",
+            "item_u0",
+            "drop_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "item"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop."
+        },
+        {
+          "id": "phase_u2",
+          "dimension": "timing",
+          "target": "event",
+          "property": "timing.event_phase",
+          "mode": "effect",
+          "value": {
+            "type": "event.phase/v1",
+            "value": "catching after the partner drop"
+          },
+          "requires": [
+            "drop_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop."
+        }
+      ],
+      "roles": {
+        "relational_action": {
+          "spec_sha256": "03fa719bf027e4dfb462858a2791ca016fae11dd93248dfedf6588a1358c0ccd",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "catch_u0",
+            "catch_u1",
+            "catch_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "narrative_phase": {
+          "spec_sha256": "c53279d6ff9d4625a5b9aa2bded760697f278b0c34703c72aaa96add65115e5d",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "phase_u0",
+            "phase_u1",
+            "phase_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "actor",
+              "core_role": "main_subject",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "partner",
+              "core_role": "relationship_target",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "item",
+              "core_role": "primary_prop",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "event",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "catching an object the partner dropped",
+          "fact_refs": [
+            "item_u0",
+            "partner_u0",
+            "drop_u0",
+            "catch_u0",
+            "phase_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "상대가 떨어뜨린 물건을 받아주는",
+          "fact_refs": [
+            "item_u1",
+            "partner_u1",
+            "drop_u1",
+            "catch_u1",
+            "phase_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared catcher, partner and object, with the independently declared event of that partner dropping that object; select the catcher catching it after that drop.",
+          "fact_refs": [
+            "actor_u2",
+            "partner_u2",
+            "item_u2",
+            "drop_u2",
+            "catch_u2",
+            "phase_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "action",
+            "timing"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "actor",
+              "property": "relation.action"
+            },
+            {
+              "dimension": "timing",
+              "target": "event",
+              "property": "timing.event_phase"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualcatcher/partner/object/drop eventclosure and sourcefootprint acceptance/formalinput needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2383,
+      "candidate_id": "cand_7f1beab5851c57daac6c0ea5d774c07e",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "기존 먼지낀 화성거주모듈 안 장소. dusty의 표면/공중carrier는 미정으로 보존하며 실제화성촬영/거주자/기술체계를 추가하지 않는다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "a dusty Mars habitat module",
+          "ko": "먼지 낀 화성 거주 모듈",
+          "phrase_en": "inside a dusty Mars habitat module",
+          "phrase_ko": "먼지 낀 화성 거주 모듈에서",
+          "tags": [
+            "sci_fi",
+            "science",
+            "interior"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_7f1beab5851c57daac6c0ea5d774c07e",
+        "provenance": [
+          {
+            "sha256": "d2370bc03e31bf711275771920e0ff0199241bea015c0fcc0d6d9af2ebb2282e",
+            "source": "slot:location:mars_habitat"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "a dusty Mars habitat module",
+          "ko": "먼지 낀 화성 거주 모듈",
+          "phrase_en": "inside a dusty Mars habitat module",
+          "phrase_ko": "먼지 낀 화성 거주 모듈에서",
+          "tags": [
+            "sci_fi",
+            "science",
+            "interior"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_7f1beab5851c57daac6c0ea5d774c07e",
+        "provenance": [
+          {
+            "sha256": "d2370bc03e31bf711275771920e0ff0199241bea015c0fcc0d6d9af2ebb2282e",
+            "source": "slot:location:mars_habitat"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "a dusty Mars habitat module",
+          "ko": "먼지 낀 화성 거주 모듈",
+          "phrase_en": "inside a dusty Mars habitat module",
+          "phrase_ko": "먼지 낀 화성 거주 모듈에서",
+          "tags": [
+            "sci_fi",
+            "science",
+            "interior"
+          ],
+          "application_scope": "Set the scene inside the same already declared dusty Mars habitat module without changing its existing dusty condition."
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        },
+        "id": "cand_7f1beab5851c57daac6c0ea5d774c07e",
+        "provenance": [
+          {
+            "sha256": "d2370bc03e31bf711275771920e0ff0199241bea015c0fcc0d6d9af2ebb2282e",
+            "source": "slot:location:mars_habitat"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Set the scene inside the same already declared dusty Mars habitat module without changing its existing dusty condition.",
+          "reason": "bareplace exactexistingdustydescription만 재사용, 실제insideeffect유지. 먼지carrier추가선택 없음."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "setting",
+                "target": "scene",
+                "property": "setting.location"
+              }
+            ]
+          },
+          "reason": "coarsesetting actualinsidemodule 관계에결속. 실제먼지발생/청소/화성촬영증명 없음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 134,
+          "sha256": "09b80c84c8df54f52a493f17b74c76cbe05ba6ba4511a5abd55787beaa07fe56"
+        },
+        "candidate_id": "cand_7f1beab5851c57daac6c0ea5d774c07e",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location.mars_habitat_module",
+            "quote": "a dusty Mars habitat module",
+            "realization_id": "base",
+            "target": "environment"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "environment.detail.dust",
+            "quote": "a dusty Mars habitat module",
+            "realization_id": "base",
+            "target": "module_surface"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "먼지 낀 화성 거주 모듈.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "거주자·기술 체계·공중 먼지·실제 화성 촬영은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location.mars_habitat_module",
+                "quote": "a dusty Mars habitat module",
+                "target": "environment"
+              }
+            ],
+            "rationale": "장소.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "environment.detail.dust",
+                "quote": "a dusty Mars habitat module",
+                "target": "module_surface"
+              }
+            ],
+            "rationale": "환경 표면.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "environment_detail"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "66458a2b9ea29f723aa7ef22b960f3c401cd8a062269e5f03fadec9768c75a57",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 134,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "d83fcccfde58de0d4bf8b34137e3058df64ab594a1439d0e51aee6bda98ff356"
+      },
+      "before_full_record_sha256": "66458a2b9ea29f723aa7ef22b960f3c401cd8a062269e5f03fadec9768c75a57",
+      "fiveB_after_full_record_sha256": "66458a2b9ea29f723aa7ef22b960f3c401cd8a062269e5f03fadec9768c75a57",
+      "proposed_after_full_record_sha256": "bab77bba84731d42c131e9638aaf867ff0dc2ce36bbc3340f9fb4127f6afc66b",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_7f1beab5851c57daac6c0ea5d774c07e": {
+          "candidate_id": "cand_7f1beab5851c57daac6c0ea5d774c07e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_7f1beab5851c57daac6c0ea5d774c07e",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 0.4
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "location",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.4,
+          "conditions": {},
+          "reason": "own{}; literalplace."
+        },
+        {
+          "slot_id": "environment_detail",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.4,
+          "conditions": {},
+          "reason": "dusty alone doesnotunconditionallyselect surfaces orfixtures.5Bsurfacedust notpositivebody."
+        },
+        {
+          "slot_id": "ambient_particle",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.4,
+          "conditions": {},
+          "reason": "actualairborneindividualparticlecarrier absent."
+        }
+      ],
+      "conditions_review": "source{} retained. Existingmodule mustalreadyfreezeexactdustydescription; thissource does not claimcarrierresolution. LocationMars fictionaldeclaredplace notimageprovenance.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "world",
+          "reason": "technologyinstitution absent"
+        },
+        {
+          "slot_id": "subject",
+          "reason": "occupants absent"
+        },
+        {
+          "slot_id": "capture_context",
+          "reason": "actualMarscapture absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "module_u0",
+          "dimension": "setting",
+          "target": "module",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.description/v1",
+            "value": "dusty Mars habitat module"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a dusty Mars habitat module"
+        },
+        {
+          "id": "module_u1",
+          "dimension": "setting",
+          "target": "module",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.description/v1",
+            "value": "dusty Mars habitat module"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "먼지 낀 화성 거주 모듈"
+        },
+        {
+          "id": "module_u2",
+          "dimension": "setting",
+          "target": "module",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.description/v1",
+            "value": "dusty Mars habitat module"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a dusty Mars habitat module"
+        },
+        {
+          "id": "inside_u2",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "place.location/v1",
+            "value": "inside the same dusty Mars habitat module"
+          },
+          "requires": [
+            "module_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "module"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a dusty Mars habitat module"
+        },
+        {
+          "id": "module_u3",
+          "dimension": "setting",
+          "target": "module",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.description/v1",
+            "value": "dusty Mars habitat module"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "먼지 낀 화성 거주 모듈에서"
+        },
+        {
+          "id": "inside_u3",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "place.location/v1",
+            "value": "inside the same dusty Mars habitat module"
+          },
+          "requires": [
+            "module_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "module"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "먼지 낀 화성 거주 모듈에서"
+        },
+        {
+          "id": "module_u4",
+          "dimension": "setting",
+          "target": "module",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.description/v1",
+            "value": "dusty Mars habitat module"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene inside the same already declared dusty Mars habitat module without changing its existing dusty condition."
+        },
+        {
+          "id": "inside_u4",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "place.location/v1",
+            "value": "inside the same dusty Mars habitat module"
+          },
+          "requires": [
+            "module_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "module"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene inside the same already declared dusty Mars habitat module without changing its existing dusty condition."
+        }
+      ],
+      "roles": {
+        "location": {
+          "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "inside_u2",
+            "inside_u3",
+            "inside_u4"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "module",
+              "core_role": "background_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "scene",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a dusty Mars habitat module",
+          "fact_refs": [
+            "module_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "먼지 낀 화성 거주 모듈",
+          "fact_refs": [
+            "module_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a dusty Mars habitat module",
+          "fact_refs": [
+            "module_u2",
+            "inside_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "먼지 낀 화성 거주 모듈에서",
+          "fact_refs": [
+            "module_u3",
+            "inside_u3"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene inside the same already declared dusty Mars habitat module without changing its existing dusty condition.",
+          "fact_refs": [
+            "module_u4",
+            "inside_u4"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualsameplace exactdusty predicate and sourceacceptance/formalinput needed; dustcarrier optionalrole remainspending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2384,
+      "candidate_id": "cand_86e981659f875a2c8173669d93c31580",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "에클레틱 그랜파 미학을 선택한다. 실제할아버지/나이/가족관계/구체의복이나레이어는 추가하지 않는다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "eclectic grandpa"
+          ],
+          "en": "eclectic grandpa aesthetic",
+          "keywords": [
+            "eclectic grandpa",
+            "vintage",
+            "layered"
+          ],
+          "ko": "에클레틱 그랜파 미학",
+          "tags": [
+            "aesthetic",
+            "vintage",
+            "layered"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": []
+        },
+        "id": "cand_86e981659f875a2c8173669d93c31580",
+        "provenance": [
+          {
+            "sha256": "ec5019a3564648ee73f2e24ae935332cf8a11626ec82d073d7ecc511c6c69369",
+            "source": "slot:aesthetic_trend:eclectic_grandpa_aesthetic"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "eclectic grandpa"
+          ],
+          "en": "eclectic grandpa aesthetic",
+          "keywords": [
+            "eclectic grandpa",
+            "vintage",
+            "layered"
+          ],
+          "ko": "에클레틱 그랜파 미학",
+          "tags": [
+            "aesthetic",
+            "vintage",
+            "layered"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": []
+        },
+        "id": "cand_86e981659f875a2c8173669d93c31580",
+        "provenance": [
+          {
+            "sha256": "ec5019a3564648ee73f2e24ae935332cf8a11626ec82d073d7ecc511c6c69369",
+            "source": "slot:aesthetic_trend:eclectic_grandpa_aesthetic"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "eclectic grandpa"
+          ],
+          "en": "eclectic grandpa aesthetic",
+          "keywords": [
+            "eclectic grandpa",
+            "vintage",
+            "layered"
+          ],
+          "ko": "에클레틱 그랜파 미학",
+          "tags": [
+            "aesthetic",
+            "vintage",
+            "layered"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "style",
+              "target": "image",
+              "property": "aesthetic.reference"
+            }
+          ]
+        },
+        "id": "cand_86e981659f875a2c8173669d93c31580",
+        "provenance": [
+          {
+            "sha256": "ec5019a3564648ee73f2e24ae935332cf8a11626ec82d073d7ecc511c6c69369",
+            "source": "slot:aesthetic_trend:eclectic_grandpa_aesthetic"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "style"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "style"
+            ],
+            "properties": [
+              {
+                "dimension": "style",
+                "target": "image",
+                "property": "aesthetic.reference"
+              }
+            ]
+          },
+          "reason": "namedaesthetic actualstyle effect유지; tagvintage/layered로 추가의복발명안함."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 135,
+          "sha256": "d1865b6506d4e9660880ea7a948e15f9e479fd929d328299576cf599ce0ca81e"
+        },
+        "candidate_id": "cand_86e981659f875a2c8173669d93c31580",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "style",
+            "pointer": "/content/en",
+            "property": "aesthetic.eclectic_grandpa",
+            "quote": "eclectic grandpa aesthetic",
+            "realization_id": "base",
+            "target": "image"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "에클레틱 그랜파 미학.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "실제 할아버지·연령·특정 의복·가족 관계는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "style",
+                "pointer": "/content/en",
+                "property": "aesthetic.eclectic_grandpa",
+                "quote": "eclectic grandpa aesthetic",
+                "target": "image"
+              }
+            ],
+            "rationale": "미학.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "aesthetic_trend"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "e5e6f4f0f74c1c10dd13098d07bcd91a578d92556fc74feb1137c729f8622431",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 135,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "3fccb2132257b3251dbb5c7e92c13337b0bdc7cfb935273235d316356df26f07"
+      },
+      "before_full_record_sha256": "e5e6f4f0f74c1c10dd13098d07bcd91a578d92556fc74feb1137c729f8622431",
+      "fiveB_after_full_record_sha256": "e5e6f4f0f74c1c10dd13098d07bcd91a578d92556fc74feb1137c729f8622431",
+      "proposed_after_full_record_sha256": "3abbddefdba5c8b3a455e8f6ff28c8a977ab4d13cbb57d7e4954d1c82748ecf1",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_86e981659f875a2c8173669d93c31580": {
+          "candidate_id": "cand_86e981659f875a2c8173669d93c31580",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife"
+              ]
+            }
+          },
+          "id": "bind_86e981659f875a2c8173669d93c31580",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "aesthetic_trend",
+          "weight": 0.68
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "aesthetic_trend",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 0.68,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_86e981659f875a2c8173669d93c31580",
+          "reason": "owndoc/craft/wildlifedeny142contract retained. Contextualrole actualstyleeffect.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife"
+              ]
+            }
+          }
+        }
+      ],
+      "conditions_review": "source{} preserved. Actualstylelabel notage/identityproof; keywords/aliases arediscoveryonly. Noactualgarment/props lockedchangepermission implied.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "age_presentation",
+          "reason": "grandpalabelnotrealage"
+        },
+        {
+          "slot_id": "wardrobe_layering",
+          "reason": "layeredkeywordonly"
+        },
+        {
+          "slot_id": "wardrobe_style",
+          "reason": "specificoutfit absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "style_u0",
+          "dimension": "style",
+          "target": "image",
+          "property": "aesthetic.reference",
+          "mode": "effect",
+          "value": {
+            "type": "aesthetic.reference/v1",
+            "value": "eclectic grandpa aesthetic"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "eclectic grandpa aesthetic"
+        },
+        {
+          "id": "style_u1",
+          "dimension": "style",
+          "target": "image",
+          "property": "aesthetic.reference",
+          "mode": "effect",
+          "value": {
+            "type": "aesthetic.reference/v1",
+            "value": "eclectic grandpa aesthetic"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "에클레틱 그랜파 미학"
+        }
+      ],
+      "roles": {
+        "aesthetic_trend": {
+          "spec_sha256": "030ffe8a691928e6911269c2ea11352443b804e25a7fff57de37cd35b41744ff",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "style_u0",
+            "style_u1"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "image",
+              "core_role": "image",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "eclectic grandpa aesthetic",
+          "fact_refs": [
+            "style_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "에클레틱 그랜파 미학",
+          "fact_refs": [
+            "style_u1"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "style",
+              "target": "image",
+              "property": "aesthetic.reference"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "namedstyle acceptedtypedvalue and sourcefootprint/formalinput needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2385,
+      "candidate_id": "cand_9382238d531e534da1d51abd3d3efd78",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "기존 카디건의 작은 보풀 표면조직과 현재보풀상태를 선택한다. 노후원인/섬유/현재착용자/집장소는 미정이다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "tiny pilling on a cardigan",
+          "en": "tiny pilling on a cardigan",
+          "ko": "카디건의 작은 보풀 디테일",
+          "tags": [
+            "human",
+            "garment",
+            "knit",
+            "texture",
+            "home"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_9382238d531e534da1d51abd3d3efd78",
+        "provenance": [
+          {
+            "sha256": "8d38e7123b394cec3a3d91faafaa5f3e917201cc49d7c41d049dd1f66827ba6e",
+            "source": "slot:garment_detail:cardigan_pilling_detail"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "tiny pilling on a cardigan",
+          "en": "tiny pilling on a cardigan",
+          "ko": "카디건의 작은 보풀 디테일",
+          "tags": [
+            "human",
+            "garment",
+            "knit",
+            "texture",
+            "home"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_9382238d531e534da1d51abd3d3efd78",
+        "provenance": [
+          {
+            "sha256": "8d38e7123b394cec3a3d91faafaa5f3e917201cc49d7c41d049dd1f66827ba6e",
+            "source": "slot:garment_detail:cardigan_pilling_detail"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "tiny pilling on a cardigan",
+          "en": "tiny pilling on a cardigan",
+          "ko": "카디건의 작은 보풀 디테일",
+          "tags": [
+            "human",
+            "garment",
+            "knit",
+            "texture",
+            "home"
+          ],
+          "application_scope": "Select tiny pilling texture and the pilled state on the same already declared cardigan."
+        },
+        "effects": {
+          "dimensions": [
+            "appearance",
+            "material"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "target": "cardigan",
+              "property": "garment.state"
+            },
+            {
+              "dimension": "material",
+              "target": "cardigan",
+              "property": "surface.texture"
+            }
+          ]
+        },
+        "id": "cand_9382238d531e534da1d51abd3d3efd78",
+        "provenance": [
+          {
+            "sha256": "8d38e7123b394cec3a3d91faafaa5f3e917201cc49d7c41d049dd1f66827ba6e",
+            "source": "slot:garment_detail:cardigan_pilling_detail"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Select tiny pilling texture and the pilled state on the same already declared cardigan.",
+          "reason": "existingcardiganowner한정, 실제보풀surface/currentstate effect모두유지."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "appearance",
+              "material"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "target": "cardigan",
+                "property": "garment.state"
+              },
+              {
+                "dimension": "material",
+                "target": "cardigan",
+                "property": "surface.texture"
+              }
+            ]
+          },
+          "reason": "원appearance currentstate보존, actualtinypilling surfaceorganization omittedmaterialeffect노출. 인과/성분 없음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 136,
+          "sha256": "26b1aa43054082e1fca7daf9bead9570c1095f3435fd9c685a44f539ce65b162"
+        },
+        "candidate_id": "cand_9382238d531e534da1d51abd3d3efd78",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.texture.tiny_pilling",
+            "quote": "tiny pilling on a cardigan",
+            "realization_id": "base",
+            "target": "cardigan_surface"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "garment.state.pilled",
+            "quote": "tiny pilling on a cardigan",
+            "realization_id": "base",
+            "target": "cardigan"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "카디건의 작은 보풀.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "노후 원인·섬유·집 장소는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.texture.tiny_pilling",
+                "quote": "tiny pilling on a cardigan",
+                "target": "cardigan_surface"
+              }
+            ],
+            "rationale": "조직.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "texture"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "garment.state.pilled",
+                "quote": "tiny pilling on a cardigan",
+                "target": "cardigan"
+              }
+            ],
+            "rationale": "착용 상태.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "garment_state"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "27fa2e7fb333f84dc7f8f3bed35d5bd4c9acb98f41b0b68c49b785d32806f214",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 136,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "3c885be0abc543a4aa32fe05d8399944f0b8295a3524f2178f815d67c2f01d02"
+      },
+      "before_full_record_sha256": "27fa2e7fb333f84dc7f8f3bed35d5bd4c9acb98f41b0b68c49b785d32806f214",
+      "fiveB_after_full_record_sha256": "27fa2e7fb333f84dc7f8f3bed35d5bd4c9acb98f41b0b68c49b785d32806f214",
+      "proposed_after_full_record_sha256": "dd642a2d31e049124d9d15a8b86d32c47f9079108ca1de1d90e7a37553e92de1",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_9382238d531e534da1d51abd3d3efd78": {
+          "candidate_id": "cand_9382238d531e534da1d51abd3d3efd78",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_9382238d531e534da1d51abd3d3efd78",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "garment_detail",
+          "weight": 0.48
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "garment_detail",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 0.48,
+          "conditions_action": "retire_old_presentation_only",
+          "old_binding_id": "bind_9382238d531e534da1d51abd3d3efd78",
+          "reason": "ownhuman4denyread; currentpilling isstate/texture notconstructiontrim."
+        },
+        {
+          "slot_id": "texture",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.48,
+          "conditions": {},
+          "reason": "actualtinyphysicalpilling texture."
+        },
+        {
+          "slot_id": "garment_state",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.48,
+          "conditions": {},
+          "reason": "actualpilledcurrentgarmentstate; own142{}."
+        }
+      ],
+      "conditions_review": "sourcehuman retained evensemanticcarrier cardigan. Newstate/texture do notinherit retiredgarmentdetail4deny; exactsamegarment prerequisite required.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "surface_material",
+          "reason": "fiberchemistry absent"
+        },
+        {
+          "slot_id": "location",
+          "reason": "home tagonly"
+        },
+        {
+          "slot_id": "aftermath_trace",
+          "reason": "agingcause absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "cardigan_u0",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "garment.kind/v1",
+            "value": "cardigan"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "tiny pilling on a cardigan"
+        },
+        {
+          "id": "pills_u0",
+          "dimension": "material",
+          "target": "cardigan",
+          "property": "surface.texture",
+          "mode": "effect",
+          "value": {
+            "type": "surface.texture/v1",
+            "value": "tiny pilling"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "tiny pilling on a cardigan"
+        },
+        {
+          "id": "state_u0",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.state",
+          "mode": "effect",
+          "value": {
+            "type": "garment.state/v1",
+            "value": "pilled"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "tiny pilling on a cardigan"
+        },
+        {
+          "id": "cardigan_u1",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "garment.kind/v1",
+            "value": "cardigan"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "카디건의 작은 보풀 디테일"
+        },
+        {
+          "id": "pills_u1",
+          "dimension": "material",
+          "target": "cardigan",
+          "property": "surface.texture",
+          "mode": "effect",
+          "value": {
+            "type": "surface.texture/v1",
+            "value": "tiny pilling"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "카디건의 작은 보풀 디테일"
+        },
+        {
+          "id": "state_u1",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.state",
+          "mode": "effect",
+          "value": {
+            "type": "garment.state/v1",
+            "value": "pilled"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "카디건의 작은 보풀 디테일"
+        },
+        {
+          "id": "cardigan_u2",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "garment.kind/v1",
+            "value": "cardigan"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "tiny pilling on a cardigan"
+        },
+        {
+          "id": "pills_u2",
+          "dimension": "material",
+          "target": "cardigan",
+          "property": "surface.texture",
+          "mode": "effect",
+          "value": {
+            "type": "surface.texture/v1",
+            "value": "tiny pilling"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "tiny pilling on a cardigan"
+        },
+        {
+          "id": "state_u2",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.state",
+          "mode": "effect",
+          "value": {
+            "type": "garment.state/v1",
+            "value": "pilled"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "tiny pilling on a cardigan"
+        },
+        {
+          "id": "cardigan_u3",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "garment.kind/v1",
+            "value": "cardigan"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select tiny pilling texture and the pilled state on the same already declared cardigan."
+        },
+        {
+          "id": "pills_u3",
+          "dimension": "material",
+          "target": "cardigan",
+          "property": "surface.texture",
+          "mode": "effect",
+          "value": {
+            "type": "surface.texture/v1",
+            "value": "tiny pilling"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select tiny pilling texture and the pilled state on the same already declared cardigan."
+        },
+        {
+          "id": "state_u3",
+          "dimension": "appearance",
+          "target": "cardigan",
+          "property": "garment.state",
+          "mode": "effect",
+          "value": {
+            "type": "garment.state/v1",
+            "value": "pilled"
+          },
+          "requires": [
+            "cardigan_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select tiny pilling texture and the pilled state on the same already declared cardigan."
+        }
+      ],
+      "roles": {
+        "texture": {
+          "spec_sha256": "7206f92638e2b0f2eb3fe1511d17972849bbe4f6634febafa78baa4719fcff7c",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "pills_u0",
+            "pills_u1",
+            "pills_u2",
+            "pills_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "garment_state": {
+          "spec_sha256": "3b6695ae58d89dc007d6545b7ad61073c8bdd58710f1d9f807f146c6738a26cd",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "state_u0",
+            "state_u1",
+            "state_u2",
+            "state_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "cardigan",
+              "core_role": "primary_garment",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "tiny pilling on a cardigan",
+          "fact_refs": [
+            "cardigan_u0",
+            "pills_u0",
+            "state_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "카디건의 작은 보풀 디테일",
+          "fact_refs": [
+            "cardigan_u1",
+            "pills_u1",
+            "state_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "tiny pilling on a cardigan",
+          "fact_refs": [
+            "cardigan_u2",
+            "pills_u2",
+            "state_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select tiny pilling texture and the pilled state on the same already declared cardigan.",
+          "fact_refs": [
+            "cardigan_u3",
+            "pills_u3",
+            "state_u3"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "appearance",
+            "material"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "target": "cardigan",
+              "property": "garment.state"
+            },
+            {
+              "dimension": "material",
+              "target": "cardigan",
+              "property": "surface.texture"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualcardigan/core and completefootprint acceptance/formalinput needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2386,
+      "candidate_id": "cand_a030aefff7225b3cb663e2943a9b38e2",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "같은 물리 옷감의 짜임이 햇빛에 보이도록 한다. 의복주체/재료/특정직조/빛방향은 원문에 없다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "sunlit visible fabric weave",
+          "en": "sunlit visible fabric weave",
+          "ko": "햇빛에 보이는 옷감 짜임",
+          "tags": [
+            "human",
+            "garment",
+            "weave",
+            "sunlight",
+            "texture"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_a030aefff7225b3cb663e2943a9b38e2",
+        "provenance": [
+          {
+            "sha256": "e10de93df71fc9b50010172bb0705875b83c1a4af8cc5419ce84de1207e6d68e",
+            "source": "slot:garment_detail:sunlit_fabric_weave"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "sunlit visible fabric weave",
+          "en": "sunlit visible fabric weave",
+          "ko": "햇빛에 보이는 옷감 짜임",
+          "tags": [
+            "human",
+            "garment",
+            "weave",
+            "sunlight",
+            "texture"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_a030aefff7225b3cb663e2943a9b38e2",
+        "provenance": [
+          {
+            "sha256": "e10de93df71fc9b50010172bb0705875b83c1a4af8cc5419ce84de1207e6d68e",
+            "source": "slot:garment_detail:sunlit_fabric_weave"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "sunlit visible fabric weave",
+          "en": "sunlit visible fabric weave",
+          "ko": "햇빛에 보이는 옷감 짜임",
+          "tags": [
+            "human",
+            "garment",
+            "weave",
+            "sunlight",
+            "texture"
+          ],
+          "application_scope": "Apply sunlight to the same already declared fabric surface so its weave is visible, without selecting an unmentioned weave type or garment."
+        },
+        "effects": {
+          "dimensions": [
+            "lighting",
+            "material"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "target": "fabric",
+              "property": "lighting.source"
+            },
+            {
+              "dimension": "material",
+              "target": "fabric",
+              "property": "surface.weave"
+            }
+          ]
+        },
+        "id": "cand_a030aefff7225b3cb663e2943a9b38e2",
+        "provenance": [
+          {
+            "sha256": "e10de93df71fc9b50010172bb0705875b83c1a4af8cc5419ce84de1207e6d68e",
+            "source": "slot:garment_detail:sunlit_fabric_weave"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply sunlight to the same already declared fabric surface so its weave is visible, without selecting an unmentioned weave type or garment.",
+          "reason": "actualfabriccarrier만명시, weavevisibility+sunlight actualselection유지. Garmenttag로 wearer/clothes 발명안함."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "lighting",
+              "material"
+            ],
+            "properties": [
+              {
+                "dimension": "lighting",
+                "target": "fabric",
+                "property": "lighting.source"
+              },
+              {
+                "dimension": "material",
+                "target": "fabric",
+                "property": "surface.weave"
+              }
+            ]
+          },
+          "reason": "coarse/misownedappearance actualprimaryclauses는 physicalweave와 sunlight. 실제mutation을 material/lighting으로정확교정하고 no-op으로삭제안함; garmentappearance 별도근거없음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 137,
+          "sha256": "5caf814a8ce9e425e523e698e066049b56934d33a48211cc87ad93a533014710"
+        },
+        "candidate_id": "cand_a030aefff7225b3cb663e2943a9b38e2",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.weave.visible",
+            "quote": "sunlit visible fabric weave",
+            "realization_id": "base",
+            "target": "fabric"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.source.sunlight",
+            "quote": "sunlit visible fabric weave",
+            "realization_id": "base",
+            "target": "fabric_illumination"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "햇빛에 드러나는 옷감 짜임.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "특정 조직·재료·옷 종류·광 방향은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.weave.visible",
+                "quote": "sunlit visible fabric weave",
+                "target": "fabric"
+              }
+            ],
+            "rationale": "조직.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "texture"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.source.sunlight",
+                "quote": "sunlit visible fabric weave",
+                "target": "fabric_illumination"
+              }
+            ],
+            "rationale": "광원.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_type"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "7930906dc69b52d3519563173d5e3d6e300da5e86813f01b2006df7973c77b7d",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 137,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "7cae9eebb27830bd15cc5ebf595acea7c66916e7ffd3bec6f601d5bd0fe81ebe"
+      },
+      "before_full_record_sha256": "7930906dc69b52d3519563173d5e3d6e300da5e86813f01b2006df7973c77b7d",
+      "fiveB_after_full_record_sha256": "7930906dc69b52d3519563173d5e3d6e300da5e86813f01b2006df7973c77b7d",
+      "proposed_after_full_record_sha256": "27e01f10b004716f11a08985527b1b9c37373a3edfc3841a4023b92c9e5c0f71",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_a030aefff7225b3cb663e2943a9b38e2": {
+          "candidate_id": "cand_a030aefff7225b3cb663e2943a9b38e2",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_a030aefff7225b3cb663e2943a9b38e2",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "garment_detail",
+          "weight": 0.55
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "garment_detail",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 0.55,
+          "conditions_action": "retire_old_presentation_only",
+          "old_binding_id": "bind_a030aefff7225b3cb663e2943a9b38e2",
+          "reason": "ownhuman4denyread; sourcebodygenericfabric noactualgarmentconstruction."
+        },
+        {
+          "slot_id": "texture",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.55,
+          "conditions": {},
+          "reason": "actualvisiblephysicalweave."
+        },
+        {
+          "slot_id": "light_type",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.55,
+          "conditions": {},
+          "reason": "sunlit actualsunlight; notdayphase inferred."
+        }
+      ],
+      "conditions_review": "sourcehuman retained; textileowner nothumananatomy. Explicitforegroundsurfaceproposedaddress notnewposition, actualcorebindingneeded. Nohumanreferenceconversion.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "surface_material",
+          "reason": "fiberidentity absent"
+        },
+        {
+          "slot_id": "light_direction",
+          "reason": "incidenceangle absent"
+        },
+        {
+          "slot_id": "subject_framing",
+          "reason": "skin/clothingexposure absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "fabric_u0",
+          "dimension": "subject",
+          "target": "fabric",
+          "property": "entity.surface.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "textile_surface.presence/v1",
+            "value": "declared fabric surface"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "sunlit visible fabric weave"
+        },
+        {
+          "id": "weave_u0",
+          "dimension": "material",
+          "target": "fabric",
+          "property": "surface.weave",
+          "mode": "effect",
+          "value": {
+            "type": "surface.weave/v1",
+            "value": "visible fabric weave"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "sunlit visible fabric weave"
+        },
+        {
+          "id": "sun_u0",
+          "dimension": "lighting",
+          "target": "fabric",
+          "property": "lighting.source",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.source/v1",
+            "value": "sunlight illuminating the fabric"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "sunlit visible fabric weave"
+        },
+        {
+          "id": "fabric_u1",
+          "dimension": "subject",
+          "target": "fabric",
+          "property": "entity.surface.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "textile_surface.presence/v1",
+            "value": "declared fabric surface"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "햇빛에 보이는 옷감 짜임"
+        },
+        {
+          "id": "weave_u1",
+          "dimension": "material",
+          "target": "fabric",
+          "property": "surface.weave",
+          "mode": "effect",
+          "value": {
+            "type": "surface.weave/v1",
+            "value": "visible fabric weave"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "햇빛에 보이는 옷감 짜임"
+        },
+        {
+          "id": "sun_u1",
+          "dimension": "lighting",
+          "target": "fabric",
+          "property": "lighting.source",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.source/v1",
+            "value": "sunlight illuminating the fabric"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "햇빛에 보이는 옷감 짜임"
+        },
+        {
+          "id": "fabric_u2",
+          "dimension": "subject",
+          "target": "fabric",
+          "property": "entity.surface.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "textile_surface.presence/v1",
+            "value": "declared fabric surface"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "sunlit visible fabric weave"
+        },
+        {
+          "id": "weave_u2",
+          "dimension": "material",
+          "target": "fabric",
+          "property": "surface.weave",
+          "mode": "effect",
+          "value": {
+            "type": "surface.weave/v1",
+            "value": "visible fabric weave"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "sunlit visible fabric weave"
+        },
+        {
+          "id": "sun_u2",
+          "dimension": "lighting",
+          "target": "fabric",
+          "property": "lighting.source",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.source/v1",
+            "value": "sunlight illuminating the fabric"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "sunlit visible fabric weave"
+        },
+        {
+          "id": "fabric_u3",
+          "dimension": "subject",
+          "target": "fabric",
+          "property": "entity.surface.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "textile_surface.presence/v1",
+            "value": "declared fabric surface"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply sunlight to the same already declared fabric surface so its weave is visible, without selecting an unmentioned weave type or garment."
+        },
+        {
+          "id": "weave_u3",
+          "dimension": "material",
+          "target": "fabric",
+          "property": "surface.weave",
+          "mode": "effect",
+          "value": {
+            "type": "surface.weave/v1",
+            "value": "visible fabric weave"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply sunlight to the same already declared fabric surface so its weave is visible, without selecting an unmentioned weave type or garment."
+        },
+        {
+          "id": "sun_u3",
+          "dimension": "lighting",
+          "target": "fabric",
+          "property": "lighting.source",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.source/v1",
+            "value": "sunlight illuminating the fabric"
+          },
+          "requires": [
+            "fabric_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply sunlight to the same already declared fabric surface so its weave is visible, without selecting an unmentioned weave type or garment."
+        }
+      ],
+      "roles": {
+        "texture": {
+          "spec_sha256": "7206f92638e2b0f2eb3fe1511d17972849bbe4f6634febafa78baa4719fcff7c",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "weave_u0",
+            "weave_u1",
+            "weave_u2",
+            "weave_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "light_type": {
+          "spec_sha256": "2255889e3312890d643e01abb252eac8a9a009891733112aef6d44ee157789bf",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "sun_u0",
+            "sun_u1",
+            "sun_u2",
+            "sun_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "fabric",
+              "core_role": "foreground_surface",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "sunlit visible fabric weave",
+          "fact_refs": [
+            "fabric_u0",
+            "weave_u0",
+            "sun_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "햇빛에 보이는 옷감 짜임",
+          "fact_refs": [
+            "fabric_u1",
+            "weave_u1",
+            "sun_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "sunlit visible fabric weave",
+          "fact_refs": [
+            "fabric_u2",
+            "weave_u2",
+            "sun_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply sunlight to the same already declared fabric surface so its weave is visible, without selecting an unmentioned weave type or garment.",
+          "fact_refs": [
+            "fabric_u3",
+            "weave_u3",
+            "sun_u3"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "lighting",
+            "material"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "target": "fabric",
+              "property": "lighting.source"
+            },
+            {
+              "dimension": "material",
+              "target": "fabric",
+              "property": "surface.weave"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualfabric core and originalappearance→material/lighting sourcecorrection/lockimpact rootacceptance needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2387,
+      "candidate_id": "cand_a70018ac406559fab5e9ab3615bace4e",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "이미 흰 사이클로라마가 있는 동일 스튜디오 안 장소를 선택한다. 실제광원/과노출/상업촬영은 미정이다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "a white cyclorama studio",
+          "ko": "흰색 사이클로라마 스튜디오",
+          "phrase_en": "inside a white cyclorama studio",
+          "phrase_ko": "흰색 사이클로라마 스튜디오에서",
+          "tags": [
+            "studio",
+            "commercial"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_a70018ac406559fab5e9ab3615bace4e",
+        "provenance": [
+          {
+            "sha256": "7c520497dd4d16c28f7180e342eeb0a5602de9d899583485604ed96b8e4d77f2",
+            "source": "slot:location:white_studio"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "a white cyclorama studio",
+          "ko": "흰색 사이클로라마 스튜디오",
+          "phrase_en": "inside a white cyclorama studio",
+          "phrase_ko": "흰색 사이클로라마 스튜디오에서",
+          "tags": [
+            "studio",
+            "commercial"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_a70018ac406559fab5e9ab3615bace4e",
+        "provenance": [
+          {
+            "sha256": "7c520497dd4d16c28f7180e342eeb0a5602de9d899583485604ed96b8e4d77f2",
+            "source": "slot:location:white_studio"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "a white cyclorama studio",
+          "ko": "흰색 사이클로라마 스튜디오",
+          "phrase_en": "inside a white cyclorama studio",
+          "phrase_ko": "흰색 사이클로라마 스튜디오에서",
+          "tags": [
+            "studio",
+            "commercial"
+          ],
+          "application_scope": "Set the scene inside the same already declared cyclorama studio with its existing white cyclorama surface."
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        },
+        "id": "cand_a70018ac406559fab5e9ab3615bace4e",
+        "provenance": [
+          {
+            "sha256": "7c520497dd4d16c28f7180e342eeb0a5602de9d899583485604ed96b8e4d77f2",
+            "source": "slot:location:white_studio"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Set the scene inside the same already declared cyclorama studio with its existing white cyclorama surface.",
+          "reason": "bareplace/whitequalifier exactexisting만사용, inside actualeffect유지. White는 cyc영역만고정하고 주체/전체이미지를 칠하지않음."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "setting",
+                "target": "scene",
+                "property": "setting.location"
+              }
+            ]
+          },
+          "reason": "coarsesetting actualinsideroom에결속; actualwhitecyc는exactexistingguard."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 138,
+          "sha256": "208850f6b7e4bee64ab7865c6d61079a14edcd8654c1f9c18ebc6b12a26f3040"
+        },
+        "candidate_id": "cand_a70018ac406559fab5e9ab3615bace4e",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location.cyclorama_studio",
+            "quote": "a white cyclorama studio",
+            "realization_id": "base",
+            "target": "environment"
+          },
+          {
+            "dimension": "color",
+            "pointer": "/content/en",
+            "property": "color.local.white",
+            "quote": "a white cyclorama studio",
+            "realization_id": "base",
+            "target": "cyclorama"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "흰 사이클로라마 스튜디오.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "노출 과다·광원·상업 촬영은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location.cyclorama_studio",
+                "quote": "a white cyclorama studio",
+                "target": "environment"
+              }
+            ],
+            "rationale": "장소.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "color",
+                "pointer": "/content/en",
+                "property": "color.local.white",
+                "quote": "a white cyclorama studio",
+                "target": "cyclorama"
+              }
+            ],
+            "rationale": "색.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "color"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "b9c04c08c67765191fda9792f110d426327173b13b910be8b42778d643db3408",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 138,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "6ee55e661255c0091a26bdab37358b1829e277759b2707c74056de08abe32eb6"
+      },
+      "before_full_record_sha256": "b9c04c08c67765191fda9792f110d426327173b13b910be8b42778d643db3408",
+      "fiveB_after_full_record_sha256": "b9c04c08c67765191fda9792f110d426327173b13b910be8b42778d643db3408",
+      "proposed_after_full_record_sha256": "78e5898acb980b6807527002f2d701812a68db6dce200b4e0114923d63bcbf91",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_a70018ac406559fab5e9ab3615bace4e": {
+          "candidate_id": "cand_a70018ac406559fab5e9ab3615bace4e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_a70018ac406559fab5e9ab3615bace4e",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 1
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "location",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1,
+          "conditions": {},
+          "reason": "own{}; actualstudioplace."
+        },
+        {
+          "slot_id": "color",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1,
+          "conditions": {},
+          "reason": "white explicitlyownedcyc region predicate only."
+        }
+      ],
+      "conditions_review": "source{} retained. Needroomowner withindependentlyboundedcyc region andwhitepredicate. Backgroundsurfaceaddress notproofofblankframe/overexposure.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "exposure",
+          "reason": "overexposure absent"
+        },
+        {
+          "slot_id": "lighting",
+          "reason": "illuminationrecipe absent"
+        },
+        {
+          "slot_id": "capture_context",
+          "reason": "commercial tagonly"
+        }
+      ],
+      "facts": [
+        {
+          "id": "room_u0",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.identity/v1",
+            "value": "cyclorama studio"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a white cyclorama studio"
+        },
+        {
+          "id": "white_u0",
+          "dimension": "color",
+          "target": "room",
+          "property": "color.local.cyclorama",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.name/v1",
+            "value": "white"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a white cyclorama studio"
+        },
+        {
+          "id": "room_u1",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.identity/v1",
+            "value": "cyclorama studio"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "흰색 사이클로라마 스튜디오"
+        },
+        {
+          "id": "white_u1",
+          "dimension": "color",
+          "target": "room",
+          "property": "color.local.cyclorama",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.name/v1",
+            "value": "white"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "흰색 사이클로라마 스튜디오"
+        },
+        {
+          "id": "room_u2",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.identity/v1",
+            "value": "cyclorama studio"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a white cyclorama studio"
+        },
+        {
+          "id": "white_u2",
+          "dimension": "color",
+          "target": "room",
+          "property": "color.local.cyclorama",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.name/v1",
+            "value": "white"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a white cyclorama studio"
+        },
+        {
+          "id": "inside_u2",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "place.location/v1",
+            "value": "inside the same white cyclorama studio"
+          },
+          "requires": [
+            "room_u0",
+            "white_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "room"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a white cyclorama studio"
+        },
+        {
+          "id": "room_u3",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.identity/v1",
+            "value": "cyclorama studio"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "흰색 사이클로라마 스튜디오에서"
+        },
+        {
+          "id": "white_u3",
+          "dimension": "color",
+          "target": "room",
+          "property": "color.local.cyclorama",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.name/v1",
+            "value": "white"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "흰색 사이클로라마 스튜디오에서"
+        },
+        {
+          "id": "inside_u3",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "place.location/v1",
+            "value": "inside the same white cyclorama studio"
+          },
+          "requires": [
+            "room_u0",
+            "white_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "room"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "흰색 사이클로라마 스튜디오에서"
+        },
+        {
+          "id": "room_u4",
+          "dimension": "setting",
+          "target": "room",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "place.identity/v1",
+            "value": "cyclorama studio"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene inside the same already declared cyclorama studio with its existing white cyclorama surface."
+        },
+        {
+          "id": "white_u4",
+          "dimension": "color",
+          "target": "room",
+          "property": "color.local.cyclorama",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.name/v1",
+            "value": "white"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene inside the same already declared cyclorama studio with its existing white cyclorama surface."
+        },
+        {
+          "id": "inside_u4",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "place.location/v1",
+            "value": "inside the same white cyclorama studio"
+          },
+          "requires": [
+            "room_u0",
+            "white_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "room"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene inside the same already declared cyclorama studio with its existing white cyclorama surface."
+        }
+      ],
+      "roles": {
+        "location": {
+          "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "inside_u2",
+            "inside_u3",
+            "inside_u4"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "color": {
+          "spec_sha256": "4e8c16b3614678775dcc0bac4c7ccf275c0bf6a488d22ca79fec85fc3e82a309",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "white_u0",
+            "white_u1",
+            "white_u2",
+            "white_u3",
+            "white_u4"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "room",
+              "core_role": "background_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "scene",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a white cyclorama studio",
+          "fact_refs": [
+            "room_u0",
+            "white_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "흰색 사이클로라마 스튜디오",
+          "fact_refs": [
+            "room_u1",
+            "white_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "inside a white cyclorama studio",
+          "fact_refs": [
+            "room_u2",
+            "white_u2",
+            "inside_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "흰색 사이클로라마 스튜디오에서",
+          "fact_refs": [
+            "room_u3",
+            "white_u3",
+            "inside_u3"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene inside the same already declared cyclorama studio with its existing white cyclorama surface.",
+          "fact_refs": [
+            "room_u4",
+            "white_u4",
+            "inside_u4"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualroom/cyc-region core and sourceacceptance/formalinput needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2388,
+      "candidate_id": "cand_a9b5756e76c1541493433569c447aa13",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "수평 염소형 동공과 작고 살아있는 뿔. 종단서/동공형상/뿔형태는 있지만 실제bodyowner/continuity와 인간eye-role 적용은 미정이다.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "horizontal caprine pupils and small living horns",
+          "clause": "ownedbiologicalpupils/horns and actualsamebody continuity",
+          "mode": "effect",
+          "operation": "set_value",
+          "target_intent": "actual biologicalsubject and its selectedpupils/horns",
+          "property_intent": "speciescues/eyeform/hornform plusconnectiononlyifexplicit",
+          "typed_value_status": "livinghorns selectsbiologicalform but no namedattachmentjunction/actualbodycarrier; exacthuman/nonhuman scope notselected",
+          "receiver_status": "actualsameownerlinkage unbound",
+          "reason": "Do notaddhorns/newactor orconvertreferencedhuman fromtags. Livinghorns alone does not prove declaredcontinuity/junction. Preserve species footprint pending complete source/KO/owners correction."
+        }
+      ],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "horizontal caprine pupils and small living horns",
+          "ko": "horizontal caprine pupils and small living horns",
+          "tags": [
+            "human",
+            "beastkin",
+            "species",
+            "caprine",
+            "human_animal_boundary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "species"
+          ],
+          "properties": []
+        },
+        "id": "cand_a9b5756e76c1541493433569c447aa13",
+        "provenance": [
+          {
+            "sha256": "c89c55a2e2a356006e0032b137866ea0f8920fe8bd6566df73bccc3513db73e6",
+            "source": "slot:species_marker:caprine_horizontal_pupil_small_horns"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "horizontal caprine pupils and small living horns",
+          "ko": "horizontal caprine pupils and small living horns",
+          "tags": [
+            "human",
+            "beastkin",
+            "species",
+            "caprine",
+            "human_animal_boundary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "species"
+          ],
+          "properties": []
+        },
+        "id": "cand_a9b5756e76c1541493433569c447aa13",
+        "provenance": [
+          {
+            "sha256": "c89c55a2e2a356006e0032b137866ea0f8920fe8bd6566df73bccc3513db73e6",
+            "source": "slot:species_marker:caprine_horizontal_pupil_small_horns"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "horizontal caprine pupils and small living horns",
+          "ko": "horizontal caprine pupils and small living horns",
+          "tags": [
+            "human",
+            "beastkin",
+            "species",
+            "caprine",
+            "human_animal_boundary"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "species"
+          ],
+          "properties": []
+        },
+        "id": "cand_a9b5756e76c1541493433569c447aa13",
+        "provenance": [
+          {
+            "sha256": "c89c55a2e2a356006e0032b137866ea0f8920fe8bd6566df73bccc3513db73e6",
+            "source": "slot:species_marker:caprine_horizontal_pupil_small_horns"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 139,
+          "sha256": "a921a97997678fa07706f69f66af2cbee58043526fbe5471c0b237a74220d403"
+        },
+        "candidate_id": "cand_a9b5756e76c1541493433569c447aa13",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "species",
+            "pointer": "/content/en",
+            "property": "species.cues.caprine_pupils_living_horns",
+            "quote": "horizontal caprine pupils and small living horns",
+            "realization_id": "base",
+            "target": "actor"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "eyes.structure.horizontal",
+            "quote": "horizontal caprine pupils and small living horns",
+            "realization_id": "base",
+            "target": "pupils"
+          },
+          {
+            "dimension": "body_geometry",
+            "pointer": "/content/en",
+            "property": "body.connection.living_horns",
+            "quote": "horizontal caprine pupils and small living horns",
+            "realization_id": "base",
+            "target": "horns"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "수평 염소형 동공과 작고 살아 있는 뿔.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "장식·염소 정체·변신 단계는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "species",
+                "pointer": "/content/en",
+                "property": "species.cues.caprine_pupils_living_horns",
+                "quote": "horizontal caprine pupils and small living horns",
+                "target": "actor"
+              }
+            ],
+            "rationale": "종 단서.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "species_marker"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "eyes.structure.horizontal",
+                "quote": "horizontal caprine pupils and small living horns",
+                "target": "pupils"
+              }
+            ],
+            "rationale": "눈 구조.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "eye_detail"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "body_geometry",
+                "pointer": "/content/en",
+                "property": "body.connection.living_horns",
+                "quote": "horizontal caprine pupils and small living horns",
+                "target": "horns"
+              }
+            ],
+            "rationale": "살아 있는 연결.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "anatomical_connection"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "29b4648198f673fda071606a7e3ad34e7166efceb59f52321c7655d42a543e34",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 139,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "9c1fbcfa32472e289d555061e07917d0c0bd2ca402ffe13f1421f3155d78390d"
+      },
+      "before_full_record_sha256": "29b4648198f673fda071606a7e3ad34e7166efceb59f52321c7655d42a543e34",
+      "fiveB_after_full_record_sha256": "29b4648198f673fda071606a7e3ad34e7166efceb59f52321c7655d42a543e34",
+      "proposed_after_full_record_sha256": "29b4648198f673fda071606a7e3ad34e7166efceb59f52321c7655d42a543e34",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_a9b5756e76c1541493433569c447aa13": {
+          "candidate_id": "cand_a9b5756e76c1541493433569c447aa13",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_a9b5756e76c1541493433569c447aa13",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "species_marker",
+          "weight": 0.8
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "species_marker",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions": {},
+          "reason": "own{}; actualcaprinecue notgoatidentity."
+        },
+        {
+          "slot_id": "body_form",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions": {},
+          "reason": "V2biologicalsmalllivinghorn formexplicit."
+        },
+        {
+          "slot_id": "eye_detail",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "reason": "actualeyegeometryknown buthuman-specificroleapplicability mustnotforcehumanowner."
+        },
+        {
+          "slot_id": "anatomical_connection",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions": {},
+          "reason": "noactualcontinuity/endpoints/physicaljunction selected; old5Bconnection fact notproof."
+        }
+      ],
+      "conditions_review": "source{} retained. Human/beastkintags notownerproof; V2anatomypermission is not permission totransformhuman. Sameactor/pupil/horn addresses provisionaluntilactualcore.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "wearable_accessory",
+          "reason": "livinghornnotdetachableornament"
+        },
+        {
+          "slot_id": "object_structure",
+          "reason": "explicitlivinghornnotgenericartifact"
+        },
+        {
+          "slot_id": "transformation_stage",
+          "reason": "transformation absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "cue_u0",
+          "dimension": "species",
+          "target": "actor",
+          "property": "species.cues",
+          "mode": "effect",
+          "value": {
+            "type": "species.cue/v1",
+            "value": "horizontal caprine pupils and small living horns"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "horizontal caprine pupils and small living horns"
+        },
+        {
+          "id": "pupils_u0",
+          "dimension": "appearance",
+          "target": "pupils",
+          "property": "eyes.structure",
+          "mode": "effect",
+          "value": {
+            "type": "pupil.shape/v1",
+            "value": "horizontal caprine pupils"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "horizontal caprine pupils and small living horns"
+        },
+        {
+          "id": "horns_u0",
+          "dimension": "body_geometry",
+          "target": "horns",
+          "property": "body.horn_form",
+          "mode": "effect",
+          "value": {
+            "type": "horn.form/v1",
+            "value": "small living horns"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "horizontal caprine pupils and small living horns"
+        },
+        {
+          "id": "cue_u1",
+          "dimension": "species",
+          "target": "actor",
+          "property": "species.cues",
+          "mode": "effect",
+          "value": {
+            "type": "species.cue/v1",
+            "value": "horizontal caprine pupils and small living horns"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "horizontal caprine pupils and small living horns"
+        },
+        {
+          "id": "pupils_u1",
+          "dimension": "appearance",
+          "target": "pupils",
+          "property": "eyes.structure",
+          "mode": "effect",
+          "value": {
+            "type": "pupil.shape/v1",
+            "value": "horizontal caprine pupils"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "horizontal caprine pupils and small living horns"
+        },
+        {
+          "id": "horns_u1",
+          "dimension": "body_geometry",
+          "target": "horns",
+          "property": "body.horn_form",
+          "mode": "effect",
+          "value": {
+            "type": "horn.form/v1",
+            "value": "small living horns"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "horizontal caprine pupils and small living horns"
+        }
+      ],
+      "roles": {
+        "species_marker": {
+          "spec_sha256": "915331d34ec1007299542b6c5decfffd2fd5e25ff48ecbee6621c4b5aa4dbfe1",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "cue_u0",
+            "cue_u1"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "body_form": {
+          "spec_sha256": "7744e176caa9909ba1885d983ebfcb6c097267e3e6c6869885c8ce956633a27a",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "horns_u0",
+            "horns_u1"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "actor",
+              "core_role": "main_subject",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "pupils",
+              "core_role": "primary_face",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "horns",
+              "core_role": "main_subject",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "horizontal caprine pupils and small living horns",
+          "fact_refs": [
+            "cue_u0",
+            "pupils_u0",
+            "horns_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "horizontal caprine pupils and small living horns",
+          "fact_refs": [
+            "cue_u1",
+            "pupils_u1",
+            "horns_u1"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "species"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualbiologicalowner/parts and completeappearance/bodygeometry/speciesfootprint plus exactKO correction needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2389,
+      "candidate_id": "cand_c54c7d2b2e2456e7a1ec521383ea2816",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "같은 주체가 중력을 거스르는 규칙과 사진처럼 설득력있게 읽히는 외관을 선택한다. 부유자세/높이/원인/실제촬영증명은 미정이다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "the subject defying gravity while still reading as photographed",
+          "ko": "피사체가 중력을 거스르지만 사진처럼 설득력 있는 장면",
+          "tags": [
+            "surreal",
+            "gravity",
+            "impossible"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "concept"
+          ],
+          "properties": []
+        },
+        "id": "cand_c54c7d2b2e2456e7a1ec521383ea2816",
+        "provenance": [
+          {
+            "sha256": "2966c3b50be5805ab7fac0c779159b35d9ade37c0f495870e8db11fe34bbbcbc",
+            "source": "slot:surreal_concept:gravity_defying_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "the subject defying gravity while still reading as photographed",
+          "ko": "피사체가 중력을 거스르지만 사진처럼 설득력 있는 장면",
+          "tags": [
+            "surreal",
+            "gravity",
+            "impossible"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "concept"
+          ],
+          "properties": []
+        },
+        "id": "cand_c54c7d2b2e2456e7a1ec521383ea2816",
+        "provenance": [
+          {
+            "sha256": "2966c3b50be5805ab7fac0c779159b35d9ade37c0f495870e8db11fe34bbbcbc",
+            "source": "slot:surreal_concept:gravity_defying_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "the subject defying gravity while still reading as photographed",
+          "ko": "피사체가 중력을 거스르지만 사진처럼 설득력 있는 장면",
+          "tags": [
+            "surreal",
+            "gravity",
+            "impossible"
+          ],
+          "application_scope": "Select gravity defiance for the same already declared subject while rendering the scene so it still reads as photographed; do not prescribe an unmentioned floating pose or cause."
+        },
+        "effects": {
+          "dimensions": [
+            "concept",
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "concept",
+              "target": "subject",
+              "property": "concept.surreal"
+            },
+            {
+              "dimension": "style",
+              "target": "image",
+              "property": "aesthetic.rendering"
+            }
+          ]
+        },
+        "id": "cand_c54c7d2b2e2456e7a1ec521383ea2816",
+        "provenance": [
+          {
+            "sha256": "2966c3b50be5805ab7fac0c779159b35d9ade37c0f495870e8db11fe34bbbcbc",
+            "source": "slot:surreal_concept:gravity_defying_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Select gravity defiance for the same already declared subject while rendering the scene so it still reads as photographed; do not prescribe an unmentioned floating pose or cause.",
+          "reason": "actualrule+visualrendering constraints모두effect유지. 기존주체only, stillword로이미frozenstyle이라고추정하여권한회피안함."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "concept"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "concept",
+              "style"
+            ],
+            "properties": [
+              {
+                "dimension": "concept",
+                "target": "subject",
+                "property": "concept.surreal"
+              },
+              {
+                "dimension": "style",
+                "target": "image",
+                "property": "aesthetic.rendering"
+              }
+            ]
+          },
+          "reason": "원concept유지와 explicitphotographed-reading style누락효과노출. 실제세부물리/포즈/전체세계법칙은추가없음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 140,
+          "sha256": "b94fe775fd5b76ad59e53fb2139112a5657cac2ef86a70ea75de58de4f543762"
+        },
+        "candidate_id": "cand_c54c7d2b2e2456e7a1ec521383ea2816",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "concept",
+            "pointer": "/content/en",
+            "property": "concept.surreal.gravity_defiance",
+            "quote": "the subject defying gravity while still reading as photographed",
+            "realization_id": "base",
+            "target": "scene_rule"
+          },
+          {
+            "dimension": "style",
+            "pointer": "/content/en",
+            "property": "aesthetic.photographed_reading",
+            "quote": "the subject defying gravity while still reading as photographed",
+            "realization_id": "base",
+            "target": "image"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "중력을 거스르면서 사진처럼 읽히는 주체.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "구체 부유 자세·원인·물리 실증은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "concept",
+                "pointer": "/content/en",
+                "property": "concept.surreal.gravity_defiance",
+                "quote": "the subject defying gravity while still reading as photographed",
+                "target": "scene_rule"
+              }
+            ],
+            "rationale": "불가능 규칙.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "surreal_concept"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "style",
+                "pointer": "/content/en",
+                "property": "aesthetic.photographed_reading",
+                "quote": "the subject defying gravity while still reading as photographed",
+                "target": "image"
+              }
+            ],
+            "rationale": "표현.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "aesthetic_trend"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "e97826a6cbf0c6b6b1fac5118d81fc5adc36d499ea05d837e15e5882da2f0331",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 140,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "4c7c497a9ea34d66958d849dd1075fd2a5f5e9e38713ac117ca2ebd4add2aeed"
+      },
+      "before_full_record_sha256": "e97826a6cbf0c6b6b1fac5118d81fc5adc36d499ea05d837e15e5882da2f0331",
+      "fiveB_after_full_record_sha256": "e97826a6cbf0c6b6b1fac5118d81fc5adc36d499ea05d837e15e5882da2f0331",
+      "proposed_after_full_record_sha256": "0b21fe9a58c0cae51b65d92f771983d9fb9e576142d846e7299df7cfdcea21da",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_c54c7d2b2e2456e7a1ec521383ea2816": {
+          "candidate_id": "cand_c54c7d2b2e2456e7a1ec521383ea2816",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_c54c7d2b2e2456e7a1ec521383ea2816",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "surreal_concept",
+          "weight": 1.0
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "surreal_concept",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 1,
+          "conditions": {},
+          "reason": "own{}; explicitlocalizedgravityrule, contextualrole actualeffect."
+        },
+        {
+          "slot_id": "aesthetic_trend",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 1,
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife"
+              ]
+            }
+          },
+          "reason": "photo-reading actualaesthetic constraint withown142policy."
+        },
+        {
+          "slot_id": "surreal_physics_detail",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 1,
+          "conditions": {},
+          "reason": "noindependentlocalobservableconsequence/pose beyondruleitself; noautomaticrule-childunion."
+        }
+      ],
+      "conditions_review": "source{} retained. Gravityscope onlysamesubject notallworld. Existingimagephotoreading was not separatelyprovedfrozen so itremainsactualstyleeffect, notinventedpreservationwitness.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "body_pose",
+          "reason": "floatingpose absent"
+        },
+        {
+          "slot_id": "physical_motion",
+          "reason": "motionpath absent"
+        },
+        {
+          "slot_id": "capture_context",
+          "reason": "actualphotographicprovenance absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "subject_u0",
+          "dimension": "subject",
+          "target": "subject",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "declared subject"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "the subject defying gravity while still reading as photographed"
+        },
+        {
+          "id": "defy_u0",
+          "dimension": "concept",
+          "target": "subject",
+          "property": "concept.surreal",
+          "mode": "effect",
+          "value": {
+            "type": "scene.rule/v1",
+            "value": "the same subject defies gravity"
+          },
+          "requires": [
+            "subject_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "the subject defying gravity while still reading as photographed"
+        },
+        {
+          "id": "photo_u0",
+          "dimension": "style",
+          "target": "image",
+          "property": "aesthetic.rendering",
+          "mode": "effect",
+          "value": {
+            "type": "visual.rendering/v1",
+            "value": "reads as photographed"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "the subject defying gravity while still reading as photographed"
+        },
+        {
+          "id": "subject_u1",
+          "dimension": "subject",
+          "target": "subject",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "declared subject"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "피사체가 중력을 거스르지만 사진처럼 설득력 있는 장면"
+        },
+        {
+          "id": "defy_u1",
+          "dimension": "concept",
+          "target": "subject",
+          "property": "concept.surreal",
+          "mode": "effect",
+          "value": {
+            "type": "scene.rule/v1",
+            "value": "the same subject defies gravity"
+          },
+          "requires": [
+            "subject_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "피사체가 중력을 거스르지만 사진처럼 설득력 있는 장면"
+        },
+        {
+          "id": "photo_u1",
+          "dimension": "style",
+          "target": "image",
+          "property": "aesthetic.rendering",
+          "mode": "effect",
+          "value": {
+            "type": "visual.rendering/v1",
+            "value": "reads as photographed"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "피사체가 중력을 거스르지만 사진처럼 설득력 있는 장면"
+        },
+        {
+          "id": "subject_u2",
+          "dimension": "subject",
+          "target": "subject",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "declared subject"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select gravity defiance for the same already declared subject while rendering the scene so it still reads as photographed; do not prescribe an unmentioned floating pose or cause."
+        },
+        {
+          "id": "defy_u2",
+          "dimension": "concept",
+          "target": "subject",
+          "property": "concept.surreal",
+          "mode": "effect",
+          "value": {
+            "type": "scene.rule/v1",
+            "value": "the same subject defies gravity"
+          },
+          "requires": [
+            "subject_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select gravity defiance for the same already declared subject while rendering the scene so it still reads as photographed; do not prescribe an unmentioned floating pose or cause."
+        },
+        {
+          "id": "photo_u2",
+          "dimension": "style",
+          "target": "image",
+          "property": "aesthetic.rendering",
+          "mode": "effect",
+          "value": {
+            "type": "visual.rendering/v1",
+            "value": "reads as photographed"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select gravity defiance for the same already declared subject while rendering the scene so it still reads as photographed; do not prescribe an unmentioned floating pose or cause."
+        }
+      ],
+      "roles": {
+        "surreal_concept": {
+          "spec_sha256": "809eb741beda3e6ad62e65c211c310019fc68e4f3728cb60721ac8edf707a624",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "defy_u0",
+            "defy_u1",
+            "defy_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "aesthetic_trend": {
+          "spec_sha256": "030ffe8a691928e6911269c2ea11352443b804e25a7fff57de37cd35b41744ff",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "photo_u0",
+            "photo_u1",
+            "photo_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "subject",
+              "core_role": "main_subject",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "image",
+              "core_role": "image",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "the subject defying gravity while still reading as photographed",
+          "fact_refs": [
+            "subject_u0",
+            "defy_u0",
+            "photo_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "피사체가 중력을 거스르지만 사진처럼 설득력 있는 장면",
+          "fact_refs": [
+            "subject_u1",
+            "defy_u1",
+            "photo_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select gravity defiance for the same already declared subject while rendering the scene so it still reads as photographed; do not prescribe an unmentioned floating pose or cause.",
+          "fact_refs": [
+            "subject_u2",
+            "defy_u2",
+            "photo_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "concept",
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "concept",
+              "target": "subject",
+              "property": "concept.surreal"
+            },
+            {
+              "dimension": "style",
+              "target": "image",
+              "property": "aesthetic.rendering"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualsubject/core, localizedrule and addedstylepermission/sourceacceptance/formalinput needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    }
+  ],
+  "registration_global_git_network_model_calls": 0
+}

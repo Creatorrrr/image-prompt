@@ -1,0 +1,4406 @@
+{
+  "schema": "photo-native-manual-source-fact-draft/v1",
+  "task": "/root/review_09250_10500",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "assigned_range": [
+    2250,
+    3250
+  ],
+  "draft_range": [
+    2316,
+    2324
+  ],
+  "management_batch_complete": false,
+  "actual_whole_original_and5B_after_read_count": 8,
+  "actual_whole_after_reread_count": 0,
+  "source_packet": {
+    "path": "authored/native_09250_02250_03250.02300_02350.packet.json",
+    "raw_sha256": "9ed5a0d686ee39d6b571d8d8e8022304254570bc6d6d66e77788160b02132856",
+    "source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b"
+  },
+  "catalog": {
+    "path": "CATALOG-FINAL-142-V2.json",
+    "canonical_sha256": "0d7cab7b4add7279b0faa629bb5df72829da0c756adc6db21dcd7c09d56b971f"
+  },
+  "literal": {
+    "path": "authored/native_09250_02250_03250.02316_02324.literals.py",
+    "raw_sha256": "77659da3d54e7f068bd469bfab930e10926cf84e3015ef506e0d7caa8aea8d19"
+  },
+  "mechanical_clause_expansion_only": true,
+  "automatic_semantic_classification": false,
+  "records": [
+    {
+      "ordinal": 2316,
+      "candidate_id": "cand_bf0366e481de5aa99286407c9b02882e",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "선언된 절차에서 경로 분류 단계를 선택한다. facet의 인계/transfer를 본문 행동으로 합치지 않는다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "route sorting procedure",
+          "facets": {
+            "event_phase": [
+              "active_process"
+            ],
+            "process_stage": [
+              "transfer"
+            ],
+            "relation_type": [
+              "handoff"
+            ]
+          },
+          "ko": "route sorting procedure",
+          "tags": [
+            "human",
+            "procedure",
+            "logistics"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_bf0366e481de5aa99286407c9b02882e",
+        "provenance": [
+          {
+            "sha256": "4e328538aec13553650c64f9050f42da00da23231a1cb2a8ddf1f14110d0dd8a",
+            "source": "slot:procedure_step:route_sorting"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "route sorting procedure",
+          "facets": {
+            "event_phase": [
+              "active_process"
+            ],
+            "process_stage": [
+              "transfer"
+            ],
+            "relation_type": [
+              "handoff"
+            ]
+          },
+          "ko": "route sorting procedure",
+          "tags": [
+            "human",
+            "procedure",
+            "logistics"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_bf0366e481de5aa99286407c9b02882e",
+        "provenance": [
+          {
+            "sha256": "4e328538aec13553650c64f9050f42da00da23231a1cb2a8ddf1f14110d0dd8a",
+            "source": "slot:procedure_step:route_sorting"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "route sorting procedure",
+          "facets": {
+            "event_phase": [
+              "active_process"
+            ],
+            "process_stage": [
+              "transfer"
+            ],
+            "relation_type": [
+              "handoff"
+            ]
+          },
+          "ko": "경로 분류 절차",
+          "tags": [
+            "human",
+            "procedure",
+            "logistics"
+          ],
+          "application_scope": "Select the route-sorting step in the same already declared routing procedure."
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "process",
+              "property": "procedure.step"
+            }
+          ]
+        },
+        "id": "cand_bf0366e481de5aa99286407c9b02882e",
+        "provenance": [
+          {
+            "sha256": "4e328538aec13553650c64f9050f42da00da23231a1cb2a8ddf1f14110d0dd8a",
+            "source": "slot:procedure_step:route_sorting"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "route sorting procedure",
+          "after": "경로 분류 절차",
+          "reason": "EN actualprocedure만 번역; 배송물/인계/장비 없음."
+        },
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Select the route-sorting step in the same already declared routing procedure.",
+          "reason": "명시 route sorting procedure를 기존 절차의 actual selectedstep로 한정; 작업자/대상물 발명 안 함."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "target": "process",
+                "property": "procedure.step"
+              }
+            ]
+          },
+          "reason": "원 action을 actual process-step 선택에 결속. contextualrole가 effect를 context로 바꾸지 않는다."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 67,
+          "sha256": "ae95341d22e11d8adcc299117dfae1491f87b16af6e9cac40e6f2eaa2a8afe0d"
+        },
+        "candidate_id": "cand_bf0366e481de5aa99286407c9b02882e",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "procedure.step.route_sorting",
+            "quote": "route sorting procedure",
+            "realization_id": "base",
+            "target": "routing_process"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "경로 분류 절차.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "인계 행동·작업자·운송 수단은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/en",
+                "property": "procedure.step.route_sorting",
+                "quote": "route sorting procedure",
+                "target": "routing_process"
+              }
+            ],
+            "rationale": "절차.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "procedure_step"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "563febdadad8f7850eceb1e8f275d3797cf85e9d5afc4d3ce1aa728d8f2068f3",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 67,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "e05aea5d437f5ed551b17d1c1a0df1dd2fd94267325f20e214c0c5b945216eb1"
+      },
+      "before_full_record_sha256": "563febdadad8f7850eceb1e8f275d3797cf85e9d5afc4d3ce1aa728d8f2068f3",
+      "fiveB_after_full_record_sha256": "563febdadad8f7850eceb1e8f275d3797cf85e9d5afc4d3ce1aa728d8f2068f3",
+      "proposed_after_full_record_sha256": "11ed8220d6996402e71fb5bce5b2341e4e285867054af7521dd276125280a3ba",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_bf0366e481de5aa99286407c9b02882e": {
+          "candidate_id": "cand_bf0366e481de5aa99286407c9b02882e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_bf0366e481de5aa99286407c9b02882e",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "procedure_step",
+          "weight": 0.8
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "procedure_step",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 0.8,
+          "conditions": {},
+          "reason": "own{}; statedprocedure route-sortingstep."
+        }
+      ],
+      "conditions_review": "source{} retained. human/logistics tags and transfer/handoff facets do notsupplyhuman/objects/actions. Existingprocess independentlydeclared needed.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "relational_action",
+          "reason": "인계는 facet만"
+        },
+        {
+          "slot_id": "subject",
+          "reason": "작업자 없음"
+        },
+        {
+          "slot_id": "prop_state",
+          "reason": "분류물/배열 상태 미정"
+        }
+      ],
+      "facts": [
+        {
+          "id": "sort_u0",
+          "dimension": "action",
+          "target": "process",
+          "property": "procedure.step",
+          "mode": "effect",
+          "value": {
+            "type": "procedure.step/v1",
+            "value": "route sorting"
+          },
+          "requires": [
+            "process_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "route sorting procedure"
+        },
+        {
+          "id": "sort_u1",
+          "dimension": "action",
+          "target": "process",
+          "property": "procedure.step",
+          "mode": "effect",
+          "value": {
+            "type": "procedure.step/v1",
+            "value": "route sorting"
+          },
+          "requires": [
+            "process_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "경로 분류 절차"
+        },
+        {
+          "id": "process_u2",
+          "dimension": "action",
+          "target": "process",
+          "property": "procedure.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "procedure.presence/v1",
+            "value": "declared routing procedure"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select the route-sorting step in the same already declared routing procedure."
+        },
+        {
+          "id": "sort_u2",
+          "dimension": "action",
+          "target": "process",
+          "property": "procedure.step",
+          "mode": "effect",
+          "value": {
+            "type": "procedure.step/v1",
+            "value": "route sorting"
+          },
+          "requires": [
+            "process_u2"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select the route-sorting step in the same already declared routing procedure."
+        }
+      ],
+      "roles": {
+        "procedure_step": {
+          "spec_sha256": "00e36ae8362999305b68ec951df8781ddd10cc875b9eff22bbee7c548c4c69b2",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "sort_u0",
+            "sort_u1",
+            "sort_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "process",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "route sorting procedure",
+          "fact_refs": [
+            "sort_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "경로 분류 절차",
+          "fact_refs": [
+            "sort_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select the route-sorting step in the same already declared routing procedure.",
+          "fact_refs": [
+            "process_u2",
+            "sort_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "process",
+              "property": "procedure.step"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actual declaredprocedure exactscope and selectedstep 의미 root수용/정식input 필요."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2317,
+      "candidate_id": "cand_cab07908b2d35a9c9f4d7c43d413a0ea",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "종이 부적과 sealed라는 서술. 봉인이 물리적 밀봉인지 부적의 상징/마법적 의미인지 미정이므로 물리작동 상태를 확정하지 않는다.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "a sealed talisman paper charm",
+          "clause": "sealed talisman",
+          "mode": "effect or exact declared-state prerequisite pending source intent",
+          "operation": "set_value",
+          "target_intent": "same paper charm",
+          "property_intent": "physical sealed state versus symbolic sealing context",
+          "typed_value_status": "unselected physical closure, seal impression or declared magical sealing sense",
+          "receiver_status": "no container, attachment, inscription or supernatural endpoint declared",
+          "reason": "Do not choose envelope closure or functioning magic from sealed. Originalempty effects do notprove no-op; preserve record and mark incomplete until source intent resolves."
+        }
+      ],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "talisman paper",
+            "부적"
+          ],
+          "en": "a sealed talisman paper charm",
+          "keywords": [
+            "talisman",
+            "paper charm",
+            "seal"
+          ],
+          "ko": "봉인 부적 종이",
+          "tags": [
+            "human",
+            "prop",
+            "folk",
+            "talisman"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_cab07908b2d35a9c9f4d7c43d413a0ea",
+        "provenance": [
+          {
+            "sha256": "3aad04d809913dd189bf7f49aa91c9acb0dc440584beae49a32139d0e4fbc270",
+            "source": "slot:prop:sealed_talisman_paper_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "talisman paper",
+            "부적"
+          ],
+          "en": "a sealed talisman paper charm",
+          "keywords": [
+            "talisman",
+            "paper charm",
+            "seal"
+          ],
+          "ko": "봉인 부적 종이",
+          "tags": [
+            "human",
+            "prop",
+            "folk",
+            "talisman"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_cab07908b2d35a9c9f4d7c43d413a0ea",
+        "provenance": [
+          {
+            "sha256": "3aad04d809913dd189bf7f49aa91c9acb0dc440584beae49a32139d0e4fbc270",
+            "source": "slot:prop:sealed_talisman_paper_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "talisman paper",
+            "부적"
+          ],
+          "en": "a sealed talisman paper charm",
+          "keywords": [
+            "talisman",
+            "paper charm",
+            "seal"
+          ],
+          "ko": "봉인 부적 종이",
+          "tags": [
+            "human",
+            "prop",
+            "folk",
+            "talisman"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_cab07908b2d35a9c9f4d7c43d413a0ea",
+        "provenance": [
+          {
+            "sha256": "3aad04d809913dd189bf7f49aa91c9acb0dc440584beae49a32139d0e4fbc270",
+            "source": "slot:prop:sealed_talisman_paper_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 68,
+          "sha256": "ab4cc226086ca283e4d376977ecf66d5636fd9830c9b6f022f93a7a4a4b94181"
+        },
+        "candidate_id": "cand_cab07908b2d35a9c9f4d7c43d413a0ea",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "props.type.paper_charm",
+            "quote": "a sealed talisman paper charm",
+            "realization_id": "base",
+            "target": "talisman"
+          },
+          {
+            "dimension": "role",
+            "pointer": "/content/en",
+            "property": "props.state.sealed",
+            "quote": "a sealed talisman paper charm",
+            "realization_id": "base",
+            "target": "talisman"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.material.paper",
+            "quote": "a sealed talisman paper charm",
+            "realization_id": "base",
+            "target": "talisman"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "봉인된 종이 부적 소품.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "마법 작동·가시 글자·착용·종교는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "props.type.paper_charm",
+                "quote": "a sealed talisman paper charm",
+                "target": "talisman"
+              }
+            ],
+            "rationale": "물건.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "role",
+                "pointer": "/content/en",
+                "property": "props.state.sealed",
+                "quote": "a sealed talisman paper charm",
+                "target": "talisman"
+              }
+            ],
+            "rationale": "상태.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop_state"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.material.paper",
+                "quote": "a sealed talisman paper charm",
+                "target": "talisman"
+              }
+            ],
+            "rationale": "재료.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "9a8736d2961b81777cff5c1b9edb0995c98e9f880c108d412c3b1b95ae8a0aac",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 68,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "8c1e3baf5883d61d45292223ee9057cf2773c0d7dd045b4a39c0850cdc76eddd"
+      },
+      "before_full_record_sha256": "9a8736d2961b81777cff5c1b9edb0995c98e9f880c108d412c3b1b95ae8a0aac",
+      "fiveB_after_full_record_sha256": "9a8736d2961b81777cff5c1b9edb0995c98e9f880c108d412c3b1b95ae8a0aac",
+      "proposed_after_full_record_sha256": "9a8736d2961b81777cff5c1b9edb0995c98e9f880c108d412c3b1b95ae8a0aac",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_cab07908b2d35a9c9f4d7c43d413a0ea": {
+          "candidate_id": "cand_cab07908b2d35a9c9f4d7c43d413a0ea",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_cab07908b2d35a9c9f4d7c43d413a0ea",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 0.82
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "prop",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.82,
+          "conditions": {},
+          "reason": "own{}; literalcharm sceneobject."
+        },
+        {
+          "slot_id": "surface_material",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.82,
+          "conditions": {
+            "subject_applicability": {
+              "allow_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "architecture",
+                "subculture_practice",
+                "worldbuilding_system",
+                "cjk_narrative_world"
+              ],
+              "allow_domains_override_subject_categories": true,
+              "subject_categories": [
+                "object",
+                "food",
+                "plant",
+                "environment",
+                "sign",
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "reason": "paper explicitlydeclared, 142materialpolicy only."
+        },
+        {
+          "slot_id": "prop_state",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.82,
+          "conditions": {},
+          "reason": "sealed actualscope unselected; old5Bstate notproof."
+        }
+      ],
+      "conditions_review": "source human retained. Aliases/keywords are discovery only; paper/charm evidence from EN/KO. No wornowner, sealtext or magic power presumed.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "visible_text",
+          "reason": "inscription absent"
+        },
+        {
+          "slot_id": "wearable_accessory",
+          "reason": "currentwearer absent"
+        },
+        {
+          "slot_id": "surreal_physics_detail",
+          "reason": "actualimpossibleoperation absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "charm_u0",
+          "dimension": "subject",
+          "target": "charm",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "talisman paper charm"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a sealed talisman paper charm"
+        },
+        {
+          "id": "paper_u0",
+          "dimension": "material",
+          "target": "charm",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "material.declared/v1",
+            "value": "paper"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a sealed talisman paper charm"
+        },
+        {
+          "id": "charm_u1",
+          "dimension": "subject",
+          "target": "charm",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "talisman paper charm"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "봉인 부적 종이"
+        },
+        {
+          "id": "paper_u1",
+          "dimension": "material",
+          "target": "charm",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "material.declared/v1",
+            "value": "paper"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "봉인 부적 종이"
+        }
+      ],
+      "roles": {
+        "prop": {
+          "spec_sha256": "9ce14518a99e00e8597f430f13e7246e86fbd697fa0ccf11d72a0f512d0f9c43",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "charm_u0",
+            "charm_u1"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        },
+        "surface_material": {
+          "spec_sha256": "10e1ae79963383225dc3e3e86d7de760e6e8c7472b6d8c3a1b366c439b1865e8",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "paper_u0",
+            "paper_u1"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "charm",
+              "core_role": "primary_prop",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a sealed talisman paper charm",
+          "fact_refs": [
+            "charm_u0",
+            "paper_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "봉인 부적 종이",
+          "fact_refs": [
+            "charm_u1",
+            "paper_u1"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "sealed exactmeaning/application/owner required; no nativecompleteinventory."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2318,
+      "candidate_id": "cand_de8915a714895e67b56a5c2ac9b322e5",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "같은 눈에 비어 있고 평온하며 해리된 듯한 응시 외관을 선택한다. 진단/사적 평온/카메라 초점이탈을 주장하지 않는다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "a dissociated blank calm stare",
+          "en": "a dissociated blank calm stare",
+          "ko": "초점이 살짝 풀린 해리된 평온",
+          "tags": [
+            "human",
+            "expression",
+            "uncanny"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_de8915a714895e67b56a5c2ac9b322e5",
+        "provenance": [
+          {
+            "sha256": "c59f9400eebdbf822bc9dbed2add52166f7abc6cd1e30c8c3c7b681fb8ced612",
+            "source": "slot:expression:dissociated_blank_calm"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "a dissociated blank calm stare",
+          "en": "a dissociated blank calm stare",
+          "ko": "해리된 듯 비고 평온한 응시",
+          "tags": [
+            "human",
+            "expression",
+            "uncanny"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_de8915a714895e67b56a5c2ac9b322e5",
+        "provenance": [
+          {
+            "sha256": "c59f9400eebdbf822bc9dbed2add52166f7abc6cd1e30c8c3c7b681fb8ced612",
+            "source": "slot:expression:dissociated_blank_calm"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "a dissociated blank calm stare",
+          "en": "a dissociated blank calm stare",
+          "ko": "해리된 듯 비고 평온한 응시",
+          "tags": [
+            "human",
+            "expression",
+            "uncanny"
+          ],
+          "application_scope": "Select a dissociated-looking blank calm stare in the same already declared actor’s eyes, as an expression rather than a clinical diagnosis or optical defocus."
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": [
+            {
+              "dimension": "expression",
+              "target": "eyes",
+              "property": "eyes.expression"
+            }
+          ]
+        },
+        "id": "cand_de8915a714895e67b56a5c2ac9b322e5",
+        "provenance": [
+          {
+            "sha256": "c59f9400eebdbf822bc9dbed2add52166f7abc6cd1e30c8c3c7b681fb8ced612",
+            "source": "slot:expression:dissociated_blank_calm"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Select a dissociated-looking blank calm stare in the same already declared actor’s eyes, as an expression rather than a clinical diagnosis or optical defocus.",
+          "reason": "5B wholeKO修正 유지. actualexpression 선택은 effect로 유지하고 해리 look을 clinicalstate/optics로 확대 안 함."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "expression"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "expression"
+            ],
+            "properties": [
+              {
+                "dimension": "expression",
+                "target": "eyes",
+                "property": "eyes.expression"
+              }
+            ]
+          },
+          "reason": "coarse expression을 본문 actualownedeyeappearance에 결속."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 69,
+          "sha256": "09589793b2d20bbea657568ab25701d12ed6504eea780d5e71a13b08172987b5"
+        },
+        "candidate_id": "cand_de8915a714895e67b56a5c2ac9b322e5",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [
+          {
+            "after": "해리된 듯 비고 평온한 응시",
+            "before": "초점이 살짝 풀린 해리된 평온",
+            "pointer": "/content/ko",
+            "reason": "초점 광학을 추가하지 않고 표정과 응시를 보존."
+          }
+        ],
+        "facts": [
+          {
+            "dimension": "expression",
+            "pointer": "/content/en",
+            "property": "eyes.expression.blank_calm_stare",
+            "quote": "a dissociated blank calm stare",
+            "realization_id": "base",
+            "target": "actor_eyes"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "해리된 듯 비고 평온한 응시 표정.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "임상 해리·초점 이탈·실제 마음 상태는 확정하지 않는다."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "expression",
+                "pointer": "/content/en",
+                "property": "eyes.expression.blank_calm_stare",
+                "quote": "a dissociated blank calm stare",
+                "target": "actor_eyes"
+              }
+            ],
+            "rationale": "표정.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "expression"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "d0c063b1a4c7ba5447db06c0dd83bc61ef122377d549217c4423da415bfec10b",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 69,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "e5cb5d5a403d95e66652c21af101b3ab04960288bbbdebe5d8f87e3e128f84bb"
+      },
+      "before_full_record_sha256": "d0c063b1a4c7ba5447db06c0dd83bc61ef122377d549217c4423da415bfec10b",
+      "fiveB_after_full_record_sha256": "c6b5f1bd258e27677a11642b0ca430a41bca5a8cc472ff02246e463a74f0e7ef",
+      "proposed_after_full_record_sha256": "193ce847bfcfb9dca93c36fe4724a10363075247600b034a5441264284ecb0e8",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_de8915a714895e67b56a5c2ac9b322e5": {
+          "candidate_id": "cand_de8915a714895e67b56a5c2ac9b322e5",
+          "conditions": {
+            "subject_applicability": {
+              "subject_categories": [
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "id": "bind_de8915a714895e67b56a5c2ac9b322e5",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "expression",
+          "weight": 0.58
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "expression",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.58,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_de8915a714895e67b56a5c2ac9b322e5",
+          "reason": "own human/animal은 expression전용, sourcehumanintrinsic 그대로.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "subject_categories": [
+                "human",
+                "animal"
+              ]
+            }
+          }
+        }
+      ],
+      "conditions_review": "sourcehuman retained. Original KO 초점이살짝풀린→5B 해리된듯비고평온한응시 entireafterread; no return to ungroundeddefocus.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "focus",
+          "reason": "opticaldefocus absent"
+        },
+        {
+          "slot_id": "gaze_direction",
+          "reason": "irisframeorientation absent"
+        },
+        {
+          "slot_id": "character_intent",
+          "reason": "privategoal/diagnosis absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "stare_u0",
+          "dimension": "expression",
+          "target": "eyes",
+          "property": "eyes.expression",
+          "mode": "effect",
+          "value": {
+            "type": "eyes.expression/v1",
+            "value": "dissociated-looking blank calm stare"
+          },
+          "requires": [
+            "eyes_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a dissociated blank calm stare"
+        },
+        {
+          "id": "stare_u1",
+          "dimension": "expression",
+          "target": "eyes",
+          "property": "eyes.expression",
+          "mode": "effect",
+          "value": {
+            "type": "eyes.expression/v1",
+            "value": "dissociated-looking blank calm stare"
+          },
+          "requires": [
+            "eyes_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "해리된 듯 비고 평온한 응시"
+        },
+        {
+          "id": "stare_u2",
+          "dimension": "expression",
+          "target": "eyes",
+          "property": "eyes.expression",
+          "mode": "effect",
+          "value": {
+            "type": "eyes.expression/v1",
+            "value": "dissociated-looking blank calm stare"
+          },
+          "requires": [
+            "eyes_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "a dissociated blank calm stare"
+        },
+        {
+          "id": "eyes_u3",
+          "dimension": "body_geometry",
+          "target": "eyes",
+          "property": "eyes.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "eyes.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select a dissociated-looking blank calm stare in the same already declared actor’s eyes, as an expression rather than a clinical diagnosis or optical defocus."
+        },
+        {
+          "id": "stare_u3",
+          "dimension": "expression",
+          "target": "eyes",
+          "property": "eyes.expression",
+          "mode": "effect",
+          "value": {
+            "type": "eyes.expression/v1",
+            "value": "dissociated-looking blank calm stare"
+          },
+          "requires": [
+            "eyes_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select a dissociated-looking blank calm stare in the same already declared actor’s eyes, as an expression rather than a clinical diagnosis or optical defocus."
+        }
+      ],
+      "roles": {
+        "expression": {
+          "spec_sha256": "c6522d8adb08e6c13ce706a7b3f38471ab9c16ac75390507b745de8109f429ff",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "stare_u0",
+            "stare_u1",
+            "stare_u2",
+            "stare_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "eyes",
+              "core_role": "primary_face",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a dissociated blank calm stare",
+          "fact_refs": [
+            "stare_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "해리된 듯 비고 평온한 응시",
+          "fact_refs": [
+            "stare_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "a dissociated blank calm stare",
+          "fact_refs": [
+            "stare_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select a dissociated-looking blank calm stare in the same already declared actor’s eyes, as an expression rather than a clinical diagnosis or optical defocus.",
+          "fact_refs": [
+            "eyes_u3",
+            "stare_u3"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": [
+            {
+              "dimension": "expression",
+              "target": "eyes",
+              "property": "eyes.expression"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualsameeyespresence and expression correction acceptance/formalinput required."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2319,
+      "candidate_id": "cand_e895fb192b3a5298b234fe42d5c0179f",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "같은 기록 카메라를 같은 테이블 가장자리에 숨겨 배치한 촬영 구성. 실제 불법/비동의/관측방향/높이는 미정이다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "from a hidden camera at the edge of a table",
+          "facets": {
+            "camera_angle": [
+              "hidden_observer"
+            ]
+          },
+          "ko": "테이블 가장자리 숨은 카메라 시점",
+          "tags": [
+            "interior",
+            "surveillance"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_e895fb192b3a5298b234fe42d5c0179f",
+        "provenance": [
+          {
+            "sha256": "e1f1b3eac8451f091eecc30aacbba6be238383850d90f72692ddfd391ed08943",
+            "source": "slot:camera_direction:from_table_edge_hidden_camera"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "from a hidden camera at the edge of a table",
+          "facets": {
+            "camera_angle": [
+              "hidden_observer"
+            ]
+          },
+          "ko": "테이블 가장자리 숨은 카메라 시점",
+          "tags": [
+            "interior",
+            "surveillance"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_e895fb192b3a5298b234fe42d5c0179f",
+        "provenance": [
+          {
+            "sha256": "e1f1b3eac8451f091eecc30aacbba6be238383850d90f72692ddfd391ed08943",
+            "source": "slot:camera_direction:from_table_edge_hidden_camera"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "from a hidden camera at the edge of a table",
+          "facets": {
+            "camera_angle": [
+              "hidden_observer"
+            ]
+          },
+          "ko": "테이블 가장자리 숨은 카메라 시점",
+          "tags": [
+            "interior",
+            "surveillance"
+          ],
+          "application_scope": "Use the same already declared recording camera and table; conceal that camera at that table’s edge for the stated capture viewpoint."
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "target": "camera",
+              "property": "capture.configuration"
+            }
+          ]
+        },
+        "id": "cand_e895fb192b3a5298b234fe42d5c0179f",
+        "provenance": [
+          {
+            "sha256": "e1f1b3eac8451f091eecc30aacbba6be238383850d90f72692ddfd391ed08943",
+            "source": "slot:camera_direction:from_table_edge_hidden_camera"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Use the same already declared recording camera and table; conceal that camera at that table’s edge for the stated capture viewpoint.",
+          "reason": "actualedge/concealment configuration effect유지; camera/table existingonly."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "camera"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "camera"
+            ],
+            "properties": [
+              {
+                "dimension": "camera",
+                "target": "camera",
+                "property": "capture.configuration"
+              }
+            ]
+          },
+          "reason": "coarsecamera를 actualcapturearrangement에 결속; unspecifiedviewaxis는 발명하지 않는다."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 70,
+          "sha256": "af1283968bf2284c0f12235de232c3ba6508ebb947bbed934eccd0e346501bad"
+        },
+        "candidate_id": "cand_e895fb192b3a5298b234fe42d5c0179f",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "capture.configuration.hidden_at_table_edge",
+            "quote": "from a hidden camera at the edge of a table",
+            "realization_id": "base",
+            "target": "camera"
+          },
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "capture.context.hidden_observation",
+            "quote": "from a hidden camera at the edge of a table",
+            "realization_id": "base",
+            "target": "capture"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "테이블 가장자리 숨긴 카메라의 관찰 구성.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "카메라 방향·높이·실제 불법 감시는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "capture.configuration.hidden_at_table_edge",
+                "quote": "from a hidden camera at the edge of a table",
+                "target": "camera"
+              }
+            ],
+            "rationale": "장치 배치.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "capture_configuration"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "capture.context.hidden_observation",
+                "quote": "from a hidden camera at the edge of a table",
+                "target": "capture"
+              }
+            ],
+            "rationale": "관찰 맥락.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "capture_context"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "b42fa2f8b72b60b62ab414967186fda1c72d7c2d126fab0ca4c1c04803e6f25a",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 70,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "21d8bf89f7ecbbfc801bf4817fb9b498f7c2b573de8f4d29f8362d26251782a8"
+      },
+      "before_full_record_sha256": "b42fa2f8b72b60b62ab414967186fda1c72d7c2d126fab0ca4c1c04803e6f25a",
+      "fiveB_after_full_record_sha256": "b42fa2f8b72b60b62ab414967186fda1c72d7c2d126fab0ca4c1c04803e6f25a",
+      "proposed_after_full_record_sha256": "b502e8bf644baa499c4f203c76d9669c40db22e97081b95c01e8b96bef7b800e",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_e895fb192b3a5298b234fe42d5c0179f": {
+          "candidate_id": "cand_e895fb192b3a5298b234fe42d5c0179f",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_e895fb192b3a5298b234fe42d5c0179f",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "camera_direction",
+          "weight": 0.8
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "camera_direction",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions_action": "retire_old_presentation_only",
+          "old_binding_id": "bind_e895fb192b3a5298b234fe42d5c0179f",
+          "reason": "viewingaxis 값없음; hiddenplacement는 configuration."
+        },
+        {
+          "slot_id": "capture_configuration",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions": {},
+          "reason": "actualdevice-table arrangement literal."
+        },
+        {
+          "slot_id": "capture_context",
+          "role": "pending",
+          "semantic_role": "contextual",
+          "weight": 0.8,
+          "conditions_intent": "use exact V2 capture_context policy after fullspec reread and formalinput; no copied blanket conditions",
+          "reason": "literal hidden-camera contextknown; full roleconditions not reauthored in this item, so pendingedge."
+        }
+      ],
+      "conditions_review": "source{} and oldbinding{} retained. camera_angle facet isnotadditionalpositive axis. Real hiddenstatus is effect notalreadyhidden prerequisite; no permission to create newcamera/table.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "camera_height",
+          "reason": "tableedge does not select cameraheight"
+        },
+        {
+          "slot_id": "camera_direction",
+          "reason": "actualaxis absent"
+        },
+        {
+          "slot_id": "camera_type",
+          "reason": "secretcamera model absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "camera_u0",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "camera.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "camera.presence/v1",
+            "value": "recording camera"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "from a hidden camera at the edge of a table"
+        },
+        {
+          "id": "table_u0",
+          "dimension": "subject",
+          "target": "table",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "table"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "from a hidden camera at the edge of a table"
+        },
+        {
+          "id": "config_u0",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "capture.configuration",
+          "mode": "effect",
+          "value": {
+            "type": "capture.configuration/v1",
+            "value": "hidden at the edge of the same table"
+          },
+          "requires": [
+            "camera_u0",
+            "table_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "table"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "from a hidden camera at the edge of a table"
+        },
+        {
+          "id": "context_u0",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "capture.context",
+          "mode": "context",
+          "value": {
+            "type": "capture.context/v1",
+            "value": "capture from a hidden camera"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "from a hidden camera at the edge of a table"
+        },
+        {
+          "id": "camera_u1",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "camera.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "camera.presence/v1",
+            "value": "recording camera"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "테이블 가장자리 숨은 카메라 시점"
+        },
+        {
+          "id": "table_u1",
+          "dimension": "subject",
+          "target": "table",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "table"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "테이블 가장자리 숨은 카메라 시점"
+        },
+        {
+          "id": "config_u1",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "capture.configuration",
+          "mode": "effect",
+          "value": {
+            "type": "capture.configuration/v1",
+            "value": "hidden at the edge of the same table"
+          },
+          "requires": [
+            "camera_u0",
+            "table_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "table"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "테이블 가장자리 숨은 카메라 시점"
+        },
+        {
+          "id": "context_u1",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "capture.context",
+          "mode": "context",
+          "value": {
+            "type": "capture.context/v1",
+            "value": "capture from a hidden camera"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "테이블 가장자리 숨은 카메라 시점"
+        },
+        {
+          "id": "camera_u2",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "camera.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "camera.presence/v1",
+            "value": "recording camera"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared recording camera and table; conceal that camera at that table’s edge for the stated capture viewpoint."
+        },
+        {
+          "id": "table_u2",
+          "dimension": "subject",
+          "target": "table",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "prop.kind/v1",
+            "value": "table"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared recording camera and table; conceal that camera at that table’s edge for the stated capture viewpoint."
+        },
+        {
+          "id": "config_u2",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "capture.configuration",
+          "mode": "effect",
+          "value": {
+            "type": "capture.configuration/v1",
+            "value": "hidden at the edge of the same table"
+          },
+          "requires": [
+            "camera_u0",
+            "table_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "table"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared recording camera and table; conceal that camera at that table’s edge for the stated capture viewpoint."
+        },
+        {
+          "id": "context_u2",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "capture.context",
+          "mode": "context",
+          "value": {
+            "type": "capture.context/v1",
+            "value": "capture from a hidden camera"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared recording camera and table; conceal that camera at that table’s edge for the stated capture viewpoint."
+        }
+      ],
+      "roles": {
+        "capture_configuration": {
+          "spec_sha256": "4c667ad7eef001fc3cead47f3be7c4aed2789aa5994b787e7f3a643f133353b3",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "config_u0",
+            "config_u1",
+            "config_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "capture_context": {
+          "spec_sha256": "016724066faa94fa913c2a964ec74b9abecc2893b77751a6d1180d6505470d4a",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "context_u0",
+            "context_u1",
+            "context_u2"
+          ],
+          "support_modes": [
+            "context"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "camera",
+              "core_role": "recording_camera",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "table",
+              "core_role": "primary_prop",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "from a hidden camera at the edge of a table",
+          "fact_refs": [
+            "camera_u0",
+            "table_u0",
+            "config_u0",
+            "context_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "테이블 가장자리 숨은 카메라 시점",
+          "fact_refs": [
+            "camera_u1",
+            "table_u1",
+            "config_u1",
+            "context_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared recording camera and table; conceal that camera at that table’s edge for the stated capture viewpoint.",
+          "fact_refs": [
+            "camera_u2",
+            "table_u2",
+            "config_u2",
+            "context_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": [
+            {
+              "dimension": "camera",
+              "target": "camera",
+              "property": "capture.configuration"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actual camera/table owner and full capture_context rolepolicy final rebind needed. Sourcecorrected wholeafterreread required."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2320,
+      "candidate_id": "cand_f302fb5230c859cc9fe747b490f2f44b",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "같은 선언된 머리의 곧은 형태/부드러운 앞머리와 검은 색. 가발/생물모발 구분/국적/얼굴형상은 추정하지 않는다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "straight black hair with soft bangs",
+          "ko": "부드러운 앞머리가 있는 스트레이트 블랙 헤어",
+          "tags": [
+            "human",
+            "hair",
+            "portrait",
+            "fashion",
+            "neutral"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_f302fb5230c859cc9fe747b490f2f44b",
+        "provenance": [
+          {
+            "sha256": "2dac5f1e8232544aaa11440b075c17db038b0a995b63d7e71f919c0514910344",
+            "source": "slot:hair_style:straight_black_hair_with_bangs"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "straight black hair with soft bangs",
+          "ko": "부드러운 앞머리가 있는 스트레이트 블랙 헤어",
+          "tags": [
+            "human",
+            "hair",
+            "portrait",
+            "fashion",
+            "neutral"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_f302fb5230c859cc9fe747b490f2f44b",
+        "provenance": [
+          {
+            "sha256": "2dac5f1e8232544aaa11440b075c17db038b0a995b63d7e71f919c0514910344",
+            "source": "slot:hair_style:straight_black_hair_with_bangs"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "straight black hair with soft bangs",
+          "ko": "부드러운 앞머리가 있는 스트레이트 블랙 헤어",
+          "tags": [
+            "human",
+            "hair",
+            "portrait",
+            "fashion",
+            "neutral"
+          ],
+          "application_scope": "Select straight black hair with soft bangs for the same already declared hair owner and region."
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "target": "hair",
+              "property": "hair.color"
+            },
+            {
+              "dimension": "appearance",
+              "target": "hair",
+              "property": "hair.style"
+            }
+          ]
+        },
+        "id": "cand_f302fb5230c859cc9fe747b490f2f44b",
+        "provenance": [
+          {
+            "sha256": "2dac5f1e8232544aaa11440b075c17db038b0a995b63d7e71f919c0514910344",
+            "source": "slot:hair_style:straight_black_hair_with_bangs"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Select straight black hair with soft bangs for the same already declared hair owner and region.",
+          "reason": "owner/region범위를 기존hair로 한정하고 실제form/color선택 effect유지."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "target": "hair",
+                "property": "hair.color"
+              },
+              {
+                "dimension": "appearance",
+                "target": "hair",
+                "property": "hair.style"
+              }
+            ]
+          },
+          "reason": "coarseappearance를 독립 style+color에 결속; texture/material/newhairentity 없음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 71,
+          "sha256": "172ede4409eaa3de9b0ce0ab6856de51ae5e9b138f791b456337e91e7856f9f7"
+        },
+        "candidate_id": "cand_f302fb5230c859cc9fe747b490f2f44b",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "hair.style.straight_soft_bangs",
+            "quote": "straight black hair with soft bangs",
+            "realization_id": "base",
+            "target": "hair"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "hair.color.black",
+            "quote": "straight black hair with soft bangs",
+            "realization_id": "base",
+            "target": "hair"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "곧은 검은 머리와 부드러운 앞머리.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "국적·가발 여부·얼굴 형상은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "hair.style.straight_soft_bangs",
+                "quote": "straight black hair with soft bangs",
+                "target": "hair"
+              }
+            ],
+            "rationale": "형태.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "hair_style"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "hair.color.black",
+                "quote": "straight black hair with soft bangs",
+                "target": "hair"
+              }
+            ],
+            "rationale": "색.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "hair_color"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "a7bb4885564accd0a33a6e1e8359fb6404538cdc4e224e6e14d6c2914506ceeb",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 71,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "03dd5fccac121de75cad1a4be89842f0896011cbc5deccc403859ef8d99ef376"
+      },
+      "before_full_record_sha256": "a7bb4885564accd0a33a6e1e8359fb6404538cdc4e224e6e14d6c2914506ceeb",
+      "fiveB_after_full_record_sha256": "a7bb4885564accd0a33a6e1e8359fb6404538cdc4e224e6e14d6c2914506ceeb",
+      "proposed_after_full_record_sha256": "160f5cfa1c9b813082c513c9256a60357879fee2cd528e6189fcfe845033a76a",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_f302fb5230c859cc9fe747b490f2f44b": {
+          "candidate_id": "cand_f302fb5230c859cc9fe747b490f2f44b",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_f302fb5230c859cc9fe747b490f2f44b",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "hair_style",
+          "weight": 0.85
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "hair_style",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.85,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_f302fb5230c859cc9fe747b490f2f44b",
+          "reason": "ownhairpolicy142일치; sourcehumanintrinsic 별도.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          }
+        },
+        {
+          "slot_id": "hair_color",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.85,
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "reason": "별도142haircolor계약만; same hairboundedblack."
+        }
+      ],
+      "conditions_review": "sourcehuman retained. primaryhair가 실제 선언된 samehairowner를 가리켜야 하며 roleword만으로 머리카락 존재/가발여부를 증명하지 않는다.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "texture",
+          "reason": "섬유표면조직 없음"
+        },
+        {
+          "slot_id": "color_grading",
+          "reason": "globalblackgrade absent"
+        },
+        {
+          "slot_id": "anatomical_connection",
+          "reason": "모발의 생물연결/가발연결 없음"
+        }
+      ],
+      "facts": [
+        {
+          "id": "hair_u0",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "hair.presence/v1",
+            "value": "declared hair"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "straight black hair with soft bangs"
+        },
+        {
+          "id": "style_u0",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.style",
+          "mode": "effect",
+          "value": {
+            "type": "hair.style/v1",
+            "value": "straight hair with soft bangs"
+          },
+          "requires": [
+            "hair_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "straight black hair with soft bangs"
+        },
+        {
+          "id": "black_u0",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.color",
+          "mode": "effect",
+          "value": {
+            "type": "hair.color/v1",
+            "value": "black"
+          },
+          "requires": [
+            "hair_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "straight black hair with soft bangs"
+        },
+        {
+          "id": "hair_u1",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "hair.presence/v1",
+            "value": "declared hair"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "부드러운 앞머리가 있는 스트레이트 블랙 헤어"
+        },
+        {
+          "id": "style_u1",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.style",
+          "mode": "effect",
+          "value": {
+            "type": "hair.style/v1",
+            "value": "straight hair with soft bangs"
+          },
+          "requires": [
+            "hair_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "부드러운 앞머리가 있는 스트레이트 블랙 헤어"
+        },
+        {
+          "id": "black_u1",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.color",
+          "mode": "effect",
+          "value": {
+            "type": "hair.color/v1",
+            "value": "black"
+          },
+          "requires": [
+            "hair_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "부드러운 앞머리가 있는 스트레이트 블랙 헤어"
+        },
+        {
+          "id": "hair_u2",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "hair.presence/v1",
+            "value": "declared hair"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select straight black hair with soft bangs for the same already declared hair owner and region."
+        },
+        {
+          "id": "style_u2",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.style",
+          "mode": "effect",
+          "value": {
+            "type": "hair.style/v1",
+            "value": "straight hair with soft bangs"
+          },
+          "requires": [
+            "hair_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select straight black hair with soft bangs for the same already declared hair owner and region."
+        },
+        {
+          "id": "black_u2",
+          "dimension": "appearance",
+          "target": "hair",
+          "property": "hair.color",
+          "mode": "effect",
+          "value": {
+            "type": "hair.color/v1",
+            "value": "black"
+          },
+          "requires": [
+            "hair_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select straight black hair with soft bangs for the same already declared hair owner and region."
+        }
+      ],
+      "roles": {
+        "hair_style": {
+          "spec_sha256": "7a38c4f90b1d814a77f75d887bb1a18f92f2ffc4077621ee178c87ec4b1d0fad",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "style_u0",
+            "style_u1",
+            "style_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "hair_color": {
+          "spec_sha256": "0dd5c47d134420780647ac79726536a7d385346323715c0a8d264e21ce2ab418",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "black_u0",
+            "black_u1",
+            "black_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "hair",
+              "core_role": "primary_hair",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "straight black hair with soft bangs",
+          "fact_refs": [
+            "hair_u0",
+            "style_u0",
+            "black_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "부드러운 앞머리가 있는 스트레이트 블랙 헤어",
+          "fact_refs": [
+            "hair_u1",
+            "style_u1",
+            "black_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Select straight black hair with soft bangs for the same already declared hair owner and region.",
+          "fact_refs": [
+            "hair_u2",
+            "style_u2",
+            "black_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "target": "hair",
+              "property": "hair.color"
+            },
+            {
+              "dimension": "appearance",
+              "target": "hair",
+              "property": "hair.style"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualhaircore owner/region and footprintacceptance/formalinput required."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2321,
+      "candidate_id": "cand_17aa0c8013f75cdc88eca789aa402fb4",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "친절이 들켰는지 확인하는 실제 행동과 그 목적 맥락. 실제 알아챔/부끄러움/특정시선/손동작은 미정이다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "checking whether the kindness was noticed",
+          "ko": "다정한 행동을 들켰는지 살피는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "shy",
+            "action"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_17aa0c8013f75cdc88eca789aa402fb4",
+        "provenance": [
+          {
+            "sha256": "b97bc25c3e6189baa4f01ee7de59d573560129ed895e6c16fb109c579475ded9",
+            "source": "slot:action:checking_if_seen_after_kindness"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "checking whether the kindness was noticed",
+          "ko": "다정한 행동을 들켰는지 살피는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "shy",
+            "action"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_17aa0c8013f75cdc88eca789aa402fb4",
+        "provenance": [
+          {
+            "sha256": "b97bc25c3e6189baa4f01ee7de59d573560129ed895e6c16fb109c579475ded9",
+            "source": "slot:action:checking_if_seen_after_kindness"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "checking whether the kindness was noticed",
+          "ko": "다정한 행동을 들켰는지 살피는",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "shy",
+            "action"
+          ],
+          "application_scope": "Use the same already declared actor and referenced kind act; have that actor check whether the act was noticed, without assuming that anyone noticed it."
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "actor",
+              "property": "action.checking_notice"
+            }
+          ]
+        },
+        "id": "cand_17aa0c8013f75cdc88eca789aa402fb4",
+        "provenance": [
+          {
+            "sha256": "b97bc25c3e6189baa4f01ee7de59d573560129ed895e6c16fb109c579475ded9",
+            "source": "slot:action:checking_if_seen_after_kindness"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Use the same already declared actor and referenced kind act; have that actor check whether the act was noticed, without assuming that anyone noticed it.",
+          "reason": "concretechecking 유지, 이미 독립선언된 actor/referencedact만 사용. 실제 타인반응/과거친절 새생성 아님."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "action"
+            ],
+            "properties": [
+              {
+                "dimension": "action",
+                "target": "actor",
+                "property": "action.checking_notice"
+              }
+            ]
+          },
+          "reason": "actualchecking을 effect로 유지하고 its goal context는 사적심리 진실성과 구별한다."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 72,
+          "sha256": "396bf22977fdffb617478494c10b17e830eeddb28c04863f4067f23f31c5a948"
+        },
+        "candidate_id": "cand_17aa0c8013f75cdc88eca789aa402fb4",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "character_response",
+            "pointer": "/content/en",
+            "property": "character.intent.check_kindness_noticed",
+            "quote": "checking whether the kindness was noticed",
+            "realization_id": "base",
+            "target": "actor"
+          },
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "action.checking_notice",
+            "quote": "checking whether the kindness was noticed",
+            "realization_id": "base",
+            "target": "actor"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "친절이 눈에 띄었는지 확인하는 행동 맥락.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "특정 시선·손동작·부끄러움·관계 타깃은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "character_response",
+                "pointer": "/content/en",
+                "property": "character.intent.check_kindness_noticed",
+                "quote": "checking whether the kindness was noticed",
+                "target": "actor"
+              }
+            ],
+            "rationale": "목표.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "character_intent"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/en",
+                "property": "action.checking_notice",
+                "quote": "checking whether the kindness was noticed",
+                "target": "actor"
+              }
+            ],
+            "rationale": "확인 행동.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "action"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "80bf2403f6881cd29bdbc7aa3b5c45c6b15afa38a9a05dc26f0c1580bebda33b",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 72,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "47b357dba6c3f08997bab49cf67ab75ff9aef8aebe414a6f30f9f87802c634a4"
+      },
+      "before_full_record_sha256": "80bf2403f6881cd29bdbc7aa3b5c45c6b15afa38a9a05dc26f0c1580bebda33b",
+      "fiveB_after_full_record_sha256": "80bf2403f6881cd29bdbc7aa3b5c45c6b15afa38a9a05dc26f0c1580bebda33b",
+      "proposed_after_full_record_sha256": "4a6f95eee01d71d487015acf39825b4478b465cde6bbc2c40258527b0a0a051d",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_17aa0c8013f75cdc88eca789aa402fb4": {
+          "candidate_id": "cand_17aa0c8013f75cdc88eca789aa402fb4",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_17aa0c8013f75cdc88eca789aa402fb4",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.82
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "action",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.82,
+          "conditions": {},
+          "reason": "own{}; actualcheckactivity."
+        },
+        {
+          "slot_id": "character_intent",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 0.82,
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "reason": "explicitstatedgoal, notinferredprivateintent."
+        }
+      ],
+      "conditions_review": "sourcehuman retained. referencedkindact is intrinsic exact event prerequisite, notsource tag. No observer/personcount added. actualnotice outcome remainsunknown.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "gaze_target",
+          "reason": "목표눈방향 미명시"
+        },
+        {
+          "slot_id": "expression",
+          "reason": "shy tag notexpression"
+        },
+        {
+          "slot_id": "social_cue",
+          "reason": "actualothersresponse absent"
+        }
+      ],
+      "facts": [
+        {
+          "id": "kindness_u0",
+          "dimension": "concept",
+          "target": "event",
+          "property": "scene.event_kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "declared.event/v1",
+            "value": "the referenced kind act"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "checking whether the kindness was noticed"
+        },
+        {
+          "id": "check_u0",
+          "dimension": "action",
+          "target": "actor",
+          "property": "action.checking_notice",
+          "mode": "effect",
+          "value": {
+            "type": "action.checking/v1",
+            "value": "checking whether the kindness was noticed"
+          },
+          "requires": [
+            "actor_u2",
+            "kindness_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "checking whether the kindness was noticed"
+        },
+        {
+          "id": "goal_u0",
+          "dimension": "character_response",
+          "target": "actor",
+          "property": "character.intent",
+          "mode": "context",
+          "value": {
+            "type": "character.goal/v1",
+            "value": "find out whether the kindness was noticed"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "checking whether the kindness was noticed"
+        },
+        {
+          "id": "kindness_u1",
+          "dimension": "concept",
+          "target": "event",
+          "property": "scene.event_kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "declared.event/v1",
+            "value": "the referenced kind act"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다정한 행동을 들켰는지 살피는"
+        },
+        {
+          "id": "check_u1",
+          "dimension": "action",
+          "target": "actor",
+          "property": "action.checking_notice",
+          "mode": "effect",
+          "value": {
+            "type": "action.checking/v1",
+            "value": "checking whether the kindness was noticed"
+          },
+          "requires": [
+            "actor_u2",
+            "kindness_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다정한 행동을 들켰는지 살피는"
+        },
+        {
+          "id": "goal_u1",
+          "dimension": "character_response",
+          "target": "actor",
+          "property": "character.intent",
+          "mode": "context",
+          "value": {
+            "type": "character.goal/v1",
+            "value": "find out whether the kindness was noticed"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다정한 행동을 들켰는지 살피는"
+        },
+        {
+          "id": "actor_u2",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared actor and referenced kind act; have that actor check whether the act was noticed, without assuming that anyone noticed it."
+        },
+        {
+          "id": "kindness_u2",
+          "dimension": "concept",
+          "target": "event",
+          "property": "scene.event_kind",
+          "mode": "prerequisite",
+          "value": {
+            "type": "declared.event/v1",
+            "value": "the referenced kind act"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared actor and referenced kind act; have that actor check whether the act was noticed, without assuming that anyone noticed it."
+        },
+        {
+          "id": "check_u2",
+          "dimension": "action",
+          "target": "actor",
+          "property": "action.checking_notice",
+          "mode": "effect",
+          "value": {
+            "type": "action.checking/v1",
+            "value": "checking whether the kindness was noticed"
+          },
+          "requires": [
+            "actor_u2",
+            "kindness_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared actor and referenced kind act; have that actor check whether the act was noticed, without assuming that anyone noticed it."
+        },
+        {
+          "id": "goal_u2",
+          "dimension": "character_response",
+          "target": "actor",
+          "property": "character.intent",
+          "mode": "context",
+          "value": {
+            "type": "character.goal/v1",
+            "value": "find out whether the kindness was noticed"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared actor and referenced kind act; have that actor check whether the act was noticed, without assuming that anyone noticed it."
+        }
+      ],
+      "roles": {
+        "action": {
+          "spec_sha256": "a98cf30ecf21cc1416ee2488bf6458773b4b978c846d597c10d8e8f518d6ad6c",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "check_u0",
+            "check_u1",
+            "check_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "character_intent": {
+          "spec_sha256": "665ea87070d020c1511b75d8cd0963f1c3e01e955659d1caa69ac82940d02f4f",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "goal_u0",
+            "goal_u1",
+            "goal_u2"
+          ],
+          "support_modes": [
+            "context"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "actor",
+              "core_role": "main_subject",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "event",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "checking whether the kindness was noticed",
+          "fact_refs": [
+            "kindness_u0",
+            "check_u0",
+            "goal_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "다정한 행동을 들켰는지 살피는",
+          "fact_refs": [
+            "kindness_u1",
+            "check_u1",
+            "goal_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Use the same already declared actor and referenced kind act; have that actor check whether the act was noticed, without assuming that anyone noticed it.",
+          "fact_refs": [
+            "actor_u2",
+            "kindness_u2",
+            "check_u2",
+            "goal_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "target": "actor",
+              "property": "action.checking_notice"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "independentlydeclared referencedkindact and actualsameactor core plus sourceacceptance needed."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2322,
+      "candidate_id": "cand_458c25b5ff8f5193bd068164cad9cbc4",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "심플한 진주 스터드 귀걸이의 물건/선언 재료. 실제 착용자/착용상태는 명시되지 않아 wearable role는 미확정이다.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "simple pearl stud earrings",
+          "clause": "actual worn owner/state and simple stud appearance application",
+          "mode": "effect versus existing-jewelry prerequisite pending scope",
+          "operation": "set_value",
+          "target_intent": "actual declared earrings and wearer if worn",
+          "property_intent": "accessories worn appearance and simple stud form",
+          "typed_value_status": "actual wearing not selected; no new ears/wearer supplied",
+          "receiver_status": "wearer absent",
+          "reason": "Noun earrings names use category, not current wearing. Keep coarse appearance until explicit scope can preserve actual styling or limit to exact-existing reuse; pearl is declared material, not verified natural/price claim."
+        }
+      ],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "simple pearl stud earrings",
+          "en": "simple pearl stud earrings",
+          "ko": "심플한 진주 스터드 귀걸이",
+          "tags": [
+            "human",
+            "accessory",
+            "jewelry",
+            "classic"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_458c25b5ff8f5193bd068164cad9cbc4",
+        "provenance": [
+          {
+            "sha256": "67e3c199ebf3c5ce1c755e4db30a4a4ac7271fd101a3d294a810a309820f3083",
+            "source": "slot:wearable_accessory:simple_pearl_studs"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "simple pearl stud earrings",
+          "en": "simple pearl stud earrings",
+          "ko": "심플한 진주 스터드 귀걸이",
+          "tags": [
+            "human",
+            "accessory",
+            "jewelry",
+            "classic"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_458c25b5ff8f5193bd068164cad9cbc4",
+        "provenance": [
+          {
+            "sha256": "67e3c199ebf3c5ce1c755e4db30a4a4ac7271fd101a3d294a810a309820f3083",
+            "source": "slot:wearable_accessory:simple_pearl_studs"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "simple pearl stud earrings",
+          "en": "simple pearl stud earrings",
+          "ko": "심플한 진주 스터드 귀걸이",
+          "tags": [
+            "human",
+            "accessory",
+            "jewelry",
+            "classic"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_458c25b5ff8f5193bd068164cad9cbc4",
+        "provenance": [
+          {
+            "sha256": "67e3c199ebf3c5ce1c755e4db30a4a4ac7271fd101a3d294a810a309820f3083",
+            "source": "slot:wearable_accessory:simple_pearl_studs"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 73,
+          "sha256": "e3f2e7ca686e67eee807d18f85d7256e079eaa1e25e147f189dad33a13ff661e"
+        },
+        "candidate_id": "cand_458c25b5ff8f5193bd068164cad9cbc4",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "accessories.earrings.pearl_stud",
+            "quote": "simple pearl stud earrings",
+            "realization_id": "base",
+            "target": "wearer_ears"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.material.pearl",
+            "quote": "simple pearl stud earrings",
+            "realization_id": "base",
+            "target": "earrings"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "심플한 진주 스터드 귀걸이.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "진품·가격·귀 형태·새 착용자는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "accessories.earrings.pearl_stud",
+                "quote": "simple pearl stud earrings",
+                "target": "wearer_ears"
+              }
+            ],
+            "rationale": "장신구.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wearable_accessory"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.material.pearl",
+                "quote": "simple pearl stud earrings",
+                "target": "earrings"
+              }
+            ],
+            "rationale": "명명 재료.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "d1c5d51bfa596fe837cefb83ffb97731a69f5fffe17b7763556273bf24cd918a",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 73,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "56abfda7b7b66f4ad70b797f8f17b53c81d70faf30f4b8db6f271cf5a10d4851"
+      },
+      "before_full_record_sha256": "d1c5d51bfa596fe837cefb83ffb97731a69f5fffe17b7763556273bf24cd918a",
+      "fiveB_after_full_record_sha256": "d1c5d51bfa596fe837cefb83ffb97731a69f5fffe17b7763556273bf24cd918a",
+      "proposed_after_full_record_sha256": "d1c5d51bfa596fe837cefb83ffb97731a69f5fffe17b7763556273bf24cd918a",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_458c25b5ff8f5193bd068164cad9cbc4": {
+          "candidate_id": "cand_458c25b5ff8f5193bd068164cad9cbc4",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_458c25b5ff8f5193bd068164cad9cbc4",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "wearable_accessory",
+          "weight": 0.52
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "wearable_accessory",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.52,
+          "conditions": {},
+          "reason": "own{} cannotprove visiblyworn ownership."
+        },
+        {
+          "slot_id": "surface_material",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.52,
+          "conditions": {
+            "subject_applicability": {
+              "allow_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "architecture",
+                "subculture_practice",
+                "worldbuilding_system",
+                "cjk_narrative_world"
+              ],
+              "allow_domains_override_subject_categories": true,
+              "subject_categories": [
+                "object",
+                "food",
+                "plant",
+                "environment",
+                "sign",
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "reason": "declaredpearl actualtext; no authenticityinference."
+        }
+      ],
+      "conditions_review": "sourcehuman preserved but actualwearer notinferred fromhuman guard. Existingearring pair doesnotestablishtwopeople oractualearsgeometry.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "subject_count",
+          "reason": "수식 earrings는 총인원 아님"
+        },
+        {
+          "slot_id": "object_structure",
+          "reason": "studtypename만으로 fastenergeometry없음"
+        },
+        {
+          "slot_id": "color",
+          "reason": "pearlmaterial notautomaticallywhite"
+        }
+      ],
+      "facts": [
+        {
+          "id": "earrings_u0",
+          "dimension": "subject",
+          "target": "earrings",
+          "property": "jewelry.description",
+          "mode": "prerequisite",
+          "value": {
+            "type": "jewelry.description/v1",
+            "value": "simple pearl stud earrings"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "simple pearl stud earrings"
+        },
+        {
+          "id": "pearl_u0",
+          "dimension": "material",
+          "target": "earrings",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "material.declared/v1",
+            "value": "pearl"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "simple pearl stud earrings"
+        },
+        {
+          "id": "earrings_u1",
+          "dimension": "subject",
+          "target": "earrings",
+          "property": "jewelry.description",
+          "mode": "prerequisite",
+          "value": {
+            "type": "jewelry.description/v1",
+            "value": "simple pearl stud earrings"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "심플한 진주 스터드 귀걸이"
+        },
+        {
+          "id": "pearl_u1",
+          "dimension": "material",
+          "target": "earrings",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "material.declared/v1",
+            "value": "pearl"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "심플한 진주 스터드 귀걸이"
+        },
+        {
+          "id": "earrings_u2",
+          "dimension": "subject",
+          "target": "earrings",
+          "property": "jewelry.description",
+          "mode": "prerequisite",
+          "value": {
+            "type": "jewelry.description/v1",
+            "value": "simple pearl stud earrings"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "simple pearl stud earrings"
+        },
+        {
+          "id": "pearl_u2",
+          "dimension": "material",
+          "target": "earrings",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "material.declared/v1",
+            "value": "pearl"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "simple pearl stud earrings"
+        }
+      ],
+      "roles": {
+        "surface_material": {
+          "spec_sha256": "10e1ae79963383225dc3e3e86d7de760e6e8c7472b6d8c3a1b366c439b1865e8",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "pearl_u0",
+            "pearl_u1",
+            "pearl_u2"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "earrings",
+              "core_role": "primary_prop",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "simple pearl stud earrings",
+          "fact_refs": [
+            "earrings_u0",
+            "pearl_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "심플한 진주 스터드 귀걸이",
+          "fact_refs": [
+            "earrings_u1",
+            "pearl_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "simple pearl stud earrings",
+          "fact_refs": [
+            "earrings_u2",
+            "pearl_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actual jewelry/wearer/wornstate and simple appearance scope required. Originalcoarseappearance preserved."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2323,
+      "candidate_id": "cand_5b28e92985c950208e7677372c7e11fa",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "엘리베이터 문틈에서 나오는 가느다란 빛 조각과 그 경로. 문 이동/광원발생장치/빛색은 정해지지 않았다.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "thin sliver of light from an elevator door gap",
+          "en": "thin elevator-gap sliver light",
+          "ko": "엘리베이터 문틈의 가느다란 빛",
+          "tags": [
+            "threshold",
+            "elevator",
+            "interior"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_5b28e92985c950208e7677372c7e11fa",
+        "provenance": [
+          {
+            "sha256": "362cee18724b1cb0f103d9143a9c33b1b8cd1c0ecc649e5c01710a76114c8618",
+            "source": "slot:lighting:elevator_gap_sliver_light"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "thin sliver of light from an elevator door gap",
+          "en": "thin elevator-gap sliver light",
+          "ko": "엘리베이터 문틈의 가느다란 빛",
+          "tags": [
+            "threshold",
+            "elevator",
+            "interior"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_5b28e92985c950208e7677372c7e11fa",
+        "provenance": [
+          {
+            "sha256": "362cee18724b1cb0f103d9143a9c33b1b8cd1c0ecc649e5c01710a76114c8618",
+            "source": "slot:lighting:elevator_gap_sliver_light"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "thin sliver of light from an elevator door gap",
+          "en": "thin elevator-gap sliver light",
+          "ko": "엘리베이터 문틈의 가느다란 빛",
+          "tags": [
+            "threshold",
+            "elevator",
+            "interior"
+          ],
+          "application_scope": "Apply a thin sliver of light from the same declared elevator door gap to the same existing receiving surface."
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "target": "receiver",
+              "property": "lighting.path"
+            },
+            {
+              "dimension": "lighting",
+              "target": "receiver",
+              "property": "lighting.pattern"
+            }
+          ]
+        },
+        "id": "cand_5b28e92985c950208e7677372c7e11fa",
+        "provenance": [
+          {
+            "sha256": "362cee18724b1cb0f103d9143a9c33b1b8cd1c0ecc649e5c01710a76114c8618",
+            "source": "slot:lighting:elevator_gap_sliver_light"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply a thin sliver of light from the same declared elevator door gap to the same existing receiving surface.",
+          "reason": "문틈/수광면을 기존으로 한정하고 actualsliver/path선택은 effect."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "lighting"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "lighting"
+            ],
+            "properties": [
+              {
+                "dimension": "lighting",
+                "target": "receiver",
+                "property": "lighting.path"
+              },
+              {
+                "dimension": "lighting",
+                "target": "receiver",
+                "property": "lighting.pattern"
+              }
+            ]
+          },
+          "reason": "원 lighting을 source실제경로와 가는빛형태에 결속. gap을 emitterdevice로 승격하지 않음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02250_02500.json",
+          "item": 74,
+          "sha256": "b147ae16cb6e72b83c2e981097641054f7e47ff4b69082fca0e7ffa8b538c396"
+        },
+        "candidate_id": "cand_5b28e92985c950208e7677372c7e11fa",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.pattern.thin_sliver",
+            "quote": "thin elevator-gap sliver light",
+            "realization_id": "base",
+            "target": "door_gap_light"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.source.elevator_gap",
+            "quote": "thin elevator-gap sliver light",
+            "realization_id": "base",
+            "target": "illumination"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "엘리베이터 문틈의 가느다란 빛.",
+        "packet_sha256": "bef0267822fee9c336730fea9cd932f331554f48005bb35f6054e7a0a1bcc177",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "문이 움직임·빛 색·실내 전체를 추가하지 않는다."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2250,
+            2500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2250-2500.json",
+            "sha256": "03c64180165e3514328f92670f789baef74e6b4f9003899e43944d34e55c98c8"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.pattern.thin_sliver",
+                "quote": "thin elevator-gap sliver light",
+                "target": "door_gap_light"
+              }
+            ],
+            "rationale": "형태.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_shape"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.source.elevator_gap",
+                "quote": "thin elevator-gap sliver light",
+                "target": "illumination"
+              }
+            ],
+            "rationale": "광원 경로.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_type"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "4596ead497e58d1d2d571f9126ed19e2eff7640c0d9db17bcaa6f27d81b69542",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02250_02500.json",
+        "item": 74,
+        "file_raw_sha256": "4d8fc80888f0844eb5d39ab1285b73a188f61e311c2a1e8ddfa36741b2df792d",
+        "row_sha256": "549debcb5c872023ea983facf7da50283196f02b1e222e3ff6d2efdd51b0ce09"
+      },
+      "before_full_record_sha256": "4596ead497e58d1d2d571f9126ed19e2eff7640c0d9db17bcaa6f27d81b69542",
+      "fiveB_after_full_record_sha256": "4596ead497e58d1d2d571f9126ed19e2eff7640c0d9db17bcaa6f27d81b69542",
+      "proposed_after_full_record_sha256": "068eb8b8578a4bea090799b1dbe19e15347ef634d7f445484b99069df5a74737",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_5b28e92985c950208e7677372c7e11fa": {
+          "candidate_id": "cand_5b28e92985c950208e7677372c7e11fa",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_5b28e92985c950208e7677372c7e11fa",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "lighting",
+          "weight": 0.55
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "lighting",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 0.55,
+          "conditions_action": "retire_old_presentation_only",
+          "old_binding_id": "bind_5b28e92985c950208e7677372c7e11fa",
+          "reason": "actualcomplete source/placement/setup absent; namedsliverpath only."
+        },
+        {
+          "slot_id": "light_shape",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.55,
+          "conditions": {},
+          "reason": "thinSliver actualpattern with proposedboundedreceiver."
+        },
+        {
+          "slot_id": "light_type",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.55,
+          "conditions": {},
+          "reason": "aperturepath alone does not select source/emissionmechanism; old5Blighting.source notproof."
+        }
+      ],
+      "conditions_review": "source{} and own{} read. Core mustindependentlydeclare gap and receivingcarrier; nodooropen/close action ornewfixture permission. Exactgap isaperture notwholeelevatorsetting.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "prop_state",
+          "reason": "dooropenstate absent"
+        },
+        {
+          "slot_id": "light_direction",
+          "reason": "exactangle absent"
+        },
+        {
+          "slot_id": "object_structure",
+          "reason": "gapidentity preq notnewhinge geometryeffect"
+        }
+      ],
+      "facts": [
+        {
+          "id": "gap_u0",
+          "dimension": "subject",
+          "target": "gap",
+          "property": "object.geometry",
+          "mode": "prerequisite",
+          "value": {
+            "type": "aperture.identity/v1",
+            "value": "elevator door gap"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "thin elevator-gap sliver light"
+        },
+        {
+          "id": "shape_u0",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.pattern",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.pattern/v1",
+            "value": "thin sliver of light"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "thin elevator-gap sliver light"
+        },
+        {
+          "id": "path_u0",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.path",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.path/v1",
+            "value": "from the same elevator door gap"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "gap"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "thin elevator-gap sliver light"
+        },
+        {
+          "id": "gap_u1",
+          "dimension": "subject",
+          "target": "gap",
+          "property": "object.geometry",
+          "mode": "prerequisite",
+          "value": {
+            "type": "aperture.identity/v1",
+            "value": "elevator door gap"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "엘리베이터 문틈의 가느다란 빛"
+        },
+        {
+          "id": "shape_u1",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.pattern",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.pattern/v1",
+            "value": "thin sliver of light"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "엘리베이터 문틈의 가느다란 빛"
+        },
+        {
+          "id": "path_u1",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.path",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.path/v1",
+            "value": "from the same elevator door gap"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "gap"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "엘리베이터 문틈의 가느다란 빛"
+        },
+        {
+          "id": "gap_u2",
+          "dimension": "subject",
+          "target": "gap",
+          "property": "object.geometry",
+          "mode": "prerequisite",
+          "value": {
+            "type": "aperture.identity/v1",
+            "value": "elevator door gap"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "thin sliver of light from an elevator door gap"
+        },
+        {
+          "id": "shape_u2",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.pattern",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.pattern/v1",
+            "value": "thin sliver of light"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "thin sliver of light from an elevator door gap"
+        },
+        {
+          "id": "path_u2",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.path",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.path/v1",
+            "value": "from the same elevator door gap"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "gap"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "thin sliver of light from an elevator door gap"
+        },
+        {
+          "id": "gap_u3",
+          "dimension": "subject",
+          "target": "gap",
+          "property": "object.geometry",
+          "mode": "prerequisite",
+          "value": {
+            "type": "aperture.identity/v1",
+            "value": "elevator door gap"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply a thin sliver of light from the same declared elevator door gap to the same existing receiving surface."
+        },
+        {
+          "id": "receiver_u3",
+          "dimension": "subject",
+          "target": "receiver",
+          "property": "entity.surface.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "receiving_surface.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply a thin sliver of light from the same declared elevator door gap to the same existing receiving surface."
+        },
+        {
+          "id": "shape_u3",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.pattern",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.pattern/v1",
+            "value": "thin sliver of light"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply a thin sliver of light from the same declared elevator door gap to the same existing receiving surface."
+        },
+        {
+          "id": "path_u3",
+          "dimension": "lighting",
+          "target": "receiver",
+          "property": "lighting.path",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.path/v1",
+            "value": "from the same elevator door gap"
+          },
+          "requires": [
+            "gap_u0",
+            "receiver_u3"
+          ],
+          "operation": "set_value",
+          "receivers": [
+            "gap"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply a thin sliver of light from the same declared elevator door gap to the same existing receiving surface."
+        }
+      ],
+      "roles": {
+        "light_shape": {
+          "spec_sha256": "f5a3e8dbabc2740cd170a12bb7f2f5cbd8696b95cac5331912cbcdebfd9d0d72",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "shape_u0",
+            "shape_u1",
+            "shape_u2",
+            "shape_u3"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "gap",
+              "core_role": "background_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "receiver",
+              "core_role": "light_receiver",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "thin elevator-gap sliver light",
+          "fact_refs": [
+            "gap_u0",
+            "shape_u0",
+            "path_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "엘리베이터 문틈의 가느다란 빛",
+          "fact_refs": [
+            "gap_u1",
+            "shape_u1",
+            "path_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "thin sliver of light from an elevator door gap",
+          "fact_refs": [
+            "gap_u2",
+            "shape_u2",
+            "path_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply a thin sliver of light from the same declared elevator door gap to the same existing receiving surface.",
+          "fact_refs": [
+            "gap_u3",
+            "receiver_u3",
+            "shape_u3",
+            "path_u3"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": [
+            {
+              "dimension": "lighting",
+              "target": "receiver",
+              "property": "lighting.path"
+            },
+            {
+              "dimension": "lighting",
+              "target": "receiver",
+              "property": "lighting.pattern"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "actualgap/receiver core plus sourcecorrection acceptance. Lighttype actualmechanism remainspending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    }
+  ],
+  "registration_global_git_network_model_calls": 0
+}
