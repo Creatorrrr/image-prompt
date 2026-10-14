@@ -19,6 +19,20 @@ def git(*args):
     return subprocess.check_output(['git', *args], cwd=review.ROOT).decode().strip()
 
 
+def stage_selected(relative):
+    """An immutable shared packet can already be tracked without a new diff."""
+    wanted = set(relative)
+    subprocess.run(['git', 'add', '--', *relative], cwd=review.ROOT, check=True)
+    staged = set(filter(None, subprocess.check_output(
+        ['git', 'diff', '--cached', '--name-only', '-z'], cwd=review.ROOT).decode().split('\0')))
+    tracked = set(filter(None, subprocess.check_output(
+        ['git', 'ls-files', '-z', '--', *relative], cwd=review.ROOT).decode().split('\0')))
+    unstaged = subprocess.check_output(
+        ['git', 'diff', '--name-only', '-z', '--', *relative], cwd=review.ROOT)
+    if not staged <= wanted or tracked != wanted or unstaged:
+        raise ValueError('staged content differs from the explicitly selected review batch')
+
+
 def write_current():
     progress = json.loads((review.HERE / 'PROGRESS.json').read_text())
     rows = []
@@ -156,11 +170,7 @@ def integrate(job):
         review.HERE / 'PROGRESS.json', review.HERE / 'CURRENT.json', review.HERE / 'CURRENT.ko.md']
     paths.extend(review.ROOT / path for path in job.get('extra_files', []))
     relative = [str(path.relative_to(review.ROOT)) for path in paths]
-    subprocess.run(['git', 'add', '--', *relative], cwd=review.ROOT, check=True)
-    staged = set(subprocess.check_output(['git', 'diff', '--cached', '--name-only', '-z'],
-                                        cwd=review.ROOT).decode().strip('\0').split('\0'))
-    if staged != set(relative):
-        raise ValueError('staged paths differ from the explicitly selected review batch')
+    stage_selected(relative)
     subprocess.run(['git', 'diff', '--cached', '--check'], cwd=review.ROOT, check=True)
     action = 'checkpoint' if pending_ordinals else 'integrate'
     subprocess.run(['git', 'commit', '-m', f'feat(photo): {action} direct review {start} through {stop - 1}'],

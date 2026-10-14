@@ -1,7 +1,10 @@
 """A fully read but unresolved candidate must remain unfinished."""
 import importlib.util
 from pathlib import Path
+import subprocess
+import tempfile
 import unittest
+from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parents[1] / 'docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014'
 spec = importlib.util.spec_from_file_location('direct_review_state', HERE / 'review_state.py')
@@ -15,6 +18,22 @@ spec.loader.exec_module(integrator)
 
 
 class ReviewStateTests(unittest.TestCase):
+    def test_shared_tracked_packet_and_new_batch_have_an_exact_commit_boundary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            def git(*args):
+                return subprocess.check_output(['git', *args], cwd=root, stderr=subprocess.DEVNULL)
+            git('init'); git('config', 'user.name', 'Fixture'); git('config', 'user.email', 'fixture@example.test')
+            (root/'packet.json').write_text('immutable packet')
+            git('add', 'packet.json'); git('commit', '-m', 'fixture')
+            (root/'batch.json').write_text('new literal source decisions')
+            with patch.object(integrator.review, 'ROOT', root):
+                integrator.stage_selected(['packet.json', 'batch.json'])
+                self.assertEqual(git('diff', '--cached', '--name-only').decode().strip(), 'batch.json')
+                (root/'unrelated.txt').write_text('protected work'); git('add', 'unrelated.txt')
+                with self.assertRaisesRegex(ValueError, 'explicitly selected'):
+                    integrator.stage_selected(['packet.json', 'batch.json'])
+
     def test_structured_proposals_are_not_reported_as_text_corrections(self):
         rows = [{'corrections': [
             {'before': 'old', 'after': 'new'}, {'before': None, 'after': {'standing': {}}}]},
