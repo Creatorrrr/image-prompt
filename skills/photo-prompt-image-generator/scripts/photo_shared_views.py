@@ -38,6 +38,25 @@ class RequestCandidates(dict):
             self['_request_role_proposals']={tag:{} for tag in self['slot_catalog']}
             for proposal in proposals.values():self['_request_role_proposals'][proposal['target_slot_id']][proposal['candidate_id']]=proposal
 
+def materialize_member(data, pointer, *, realization_id=None, dependency_selections=None):
+    """CID owns meaning; an explicitly declared role only supplies presentation conditions."""
+    bid = pointer.get('binding_id')
+    binding = data['slot_bindings'][bid] if bid else None
+    role = pointer.get('presentation_role', binding['slot_id'] if binding else '')
+    if binding and (binding['candidate_id'] != pointer['candidate_id'] or role != binding['slot_id']):
+        raise ValueError('member presentation role does not match its explicit binding')
+    if role and role not in data['slot_catalog']:
+        raise ValueError('unknown explicit member presentation role')
+    member = c.entry(data, pointer['candidate_id'], bid, realization_id=realization_id,
+                     dependency_selections=dependency_selections)
+    requirements = copy.deepcopy(pointer.get('requirements') or {})
+    member['_member_requirements'] = requirements
+    # These are additional semantic/render obligations, never condition or body overrides.
+    member['member_requirements']=copy.deepcopy(requirements)
+    member.update(slot=role, entry_id=pointer['candidate_id'], adoption=pointer.get('adoption'))
+    return member
+
+
 def assemble(corpus,vectors):
     """Offline fixture/evaluation projection; production always uses SearchReader."""
     data=dict(corpus);data.update(corpus['policies']);data['_global_index']=vectors;data['_global_index_sha256']=c.digest(vectors)
@@ -55,7 +74,7 @@ def assemble(corpus,vectors):
     for cid in corpus['policies']['bundle_refs']:
         row=c.entry(corpus,cid);members=[]
         for pointer in row['member_candidates']:
-            binding=corpus['slot_bindings'][pointer['binding_id']];member=c.entry(corpus,pointer['candidate_id'],pointer['binding_id']);member.update(copy.deepcopy(pointer['requirements']));member.update({'slot':binding['slot_id'],'entry_id':pointer['candidate_id'],'adoption':pointer['adoption']});members.append(member)
+            members.append(materialize_member(corpus,pointer))
         row['member_candidates']=members;bundles.append(row)
     data['candidate_bundles']=bundles
     return data

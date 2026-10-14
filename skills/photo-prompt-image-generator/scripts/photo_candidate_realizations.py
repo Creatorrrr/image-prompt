@@ -7,10 +7,24 @@ from __future__ import annotations
 import copy
 
 PROJECTION_FIELDS = frozenset({'en', 'ko', 'embedding_text', 'concept_units', 'relations'})
+# The existing primitive shape is unchanged. Mechanisms have an explicit
+# per-kind extension because their canonical positive meaning lives in definition.
+MECHANISM_PROJECTION_CONTRACT = 'photo-relationship-realization-content/v1'
+MECHANISM_PROJECTION_FIELDS = PROJECTION_FIELDS | {'definition'}
+PROJECTION_FIELDS_BY_KIND = {'visual_option': PROJECTION_FIELDS,
+                             'relationship_mechanism': MECHANISM_PROJECTION_FIELDS}
+# These positive source surfaces are read by index/render consumers but have no
+# selected counterpart in the exact mechanism contract. Fail visibly rather
+# than leaving an alternative in the selected entry or silently hiding it.
+MECHANISM_UNPROJECTED_POSITIVE_FIELDS = frozenset({'ja', 'label_en', 'label_ko',
+    'definitions_by_topic', 'manifestations', 'components', 'member_candidates',
+    'embedding_texts', 'concept_candidate'})
+MECHANISM_UNPROJECTED_SEMANTIC_FIELDS = frozenset({'definition', 'semantic_caption',
+    'visual_components', 'support_cues', 'component_semantics'})
 
 
 def validate_content(record):
-    """Primitive OR choices may own explicit text, never identity or guards.
+    """Explicit OR choices own selected text, never identity or guards.
 
     Canonical search text remains owned once by the source record. These
     manually authored render projections do not create search documents.
@@ -19,14 +33,28 @@ def validate_content(record):
     if choices is None:
         return
     import photo_candidate_corpus as c
-    if (record['record_kind'] != 'visual_option'
+    fields = PROJECTION_FIELDS_BY_KIND.get(record['record_kind'])
+    if (fields is None
             or not record['effects'].get('realizations')
             or not isinstance(choices, dict) or set(choices) != set(ids(record))):
         raise ValueError('primitive realization text must cover every actual branch exactly once')
+    if record['record_kind'] == 'relationship_mechanism':
+        c.validate_effects(record['effects'], record['id'])
+        unsupported = sorted(key for key in MECHANISM_UNPROJECTED_POSITIVE_FIELDS
+                             if record['content'].get(key))
+        semantics = record['content'].get('semantics')
+        if isinstance(semantics, dict):
+            unsupported.extend('semantics.' + key for key in sorted(
+                MECHANISM_UNPROJECTED_SEMANTIC_FIELDS) if semantics.get(key))
+        if unsupported:
+            raise ValueError('mechanism projection has unprojected positive source fields: '
+                             + ', '.join(unsupported))
+    string_fields = ('en', 'ko', 'embedding_text', 'definition') if (
+        record['record_kind'] == 'relationship_mechanism') else ('en', 'ko', 'embedding_text')
     for rid, text in choices.items():
-        if (not isinstance(text, dict) or set(text) != PROJECTION_FIELDS
+        if (not isinstance(text, dict) or set(text) != fields
                 or any(not isinstance(text[k], str) or not text[k].strip()
-                       for k in ('en', 'ko', 'embedding_text'))
+                       for k in string_fields)
                 or not c.strings(text['concept_units'], rid + '.concept_units')
                 or not isinstance(text['relations'], list)
                 or any(not isinstance(row, dict) for row in text['relations'])):
@@ -34,11 +62,15 @@ def validate_content(record):
 
 
 def project_content(record, realization_id):
-    """Project one declared primitive choice without mutating its source."""
+    """Project one declared choice, preserving full canonical discovery text."""
     choices = record['content'].get('realization_content')
     if choices is None:
         return {}
     branch(record, realization_id)  # Reject foreign choices even without a prior validate call.
+    if record['record_kind'] == 'relationship_mechanism':
+        # entry() may be used without an earlier corpus validate(). Never emit
+        # an unqualified mechanism definition or extra positive source surface.
+        validate_content(record)
     selected = copy.deepcopy(choices[realization_id])
     # Canonical aliases/keywords can describe both alternatives. They remain
     # in the single search document, but cannot leak into a selected render
@@ -119,7 +151,7 @@ def selected_view(candidate, interpretation):
 
 
 def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id=None,
-                 *, check_effect_scope=True):
+                 *, check_effect_scope=True, dependency_selections=None):
     import photo_candidate_corpus as c
     import prompt_generator as g
     record = data['candidates'][candidate_id]
@@ -128,7 +160,7 @@ def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id
         selected = branch(record, rid)
         if not context_satisfied(selected, core):
             continue
-        entry = c.entry(data, candidate_id, binding_id, realization_id=rid)
+        entry = c.entry(data, candidate_id, binding_id, realization_id=rid, dependency_selections=dependency_selections)
         if not g.core_entry_eligible(data, core, contract, picked, slot, entry,
                                      check_effect_scope=check_effect_scope):
             continue
@@ -140,10 +172,37 @@ def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id
                 continue
         pointers = record['content'].get('member_candidates', [])
         wanted = member_ids(record, rid)
-        if any(not eligible_ids(data, pointer['candidate_id'], core, contract, picked,
-                                data['slot_bindings'][pointer['binding_id']]['slot_id'],
-                                pointer['binding_id'])
-               for pointer in pointers if pointer['candidate_id'] in wanted):
+        import photo_semantic_evidence as native
+        selected_choices = dependency_selections or {}
+        if native.native_status(record) == 'qualified':
+            proof = native.proof_of(entry)
+            adopted = {row['candidate_id'] for row,_ in native.selected_dependencies(proof, rid, selected_choices)}
+        else:
+            # Stage 5C search preserves canonical required/unspecified members.
+            # Explicitly optional source members never default to all-selected.
+            adopted = {row['candidate_id'] for row in pointers if row.get('adoption') != 'optional'
+                       or row['candidate_id'] in selected_choices}
+        member_failed = False
+        for pointer in pointers:
+            child_id = pointer['candidate_id']
+            if child_id not in wanted or child_id not in adopted:
+                continue
+            # Transitional presentation conditions remain ANDed only when the
+            # source explicitly names that binding. No old-binding lookup fallback.
+            bid = pointer.get('binding_id')
+            role = data['slot_bindings'][bid]['slot_id'] if bid else ''
+            child_selections = selected_choices
+            if native.native_status(data['candidates'][child_id]) == 'qualified':
+                child_guard = native.compact(data['candidates'][child_id], data)
+                descendant_ids = {cid for child_rid in ids(data['candidates'][child_id])
+                    for cid in native.dependency_choices(child_guard, child_rid)}
+                child_selections = {cid:value for cid,value in selected_choices.items() if cid in descendant_ids}
+            choices = eligible_ids(data, child_id, core, contract, picked, role, bid,
+                check_effect_scope=check_effect_scope, dependency_selections=child_selections)
+            actual_choice = selected_choices.get(child_id)
+            if not choices or actual_choice is not None and actual_choice not in choices:
+                member_failed = True; break
+        if member_failed:
             continue
         result.append(rid)
     return result

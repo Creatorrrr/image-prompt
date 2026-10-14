@@ -2717,7 +2717,9 @@ def audit_candidate_semantic_contracts(
         expected_bundles = candidate_semantics_generator.candidate_pack_candidate_bundles(
             source_data, pack
         )
-        if bundles != expected_bundles:
+        comparable=lambda contract: {**contract,'candidates':[photo_candidate_semantics.bundle_audit_material(row)
+            for row in contract.get('candidates',[])]}
+        if comparable(bundles) != comparable(expected_bundles):
             fail(
                 "",
                 "candidate bundle contents or joint admission differ from the same source snapshot and frozen core",
@@ -2741,6 +2743,14 @@ def audit_candidate_semantic_contracts(
         if not isinstance(bundle, dict):
             continue
         candidate_id = str(bundle.get("id") or "")
+        if bundle.get('native_bundle_contract') == photo_candidate_semantics.NATIVE_BUNDLE_CONTRACT:
+            if bundle.get('source_contract_sha256') != photo_candidate_semantics.digest(
+                    photo_candidate_semantics.bundle_source_material(bundle)):
+                fail(candidate_id,'native selected-member presentation differs from its bound source')
+            # Exact source recomputation above and whole adoption below bind
+            # every local/joint effect and actual selected dependency. The
+            # historical all-member union is not a native identity contract.
+            continue
         if (
             bundle.get("source_contract_sha256")
             != photo_candidate_semantics.digest(
@@ -2768,8 +2778,9 @@ def audit_candidate_semantic_contracts(
                 dims={d for member in selected_members for d in member.get('affected_dimensions') or []}
                 if (not selected_members or dims!=set(choice.get('affected_dimensions') or [])
                         or not dims<=open_dimensions
-                        or any(not property_effects_allowed((pack.get('authorial_core') or {}).get('intent_lock') or {},
-                                    member.get('affected_dimensions') or [],member.get('affected_properties',[]))
+                        or any(not native_property_effects_allowed(pack.get('authorial_core') or {},
+                                    member.get('affected_dimensions') or [],member.get('affected_properties',[]),
+                                    candidate_id=member.get('id'),realization_id=member.get('realization_id'))
                                for member in selected_members)
                         or choice.get('source_contract_sha256')!=photo_candidate_semantics.digest(photo_candidate_semantics.bundle_source_material(choice))):
                     fail(candidate_id,'conditional bundle choice has altered or closed member effects')
@@ -2891,11 +2902,21 @@ def audit_candidate_semantic_contracts(
                 trusted = photo_candidate_semantics.semantic_source(
                     source_entry, str(candidate.get("slot") or ""), source_data.get("candidate_semantic_policy")
                 )
+                if candidate.get('native_bundle_contract') == photo_candidate_semantics.NATIVE_BUNDLE_CONTRACT:
+                    import photo_semantic_evidence as native
+                    import photo_candidate_corpus as corpus
+                    interpretation=by_id.get(candidate_id,{})
+                    selected_entry=corpus.entry(source_data,candidate_id,
+                        realization_id=interpretation.get('realization_id','base'),
+                        dependency_selections=interpretation.get('dependency_selections'))
+                    dims,props,_=native.permission_scope(selected_entry,pack['authorial_core'])
+                    trusted.update(affected_dimensions=dims,affected_properties=props)
                 if (candidate.get("affected_properties", []) != trusted.get("affected_properties", [])
                         or candidate.get("affected_dimensions") != trusted["affected_dimensions"]
-                        or not property_effects_allowed(
-                            (pack.get("authorial_core") or {}).get("intent_lock") or {},
-                            trusted["affected_dimensions"], trusted.get("affected_properties", []))):
+                        or not native_property_effects_allowed(
+                            pack.get("authorial_core") or {}, trusted["affected_dimensions"],
+                            trusted.get("affected_properties", []), candidate_id=candidate_id,
+                            realization_id=candidate.get("realization_id"))):
                     fail(candidate_id, "selected property effects must match the source and preserve requester property locks")
         interpretation = by_id.get(candidate_id, {})
         for field, expected_ids in (
@@ -3003,6 +3024,11 @@ def audit_candidate_interpretations(
     for cid in chosen:
         try:
             candidate_objects[cid]=realizations.selected_view(candidate_objects.get(cid,{}),by_id.get(cid,{}))
+            if candidate_objects[cid].get('native_bundle_contract') == photo_candidate_semantics.NATIVE_BUNDLE_CONTRACT:
+                interpretation=by_id.get(cid,{})
+                candidate_objects[cid]=photo_candidate_semantics.native_bundle_view(_audit_source_data(),
+                    candidate_objects[cid],pack,interpretation.get('realization_id','base'),
+                    interpretation.get('dependency_selections'))
         except ValueError as error:
             failures.append({'check':'candidate_realization','candidate_id':cid,'reason':str(error)})
     failures.extend(audit_candidate_semantic_contracts(pack, prompt_en, chosen, candidate_objects, semantic_evidence_rows))
@@ -3060,8 +3086,8 @@ def audit_candidate_interpretations(
             baseline_retained = row.get("realization") == "baseline" and text_contains_term(str(core.get("baseline_prompt_en") or ""), evidence)
             if not baseline_retained and (
                 not effects
-                or not property_effects_allowed(lock, effects, candidate.get("affected_properties", []))
-                or not property_effects_allowed(lock, effects, row.get("affected_properties", []))
+                or not native_property_effects_allowed(core, effects, candidate.get("affected_properties", []), candidate_id=candidate_id, realization_id=row.get("realization_id"))
+                or not native_property_effects_allowed(core, effects, row.get("affected_properties", []), candidate_id=candidate_id, realization_id=row.get("realization_id"))
             ):
                 failures.append({"check": "candidate_interpretation_properties", "candidate_id": candidate_id,
                                  "reason": "candidate and authored effects must preserve protected properties; broad unknown garment effects are not compatible"})
@@ -3377,11 +3403,14 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any], *, creative_
         if isinstance(core.get("request_binding"), dict)
         else {}
     )
-    if not isinstance(assertions, list) or len(assertions) > 16:
+    if not isinstance(assertions, list) or len(assertions) > 64:
         return False
     try:
         authored_subject_category(assertions, (creative_control_snapshot or {}).get("context"))
         visual_spans = authorial_core_visual_spans(core, creative_control_snapshot)
+        from photo_precore_bridge import load as _neutral_load
+        _native_witnesses=_neutral_load('photo_semantic_witnesses')
+        _native_witnesses.read(assertions, visual_spans, core.get('baseline_prompt_en', ''),intent_lock=intent_lock)
     except (ValueError, TypeError, KeyError, AttributeError):
         return False
     span_ids = {
@@ -3502,7 +3531,7 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any], *, creative_
             or not affected
             or len(affected) != len(set(affected))
             or not set(affected) <= AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
-            or (polarity == "required" and not set(affected) <= locked)
+            or (polarity == "required" and not set(affected) <= locked and not _native_witnesses.is_native_fact(item))
             or (polarity == "advisory" and not set(affected) <= opened)
             or not 1 <= len(axes) <= 16
             or len(evidence) > 16
@@ -4368,8 +4397,8 @@ def audit_authorial_core(
                 }
             )
         for row in decisions:
-            if not property_effects_allowed(
-                intent_lock, [row.get("dimension")], row.get("affected_properties", [])
+            if not native_property_effects_allowed(
+                core, [row.get("dimension")], row.get("affected_properties", [])
             ):
                 failures.append(
                     {
@@ -4682,8 +4711,9 @@ def audit_creative_augmentation(
                         "open_dimensions": sorted(open_dimensions),
                     }
                 )
-            if not property_effects_allowed(
-                intent_lock, affected_dimensions, decision.get("affected_properties", [])
+            if not native_property_effects_allowed(
+                core, affected_dimensions, decision.get("affected_properties", []),
+                candidate_id=candidate_id, realization_id=decision.get("realization_id")
             ):
                 failures.append(
                     {
@@ -4853,8 +4883,9 @@ def audit_adult_appeal_dimension_scope(
                         "reason": "an adult candidate must declare its complete effect within this axis's unlocked dimensions",
                     }
                 )
-            if not property_effects_allowed(
-                intent_lock, affected, candidate.get("affected_properties", [])
+            if not native_property_effects_allowed(
+                pack.get("authorial_core") or {}, affected, candidate.get("affected_properties", []),
+                candidate_id=candidate.get("id"), realization_id=candidate.get("realization_id")
             ):
                 failures.append(
                     {
@@ -4982,10 +5013,8 @@ def audit_adult_appeal(
                         "reason": "realization must be baseline or refined",
                     }
                 )
-            if not property_effects_allowed(
-                (pack.get("authorial_core") or {}).get("intent_lock") or {},
-                affected,
-                actual.get("affected_properties", []),
+            if not native_property_effects_allowed(
+                pack.get("authorial_core") or {}, affected, actual.get("affected_properties", []),
             ):
                 failures.append(
                     {
@@ -5606,6 +5635,132 @@ def bound_native_source(source_data, query_context=None):
     finally:_BOUND_AUDIT_SOURCE.reset(token);_BOUND_QUERY_CONTEXT.reset(query_token)
 
 
+def native_property_effects_allowed(core, dimensions, effects, *, candidate_id=None, realization_id=None):
+    import photo_semantic_evidence as native
+    record = None
+    if candidate_id:
+        try:
+            source = _audit_source_data()
+            if candidate_id in source['candidates']:
+                record = source['candidates'][candidate_id]
+        except (KeyError, TypeError, ValueError):
+            return False
+    return native.property_scope_allowed(core, dimensions, effects, record=record, realization_id=realization_id)
+
+
+def audit_native_member_requirement_evidence(source_data, closure, selections, interpretation, prompt):
+    """Preserve selected semantic/render obligations without treating them as guards."""
+    import photo_semantic_evidence as native
+    expected={}
+    for selected in closure:
+        parent_id=selected['candidate_id'];rid=selected['realization_id']
+        record=source_data['candidates'][parent_id];guard=native.compact(record,source_data)
+        adopted={row['candidate_id'] for row,_ in native.selected_dependencies(guard,rid,selections)}
+        for pointer in record['content'].get('member_candidates',[]):
+            child_id=pointer['candidate_id'];requirements=pointer.get('requirements') or {}
+            if child_id not in adopted:continue
+            units=requirements.get('concept_units') or [];relations=requirements.get('relations') or []
+            if not units and not relations:continue
+            expected.setdefault(parent_id,{})[child_id]={
+                'concept_units':{str(index) for index in range(len(units))},
+                'relations':{row['id'] for row in relations}}
+    evidence=interpretation.get('member_requirement_evidence') or {}
+    if not isinstance(evidence,dict) or set(evidence)!=set(expected):
+        raise ValueError('selected member semantic/render requirements need explicit literal evidence')
+    for parent_id,children in expected.items():
+        if not isinstance(evidence[parent_id],dict) or set(evidence[parent_id])!=set(children):
+            raise ValueError('member requirement evidence must cover exactly selected parent/child CID edges')
+        for child_id,fields in children.items():
+            item=evidence[parent_id][child_id]
+            if not isinstance(item,dict) or set(item)!=set(fields):
+                raise ValueError('member requirement evidence must separate positive units and relations')
+            for field,ids in fields.items():
+                rows=item[field]
+                if (not isinstance(rows,dict) or set(rows)!=ids
+                        or any(not isinstance(value,str) or not value.strip() or not text_contains_term(prompt,value)
+                               for value in rows.values())):
+                    raise ValueError('selected member unit/relation evidence is missing or not literal in the final prompt')
+
+
+def audit_native_adoptions(pack, composed, source_data):
+    """Search recall never certifies a chosen cue's whole actual native effects."""
+    import photo_candidate_corpus as corpus
+    import photo_semantic_evidence as native
+    core = pack.get('authorial_core') or {}
+    chosen = normalize_chosen_candidate_ids(composed.get('chosen_candidate_ids'))
+    chosen.update(normalize_chosen_candidate_ids(composed.get('chosen_visual_concept_ids')))
+    transformed = [row for row in (composed.get('creative_augmentation_brief') or {}).get('decisions', [])
+                   if isinstance(row, dict) and row.get('decision') == 'transformed']
+    chosen.update(row.get('candidate_id') for row in transformed if row.get('candidate_id'))
+    interpretations = {row.get('candidate_id'): row for row in
+        [*(composed.get('candidate_interpretations') or []), *transformed] if isinstance(row, dict)}
+    failures = []
+    for cid in sorted(chosen):
+        try:
+            # Noncanonical authorial decisions retain their separate audit. A
+            # source candidate can never escape through a pack projection ID.
+            source_id = cid
+            if cid not in source_data['candidates']:
+                projected = (pack.get('candidate_pool') or {}).get(cid, {})
+                source_id = projected.get('source_candidate_id', cid)
+            if source_id not in source_data['candidates'] and not corpus.ID.fullmatch(source_id):
+                continue  # Policy-authored directions have their own bounded audit.
+            if source_id not in source_data['candidates']:
+                raise ValueError('chosen cue has no pinned canonical native source')
+            native.validate(source_data['candidates'][source_id], source_data['slot_catalog'], corpus=source_data)
+            interpretation = interpretations.get(cid, {})
+            entry = corpus.entry(source_data, source_id,
+                realization_id=interpretation.get('realization_id'),
+                dependency_selections=interpretation.get('dependency_selections'))
+            receipt = native.admission(entry, core)
+            if receipt['status'] != 'qualified' or not receipt['allowed']:
+                raise ValueError(receipt.get('reason', 'native whole-cue admission failed'))
+            constraints, picked = candidate_semantics_generator.frozen_core_context(
+                source_data, core, pack.get('creative_controls') or {})
+            import photo_candidate_realizations as realizations
+            proof = native.proof_of(entry); selected_rid = entry.get('_realization_id', 'base')
+            selections = entry.get('_native_dependency_selections', {})
+            closure = native.effect_closure(source_id, proof, selected_rid, selections)
+            audit_native_member_requirement_evidence(source_data,closure,selections,interpretation,
+                str(composed.get('prompt_en') or ''))
+            for selected_source in closure:
+                selected_id = selected_source['candidate_id']; rid = selected_source['realization_id']
+                child_record = source_data['candidates'][selected_id]
+                child_guard = native.compact(child_record, source_data)
+                relevant = native.dependency_choices(child_guard, rid)
+                child_selections = {key:value for key,value in selections.items() if key in relevant}
+                child_entry = corpus.entry(source_data, selected_id, realization_id=rid,
+                    dependency_selections=child_selections)
+                if not candidate_semantics_generator.core_entry_eligible(source_data, core, constraints, picked, '', child_entry):
+                    raise ValueError('selected source intrinsic conditions or native effect scope are incompatible')
+                branch = realizations.branch(child_record, rid)
+                if not realizations.context_satisfied(branch, core):
+                    raise ValueError('selected actual branch has no existing required context')
+                if branch and branch.get('conditions') and not candidate_semantics_generator.core_entry_eligible(
+                        source_data, core, constraints, picked, '', {**child_entry, **branch['conditions']}, check_effect_scope=False):
+                    raise ValueError('selected actual branch conditions are incompatible')
+                for member in child_record['content'].get('member_candidates', []):
+                    if (member['candidate_id'] not in realizations.member_ids(child_record, rid)
+                            or member['candidate_id'] not in {row['candidate_id'] for row in closure}
+                            or not member.get('binding_id')):
+                        continue
+                    member_record = source_data['slot_bindings'][member['binding_id']]
+                    member_choice = next(row['realization_id'] for row in closure if row['candidate_id']==member['candidate_id'])
+                    member_entry = corpus.entry(source_data, member['candidate_id'], member['binding_id'],
+                        realization_id=member_choice, dependency_selections={key:value for key,value in selections.items()
+                            if key in native.dependency_choices(native.compact(source_data['candidates'][member['candidate_id']], source_data),member_choice)})
+                    if not candidate_semantics_generator.core_entry_eligible(source_data, core, constraints, picked,
+                            member_record['slot_id'], member_entry):
+                        raise ValueError('selected member presentation conditions are incompatible')
+            dimensions, properties, _ = native.permission_scope(entry, core)
+            if (not set(dimensions) <= set((core.get('intent_lock') or {}).get('open_dimensions') or [])
+                    or not native.property_scope_allowed(core, dimensions, properties)):
+                raise ValueError('selected whole native effects conflict with frozen dimension/property scope')
+        except (KeyError, ValueError, TypeError) as error:
+            failures.append({'check':'native_candidate_adoption','candidate_id':cid,'reason':str(error)})
+    return failures
+
+
 def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,runtime_store=None,query_context=None):
     if runtime_receipt is not None:
         from photo_runtime_sources import RuntimeSnapshotProvider
@@ -5621,7 +5776,11 @@ def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,
     if hasattr(source_data,'for_core'):
         source_data=photo_shared_views.RequestCandidates(source_data.for_core(pack['authorial_core']),pack['candidate_pool'],pack['role_proposals'])
     token=_BOUND_AUDIT_SOURCE.set(source_data);query_token=_BOUND_QUERY_CONTEXT.set(query_context)
-    try:return _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
+    try:
+        report = _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
+        report['failures'].extend(audit_native_adoptions(pack, composed, source_data))
+        if report['failures']: report['status'] = 'fail'
+        return report
     finally:_BOUND_AUDIT_SOURCE.reset(token);_BOUND_QUERY_CONTEXT.reset(query_token)
 
 

@@ -4,9 +4,11 @@ import photo_candidate_corpus as c
 import photo_global_index as index
 import photo_slot_semantics as semantics
 import photo_candidate_realizations as realizations
+import photo_semantic_evidence as evidence
 
 
-def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, realization_ids=None):
+def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, realization_ids=None,
+            dependency_selections=None):
     compatible = sorted(eligible_bindings)
     preferred = [bid for bid in compatible if data['slot_bindings'][bid]['slot_id'] == slot]
     declared = [bid for bid in (declared_bindings if declared_bindings is not None else data['slot_bindings'])
@@ -22,14 +24,31 @@ def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, reali
     if not ids:raise ValueError('no eligible realization for role proposal')
     choices=[]
     for rid in ids:
-        effects=realizations.effects(record,rid)
-        fit=semantics.fit(data['slot_catalog'][slot],{**record,'effects':effects},positive,
+        effects=(evidence.effect_set(record,rid) if evidence.native_status(record)=='qualified'
+                 else realizations.effects(record,rid))
+        fit=semantics.fit(data['slot_catalog'][slot],record,positive,
                           realization_id=rid)
         choices.append(({'eligible':0,'review_required':1,'incompatible':2}[fit['status']],rid,fit,effects))
     _,rid,fit,effects=min(choices,key=lambda row:(row[0],row[1]))
     if declared and not preferred:
         fit.update(status='incompatible', reason='declared_role_conditions_not_satisfied')
-    value = {'schema': 'photo-request-role-proposal/v3', 'target_slot_id': slot, 'candidate_id': cid,
+    dependency_choices = {}; effect_closure = []
+    if evidence.native_status(record) == 'qualified':
+        proof = (record['_semantic_evidence_guard'] if '_semantic_evidence_guard' in record
+                 else evidence.compact(record, data))
+        dependency_choices = evidence.dependency_choices(proof, rid)
+        selections = dependency_selections or {}
+        if not isinstance(selections, dict) or not set(selections) <= set(dependency_choices):
+            raise ValueError('role proposal contains foreign dependency selections')
+        try:
+            effect_closure = evidence.effect_closure(cid, proof, rid, selections)
+        except ValueError:
+            if fit['status'] != 'incompatible':
+                fit.update(status='review_required', reason='actual_dependency_realization_selection_required')
+    value = {'schema': 'photo-request-role-proposal/v4', 'target_slot_id': slot, 'candidate_id': cid,
+             'native_qualification':fit['native_qualification'],
+             'dependency_selections':copy.deepcopy(dependency_selections or {}),
+             'dependency_choices':dependency_choices, 'native_effect_closure':effect_closure,
              'source_binding_id': bid, 'eligible_source_binding_ids': compatible,
              'effects': effects, 'conditions': copy.deepcopy(record['conditions']),
              'role_conditions': copy.deepcopy(original['conditions'] if original else {'subject_applicability': {}}),
@@ -44,12 +63,13 @@ def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, reali
 
 def entry(data, proposal):
     return c.entry(data, proposal['candidate_id'], proposal['source_binding_id'],
-                   realization_id=proposal['realization_id'])
+                   realization_id=proposal['realization_id'], dependency_selections=proposal['dependency_selections'])
 
 
 def validate(data, proposal, eligible_bindings):
     expected = propose(data, proposal['target_slot_id'], proposal['candidate_id'], eligible_bindings,
-                       realization_ids=proposal['eligible_realization_ids'])
+                       realization_ids=proposal['eligible_realization_ids'],
+                       dependency_selections=proposal['dependency_selections'])
     if proposal != expected:
         raise ValueError('role proposal changed authored conditions/effects/owner')
     return entry(data, proposal)

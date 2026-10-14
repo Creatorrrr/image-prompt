@@ -16,14 +16,15 @@ class SemanticRoleTests(unittest.TestCase):
     def test_shared_appearance_dimension_does_not_make_cuff_hair_color(self):
         record={'effects':{'dimensions':['appearance'],'properties':[{'dimension':'appearance','target':'main_subject','property':'wardrobe.cuffs.attachment'}]}}
         fit=semantics.fit(self.hair_spec(),record,'A white cuff joins the garment sleeve')
-        self.assertEqual(fit['status'],'incompatible');self.assertEqual(fit['matched_properties'],[])
+        self.assertEqual(fit['status'],'review_required');self.assertEqual(fit['matched_properties'],[])
+        self.assertEqual(fit['native_qualification'],'unqualified')
 
-    def test_explicit_hair_owner_and_color_property_can_fit_without_a_tag(self):
+    def test_explicit_hair_words_and_property_still_need_native_source_qualification(self):
         record={'effects':{'dimensions':['appearance'],'properties':[{'dimension':'appearance','target':'main_subject','property':'hair.color'}]}}
         fit=semantics.fit(self.hair_spec(),record,'Hair color bounded to a red fringe')
-        self.assertEqual(fit['status'],'eligible')
+        self.assertEqual(fit['status'],'review_required')
         other=copy.deepcopy(record);other['effects']['properties'][0]['target']='background'
-        self.assertEqual(semantics.fit(self.hair_spec(),other,'Hair color bounded to a red fringe')['status'],'incompatible')
+        self.assertEqual(semantics.fit(self.hair_spec(),other,'Hair color bounded to a red fringe')['status'],'review_required')
 
     def test_meaning_word_alone_and_wildcard_effects_need_review(self):
         for properties in ([],[{'dimension':'appearance','target':'main_subject','property':'*'}]):
@@ -33,7 +34,7 @@ class SemanticRoleTests(unittest.TestCase):
     def test_same_lighting_dimension_does_not_approve_pattern_as_direction(self):
         spec=slot('light_direction',['lighting'],property_prefixes=['lighting.direction'],evidence_terms=['side light'])
         record={'effects':{'dimensions':['lighting'],'properties':[{'dimension':'lighting','target':'main_subject','property':'lighting.pattern'}]}}
-        self.assertEqual(semantics.fit(spec,record,'dappled light through leaves')['status'],'incompatible')
+        self.assertEqual(semantics.fit(spec,record,'dappled light through leaves')['status'],'review_required')
 
     def test_intrinsic_conditions_and_effects_survive_other_role_proposal(self):
         data=fixture();data['candidates'][A]['conditions']={'for_any':['human']}

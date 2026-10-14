@@ -179,9 +179,9 @@ class LazyRuntimeData(dict):
         bundles=[]
         for cid in sorted(ids & set(self.reader.meta['policies']['bundle_refs'])):
             row=c.entry(result,cid);members=[]
+            from photo_shared_views import materialize_member
             for pointer in row['member_candidates']:
-                b=self['slot_bindings'][pointer['binding_id']];member=c.entry(result,pointer['candidate_id'],pointer['binding_id'])
-                member.update(copy.deepcopy(pointer['requirements']));member.update(slot=b['slot_id'],entry_id=pointer['candidate_id'],adoption=pointer['adoption']);members.append(member)
+                members.append(materialize_member(result,pointer))
             row['member_candidates']=members;bundles.append(row)
         result['candidate_bundles']=bundles
         return result

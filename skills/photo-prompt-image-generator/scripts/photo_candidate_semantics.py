@@ -20,7 +20,9 @@ BUNDLE_VERSION = "photo-candidate-bundles/v2"
 COMPILED_BUNDLE_FIELDS = (
     "id", "source_sha256", "associated_profile_ids", "components", "member_candidates",
     "confusion_boundaries", "relations", "adoption", "profile_activation",
-    "realization_id", "source_record_sha256",
+    "realization_id", "source_record_sha256", "native_bundle_contract",
+    "native_dependency_choices", "native_dependency_selections", "native_effect_closure",
+    "affected_dimensions", "affected_properties", "realization_choices",
 )
 
 
@@ -101,11 +103,72 @@ def semantic_source(entry: dict[str, Any], slot: str = "", policy: dict[str, Any
 
 
 
+NATIVE_BUNDLE_CONTRACT = 'photo-native-selected-members/v1'
+
+
+def native_bundle_view(data, bundle, pack, realization_id, dependency_selections=None):
+    """Expose root obligations separately from explicitly adopted child choices."""
+    import photo_candidate_corpus as c
+    import photo_candidate_realizations as realizations
+    import photo_semantic_evidence as native
+    import photo_shared_views as views
+    import prompt_generator as g
+    cid=bundle['id'];core=pack['authorial_core'];selections=copy.deepcopy(dependency_selections or {})
+    if not isinstance(selections,dict) or any(not isinstance(key,str) or not isinstance(value,str) for key,value in selections.items()):
+        raise ValueError('explicit native dependency selections must map CID strings to actual RID strings')
+    entry=c.entry(data,cid,realization_id=realization_id,dependency_selections=selections)
+    proof=native.proof_of(entry);choices=native.dependency_choices(proof,realization_id)
+    if not set(selections)<=set(choices):raise ValueError('unknown native member selection')
+    row={**copy.deepcopy(bundle),**entry}
+    row.update(realization_id=realization_id,native_bundle_contract=NATIVE_BUNDLE_CONTRACT,
+        native_dependency_choices=choices,native_dependency_selections=selections,
+        source_record_sha256=c.digest(data['candidates'][cid]),adoption='optional')
+    row.setdefault('relations',[])
+    row['member_candidates']=[];closure=[]
+    try:
+        closure=native.effect_closure(cid,proof,realization_id,selections)
+        dimensions,properties,_=native.permission_scope(entry,core)
+        constraints,picked=g.frozen_core_context(data,core,pack['creative_controls'])
+        allowed=g.core_entry_eligible(data,core,constraints,picked,'',entry)
+        pointers={pointer['candidate_id']:pointer for pointer in data['candidates'][cid]['content'].get('member_candidates',[])}
+        for dependency,_ in native.selected_dependencies(proof,realization_id,selections):
+            child_id=dependency['candidate_id']
+            rid=next(item['realization_id'] for item in closure if item['candidate_id']==child_id)
+            child_guard=native.compact(data['candidates'][child_id],data)
+            child_choices=native.dependency_choices(child_guard,rid)
+            member=views.materialize_member(data,pointers[child_id],realization_id=rid,
+                dependency_selections={key:value for key,value in selections.items() if key in child_choices})
+            if not g.core_entry_eligible(data,core,constraints,picked,member['slot'],member):
+                allowed=False
+            row['member_candidates'].append(member)
+        status='eligible' if allowed else 'ineligible'
+    except ValueError as error:
+        # A required conditional member needs an actual choice. Publish its
+        # bounded source-addressed choice inventory, never a union of siblings.
+        dimensions=list(entry['affected_dimensions']);properties=copy.deepcopy(entry['affected_properties'])
+        status='review_required';row['native_selection_reason']=str(error)
+    row.update(native_effect_closure=closure,affected_dimensions=dimensions,affected_properties=properties,
+        content_form='unordered_inspiration_terms',semantic_surface_version=SURFACE_VERSION,
+        concept_units=[unit for component in row.get('components',[]) for unit in component['concept_units']],
+        applicability={'status':status,'source':'native_whole_selected_dependencies'},conflicts_with=[])
+    row['concept_terms']=list(row['concept_units'])
+    row['selection_contract']={'scope':'root_components_plus_explicit_selected_members',
+        'dependency_selections':'candidate_id_to_actual_child_realization',
+        'component_evidence':'every_parent_component_id_to_literal_final_prompt_phrase',
+        'relation_evidence':'every_parent_relation_id_to_literal_final_prompt_phrase',
+        'associated_profiles_are_not_promoted':True}
+    row['source_contract_sha256']=digest(bundle_source_material(row))
+    return row
+
+
 def bundle_variants(data, bundle, pack):
     import photo_candidate_corpus as c
     import photo_candidate_realizations as realizations
     import prompt_generator as g
     cid=bundle['id'];record=data['candidates'][cid]
+    import photo_semantic_evidence as native
+    if native.native_status(record)=='qualified':
+        return [native_bundle_view(data,bundle,pack,rid) for rid in realizations.ids(record)]
     if not record['effects'].get('realizations'):
         return [bundle]
     core=pack['authorial_core']
@@ -132,6 +195,10 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
     variants=[row for bundle in originals.values() for row in bundle_variants(data,bundle,pack)]
     for bundle in variants:
         if bundle["id"] not in getattr(data,"admitted_ids",set()):continue
+        if bundle.get('native_bundle_contract') == NATIVE_BUNDLE_CONTRACT:
+            # Candidate-native scope already includes root/joint effects and
+            # only explicitly selected members; legacy member unions do not apply.
+            result.append(copy.deepcopy(bundle));continue
         member_ids = {member["id"] for member in bundle["member_candidates"]}
         dimensions = {dimension for member in bundle["member_candidates"]
                       for dimension in member.get("affected_dimensions") or []}
@@ -173,8 +240,20 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
     for row in result:grouped.setdefault(row['id'],[]).append(row)
     result=[]
     for cid,choices in grouped.items():
-        if 'realization_id' not in choices[0]:
+        if 'realization_id' not in choices[0] or not data['candidates'][cid]['effects'].get('realizations'):
             result.extend(choices);continue
+        if choices[0].get('native_bundle_contract') == NATIVE_BUNDLE_CONTRACT:
+            master=copy.deepcopy(originals[cid])
+            master.update(native_bundle_contract=NATIVE_BUNDLE_CONTRACT,
+                realization_choices=sorted(choices,key=lambda row:row['realization_id']),
+                affected_dimensions=[],affected_properties=[],member_candidates=[],
+                source_record_sha256=digest(data['candidates'][cid]),
+                applicability={'status':'review_required','source':'explicit_actual_root_realization_required'},
+                selection_contract={'realization_id':'one_presented_realization_required',
+                    'dependency_selections':'candidate_id_to_actual_child_realization',
+                    'associated_profiles_are_not_promoted':True})
+            master['source_contract_sha256']=digest(bundle_source_material(master))
+            result.append(master);continue
         master=copy.deepcopy(originals[cid])
         master.update(content_form='unordered_inspiration_terms',semantic_surface_version=SURFACE_VERSION,
                       source_record_sha256=digest(data['candidates'][cid]),
@@ -219,3 +298,14 @@ def apply_public_semantics(pack: dict[str, Any], sources: dict[str, dict[str, An
     visit(pack)
     if isinstance(pack,photo_native_pack.WorkingPack):visit(photo_native_pack.role_cards(pack))
     pack["candidate_semantic_surface_version"] = SURFACE_VERSION
+
+
+def bundle_audit_material(bundle):
+    if bundle.get('native_bundle_contract') != NATIVE_BUNDLE_CONTRACT:
+        return bundle
+    # A native pool may merge other role presentations for the same CID. Those
+    # extra display fields are not the bundle's immutable semantic contract.
+    fields=(*COMPILED_BUNDLE_FIELDS,'source_contract_sha256','selection_contract',
+        'native_selection_reason','applicability','content_form','semantic_surface_version',
+        'concept_units','concept_terms','conflicts_with')
+    return {key:copy.deepcopy(bundle[key]) for key in fields if key in bundle}
