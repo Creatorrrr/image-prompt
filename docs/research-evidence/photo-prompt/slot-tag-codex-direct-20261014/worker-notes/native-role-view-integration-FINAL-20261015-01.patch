@@ -1,0 +1,701 @@
+--- before/skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py
++++ after/skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py
+@@ -8,6 +8,7 @@
+ import contextlib
+ import contextvars
+ import photo_native_owner_resolution as owner_resolver
++import photo_semantic_role_views as manual_views
+ import photo_candidate_corpus as c
+ import photo_candidate_realizations as realizations
+ from photo_precore_bridge import load
+@@ -62,7 +63,7 @@
+ 
+ 
+ def _proof_fields_valid(proof):
+-    return set(proof) in (PROOF_FIELDS, PROOF_FIELDS | {'guard_supports'})
++    return PROOF_FIELDS <= set(proof) <= PROOF_FIELDS | {'guard_supports','manual_role_views'}
+ 
+ 
+ def _guard_support_rows(proof):
+@@ -590,6 +591,92 @@
+             covered.add(binding['pointer'])
+         if covered!=paths:
+             raise ValueError('every positive member requirement needs explicit fact-mode and actual-effect coverage')
++
++
++def _compile_manual_role_views(record,catalog):
++    """Structural output only, called after the native whole-source checks.
++
++    This is not a capability or a public caller-authored source context. Full
++    qualification/publication must independently supply the actual record.
++    """
++    proof=record['content']['role_evidence']
++    if 'manual_role_views' not in proof:return None
++    rows=proof['manual_role_views']
++    if not isinstance(rows,list) or not 1<=len(rows)<=manual_views.MAX_VIEWS:
++        raise ValueError('bounded nonempty explicit manual role views required')
++    ids=sorted(realizations.ids(record))
++    context={'candidate_id':record['id'],'actual_realization_ids':ids,
++        'meaning_sha256':meaning_sha256(record),'catalog_by_id':catalog,
++        'facts':proof['facts'],'source_units':proof['source_units'],
++        'positive_fields':[{'realization_id':rid,'pointer':pointer,
++            'text':positive_string(record,pointer,realization_id=rid)}
++            for rid in ids for pointer in sorted(primary_paths(record,rid))],
++        'closure_snapshot':{key:proof[key] for key in manual_views.CLOSURE_FIELDS}}
++    validated=manual_views.validate_full_views(rows,context=context)
++    expected=manual_views.compact_views(validated,authoritative_contract_sha256=c.digest(context))
++    return validated,expected
++
++
++def _ordinary_role_fact(spec,fact):
++    return (fact['dimension'] in spec['dimensions'] and any(
++        fact['property']==prefix.rstrip('.') or fact['property'].startswith(
++            prefix if prefix.endswith('.') else prefix+'.') for prefix in spec['property_prefixes']))
++
++
++def _role_fact_support(spec,role,fact,*,view_authority=None):
++    # A semantic view changes only the explicit role support decision. The
++    # complete canonical value/mode/property/owner/operation/Rx stays original.
++    if (fact['realization_id'] not in role['realization_ids'] or fact['mode'] not in role['support_modes']
++            or fact['mode']=='context' and spec['semantic_role']!='contextual'):
++        raise ValueError('role fact is outside its reviewed spec/mode/actual RID')
++    if _ordinary_role_fact(spec,fact):return None
++    if view_authority is None or not role.get('view_refs'):
++        raise ValueError('out-of-prefix role fact requires its explicit source-qualified manual view')
++    actual,expected=view_authority
++    support=manual_views.selected_support(actual,expected_binding=expected,
++        role_id=spec['id'],realization_id=fact['realization_id'],fact_id=fact['id'])
++    original={key:value for key,value in fact.items() if key not in {'pointer','quote'}}
++    if (support is None or not set(support['view_ids'])<=set(role['view_refs'])
++            or support['fact']!=original):
++        raise ValueError('manual view does not support this unchanged canonical role fact')
++    return support
++
++
++def _validate_manual_view_usage(proof):
++    rows={row['id']:row for row in proof.get('manual_role_views',[])};used=set()
++    for tag,role in proof['roles'].items():
++        refs=role.get('view_refs',[])
++        if 'view_refs' in role:_strings(refs,'explicit role manual views')
++        for ref in refs:
++            view=rows.get(ref)
++            if (view is None or view['role_id']!=tag or view['realization_id'] not in role['realization_ids']
++                    or not {row['fact_id'] for row in view['canonical_fact_refs']}<=set(role['fact_refs'])):
++                raise ValueError('manual view must bind its exact same-source role/facts/actual RID')
++            used.add(ref)
++    if used!=set(rows):raise ValueError('unused or foreign manual role view')
++
++
++def _lookup_manual_view_authority(record,source_data):
++    """Rebuild expected support from the independently pinned full source.
++
++    Never take an expected binding from the compact/public receipt under test.
++    Lazy source_data.candidates loads the existing hash-verified payload. The
++    runtime/final auditor owns its independently acquired source generation.
++    """
++    if source_data is None:raise ValueError('manual role view requires independent full-source authority')
++    cid=record['id'];source=source_data['candidates'][cid]
++    if '_semantic_evidence_guard' in source:
++        raise ValueError('compact metadata is not full-source role-view authority')
++    expected_guard=compact(source,source_data)  # All native whole-source checks.
++    if expected_guard is None or 'manual_role_view_bindings' not in expected_guard:
++        raise ValueError('actual full source has no qualified manual role views')
++    if '_semantic_evidence_guard' in record:
++        if proof_of(record)!=expected_guard:raise ValueError('manual role compact differs from full-source qualification')
++        actual=proof_of(record)['manual_role_view_bindings']
++    else:
++        if record!=source:raise ValueError('manual role full source differs from pinned source')
++        actual=_compile_manual_role_views(record,source_data['slot_catalog'])[0]
++    return actual,expected_guard['manual_role_view_bindings']
+ 
+ 
+ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
+@@ -726,14 +813,16 @@
+         raise ValueError('source unit names a foreign RID')
+     if record['record_kind'] == 'diagnostic' and (proof['roles'] or proof['facts'] or supports):
+         raise ValueError('diagnostic cannot certify positive semantic facts')
++    view_authority=_compile_manual_role_views(record,catalog)
+     for tag, role in proof['roles'].items():
+-        if (tag not in catalog or not isinstance(role, dict) or set(role) not in (
+-                {'spec_sha256', 'scope', 'realization_ids', 'fact_refs', 'support_modes'},
+-                {'spec_sha256', 'scope', 'realization_ids', 'fact_refs', 'support_modes','guard_refs'})):
++        if (tag not in catalog or not isinstance(role, dict)
++                or not {'spec_sha256','scope','realization_ids','fact_refs','support_modes'} <= set(role)
++                or not set(role) <= {'spec_sha256','scope','realization_ids','fact_refs','support_modes','guard_refs','view_refs'}):
+             raise ValueError('unknown role or native role contract')
+         spec = catalog[tag]
+         guard_refs=role.get('guard_refs',[])
+         if 'guard_refs' in role:_strings(guard_refs,'role guard supports')
++        if 'view_refs' in role:_strings(role['view_refs'],'explicit role manual views')
+         _strings(role['realization_ids'], 'role RIDs'); _strings(role['fact_refs'], 'role facts',empty=bool(guard_refs))
+         _strings(role['support_modes'], 'role modes')
+         if (role['spec_sha256'] != c.digest(spec) or role['scope'] not in {'whole_record', 'positive_alternative'}
+@@ -743,12 +832,8 @@
+         covered = set()
+         for ref in role['fact_refs']:
+             fact = facts.get(ref)
+-            if (fact is None or fact['realization_id'] not in role['realization_ids']
+-                    or fact['mode'] not in role['support_modes'] or fact['dimension'] not in spec['dimensions']
+-                    or not any(fact['property'] == prefix.rstrip('.') or fact['property'].startswith(
+-                        prefix if prefix.endswith('.') else prefix+'.') for prefix in spec['property_prefixes'])
+-                    or fact['mode'] == 'context' and spec['semantic_role'] != 'contextual'):
+-                raise ValueError('role fact is outside its reviewed spec/mode/actual RID')
++            if fact is None:raise ValueError('role fact is outside its reviewed spec/mode/actual RID')
++            _role_fact_support(spec,role,fact,view_authority=view_authority)
+             covered.add(fact['realization_id'])
+         for ref in guard_refs:
+             support=supports.get(ref)
+@@ -764,6 +849,7 @@
+             raise ValueError('role needs source support on every qualified RID')
+         if guard_refs and set(role['support_modes'])!={facts[ref]['mode'] for ref in role['fact_refs']}|{supports[ref]['mode'] for ref in guard_refs}:
+             raise ValueError('guard-backed role modes must match its actual direct support union')
++    _validate_manual_view_usage(proof)
+ 
+ 
+ def compact(record, corpus=None, _stack=()):
+@@ -777,6 +863,9 @@
+             raise ValueError('native compact seal requires the full current source/catalog')
+         validate(record,corpus['slot_catalog'],corpus=corpus)
+     result = copy.deepcopy(proof)
++    if 'manual_role_views' in proof:
++        result.pop('manual_role_views')
++        result['manual_role_view_bindings']=_compile_manual_role_views(record,corpus['slot_catalog'])[1]
+     result.pop('source_units'); result.pop('review')
+     for fact in result['facts']:
+         fact.pop('pointer'); fact.pop('quote')
+@@ -804,7 +893,7 @@
+     return result
+ 
+ 
+-def qualification(spec, record, realization_id='base'):
++def qualification(spec, record, realization_id='base', *, source_data=None):
+     result = {'status': 'review_required', 'reason': 'native_source_unqualified_stage05c',
+               'native_qualification': native_status(record), 'matched_properties': [],
+               'meaning_terms': [], 'fact_refs': [], 'support_modes': []}
+@@ -836,8 +925,20 @@
+         return {**result, 'reason': 'qualified_actual_effect_set_changed'}
+     if not selected and not selected_guards:
+         return {**result, 'reason': 'role_has_no_selected_fact'}
++    view_supports=[]
++    try:
++        view_authority=None
++        if 'manual_role_views' in proof or 'manual_role_view_bindings' in proof or 'view_refs' in role:
++            if source_data is None:return {**result,'reason':'manual_role_view_full_source_authority_required'}
++            view_authority=_lookup_manual_view_authority(record,source_data)
++        for fact in selected:
++            support=_role_fact_support(spec,role,fact,view_authority=view_authority)
++            if support is not None:view_supports.append(support)
++    except (ValueError,KeyError,TypeError,IndexError):
++        return {**result,'native_qualification':'invalid','reason':'manual_role_view_or_original_role_binding_changed'}
++    optional_views=({'matched_manual_role_views':view_supports} if view_supports else {})
+     if selected_guards:
+-        return {**result,'status':'eligible','reason':'source_reviewed_guard_evidence_requires_admission',
++        return {**result,**optional_views,'status':'eligible','reason':'source_reviewed_guard_evidence_requires_admission',
+             'fact_refs':[fact['id'] for fact in selected],
+             'guard_refs':[row['id'] for row in selected_guards],
+             'guard_admission_required':True,
+@@ -846,7 +947,7 @@
+                 for row in selected_guards],
+             'support_modes':sorted({fact['mode'] for fact in selected}|{row['mode'] for row in selected_guards}),
+             'matched_properties':[dict(zip(PROPERTY_FIELDS,key)) for key in dict.fromkeys(property_key(fact) for fact in selected)]}
+-    return {**result, 'status': 'eligible', 'reason': 'source_reviewed_mode_specific_evidence',
++    return {**result, **optional_views, 'status': 'eligible', 'reason': 'source_reviewed_mode_specific_evidence',
+             'fact_refs': [fact['id'] for fact in selected], 'support_modes': sorted({fact['mode'] for fact in selected}),
+             'matched_properties': [dict(zip(PROPERTY_FIELDS, key)) for key in dict.fromkeys(property_key(fact) for fact in selected)]}
+ 
+--- before/skills/photo-prompt-image-generator/scripts/photo_slot_semantics.py
++++ after/skills/photo-prompt-image-generator/scripts/photo_slot_semantics.py
+@@ -26,12 +26,12 @@
+         raise ValueError("unknown core focus field: " + tag)
+ 
+ 
+-def fit(spec, record, positive_text, *, realization_id='base'):
++def fit(spec, record, positive_text, *, realization_id='base', source_data=None):
+     """Dimensions, tags and source membership cannot establish semantic approval.
+ 
+ Specific effect paths name a carrier property. Text provides corroboration,
+ not an independent semantic certification. Wildcards remain review_required.
+     """
+     import photo_semantic_evidence
+-    reviewed = photo_semantic_evidence.qualification(spec, record, realization_id)
++    reviewed = photo_semantic_evidence.qualification(spec, record, realization_id, source_data=source_data)
+     return {**reviewed, 'semantic_role': spec['semantic_role'], 'owner_scope': list(spec['owners'])}
+--- before/skills/photo-prompt-image-generator/scripts/photo_role_proposals.py
++++ after/skills/photo-prompt-image-generator/scripts/photo_role_proposals.py
+@@ -27,7 +27,7 @@
+         effects=(evidence.effect_set(record,rid) if evidence.native_status(record)=='qualified'
+                  else realizations.effects(record,rid))
+         fit=semantics.fit(data['slot_catalog'][slot],record,positive,
+-                          realization_id=rid)
++                          realization_id=rid,source_data=data)
+         choices.append(({'eligible':0,'review_required':1,'incompatible':2}[fit['status']],rid,fit,effects))
+     _,rid,fit,effects=min(choices,key=lambda row:(row[0],row[1]))
+     if declared and not preferred:
+--- before/tests/test_photo_native_manual_role_views.py
++++ after/tests/test_photo_native_manual_role_views.py
+@@ -0,0 +1,287 @@
++"""Source-qualified views of unchanged facts; synthetic review, no corpus approval."""
++import copy
++import unittest
++from unittest import mock
++from tests.test_photo_semantic_evidence import (A,source,fact,owner_map,seal,reattest,core,reviewed_source,assertion)
++from tests.photo_native_schema import slot
++from tests import test_photo_native_existing_member_scope as scoped
++import photo_candidate_corpus as c
++import photo_semantic_evidence as e
++import photo_semantic_role_views as v
++import photo_search_layout as layout
++import photo_role_proposals as proposals
++_BASE_SCOPE_SOURCE=scoped.scope_source
++
++
++def attach(data,role,refs,facets,*,cid=A,view_id='manual_facet'):
++    """Explicit fixture authoring; hashes only bind these literal chosen facts.
++
++    This helper is not a production proof converter. The source, selected facet
++    and canonical facts/modes below are explicitly authored before it is called.
++    """
++    rec=data['candidates'][cid];proof=rec['content']['role_evidence']
++    rows=[next(row for row in proof['facts'] if row['id']==fid) for fid in refs]
++    rid=rows[0]['realization_id'];anchors=[];endpoints=[];required=set()
++    def requirements(row):
++        for ref in row['requires']:
++            if ref not in required:
++                required.add(ref);requirements(next(x for x in proof['facts'] if x['id']==ref))
++    for row in rows:
++        unit=next(x for x in proof['source_units'] if x['realization_id']==rid and x['pointer']==row['pointer'] and x['disposition']=='semantic')
++        text=e.positive_string(rec,row['pointer'],realization_id=rid);facet=facets[row['id']]
++        start=text.index(facet,text.index(row['quote']))
++        anchors.append({'fact_id':row['id'],'pointer':row['pointer'],'source_unit_sha256':c.digest(unit),
++            'full_field_sha256':c.digest(text),'facet_quote':facet,'start':start,'stop':start+len(facet)})
++        endpoints.append({'fact_id':row['id'],'position':'target'})
++        endpoints += [{'fact_id':row['id'],'position':'receiver','index':i} for i in range(len(row.get('receivers',[])))]
++        requirements(row)
++    view={'schema':v.SCHEMA,'id':view_id,'candidate_id':cid,'realization_id':rid,'role_id':role,
++        'spec_sha256':c.digest(data['slot_catalog'][role]),
++        'canonical_fact_refs':[{'fact_id':row['id'],'fact_sha256':c.digest(row),'mode':row['mode']} for row in rows],
++        'normal_anchors':anchors,'endpoint_refs':endpoints,'requires_refs':sorted(required),
++        'whole_closure_sha256':c.digest({key:proof[key] for key in v.CLOSURE_FIELDS}),
++        'manual_semantic_facet':'The exact selected positive facet supports this reviewed role.',
++        'whole_value_retained':'Retain every original fact mode, complete typed value, operation, target, receiver and requirement.',
++        'manual_boundary_rationale':'No unmentioned strike, new owner, body part or unrelated clause is inferred.'}
++    proof.setdefault('manual_role_views',[]).append(view)
++    proof['roles'][role].setdefault('view_refs',[]).append(view_id);reattest(data,cid)
++    return data
++
++
++def interaction_source(*,mode='effect',role_kind='direct'):
++    text='An existing actor and existing gavel. The actor announces while holding the gavel. Holding elsewhere is unrelated.'
++    rows=[fact('actorP','subject','actor','entity.presence','prerequisite','present',[],quote='existing actor'),
++        fact('gavelP','subject','gavel','entity.presence','prerequisite','present',[],quote='existing gavel'),
++        fact('announce','action','actor','action.announcing',mode,'announcing_while_holding_same_gavel',['actorP','gavelP'],
++            quote='announces while holding the gavel',operation='set_value',receivers=['gavel'])]
++    data=source(text,rows,{
++        'relational_action':slot('relational_action',['relationship'],property_prefixes=['interaction.'],semantic_role=role_kind),
++        'declaration_action':slot('declaration_action',['action'],property_prefixes=['action.announcing'],semantic_role=role_kind)},
++        {'base':owner_map(('actor','main_subject'),('gavel','primary_prop'))})
++    seal(data,{'relational_action':['announce'],'declaration_action':['announce']})
++    return attach(data,'relational_action',['announce'],{'announce':'holding the gavel'})
++
++
++def interaction_core():
++    return core(['actor_A','gavel_A'],[('subject',owner,'entity.presence','present') for owner in ['actor_A','gavel_A']],
++        [('disjoint','actor_A','gavel_A')],role_bindings={'main_subject':'actor_A','primary_prop':'gavel_A'})
++
++
++def surface_view_source(*,cid=A):
++    # The literal optical-response E supports this visual appearance facet,
++    # without becoming a material substitution or an invented relationship.
++    data=_BASE_SCOPE_SOURCE(cid=cid);spec=data['slot_catalog']['surface_material']
++    spec.update(description='Visible optical response of an actual existing surface.',
++        description_ko='실제 기존 표면의 가시적인 광학 반응.',dimensions=['appearance'],property_prefixes=['surface.presentation'],
++        includes=['The explicitly rendered glossy response.'],excludes=['An inferred material replacement.'])
++    seal(data,{'surface_material':['gloss']},cid=cid)
++    return attach(data,'surface_material',['gloss'],{'gloss':'glossy'},cid=cid)
++
++
++class NativeManualRoleViewTests(unittest.TestCase):
++    def test_full_compact_and_proposal_use_same_fact_without_permission_projection(self):
++        data=interaction_source();c.validate(data);rec=data['candidates'][A];guard=layout.guard_record(rec,data)
++        results=[e.qualification(data['slot_catalog']['relational_action'],row,source_data=data) for row in [rec,guard]]
++        self.assertEqual(*results);self.assertEqual(results[0]['status'],'eligible')
++        self.assertEqual(results[0]['matched_properties'],[{'dimension':'action','target':'actor','property':'action.announcing'}])
++        self.assertEqual(results[0]['matched_manual_role_views'][0]['fact']['receivers'],['gavel'])
++        self.assertNotIn('manual_role_views',e.proof_of(guard));self.assertIn('manual_role_view_bindings',e.proof_of(guard))
++        proposal=proposals.propose(data,'relational_action',A,[])
++        self.assertEqual(proposal['semantic_fit'],{**results[0],'semantic_role':'direct','owner_scope':['fixture_owner']})
++        frozen=interaction_core();entry=c.entry(data,A,realization_id='base')
++        self.assertTrue(e.admission(entry,frozen)['allowed'])
++        dims,props,_=e.permission_scope(entry,frozen);self.assertEqual(dims,['action'])
++        self.assertEqual({row['target'] for row in props},{'actor_A','gavel_A'})
++        self.assertNotIn('relationship',dims)
++
++    def test_no_external_full_source_authority_never_certifies_compact_or_full_view(self):
++        data=interaction_source();rec=data['candidates'][A];guard=layout.guard_record(rec,data)
++        for row in [rec,guard]:
++            result=e.qualification(data['slot_catalog']['relational_action'],row)
++            self.assertEqual(result['status'],'review_required');self.assertEqual(result['reason'],'manual_role_view_full_source_authority_required')
++        fake={**data,'candidates':{A:guard}}
++        self.assertNotEqual(e.qualification(data['slot_catalog']['relational_action'],guard,source_data=fake)['status'],'eligible')
++        self.assertRaises(TypeError,e.qualification,data['slot_catalog']['relational_action'],guard,expected_binding=e.proof_of(guard)['manual_role_view_bindings'])
++
++    def test_out_of_prefix_requires_own_explicit_view_and_exact_role_usage(self):
++        for defect in ['absent','no_refs','wrong_ref','orphan','other_role','other_fact','empty','empty_refs']:
++            data=interaction_source();p=data['candidates'][A]['content']['role_evidence']
++            if defect=='absent':p.pop('manual_role_views');p['roles']['relational_action'].pop('view_refs')
++            elif defect=='no_refs':p['roles']['relational_action'].pop('view_refs')
++            elif defect=='wrong_ref':p['roles']['relational_action']['view_refs']=['unknown']
++            elif defect=='orphan':p['manual_role_views'].append({**copy.deepcopy(p['manual_role_views'][0]),'id':'unreferenced'})
++            elif defect=='other_role':p['roles']['declaration_action']['view_refs']=p['roles']['relational_action'].pop('view_refs')
++            elif defect=='other_fact':p['roles']['relational_action']['fact_refs']=['actorP']
++            elif defect=='empty':p['manual_role_views']=[]
++            else:p['roles']['relational_action']['view_refs']=[]
++            reattest(data)
++            with self.subTest(defect=defect):self.assertRaises(ValueError,c.validate,data)
++
++    def test_recomputed_compact_hashes_never_replace_actual_full_source_binding(self):
++        data=interaction_source();guard=layout.guard_record(data['candidates'][A],data)
++        for defect in ['value','view_ids','role','catalog','receiver','closure','provenance','source']:
++            bad=copy.deepcopy(guard);p=e.proof_of(bad);receipt=p['manual_role_view_bindings']
++            if defect=='value':receipt['bindings'][0]['fact']['value']['value']='striking'
++            elif defect=='view_ids':receipt['bindings'][0]['view_id']='forged_view'
++            elif defect=='role':p['roles']['relational_action']['view_refs']=['forged_view']
++            elif defect=='catalog':receipt['bindings'][0]['spec_sha256']='0'*64
++            elif defect=='receiver':receipt['bindings'][0]['fact']['receivers']=[]
++            elif defect=='closure':receipt['bindings'][0]['whole_closure_sha256']='0'*64
++            elif defect=='provenance':p['qualification_sha256']='0'*64
++            else:p['meaning_sha256']='0'*64
++            receipt['receipt_sha256']=c.digest({k:x for k,x in receipt.items() if k!='receipt_sha256'})
++            p['compact_sha256']=c.digest({k:x for k,x in p.items() if k!='compact_sha256'})
++            with self.subTest(defect=defect):
++                self.assertNotEqual(e.qualification(data['slot_catalog']['relational_action'],bad,source_data=data)['status'],'eligible')
++        wrong=copy.deepcopy(data);wrong['candidates'][A]['provenance'][0]['sha256']='0'*64
++        self.assertNotEqual(e.qualification(data['slot_catalog']['relational_action'],data['candidates'][A],source_data=wrong)['status'],'eligible')
++
++    def test_native_whole_validation_runs_before_view_compiler(self):
++        for defect in ['source','missing_E','owner','guard','unit','proof_signature']:
++            data=interaction_source();rec=data['candidates'][A];p=rec['content']['role_evidence']
++            if defect=='source':rec['content']['en']='No original actor or holding clause.'
++            elif defect=='missing_E':p['facts']=[row for row in p['facts'] if row['id']!='announce']
++            elif defect=='owner':p['owner_maps']['base']['bindings'].pop()
++            elif defect=='guard':p['guard_sets']['base']['source_conditions']=[]
++            elif defect=='unit':p['source_units'][0]['quote']='holding the gavel'
++            else:p['review']['native_review']['native_contract_sha256']='0'*64
++            if defect!='proof_signature':reattest(data)
++            with self.subTest(defect=defect),mock.patch.object(v,'validate_full_views',wraps=v.validate_full_views) as call:
++                self.assertRaises(ValueError,c.validate,data);self.assertEqual(call.call_count,0)
++
++    def test_facet_needs_exact_ordinary_canonical_quote_occurrence(self):
++        for defect in ['outside_quote','wrong_offset','other_field','reference','metadata','unit_hash','guard_id']:
++            data=interaction_source();rec=data['candidates'][A];p=rec['content']['role_evidence'];view=p['manual_role_views'][0];a=view['normal_anchors'][0]
++            if defect=='outside_quote':
++                a.update(facet_quote='Holding elsewhere',start=rec['content']['en'].index('Holding elsewhere'));a['stop']=a['start']+len(a['facet_quote'])
++            elif defect=='wrong_offset':a['start']=True
++            elif defect=='other_field':a['pointer']='/content/ko'
++            elif defect=='reference':p['source_units'][0]['disposition']='semantic_reference'
++            elif defect=='metadata':a['pointer']='/content/activation/exact_terms/0'
++            elif defect=='unit_hash':a['source_unit_sha256']='0'*64
++            else:view['canonical_fact_refs'][0]['fact_id']='guard_only_support'
++            reattest(data)
++            with self.subTest(defect=defect):self.assertRaises(ValueError,c.validate,data)
++
++    def test_all_original_positions_requires_modes_and_sentinel_boundaries(self):
++        for defect in ['receiver','requires','value','operation','mode','fact_hash','sentinel']:
++            data=interaction_source();p=data['candidates'][A]['content']['role_evidence'];view=p['manual_role_views'][0];row=p['facts'][-1]
++            if defect=='receiver':view['endpoint_refs'].pop()
++            elif defect=='requires':view['requires_refs'].pop()
++            elif defect=='value':row['value']['value']='announcing_without_holding'
++            elif defect=='operation':row['operation']='relocate'
++            elif defect=='mode':row['mode']='context';row.pop('operation');row.pop('receivers')
++            elif defect=='fact_hash':view['canonical_fact_refs'][0]['fact_sha256']='0'*64
++            else:row['value']={'type':'frozen_property_reference/v1','value':'same'};view['canonical_fact_refs'][0]['fact_sha256']=c.digest(row)
++            reattest(data)
++            with self.subTest(defect=defect):self.assertRaises(ValueError,c.validate,data)
++        for mode,kind in [('prerequisite','direct'),('preservation','direct'),('context','contextual')]:
++            data=interaction_source(mode=mode,role_kind=kind);c.validate(data)
++            result=e.qualification(data['slot_catalog']['relational_action'],data['candidates'][A],source_data=data)
++            self.assertEqual(result['status'],'eligible');self.assertEqual(result['support_modes'],[mode])
++        self.assertRaises(ValueError,c.validate,interaction_source(mode='context'))
++
++    def test_E_and_actual_receivers_stay_subject_to_equal_value_and_property_locks(self):
++        data=interaction_source();entry=c.entry(data,A,realization_id='base')
++        for owner in ['actor_A','gavel_A']:
++            frozen=interaction_core();frozen['intent_lock']['semantic_anchors']=[{'dimension':'action','target':owner,'property':'action.announcing'}]
++            self.assertFalse(e.property_scope_allowed(frozen,entry['affected_dimensions'],entry['affected_properties'],record=entry))
++        frozen=interaction_core();frozen['semantic_assertions'].append(assertion('old_E','fact',dimension='action',owner='actor_A',property='action.announcing',value_type='action.announcing/v1',value='announcing_while_holding_same_gavel'))
++        frozen['intent_lock']['semantic_anchors']=[{'dimension':'action','target':'actor_A','property':'action.announcing'}]
++        self.assertFalse(e.property_scope_allowed(frozen,entry['affected_dimensions'],entry['affected_properties'],record=entry))
++
++    def test_view_does_not_change_each_member_P_PR_or_quantified_guards(self):
++        data=surface_view_source();c.validate(data);frozen=scoped.scope_core();mapping=scoped.choices(data,frozen)
++        for entry in scoped.entries(data,frozen,mapping=mapping):
++            result=e.admission(entry,frozen);self.assertTrue(result['allowed'],result);self.assertEqual(len(result['resolved_frozen_facts']),4)
++            self.assertEqual({p['target'] for p in e.permission_scope(entry,frozen)[1]},{'coat_A','glove_A'})
++        for defect in ['P','PR','relation']:
++            bad=scoped.scope_core()
++            if defect=='relation':bad['semantic_assertions']=[x for x in bad['semantic_assertions'] if x['assertion_id']!='owned_1']
++            else:
++                prop='entity.kind' if defect=='P' else 'entity.presence'
++                bad['semantic_assertions']=[x for x in bad['semantic_assertions'] if not(x['axes'].get('owner')=='glove_A' and x['axes'].get('property')==prop)]
++            scoped.neutral.reseal(bad)
++            if defect=='PR':mapping=scoped.choices(data,frozen)
++            else:mapping=scoped.choices(data,bad)
++            with self.subTest(defect=defect):self.assertFalse(e.admission(scoped.entries(data,bad,mapping=mapping)[0],bad)['allowed'])
++
++    def test_manual_views_coexist_with_executed_guard_support_without_fact_borrowing(self):
++        from tests import test_photo_native_guard_role_support as guards
++        for schema in ['v1','v2']:
++            data=guards.relation_source(schema);rec=data['candidates'][A];proof=rec['content']['role_evidence']
++            relation_text=rec['content']['en'];rec['content']['en']+=' Side light illuminates that same existing face.'
++            proof['facts'] += [fact('faceP','subject','face','anatomy.face.presence','prerequisite','present',[],quote='existing face'),
++                fact('side','lighting','face','lighting.direction','effect','side',['faceP'],quote='Side light',operation='set_value',receivers=[])]
++            rec['effects']={'dimensions':['lighting'],'properties':[{'dimension':'lighting','target':'face','property':'lighting.direction'}]}
++            data['slot_catalog']['illumination_appearance']=slot('illumination_appearance',['appearance'],property_prefixes=['surface.illuminated_appearance'])
++            seal(data,{'illumination_appearance':['side']})
++            # Retain actual relation support as a distinct executed prerequisite;
++            # its own source quote does not become a scalar canonical fact.
++            guards.attach(data,[guards.support(data,quote=relation_text)],'anatomical_connection')
++            attach(data,'illumination_appearance',['side'],{'side':'Side light'})
++            c.validate(data);frozen=guards.relation_core()
++            frozen['semantic_assertions'].append(assertion('face_presence','fact',owner='actual_face',property='anatomy.face.presence',value_type='anatomy.face.presence/v1',value='present'))
++            for entry in guards.entries(data):
++                result=e.admission(entry,frozen);self.assertTrue(result['allowed'],result)
++                self.assertEqual(result['resolved_guard_supports'][0]['guard_support_id'],'owned_relation')
++            spec=data['slot_catalog']['illumination_appearance']
++            self.assertEqual(e.qualification(spec,rec,source_data=data)['status'],'eligible')
++            self.assertEqual(e.qualification(spec,layout.guard_record(rec,data),source_data=data)['status'],'eligible')
++            proof['manual_role_views'][0]['canonical_fact_refs'][0]['fact_id']='owned_relation';reattest(data)
++            self.assertRaises(ValueError,c.validate,data)
++
++    def test_absent_view_fields_preserve_old_literal_qualification_and_hash_recipe(self):
++        data=reviewed_source();rec=data['candidates'][A];p=rec['content']['role_evidence'];before=c.canonical_bytes(p)
++        expected={'status':'eligible','reason':'source_reviewed_mode_specific_evidence','native_qualification':'qualified',
++            'matched_properties':[{'dimension':'material','target':'main_subject','property':'surface.material'}],
++            'meaning_terms':[],'fact_refs':['satin'],'support_modes':['effect']}
++        self.assertEqual(e.qualification(data['slot_catalog']['surface_material'],rec),expected)
++        self.assertEqual(e.qualification(data['slot_catalog']['surface_material'],layout.guard_record(rec,data),source_data=data),expected)
++        self.assertNotIn('manual_role_view_bindings',e.compact(rec,data));self.assertEqual(before,c.canonical_bytes(p))
++        material={key:value for key,value in p.items() if key!='review'}
++        material['review_bindings']={key:p['review'].get(key) for key in ['original_review','source_correction']}
++        self.assertEqual(e.native_contract_sha256(p),c.digest(material))
++
++    def test_malformed_role_view_refs_and_removed_compact_view_field_fail_closed(self):
++        for refs in [None,{},[[]],['manual_facet','manual_facet'],[True]]:
++            data=interaction_source();data['candidates'][A]['content']['role_evidence']['roles']['relational_action']['view_refs']=refs;reattest(data)
++            with self.subTest(refs=refs):self.assertRaises(ValueError,c.validate,data)
++        data=interaction_source();guard=layout.guard_record(data['candidates'][A],data)
++        p=e.proof_of(guard);p.pop('manual_role_view_bindings');p['compact_sha256']=c.digest({k:x for k,x in p.items() if k!='compact_sha256'})
++        self.assertNotEqual(e.qualification(data['slot_catalog']['relational_action'],guard,source_data=data)['status'],'eligible')
++
++    def test_profile_selected_RID_obligations_keep_exact_views_and_source_facts(self):
++        from tests import test_photo_native_v4_guards as profiles
++        data=profiles.profile_source();spec=data['slot_catalog']['light_direction']
++        spec.update(dimensions=['appearance'],property_prefixes=['surface.illuminated_appearance'],
++            description='The explicitly rendered side-lit appearance of an actual receiving surface.')
++        proof=data['candidates'][A]['content']['role_evidence'];effects=[row for row in proof['facts'] if row['mode']=='effect']
++        seal(data,{'light_direction':[row['id'] for row in effects]})
++        for row in effects:attach(data,'light_direction',[row['id']],{row['id']:'Side light'},view_id='view_'+row['id'])
++        c.validate(data);rec=data['candidates'][A];guard=layout.guard_record(rec,data)
++        for rid in ['alone','helper']:
++            full=e.qualification(spec,rec,rid,source_data=data);compact=e.qualification(spec,guard,rid,source_data=data)
++            self.assertEqual(full,compact);self.assertEqual(full['status'],'eligible')
++            self.assertTrue(all(row['fact']['realization_id']==rid for row in full['matched_manual_role_views']))
++            entry=c.entry(data,A,realization_id=rid)
++            self.assertEqual(entry['_selected_profile_contract']['realization_id'],rid)
++        self.assertEqual(e.qualification(spec,rec,'sibling',source_data=data)['status'],'incompatible')
++        bad=copy.deepcopy(data);bad['candidates'][A]['content']['role_evidence']['manual_role_views'][0]['realization_id']='helper';reattest(bad)
++        self.assertRaises(ValueError,c.validate,bad)
++
++    def test_opt_in_caps_and_whole_spec_source_pins_fail_without_truncation(self):
++        for defect in ['overflow','duplicate','spec','closure','rid','fullfield','pointer']:
++            data=interaction_source();p=data['candidates'][A]['content']['role_evidence'];view=p['manual_role_views'][0]
++            if defect=='overflow':p['manual_role_views']=[{**copy.deepcopy(view),'id':'view_'+str(i)} for i in range(129)]
++            elif defect=='duplicate':p['manual_role_views'].append(copy.deepcopy(view))
++            elif defect=='spec':data['slot_catalog']['relational_action']['excludes'].append('new explicit boundary');p['catalog_sha256']=c.digest(data['slot_catalog'])
++            elif defect=='closure':view['whole_closure_sha256']='0'*64
++            elif defect=='rid':view['realization_id']='sibling'
++            elif defect=='fullfield':view['normal_anchors'][0]['full_field_sha256']='0'*64
++            else:view['normal_anchors'][0]['pointer']='/content/realization_content/sibling/en'
++            reattest(data)
++            with self.subTest(defect=defect):self.assertRaises(ValueError,c.validate,data)
++
++
++if __name__=='__main__':unittest.main()
+--- before/tests/test_photo_native_manual_role_view_transport.py
++++ after/tests/test_photo_native_manual_role_view_transport.py
+@@ -0,0 +1,175 @@
++"""Actual isolated lazy/public/compose/runtime transport; no operating source IO."""
++import copy
++import json
++from pathlib import Path
++import tempfile
++from types import SimpleNamespace
++import unittest
++from unittest import mock
++from tests import test_photo_native_manual_role_views as m
++from tests import test_photo_native_member_scope_transport as t
++from tests import test_photo_native_existing_member_scope as scoped
++from tests import test_photo_native_compound_evidence as compound
++from tests.test_photo_semantic_evidence import seal
++import photo_candidate_corpus as c
++import photo_semantic_evidence as e
++import photo_native_owner_resolution as resolver
++import photo_role_proposals as roles
++import photo_native_pack as packs
++import audit_composed_prompt as audit
++import audit_image_render_request as render
++A=m.A;B=compound.B
++
++
++def view_pack(directory):
++    from tests.test_photo_global_retrieval import GlobalDiscoveryTests
++    from tests.test_photo_slot_queries import synthetic_set
++    from photo_search_reader import SearchReader,LazyRuntimeData
++    import photo_search_layout as layout
++    import photo_global_index as index
++    import prompt_generator as g
++    import hashlib
++    # Write the complete explicit fixture AFTER the independent core is frozen.
++    # Local holder is explicitly the secondary holder declared by that core;
++    # do not compile a view and silently change its owner map afterwards.
++    run,core,controls=t.frozen_scope_run(directory);data=m._BASE_SCOPE_SOURCE()
++    spec=data['slot_catalog']['surface_material']
++    spec.update(description='Visible optical response of an actual existing surface.',
++        description_ko='실제 기존 표면의 가시적인 광학 반응.',dimensions=['appearance'],property_prefixes=['surface.presentation'],
++        includes=['The explicitly rendered glossy response.'],excludes=['An inferred material replacement.'])
++    data['candidates'][A]['content']['role_evidence']['owner_maps']['base']['bindings'][1]['selector']['role']='secondary_subject'
++    seal(data,{'surface_material':['gloss']});m.attach(data,'surface_material',['gloss'],{'gloss':'glossy'});c.validate(data)
++    data['policies']=t.views.source(GlobalDiscoveryTests().data())['policies'];data['policies']['bundle_refs']=[]
++    data['policies']['_quality_layers']={'adult_appeal':{'contextual_retrieval':{'contract_version':'photo-contextual-appeal/v2'}}}
++    vectors={'schema':index.SCHEMA,'space':index.SPACE,'query_recipe':index.QUERY_RECIPE,'corpus_sha256':c.digest(data),'entries':{}}
++    for cid,record in data['candidates'].items():
++        recipe,text=index.text(record);vectors['entries'][cid]={'id':cid,'recipe':recipe,'text':text,'text_sha256':hashlib.sha256(text.encode()).hexdigest(),'vector':[1.0]+[0.0]*767}
++    assets=directory/'synthetic-search';layout.build(assets,data,vectors,activate=True)
++    runtime=LazyRuntimeData(SearchReader(assets)).for_core(core);query=synthetic_set(core,controls,data['slot_catalog'],['surface_material'])
++    pack=g.generate_candidate_pack(runtime,core,controls,t.files.value(t.files.load_state(run),'embodiment_review'),seed=5,query_context=query,requested_slots=['surface_material'])
++    return run,pack,runtime,query
++
++
++def member_views(optional=False):
++    data=t.MemberScopeClosureTests().compound(optional)
++    spec=data['slot_catalog']['surface_material']
++    spec.update(description='Visible optical response of actual existing surfaces.',
++        dimensions=['appearance'],property_prefixes=['surface.presentation'])
++    seal(data,{'surface_material':['gloss']},cid=B)
++    m.attach(data,'surface_material',['gloss'],{'gloss':'glossy'},cid=B)
++    compound.dependencies(data,A,'base',[B])
++    if optional:data['candidates'][A]['content']['role_evidence']['dependencies']['base'][0]['selection']='explicit_optional'
++    seal(data,{'surface_material':['gloss']})
++    m.attach(data,'surface_material',['gloss'],{'gloss':'glossy'})
++    c.validate(data);return data
++
++
++class NativeManualRoleViewTransportTests(unittest.TestCase):
++    def test_actual_lazy_immutable_pack_compose_and_fresh_runtime_with_one_expansion(self):
++        with tempfile.TemporaryDirectory() as temp:
++            _,pack,data,query=view_pack(Path(temp));self.addCleanup(data.reader.close)
++            before=c.canonical_bytes(pack);proposal=next(iter(pack['role_proposals'].values()))
++            support=proposal['semantic_fit']['matched_manual_role_views'][0]
++            self.assertEqual(support['fact']['dimension'],'material');self.assertEqual(support['fact']['property'],'surface.optical_response')
++            self.assertGreater(data.reader.metrics['payload_reads'],0)
++            self.assertNotIn('owner_selections',pack)
++            with mock.patch.object(e,'_lookup_manual_view_authority',wraps=e._lookup_manual_view_authority) as authority:
++                replay=roles.propose(data,'surface_material',A,[],realization_ids=['base'])
++                self.assertEqual(replay['semantic_fit'],proposal['semantic_fit']);self.assertEqual(authority.call_count,1)
++            composed=t.composition(pack,data)
++            with audit.bound_native_source(data,query):
++                with mock.patch.object(resolver,'resolve_selected_contracts',wraps=resolver.resolve_selected_contracts) as call:
++                    report=audit.audit_composed_prompt(pack,composed)
++                    self.assertEqual(report['status'],'pass',report);self.assertEqual(call.call_count,1)
++                resolved=report['native_owner_resolution'];request={'native_owner_resolution_sha256':resolved['canonical_sha256'],'source_composed_sha256':resolved['composed_sha256']}
++                runtime=render.audit_image_render_request(pack,composed,request)
++                self.assertFalse(any(x['check']=='native_owner_resolution' for x in runtime['failures']),runtime)
++            self.assertEqual(before,c.canonical_bytes(pack))
++
++    def test_public_source_and_compact_receipt_selfhash_cannot_mint_authority(self):
++        with tempfile.TemporaryDirectory() as temp:
++            _,pack,data,query=view_pack(Path(temp));self.addCleanup(data.reader.close);composed=t.composition(pack,data)
++            published=data['candidates'][A];guard=copy.deepcopy(data.reader.meta['guards'][A]);p=e.proof_of(guard)
++            # Recompute all local receipt/compact hashes, while the independent
++            # published full source remains exact and unchanged.
++            p['manual_role_view_bindings']['bindings'][0]['fact']['value']['value']='matte'
++            receipt=p['manual_role_view_bindings'];receipt['receipt_sha256']=c.digest({k:v for k,v in receipt.items() if k!='receipt_sha256'})
++            p['compact_sha256']=c.digest({k:v for k,v in p.items() if k!='compact_sha256'})
++            self.assertNotEqual(e.qualification(data['slot_catalog']['surface_material'],guard,source_data=data)['status'],'eligible')
++            bad=copy.deepcopy(pack);rec=bad['candidate_pool'][A]['authored_record'];proof=rec['content']['role_evidence']
++            proof['manual_role_views'][0]['manual_semantic_facet']='Forged public-pack interpretation.'
++            proof['review']['native_review']['native_contract_sha256']=e.native_contract_sha256(proof)
++            # Refresh the visible public source hash and its proposal IDs too.
++            proposals={}
++            for old,row in bad['role_proposals'].items():
++                row['source_record_sha256']=c.digest(rec);row['proposal_id']='role_'+c.digest({k:v for k,v in row.items() if k!='proposal_id'})[:32];proposals[old]=row['proposal_id']
++            def rename(value):
++                if isinstance(value,str):return proposals.get(value,value)
++                if isinstance(value,list):return [rename(x) for x in value]
++                if isinstance(value,dict):return {proposals.get(k,k):rename(v) for k,v in value.items()}
++                return value
++            bad=rename(bad);bad['global_retrieval']['role_proposals']=copy.deepcopy(bad['role_proposals'])
++            bad['global_retrieval']['canonical_sha256']=c.digest({k:v for k,v in bad['global_retrieval'].items() if k!='canonical_sha256'})
++            with audit.bound_native_source(data,query):
++                report=audit.audit_composed_prompt(bad,composed);self.assertEqual(report['status'],'fail')
++                self.assertTrue(any(row['check']=='global_retrieval_contract' for row in report['failures']),report)
++            self.assertEqual(data['candidates'][A],published)
++
++    def test_lazy_missing_pinned_payload_cannot_fall_back_to_guard_or_pack(self):
++        with tempfile.TemporaryDirectory() as temp:
++            _,pack,data,query=view_pack(Path(temp));self.addCleanup(data.reader.close)
++            block=data.reader.meta['payload_locator'][A];path=data.reader.assets/data.reader.meta['payload_shards'][block]['path']
++            data.reader.cache.clear();data.reader.cache_bytes=0;path.unlink()  # Isolated synthetic file only.
++            value=roles.propose(data,'surface_material',A,[],realization_ids=['base'])
++            self.assertNotEqual(value['semantic_fit']['status'],'eligible')
++            self.assertEqual(value['native_qualification'],'invalid')
++
++    def test_non_opt_in_role_lookup_never_loads_full_payload_or_adds_view_metadata(self):
++        with tempfile.TemporaryDirectory() as temp:
++            _,pack,data,query=t.scope_pack(Path(temp));self.addCleanup(data.reader.close)
++            count=data.reader.metrics['payload_reads']
++            with mock.patch.object(e,'_lookup_manual_view_authority',side_effect=AssertionError('old lookup must not hydrate view authority')):
++                proposal=roles.propose(data,'surface_material',A,[],realization_ids=['base'])
++            self.assertNotIn('matched_manual_role_views',proposal['semantic_fit'])
++            self.assertEqual(data.reader.metrics['payload_reads'],count)
++
++    def test_required_selected_optional_and_unselected_child_keep_their_own_views(self):
++        frozen=scoped.scope_core()
++        for optional in [False,True]:
++            data=member_views(optional);mapping=scoped.choices(data,frozen);mapping['entries']+=scoped.choices(data,frozen,cid=B)['entries']
++            for entry in scoped.entries(data,frozen,mapping=mapping,dependency_selections={B:'base'}):
++                with mock.patch.object(resolver,'resolve_selected_contracts',wraps=resolver.resolve_selected_contracts) as call:
++                    result=e.admission(entry,frozen);self.assertTrue(result['allowed'],result);self.assertEqual(call.call_count,1)
++                self.assertEqual(result['dependencies'][0]['candidate_id'],B)
++                self.assertTrue(e.qualification(data['slot_catalog']['surface_material'],data['candidates'][A],source_data=data)['matched_manual_role_views'])
++            if optional:
++                for entry in scoped.entries(data,frozen):self.assertEqual(e.admission(entry,frozen)['dependencies'],[])
++            bad=copy.deepcopy(data);p=bad['candidates'][A]['content']['role_evidence'];p['manual_role_views'][0]['candidate_id']=B
++            p['review']['native_review']['native_contract_sha256']=e.native_contract_sha256(p)
++            self.assertRaises(ValueError,c.validate,bad)
++
++    def test_workflow_stored_resolution_matches_fresh_source_qualified_runtime(self):
++        import argparse
++        from tests.test_photo_workflow_state import workflow
++        import photo_workflow_worker as worker
++        with tempfile.TemporaryDirectory() as temp:
++            directory=Path(temp);run,pack,data,query=view_pack(directory);self.addCleanup(data.reader.close)
++            with t.files.locked_state(run) as state:t.files.commit_stage(run,state,'pack_bound',{'pack':t.files.encode(pack),'runtime_receipt':t.files.encode({})})
++            composed=t.composition(pack,data);path=directory/'composed.json';path.write_text(json.dumps(composed))
++            def direct(state,**kwargs):return {'composed_audit':audit.audit_composed_prompt(t.files.value(state,'pack'),t.files.value(state,'composed'),source_data=data,query_context=query)}
++            with mock.patch.object(worker,'audit_bound',side_effect=direct):
++                self.assertEqual(workflow.compose_audit(argparse.Namespace(run=run,composed=path))['status'],'pass')
++                self.assertEqual(workflow.compose_audit(argparse.Namespace(run=run,composed=path))['status'],'pass')
++            parameters=directory/'parameters';parameters.write_text(json.dumps({'references':[]}))
++            with mock.patch('photo_runtime_sources.RuntimeSnapshotProvider.from_receipt',return_value=SimpleNamespace(data=data,query_context=query)):
++                result=workflow.prepare_render(argparse.Namespace(run=run,parameters=parameters,lane='native',model=None,size=None));self.assertEqual(result['status'],'pass',result)
++                state=t.files.load_state(run);stored=t.files.value(state,'composed_audit')['native_owner_resolution'];request=t.files.value(state,'render_request')
++                self.assertEqual(request['native_owner_resolution_sha256'],stored['canonical_sha256'])
++                with t.files.locked_state(run) as state:
++                    report=t.files.value(state,'composed_audit');report['native_owner_resolution']['canonical_sha256']='0'*64
++                    t.files.commit_stage(run,state,'composition_audited',{'composed_audit':t.files.encode(report)})
++                fresh=worker.audit_bound(t.files.load_state(run),runtime=True)
++                self.assertTrue(any(row['check']=='native_owner_resolution' for row in fresh['composed_audit']['failures']))
++
++
++if __name__=='__main__':unittest.main()

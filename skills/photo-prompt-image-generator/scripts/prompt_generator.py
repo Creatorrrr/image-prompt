@@ -1170,7 +1170,16 @@ def entry_block_reason(
         if str(value) in VALID_SUBJECT_CATEGORIES
     } if isinstance(intent_constraints, dict) else set()
     spec = (catalog or {}).get(slot, {})
-    typed_person_role = "actor" in spec.get("owners", []) or spec.get("applicability", {}).get("subject_categories") == ["human"]
+    applicability = spec.get("applicability", {})
+    category_domain_override = bool(
+        applicability.get("allow_domains_override_subject_categories")
+        and set(normalize_list(generation_contract.get("domains")))
+        & set(normalize_list(applicability.get("allow_domains")))
+    )
+    typed_person_role = "actor" in spec.get("owners", []) or (
+        applicability.get("subject_categories") == ["human"]
+        and not category_domain_override
+    )
     if (
         requested_categories
         and "human" not in requested_categories

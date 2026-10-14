@@ -26,12 +26,12 @@ def validate(tag, row, catalog_ids, strings):
         raise ValueError("unknown core focus field: " + tag)
 
 
-def fit(spec, record, positive_text, *, realization_id='base'):
+def fit(spec, record, positive_text, *, realization_id='base', source_data=None):
     """Dimensions, tags and source membership cannot establish semantic approval.
 
 Specific effect paths name a carrier property. Text provides corroboration,
 not an independent semantic certification. Wildcards remain review_required.
     """
     import photo_semantic_evidence
-    reviewed = photo_semantic_evidence.qualification(spec, record, realization_id)
+    reviewed = photo_semantic_evidence.qualification(spec, record, realization_id, source_data=source_data)
     return {**reviewed, 'semantic_role': spec['semantic_role'], 'owner_scope': list(spec['owners'])}

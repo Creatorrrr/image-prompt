@@ -27,7 +27,7 @@ def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, reali
         effects=(evidence.effect_set(record,rid) if evidence.native_status(record)=='qualified'
                  else realizations.effects(record,rid))
         fit=semantics.fit(data['slot_catalog'][slot],record,positive,
-                          realization_id=rid)
+                          realization_id=rid,source_data=data)
         choices.append(({'eligible':0,'review_required':1,'incompatible':2}[fit['status']],rid,fit,effects))
     _,rid,fit,effects=min(choices,key=lambda row:(row[0],row[1]))
     if declared and not preferred:
