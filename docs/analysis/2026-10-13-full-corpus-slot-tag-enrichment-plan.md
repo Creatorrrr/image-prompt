@@ -186,6 +186,10 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 같은 인물의 손·얼굴 등 실제 선택된 소유자 사이의 조건을 다루도록 `photo-native-source-guards/v2`를 구현했다. 원문 CID·실현 분기·선택 소유자·필수/선택 구성원·presentation의 조건 출처를 결합하고, 실제 소유 관계·별개 대상·정확한 값·보존 의무를 검색과 채택 단계에서 구별해 검사한다. 루트의 25개 모듈 회귀 검증은 352회 실행·고유 328개·533개 subtest, 실패·오류·skip 0건이다. 실제 메타데이터 재빌드는 같은 로컬 공간의 벡터 18,180개를 재사용했고 새 추론·provider/Gemini 호출 없이 완료했다. 실행 세대 `e54254ce78fde43d717a5c6e1670a0ffa5b50050fdafcf4b813930e42ecd0a7f`를 발행하고 실제 `lazy_verified` acquire와 원본 payload 일치까지 확인했다. 이 코드 검증은 운영 원본·태그를 바꾸거나 1278/1296의 개별 의미를 승인하지 않으며, 최종 144개 슬롯 전체의 실제 core-bound 검색 및 전수 native 자격화는 남아 있다.
 
+추가 [격리 경로 진단](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-joint-effect-assignment-diagnostic-20261015.md)에서는 서로 다른 후보의 cracked/smooth 효과를 같은 실제 표면에 선택해도 전체 compose·runtime request 감사가 통과하는 공백과, native 자격 필수 자식을 lazy 검색할 때 compact proof를 다시 변환하여 중단되는 오류를 재현했다. 이는 상수 벡터의 합성 fixture 실행이며 실제 원본 자격 승인이 아니다. 두 오류의 수정과 실제 lazy→public pack→compose→runtime 회귀를 별도 진행한다. 위 운영 acquire의 성공을 native 복합 후보 경로의 완료 근거로 사용하지 않는다.
+
+1278/1296의 [두 원본 보완안](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-SOURCE-GUARD-V2-TWO-SOURCE-SELECTION-01.json)은 전체 원본·현재·수정안·기존 5B·binding과 43개 사실·7개 단위·23개 관련 최종 명세를 루트가 직접 읽고 다음 심사 입력용으로 선택했다. 손의 따뜻한 인상과 실제 물리 온도는 구분하며, “두 손”은 같은 소유자의 실제 참여 손 두 개로 한정하고 전체 해부학적 손 개수는 주장하지 않는다. 영문의 단순 held 구절로 한국어 감싼 의미를 증명하던 두 사실 초안은 다음 정식 proof에서 재설계해야 한다. 원본 입력 선택은 proof·태그·운영 승인이 아니다. 11128/17437도 원본을 그대로 보존한 새 144개 v4 입력 두 개를 준비하여 전체 원문·분기·명세를 새로 읽도록 배정했다.
+
 검증: 각 배치의 ID·긍정 인용·원본/수정 후 hash·선택 분기·owner/property·효과·조건을 대조하고, 의미 변경은 관련 옵션·프로필·묶음·참조에 전파한다. 운영 원본을 고친 배치는 새 local index closure·runtime publication·실제 acquire까지 검증한 뒤 커밋한다. 대장만 작성한 배치는 운영 데이터를 바꾸지 않는다. 5단계 종료 조건은 직접 검토 승인 집합이 18,250/18,250, 누락·미검토·미해결 보류 0건, Gemini 신규 호출 0건이다.
 
 산출물: 직접 검토 기준 snapshot·입력/검증 보조 도구, 전체 확정 태그안·긍정 인용·소유자·분기 근거 대장, 필요한 source 보정과 native 검증, 배치별 검증·커밋, 실제 직접 검토 coverage.
