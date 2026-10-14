@@ -12,7 +12,7 @@ import sys
 
 import direct_review as review
 from summarize_batch import summarize
-from review_state import ACCEPTED, PENDING, coverage
+from review_state import ACCEPTED, PENDING, correction_counts, coverage
 
 
 def git(*args):
@@ -34,6 +34,7 @@ def write_current():
     methods = Counter(row['review_method'] for row in accepted)
     kinds = Counter(row['recommended_kind'] for row in accepted)
     roles = Counter(role['slot_id'] for row in accepted for role in row['roles'])
+    changes = correction_counts(accepted)
     report = {
         'schema': 'photo-codex-current-source-review/v1',
         'registered_decisions': len(accepted), 'total_records': len(order),
@@ -41,8 +42,10 @@ def write_current():
         'accepted_source_judgements': len(accepted),
         'review_methods': dict(methods), 'recommended_kinds': dict(kinds),
         'role_proposals': sum(roles.values()), 'role_distribution': dict(sorted(roles.items())),
-        'records_with_text_corrections': sum(bool(row['corrections']) for row in accepted),
-        'text_field_corrections': sum(len(row['corrections']) for row in accepted),
+        'records_with_text_corrections': changes['text_records'],
+        'text_field_corrections': changes['text_fields'],
+        'records_with_structured_corrections': changes['structured_records'],
+        'structured_source_value_corrections': changes['structured_values'],
         'unreviewed_records': progress['unreviewed_records'],
         'pending_decisions': progress['pending_decisions'],
         'first_unreviewed_order_offset': state['first_unreviewed_order_offset'],
@@ -58,7 +61,7 @@ def write_current():
 
 현재 승인·원문 결합 검증을 통과한 판정은 **{len(accepted):,}/{len(order):,}개**다. 보류를 포함해 등록한 직접 원문 판정은 {len(rows):,}개다. 주 에이전트 직접 승인 판정 {methods['codex_direct_source_read']:,}개와 명시 승인된 gpt-6.1-sol/high 서브에이전트 직접 승인 판정 {methods['codex_subagent_direct_source_read']:,}개를 구분한다. 주 에이전트가 worker의 모든 원문을 직접 읽었다고 주장하지 않는다.
 
-승인 판정의 역할 제안 {sum(roles.values()):,}개, 텍스트 보정 제안 {report['records_with_text_corrections']:,}개 후보/{report['text_field_corrections']:,}개 필드다. 이는 native 채택 수나 의미 정확도 점수가 아니다. 미검토 {progress['unreviewed_records']:,}개·미해결 판정 {progress['pending_decisions']:,}개이며, 작업 순서의 첫 미검토 위치는 {report['first_unreviewed_order_offset']:,}번, 보류를 포함한 첫 미완료 위치는 {report['first_unfinished_order_offset']:,}번이다. 병렬로 끝난 뒤쪽 범위를 앞쪽 미검토 완료로 합산하지 않는다. 보류가 있는 배치는 체크포인트이며 완료 배치가 아니다.
+승인 판정의 역할 제안 {sum(roles.values()):,}개, 텍스트 보정 제안 {report['records_with_text_corrections']:,}개 후보/{report['text_field_corrections']:,}개 필드, 명시적 구조 보정 제안 {changes['structured_records']:,}개 후보/{changes['structured_values']:,}개 값이다. 이는 native 채택 수나 의미 정확도 점수가 아니다. 미검토 {progress['unreviewed_records']:,}개·미해결 판정 {progress['pending_decisions']:,}개이며, 작업 순서의 첫 미검토 위치는 {report['first_unreviewed_order_offset']:,}번, 보류를 포함한 첫 미완료 위치는 {report['first_unfinished_order_offset']:,}번이다. 병렬로 끝난 뒤쪽 범위를 앞쪽 미검토 완료로 합산하지 않는다. 보류가 있는 배치는 체크포인트이며 완료 배치가 아니다.
 
 원문·참조·catalog·긍정 인용·소유자/속성 계약·실현 분기·작성 항목 및 worker task/model/effort·배정 범위·note hash를 기계 검증했다. 기계 검사는 실제 의미 정확도나 독립 사람/전문가/이미지 픽셀 검증을 대신하지 않는다. 직접 의미 판정과 혼동 경계는 각 authored 판정·worker note에 남아 있다. 같은 모델 계열의 분업 결과를 독립 평가로 표시하지 않는다.
 

@@ -28,6 +28,7 @@ NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounder
     'research_source_urls', 'tags', 'facets', 'reject_substitutes', 'contrast_examples',
     'forbidden_prompt_terms', 'runtime_forbidden_labels', 'role_evidence', 'semantic_review',
     'claim_limits', 'research_claim_limits'})
+STRUCTURED_CORRECTION_PATHS = frozenset({'/effects', '/conditions', '/content/realization_content'})
 
 
 def write(path, value):
@@ -108,14 +109,28 @@ def corrected_record(record, corrections):
     if not isinstance(corrections, list):
         raise ValueError('corrections must be a list')
     seen = set()
+    structured = False
     for change in corrections:
         if set(change) != {'pointer', 'before', 'after', 'reason'}:
             raise ValueError('invalid correction fields')
         path = change['pointer']
-        if path in seen or not all(isinstance(change[k], str) and change[k].strip()
-                for k in ('before', 'after', 'reason')):
+        if (not isinstance(path, str) or path in seen or not isinstance(change['reason'], str)
+                or not change['reason'].strip()):
             raise ValueError('duplicate or empty source correction')
         seen.add(path)
+        if path in STRUCTURED_CORRECTION_PATHS:
+            current = (result['content'].get('realization_content')
+                       if path == '/content/realization_content' else result[path[1:]])
+            if current != change['before'] or not isinstance(change['after'], dict):
+                raise ValueError('structured correction differs from exact source value')
+            if path == '/content/realization_content':
+                result['content']['realization_content'] = copy.deepcopy(change['after'])
+            else:
+                result[path[1:]] = copy.deepcopy(change['after'])
+            structured = True
+            continue
+        if not all(isinstance(change[k], str) and change[k].strip() for k in ('before', 'after')):
+            raise ValueError('text source correction requires exact nonempty strings')
         # Exact source corrections may repair a negative/claim-limit clause;
         # that clause still cannot qualify a positive fact or role.
         if pointer(result, path) != change['before']:
@@ -126,15 +141,34 @@ def corrected_record(record, corrections):
             value = value[int(key)] if isinstance(value, list) else value[key]
         key = keys[-1]
         value[int(key) if isinstance(value, list) else key] = change['after']
+    if structured:
+        # An explicit proposal may introduce native choices, never an unread
+        # external reference. The complete before snapshot remains immutable.
+        if set(references(result)) - set(references(record)):
+            raise ValueError('new references require a reopened complete source packet')
+        c.validate_conditions(result['conditions'], result['id'])
+        c.validate_effects(result['effects'], result['id'])
+        from photo_candidate_realizations import validate_content
+        validate_content(result)
+        available = {item['candidate_id'] for item in result['content'].get('member_candidates', [])}
+        components = {item['id'] for item in result['content'].get('components', [])}
+        for branch in result['effects'].get('realizations', {}).get('branches', []):
+            if (not set(branch.get('member_candidate_ids', [])) <= available
+                    or not set(branch.get('component_units', {})) <= components):
+                raise ValueError('structured realization selects a foreign member or component')
     return result
 
 
-def validate_fact(fact, record, catalog, slot=None):
+def validate_fact(fact, record, catalog, slot=None, *, realization_id=None):
     if set(fact) != {'pointer', 'quote', 'dimension', 'target', 'property'}:
         raise ValueError('invalid source fact fields')
     if not isinstance(fact['quote'], str) or not fact['quote'].strip() or fact['quote'] not in pointer(
             record, fact['pointer'], positive=True):
         raise ValueError('quote differs from positive source')
+    if realization_id is not None and fact['pointer'].startswith('/content/realization_content/'):
+        source_rid = fact['pointer'].split('/')[3].replace('~1', '/').replace('~0', '~')
+        if source_rid != realization_id:
+            raise ValueError('positive evidence belongs to a different realization')
     for key in ('target', 'property'):
         if (not isinstance(fact[key], str) or not fact[key].strip() or '*' in fact[key]
                 or fact[key].endswith('.')):
@@ -230,13 +264,15 @@ def validate_decision(row, data, *, provenance_cache=None, binding_cache=None):
         for fact in role['evidence']:
             validate_fact(fact, record, catalog, tag)
             for rid in role['realization_ids']:
+                validate_fact(fact, record, catalog, tag, realization_id=rid)
                 if not any({k: v for k, v in item.items() if k != 'realization_id'} == fact
                            and item['realization_id'] == rid for item in row['facts']):
                     raise ValueError('role evidence must be an explicitly authored branch fact')
     for fact in row['facts']:
         if not isinstance(fact, dict) or 'realization_id' not in fact or fact['realization_id'] not in known_rids:
             raise ValueError('fact must name an actual source realization')
-        validate_fact({k: v for k, v in fact.items() if k != 'realization_id'}, record, catalog)
+        validate_fact({k: v for k, v in fact.items() if k != 'realization_id'}, record, catalog,
+                      realization_id=fact['realization_id'])
     return row
 
 

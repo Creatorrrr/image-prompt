@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 import direct_review as review
-from review_state import partition
+from review_state import correction_counts, partition
 
 
 def validate_coverage(order, rows, start, stop, expected_total, *, allow_sparse=False):
@@ -77,6 +77,7 @@ def summarize(start, stop, expected_total, *, allow_sparse=False):
             raise ValueError('protected concurrent work changed')
     issues = json.loads((review.HERE / 'NATIVE-QUALIFICATION-ISSUES.json').read_text())
     count = stop - start
+    changes = correction_counts(rows[cid] for cid in order[start:stop])
     summary = {'schema': 'photo-codex-direct-batch-summary/v1',
         'range_start': start, 'range_stop': stop, 'source_records_directly_read': count,
         'direct_semantic_decisions': count, 'native_qualified_records_claimed': 0,
@@ -85,8 +86,8 @@ def summarize(start, stop, expected_total, *, allow_sparse=False):
         'role_distribution': dict(sorted(roles.items())),
         'single_role_records': sum(len(rows[cid]['roles']) == 1 for cid in order[start:stop]),
         'multiple_role_records': sum(len(rows[cid]['roles']) > 1 for cid in order[start:stop]),
-        'records_with_text_correction_proposals': sum(bool(x['corrections']) for x in proposals),
-        'text_field_correction_proposals': sum(len(x['corrections']) for x in proposals),
+        'records_with_text_correction_proposals': changes['text_records'],
+        'text_field_correction_proposals': changes['text_fields'],
         'relationship_proposals': dict(links), 'source_sha256': baseline['source_sha256'],
         'external_model_calls': 0, 'local_embedding_inferences': 0,
         'cumulative_direct_semantic_records': expected_total,
@@ -108,6 +109,11 @@ def summarize(start, stop, expected_total, *, allow_sparse=False):
     if pending:
         summary['cumulative_pending_source_judgements'] = len(pending)
         verification['cumulative_pending_source_judgements'] = len(pending)
+    if changes['structured_values']:
+        summary['records_with_structured_correction_proposals'] = changes['structured_records']
+        summary['structured_value_correction_proposals'] = changes['structured_values']
+        verification['structured_value_corrections_proposed'] = changes['structured_values']
+        verification['structured_value_corrections_applied'] = False
     if kind_changes:
         summary['record_kind_change_proposals'] = kind_changes
         summary['reviewed_diagnostic_records'] = sum(

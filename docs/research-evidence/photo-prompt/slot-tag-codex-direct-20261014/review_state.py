@@ -4,6 +4,18 @@ ACCEPTED = frozenset({'approved', 'diagnostic_reviewed'})
 PENDING = frozenset({'needs_source_fix', 'needs_boundary_review'})
 
 
+def correction_counts(rows):
+    rows = list(rows)
+    def text(change):
+        return isinstance(change['before'], str) and isinstance(change['after'], str)
+    return {
+        'text_records': sum(any(text(change) for change in row['corrections']) for row in rows),
+        'text_fields': sum(text(change) for row in rows for change in row['corrections']),
+        'structured_records': sum(any(not text(change) for change in row['corrections']) for row in rows),
+        'structured_values': sum(not text(change) for row in rows for change in row['corrections']),
+    }
+
+
 def partition(rows):
     accepted, pending, all_rows = {}, {}, {}
     for row in rows:
