@@ -7,7 +7,14 @@
       "status": "open",
       "candidate_id": "cand_9c8f24f563ae57148d6b44472bdead38",
       "source": "underlit face horror",
-      "requirement": "Lighting is relative to an existing face. Source qualification must encode that carrier prerequisite and reject adding a face/person to a cup, while allowing an explicitly declared face-bearing depiction. A rationale alone is insufficient."
+      "requirement": "Lighting is relative to an existing face. Source qualification must encode that carrier prerequisite and reject adding a face/person to a cup, while allowing an explicitly declared face-bearing depiction. A rationale alone is insufficient.",
+      "additional_examples": [
+        {"order_offset": 262, "source": "hands-first POV", "carrier": "existing hands"},
+        {"order_offset": 351, "source": "cold breath fog texture", "carrier": "existing breath source"},
+        {"order_offset": 443, "source": "view through a gap in the crowd", "carrier": "declared crowd"},
+        {"order_offset": 467, "source": "wet mud caked skin texture", "carrier": "existing skin"},
+        {"order_offset": 477, "source": "a hairline rim glow", "carrier": "existing hairline"}
+      ]
     },
     {
       "id": "whole-scene-palette-scope",
@@ -22,6 +29,30 @@
       "candidate_id": "cand_f741ac725a655b50a113c62dca2b2d3c",
       "source": "raw documentary photography",
       "requirement": "The source explicitly combines documentary purpose and raw aesthetic treatment, but aesthetic_trend currently denies documentary/craft/wildlife domains. Reassess the role applicability against actual meaning and frozen intent, with catalog/hash revalidation if changed; never bypass intrinsic source guards."
+    },
+    {
+      "id": "role-scope-versus-intrinsic-subject-guard",
+      "status": "open",
+      "candidate_id": "cand_957dbd14de775085ba9b6a47912d7a88",
+      "source": "station staff uniform",
+      "requirement": "The garment can be an unworn object. A role's human-only applicability or another role's actor-owned fact must not become an intrinsic requirement that creates a wearer or rejects the existing garment role. Review object/actor/context owners independently, including product-domain exclusions in garment_detail and attire_context. Revisit inherited source guards explicitly rather than silently widening them."
+    },
+    {
+      "id": "fungus-subject-kind",
+      "status": "open",
+      "order_offset": 294,
+      "source": "wild mushrooms",
+      "requirement": "The body names fungi, while the current content.kind includes plant and macro. Do not treat plant metadata as biological truth. Resolve the native taxonomy/eligibility and all dependent consumers with explicit reviewed before/after evidence."
+    },
+    {
+      "id": "coarse-effects-to-owned-property-refinement",
+      "status": "open",
+      "requirement": "Adding precise role facts to existing coarse or empty property metadata can narrow a previously conservative lock scope. Audit each effect/owner refinement against frozen intent, local and whole-scene locks, positive and negative applications; retaining the old dimension name alone does not prove equivalent protection."
+    },
+    {
+      "id": "binding-addressed-native-dependencies",
+      "status": "open",
+      "requirement": "Before removing a role link or changing a referenced candidate to diagnostic, resolve every bundle/profile/member dependency that addresses its existing binding. Preserve candidate identity, conditions, ordering and branch semantics; do not redirect to an arbitrary replacement role or retain an operating legacy adapter."
     }
   ]
 }

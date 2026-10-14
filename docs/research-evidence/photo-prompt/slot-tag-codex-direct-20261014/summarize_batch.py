@@ -1,0 +1,109 @@
+"""Recompute a management-batch report from validated, authored decisions only."""
+import argparse
+from collections import Counter, defaultdict
+import hashlib
+import json
+from pathlib import Path
+
+import direct_review as review
+
+
+def summarize(start, stop, expected_total):
+    progress = review.verify()
+    if progress['direct_approved_records'] != expected_total or progress['pending_decisions']:
+        raise ValueError('unexpected coverage or unresolved source decisions')
+    baseline = json.loads((review.HERE / 'BASELINE.json').read_text())
+    frozen = review.source()
+    current = review.c.load(review.SKILL / 'assets')
+    if review.c.digest(current) != baseline['source_sha256']:
+        raise ValueError('native source changed; ledger-only reporting is invalid')
+    order = json.loads((review.HERE / 'ORDER.json').read_text())
+    rows = {}
+    for path in sorted((review.HERE / 'decisions').glob('*.json')):
+        for row in json.loads(path.read_text())['decisions']:
+            cid = row['candidate_id']
+            if cid in rows:
+                raise ValueError('duplicate canonical judgement')
+            rows[cid] = row
+    if set(rows) != set(order[:expected_total]) or not 0 <= start < stop <= expected_total:
+        raise ValueError('coverage does not match the explicitly reviewed order')
+    previous = defaultdict(set)
+    for binding in frozen['slot_bindings'].values():
+        previous[binding['candidate_id']].add(binding['slot_id'])
+    proposals, roles, links = [], Counter(), Counter()
+    for cid in order[start:stop]:
+        row = rows[cid]
+        if row['status'] not in {'approved', 'diagnostic_reviewed'}:
+            raise ValueError('batch contains unresolved judgement')
+        tags = {role['slot_id'] for role in row['roles']}
+        if len(tags) != len(row['roles']):
+            raise ValueError('duplicate proposed relationship')
+        roles.update(tags)
+        proposal = {'candidate_id': cid,
+            'retain': sorted(tags & previous[cid]), 'add': sorted(tags - previous[cid]),
+            'remove': sorted(previous[cid] - tags), 'corrections': row['corrections']}
+        proposals.append(proposal)
+        links.update({key: len(proposal[key]) for key in ('retain', 'add', 'remove')})
+    defaults = json.loads((review.SKILL / 'embedding-default.json').read_text())
+    index = json.loads((review.SKILL / 'assets/photo_candidate_search.json').read_text())
+    if defaults['space'] != baseline['space'] or index['space'] != baseline['space']:
+        raise ValueError('embedding space drifted')
+    if index['layout_id'] != baseline['layout_id']:
+        raise ValueError('active index changed during source review')
+    protected = {
+        'docs/analysis/2026-10-09-spring-fashion-integration-and-native-tests.md':
+            'b3ee189d975790cb5ce29b38e9eaadfc6cff0964a4840cd24c09ec6b96963359',
+        'docs/research-evidence/photo-prompt/data-quality-links-20261007/history/README.md':
+            '0856f394a083b760cfe99b5bc0113e0743af00c0ad9846fb904e77858712ee2b',
+    }
+    for path, digest in protected.items():
+        if hashlib.sha256((review.ROOT / path).read_bytes()).hexdigest() != digest:
+            raise ValueError('protected concurrent work changed')
+    issues = json.loads((review.HERE / 'NATIVE-QUALIFICATION-ISSUES.json').read_text())
+    count = stop - start
+    summary = {'schema': 'photo-codex-direct-batch-summary/v1',
+        'range_start': start, 'range_stop': stop, 'source_records_directly_read': count,
+        'direct_semantic_decisions': count, 'native_qualified_records_claimed': 0,
+        'native_tags_applied': False, 'source_corrections_applied': False,
+        'source_unchanged': True, 'role_proposals': sum(roles.values()),
+        'role_distribution': dict(sorted(roles.items())),
+        'single_role_records': sum(len(rows[cid]['roles']) == 1 for cid in order[start:stop]),
+        'multiple_role_records': sum(len(rows[cid]['roles']) > 1 for cid in order[start:stop]),
+        'records_with_text_correction_proposals': sum(bool(x['corrections']) for x in proposals),
+        'text_field_correction_proposals': sum(len(x['corrections']) for x in proposals),
+        'relationship_proposals': dict(links), 'source_sha256': baseline['source_sha256'],
+        'external_model_calls': 0, 'local_embedding_inferences': 0,
+        'cumulative_direct_semantic_records': expected_total,
+        'remaining_unreviewed_records': len(order) - expected_total,
+        'stage05_complete': False, 'stages06_08_complete': False}
+    verification = {'schema': 'photo-direct-batch-verification/v1',
+        'source_range': [start, stop], 'source_and_references_bound': True,
+        'decisions_match_order_exactly': True,
+        'authored_items_packet_hashes_and_positive_quotes_valid': True,
+        'direct_semantic_records': count, 'role_proposals': sum(roles.values()),
+        'text_correction_fields_proposed': summary['text_field_correction_proposals'],
+        'duplicate_decisions': 0, 'unresolved_semantic_decisions': 0,
+        'open_native_qualification_issues': sum(x['status'] == 'open' for x in issues['issues']),
+        'native_role_qualification_complete': False,
+        'native_sources_and_bindings_unchanged': True, 'protected_documents_unchanged': True,
+        'external_model_calls': 0, 'local_embedding_inferences': 0,
+        'stage05_complete': False, 'stages06_08_complete': False,
+        'remaining_unreviewed': len(order) - expected_total, 'next_order_offset': expected_total}
+    stem = f'{start:05d}-{stop:05d}'
+    for name, value in [(f'BATCH-{stem}-SUMMARY.json', summary),
+                        (f'BATCH-{stem}-CHANGE-PROPOSALS.json', proposals),
+                        (f'STAGE05B-{stem}-VERIFICATION.json', verification)]:
+        path = review.HERE / name
+        if path.exists() and json.loads(path.read_text()) != value:
+            raise ValueError('existing batch report differs; preserve its history explicitly')
+        path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
+    return summary
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--start', type=int, required=True)
+    parser.add_argument('--stop', type=int, required=True)
+    parser.add_argument('--expected-total', type=int, required=True)
+    args = parser.parse_args()
+    print(json.dumps(summarize(args.start, args.stop, args.expected_total), ensure_ascii=False))
