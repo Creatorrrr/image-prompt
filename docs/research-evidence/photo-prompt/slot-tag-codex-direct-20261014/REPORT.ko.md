@@ -1,5 +1,7 @@
 # Codex 직접 의미 검토 — 실행 현황
 
+최신 등록 수치와 남은 범위는 [CURRENT.ko.md](CURRENT.ko.md) 및 [CURRENT.json](CURRENT.json)을 기준으로 한다. 아래 배치 숫자는 각 커밋 시점의 체크포인트다.
+
 2026-10-14. 전체 5~8단계는 진행 중이다. Gemini와 다른 생성 모델을 호출하지 않는다. 의미와 태그는 Codex가 원문을 직접 읽고 작성하며 임베딩은 기존 로컬 EmbeddingGemma 2만 사용한다.
 
 ## 5A — 직접 검토 기반
