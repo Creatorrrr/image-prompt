@@ -242,6 +242,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 같은 canonical 사실의 [수동 역할 view 소비자 통합](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-ROLE-VIEW-INTEGRATION-01.json)을 완료했다. 전체 원문·guard·효과 검증 뒤 정확한 인용 안의 검토 구절을 명시적으로 결합하며, compact와 공개 후보팩의 자체 hash 대신 독립적으로 적재한 전체 원문에서 binding을 다시 만든다. 실제 속성·값·모드·operation·모든 receiver·전제는 그대로이고 새 효과나 permission을 만들지 않는다. 담당자464회·고유458개·1,094 subtest와 루트543회·고유519개·1,158 subtest가 실패·오류·skip 없이 통과했다. 도메인 예외를 다시 차단하던 추가 필터도 보정하여 실제1264 기존 binding의 object+visual_structure 양성 및 원문 조건·제외·잠금 등을 full/compact48경우와 단위6개로 확인했다. 같은 공간 벡터18,180개를 재사용하고 새 추론·Gemini0회로 세대 `50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839`를 발행·실제 acquire했다. 운영 catalog139개·native0건은 유지하며 연구 catalog149와 개별 의미 심사를 자동 적용하지 않았다. [열한 번째 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-11.json)는 중복 없는 직접 검토 초안6,715개를 보존한 범위이고 정식 승인 수가 아니다. 5단계 전수 심사와 6~8단계는 계속 진행한다.
 
+[열두 번째 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-12.json)는 담당자 직접 검토 초안 685개를 추가해 비중복 누계 7,400개를 보존한다. 200개는 현재 원문·5B 전체의 직접 재독과 수동 사실 초안이며 새 원문 after 작성·재독은 0개다. 중첩된 부분 기록은 중복 집계하지 않는다. 인용 범위를 과장한 8948번의 별도 수정 기록과 3159번 역할 분류의 재검토 필요도 보존한다. 양말의 역할 범위 및 후보 1299의 교환·구도 적용안은 아직 선택·승인하지 않았다. 이 기록은 운영 자격이나 5단계 종료를 뜻하지 않으며 전수 직접 심사와 후속 적용·검증은 계속 진행한다.
+
 ## 6단계 — 확정 연결 적용과 무결성 검증
 
 5단계의 직접 검토 승인 대장과 현재 source/catalog hash가 일치하는 추가·제거 관계만 native 원본에 적용한다. Gemini 초안·단순 유사도·규칙 출력에서 관계를 자동 수입하지 않는다. 기존 후보 ID와 계속 유효한 binding ID는 유지한다. 새로운 binding ID는 후보·슬롯 관계와 검토한 계약에 따라 안정적으로 생성하고 재실행해도 같은 관계가 중복되지 않도록 한다. 동일 후보·동일 슬롯의 불필요한 다중 관계는 허용하지 않는다. 조건별 변형이 필요하면 한 관계 안에 명시적인 적용 대안을 기록하며 검색 투표를 추가하지 않는다.
