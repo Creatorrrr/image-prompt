@@ -1,0 +1,165 @@
+{
+  "actual_realization_ids": [
+    "base"
+  ],
+  "before_exact_row_sha256": "5b6a7327cdc0d40f7835871eccbb86cbb14bbacb7d5b803e4e2865c9d678020f",
+  "before_formal04_batch": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/BATCH.json",
+    "file_sha256": "e129dd8657930fb90d017aeaa3ad26935aa6441de8065b614aea0f3496cc1d6a",
+    "sha256": "4d55aef65775e0dc7f85e3446196195be8875b6700c590f3e5894620b0259c94"
+  },
+  "bulk_scope_unchanged": {
+    "completed_unsigned_draft15": true,
+    "next_source_ordinal": 1515,
+    "prepared750": true
+  },
+  "complete_own_bindings": {
+    "bind_9f46f3d1613b55f483b86c50b8b5f1b5": {
+      "candidate_id": "cand_9f46f3d1613b55f483b86c50b8b5f1b5",
+      "conditions": {
+        "subject_applicability": {}
+      },
+      "id": "bind_9f46f3d1613b55f483b86c50b8b5f1b5",
+      "role": "optional",
+      "semantic_role": "direct",
+      "slot_id": "weather",
+      "weight": 0.82
+    }
+  },
+  "direct_manual_assessment": "Supported as a bounded candidate: direct complete own-field EN weather fact + direct complete own-field KO equivalent qualitative evaluation; own app scene prerequisite direct normal unit; whole exact app partial_restatement reference one hop to EN fact. Full evaluative/no-umbrella-addition/no-safety interpretation remains in exact app text and manually reviewed reference rationale. App is never forced to independently restate barely-needs degree. No new substantive fact/guard or permission is placed in reference rationale. No new umbrella, source correction, weather E deletion or P/C demotion. Existing source/binding guards and actual same scene/effect permission remain separately consumed in any future full proof.",
+  "formal04_changed": false,
+  "full_weather_spec_sha256": "3a65f69e0c4a8d6d8a637e920692d5ea02e1e3c4309660e02b17c4a13e0a6992",
+  "literal_author": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_11870_01257_semantic_reference_candidate_v2.py",
+    "file_sha256": "23dd11a8d024d88a571d80ea23da0dacd1ea7b83715f449fd714a06eb1c062a2"
+  },
+  "method": "codex_subagent_direct_source_read",
+  "model": "gpt-6.1-sol",
+  "narrow_isolate_validation": {
+    "all_passed": true,
+    "boundary": "Only frozen07143 _fact_valid and _validate_source_units. These mechanical checks establish neither natural-language entailment nor full native/operating acceptance.",
+    "compact_or_admission_or_runtime_checked": false,
+    "frozen_generation": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07",
+    "full_sourceproof_validated": false,
+    "module_paths_sha256": {
+      "photo_candidate_corpus": {
+        "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07/scripts/photo_candidate_corpus.py",
+        "file_sha256": "b00b200643fe672ba4fc84e162333d937b0ee83ddb0ab431b1a67169cda52da4"
+      },
+      "photo_candidate_realizations": {
+        "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07/scripts/photo_candidate_realizations.py",
+        "file_sha256": "749f00eb2f6e5c219e06bcf88b90912c2bf24f7a72eb180a70a4d93d04e0dd5c"
+      },
+      "photo_precore_bridge": {
+        "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07/scripts/photo_precore_bridge.py",
+        "file_sha256": "714048b4c78b722347ea621506879a5fa3dd7bdae3dc5bc3d1d9d031406f45a2"
+      },
+      "photo_precore_photo_semantic_witnesses": {
+        "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07/precore/photo_semantic_witnesses.py",
+        "file_sha256": "cc9bfca271ae1650c28a08b379bc84030b38a5cbcf9918c18d55d50a93094a58"
+      },
+      "photo_semantic_evidence": {
+        "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07/scripts/photo_semantic_evidence.py",
+        "file_sha256": "7d9f7e7c69bc1f8186af9a289eb46defd0e953de9c27d1b0b770142ad2660205"
+      }
+    },
+    "signature_created": false,
+    "tests": [
+      {
+        "case": "full_local_EN_KO_facts_plus_app_direct_scene_and_onehop_partial_reference",
+        "passed": true
+      },
+      {
+        "case": "canonical_weather_without_direct_unit_anchor",
+        "reason": "source unit facts must not be empty",
+        "rejected": true
+      },
+      {
+        "case": "unknown_fact_reference",
+        "reason": "semantic reference needs a distinct same-RID direct semantic anchor",
+        "rejected": true
+      },
+      {
+        "case": "same_pointer_self_reference",
+        "reason": "semantic reference needs a distinct same-RID direct semantic anchor",
+        "rejected": true
+      },
+      {
+        "case": "partial_instead_of_whole_application_quote",
+        "reason": "invalid full-string source-unit disposition",
+        "rejected": true
+      },
+      {
+        "case": "foreign_RID_canonical_fact_cannot_anchor_base_unit",
+        "reason": "unit borrows a foreign fact/source",
+        "rejected": true
+      },
+      {
+        "case": "duplicate_reference_unit",
+        "reason": "invalid bounded semantic reference relation or rationale",
+        "rejected": true
+      },
+      {
+        "case": "nonsemantic_application_conflicts_with_reference",
+        "reason": "semantic reference conflicts with nonsemantic disposition",
+        "rejected": true
+      },
+      {
+        "case": "invented_reference_relation",
+        "reason": "invalid bounded semantic reference relation or rationale",
+        "rejected": true
+      },
+      {
+        "case": "KO_fact_without_own_direct_semantic_anchor",
+        "reason": "source unit facts must not be empty",
+        "rejected": true
+      }
+    ]
+  },
+  "new_contract_read": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/native-08250-semantic-reference-unit-contract-20261015.md",
+    "file_sha256": "81049e8836c3ba1fd8e0b0c12b5e046554f99f059fdc51c3eb65c4b3a1409005"
+  },
+  "new_full_native_proof_count": 0,
+  "new_signatures": 0,
+  "old_formal04_pending_ordinals": [
+    1257,
+    1264,
+    1267,
+    1285,
+    1299
+  ],
+  "old_formal04_workerproof_count": 45,
+  "operating_count": 0,
+  "os_network_denied": true,
+  "preserved_failed_helper_v1": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_11870_01257_semantic_reference_candidate_v1.py",
+    "file_sha256": "0128111fe12fe734f47411ba32398638fe506ce84e0bbb6ab52e79862f595333",
+    "reason": "Per-RID _validate_source_units filters foreign-RID units rather than globally rejecting unknown RIDs. Initial isolated negative test expected the global boundary in the local function. v2 instead tests foreign-RID canonical fact at direct base anchor, correctly rejected. No facts/units/source/proof/status changed between v1 and v2; only negative probe and output filename changed. Full all-RID validation not claimed."
+  },
+  "proposal": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_11870_01257_semantic_reference_candidate_v2.json",
+    "file_sha256": "56cb4dcc69b10c92b61338a413f68e3b9dd32fa780c54d4481c79855ad0eac9f",
+    "sha256": "a2c2707f178a42d0c99319d015ea00656525a5c87df8367800a898b6d9e8b89b"
+  },
+  "provider_keys_absent": true,
+  "reasoning_effort": "high",
+  "reference_CID_closure": {},
+  "reference_binding_closure": {},
+  "reopen": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-04/REOPEN-01257-QUOTE-v1.json",
+    "file_sha256": "5ba26216809ab1c97c033a1f761ea0252c5245a3b550932c5c040ff476a14438",
+    "sha256": "b29f5abc705a5e525689f01538116841ca4b6f23ca6c0ef4d7daf0e31ad0bf69"
+  },
+  "reread_ordinals": [
+    1257
+  ],
+  "root_acceptance_count": 0,
+  "schema": "photo-bounded-manual-semantic-reference-followup-note/v1",
+  "source_production_registration_assets_runtime_Git_model_provider_network_changes": 0,
+  "task_name": "/root/review_11870_12250",
+  "utc": "2026-10-14T19:32:25.293132+00:00",
+  "whole_current_sha256": "842022197b8679ef9c0026c5e5e1b02528981c5c1b41429481332f74f50744ea",
+  "whole_original_sha256": "fc4441be6980df7ba63c23fa784e498da63e0cb94fcbfe9038a0a439d0c3f1f8",
+  "whole_provenance_original_exact_SHA_match_and_direct_read": true
+}
