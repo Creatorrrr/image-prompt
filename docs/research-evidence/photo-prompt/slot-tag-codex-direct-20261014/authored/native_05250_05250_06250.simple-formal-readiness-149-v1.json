@@ -1,0 +1,1257 @@
+{
+  "schema": "photo-manual-formal-readiness-diagnostic/v1",
+  "task": "/root/review_05250_06250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "bulk_actual_read_count": 1000,
+  "bulk_after_read_count": 1000,
+  "new_unique_bulk_read_count": 0,
+  "formal_proof_count": 0,
+  "qualified_count": 0,
+  "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "selection_method": "Five manual simplest-case source rereads; no classifier, generated semantic approval or forced target count. Existing owner plans remain conditional on independent actual core input.",
+  "full_specs": {
+    "location": {
+      "canonical_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+      "full_spec": {
+        "applicability": {},
+        "core_fields": [
+          "setting"
+        ],
+        "description": "Physical place and structural setting of the scene, distinct from use state or world rules.",
+        "description_ko": "장면이 놓인 장소와 공간 구조: 공간의 사용·손상 상태는 space_condition; 대기 중 사건과 장소 자체를 구별",
+        "dimensions": [
+          "setting"
+        ],
+        "evidence_terms": [
+          "room",
+          "street",
+          "place",
+          "hall",
+          "window",
+          "landscape"
+        ],
+        "excludes": [
+          "공간의 사용·손상 상태는 space_condition; 대기 중 사건과 장소 자체를 구별"
+        ],
+        "id": "location",
+        "includes": [
+          "Physical place and structural setting of the scene, distinct from use state or world rules."
+        ],
+        "neighbors": [
+          "background_element",
+          "environment_detail",
+          "publication_caption_context",
+          "space_condition",
+          "visible_text"
+        ],
+        "owners": [
+          "environment"
+        ],
+        "priority": "core",
+        "property_prefixes": [
+          "setting.location",
+          "location.",
+          "spatial_structure.",
+          "architecture."
+        ],
+        "semantic_role": "direct"
+      }
+    },
+    "narrative_phase": {
+      "canonical_sha256": "4d2428d5c4bcd08d22ca803a1019b4636202093f83d5099c1c85f4f0c4591615",
+      "full_spec": {
+        "applicability": {},
+        "core_fields": [
+          "setting",
+          "event"
+        ],
+        "description": "Selected instant or phase within an explicitly declared human, natural, mechanical or other event, distinct from clock time, a named occasion and inferred chronology.",
+        "description_ko": "명시된 인간·자연·기계 등 사건 안에서 선택한 순간이나 단계. 하루 시각·행사 명목과 구별하며 사건의 원인·완료·연속 경과를 추론하지 않는다.",
+        "dimensions": [
+          "timing"
+        ],
+        "evidence_terms": [
+          "before",
+          "after",
+          "mid",
+          "phase",
+          "first",
+          "reveal"
+        ],
+        "excludes": [
+          "Clock time, season, historical era and the name of an occasion alone.",
+          "An inferred preceding cause, unmentioned event, completed outcome or elapsed sequence.",
+          "Do not infer rainfall from wetness or a clock time from low tide; a phase requires its explicit source event relation."
+        ],
+        "id": "narrative_phase",
+        "includes": [
+          "Explicit before/after/during relations and selected natural-event phases, including an already declared loading event, rainfall or tide.",
+          "Human participation is not required. Existing source conditions and actual event/carrier identity remain mandatory.",
+          "A procedure operation or material transformation can additionally have its own role; a selected event phase alone does not supply the operation or transformation."
+        ],
+        "neighbors": [
+          "calendar_context",
+          "historical_period",
+          "procedure_step",
+          "season",
+          "time_of_day",
+          "transformation_stage"
+        ],
+        "owners": [
+          "context"
+        ],
+        "priority": "support",
+        "property_prefixes": [
+          "timing.event_phase",
+          "narrative.phase"
+        ],
+        "semantic_role": "contextual"
+      }
+    },
+    "mood": {
+      "canonical_sha256": "70b1b2a2fcea831fe771b52bd1eb8b3879379d5daf6dbb2fe98a1f26d3bcab26",
+      "full_spec": {
+        "applicability": {},
+        "core_fields": [
+          "setting",
+          "visual_priorities"
+        ],
+        "description": "Emotional atmosphere or proposed affective reading of the scene, not a measured state of air or a proven private emotion.",
+        "description_ko": "장면이 제안하는 정서와 분위기 해석: 공기 중 안개·먼지와 구별; 인물의 실제 마음을 확인했다고 주장하지 않음",
+        "dimensions": [
+          "atmosphere"
+        ],
+        "evidence_terms": [
+          "mood",
+          "tension",
+          "intimate",
+          "serene",
+          "calm",
+          "정서"
+        ],
+        "excludes": [
+          "공기 중 안개·먼지와 구별; 인물의 실제 마음을 확인했다고 주장하지 않음"
+        ],
+        "id": "mood",
+        "includes": [
+          "Emotional atmosphere or proposed affective reading of the scene, not a measured state of air or a proven private emotion."
+        ],
+        "neighbors": [
+          "aftermath_trace",
+          "character_contrast",
+          "character_intent",
+          "narrative_clue",
+          "offscreen_context",
+          "participant_role",
+          "proxemics",
+          "social_cue"
+        ],
+        "owners": [
+          "context"
+        ],
+        "priority": "core",
+        "property_prefixes": [
+          "mood.",
+          "affect.",
+          "scene.mood"
+        ],
+        "semantic_role": "contextual"
+      }
+    },
+    "image_detail": {
+      "canonical_sha256": "4582e06ce33f6c5cc2dd1cd36b9586882ef06b51d6e8e16445a7c32448c9bc1a",
+      "full_spec": {
+        "applicability": {},
+        "core_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "description": "Recorded detail, acuity and edge rendering, distinct from physical realism claims and focus-plane placement.",
+        "description_ko": "영상 세부와 선명도: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+        "dimensions": [
+          "camera",
+          "style"
+        ],
+        "evidence_terms": [
+          "detail",
+          "sharpness",
+          "acuity",
+          "oversharpen",
+          "readable contours"
+        ],
+        "excludes": [
+          "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+        ],
+        "id": "image_detail",
+        "includes": [
+          "Recorded detail, acuity and edge rendering, distinct from physical realism claims and focus-plane placement."
+        ],
+        "neighbors": [
+          "depth_of_field",
+          "focus",
+          "lens"
+        ],
+        "owners": [
+          "image"
+        ],
+        "priority": "support",
+        "property_prefixes": [
+          "image.detail",
+          "image.acuity",
+          "image.sharpness"
+        ],
+        "semantic_role": "direct"
+      }
+    }
+  },
+  "records": [
+    {
+      "ordinal": 6131,
+      "candidate_id": "cand_fd16e05ffe2a5d96bb095f24b665cf50",
+      "status": "semantically_simple_formal_authoring_candidate_not_qualified",
+      "meaning": "The existing scene is a card-tournament ruling-table setting; no proprietary game is represented.",
+      "whole_source_read_reuse": {
+        "packet": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_05250_05250_06250.06100_06150.packet.json",
+        "raw_sha256": "967c305c2ef44165c20dc4a03b34e0ec4285ded28a88edf3b7025267745a759c",
+        "before": "57b6c69199f1d0101cddeffd3f73a437c265199a8c3389414f7965247bef40ac",
+        "after": "57b6c69199f1d0101cddeffd3f73a437c265199a8c3389414f7965247bef40ac",
+        "compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_05250_06250_06000_06250.json",
+          "item": 132,
+          "file_sha256": "35e208905ac6515548359b82ef712e3f32e956e6ac31d045ab88fc7d183376c8",
+          "row_sha256": "b5380aeb426841881fab0e83bcb6facf9c7074d611ac4aa6b0849d12bae24564"
+        }
+      },
+      "full_source_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "game_liveops_card_adjudication_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "고유 게임을 닮지 않은 카드 대회 판정 테이블",
+            "a card-tournament ruling table unrelated to any proprietary game"
+          ],
+          "embedding_text": "a card-tournament ruling table unrelated to any proprietary game",
+          "en": "a card-tournament ruling table unrelated to any proprietary game",
+          "facets": {
+            "manifestation_mode": [
+              "cjk_commercial_narrative_system"
+            ],
+            "narrative_variant": [
+              "card_adjudication"
+            ]
+          },
+          "ko": "고유 게임을 닮지 않은 카드 대회 판정 테이블",
+          "tags": [
+            "cjk_narrative_world",
+            "cjk_vrmmo_card_liveops_world",
+            "game_liveops_card_adjudication_scene"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_fd16e05ffe2a5d96bb095f24b665cf50",
+        "provenance": [
+          {
+            "sha256": "0a2d044d7b50e83b3bfe7ae04408b0226354333752f1490b9ab931069b6e9d2e",
+            "source": "slot:location:game_liveops_card_adjudication_location"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing_bindings": {
+        "bind_fd16e05ffe2a5d96bb095f24b665cf50": {
+          "candidate_id": "cand_fd16e05ffe2a5d96bb095f24b665cf50",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_fd16e05ffe2a5d96bb095f24b665cf50",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 1
+        }
+      },
+      "closure": {
+        "candidates": {},
+        "bindings": {}
+      },
+      "realization_ids": [
+        "base"
+      ],
+      "profile_contracts": {
+        "base": null
+      },
+      "guard_sets": {
+        "base": {
+          "source_conditions": [
+            {
+              "requires_primary_any_tags": [
+                "game_liveops_card_adjudication_scene"
+              ]
+            },
+            {}
+          ],
+          "member_conditions": {}
+        }
+      },
+      "dependency_guards": {
+        "base": []
+      },
+      "dependencies": {
+        "base": []
+      },
+      "owner_map_plan": {
+        "source_target": "scene",
+        "selector": {
+          "kind": "core_role",
+          "role": "scene"
+        },
+        "origin": "existing",
+        "introduced_by": null,
+        "not_an_actual_owner_id": "Caller must independently freeze this actual scene/image role and exact entity.presence/v1=present witness before formal proof. No main/foreground fallback."
+      },
+      "prerequisite_plan": {
+        "id": "ownerP",
+        "mode": "prerequisite",
+        "dimension": "subject",
+        "property": "entity.presence",
+        "target": "scene",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      "facts_plan": [
+        {
+          "id": "f1",
+          "realization_id": "base",
+          "mode": "effect",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "card_tournament_ruling_table"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "a card-tournament ruling table unrelated to any proprietary game"
+          },
+          "operation": "set_value",
+          "receivers": []
+        },
+        {
+          "id": "f2",
+          "realization_id": "base",
+          "mode": "context",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "design.proprietary_boundary",
+          "value": {
+            "type": "design.proprietary_boundary/v1",
+            "value": "unrelated_to_any_proprietary_game"
+          },
+          "requires": [],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "unrelated to any proprietary game"
+          }
+        }
+      ],
+      "all_primary_fields_units_plan": {
+        "rule": "Each complete EN/KO/embedding/phrase if present maps individually to these same retained meanings; relations subject/type/object form one bound whole-image ownership context in 6220. Aliases/tags/keywords are not positive units. No field may be omitted merely because EN duplicates it.",
+        "fields": {
+          "embedding_text": "a card-tournament ruling table unrelated to any proprietary game",
+          "en": "a card-tournament ruling table unrelated to any proprietary game",
+          "facets": {
+            "manifestation_mode": [
+              "cjk_commercial_narrative_system"
+            ],
+            "narrative_variant": [
+              "card_adjudication"
+            ]
+          },
+          "ko": "고유 게임을 닮지 않은 카드 대회 판정 테이블"
+        }
+      },
+      "role_plans": [
+        {
+          "slot_id": "location",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "semantic_role": "direct",
+          "weight_intent": "Retain exact existing binding weight when same slot; new role requires individual spec-grounded binding, no member union."
+        }
+      ],
+      "why_pending_is_resolvable": "No missing endpoint or competing source branch requires an editorial choice. Explicit scene/image core roles suffice once independently frozen; actual effects stay effects and full intrinsic guards remain. This is an authoring plan, not a new source selection or evidence qualification.",
+      "source_effect_boundary": "Preserve every original dimension/property. Empty property inventories may be completed by source-supported actual E, retaining original dimension-level locks. 6214 timing completion requires explicit exact-source effect contract before admission; it is not silently approved here.",
+      "rejected_boundaries": [
+        "A ruling-table purpose does not assert players, current adjudication, a proprietary ruleset, brand or object inventory beyond the described setting."
+      ],
+      "formal_remaining": [
+        "independently frozen actual owner and prerequisite witnesses",
+        "exact formal INPUT/ASSIGNMENT",
+        "per-field source units/effect contract and all actual original/property/receiver/whole locks",
+        "full current native validator and independent peer acceptance"
+      ]
+    },
+    {
+      "ordinal": 6162,
+      "candidate_id": "cand_4c186eb6cb535f1380915a6b420b2a6d",
+      "status": "semantically_simple_formal_authoring_candidate_not_qualified",
+      "meaning": "The existing scene is a giant-machine maintenance hangar with a nonproprietary design boundary.",
+      "whole_source_read_reuse": {
+        "packet": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_05250_05250_06250.06150_06200.packet.json",
+        "raw_sha256": "d7ab48a8efc75ba550532907814888943118bde9d33f47a0fb552183c38e18d2",
+        "before": "2d7edf7f5ecf246d7b8e6ea2f8f1e120c5415f9dc9f1a27153ee66041e57a0f8",
+        "after": "2d7edf7f5ecf246d7b8e6ea2f8f1e120c5415f9dc9f1a27153ee66041e57a0f8",
+        "compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_05250_06250_06000_06250.json",
+          "item": 163,
+          "file_sha256": "35e208905ac6515548359b82ef712e3f32e956e6ac31d045ab88fc7d183376c8",
+          "row_sha256": "c26e99906334917aeee13c93a3e860ee6f0114eb67ba9a4fa3a961e9811f61c8"
+        }
+      },
+      "full_source_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "mecha_kaiju_mecha_sortie_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "고유 기체를 닮지 않은 거대기체 격납 정비고",
+            "a giant-machine maintenance hangar unrelated to any proprietary design"
+          ],
+          "embedding_text": "a giant-machine maintenance hangar unrelated to any proprietary design",
+          "en": "a giant-machine maintenance hangar unrelated to any proprietary design",
+          "facets": {
+            "manifestation_mode": [
+              "cjk_commercial_narrative_system"
+            ],
+            "narrative_variant": [
+              "mecha_sortie"
+            ]
+          },
+          "ko": "고유 기체를 닮지 않은 거대기체 격납 정비고",
+          "tags": [
+            "cjk_narrative_world",
+            "jp_mecha_kaiju_tokusatsu_disaster_state",
+            "mecha_kaiju_mecha_sortie_scene"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_4c186eb6cb535f1380915a6b420b2a6d",
+        "provenance": [
+          {
+            "sha256": "c431c97cf5fd330276c0235168e80c1a25feaa62d6f8f8e465ceefe754d5d98c",
+            "source": "slot:location:mecha_kaiju_mecha_sortie_location"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing_bindings": {
+        "bind_4c186eb6cb535f1380915a6b420b2a6d": {
+          "candidate_id": "cand_4c186eb6cb535f1380915a6b420b2a6d",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_4c186eb6cb535f1380915a6b420b2a6d",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 1
+        }
+      },
+      "closure": {
+        "candidates": {},
+        "bindings": {}
+      },
+      "realization_ids": [
+        "base"
+      ],
+      "profile_contracts": {
+        "base": null
+      },
+      "guard_sets": {
+        "base": {
+          "source_conditions": [
+            {
+              "requires_primary_any_tags": [
+                "mecha_kaiju_mecha_sortie_scene"
+              ]
+            },
+            {}
+          ],
+          "member_conditions": {}
+        }
+      },
+      "dependency_guards": {
+        "base": []
+      },
+      "dependencies": {
+        "base": []
+      },
+      "owner_map_plan": {
+        "source_target": "scene",
+        "selector": {
+          "kind": "core_role",
+          "role": "scene"
+        },
+        "origin": "existing",
+        "introduced_by": null,
+        "not_an_actual_owner_id": "Caller must independently freeze this actual scene/image role and exact entity.presence/v1=present witness before formal proof. No main/foreground fallback."
+      },
+      "prerequisite_plan": {
+        "id": "ownerP",
+        "mode": "prerequisite",
+        "dimension": "subject",
+        "property": "entity.presence",
+        "target": "scene",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      "facts_plan": [
+        {
+          "id": "f1",
+          "realization_id": "base",
+          "mode": "effect",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "giant_machine_maintenance_hangar"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "a giant-machine maintenance hangar unrelated to any proprietary design"
+          },
+          "operation": "set_value",
+          "receivers": []
+        },
+        {
+          "id": "f2",
+          "realization_id": "base",
+          "mode": "context",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "design.proprietary_boundary",
+          "value": {
+            "type": "design.proprietary_boundary/v1",
+            "value": "unrelated_to_any_proprietary_design"
+          },
+          "requires": [],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "unrelated to any proprietary design"
+          }
+        }
+      ],
+      "all_primary_fields_units_plan": {
+        "rule": "Each complete EN/KO/embedding/phrase if present maps individually to these same retained meanings; relations subject/type/object form one bound whole-image ownership context in 6220. Aliases/tags/keywords are not positive units. No field may be omitted merely because EN duplicates it.",
+        "fields": {
+          "embedding_text": "a giant-machine maintenance hangar unrelated to any proprietary design",
+          "en": "a giant-machine maintenance hangar unrelated to any proprietary design",
+          "facets": {
+            "manifestation_mode": [
+              "cjk_commercial_narrative_system"
+            ],
+            "narrative_variant": [
+              "mecha_sortie"
+            ]
+          },
+          "ko": "고유 기체를 닮지 않은 거대기체 격납 정비고"
+        }
+      },
+      "role_plans": [
+        {
+          "slot_id": "location",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "semantic_role": "direct",
+          "weight_intent": "Retain exact existing binding weight when same slot; new role requires individual spec-grounded binding, no member union."
+        }
+      ],
+      "why_pending_is_resolvable": "No missing endpoint or competing source branch requires an editorial choice. Explicit scene/image core roles suffice once independently frozen; actual effects stay effects and full intrinsic guards remain. This is an authoring plan, not a new source selection or evidence qualification.",
+      "source_effect_boundary": "Preserve every original dimension/property. Empty property inventories may be completed by source-supported actual E, retaining original dimension-level locks. 6214 timing completion requires explicit exact-source effect contract before admission; it is not silently approved here.",
+      "rejected_boundaries": [
+        "Giant-machine is the hangar purpose; it does not add a machine, crew, current repair, sortie, quantified scale relation or physical mass."
+      ],
+      "formal_remaining": [
+        "independently frozen actual owner and prerequisite witnesses",
+        "exact formal INPUT/ASSIGNMENT",
+        "per-field source units/effect contract and all actual original/property/receiver/whole locks",
+        "full current native validator and independent peer acceptance"
+      ]
+    },
+    {
+      "ordinal": 6191,
+      "candidate_id": "cand_cfaf28a542bc5701bb7730ee98022ab2",
+      "status": "semantically_simple_formal_authoring_candidate_not_qualified",
+      "meaning": "The existing scene is an administrative hall at a fictional xianxia sect secret-realm entrance.",
+      "whole_source_read_reuse": {
+        "packet": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_05250_05250_06250.06150_06200.packet.json",
+        "raw_sha256": "d7ab48a8efc75ba550532907814888943118bde9d33f47a0fb552183c38e18d2",
+        "before": "1b1c26944458b3f2d1d4e0dab39b8072373b46343065b07dbcd6cdf1e23920a4",
+        "after": "1b1c26944458b3f2d1d4e0dab39b8072373b46343065b07dbcd6cdf1e23920a4",
+        "compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_05250_06250_06000_06250.json",
+          "item": 192,
+          "file_sha256": "35e208905ac6515548359b82ef712e3f32e956e6ac31d045ab88fc7d183376c8",
+          "row_sha256": "9b920b5ab2760648002e78b25a3bceb30003e9fd7d9524db22c681f0fc6cf4af"
+        }
+      },
+      "full_source_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "xianxia_sect_secret_realm_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "허구 선협 종문의 비경 입구 행정 전각",
+            "the administrative hall at a secret-realm entrance in a fictional xianxia sect"
+          ],
+          "embedding_text": "the administrative hall at a secret-realm entrance in a fictional xianxia sect",
+          "en": "the administrative hall at a secret-realm entrance in a fictional xianxia sect",
+          "facets": {
+            "manifestation_mode": [
+              "cjk_commercial_narrative_system"
+            ],
+            "narrative_variant": [
+              "secret_realm"
+            ]
+          },
+          "ko": "허구 선협 종문의 비경 입구 행정 전각",
+          "tags": [
+            "cjk_narrative_world",
+            "cn_xianxia_cultivation_sect_world",
+            "xianxia_sect_secret_realm_scene"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_cfaf28a542bc5701bb7730ee98022ab2",
+        "provenance": [
+          {
+            "sha256": "a345a7ddf25ee51387119adee5d5461b61d59781f65fd870eb8c05b60a3ea201",
+            "source": "slot:location:xianxia_sect_secret_realm_location"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing_bindings": {
+        "bind_cfaf28a542bc5701bb7730ee98022ab2": {
+          "candidate_id": "cand_cfaf28a542bc5701bb7730ee98022ab2",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_cfaf28a542bc5701bb7730ee98022ab2",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 1
+        }
+      },
+      "closure": {
+        "candidates": {},
+        "bindings": {}
+      },
+      "realization_ids": [
+        "base"
+      ],
+      "profile_contracts": {
+        "base": null
+      },
+      "guard_sets": {
+        "base": {
+          "source_conditions": [
+            {
+              "requires_primary_any_tags": [
+                "xianxia_sect_secret_realm_scene"
+              ]
+            },
+            {}
+          ],
+          "member_conditions": {}
+        }
+      },
+      "dependency_guards": {
+        "base": []
+      },
+      "dependencies": {
+        "base": []
+      },
+      "owner_map_plan": {
+        "source_target": "scene",
+        "selector": {
+          "kind": "core_role",
+          "role": "scene"
+        },
+        "origin": "existing",
+        "introduced_by": null,
+        "not_an_actual_owner_id": "Caller must independently freeze this actual scene/image role and exact entity.presence/v1=present witness before formal proof. No main/foreground fallback."
+      },
+      "prerequisite_plan": {
+        "id": "ownerP",
+        "mode": "prerequisite",
+        "dimension": "subject",
+        "property": "entity.presence",
+        "target": "scene",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      "facts_plan": [
+        {
+          "id": "f1",
+          "realization_id": "base",
+          "mode": "effect",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "administrative_hall_at_secret_realm_entrance_in_fictional_xianxia_sect"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "the administrative hall at a secret-realm entrance in a fictional xianxia sect"
+          },
+          "operation": "set_value",
+          "receivers": []
+        }
+      ],
+      "all_primary_fields_units_plan": {
+        "rule": "Each complete EN/KO/embedding/phrase if present maps individually to these same retained meanings; relations subject/type/object form one bound whole-image ownership context in 6220. Aliases/tags/keywords are not positive units. No field may be omitted merely because EN duplicates it.",
+        "fields": {
+          "embedding_text": "the administrative hall at a secret-realm entrance in a fictional xianxia sect",
+          "en": "the administrative hall at a secret-realm entrance in a fictional xianxia sect",
+          "facets": {
+            "manifestation_mode": [
+              "cjk_commercial_narrative_system"
+            ],
+            "narrative_variant": [
+              "secret_realm"
+            ]
+          },
+          "ko": "허구 선협 종문의 비경 입구 행정 전각"
+        }
+      },
+      "role_plans": [
+        {
+          "slot_id": "location",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "semantic_role": "direct",
+          "weight_intent": "Retain exact existing binding weight when same slot; new role requires individual spec-grounded binding, no member union."
+        }
+      ],
+      "why_pending_is_resolvable": "No missing endpoint or competing source branch requires an editorial choice. Explicit scene/image core roles suffice once independently frozen; actual effects stay effects and full intrinsic guards remain. This is an authoring plan, not a new source selection or evidence qualification.",
+      "source_effect_boundary": "Preserve every original dimension/property. Empty property inventories may be completed by source-supported actual E, retaining original dimension-level locks. 6214 timing completion requires explicit exact-source effect contract before admission; it is not silently approved here.",
+      "rejected_boundaries": [
+        "Fictional sect/secret-realm place designation is retained in the location value; it does not create a portal, supernatural rule, official, registration action or historic architectural recipe."
+      ],
+      "formal_remaining": [
+        "independently frozen actual owner and prerequisite witnesses",
+        "exact formal INPUT/ASSIGNMENT",
+        "per-field source units/effect contract and all actual original/property/receiver/whole locks",
+        "full current native validator and independent peer acceptance"
+      ]
+    },
+    {
+      "ordinal": 6214,
+      "candidate_id": "cand_33758e40cc3a52c6bc1b5d6e7237070b",
+      "status": "semantically_simple_formal_authoring_candidate_not_qualified",
+      "meaning": "The existing scene is a quiet café service counter just before closing.",
+      "whole_source_read_reuse": {
+        "packet": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_05250_05250_06250.06200_06250.packet.json",
+        "raw_sha256": "37f776de74a9c47507994049a81280fe9847f389007e4d96bb9c12f19915fdd7",
+        "before": "dbc94e88712bcb51fa6ac281ff75a00481fbcc546e89fb2e6cbe5d627473271b",
+        "after": "ce94aa8726c5452c3d2e274f7bcc31da6ca67a333a6594e854338b92b09057cb",
+        "compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_05250_06250_06000_06250.json",
+          "item": 215,
+          "file_sha256": "35e208905ac6515548359b82ef712e3f32e956e6ac31d045ab88fc7d183376c8",
+          "row_sha256": "04dcc93127d39c98dbc9bbddbc959eed478f1554f40db199686cea2005179748"
+        }
+      },
+      "full_source_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "character_affection_distance_spectrum_scene_atomic_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "폐점 직전의 조용한 카페 서비스 카운터",
+            "a quiet café service counter just before closing"
+          ],
+          "embedding_text": "a quiet café service counter just before closing",
+          "en": "a quiet café service counter just before closing",
+          "facets": {},
+          "ko": "폐점 직전의 조용한 카페 서비스 카운터",
+          "tags": [
+            "character_scene_grammar",
+            "dere_behavior_spectrum",
+            "affect_expression_gaze",
+            "character_affection_distance_spectrum_scene_atomic_scene",
+            "original_character"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_33758e40cc3a52c6bc1b5d6e7237070b",
+        "provenance": [
+          {
+            "sha256": "3609e88daddf044a248d0f3346aa6464310bea9230d33156eee9e71a5875fedd",
+            "source": "slot:location:character_affection_distance_spectrum_scene_location"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing_bindings": {
+        "bind_33758e40cc3a52c6bc1b5d6e7237070b": {
+          "candidate_id": "cand_33758e40cc3a52c6bc1b5d6e7237070b",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_33758e40cc3a52c6bc1b5d6e7237070b",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 1
+        }
+      },
+      "closure": {
+        "candidates": {},
+        "bindings": {}
+      },
+      "realization_ids": [
+        "base"
+      ],
+      "profile_contracts": {
+        "base": null
+      },
+      "guard_sets": {
+        "base": {
+          "source_conditions": [
+            {
+              "requires_primary_any_tags": [
+                "character_affection_distance_spectrum_scene_atomic_scene"
+              ]
+            },
+            {}
+          ],
+          "member_conditions": {}
+        }
+      },
+      "dependency_guards": {
+        "base": []
+      },
+      "dependencies": {
+        "base": []
+      },
+      "owner_map_plan": {
+        "source_target": "scene",
+        "selector": {
+          "kind": "core_role",
+          "role": "scene"
+        },
+        "origin": "existing",
+        "introduced_by": null,
+        "not_an_actual_owner_id": "Caller must independently freeze this actual scene/image role and exact entity.presence/v1=present witness before formal proof. No main/foreground fallback."
+      },
+      "prerequisite_plan": {
+        "id": "ownerP",
+        "mode": "prerequisite",
+        "dimension": "subject",
+        "property": "entity.presence",
+        "target": "scene",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      "facts_plan": [
+        {
+          "id": "f1",
+          "realization_id": "base",
+          "mode": "effect",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "cafe_service_counter"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "a quiet café service counter just before closing"
+          },
+          "operation": "set_value",
+          "receivers": []
+        },
+        {
+          "id": "f2",
+          "realization_id": "base",
+          "mode": "effect",
+          "dimension": "timing",
+          "target": "scene",
+          "property": "timing.event_phase",
+          "value": {
+            "type": "timing.event_phase/v1",
+            "value": "just_before_closing"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "just before closing"
+          },
+          "operation": "set_value",
+          "receivers": []
+        },
+        {
+          "id": "f3",
+          "realization_id": "base",
+          "mode": "context",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "scene.mood",
+          "value": {
+            "type": "scene.mood/v1",
+            "value": "quiet"
+          },
+          "requires": [],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "quiet"
+          }
+        }
+      ],
+      "all_primary_fields_units_plan": {
+        "rule": "Each complete EN/KO/embedding/phrase if present maps individually to these same retained meanings; relations subject/type/object form one bound whole-image ownership context in 6220. Aliases/tags/keywords are not positive units. No field may be omitted merely because EN duplicates it.",
+        "fields": {
+          "embedding_text": "a quiet café service counter just before closing",
+          "en": "a quiet café service counter just before closing",
+          "facets": {},
+          "ko": "폐점 직전의 조용한 카페 서비스 카운터"
+        }
+      },
+      "role_plans": [
+        {
+          "slot_id": "location",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "semantic_role": "direct",
+          "weight_intent": "Retain exact existing binding weight when same slot; new role requires individual spec-grounded binding, no member union."
+        },
+        {
+          "slot_id": "narrative_phase",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "semantic_role": "direct",
+          "weight_intent": "Retain exact existing binding weight when same slot; new role requires individual spec-grounded binding, no member union."
+        },
+        {
+          "slot_id": "mood",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "semantic_role": "direct",
+          "weight_intent": "Retain exact existing binding weight when same slot; new role requires individual spec-grounded binding, no member union."
+        }
+      ],
+      "why_pending_is_resolvable": "No missing endpoint or competing source branch requires an editorial choice. Explicit scene/image core roles suffice once independently frozen; actual effects stay effects and full intrinsic guards remain. This is an authoring plan, not a new source selection or evidence qualification.",
+      "source_effect_boundary": "Preserve every original dimension/property. Empty property inventories may be completed by source-supported actual E, retaining original dimension-level locks. 6214 timing completion requires explicit exact-source effect contract before admission; it is not silently approved here.",
+      "rejected_boundaries": [
+        "Quiet is scene reading rather than actual soundlessness or private emotion. Before closing does not entail night, a shut door, current shutter action or a specific clock time."
+      ],
+      "formal_remaining": [
+        "independently frozen actual owner and prerequisite witnesses",
+        "exact formal INPUT/ASSIGNMENT",
+        "per-field source units/effect contract and all actual original/property/receiver/whole locks",
+        "full current native validator and independent peer acceptance"
+      ]
+    },
+    {
+      "ordinal": 6220,
+      "candidate_id": "cand_afdb9168ea8c53ad921a8574ed5248d1",
+      "status": "semantically_simple_formal_authoring_candidate_not_qualified",
+      "meaning": "Clean continuous photographic edges apply to the whole image while object contours remain continuous and small surface details remain readable.",
+      "whole_source_read_reuse": {
+        "packet": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_05250_05250_06250.06200_06250.packet.json",
+        "raw_sha256": "37f776de74a9c47507994049a81280fe9847f389007e4d96bb9c12f19915fdd7",
+        "before": "ebbe2513f1549d706c736433786d5e389cd648d6266eeba713df02dd9ab2f377",
+        "after": "ebbe2513f1549d706c736433786d5e389cd648d6266eeba713df02dd9ab2f377",
+        "compiled": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_05250_06250_06000_06250.json",
+          "item": 221,
+          "file_sha256": "35e208905ac6515548359b82ef712e3f32e956e6ac31d045ab88fc7d183376c8",
+          "row_sha256": "cd4d1ae965fdadfc0bb01b597d33f33ed809b103e78966188cc3e8954bcce8ca"
+        }
+      },
+      "full_source_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "깔끔하고 연속적인 사진 경계",
+            "clean continuous photographic edges"
+          ],
+          "concept_units": [
+            "object contours remain continuous",
+            "small surface details remain readable"
+          ],
+          "core_assertion_discovery": true,
+          "embedding_text": "clean continuous photographic edges; object contours remain continuous; small surface details remain readable",
+          "en": "clean continuous photographic edges",
+          "keywords": [
+            "clean continuous photographic edges"
+          ],
+          "ko": "깔끔하고 연속적인 사진 경계",
+          "relations": [
+            {
+              "id": "effect_owner",
+              "object": "whole_image",
+              "subject": "clean continuous photographic edges",
+              "type": "applies_to"
+            }
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "style",
+              "property": "image.detail",
+              "target": "image_plane"
+            }
+          ]
+        },
+        "id": "cand_afdb9168ea8c53ad921a8574ed5248d1",
+        "provenance": [
+          {
+            "sha256": "c62e576f724d2a7065d13f8f65e66da9df1f2f544ce1282aeff8afac97d360e0",
+            "source": "slot:quality:pe_clean_edges"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing_bindings": {
+        "bind_afdb9168ea8c53ad921a8574ed5248d1": {
+          "candidate_id": "cand_afdb9168ea8c53ad921a8574ed5248d1",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_afdb9168ea8c53ad921a8574ed5248d1",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "image_detail",
+          "weight": 0.72
+        }
+      },
+      "closure": {
+        "candidates": {},
+        "bindings": {}
+      },
+      "realization_ids": [
+        "base"
+      ],
+      "profile_contracts": {
+        "base": null
+      },
+      "guard_sets": {
+        "base": {
+          "source_conditions": [
+            {},
+            {}
+          ],
+          "member_conditions": {}
+        }
+      },
+      "dependency_guards": {
+        "base": []
+      },
+      "dependencies": {
+        "base": []
+      },
+      "owner_map_plan": {
+        "source_target": "image_plane",
+        "selector": {
+          "kind": "core_role",
+          "role": "image"
+        },
+        "origin": "existing",
+        "introduced_by": null,
+        "not_an_actual_owner_id": "Caller must independently freeze this actual scene/image role and exact entity.presence/v1=present witness before formal proof. No main/foreground fallback."
+      },
+      "prerequisite_plan": {
+        "id": "ownerP",
+        "mode": "prerequisite",
+        "dimension": "subject",
+        "property": "entity.presence",
+        "target": "image_plane",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      "facts_plan": [
+        {
+          "id": "f1",
+          "realization_id": "base",
+          "mode": "effect",
+          "dimension": "style",
+          "target": "image_plane",
+          "property": "image.detail",
+          "value": {
+            "type": "image.detail/v1",
+            "value": "clean_continuous_photographic_edges"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/en",
+            "quote": "clean continuous photographic edges"
+          },
+          "operation": "set_value",
+          "receivers": []
+        },
+        {
+          "id": "f2",
+          "realization_id": "base",
+          "mode": "preservation",
+          "dimension": "style",
+          "target": "image_plane",
+          "property": "image.contour.continuity",
+          "value": {
+            "type": "frozen_property_reference/v1",
+            "value": "same"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/concept_units/0",
+            "quote": "object contours remain continuous"
+          }
+        },
+        {
+          "id": "f3",
+          "realization_id": "base",
+          "mode": "preservation",
+          "dimension": "style",
+          "target": "image_plane",
+          "property": "image.small_surface_detail.readability",
+          "value": {
+            "type": "frozen_property_reference/v1",
+            "value": "same"
+          },
+          "requires": [
+            "ownerP"
+          ],
+          "evidence": {
+            "pointer": "/content/concept_units/1",
+            "quote": "small surface details remain readable"
+          }
+        }
+      ],
+      "all_primary_fields_units_plan": {
+        "rule": "Each complete EN/KO/embedding/phrase if present maps individually to these same retained meanings; relations subject/type/object form one bound whole-image ownership context in 6220. Aliases/tags/keywords are not positive units. No field may be omitted merely because EN duplicates it.",
+        "fields": {
+          "concept_units": [
+            "object contours remain continuous",
+            "small surface details remain readable"
+          ],
+          "core_assertion_discovery": true,
+          "embedding_text": "clean continuous photographic edges; object contours remain continuous; small surface details remain readable",
+          "en": "clean continuous photographic edges",
+          "ko": "깔끔하고 연속적인 사진 경계",
+          "relations": [
+            {
+              "id": "effect_owner",
+              "object": "whole_image",
+              "subject": "clean continuous photographic edges",
+              "type": "applies_to"
+            }
+          ]
+        }
+      },
+      "role_plans": [
+        {
+          "slot_id": "image_detail",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "semantic_role": "direct",
+          "weight_intent": "Retain exact existing binding weight when same slot; new role requires individual spec-grounded binding, no member union."
+        }
+      ],
+      "why_pending_is_resolvable": "No missing endpoint or competing source branch requires an editorial choice. Explicit scene/image core roles suffice once independently frozen; actual effects stay effects and full intrinsic guards remain. This is an authoring plan, not a new source selection or evidence qualification.",
+      "source_effect_boundary": "Preserve every original dimension/property. Empty property inventories may be completed by source-supported actual E, retaining original dimension-level locks. 6214 timing completion requires explicit exact-source effect contract before admission; it is not silently approved here.",
+      "rejected_boundaries": [
+        "Preserve original style/image_plane/image.detail address and explicit whole_image relation. No image.noise substitution, physical topology mutation, acquisition-device choice or external quality certification."
+      ],
+      "formal_remaining": [
+        "independently frozen actual owner and prerequisite witnesses",
+        "exact formal INPUT/ASSIGNMENT",
+        "per-field source units/effect contract and all actual original/property/receiver/whole locks",
+        "full current native validator and independent peer acceptance"
+      ]
+    }
+  ]
+}

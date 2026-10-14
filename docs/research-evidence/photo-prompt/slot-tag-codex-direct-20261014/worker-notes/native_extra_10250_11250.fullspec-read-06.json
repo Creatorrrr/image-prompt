@@ -1,0 +1,300 @@
+{
+  "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "cumulative_unique_fullspec_count": 63,
+  "new_fullspecs": {
+    "lens_artifact": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Image effects arising along the optical path, distinct from physical scene particles and encoding damage.",
+      "description_ko": "광학 경로와 이미지 면에 생긴 영상 흔적: 환경 속 입자 자체와 구별; 긴 노출·광학 flare·매체 압축의 분리 범위 검토",
+      "dimensions": [
+        "camera"
+      ],
+      "evidence_terms": [
+        "flare",
+        "bloom",
+        "halation",
+        "vignette",
+        "aberration",
+        "lens"
+      ],
+      "excludes": [
+        "환경 속 입자 자체와 구별; 긴 노출·광학 flare·매체 압축의 분리 범위 검토"
+      ],
+      "id": "lens_artifact",
+      "includes": [
+        "Image effects arising along the optical path, distinct from physical scene particles and encoding damage."
+      ],
+      "neighbors": [
+        "ambient_particle",
+        "atmospheric_medium",
+        "grain_profile",
+        "image_artifact",
+        "surface_material",
+        "texture"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "optics.",
+        "image.optical_artifact",
+        "lens.artifact"
+      ],
+      "semantic_role": "direct"
+    },
+    "skin_finish": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Explicit optical finish or microtexture of an identified owned skin surface or local skin region, including independently declared biological, synthetic or represented skin, separate from body hair, geometry, material identity and private health state.",
+      "description_ko": "독립적으로 명시된 실제 피부·합성 피부·묘사된 피부의 소유된 표면이나 국소 영역에 속한 광학 마감·미세 질감. 체모·형태·재질 정체·사적인 건강 상태와 구별하며, 역할 이름에서 살아 있는 피부나 사람을 만들지 않는다.",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "skin",
+        "pores",
+        "sheen",
+        "skin texture",
+        "피부"
+      ],
+      "excludes": [
+        "A skin, actor, robot, doll, material or surface label alone without a positively declared finish/microtexture. Generic presence or a role word does not supply skin.",
+        "Material identity alone, body hair, anatomical geometry, pigment/marking, cosmetic layer, wetness or a clinical state alone without the independently stated optical finish/microtexture.",
+        "Synthetic/represented skin does not become biological skin, add a living carrier or inherit another owner anatomy. A skin-like textile/paint/outer-shell metaphor needs exact source identity rather than a guessed anatomical conversion.",
+        "Microtexture alone does not prove actual age, family, disease, injury, health, cause, material chemistry or a specific wrinkle/pore pattern.",
+        "Ordinary roughness without explicit age presentation does not add age E. Conversely explicit selected aged/young presentation must not be deleted or relabeled P to evade age locks.",
+        "Do not duplicate the same optical/microtexture fact merely to obtain generic surface roles or new owners; separate material/texture properties need their own actual meaning."
+      ],
+      "id": "skin_finish",
+      "includes": [
+        "An actual owned skin surface or exact local skin region with positively stated optical finish or microtexture. Its biological, synthetic or represented identity must be independently supported; human-only scene classification is not required.",
+        "A matte synthetic skin surface with explicitly stated pores retains the artificial owner; no living actor, actual biological pores or real skin health is inferred.",
+        "Explicit aged-looking versus young-looking skin microtexture can support local skin finish and visible local age presentation from the same positive selection. They are shared semantic evidence, not two independent aging processes; both actual permission dimensions remain explicit when the whole source selects them.",
+        "A selected region keeps its exact actual owner and part/whole relations. Distinct regions may belong to the same or different actual owners; no automatic primary skin, two people or whole-owner transfer."
+      ],
+      "neighbors": [
+        "body_hair",
+        "body_marking",
+        "makeup_decoration",
+        "skin_condition",
+        "skin_tone"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "skin.finish",
+        "skin.texture",
+        "skin.optical"
+      ],
+      "semantic_role": "direct"
+    },
+    "space_condition": {
+      "applicability": {},
+      "core_fields": [
+        "setting"
+      ],
+      "description": "Explicit current physical or use condition of an identified place and its declared zones, including exposure or inundation by a named medium, distinct from structural location, weather and event phase.",
+      "description_ko": "선언된 장소와 구역 자체의 현재 물리·사용 상태. 특정 매질에 대한 노출·침수·잠김 구역을 포함하며, 장소 구조·날씨·사건 단계·표면 수분과 구별한다.",
+      "dimensions": [
+        "setting"
+      ],
+      "evidence_terms": [
+        "space",
+        "place",
+        "abandoned",
+        "preparation",
+        "damage",
+        "cleanup"
+      ],
+      "excludes": [
+        "A place name, weather label or event-phase label alone does not establish physical exposure, flooding or immersion.",
+        "Surface wet/damp/dry condition is not the same as exposed/submerged coverage; exposure does not imply dryness and wetness does not prove immersion.",
+        "No inferred rainfall, weather, tide cause, water chemistry, depth, salinity, current, elapsed process, biological community or completed event from the state.",
+        "Local fixture wear/utilities/use traces are environment_detail; merely being an environmental surface does not make every physical state a wear/use trace.",
+        "Object immersion, garment wetness and camera crop/visibility alone are not a place-state fact. Additional object/surface/framing roles need separately supported carrier meaning.",
+        "A state on one zone cannot be generalized to all places/zones or used to add a missing zone/medium. Preservation clauses cannot be silently recast as a new mutable state."
+      ],
+      "id": "space_condition",
+      "includes": [
+        "Retain existing use, preparation, maintenance and damage states of an actual place.",
+        "Natural or built-place physical state may specify which actual zones are exposed or submerged relative to the independently identified medium. Preserve all stated contrasting zones simultaneously.",
+        "A selected low-tide phase and the upper-exposed/lower-submerged place configuration have distinct timing and setting meaning. Neither substitutes for the other.",
+        "The actual place, every affected zone, medium and any independently required ownership/part relation must be explicit. Existing source and binding conditions are retained conjunctively; same owner/receiver locks still apply."
+      ],
+      "neighbors": [
+        "background_element",
+        "environment_detail",
+        "liquid_inclusion",
+        "location",
+        "narrative_phase",
+        "publication_caption_context",
+        "surface_moisture",
+        "visible_text",
+        "weather"
+      ],
+      "owners": [
+        "environment"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "setting.condition",
+        "space.state",
+        "environment.state"
+      ],
+      "semantic_role": "direct"
+    },
+    "species_marker": {
+      "applicability": {},
+      "core_fields": [
+        "subject"
+      ],
+      "description": "Anatomical species cues owned by a declared subject, distinct from detachable costume ornaments.",
+      "description_ko": "주체에 소유된 종별 신체 단서: 살아 있는 귀·꼬리와 착용 장식을 구별; 특정 변신 설정에만 한정하지 않음",
+      "dimensions": [
+        "species"
+      ],
+      "evidence_terms": [
+        "ears",
+        "tail",
+        "fur",
+        "wing",
+        "antennae",
+        "species"
+      ],
+      "excludes": [
+        "살아 있는 귀·꼬리와 착용 장식을 구별; 특정 변신 설정에만 한정하지 않음"
+      ],
+      "id": "species_marker",
+      "includes": [
+        "Anatomical species cues owned by a declared subject, distinct from detachable costume ornaments."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "anatomical_connection",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "body_region",
+        "brow_style",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_geometry",
+        "facial_hair",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hair_style",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "wardrobe_style",
+        "wearable_accessory"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "species.",
+        "body.species",
+        "body.ear_structure",
+        "body.tail"
+      ],
+      "semantic_role": "direct"
+    },
+    "subject": {
+      "applicability": {},
+      "core_fields": [
+        "subject"
+      ],
+      "description": "The primary declared visible entity or entities that the photograph is about.",
+      "description_ko": "장면의 주된 관찰 대상: 동반 대상은 별도 소유자; 이름만으로 인원·종을 추가하지 않음",
+      "dimensions": [
+        "subject"
+      ],
+      "evidence_terms": [
+        "subject",
+        "person",
+        "adult",
+        "animal",
+        "object",
+        "tree",
+        "sculpture"
+      ],
+      "excludes": [
+        "동반 대상은 별도 소유자; 이름만으로 인원·종을 추가하지 않음"
+      ],
+      "id": "subject",
+      "includes": [
+        "The primary declared visible entity or entities that the photograph is about."
+      ],
+      "neighbors": [
+        "action",
+        "aftermath_trace",
+        "color",
+        "companion_animal",
+        "contact_point",
+        "crowd_density",
+        "physical_motion",
+        "proxemics",
+        "reality_anchor",
+        "reflection_logic",
+        "relational_action",
+        "scale_relation",
+        "sensory_cue",
+        "shadow_relation",
+        "subject_count",
+        "surreal_physics_detail",
+        "transformation_stage",
+        "visible_text"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "subject.",
+        "entity.",
+        "object_inventory"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "new_read_count": 5,
+  "schema": "photo-native-manual-fullspec-read/v1",
+  "semantic_boundary": "material_form actual149 is appearance. Do not replace original lighting/emission_geometry for flame sources automatically. space_condition is place zones, not an aquatic plant/object immersion catchall.",
+  "whole_re_reads_this_checkpoint": [
+    "material_form",
+    "light_shape",
+    "anatomical_connection",
+    "body_form",
+    "prop_state",
+    "light_type"
+  ]
+}

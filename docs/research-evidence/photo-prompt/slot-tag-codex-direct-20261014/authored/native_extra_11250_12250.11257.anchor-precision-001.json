@@ -1,0 +1,53 @@
+{
+  "schema": "photo-native-manual-draft-fact-precision/v1",
+  "task": "/root/review_09250_10500",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "ordinal": 11257,
+  "candidate_id": "cand_e2ec6b108bb45910879e425c8ddb7297",
+  "base_file": "authored/native_extra_11250_12250.11254_11258.draft.json",
+  "base_sha256": "7125ac644e1a1f8cb8285045174c3252ffed639ca07893761c6f8d823292dec0",
+  "fact_id": "jointP",
+  "before": {
+    "id": "jointP",
+    "realization_id": "base",
+    "dimension": "body_geometry",
+    "target": "finger",
+    "property": "body.connection.hand_joints",
+    "mode": "prerequisite",
+    "value": {
+      "type": "body.connection.hand_joints/v1",
+      "value": "specified finger belongs to same hand and bends at its connected joints"
+    },
+    "requires": [
+      "fingerP",
+      "handP"
+    ],
+    "pointer": "/content/concept_units/0",
+    "quote": "the specified finger bends at its connected joints"
+  },
+  "after": {
+    "id": "jointP",
+    "realization_id": "base",
+    "dimension": "body_geometry",
+    "target": "finger",
+    "property": "body.connection.hand_joints",
+    "mode": "prerequisite",
+    "value": {
+      "type": "body.connection.hand_joints/v1",
+      "value": "specified finger has its connected joints"
+    },
+    "requires": [
+      "fingerP",
+      "handP"
+    ],
+    "pointer": "/content/concept_units/0",
+    "quote": "the specified finger bends at its connected joints"
+  },
+  "reason": "Direct concept quote states connected finger joints but does not individually assert the full finger-to-hand ownership proposition. Narrow typed value to this actual local claim; independent same-hand ownership remains required and pending via whole application/source relations, never inferred as a directly anchored fact.",
+  "proposed_source_after_sha256": "8f92bd611350bc439cab6be3884e7b882df5d211cd36fc89b5c24247f6e6383a",
+  "source_after_unchanged": true,
+  "actual_whole_source_after_reread": true,
+  "complete_native_proof": false,
+  "source_approval": false
+}
