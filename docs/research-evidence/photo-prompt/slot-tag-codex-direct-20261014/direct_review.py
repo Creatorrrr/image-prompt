@@ -1,0 +1,375 @@
+"""Prepare full sources and validate authored Codex decisions; never infer tags.
+
+No provider, embedding, network, subprocess reviewer or model is imported here.
+Mechanical acceptance of an authored decision is not an accuracy measurement.
+"""
+from __future__ import annotations
+
+import argparse
+import copy
+import gzip
+import hashlib
+import json
+from pathlib import Path
+import re
+import sys
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[3]
+SKILL = ROOT / 'skills/photo-prompt-image-generator'
+sys.path.insert(0, str(SKILL / 'scripts'))
+import photo_candidate_corpus as c
+
+SCHEMA = 'photo-codex-direct-review/v1'
+NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounders',
+    'failure_modes', 'excluded', 'exclusions', 'forbidden', 'avoid', 'negative',
+    'research_source_urls', 'tags', 'facets', 'reject_substitutes', 'contrast_examples',
+    'forbidden_prompt_terms', 'runtime_forbidden_labels', 'role_evidence', 'semantic_review'})
+
+
+def write(path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    body = c.canonical_bytes(value) + b'\n'
+    temporary = path.with_name(path.name + '.pending')
+    temporary.write_bytes(body)
+    temporary.replace(path)
+
+
+def references(value):
+    if isinstance(value, str) and c.ID.fullmatch(value):
+        yield value
+    elif isinstance(value, dict):
+        for key, child in value.items():
+            yield from references(key)
+            yield from references(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from references(child)
+
+
+def closure(data, cid):
+    found, pending = {}, [cid]
+    while pending:
+        item = pending.pop()
+        if item in found:
+            continue
+        record = data['candidates'][item]
+        found[item] = record
+        pending.extend(set(references(record)) - set(found))
+    found.pop(cid)
+    return dict(sorted(found.items()))
+
+
+def binding(data, cid):
+    record = data['candidates'][cid]
+    return {'candidate_id': cid, 'source_record_sha256': c.digest(record),
+        'catalog_sha256': c.digest(data['slot_catalog']),
+        'reference_sha256': {key: c.digest(row) for key, row in closure(data, cid).items()}}
+
+
+def pointer(record, path, *, positive=False):
+    if not isinstance(path, str) or not path.startswith('/content/'):
+        raise ValueError('expected primary content JSON pointer')
+    keys = [key.replace('~1', '/').replace('~0', '~') for key in path[1:].split('/')]
+    if positive and (set(keys) & NEGATIVE or (keys[1] == 'activation' and
+            (len(keys) < 4 or keys[2] not in {'exact_terms', 'project_glossary_aliases'}))):
+        raise ValueError('negative, routing or review metadata is not positive evidence')
+    value = record
+    try:
+        for key in keys:
+            if isinstance(value, list):
+                if not key.isdigit() or str(int(key)) != key:
+                    raise ValueError('noncanonical array index')
+                value = value[int(key)]
+            else:
+                value = value[key]
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ValueError('missing source pointer') from exc
+    if not isinstance(value, str):
+        raise ValueError('pointer must address a complete source string')
+    return value
+
+
+def corrected_record(record, corrections):
+    result = copy.deepcopy(record)
+    if not isinstance(corrections, list):
+        raise ValueError('corrections must be a list')
+    seen = set()
+    for change in corrections:
+        if set(change) != {'pointer', 'before', 'after', 'reason'}:
+            raise ValueError('invalid correction fields')
+        path = change['pointer']
+        if path in seen or not all(isinstance(change[k], str) and change[k].strip()
+                for k in ('before', 'after', 'reason')):
+            raise ValueError('duplicate or empty source correction')
+        seen.add(path)
+        if pointer(result, path, positive=True) != change['before']:
+            raise ValueError('source correction is not bound to exact current text')
+        keys = [key.replace('~1', '/').replace('~0', '~') for key in path[1:].split('/')]
+        value = result
+        for key in keys[:-1]:
+            value = value[int(key)] if isinstance(value, list) else value[key]
+        key = keys[-1]
+        value[int(key) if isinstance(value, list) else key] = change['after']
+    return result
+
+
+def validate_fact(fact, record, catalog, slot=None):
+    if set(fact) != {'pointer', 'quote', 'dimension', 'target', 'property'}:
+        raise ValueError('invalid source fact fields')
+    if not isinstance(fact['quote'], str) or not fact['quote'].strip() or fact['quote'] not in pointer(
+            record, fact['pointer'], positive=True):
+        raise ValueError('quote differs from positive source')
+    for key in ('target', 'property'):
+        if (not isinstance(fact[key], str) or not fact[key].strip() or '*' in fact[key]
+                or fact[key].endswith('.')):
+            raise ValueError('fact owner/property must be concrete')
+    from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+    if fact['dimension'] not in AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS:
+        raise ValueError('unknown effect dimension')
+    if slot is not None:
+        spec = catalog[slot]
+        if fact['dimension'] not in spec['dimensions'] or not any(
+                fact['property'] == prefix.rstrip('.') or fact['property'].startswith(
+                    prefix if prefix.endswith('.') else prefix + '.')
+                for prefix in spec['property_prefixes']):
+            raise ValueError('fact is outside role property contract')
+
+
+def validate_decision(row, data):
+    required = {'schema', 'reviewer', 'review_method', 'independent_human_review',
+        'candidate_id', 'source_record_sha256', 'catalog_sha256', 'reference_sha256',
+        'meaning_summary', 'recommended_kind', 'corrections', 'roles', 'facts',
+        'rejected_boundaries', 'uncertainties', 'status', 'all_roles_considered',
+        'authored_decision', 'packet_sha256'}
+    if not isinstance(row, dict) or set(row) != required:
+        raise ValueError('invalid direct decision fields')
+    if (row['schema'] != SCHEMA or row['reviewer'] != 'Codex'
+            or row['review_method'] != 'codex_direct_source_read'
+            or row['independent_human_review'] is not False):
+        raise ValueError('direct reviewer identity/method required')
+    cid = row['candidate_id']
+    if cid not in data['candidates']:
+        raise ValueError('unknown candidate')
+    expected = binding(data, cid)
+    if any(row[key] != value for key, value in expected.items()):
+        raise ValueError('source, references or catalog changed after review')
+    if (not isinstance(row['meaning_summary'], str) or not row['meaning_summary'].strip()
+            or row['all_roles_considered'] is not True
+            or row['status'] not in {'approved', 'diagnostic_reviewed', 'needs_source_fix',
+                                     'needs_boundary_review'}):
+        raise ValueError('meaning and explicit review status required')
+    authored = row['authored_decision']
+    if not isinstance(authored, dict) or set(authored) != {'file', 'item', 'sha256'} or not isinstance(
+            authored['file'], str) or not authored['file'] or not isinstance(authored['item'], int) or authored['item'] < 1:
+        raise ValueError('authored decision location required')
+    if not isinstance(row['packet_sha256'], str) or not re.fullmatch('[0-9a-f]{64}', row['packet_sha256']):
+        raise ValueError('complete source packet binding required')
+    if row['recommended_kind'] not in c.KINDS:
+        raise ValueError('unknown reviewed record kind')
+    record = corrected_record(data['candidates'][cid], row['corrections'])
+    catalog = data['slot_catalog']
+    from photo_candidate_realizations import ids
+    known_rids = set(ids(record))
+    if not all(isinstance(row[key], list) for key in ('roles', 'facts', 'uncertainties', 'rejected_boundaries')):
+        raise ValueError('review arrays required')
+    if not row['rejected_boundaries'] or not all(isinstance(v, str) and v.strip()
+                                              for v in row['rejected_boundaries']):
+        raise ValueError('explicit rejected-confusion reasoning required')
+    for issue in row['uncertainties']:
+        if not isinstance(issue, dict) or set(issue) != {'kind', 'detail'} or not issue['detail']:
+            raise ValueError('explicit uncertainty classification required')
+    if row['status'] in {'approved', 'diagnostic_reviewed'} and row['uncertainties']:
+        raise ValueError('unresolved issues cannot be approved')
+    diagnostic = row['recommended_kind'] == 'diagnostic'
+    if diagnostic and (row['roles'] or row['facts']):
+        raise ValueError('diagnostic cannot acquire positive roles/effects')
+    if row['status'] == 'approved' and (diagnostic or not row['roles'] or not row['facts']):
+        raise ValueError('positive approval needs owned roles and facts')
+    if row['status'] == 'diagnostic_reviewed' and not diagnostic:
+        raise ValueError('diagnostic status/kind mismatch')
+    seen = set()
+    for role in row['roles']:
+        if not isinstance(role, dict) or set(role) != {'slot_id', 'semantic_role', 'scope',
+                'realization_ids', 'rationale', 'evidence'}:
+            raise ValueError('invalid role decision')
+        tag = role['slot_id']
+        if tag in seen or tag not in catalog:
+            raise ValueError('duplicate or unknown role')
+        seen.add(tag)
+        if (role['semantic_role'] != catalog[tag]['semantic_role']
+                or role['scope'] not in {'whole_record', 'positive_alternative'}
+                or not isinstance(role['rationale'], str) or not role['rationale'].strip()
+                or not isinstance(role['realization_ids'], list) or not role['realization_ids']
+                or len(role['realization_ids']) != len(set(role['realization_ids']))
+                or not set(role['realization_ids']) <= known_rids
+                or role['scope'] == 'whole_record' and set(role['realization_ids']) != known_rids
+                or not isinstance(role['evidence'], list) or not role['evidence']):
+            raise ValueError('role contract, scope or evidence missing')
+        for fact in role['evidence']:
+            validate_fact(fact, record, catalog, tag)
+            for rid in role['realization_ids']:
+                if not any({k: v for k, v in item.items() if k != 'realization_id'} == fact
+                           and item['realization_id'] == rid for item in row['facts']):
+                    raise ValueError('role evidence must be an explicitly authored branch fact')
+    for fact in row['facts']:
+        if not isinstance(fact, dict) or 'realization_id' not in fact or fact['realization_id'] not in known_rids:
+            raise ValueError('fact must name an actual source realization')
+        validate_fact({k: v for k, v in fact.items() if k != 'realization_id'}, record, catalog)
+    return row
+
+
+def source():
+    return c.decode(gzip.decompress((HERE / 'SOURCE.json.gz').read_bytes()))
+
+
+def initialize():
+    if (HERE / 'BASELINE.json').exists():
+        raise ValueError('baseline already exists; never overwrite reviewed input')
+    data = c.load(SKILL / 'assets')
+    config = c.decode((SKILL / 'embedding-default.json').read_bytes())
+    manifest = c.decode((SKILL / 'assets/photo_candidate_search.json').read_bytes())
+    if config['provider'] != 'embeddinggemma2-local' or config['space'] != manifest['space']:
+        raise ValueError('matching local default and active index required')
+    body = c.canonical_bytes(data)
+    (HERE / 'SOURCE.json.gz').write_bytes(gzip.compress(body, mtime=0))
+    order = sorted(data['candidates'], key=lambda cid: (
+        data['candidates'][cid]['record_kind'] != 'visual_option',
+        len(c.canonical_bytes(data['candidates'][cid])), cid))
+    write(HERE / 'ORDER.json', order)
+    write(HERE / 'CATALOG.json', data['slot_catalog'])
+    owners = {}
+    modules = c.decode((SKILL / 'assets' / c.MANIFEST_NAME).read_bytes())['modules']
+    for item in modules:
+        if item['kind'] == 'candidates':
+            for cid in c.decode((SKILL / 'assets' / item['file']).read_bytes())['candidates']:
+                owners[cid] = item['file']
+    write(HERE / 'BASELINE.json', {'schema': 'photo-codex-direct-baseline/v1',
+        'source_sha256': c.digest(data), 'catalog_sha256': c.digest(data['slot_catalog']),
+        'candidate_count': len(data['candidates']), 'binding_count': len(data['slot_bindings']),
+        'slot_count': len(data['slot_catalog']), 'layout_id': manifest['layout_id'],
+        'space': manifest['space'], 'payload_owners': owners,
+        'review_method': 'codex_direct_source_read', 'historical_model_drafts_imported': 0,
+        'external_model_calls': 0, 'native_changes_applied': False})
+    return {'initialized': True, 'candidate_count': len(order), 'semantic_approvals': 0}
+
+
+def prepare(start, count):
+    data = source()
+    order = c.decode((HERE / 'ORDER.json').read_bytes())
+    if start < 0 or count < 1 or start + count > len(order):
+        raise ValueError('invalid complete source range')
+    ids = order[start:start + count]
+    packet = {'schema': 'photo-codex-direct-source-packet/v1', 'start': start,
+        'ids': ids, 'source_sha256': c.digest(data),
+        'catalog_sha256': c.digest(data['slot_catalog']),
+        'records': {cid: data['candidates'][cid] for cid in ids},
+        'references': {cid: closure(data, cid) for cid in ids}}
+    path = HERE / 'packets' / f'{start:05d}-{count:03d}.json'
+    if path.exists() and c.decode(path.read_bytes()) != packet:
+        raise ValueError('existing full source packet differs')
+    write(path, packet)
+    return {'packet': str(path.relative_to(ROOT)), 'packet_sha256': c.digest(packet), 'ids': ids}
+
+
+def verify():
+    data = source()
+    current = c.load(SKILL / 'assets')
+    accepted, pending, errors = {}, [], {}
+    packets = {}
+    for path in sorted((HERE / 'packets').glob('*.json')):
+        packet = c.decode(path.read_bytes())
+        key = c.digest(packet)
+        if key in packets:
+            raise ValueError('duplicate source packet')
+        packets[key] = packet
+    for path in sorted((HERE / 'decisions').glob('*.json')):
+        document = c.decode(path.read_bytes())
+        for number, row in enumerate(document['decisions'], 1):
+            try:
+                validate_decision(row, data)
+                validate_decision(row, current)
+                if row['candidate_id'] in accepted or row['candidate_id'] in pending:
+                    raise ValueError('duplicate decision for one canonical candidate')
+                location = row['authored_decision']
+                authored_path = (ROOT / location['file']).resolve()
+                if not authored_path.is_relative_to(HERE / 'authored'):
+                    raise ValueError('authored judgement must be stored in this direct-review run')
+                authored_document = c.decode(authored_path.read_bytes())
+                authored = authored_document['decisions'][location['item'] - 1]
+                if location['sha256'] != c.digest(authored) or any(row[k] != v for k, v in authored.items()):
+                    raise ValueError('compiled row differs from explicitly authored decision')
+                packet = packets[row['packet_sha256']]
+                cid = row['candidate_id']
+                if (cid not in packet['ids'] or packet['records'][cid] != data['candidates'][cid]
+                        or packet['references'][cid] != closure(data, cid)):
+                    raise ValueError('packet does not bind the complete candidate and references')
+                if row['status'] in {'approved', 'diagnostic_reviewed'}:
+                    accepted[cid] = row
+                else:
+                    pending.append(cid)
+            except (ValueError, KeyError, TypeError) as exc:
+                errors[f'{path.name}:{number}'] = str(exc)
+    result = {'schema': 'photo-codex-direct-progress/v1', 'records': len(data['candidates']),
+        'direct_approved_records': len(accepted), 'pending_decisions': len(pending),
+        'unreviewed_records': len(data['candidates']) - len(accepted) - len(pending),
+        'approved_ids': sorted(accepted), 'pending_ids': sorted(pending), 'errors': errors,
+        'stage05_complete': len(accepted) == len(data['candidates']) and not errors,
+        'boundary': 'Authored Codex decisions checked mechanically; no independent human or pixel verification.'}
+    write(HERE / 'PROGRESS.json', result)
+    if errors:
+        raise ValueError(str(errors))
+    return {key: value for key, value in result.items() if key not in {'approved_ids', 'pending_ids'}}
+
+
+def register(packet_path, authored_path):
+    """Bind authored semantic decisions to sources; no missing judgement defaults."""
+    data = source()
+    packet_path, authored_path = Path(packet_path).resolve(), Path(authored_path).resolve()
+    if not packet_path.is_relative_to(HERE / 'packets') or not authored_path.is_relative_to(HERE / 'authored'):
+        raise ValueError('packet and authored decisions must belong to this run')
+    packet = c.decode(packet_path.read_bytes())
+    authored = c.decode(authored_path.read_bytes())
+    required = {'candidate_id', 'meaning_summary', 'recommended_kind', 'corrections',
+        'roles', 'facts', 'rejected_boundaries', 'uncertainties', 'status', 'all_roles_considered'}
+    rows = []
+    for number, decision in enumerate(authored['decisions'], 1):
+        if set(decision) != required or decision['candidate_id'] not in packet['ids']:
+            raise ValueError('explicit authored meaning, roles and status required for packet ID')
+        cid = decision['candidate_id']
+        row = {**binding(data, cid), **decision, 'schema': SCHEMA, 'reviewer': 'Codex',
+            'review_method': 'codex_direct_source_read', 'independent_human_review': False,
+            'packet_sha256': c.digest(packet), 'authored_decision': {
+                'file': str(authored_path.relative_to(ROOT)), 'item': number, 'sha256': c.digest(decision)}}
+        validate_decision(row, data)
+        rows.append(row)
+    if len({row['candidate_id'] for row in rows}) != len(rows):
+        raise ValueError('duplicate authored candidate')
+    path = HERE / 'decisions' / authored_path.name
+    result = {'schema': 'photo-codex-direct-decision-batch/v1', 'decisions': rows}
+    if path.exists() and c.decode(path.read_bytes()) != result:
+        raise ValueError('existing decision differs; invalidate and record a correction explicitly')
+    write(path, result)
+    return verify()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest='command', required=True)
+    sub.add_parser('init')
+    view = sub.add_parser('prepare')
+    view.add_argument('--start', type=int, required=True)
+    view.add_argument('--count', type=int, required=True)
+    sub.add_parser('verify')
+    registration = sub.add_parser('register')
+    registration.add_argument('--packet', required=True)
+    registration.add_argument('--authored', required=True)
+    args = parser.parse_args()
+    result = (initialize() if args.command == 'init' else prepare(args.start, args.count)
+        if args.command == 'prepare' else register(args.packet, args.authored)
+        if args.command == 'register' else verify())
+    print(json.dumps(result, ensure_ascii=False))
+
+
+if __name__ == '__main__':
+    main()
