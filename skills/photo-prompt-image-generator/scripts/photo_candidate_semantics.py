@@ -137,7 +137,7 @@ def native_bundle_view(data, bundle, pack, realization_id, dependency_selections
             child_guard=native.compact(data['candidates'][child_id],data)
             child_choices=native.dependency_choices(child_guard,rid)
             member=views.materialize_member(data,pointers[child_id],realization_id=rid,
-                dependency_selections={key:value for key,value in selections.items() if key in child_choices},owner_selections=owner_selections)
+                dependency_selections={key:value for key,value in selections.items() if key in child_choices},owner_selections=owner_selections,guard_root=entry)
             if not g.core_entry_eligible(data,core,constraints,picked,member['slot'],member):
                 allowed=False
             row['member_candidates'].append(member)
@@ -147,6 +147,9 @@ def native_bundle_view(data, bundle, pack, realization_id, dependency_selections
         # bounded source-addressed choice inventory, never a union of siblings.
         dimensions=list(entry['affected_dimensions']);properties=copy.deepcopy(entry['affected_properties'])
         status='review_required';row['native_selection_reason']=str(error)
+        if native._has_target_guards(entry) and not native.admission(entry,core,allow_unselected=True)['allowed']:
+            # A supplied mapping that fails a source guard is not a pending choice.
+            status='ineligible'
     row.update(native_effect_closure=closure,affected_dimensions=dimensions,affected_properties=properties,
         content_form='unordered_inspiration_terms',semantic_surface_version=SURFACE_VERSION,
         concept_units=[unit for component in row.get('components',[]) for unit in component['concept_units']],

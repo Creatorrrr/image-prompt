@@ -38,7 +38,7 @@ class RequestCandidates(dict):
             self['_request_role_proposals']={tag:{} for tag in self['slot_catalog']}
             for proposal in proposals.values():self['_request_role_proposals'][proposal['target_slot_id']][proposal['candidate_id']]=proposal
 
-def materialize_member(data, pointer, *, realization_id=None, dependency_selections=None,owner_selections=None):
+def materialize_member(data, pointer, *, realization_id=None, dependency_selections=None,owner_selections=None,guard_root=None):
     """CID owns meaning; an explicitly declared role only supplies presentation conditions."""
     bid = pointer.get('binding_id')
     binding = data['slot_bindings'][bid] if bid else None
@@ -48,7 +48,7 @@ def materialize_member(data, pointer, *, realization_id=None, dependency_selecti
     if role and role not in data['slot_catalog']:
         raise ValueError('unknown explicit member presentation role')
     member = c.entry(data, pointer['candidate_id'], bid, realization_id=realization_id,
-                     dependency_selections=dependency_selections,owner_selections=owner_selections)
+                     dependency_selections=dependency_selections,owner_selections=owner_selections,guard_root=guard_root)
     member['_native_extra_conditions'] = [copy.deepcopy(pointer.get('conditions') or {})]
     requirements = copy.deepcopy(pointer.get('requirements') or {})
     member['_member_requirements'] = requirements

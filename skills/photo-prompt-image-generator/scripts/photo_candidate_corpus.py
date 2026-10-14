@@ -272,7 +272,7 @@ def load(assets, manifest_name=MANIFEST_NAME):
     return validate(corpus)
 
 
-def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, dependency_selections=None,owner_selections=None):
+def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, dependency_selections=None,owner_selections=None,guard_root=None):
     """Native semantic record, optionally with an explicitly selected role."""
     record = corpus['candidates'][candidate_id]
     result = copy.deepcopy(record['content'])
@@ -314,6 +314,7 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
         if binding['candidate_id'] != candidate_id:
             raise ValueError('role belongs to a different candidate')
         result['_role_conditions'] = copy.deepcopy(binding['conditions'])
+        result['_native_presentation_guard']={'record':copy.deepcopy(binding),'sha256':digest(binding)}
         result['_presentation_role'] = binding['slot_id']
         result['_semantic_role'] = binding['semantic_role']
         result['binding_id'] = binding_id
@@ -328,6 +329,7 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
         if descriptor is not None:result['owner_selection_requirements']=descriptor
     result['affected_dimensions'] = list(effects['dimensions'])
     result['affected_properties'] = copy.deepcopy(effects['properties'])
+    if guard_root is not None:result=photo_semantic_evidence.bind_guard_root(result,guard_root)
     return result
 
 

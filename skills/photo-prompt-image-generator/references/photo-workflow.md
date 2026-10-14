@@ -57,6 +57,14 @@ requires a new run, while a failed audit can be corrected normally. Render
 preparation copies the audited receipt and composed hashes; transport parameters
 cannot supply or override them, and runtime recomputes the same resolution.
 
+Source-local relationship conditions resolve through the same exact selected
+CID, realization and owner mapping. Satisfy the independently frozen part,
+distinctness, typed-value and preservation obligations described in
+[composition-contract.md](composition-contract.md#conditions-on-the-selected-source-owners).
+Missing choices remain review-only until resolved; an actual failed relationship
+is ineligible. The final audit reconstructs member and presentation conditions
+from the selected source closure, then runtime checks them again.
+
 Intrinsic, selected-branch, explicit presentation and selected dependency
 conditions remain cumulative. Conditional reference or identity preservation
 uses the exact caller input inventory and frozen scope inventory: known absent
