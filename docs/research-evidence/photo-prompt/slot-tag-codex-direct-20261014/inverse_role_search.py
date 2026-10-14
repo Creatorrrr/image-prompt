@@ -309,7 +309,7 @@ def search_one(corpus, reader, query, vector, *, limit=384, minimum=.30, oracle=
             'full_scan_oracle': oracle_record}
 
 
-def retrieve_assets(assets, output, run_id, *, oracle_slots=()):
+def retrieve_assets(assets, output, run_id, *, oracle_slots=(), progress=None):
     import photo_candidate_corpus as c
     import photo_search_layout as layout
     from photo_search_reader import SearchReader
@@ -348,6 +348,9 @@ def retrieve_assets(assets, output, run_id, *, oracle_slots=()):
             searches.append(search_one(corpus, reader, query, row['vector'],
                                        limit=plan['lane_limit'], minimum=plan['minimum_similarity'],
                                        oracle=query['slot_id'] in oracle_slots))
+            if progress is not None:
+                progress({'completed': len(searches), 'total': len(plan['queries']),
+                          'slot_id': query['slot_id']})
         record = {'schema': 'photo-direct-inverse-search-results/v1', 'plan_sha256': plan['canonical_sha256'],
                   'run_id': run_id, 'source_sha256': plan['source_sha256'],
                   'catalog_sha256': plan['catalog_sha256'], 'binding_sha256': plan['binding_sha256'],

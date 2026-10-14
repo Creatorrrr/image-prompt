@@ -59,8 +59,9 @@ def assignment(review, note, ordinal):
 def authored_tuple(review, file, cid, sha):
     path = review.run_path(file, 'authored')
     document = read(review, path)
-    matches = [(n, row) for n, row in enumerate(document['decisions'], 1)
-               if row['candidate_id'] == cid]
+    count = len(document['decisions'] if 'decisions' in document else document['amendments'])
+    matches = [(n, review.authored_item(document, n)) for n in range(1, count + 1)
+               if review.authored_item(document, n)['candidate_id'] == cid]
     if len(matches) != 1 or review.c.digest(matches[0][1]) != sha:
         raise ValueError('original authored item changed or is not unique')
     return {'file': str(path.relative_to(review.ROOT)), 'item': matches[0][0], 'sha256': sha}
@@ -106,7 +107,55 @@ def origins(review, authored_path, note_path, data):
             raise ValueError('frozen worker authored file changed')
     order = read(review, review.HERE / 'ORDER.json')
     result, packet_cache = [], {}
-    if 'bindings' in note and 'decisions' in document:
+    if 'bindings' in note and 'decisions' in document and 'packet_path' not in note:
+        # Later sparse rereviews bind the previous immutable authored items.
+        # Root resolves the unchanged prior source packet; the note itself is
+        # never rewritten to pretend it declared a packet file/hash.
+        if (note.get('complete_source_reread') is not True or note.get('final_ready') is not True
+                or note['source_snapshot_sha256'] != review.c.digest(data)
+                or note['catalog_sha256'] != review.c.digest(data['slot_catalog'])):
+            raise ValueError('explicit final full reread/source binding required')
+        prior_path = review.run_path(note['before_authored_file'], 'authored')
+        if review.c.digest(read(review, prior_path)) != note['before_authored_document_sha256']:
+            raise ValueError('previous immutable authored document changed')
+        decisions, entries = document['decisions'], note['bindings']
+        if ([d['candidate_id'] for d in decisions] != note['directly_reread_ids']
+                or [e['candidate_id'] for e in entries] != note['directly_reread_ids']
+                or [e['ordinal'] for e in entries] != note['directly_reread_ordinals']):
+            raise ValueError('exact sparse reread IDs/ordinals disagree')
+        existing = compiled_rows(review)
+        packets = {review.c.digest(read(review, p)): p for p in (review.HERE / 'packets').glob('*.json')}
+        for n, (decision, entry) in enumerate(zip(decisions, entries), 1):
+            cid = decision['candidate_id']
+            previous = authored_tuple(review, entry['before_authored_file'], cid, entry['before_authored_row_sha256'])
+            if (entry['before_authored_file'] != note['before_authored_file']
+                    or previous['item'] != entry['before_authored_item']
+                    or entry['proposed_decision_sha256'] != review.c.digest(decision)
+                    or any(entry[k] != v for k, v in review.binding(data, cid).items())):
+                raise ValueError('later sparse authored/source binding differs')
+            prior = review.authored_item(read(review, prior_path), previous['item'])
+            before = review.corrected_record(data['candidates'][cid], prior['corrections'])
+            after = review.corrected_record(data['candidates'][cid], decision['corrections'])
+            from photo_candidate_realizations import ids as realization_ids
+            kind = entry['proposed_record_kind_change']
+            if (entry['before_corrected_source_sha256'] != review.c.digest(before)
+                    or entry['proposed_corrected_source_sha256'] != review.c.digest(after)
+                    or entry['actual_realization_ids'] != realization_ids(after)
+                    or set(kind) != {'pointer', 'before', 'after', 'reason'}
+                    or kind['pointer'] != '/record_kind' or kind['before'] != before['record_kind']
+                    or kind['after'] != decision['recommended_kind']
+                    or not isinstance(kind['reason'], str) or not kind['reason'].strip()):
+                raise ValueError('later sparse corrected source/kind proposal differs')
+            old = existing[cid][2]
+            result.append({'candidate_id': cid, 'ordinal': entry['ordinal'], 'item': n,
+                'decision': decision, 'previous_authored': previous,
+                'worker_before_row_sha256': None,
+                'packet': packet_binding(review, packets[old['packet_sha256']], data, cid, cache=packet_cache),
+                'packet_resolution': 'root_resolved_unchanged_prior_packet_from_explicit_source_closure_hashes',
+                'proposed_record_kind_change': kind})
+        pending = [e['ordinal'] for e in result if e['decision']['status'] not in APPROVED]
+        approved_count, pending_count = note['approved_proposal_count'], note['pending_proposal_count']
+    elif 'bindings' in note and 'decisions' in document:
         if (note.get('complete_source_reread') is not True
                 or note['source_snapshot_sha256'] != review.c.digest(data)
                 or note['catalog_sha256'] != review.c.digest(data['slot_catalog'])):

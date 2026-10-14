@@ -125,6 +125,68 @@ class AmendmentsTests(unittest.TestCase):
                 self.assertEqual(result['progress']['pending_decisions'], 0)
                 self.assertEqual(result['progress']['errors'], {})
 
+    def test_repeated_rereview_binds_the_previous_immutable_wrapper_item(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, data, authored, note = self.setup_run(directory)
+            with self.context(root, here, data), patch.object(review, 'verify', return_value={}):
+                path, _ = self.prepare(here, authored, note)
+                amend.apply(review, path, actor='/root')
+                first_doc = amend.read(review, authored)
+                first = first_doc['amendments'][0]['decision']
+                second_doc = copy.deepcopy(first_doc)
+                second = second_doc['amendments'][0]
+                second.update(before_authored_file='run/authored/amendment.json',
+                              before_authored_row_sha256=review.c.digest(first))
+                second['decision']['meaning_summary'] += ' Explicit second fixture rereview.'
+                next_authored = here / 'authored/second.json'
+                next_note = here / 'worker-notes/second.json'
+                review.write(next_authored, second_doc)
+                value = amend.read(review, note)
+                value['authored_paths'] = ['run/authored/second.json']
+                review.write(next_note, value)
+                manifest = amend.normalize(review, next_authored, next_note, actor='/root')
+                target = here / 'worker-notes/second-normalization.json'
+                review.write(target, manifest)
+                result = amend.apply(review, target, actor='/root')
+                self.assertEqual(result['revised'], 1)
+                self.assertEqual(manifest['replacements'][0]['previous_authored']['sha256'], review.c.digest(first))
+                self.assertEqual(amend.read(review, authored), first_doc)
+
+    def test_later_note_keeps_source_hashes_separate_from_exact_kind_proposal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, data, authored, note_path = self.setup_run(directory)
+            with self.context(root, here, data), patch.object(review, 'verify', return_value={}):
+                row = amend.read(review, authored)['amendments'][0]['decision']
+                row['recommended_kind'] = 'visual_profile'
+                prior = amend.read(review, here / 'authored/original.json')
+                binding = {**review.binding(data, A), 'ordinal': 0,
+                    'before_authored_file': 'run/authored/original.json', 'before_authored_item': 1,
+                    'before_authored_row_sha256': review.c.digest(prior['decisions'][0]),
+                    'before_corrected_source_sha256': review.c.digest(data['candidates'][A]),
+                    'proposed_corrected_source_sha256': review.c.digest(data['candidates'][A]),
+                    'proposed_decision_sha256': review.c.digest(row), 'actual_realization_ids': ['base'],
+                    'proposed_record_kind_change': {'pointer': '/record_kind', 'before': 'visual_option',
+                        'after': 'visual_profile', 'reason': 'Explicit fixture profile proposal.'}}
+                note = {'task_name': '/root/worker', 'agent_id': '/root/worker',
+                    'model': 'gpt-6.1-sol', 'reasoning_effort': 'high',
+                    'authored_paths': ['run/authored/amendment.json'], 'complete_source_reread': True,
+                    'source_snapshot_sha256': review.c.digest(data), 'catalog_sha256': review.c.digest(data['slot_catalog']),
+                    'directly_reread_ids': [A], 'directly_reread_ordinals': [0], 'directly_reread_count': 1,
+                    'final_ready': True, 'before_authored_file': 'run/authored/original.json',
+                    'before_authored_document_sha256': review.c.digest(prior), 'bindings': [binding],
+                    'approved_proposal_count': 1, 'pending_proposal_count': 0}
+                review.write(authored, {'decisions': [row]}); review.write(note_path, note)
+                path, manifest = self.prepare(here, authored, note_path)
+                entry = manifest['replacements'][0]
+                self.assertIn('root_resolved', entry['packet_resolution'])
+                self.assertEqual(entry['proposed_record_kind_change']['after'], 'visual_profile')
+                self.assertEqual(amend.apply(review, path, actor='/root')['revised'], 1)
+                self.assertEqual(data['candidates'][A]['record_kind'], 'visual_option')
+                note['bindings'][0]['proposed_record_kind_change']['after'] = 'diagnostic'
+                review.write(note_path, note)
+                with self.assertRaisesRegex(ValueError, 'kind proposal differs'):
+                    amend.origins(review, authored, note_path, data)
+
     def test_registered_row_worker_format_keeps_immutable_custom_history(self):
         with tempfile.TemporaryDirectory() as directory:
             root, here, data, authored, note_path = self.setup_run(directory)
