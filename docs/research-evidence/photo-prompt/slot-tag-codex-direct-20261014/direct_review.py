@@ -6,6 +6,7 @@ Mechanical acceptance of an authored decision is not an accuracy measurement.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import copy
 import gzip
 import hashlib
@@ -137,7 +138,7 @@ def validate_fact(fact, record, catalog, slot=None):
             raise ValueError('fact is outside role property contract')
 
 
-def validate_decision(row, data):
+def validate_decision(row, data, *, provenance_cache=None):
     required = {'schema', 'reviewer', 'review_method', 'independent_human_review',
         'candidate_id', 'source_record_sha256', 'catalog_sha256', 'reference_sha256',
         'meaning_summary', 'recommended_kind', 'corrections', 'roles', 'facts',
@@ -154,7 +155,7 @@ def validate_decision(row, data):
             or row['independent_human_review'] is not False):
         raise ValueError('direct reviewer identity/method required')
     if delegated:
-        validate_review_provenance(row)
+        validate_review_provenance(row, cache=provenance_cache)
     cid = row['candidate_id']
     if cid not in data['candidates']:
         raise ValueError('unknown candidate')
@@ -239,7 +240,7 @@ def run_path(value, directory):
     return path
 
 
-def delegated_provenance(note_path, authored_path, packet_sha256, cid):
+def delegated_provenance(note_path, authored_path, packet_sha256, cid, *, cache=None):
     """Bind an explicit worker attestation to a real dispatched assignment.
 
     This proves attribution and range integrity, not semantic accuracy or that
@@ -247,15 +248,22 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid):
     """
     note_path = run_path(str(note_path), 'worker-notes')
     authored_path = run_path(str(authored_path), 'authored')
-    note = c.decode(note_path.read_bytes())
-    registry = c.decode((HERE / 'DELEGATION-ASSIGNMENTS.json').read_bytes())['assignments']
+    def read(path):
+        if cache is None:
+            return c.decode(path.read_bytes())
+        if path not in cache:
+            cache[path] = c.decode(path.read_bytes())
+        return cache[path]
+    note = read(note_path)
+    registry = read(HERE / 'DELEGATION-ASSIGNMENTS.json')['assignments']
     matches = [(key, assignment) for key, assignment in registry.items()
                if note['task_name'] in {key, assignment['task_name']}]
     if len(matches) != 1:
         raise ValueError('worker has no unique dispatched assignment')
     assignment_id, assignment = matches[0]
     start, stop = note['start'], note['stop']
-    order = c.decode((HERE / 'ORDER.json').read_bytes())
+    order = read(HERE / 'ORDER.json')
+    unresolved = note['unresolved_ordinals']
     if (not isinstance(start, int) or not isinstance(stop, int)
             or not assignment['start'] <= start < stop <= assignment['stop']
             or cid not in order[start:stop]
@@ -263,11 +271,12 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid):
             or note['reasoning_effort'] != assignment['reasoning_effort']
             or note['complete_source_read'] is not True
             or note['directly_reviewed_count'] != stop - start
-            or note['unresolved_ordinals']):
+            or not isinstance(unresolved, list) or len(set(unresolved)) != len(unresolved)
+            or any(not isinstance(n, int) or not start <= n < stop for n in unresolved)):
         raise ValueError('worker identity, assigned range or complete review does not match')
     if authored_path not in {run_path(value, 'authored') for value in note['authored_paths']}:
         raise ValueError('authored document is not attested by this worker')
-    packets = [c.decode(run_path(value, 'packets').read_bytes()) for value in note['packet_paths']]
+    packets = [read(run_path(value, 'packets')) for value in note['packet_paths']]
     if not any(c.digest(packet) == packet_sha256 and cid in packet['ids'] for packet in packets):
         raise ValueError('complete source packet is not attested by this worker')
     return {'assignment_id': assignment_id, 'task_name': assignment['task_name'],
@@ -276,16 +285,23 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid):
         'worker_note': {'file': str(note_path.relative_to(ROOT)), 'sha256': c.digest(note)}}
 
 
-def validate_review_provenance(row):
+def validate_review_provenance(row, *, cache=None):
     provenance = row['review_provenance']
     if not isinstance(provenance, dict) or set(provenance) != {
             'assignment_id', 'task_name', 'model', 'reasoning_effort', 'range',
             'assignment_sha256', 'worker_note'}:
         raise ValueError('delegated review attribution is required')
     expected = delegated_provenance(provenance['worker_note']['file'],
-        row['authored_decision']['file'], row['packet_sha256'], row['candidate_id'])
+        row['authored_decision']['file'], row['packet_sha256'], row['candidate_id'], cache=cache)
     if provenance != expected:
         raise ValueError('worker note or dispatched assignment changed after review')
+    note_path = run_path(provenance['worker_note']['file'], 'worker-notes')
+    note = (cache[note_path] if cache is not None else c.decode(note_path.read_bytes()))
+    order_path = HERE / 'ORDER.json'
+    order = (cache[order_path] if cache is not None else c.decode(order_path.read_bytes()))
+    pending = order.index(row['candidate_id']) in note['unresolved_ordinals']
+    if pending != (row['status'] not in {'approved', 'diagnostic_reviewed'}):
+        raise ValueError('unresolved worker judgement cannot be counted as approved')
 
 
 def source():
@@ -346,6 +362,7 @@ def verify():
     current = c.load(SKILL / 'assets')
     accepted, pending, errors = {}, [], {}
     packets = {}
+    provenance_cache = {}
     for path in sorted((HERE / 'packets').glob('*.json')):
         packet = c.decode(path.read_bytes())
         key = c.digest(packet)
@@ -356,8 +373,8 @@ def verify():
         document = c.decode(path.read_bytes())
         for number, row in enumerate(document['decisions'], 1):
             try:
-                validate_decision(row, data)
-                validate_decision(row, current)
+                validate_decision(row, data, provenance_cache=provenance_cache)
+                validate_decision(row, current, provenance_cache=provenance_cache)
                 if row['candidate_id'] in accepted or row['candidate_id'] in pending:
                     raise ValueError('duplicate decision for one canonical candidate')
                 location = row['authored_decision']
@@ -387,6 +404,7 @@ def verify():
         'native_qualification_status': 'not_certified_by_this_ledger',
         'stage05_complete': False,
         'boundary': 'Authored Codex decisions checked mechanically; no independent human or pixel verification.'}
+    result['approved_review_methods'] = dict(Counter(row['review_method'] for row in accepted.values()))
     write(HERE / 'PROGRESS.json', result)
     if errors:
         raise ValueError(str(errors))
@@ -404,6 +422,7 @@ def register(packet_path, authored_path, worker_note=None):
     required = {'candidate_id', 'meaning_summary', 'recommended_kind', 'corrections',
         'roles', 'facts', 'rejected_boundaries', 'uncertainties', 'status', 'all_roles_considered'}
     rows = []
+    provenance_cache = {}
     for number, decision in enumerate(authored['decisions'], 1):
         if set(decision) != required or decision['candidate_id'] not in packet['ids']:
             raise ValueError('explicit authored meaning, roles and status required for packet ID')
@@ -414,8 +433,9 @@ def register(packet_path, authored_path, worker_note=None):
                 'file': str(authored_path.relative_to(ROOT)), 'item': number, 'sha256': c.digest(decision)}}
         if worker_note is not None:
             row.update(schema=DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read',
-                review_provenance=delegated_provenance(worker_note, authored_path, c.digest(packet), cid))
-        validate_decision(row, data)
+                review_provenance=delegated_provenance(worker_note, authored_path, c.digest(packet), cid,
+                                                       cache=provenance_cache))
+        validate_decision(row, data, provenance_cache=provenance_cache)
         rows.append(row)
     if len({row['candidate_id'] for row in rows}) != len(rows):
         raise ValueError('duplicate authored candidate')

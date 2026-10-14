@@ -8,7 +8,18 @@ from pathlib import Path
 import direct_review as review
 
 
-def summarize(start, stop, expected_total):
+def validate_coverage(order, rows, start, stop, expected_total, *, allow_sparse=False):
+    if len(rows) != expected_total or not set(rows) <= set(order):
+        raise ValueError('coverage count or canonical IDs do not match')
+    if not 0 <= start < stop <= len(order) or not set(order[start:stop]) <= set(rows):
+        raise ValueError('requested batch contains unreviewed IDs')
+    prefix = next((n for n, cid in enumerate(order) if cid not in rows), len(order))
+    if not allow_sparse and prefix != expected_total:
+        raise ValueError('coverage does not match the explicitly reviewed order')
+    return prefix
+
+
+def summarize(start, stop, expected_total, *, allow_sparse=False):
     progress = review.verify()
     if progress['direct_approved_records'] != expected_total or progress['pending_decisions']:
         raise ValueError('unexpected coverage or unresolved source decisions')
@@ -25,8 +36,7 @@ def summarize(start, stop, expected_total):
             if cid in rows:
                 raise ValueError('duplicate canonical judgement')
             rows[cid] = row
-    if set(rows) != set(order[:expected_total]) or not 0 <= start < stop <= expected_total:
-        raise ValueError('coverage does not match the explicitly reviewed order')
+    prefix = validate_coverage(order, rows, start, stop, expected_total, allow_sparse=allow_sparse)
     previous = defaultdict(set)
     for binding in frozen['slot_bindings'].values():
         previous[binding['candidate_id']].add(binding['slot_id'])
@@ -102,6 +112,15 @@ def summarize(start, stop, expected_total):
         summary['reviewed_positive_records'] = count - summary['reviewed_diagnostic_records']
         verification['record_kind_changes_proposed'] = len(kind_changes)
         verification['record_kind_changes_applied'] = False
+    if allow_sparse or any(row['review_method'] != 'codex_direct_source_read' for row in rows.values()):
+        summary['batch_review_methods'] = dict(Counter(rows[cid]['review_method'] for cid in order[start:stop]))
+        summary['cumulative_review_methods'] = dict(Counter(row['review_method'] for row in rows.values()))
+        summary['contiguous_reviewed_prefix'] = prefix
+        summary['coverage_is_contiguous_prefix'] = prefix == expected_total
+        summary['root_personally_read_all_worker_sources_claimed'] = False
+        verification['next_order_offset'] = prefix
+        verification['coverage_is_contiguous_prefix'] = prefix == expected_total
+        verification['worker_attribution_and_note_hashes_valid'] = True
     stem = f'{start:05d}-{stop:05d}'
     for name, value in [(f'BATCH-{stem}-SUMMARY.json', summary),
                         (f'BATCH-{stem}-CHANGE-PROPOSALS.json', proposals),
@@ -118,5 +137,7 @@ if __name__ == '__main__':
     parser.add_argument('--start', type=int, required=True)
     parser.add_argument('--stop', type=int, required=True)
     parser.add_argument('--expected-total', type=int, required=True)
+    parser.add_argument('--allow-sparse', action='store_true')
     args = parser.parse_args()
-    print(json.dumps(summarize(args.start, args.stop, args.expected_total), ensure_ascii=False))
+    print(json.dumps(summarize(args.start, args.stop, args.expected_total,
+                               allow_sparse=args.allow_sparse), ensure_ascii=False))
