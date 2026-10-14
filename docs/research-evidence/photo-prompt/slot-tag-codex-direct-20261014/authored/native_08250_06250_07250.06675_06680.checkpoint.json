@@ -1,0 +1,1311 @@
+{
+  "schema": "photo-native-manual-bulk-checkpoint/v1",
+  "task_name": "/root/review_08250_09250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "prepared_total": 1000,
+  "read_range": [
+    6675,
+    6680
+  ],
+  "actual_direct_read_count": 5,
+  "records": [
+    {
+      "ordinal": 6675,
+      "candidate_id": "cand_2e2244746ee350f19985baeaaaedde26",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "top hourglass silhouette",
+            "top hourglass figure",
+            "탑 아워글래스 체형"
+          ],
+          "embedding_text": "adult bilateral top-hourglass relation with a clearly narrower waist, both upper-torso and hip expansion, and the upper expansion visibly greater; distinct from bust prominence alone or an inverted triangle without waist definition",
+          "en": "top-hourglass relation with a defined waist and greater upper-torso expansion",
+          "keywords": [
+            "defined waist",
+            "upper torso larger than hips",
+            "hip expansion retained"
+          ],
+          "ko": "정의된 허리를 유지하면서 상체 확장이 골반보다 큰 탑 아워글래스 관계",
+          "tags": [
+            "human",
+            "adult",
+            "silhouette",
+            "top_hourglass",
+            "body_relation"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "body_geometry"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e2244746ee350f19985baeaaaedde26",
+        "provenance": [
+          {
+            "sha256": "ced258699a83ad3b635591ef4e94b57f5423bcbc984de7c84451dffdff6ae69d",
+            "source": "slot:silhouette_proportion:top_hourglass_relation"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "top hourglass silhouette",
+            "top hourglass figure",
+            "탑 아워글래스 체형"
+          ],
+          "embedding_text": "adult bilateral top-hourglass relation with a clearly narrower waist, both upper-torso and hip expansion, and the upper expansion visibly greater; distinct from bust prominence alone or an inverted triangle without waist definition",
+          "en": "top-hourglass relation with a defined waist and greater upper-torso expansion",
+          "keywords": [
+            "defined waist",
+            "upper torso larger than hips",
+            "hip expansion retained"
+          ],
+          "ko": "정의된 허리를 유지하면서 상체 확장이 골반보다 큰 탑 아워글래스 관계",
+          "tags": [
+            "human",
+            "adult",
+            "silhouette",
+            "top_hourglass",
+            "body_relation"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "body_geometry"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e2244746ee350f19985baeaaaedde26",
+        "provenance": [
+          {
+            "sha256": "ced258699a83ad3b635591ef4e94b57f5423bcbc984de7c84451dffdff6ae69d",
+            "source": "slot:silhouette_proportion:top_hourglass_relation"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 176,
+        "json_pointer": "/decisions/175",
+        "row_sha256": "f2660bfa6cbcdbc7a0fb4f44f5afbd70d92b66b4e81008188855f108f46f4b3c"
+      },
+      "source_bindings": {
+        "bind_2e2244746ee350f19985baeaaaedde26": {
+          "candidate_id": "cand_2e2244746ee350f19985baeaaaedde26",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_2e2244746ee350f19985baeaaaedde26",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "silhouette_proportion",
+          "weight": 0.58
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "An adult bilateral top-hourglass relation has a clearly narrower waist, both upper-torso and hip expansion, with upper expansion visibly greater; it does not merely select prominent bust size.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "adult bilateral top-hourglass relation",
+          "dimension": "age",
+          "target": "actor",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "a clearly narrower waist, both upper-torso and hip expansion, and the upper expansion visibly greater",
+          "dimension": "body_geometry",
+          "target": "actor",
+          "property": "body.proportion.top_hourglass",
+          "mode": "effect",
+          "value": {
+            "type": "body.proportion.top_hourglass/v1",
+            "value": "narrower_waist_both_upper_torso_and_hips_expanded_upper_greater"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        }
+      ],
+      "roles": {
+        "silhouette_proportion": "relative waist/upper-torso/hip geometry on same adult",
+        "age_presentation": "existing adult carrier restriction, not age transformation",
+        "body_form": "all asserted geometry is relative proportion; no separately evidenced anatomical contour/volume fact for duplicate tag",
+        "anatomical_connection": "no part attachment proposition",
+        "garment_fit": "body relation is not fabric drape/ease",
+        "adult_presentation_context": "adult proportion alone no sexual context"
+      },
+      "owner_and_receiver_intents": [
+        "Actual adult body carrier must be independently selected; waist/upper-torso/hips stay on same actor, not a mixed set of bodies or garment volumes.",
+        "No automatic arbitrary main_subject. Adult prerequisite needs same-owner typed witness while actual body proportion E retains body-geometry permission."
+      ],
+      "pending": [
+        "Body-geometry source effect must refine exact owned property; EN short clause does not alone independently state retained hip expansion, so full embedding positive clause anchors complete aggregate.",
+        "No body-fat/health/desirability, breast-only measurement, symmetry beyond bilateral reading, exact numeric ratio, clothing or youth inference. for_any human and optional silhouette_proportion/direct0.58 human/deny-domain binding retained."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "adult bilateral top-hourglass relation with a clearly narrower waist, both upper-torso and hip expansion, and the upper expansion visibly greater; distinct from bust prominence alone or an inverted triangle without waist definition",
+          "literal_fact_draft_indices": [
+            0,
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "top-hourglass relation with a defined waist and greater upper-torso expansion",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "정의된 허리를 유지하면서 상체 확장이 골반보다 큰 탑 아워글래스 관계",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6676,
+      "candidate_id": "cand_44110169b08b5855a018f514b6c16aaa",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "authority"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "police duty uniform system",
+            "경찰 공공안전 근무 제복"
+          ],
+          "embedding_text": "adult on-duty police uniform with matched shirt trousers footwear radio and practical utility equipment plus generic fictional unreadable identifiers, distinct from costume fashion private security or weapon-only styling",
+          "en": "a coherent fictional police public-safety duty uniform with radio and utility equipment",
+          "keywords": [
+            "matched duty shirt and trousers",
+            "radio",
+            "utility belt",
+            "fictional identifiers"
+          ],
+          "ko": "가상 표식과 무전·근무 장구가 일관된 경찰 공공안전 근무복",
+          "tags": [
+            "human",
+            "professional",
+            "police",
+            "authority",
+            "uniform",
+            "public_safety"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_44110169b08b5855a018f514b6c16aaa",
+        "provenance": [
+          {
+            "sha256": "1f414123da451385f8979174e2bf542a909c08efc05ab67f822bb6e0873f1fd6",
+            "source": "slot:costume_style:police_public_safety_duty_uniform"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "authority"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "police duty uniform system",
+            "경찰 공공안전 근무 제복"
+          ],
+          "embedding_text": "adult on-duty police uniform with matched shirt trousers footwear radio and practical utility equipment plus generic fictional unreadable identifiers, distinct from costume fashion private security or weapon-only styling",
+          "en": "a coherent fictional police public-safety duty uniform with radio and utility equipment",
+          "keywords": [
+            "matched duty shirt and trousers",
+            "radio",
+            "utility belt",
+            "fictional identifiers"
+          ],
+          "ko": "가상 표식과 무전·근무 장구가 일관된 경찰 공공안전 근무복",
+          "tags": [
+            "human",
+            "professional",
+            "police",
+            "authority",
+            "uniform",
+            "public_safety"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_44110169b08b5855a018f514b6c16aaa",
+        "provenance": [
+          {
+            "sha256": "1f414123da451385f8979174e2bf542a909c08efc05ab67f822bb6e0873f1fd6",
+            "source": "slot:costume_style:police_public_safety_duty_uniform"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 177,
+        "json_pointer": "/decisions/176",
+        "row_sha256": "70980cd5034d4d9f5aa5a986592fede61dce76494e462a7a8ea7e9727207c87c"
+      },
+      "source_bindings": {
+        "bind_44110169b08b5855a018f514b6c16aaa": {
+          "candidate_id": "cand_44110169b08b5855a018f514b6c16aaa",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_44110169b08b5855a018f514b6c16aaa",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "attire_context",
+          "weight": 0.56
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "A coherent fictional adult police duty ensemble combines matched shirt, trousers, footwear, radio and practical utility equipment with generic fictional unreadable identifiers; it does not establish real police authority.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "adult on-duty police uniform",
+          "dimension": "age",
+          "target": "wearer",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "fictional police public-safety duty uniform",
+          "dimension": "role",
+          "target": "uniform",
+          "property": "wardrobe.role.fictional_police_duty",
+          "mode": "context",
+          "value": {
+            "type": "wardrobe.role.fictional_police_duty/v1",
+            "value": "declared_fictional_police_public_safety_attire"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "matched shirt trousers footwear radio and practical utility equipment",
+          "dimension": "appearance",
+          "target": "ensemble",
+          "property": "wardrobe.ensemble.matched_duty_uniform",
+          "mode": "effect",
+          "value": {
+            "type": "wardrobe.ensemble.matched_duty_uniform/v1",
+            "value": "matched_shirt_trousers_footwear_and_practical_duty_equipment"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "footwear",
+          "dimension": "appearance",
+          "target": "footwear",
+          "property": "footwear.duty",
+          "mode": "effect",
+          "value": {
+            "type": "footwear.duty/v1",
+            "value": "duty_ensemble_footwear"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "radio and utility equipment",
+          "dimension": "subject",
+          "target": "equipment",
+          "property": "props.radio_utility_equipment",
+          "mode": "effect",
+          "value": {
+            "type": "props.radio_utility_equipment/v1",
+            "value": "radio_and_practical_utility_equipment"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "generic fictional unreadable identifiers",
+          "dimension": "text",
+          "target": "identifier_surfaces",
+          "property": "text.generic_fictional_identifiers",
+          "mode": "effect",
+          "value": {
+            "type": "text.generic_fictional_identifiers/v1",
+            "value": "generic_fictional_unreadable_identifiers"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        }
+      ],
+      "roles": {
+        "attire_context": "declared fictional duty uniform role, no real authority claim",
+        "wardrobe_style": "coherent actual matched ensemble",
+        "footwear": "explicit footwear on actual ensemble owner",
+        "prop": "radio and utility equipment actual inventory",
+        "wearable_accessory": "old5B assumes on-body equipment, but with radio does not specify mounting; exact worn attachment pending",
+        "visible_text": "explicit unreadable fictional identifiers, no invented readable real badges/names",
+        "age_presentation": "adult intended wearer, independent actual existing-owner application remains pending",
+        "participant_role": "do not infer real police employment from costume/uniform"
+      },
+      "owner_and_receiver_intents": [
+        "Selected adult wearer and actual shirt/trousers/footwear/equipment/identifier surfaces need exact separate ownership. Existing-adult-only application is a proposal boundary for this noun ensemble, not a claimed approved source guard.",
+        "No utility belt from keywords, no firearm from exclusion, no radio attached to chest/shoulder solely from with."
+      ],
+      "pending": [
+        "Appearance-only coarse source omits text/prop scopes and adult application. Native needs exact wardrobe/equipment receivers and proposed wearing/creation scope, not a contextual-only waiver.",
+        "On-duty is declared fictional attire context; no actual law-enforcement authority, agency identity, readable official credential, weapon or operational radio result. for_any human/authority and optional contextual attire_context0.56 human/deny-domain binding preserved."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "adult on-duty police uniform with matched shirt trousers footwear radio and practical utility equipment plus generic fictional unreadable identifiers, distinct from costume fashion private security or weapon-only styling",
+          "literal_fact_draft_indices": [
+            0,
+            2,
+            3,
+            5
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a coherent fictional police public-safety duty uniform with radio and utility equipment",
+          "literal_fact_draft_indices": [
+            1,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "가상 표식과 무전·근무 장구가 일관된 경찰 공공안전 근무복",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6677,
+      "candidate_id": "cand_4922d959a2605825a7ae15b072939647",
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "오리지널 실행형 세계를 만드는 성인 coder·그래픽 제작자·음악 제작자 크루",
+            "an adult coder, visual artist, and musician crew creating an original executable world"
+          ],
+          "embedding_text": "an adult coder, visual artist, and musician crew creating an original executable world",
+          "en": "an adult coder, visual artist, and musician crew creating an original executable world",
+          "facets": {
+            "manifestation_mode": [
+              "diegetic_world_system"
+            ]
+          },
+          "kind": [
+            "human",
+            "adult"
+          ],
+          "ko": "오리지널 실행형 세계를 만드는 성인 coder·그래픽 제작자·음악 제작자 크루",
+          "tags": [
+            "worldbuilding_system",
+            "demoscene_world",
+            "demoscene_world_premiere_scene",
+            "human",
+            "adult",
+            "age_context_only"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_4922d959a2605825a7ae15b072939647",
+        "provenance": [
+          {
+            "sha256": "85e9dfa7afdd89e7e350a76ff7e2b37d0063b8202b9d4d2553cee3a7f3f74865",
+            "source": "slot:subject:demoscene_world_premiere_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "오리지널 실행형 세계를 만드는 성인 coder·그래픽 제작자·음악 제작자 크루",
+            "an adult coder, visual artist, and musician crew creating an original executable world"
+          ],
+          "embedding_text": "an adult coder, visual artist, and musician crew creating an original executable world",
+          "en": "an adult coder, visual artist, and musician crew creating an original executable world",
+          "facets": {
+            "manifestation_mode": [
+              "diegetic_world_system"
+            ]
+          },
+          "kind": [
+            "human",
+            "adult"
+          ],
+          "ko": "오리지널 실행형 세계를 만드는 성인 coder·그래픽 제작자·음악 제작자 크루",
+          "tags": [
+            "worldbuilding_system",
+            "demoscene_world",
+            "demoscene_world_premiere_scene",
+            "human",
+            "adult",
+            "age_context_only"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_4922d959a2605825a7ae15b072939647",
+        "provenance": [
+          {
+            "sha256": "85e9dfa7afdd89e7e350a76ff7e2b37d0063b8202b9d4d2553cee3a7f3f74865",
+            "source": "slot:subject:demoscene_world_premiere_subject"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 178,
+        "json_pointer": "/decisions/177",
+        "row_sha256": "2c03d3652df0ef78ec251ab7387d796cc09758cb8ffad63f5b94b8af1504f5af"
+      },
+      "source_bindings": {
+        "bind_4922d959a2605825a7ae15b072939647": {
+          "candidate_id": "cand_4922d959a2605825a7ae15b072939647",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_4922d959a2605825a7ae15b072939647",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "subject",
+          "weight": 1
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "An adult coder, visual artist and musician crew is actively creating an original executable world; the role list does not fix headcount or prove executable success.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "an adult coder, visual artist, and musician crew",
+          "dimension": "subject",
+          "target": "crew",
+          "property": "subject.creative_crew",
+          "mode": "effect",
+          "value": {
+            "type": "subject.creative_crew/v1",
+            "value": "coder_visual_artist_and_musician_crew"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "adult coder, visual artist, and musician crew",
+          "dimension": "age",
+          "target": "crew_members",
+          "property": "age.declared",
+          "mode": "effect",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "coder, visual artist, and musician crew",
+          "dimension": "role",
+          "target": "crew_members",
+          "property": "participant.role.creative_roles",
+          "mode": "effect",
+          "value": {
+            "type": "participant.role.creative_roles/v1",
+            "value": "coder_visual_artist_and_musician_roles_with_possible_overlap"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "creating an original executable world",
+          "dimension": "action",
+          "target": "crew_members",
+          "property": "action.creating_executable_world",
+          "mode": "effect",
+          "value": {
+            "type": "action.creating_executable_world/v1",
+            "value": "ongoing_creation_of_original_executable_world"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "an original executable world",
+          "dimension": "concept",
+          "target": "creative_work",
+          "property": "record.context.original_executable_world",
+          "mode": "context",
+          "value": {
+            "type": "record.context.original_executable_world/v1",
+            "value": "declared_original_executable_world_project_not_verified_execution"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        }
+      ],
+      "roles": {
+        "subject": "actual creative crew",
+        "age_presentation": "adult crew-member scope individually required, not kind/tags",
+        "participant_role": "explicit coder/artist/musician roles on actual people; role overlap and headcount unresolved",
+        "action": "actual ongoing creation cannot become passive context",
+        "world": "world is the created executable artifact here; no explicit persistent world rules/institutions under the photographed scene, so oldworld role pending",
+        "prop": "no particular computer/music instrument from professions",
+        "subject_count": "three role names are not exactly three people",
+        "visible_text": "no code/screens/captions required"
+      },
+      "owner_and_receiver_intents": [
+        "Actual crew members receive individual adult/role values; collective group witness alone cannot qualify every person.",
+        "Created executable work is a project/artifact context, not a separate inhabited physical location or extra person. Actual current creative activity still needs visible/source refinement and exact permissions."
+      ],
+      "pending": [
+        "Subject-only source footprint omits age/roles/ongoing action. Originality and executable intent are declared nonvisual requirements, not proof of authorship or actual program success.",
+        "No exact computer, depicted code, completed original world, tested runtime, professional skill or group count. Own subject optional/direct1 binding and intrinsic conditions empty."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "an adult coder, visual artist, and musician crew creating an original executable world",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "an adult coder, visual artist, and musician crew creating an original executable world",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "오리지널 실행형 세계를 만드는 성인 coder·그래픽 제작자·음악 제작자 크루",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6678,
+      "candidate_id": "cand_7a02cc62e9c45b968e1bb60e2d406673",
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "가까운 옥상 난간과 낮고 먼 도시 전망의 고도 관계",
+            "physical rooftop parapet joining a near elevated plane to a lower distant city vista"
+          ],
+          "embedding_text": "a visible rooftop parapet balcony rail or overlook edge separates a grounded near elevated plane from a lower distant city or landscape using scale occlusion and atmospheric depth",
+          "en": "a relation frame joining a near physical edge to a lower distant vista",
+          "keywords": [
+            "near edge",
+            "elevated plane",
+            "lower vista",
+            "atmospheric depth"
+          ],
+          "ko": "가까운 난간 또는 끝선과 낮고 먼 전망을 함께 읽는 구도",
+          "tags": [
+            "emotional_place_visual_semantics",
+            "overlook_edge_foreground_vista_relation",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_7a02cc62e9c45b968e1bb60e2d406673",
+        "provenance": [
+          {
+            "sha256": "8dfddd9aca70858d53c48caa5795bd0549a24dc512fed76a73469c3c3ab64f96",
+            "source": "slot:composition:ep_near_edge_lower_vista_relation"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "가까운 옥상 난간과 낮고 먼 도시 전망의 고도 관계",
+            "physical rooftop parapet joining a near elevated plane to a lower distant city vista"
+          ],
+          "embedding_text": "a visible rooftop parapet balcony rail or overlook edge separates a grounded near elevated plane from a lower distant city or landscape using scale occlusion and atmospheric depth",
+          "en": "a relation frame joining a near physical edge to a lower distant vista",
+          "keywords": [
+            "near edge",
+            "elevated plane",
+            "lower vista",
+            "atmospheric depth"
+          ],
+          "ko": "가까운 난간 또는 끝선과 낮고 먼 전망을 함께 읽는 구도",
+          "tags": [
+            "emotional_place_visual_semantics",
+            "overlook_edge_foreground_vista_relation",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_7a02cc62e9c45b968e1bb60e2d406673",
+        "provenance": [
+          {
+            "sha256": "8dfddd9aca70858d53c48caa5795bd0549a24dc512fed76a73469c3c3ab64f96",
+            "source": "slot:composition:ep_near_edge_lower_vista_relation"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 179,
+        "json_pointer": "/decisions/178",
+        "row_sha256": "529b9b0d0b5aeac602518cd597d3e13856d09e2b2bf138873d6d18f4ac7d7f14"
+      },
+      "source_bindings": {
+        "bind_7a02cc62e9c45b968e1bb60e2d406673": {
+          "candidate_id": "cand_7a02cc62e9c45b968e1bb60e2d406673",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_7a02cc62e9c45b968e1bb60e2d406673",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.93
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "A near physical parapet, balcony rail or overlook edge separates a grounded elevated plane from a lower distant city-or-landscape vista using perspective scale, occlusion and atmospheric depth.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "joining a near physical edge to a lower distant vista",
+          "dimension": "composition",
+          "target": "frame",
+          "property": "composition.near_edge_lower_vista",
+          "mode": "effect",
+          "value": {
+            "type": "composition.near_edge_lower_vista/v1",
+            "value": "near_physical_edge_and_lower_distant_vista_read_together"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "separates a grounded near elevated plane from a lower distant city or landscape",
+          "dimension": "composition",
+          "target": "scene_planes",
+          "property": "spatial.depth.elevated_near_lower_distant",
+          "mode": "effect",
+          "value": {
+            "type": "spatial.depth.elevated_near_lower_distant/v1",
+            "value": "grounded_near_elevated_plane_separated_from_lower_distant_vista"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "a visible rooftop parapet balcony rail or overlook edge",
+          "dimension": "setting",
+          "target": "edge",
+          "property": "setting.location.overlook_edge",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location.overlook_edge/v1",
+            "value": "selected_visible_parapet_balcony_rail_or_overlook_edge"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "using scale occlusion and atmospheric depth",
+          "dimension": "composition",
+          "target": "scene_planes",
+          "property": "spatial.depth.scale_occlusion_atmospheric",
+          "mode": "effect",
+          "value": {
+            "type": "spatial.depth.scale_occlusion_atmospheric/v1",
+            "value": "depth_relation_uses_perspective_scale_occlusion_and_atmospheric_depth"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        }
+      ],
+      "roles": {
+        "composition": "explicit near edge/lower vista relation",
+        "spatial_depth": "actual elevation, distance, occlusion and atmospheric-depth cues",
+        "location": "actual physical edge and city-or-landscape relation",
+        "atmospheric_medium": "atmospheric depth must remain, but no explicitly chosen haze/fog density or scattering medium; separate air-response qualification pending",
+        "scale_relation": "perspective size cue does not give physical comparative sizes of two named entities",
+        "camera_angle": "near-elevated relation does not determine exact acquisition camera pitch",
+        "subject": "no observer/person required",
+        "character_intent": "no fear/longing emotion inferred"
+      },
+      "owner_and_receiver_intents": [
+        "Actual near edge/elevated support plane and distant lower vista remain distinct; one physical source choice not three mandatory rail/parapet/overlook objects.",
+        "Near-plane relation is explicitly sourced; it is not permission to assign an arbitrary unrelated core foreground or main subject."
+      ],
+      "pending": [
+        "Composition-only footprint omits actual structural-location and depth relations. Native needs source-selected existing/creation owner design and exact effects, not hidden context.",
+        "Atmospheric-depth wording is retained even without a new fog/air-particle effect. No exact viewpoint height, camera distance, weather, human leaning/contact, safety rail function or emotional interpretation. Own composition optional/direct0.93 binding empty."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "a visible rooftop parapet balcony rail or overlook edge separates a grounded near elevated plane from a lower distant city or landscape using scale occlusion and atmospheric depth",
+          "literal_fact_draft_indices": [
+            1,
+            2,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a relation frame joining a near physical edge to a lower distant vista",
+          "literal_fact_draft_indices": [
+            0
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "가까운 난간 또는 끝선과 낮고 먼 전망을 함께 읽는 구도",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6679,
+      "candidate_id": "cand_8fee1cbd9e3d55c38068d988f1e59e27",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "custodial_torture"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "허구 구금 고문실",
+            "fictional official detention site"
+          ],
+          "embedding_text": "declared fictional detention location with official or officially acquiesced control, a guarded exit, one adult detainee and records or demands that connect intentional severe suffering to a qualifying purpose",
+          "en": "declared fictional detention setting with official custody and qualifying-purpose context",
+          "keywords": [
+            "custody room",
+            "official records",
+            "guarded exit",
+            "interrogation demand",
+            "punishment order"
+          ],
+          "ko": "공적 구금 통제와 정보·처벌 목적 흔적이 분명한 허구 구금실",
+          "tags": [
+            "violence_crime_visual_semantics",
+            "custodial_torture",
+            "location"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_8fee1cbd9e3d55c38068d988f1e59e27",
+        "provenance": [
+          {
+            "sha256": "9cd396fc49fb7c016abbdeedb193b76e1ebe26c18ba05eda93b74469f04bbbb6",
+            "source": "slot:location:vc_torture_detention_location"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "custodial_torture"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "허구 구금 고문실",
+            "fictional official detention site"
+          ],
+          "embedding_text": "declared fictional detention location with official or officially acquiesced control, a guarded exit, one adult detainee and records or demands that connect intentional severe suffering to a qualifying purpose",
+          "en": "declared fictional detention setting with official custody and qualifying-purpose context",
+          "keywords": [
+            "custody room",
+            "official records",
+            "guarded exit",
+            "interrogation demand",
+            "punishment order"
+          ],
+          "ko": "공적 구금 통제와 정보·처벌 목적 흔적이 분명한 허구 구금실",
+          "tags": [
+            "violence_crime_visual_semantics",
+            "custodial_torture",
+            "location"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_8fee1cbd9e3d55c38068d988f1e59e27",
+        "provenance": [
+          {
+            "sha256": "9cd396fc49fb7c016abbdeedb193b76e1ebe26c18ba05eda93b74469f04bbbb6",
+            "source": "slot:location:vc_torture_detention_location"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 180,
+        "json_pointer": "/decisions/179",
+        "row_sha256": "08ffc888549f1842cc2d063d9a0045da44d1dffecf3481a96e9947ecff8e14ff"
+      },
+      "source_bindings": {
+        "bind_8fee1cbd9e3d55c38068d988f1e59e27": {
+          "candidate_id": "cand_8fee1cbd9e3d55c38068d988f1e59e27",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_8fee1cbd9e3d55c38068d988f1e59e27",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 0.78
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "A declared fictional detention site has official-or-acquiesced control, a guarded exit, one adult detainee and records OR demands linking intentional severe suffering to a declared qualifying purpose.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "declared fictional detention setting",
+          "dimension": "setting",
+          "target": "site",
+          "property": "setting.location.fictional_detention",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location.fictional_detention/v1",
+            "value": "declared_fictional_detention_site"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "official or officially acquiesced control",
+          "dimension": "event",
+          "target": "custody_context",
+          "property": "situation.official_or_acquiesced_custody",
+          "mode": "context",
+          "value": {
+            "type": "situation.official_or_acquiesced_custody/v1",
+            "value": "declared_official_or_officially_acquiesced_control"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "a guarded exit",
+          "dimension": "setting",
+          "target": "exit",
+          "property": "space.state.guarded_exit",
+          "mode": "effect",
+          "value": {
+            "type": "space.state.guarded_exit/v1",
+            "value": "exit_is_guarded_without_forced_visible_guard_person"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "one adult detainee",
+          "dimension": "subject",
+          "target": "detainee",
+          "property": "entity.detainee",
+          "mode": "effect",
+          "value": {
+            "type": "entity.detainee/v1",
+            "value": "detainee"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "one adult detainee",
+          "dimension": "count",
+          "target": "detainee",
+          "property": "subject.count.detainees",
+          "mode": "effect",
+          "value": {
+            "type": "subject.count.detainees/v1",
+            "value": "one"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "adult detainee",
+          "dimension": "age",
+          "target": "detainee",
+          "property": "age.declared",
+          "mode": "effect",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "detainee",
+          "dimension": "role",
+          "target": "detainee",
+          "property": "participant.role.detainee",
+          "mode": "effect",
+          "value": {
+            "type": "participant.role.detainee/v1",
+            "value": "detainee_role"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "records or demands that connect intentional severe suffering to a qualifying purpose",
+          "dimension": "event",
+          "target": "purpose_context",
+          "property": "situation.intentional_suffering_qualifying_purpose",
+          "mode": "context",
+          "value": {
+            "type": "situation.intentional_suffering_qualifying_purpose/v1",
+            "value": "declared_intentional_severe_suffering_and_qualifying_purpose_link"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "records or demands",
+          "dimension": "subject",
+          "target": "records_or_demands",
+          "property": "props.purpose_record",
+          "mode": "effect",
+          "value": {
+            "type": "props.purpose_record/v1",
+            "value": "purpose_record_object_in_record_choice_only"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        },
+        {
+          "pointer": "/content/ko",
+          "quote": "정보·처벌 목적 흔적",
+          "dimension": "event",
+          "target": "purpose_context",
+          "property": "situation.information_punishment_purpose",
+          "mode": "context",
+          "value": {
+            "type": "situation.information_punishment_purpose/v1",
+            "value": "declared_information_or_punishment_purpose_trace"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_and_branch_guards"
+        }
+      ],
+      "roles": {
+        "location": "actual fictional detention venue",
+        "space_condition": "current guarded/control state, separate from architecture",
+        "situation_context": "official involvement and qualifying purpose are explicit declared context",
+        "participant_role": "actual detainee role, not inference from pain alone",
+        "age_presentation": "one actual adult detainee, not every person in setting",
+        "subject_count": "one detainee does not count guards/staff",
+        "prop": "record choice only; a demand is not automatically a paper record/object",
+        "visible_text": "no readable legal order or label required",
+        "action": "records/demands linking suffering do not specify a current depicted physical torture mechanism",
+        "world": "fictional qualification alone is not a complete persistent-world system"
+      },
+      "owner_and_receiver_intents": [
+        "Actual detention place, exit, adult detainee and selected record-or-demand carrier require distinct exact owners. No automatic guard person, second adult, restraints or weapon.",
+        "A records choice has actual prop E; demands may be communicative/declarative context rather than a separate physical paper. Source requires the purpose link in either choice."
+      ],
+      "pending": [
+        "Setting-only footprint omits guarded state, actual detainee/count/age/role and conditional record object. Native branch/source and full permission design pending, not E0.",
+        "Severe suffering/purpose are source-declared context linked by records/demands; no invented injury, graphic method, present suffering expression or real-world legal allegation. This preserves original qualification without claiming the pixels establish official authority/purpose.",
+        "custodial_torture primary guard and optional location/direct0.78 binding empty retained."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "declared fictional detention location with official or officially acquiesced control, a guarded exit, one adult detainee and records or demands that connect intentional severe suffering to a qualifying purpose",
+          "literal_fact_draft_indices": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "declared fictional detention setting with official custody and qualifying-purpose context",
+          "literal_fact_draft_indices": [
+            0
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "공적 구금 통제와 정보·처벌 목적 흔적이 분명한 허구 구금실",
+          "literal_fact_draft_indices": [
+            9
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    }
+  ],
+  "complete_native_proof_count": 0,
+  "operating_native_qualified_count": 0,
+  "source_unit_inventory_only_not_full_semantic_disposition": true,
+  "limitations": "Pending drafts only. Whole contract source-path inventory is enumerated exactly; it is not complete clause entailment/native qualification. Aggregate/conditional values and empty requires/receivers remain pending."
+}
