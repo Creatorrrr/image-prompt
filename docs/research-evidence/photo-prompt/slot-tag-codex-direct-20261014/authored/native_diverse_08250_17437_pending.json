@@ -1,0 +1,1985 @@
+{
+  "schema": "photo-native-diverse-semantic-pending/v1",
+  "task_name": "/root/review_08250_09250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "ordinal": 17437,
+  "candidate_id": "cand_d15b4c6334a45b61a7407a022a2cc8e0",
+  "status": "semantic_pending_source_effect_and_optional_selection_design",
+  "complete_original_and_corrected_source_read": true,
+  "original_review": {
+    "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_08250_09250_17250_17500.json#item=188",
+    "decision_sha256": "fdab73798238a9e78e616428dfc20acbfc97cb6aeb55c382b4ba88c6ebafd228",
+    "source_record_sha256": "d38eab4916c93039451c967f69f00f8568c9135f31f2a6a12babbc2b489fc3b5",
+    "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c"
+  },
+  "original_source": {
+    "conditions": {},
+    "content": {
+      "activation": {
+        "exact_terms": [
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
+        ],
+        "requires_adult_character": true
+      },
+      "authored_components": {
+        "components": [
+          {
+            "id": "haughty_status_play",
+            "match_terms": [
+              "점수로 잘난 척",
+              "한 수 위라고 뽐내",
+              "도도한 라이벌",
+              "건방지고 도도한 표정",
+              "거만한 반쯤 감긴 눈",
+              "haughty one-up",
+              "boasts over one point",
+              "smug peer rival",
+              "haughty smug expression",
+              "status play"
+            ]
+          },
+          {
+            "id": "small_setback_or_help",
+            "match_terms": [
+              "작은 실수",
+              "도움을 받",
+              "되돌려 받은",
+              "small setback",
+              "receives help",
+              "returned item",
+              "one-point loss"
+            ]
+          },
+          {
+            "id": "warm_crack",
+            "match_terms": [
+              "입꼬리가 잠깐 풀",
+              "볼이 따뜻해",
+              "warm crack",
+              "mouth corner softens",
+              "brief grateful warmth"
+            ]
+          },
+          {
+            "id": "recovery_attempt",
+            "match_terms": [
+              "다시 도도한 표정",
+              "표정을 수습",
+              "recovers the smirk",
+              "tries to regain composure",
+              "suppresses the warmth"
+            ]
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v2",
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "haughty_status_play"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "haughty_status_play",
+              "small_setback_or_help",
+              "warm_crack",
+              "recovery_attempt"
+            ],
+            "evidence": [
+              {
+                "field": "adult_role_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "adult rival",
+                    "adult peer",
+                    "mid-twenties",
+                    "unmistakably adult"
+                  ],
+                  "must_not_contain": [
+                    "girl",
+                    "teen",
+                    "schoolgirl"
+                  ]
+                }
+              },
+              {
+                "field": "haughty_baseline_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "haughty baseline",
+                    "raised brow",
+                    "half-lidded",
+                    "superior smirk",
+                    "chin-down"
+                  ]
+                }
+              },
+              {
+                "field": "smug_expression_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "smug expression",
+                    "superior smirk",
+                    "self-satisfied mouth",
+                    "cool arrogant gaze"
+                  ]
+                }
+              },
+              {
+                "field": "adult_youthful_styling_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "youthful adult styling",
+                    "fresh adult styling",
+                    "young-adult energy",
+                    "playful adult styling"
+                  ]
+                }
+              },
+              {
+                "field": "appearance_inference_exclusion_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "behavior not childlike morphology",
+                    "not childlike proportions",
+                    "not twin tails alone",
+                    "adult behavior carries"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+            "render_gates": [
+              {
+                "description": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+                "id": "vo_mesugaki_unmistakably_adult",
+                "review_scale": "both"
+              },
+              {
+                "description": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+                "id": "vo_mesugaki_haughty_baseline",
+                "review_scale": "thumbnail"
+              },
+              {
+                "description": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+                "id": "vo_mesugaki_youthful_adult_styling",
+                "review_scale": "both"
+              },
+              {
+                "description": "The archetype is carried by behavior and event, not inferred from twin tails, small facial features, reference appearance, or a label alone.",
+                "id": "vo_mesugaki_behavior_not_morphology",
+                "review_scale": "both"
+              }
+            ]
+          }
+        ]
+      },
+      "category": "behavioral_archetype",
+      "composition_instruction": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult peer rival",
+          "haughty and smug facial baseline",
+          "poised arrogant bearing",
+          "fresh youthful adult styling",
+          "behavior rather than childlike morphology",
+          "optional one-up incident",
+          "optional warm composure crack"
+        ]
+      },
+      "evidence_requirements": {
+        "adult_role_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "adult rival",
+            "adult peer",
+            "mid-twenties",
+            "unmistakably adult"
+          ],
+          "must_not_contain": [
+            "girl",
+            "teen",
+            "schoolgirl"
+          ]
+        },
+        "adult_youthful_styling_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "youthful adult styling",
+            "fresh adult styling",
+            "young-adult energy",
+            "playful adult styling"
+          ]
+        },
+        "appearance_inference_exclusion_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "behavior not childlike morphology",
+            "not childlike proportions",
+            "not twin tails alone",
+            "adult behavior carries"
+          ]
+        },
+        "haughty_baseline_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "haughty baseline",
+            "raised brow",
+            "half-lidded",
+            "superior smirk",
+            "chin-down"
+          ]
+        },
+        "smug_expression_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "smug expression",
+            "superior smirk",
+            "self-satisfied mouth",
+            "cool arrogant gaze"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "twin_tails_as_personality_evidence",
+        "small_face_or_childlike_morphology_as_archetype_evidence",
+        "generic_cute_face_without_haughty_behavior",
+        "bullying_or_humiliation",
+        "minor_coded_role_or_schoolchild_styling"
+      ],
+      "render_gates": [
+        {
+          "description": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+          "id": "vo_mesugaki_unmistakably_adult",
+          "review_scale": "both"
+        },
+        {
+          "description": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+          "id": "vo_mesugaki_haughty_baseline",
+          "review_scale": "thumbnail"
+        },
+        {
+          "description": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+          "id": "vo_mesugaki_youthful_adult_styling",
+          "review_scale": "both"
+        },
+        {
+          "description": "The archetype is carried by behavior and event, not inferred from twin tails, small facial features, reference appearance, or a label alone.",
+          "id": "vo_mesugaki_behavior_not_morphology",
+          "review_scale": "both"
+        }
+      ],
+      "required_evidence_fields": [
+        "adult_role_phrase",
+        "haughty_baseline_phrase",
+        "smug_expression_phrase",
+        "adult_youthful_styling_phrase",
+        "appearance_inference_exclusion_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "forbidden_prompt_terms": [
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
+        ],
+        "prompt_label_terms": [],
+        "runtime_forbidden_labels": [
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
+        ]
+      },
+      "semantics": {
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "점수로 잘난 척",
+                "한 수 위라고 뽐내",
+                "도도한 라이벌",
+                "건방지고 도도한 표정",
+                "거만한 반쯤 감긴 눈",
+                "haughty one-up",
+                "boasts over one point",
+                "smug peer rival",
+                "haughty smug expression",
+                "status play"
+              ],
+              "id": "haughty_status_play"
+            },
+            {
+              "any_terms": [
+                "작은 실수",
+                "도움을 받",
+                "되돌려 받은",
+                "small setback",
+                "receives help",
+                "returned item",
+                "one-point loss"
+              ],
+              "id": "small_setback_or_help"
+            },
+            {
+              "any_terms": [
+                "입꼬리가 잠깐 풀",
+                "볼이 따뜻해",
+                "warm crack",
+                "mouth corner softens",
+                "brief grateful warmth"
+              ],
+              "id": "warm_crack"
+            },
+            {
+              "any_terms": [
+                "다시 도도한 표정",
+                "표정을 수습",
+                "recovers the smirk",
+                "tries to regain composure",
+                "suppresses the warmth"
+              ],
+              "id": "recovery_attempt"
+            }
+          ],
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "haughty_status_play"
+          ]
+        },
+        "contrast_examples": [
+          "childlike body morphology",
+          "generic cuteness without haughty status play",
+          "a warm helpful scene with no smug rivalry"
+        ],
+        "definition": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, a smug poised bearing, and teasing one-up behavior, with any warm crack or small setback kept optional rather than required.",
+        "paraphrase_examples": [
+          "도도한 성인 라이벌",
+          "잘난 척하는 성인 라이벌",
+          "건방지고 도도하지만 앳돼 보이는 성인 인물",
+          "smug adult rival",
+          "haughty adult peer",
+          "teasing one-up"
+        ]
+      }
+    },
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "id": "cand_d15b4c6334a45b61a7407a022a2cc8e0",
+    "provenance": [
+      {
+        "sha256": "826ad94b6ef176955c970b46aabf54556f1fc05df74a08cb373ecb4da08db58f",
+        "source": "visual_profile:adult_mesugaki_status_play"
+      }
+    ],
+    "record_kind": "visual_profile"
+  },
+  "previous_reviewed_proposal": {
+    "all_roles_considered": true,
+    "candidate_id": "cand_d15b4c6334a45b61a7407a022a2cc8e0",
+    "corrections": [
+      {
+        "after": {
+          "components": [
+            {
+              "id": "adult_peer_role",
+              "match_terms": [
+                "unmistakably adult peer rival",
+                "adult rival",
+                "adult peer",
+                "unmistakably adult",
+                "도도한 성인 라이벌"
+              ]
+            },
+            {
+              "id": "haughty_status_play",
+              "match_terms": [
+                "점수로 잘난 척",
+                "한 수 위라고 뽐내",
+                "도도한 라이벌",
+                "건방지고 도도한 표정",
+                "거만한 반쯤 감긴 눈",
+                "haughty one-up",
+                "boasts over one point",
+                "smug peer rival",
+                "haughty smug expression",
+                "status play"
+              ]
+            },
+            {
+              "id": "smug_poised_bearing",
+              "match_terms": [
+                "smug poised bearing",
+                "haughty, poised, smug facial baseline",
+                "smug expression",
+                "superior smirk",
+                "self-satisfied mouth",
+                "cool arrogant gaze"
+              ]
+            },
+            {
+              "id": "adult_youthful_styling",
+              "match_terms": [
+                "fresh youthful adult styling",
+                "youthful adult styling",
+                "fresh adult styling",
+                "young-adult energy",
+                "playful adult styling"
+              ]
+            },
+            {
+              "id": "small_setback_or_help",
+              "match_terms": [
+                "작은 실수",
+                "도움을 받",
+                "되돌려 받은",
+                "small setback",
+                "receives help",
+                "returned item",
+                "one-point loss"
+              ]
+            },
+            {
+              "id": "warm_crack",
+              "match_terms": [
+                "입꼬리가 잠깐 풀",
+                "볼이 따뜻해",
+                "warm crack",
+                "mouth corner softens",
+                "brief grateful warmth"
+              ]
+            },
+            {
+              "id": "recovery_attempt",
+              "match_terms": [
+                "다시 도도한 표정",
+                "표정을 수습",
+                "recovers the smirk",
+                "tries to regain composure",
+                "suppresses the warmth"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "adult_peer_role",
+              "haughty_status_play",
+              "smug_poised_bearing",
+              "adult_youthful_styling"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "adult_peer_role",
+                "haughty_status_play",
+                "smug_poised_bearing",
+                "adult_youthful_styling",
+                "small_setback_or_help",
+                "warm_crack",
+                "recovery_attempt"
+              ],
+              "evidence": [
+                {
+                  "field": "adult_role_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "adult rival",
+                      "adult peer",
+                      "mid-twenties",
+                      "unmistakably adult"
+                    ],
+                    "must_not_contain": [
+                      "girl",
+                      "teen",
+                      "schoolgirl"
+                    ]
+                  }
+                },
+                {
+                  "field": "haughty_baseline_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "haughty baseline",
+                      "raised brow",
+                      "half-lidded",
+                      "superior smirk",
+                      "chin-down"
+                    ]
+                  }
+                },
+                {
+                  "field": "smug_expression_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "smug expression",
+                      "superior smirk",
+                      "self-satisfied mouth",
+                      "cool arrogant gaze"
+                    ]
+                  }
+                },
+                {
+                  "field": "adult_youthful_styling_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "youthful adult styling",
+                      "fresh adult styling",
+                      "young-adult energy",
+                      "playful adult styling"
+                    ]
+                  }
+                },
+                {
+                  "field": "appearance_inference_exclusion_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "behavior not childlike morphology",
+                      "not childlike proportions",
+                      "not twin tails alone",
+                      "adult behavior carries"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+              "render_gates": [
+                {
+                  "description": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+                  "id": "vo_mesugaki_unmistakably_adult",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+                  "id": "vo_mesugaki_haughty_baseline",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+                  "id": "vo_mesugaki_youthful_adult_styling",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "The archetype is carried by behavior and event, not inferred from twin tails, small facial features, reference appearance, or a label alone.",
+                  "id": "vo_mesugaki_behavior_not_morphology",
+                  "review_scale": "both"
+                }
+              ]
+            }
+          ]
+        },
+        "before": {
+          "components": [
+            {
+              "id": "haughty_status_play",
+              "match_terms": [
+                "점수로 잘난 척",
+                "한 수 위라고 뽐내",
+                "도도한 라이벌",
+                "건방지고 도도한 표정",
+                "거만한 반쯤 감긴 눈",
+                "haughty one-up",
+                "boasts over one point",
+                "smug peer rival",
+                "haughty smug expression",
+                "status play"
+              ]
+            },
+            {
+              "id": "small_setback_or_help",
+              "match_terms": [
+                "작은 실수",
+                "도움을 받",
+                "되돌려 받은",
+                "small setback",
+                "receives help",
+                "returned item",
+                "one-point loss"
+              ]
+            },
+            {
+              "id": "warm_crack",
+              "match_terms": [
+                "입꼬리가 잠깐 풀",
+                "볼이 따뜻해",
+                "warm crack",
+                "mouth corner softens",
+                "brief grateful warmth"
+              ]
+            },
+            {
+              "id": "recovery_attempt",
+              "match_terms": [
+                "다시 도도한 표정",
+                "표정을 수습",
+                "recovers the smirk",
+                "tries to regain composure",
+                "suppresses the warmth"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "haughty_status_play"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "haughty_status_play",
+                "small_setback_or_help",
+                "warm_crack",
+                "recovery_attempt"
+              ],
+              "evidence": [
+                {
+                  "field": "adult_role_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "adult rival",
+                      "adult peer",
+                      "mid-twenties",
+                      "unmistakably adult"
+                    ],
+                    "must_not_contain": [
+                      "girl",
+                      "teen",
+                      "schoolgirl"
+                    ]
+                  }
+                },
+                {
+                  "field": "haughty_baseline_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "haughty baseline",
+                      "raised brow",
+                      "half-lidded",
+                      "superior smirk",
+                      "chin-down"
+                    ]
+                  }
+                },
+                {
+                  "field": "smug_expression_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "smug expression",
+                      "superior smirk",
+                      "self-satisfied mouth",
+                      "cool arrogant gaze"
+                    ]
+                  }
+                },
+                {
+                  "field": "adult_youthful_styling_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "youthful adult styling",
+                      "fresh adult styling",
+                      "young-adult energy",
+                      "playful adult styling"
+                    ]
+                  }
+                },
+                {
+                  "field": "appearance_inference_exclusion_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "behavior not childlike morphology",
+                      "not childlike proportions",
+                      "not twin tails alone",
+                      "adult behavior carries"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+              "render_gates": [
+                {
+                  "description": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+                  "id": "vo_mesugaki_unmistakably_adult",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+                  "id": "vo_mesugaki_haughty_baseline",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+                  "id": "vo_mesugaki_youthful_adult_styling",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "The archetype is carried by behavior and event, not inferred from twin tails, small facial features, reference appearance, or a label alone.",
+                  "id": "vo_mesugaki_behavior_not_morphology",
+                  "review_scale": "both"
+                }
+              ]
+            }
+          ]
+        },
+        "pointer": "/content/authored_components",
+        "reason": "Require four explicitly source-supported common baseline groups in discovery; retain all seven known IDs in obligation membership for compiler coverage only. Preserve optional incident definitions, five unchanged baseline evidence requirements, instruction and guards; membership itself does not generate mandatory incident evidence or gates."
+      },
+      {
+        "after": {
+          "groups": [
+            {
+              "any_terms": [
+                "unmistakably adult peer rival",
+                "adult rival",
+                "adult peer",
+                "unmistakably adult",
+                "도도한 성인 라이벌"
+              ],
+              "id": "adult_peer_role"
+            },
+            {
+              "any_terms": [
+                "점수로 잘난 척",
+                "한 수 위라고 뽐내",
+                "도도한 라이벌",
+                "건방지고 도도한 표정",
+                "거만한 반쯤 감긴 눈",
+                "haughty one-up",
+                "boasts over one point",
+                "smug peer rival",
+                "haughty smug expression",
+                "status play"
+              ],
+              "id": "haughty_status_play"
+            },
+            {
+              "any_terms": [
+                "smug poised bearing",
+                "haughty, poised, smug facial baseline",
+                "smug expression",
+                "superior smirk",
+                "self-satisfied mouth",
+                "cool arrogant gaze"
+              ],
+              "id": "smug_poised_bearing"
+            },
+            {
+              "any_terms": [
+                "fresh youthful adult styling",
+                "youthful adult styling",
+                "fresh adult styling",
+                "young-adult energy",
+                "playful adult styling"
+              ],
+              "id": "adult_youthful_styling"
+            },
+            {
+              "any_terms": [
+                "작은 실수",
+                "도움을 받",
+                "되돌려 받은",
+                "small setback",
+                "receives help",
+                "returned item",
+                "one-point loss"
+              ],
+              "id": "small_setback_or_help"
+            },
+            {
+              "any_terms": [
+                "입꼬리가 잠깐 풀",
+                "볼이 따뜻해",
+                "warm crack",
+                "mouth corner softens",
+                "brief grateful warmth"
+              ],
+              "id": "warm_crack"
+            },
+            {
+              "any_terms": [
+                "다시 도도한 표정",
+                "표정을 수습",
+                "recovers the smirk",
+                "tries to regain composure",
+                "suppresses the warmth"
+              ],
+              "id": "recovery_attempt"
+            }
+          ],
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "adult_peer_role",
+            "haughty_status_play",
+            "smug_poised_bearing",
+            "adult_youthful_styling"
+          ]
+        },
+        "before": {
+          "groups": [
+            {
+              "any_terms": [
+                "점수로 잘난 척",
+                "한 수 위라고 뽐내",
+                "도도한 라이벌",
+                "건방지고 도도한 표정",
+                "거만한 반쯤 감긴 눈",
+                "haughty one-up",
+                "boasts over one point",
+                "smug peer rival",
+                "haughty smug expression",
+                "status play"
+              ],
+              "id": "haughty_status_play"
+            },
+            {
+              "any_terms": [
+                "작은 실수",
+                "도움을 받",
+                "되돌려 받은",
+                "small setback",
+                "receives help",
+                "returned item",
+                "one-point loss"
+              ],
+              "id": "small_setback_or_help"
+            },
+            {
+              "any_terms": [
+                "입꼬리가 잠깐 풀",
+                "볼이 따뜻해",
+                "warm crack",
+                "mouth corner softens",
+                "brief grateful warmth"
+              ],
+              "id": "warm_crack"
+            },
+            {
+              "any_terms": [
+                "다시 도도한 표정",
+                "표정을 수습",
+                "recovers the smirk",
+                "tries to regain composure",
+                "suppresses the warmth"
+              ],
+              "id": "recovery_attempt"
+            }
+          ],
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "haughty_status_play"
+          ]
+        },
+        "pointer": "/content/semantics/component_semantics",
+        "reason": "Keep discovery and semantic group IDs/terms/minimum identical while preserving optional source event groups."
+      },
+      {
+        "after": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+        "before": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, a smug poised bearing, and teasing one-up behavior, with any warm crack or small setback kept optional rather than required.",
+        "pointer": "/content/semantics/definition",
+        "reason": "Resolve definition conjunction of teasing one-up behavior against explicit composition instruction that one-up/setback/warmth/recovery are all optional; retain adult/youthful/haughty/smug/poised baseline."
+      },
+      {
+        "after": "The archetype is carried by the adult peer's haughty, smug, poised baseline and fresh adult styling. A one-up incident, setback, warm crack, or recovery beat is optional; twin tails, small facial features, reference appearance, or a label alone do not establish it.",
+        "before": "The archetype is carried by behavior and event, not inferred from twin tails, small facial features, reference appearance, or a label alone.",
+        "pointer": "/content/authored_components/obligations/0/render_gates/3/description",
+        "reason": "Keep duplicated gate synchronized and avoid implying mandatory incident through behavior-and-event wording; all adult/morphology/label exclusions remain."
+      },
+      {
+        "after": "The archetype is carried by the adult peer's haughty, smug, poised baseline and fresh adult styling. A one-up incident, setback, warm crack, or recovery beat is optional; twin tails, small facial features, reference appearance, or a label alone do not establish it.",
+        "before": "The archetype is carried by behavior and event, not inferred from twin tails, small facial features, reference appearance, or a label alone.",
+        "pointer": "/content/render_gates/3/description",
+        "reason": "Keep duplicated gate synchronized and avoid implying mandatory incident through behavior-and-event wording; all adult/morphology/label exclusions remain."
+      }
+    ],
+    "facts": [
+      {
+        "dimension": "age",
+        "pointer": "/content/semantics/definition",
+        "property": "age.unmistakably_adult",
+        "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+        "realization_id": "base",
+        "target": "actor"
+      },
+      {
+        "dimension": "relationship",
+        "pointer": "/content/semantics/definition",
+        "property": "relationship.role.adult_peer_rival",
+        "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+        "realization_id": "base",
+        "target": "context"
+      },
+      {
+        "dimension": "expression",
+        "pointer": "/content/semantics/definition",
+        "property": "face.expression.haughty_smug_poised_baseline",
+        "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+        "realization_id": "base",
+        "target": "actor_face"
+      },
+      {
+        "dimension": "appearance",
+        "pointer": "/content/semantics/definition",
+        "property": "eyes.structure.haughty_half_lidded_baseline",
+        "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+        "realization_id": "base",
+        "target": "actor_eyes"
+      },
+      {
+        "dimension": "appearance",
+        "pointer": "/content/composition_instruction",
+        "property": "presentation.fresh_youthful_adult_styling",
+        "quote": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+        "realization_id": "base",
+        "target": "actor"
+      }
+    ],
+    "meaning_summary": "Unmistakably adult peer rival has haughty half-lidded eyes, smug poised bearing and fresh youthful adult styling; one-up, setback, warm crack and recovery incidents remain optional.",
+    "recommended_kind": "visual_profile",
+    "rejected_boundaries": [
+      "No minor-coded role, childlike morphology, twin tails/small face/reference appearance/label as personality proof, generic cuteness, bullying/humiliation, or compulsory one-up/setback/warmth/recovery. No private emotion or real personality truth from pixels."
+    ],
+    "roles": [
+      {
+        "evidence": [
+          {
+            "dimension": "age",
+            "pointer": "/content/semantics/definition",
+            "property": "age.unmistakably_adult",
+            "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+            "target": "actor"
+          }
+        ],
+        "rationale": "Unmistakably adult peer rival has haughty half-lidded eyes, smug poised bearing and fresh youthful adult styling; one-up, setback, warm crack and recovery incidents remain optional. Exact primary cue supplies unmistakably adult.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "direct",
+        "slot_id": "age_presentation"
+      },
+      {
+        "evidence": [
+          {
+            "dimension": "relationship",
+            "pointer": "/content/semantics/definition",
+            "property": "relationship.role.adult_peer_rival",
+            "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+            "target": "context"
+          }
+        ],
+        "rationale": "Unmistakably adult peer rival has haughty half-lidded eyes, smug poised bearing and fresh youthful adult styling; one-up, setback, warm crack and recovery incidents remain optional. Exact primary cue supplies adult peer rival.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "contextual",
+        "slot_id": "participant_role"
+      },
+      {
+        "evidence": [
+          {
+            "dimension": "expression",
+            "pointer": "/content/semantics/definition",
+            "property": "face.expression.haughty_smug_poised_baseline",
+            "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+            "target": "actor_face"
+          }
+        ],
+        "rationale": "Unmistakably adult peer rival has haughty half-lidded eyes, smug poised bearing and fresh youthful adult styling; one-up, setback, warm crack and recovery incidents remain optional. Exact primary cue supplies haughty smug poised baseline.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "direct",
+        "slot_id": "expression"
+      },
+      {
+        "evidence": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/semantics/definition",
+            "property": "eyes.structure.haughty_half_lidded_baseline",
+            "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+            "target": "actor_eyes"
+          }
+        ],
+        "rationale": "Unmistakably adult peer rival has haughty half-lidded eyes, smug poised bearing and fresh youthful adult styling; one-up, setback, warm crack and recovery incidents remain optional. Exact primary cue supplies haughty half lidded baseline.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "direct",
+        "slot_id": "eye_detail"
+      },
+      {
+        "evidence": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/composition_instruction",
+            "property": "presentation.fresh_youthful_adult_styling",
+            "quote": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+            "target": "actor"
+          }
+        ],
+        "rationale": "Unmistakably adult peer rival has haughty half-lidded eyes, smug poised bearing and fresh youthful adult styling; one-up, setback, warm crack and recovery incidents remain optional. Exact primary cue supplies fresh youthful adult styling.",
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "semantic_role": "direct",
+        "slot_id": "presentation_style"
+      }
+    ],
+    "status": "approved",
+    "uncertainties": []
+  },
+  "full_reviewed_corrected_source": {
+    "conditions": {},
+    "content": {
+      "activation": {
+        "exact_terms": [
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
+        ],
+        "requires_adult_character": true
+      },
+      "authored_components": {
+        "components": [
+          {
+            "id": "adult_peer_role",
+            "match_terms": [
+              "unmistakably adult peer rival",
+              "adult rival",
+              "adult peer",
+              "unmistakably adult",
+              "도도한 성인 라이벌"
+            ]
+          },
+          {
+            "id": "haughty_status_play",
+            "match_terms": [
+              "점수로 잘난 척",
+              "한 수 위라고 뽐내",
+              "도도한 라이벌",
+              "건방지고 도도한 표정",
+              "거만한 반쯤 감긴 눈",
+              "haughty one-up",
+              "boasts over one point",
+              "smug peer rival",
+              "haughty smug expression",
+              "status play"
+            ]
+          },
+          {
+            "id": "smug_poised_bearing",
+            "match_terms": [
+              "smug poised bearing",
+              "haughty, poised, smug facial baseline",
+              "smug expression",
+              "superior smirk",
+              "self-satisfied mouth",
+              "cool arrogant gaze"
+            ]
+          },
+          {
+            "id": "adult_youthful_styling",
+            "match_terms": [
+              "fresh youthful adult styling",
+              "youthful adult styling",
+              "fresh adult styling",
+              "young-adult energy",
+              "playful adult styling"
+            ]
+          },
+          {
+            "id": "small_setback_or_help",
+            "match_terms": [
+              "작은 실수",
+              "도움을 받",
+              "되돌려 받은",
+              "small setback",
+              "receives help",
+              "returned item",
+              "one-point loss"
+            ]
+          },
+          {
+            "id": "warm_crack",
+            "match_terms": [
+              "입꼬리가 잠깐 풀",
+              "볼이 따뜻해",
+              "warm crack",
+              "mouth corner softens",
+              "brief grateful warmth"
+            ]
+          },
+          {
+            "id": "recovery_attempt",
+            "match_terms": [
+              "다시 도도한 표정",
+              "표정을 수습",
+              "recovers the smirk",
+              "tries to regain composure",
+              "suppresses the warmth"
+            ]
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v2",
+        "discovery": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "adult_peer_role",
+            "haughty_status_play",
+            "smug_poised_bearing",
+            "adult_youthful_styling"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "adult_peer_role",
+              "haughty_status_play",
+              "smug_poised_bearing",
+              "adult_youthful_styling",
+              "small_setback_or_help",
+              "warm_crack",
+              "recovery_attempt"
+            ],
+            "evidence": [
+              {
+                "field": "adult_role_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "adult rival",
+                    "adult peer",
+                    "mid-twenties",
+                    "unmistakably adult"
+                  ],
+                  "must_not_contain": [
+                    "girl",
+                    "teen",
+                    "schoolgirl"
+                  ]
+                }
+              },
+              {
+                "field": "haughty_baseline_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "haughty baseline",
+                    "raised brow",
+                    "half-lidded",
+                    "superior smirk",
+                    "chin-down"
+                  ]
+                }
+              },
+              {
+                "field": "smug_expression_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "smug expression",
+                    "superior smirk",
+                    "self-satisfied mouth",
+                    "cool arrogant gaze"
+                  ]
+                }
+              },
+              {
+                "field": "adult_youthful_styling_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "youthful adult styling",
+                    "fresh adult styling",
+                    "young-adult energy",
+                    "playful adult styling"
+                  ]
+                }
+              },
+              {
+                "field": "appearance_inference_exclusion_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "behavior not childlike morphology",
+                    "not childlike proportions",
+                    "not twin tails alone",
+                    "adult behavior carries"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+            "render_gates": [
+              {
+                "description": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+                "id": "vo_mesugaki_unmistakably_adult",
+                "review_scale": "both"
+              },
+              {
+                "description": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+                "id": "vo_mesugaki_haughty_baseline",
+                "review_scale": "thumbnail"
+              },
+              {
+                "description": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+                "id": "vo_mesugaki_youthful_adult_styling",
+                "review_scale": "both"
+              },
+              {
+                "description": "The archetype is carried by the adult peer's haughty, smug, poised baseline and fresh adult styling. A one-up incident, setback, warm crack, or recovery beat is optional; twin tails, small facial features, reference appearance, or a label alone do not establish it.",
+                "id": "vo_mesugaki_behavior_not_morphology",
+                "review_scale": "both"
+              }
+            ]
+          }
+        ]
+      },
+      "category": "behavioral_archetype",
+      "composition_instruction": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult peer rival",
+          "haughty and smug facial baseline",
+          "poised arrogant bearing",
+          "fresh youthful adult styling",
+          "behavior rather than childlike morphology",
+          "optional one-up incident",
+          "optional warm composure crack"
+        ]
+      },
+      "evidence_requirements": {
+        "adult_role_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "adult rival",
+            "adult peer",
+            "mid-twenties",
+            "unmistakably adult"
+          ],
+          "must_not_contain": [
+            "girl",
+            "teen",
+            "schoolgirl"
+          ]
+        },
+        "adult_youthful_styling_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "youthful adult styling",
+            "fresh adult styling",
+            "young-adult energy",
+            "playful adult styling"
+          ]
+        },
+        "appearance_inference_exclusion_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "behavior not childlike morphology",
+            "not childlike proportions",
+            "not twin tails alone",
+            "adult behavior carries"
+          ]
+        },
+        "haughty_baseline_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "haughty baseline",
+            "raised brow",
+            "half-lidded",
+            "superior smirk",
+            "chin-down"
+          ]
+        },
+        "smug_expression_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "smug expression",
+            "superior smirk",
+            "self-satisfied mouth",
+            "cool arrogant gaze"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "twin_tails_as_personality_evidence",
+        "small_face_or_childlike_morphology_as_archetype_evidence",
+        "generic_cute_face_without_haughty_behavior",
+        "bullying_or_humiliation",
+        "minor_coded_role_or_schoolchild_styling"
+      ],
+      "render_gates": [
+        {
+          "description": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+          "id": "vo_mesugaki_unmistakably_adult",
+          "review_scale": "both"
+        },
+        {
+          "description": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+          "id": "vo_mesugaki_haughty_baseline",
+          "review_scale": "thumbnail"
+        },
+        {
+          "description": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+          "id": "vo_mesugaki_youthful_adult_styling",
+          "review_scale": "both"
+        },
+        {
+          "description": "The archetype is carried by the adult peer's haughty, smug, poised baseline and fresh adult styling. A one-up incident, setback, warm crack, or recovery beat is optional; twin tails, small facial features, reference appearance, or a label alone do not establish it.",
+          "id": "vo_mesugaki_behavior_not_morphology",
+          "review_scale": "both"
+        }
+      ],
+      "required_evidence_fields": [
+        "adult_role_phrase",
+        "haughty_baseline_phrase",
+        "smug_expression_phrase",
+        "adult_youthful_styling_phrase",
+        "appearance_inference_exclusion_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "forbidden_prompt_terms": [
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
+        ],
+        "prompt_label_terms": [],
+        "runtime_forbidden_labels": [
+          "mesugaki",
+          "메스가키",
+          "メスガキ"
+        ]
+      },
+      "semantics": {
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "unmistakably adult peer rival",
+                "adult rival",
+                "adult peer",
+                "unmistakably adult",
+                "도도한 성인 라이벌"
+              ],
+              "id": "adult_peer_role"
+            },
+            {
+              "any_terms": [
+                "점수로 잘난 척",
+                "한 수 위라고 뽐내",
+                "도도한 라이벌",
+                "건방지고 도도한 표정",
+                "거만한 반쯤 감긴 눈",
+                "haughty one-up",
+                "boasts over one point",
+                "smug peer rival",
+                "haughty smug expression",
+                "status play"
+              ],
+              "id": "haughty_status_play"
+            },
+            {
+              "any_terms": [
+                "smug poised bearing",
+                "haughty, poised, smug facial baseline",
+                "smug expression",
+                "superior smirk",
+                "self-satisfied mouth",
+                "cool arrogant gaze"
+              ],
+              "id": "smug_poised_bearing"
+            },
+            {
+              "any_terms": [
+                "fresh youthful adult styling",
+                "youthful adult styling",
+                "fresh adult styling",
+                "young-adult energy",
+                "playful adult styling"
+              ],
+              "id": "adult_youthful_styling"
+            },
+            {
+              "any_terms": [
+                "작은 실수",
+                "도움을 받",
+                "되돌려 받은",
+                "small setback",
+                "receives help",
+                "returned item",
+                "one-point loss"
+              ],
+              "id": "small_setback_or_help"
+            },
+            {
+              "any_terms": [
+                "입꼬리가 잠깐 풀",
+                "볼이 따뜻해",
+                "warm crack",
+                "mouth corner softens",
+                "brief grateful warmth"
+              ],
+              "id": "warm_crack"
+            },
+            {
+              "any_terms": [
+                "다시 도도한 표정",
+                "표정을 수습",
+                "recovers the smirk",
+                "tries to regain composure",
+                "suppresses the warmth"
+              ],
+              "id": "recovery_attempt"
+            }
+          ],
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "adult_peer_role",
+            "haughty_status_play",
+            "smug_poised_bearing",
+            "adult_youthful_styling"
+          ]
+        },
+        "contrast_examples": [
+          "childlike body morphology",
+          "generic cuteness without haughty status play",
+          "a warm helpful scene with no smug rivalry"
+        ],
+        "definition": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+        "paraphrase_examples": [
+          "도도한 성인 라이벌",
+          "잘난 척하는 성인 라이벌",
+          "건방지고 도도하지만 앳돼 보이는 성인 인물",
+          "smug adult rival",
+          "haughty adult peer",
+          "teasing one-up"
+        ]
+      }
+    },
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "id": "cand_d15b4c6334a45b61a7407a022a2cc8e0",
+    "provenance": [
+      {
+        "sha256": "826ad94b6ef176955c970b46aabf54556f1fc05df74a08cb373ecb4da08db58f",
+        "source": "visual_profile:adult_mesugaki_status_play"
+      }
+    ],
+    "record_kind": "visual_profile"
+  },
+  "current_actual_realization_ids": [
+    "base"
+  ],
+  "reference_sha256": {},
+  "proposed_fact_inventory_NOT_qualification": [
+    {
+      "id": "adult",
+      "realization_id": "base",
+      "pointer": "/content/semantics/definition",
+      "quote": "unmistakably adult",
+      "dimension": "age",
+      "target": "actor",
+      "property": "age.declared",
+      "mode": "prerequisite",
+      "value": {
+        "type": "age.declared/v1",
+        "value": "adult"
+      },
+      "requires": []
+    },
+    {
+      "id": "adult_presentation",
+      "realization_id": "base",
+      "pointer": "/content/render_gates/0/description",
+      "quote": "Adult role, proportions, and styling are unmistakable",
+      "dimension": "age",
+      "target": "actor",
+      "property": "age.presentation",
+      "mode": "prerequisite",
+      "value": {
+        "type": "age.presentation/v1",
+        "value": "unmistakably_adult"
+      },
+      "requires": [
+        "adult"
+      ]
+    },
+    {
+      "id": "peer_required",
+      "realization_id": "base",
+      "pointer": "/content/semantics/definition",
+      "quote": "adult peer rival",
+      "dimension": "relationship",
+      "target": "actor",
+      "property": "relationship.role.peer_rival",
+      "mode": "prerequisite",
+      "value": {
+        "type": "relationship.role/v1",
+        "value": "peer_rival"
+      },
+      "requires": [
+        "adult"
+      ]
+    },
+    {
+      "id": "peer_context",
+      "realization_id": "base",
+      "pointer": "/content/semantics/definition",
+      "quote": "adult peer rival",
+      "dimension": "relationship",
+      "target": "actor",
+      "property": "relationship.role.peer_rival",
+      "mode": "context",
+      "value": {
+        "type": "relationship.role/v1",
+        "value": "peer_rival"
+      },
+      "requires": [
+        "peer_required"
+      ]
+    },
+    {
+      "id": "face_exists",
+      "realization_id": "base",
+      "pointer": "/content/composition_instruction",
+      "quote": "facial baseline",
+      "dimension": "appearance",
+      "target": "actor",
+      "property": "anatomy.face.presence",
+      "mode": "prerequisite",
+      "value": {
+        "type": "anatomy.face.presence/v1",
+        "value": "present"
+      },
+      "requires": []
+    },
+    {
+      "id": "expression",
+      "realization_id": "base",
+      "pointer": "/content/composition_instruction",
+      "quote": "haughty, poised, smug facial baseline",
+      "dimension": "expression",
+      "target": "actor",
+      "property": "face.expression.haughty_smug_baseline",
+      "mode": "effect",
+      "value": {
+        "type": "face.expression/v1",
+        "value": "haughty_poised_smug"
+      },
+      "requires": [
+        "adult",
+        "adult_presentation",
+        "peer_required",
+        "face_exists"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "eyelids",
+      "realization_id": "base",
+      "pointer": "/content/semantics/definition",
+      "quote": "haughty half-lidded eyes",
+      "dimension": "appearance",
+      "target": "actor",
+      "property": "eyes.structure.lid_opening",
+      "mode": "effect",
+      "value": {
+        "type": "eyes.lid_opening/v1",
+        "value": "half_lidded"
+      },
+      "requires": [
+        "adult",
+        "adult_presentation",
+        "peer_required",
+        "face_exists"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "styling",
+      "realization_id": "base",
+      "pointer": "/content/composition_instruction",
+      "quote": "fresh youthful adult styling",
+      "dimension": "appearance",
+      "target": "actor",
+      "property": "presentation.fresh_adult_styling",
+      "mode": "effect",
+      "value": {
+        "type": "presentation.style/v1",
+        "value": "fresh_youthful_adult"
+      },
+      "requires": [
+        "adult",
+        "adult_presentation",
+        "peer_required"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "bearing",
+      "realization_id": "base",
+      "pointer": "/content/semantics/definition",
+      "quote": "smug poised bearing",
+      "dimension": "pose",
+      "target": "actor",
+      "property": "body.pose.poised_bearing",
+      "mode": "effect",
+      "value": {
+        "type": "body.bearing/v1",
+        "value": "smug_poised"
+      },
+      "requires": [
+        "adult",
+        "adult_presentation",
+        "peer_required"
+      ],
+      "operation": "set_value",
+      "receivers": []
+    },
+    {
+      "id": "optional_incident",
+      "realization_id": "base",
+      "pointer": "/content/semantics/definition",
+      "quote": "A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+      "dimension": "concept",
+      "target": "actor",
+      "property": "candidate.optional_event_policy",
+      "mode": "context",
+      "value": {
+        "type": "candidate.optional_event_policy/v1",
+        "value": "one_up_setback_warmth_recovery_not_mandatory"
+      },
+      "requires": []
+    }
+  ],
+  "proposed_owner_binding_NOT_adopted": {
+    "base": {
+      "schema": "photo-native-owner-bindings/v2",
+      "bindings": [
+        {
+          "target": "actor",
+          "core_role": "secondary_subject",
+          "origin": "existing",
+          "introduced_by": null
+        }
+      ]
+    }
+  },
+  "proposed_roles": {
+    "age_presentation": [
+      "adult",
+      "adult_presentation"
+    ],
+    "participant_role": [
+      "peer_required",
+      "peer_context"
+    ],
+    "expression": [
+      "expression"
+    ],
+    "eye_detail": [
+      "eyelids"
+    ],
+    "presentation_style": [
+      "styling"
+    ],
+    "body_pose": [
+      "bearing"
+    ]
+  },
+  "source_units_review_inventory": [
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/0/field",
+      "quote": "adult_role_phrase",
+      "reviewed_clause_disposition": "nonsemantic: evidence slot address"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/0/requirement/must_not_contain/0",
+      "quote": "girl",
+      "reviewed_clause_disposition": "nonsemantic: explicit exclusion, never positive age evidence"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/0/requirement/must_not_contain/1",
+      "quote": "teen",
+      "reviewed_clause_disposition": "nonsemantic: explicit exclusion, never positive age evidence"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/0/requirement/must_not_contain/2",
+      "quote": "schoolgirl",
+      "reviewed_clause_disposition": "nonsemantic: explicit exclusion, never positive age evidence"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/1/field",
+      "quote": "haughty_baseline_phrase",
+      "reviewed_clause_disposition": "nonsemantic: evidence slot address"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/2/field",
+      "quote": "smug_expression_phrase",
+      "reviewed_clause_disposition": "nonsemantic: evidence slot address"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/3/field",
+      "quote": "adult_youthful_styling_phrase",
+      "reviewed_clause_disposition": "nonsemantic: evidence slot address"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/evidence/4/field",
+      "quote": "appearance_inference_exclusion_phrase",
+      "reviewed_clause_disposition": "nonsemantic: exclusion-evidence slot address"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/instruction",
+      "quote": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+      "reviewed_clause_disposition": "semantic: adult prerequisite/peer context, expression and styling effects, optional event policy, morphology exclusion"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/0/description",
+      "quote": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+      "reviewed_clause_disposition": "semantic: already adult role/proportions/style readability, not mutable child-to-adult age"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/0/review_scale",
+      "quote": "both",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/1/description",
+      "quote": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+      "reviewed_clause_disposition": "semantic: pose and eyelids/brow/mouth jointly establish haughty peer baseline, with no exact brow shape forced"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/1/review_scale",
+      "quote": "thumbnail",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/2/description",
+      "quote": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+      "reviewed_clause_disposition": "semantic: fresh/playful adult presentation and adult morphology constraint"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/2/review_scale",
+      "quote": "both",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/3/description",
+      "quote": "The archetype is carried by the adult peer's haughty, smug, poised baseline and fresh adult styling. A one-up incident, setback, warm crack, or recovery beat is optional; twin tails, small facial features, reference appearance, or a label alone do not establish it.",
+      "reviewed_clause_disposition": "semantic: common haughty/smug/poised styling; optional incident policy; morphology/reference/label exclusions"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/authored_components/obligations/0/render_gates/3/review_scale",
+      "quote": "both",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/composition_instruction",
+      "quote": "Express the archetype as an unmistakably adult peer with a haughty, poised, smug facial baseline and fresh youthful adult styling without childlike morphology. A one-up incident, setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+      "reviewed_clause_disposition": "semantic: same complete baseline instruction and optional event policy"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/0/description",
+      "quote": "Adult role, proportions, and styling are unmistakable and do not rely on youthful archetype shorthand.",
+      "reviewed_clause_disposition": "semantic: already adult role/proportions/style readability, not mutable child-to-adult age"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/0/review_scale",
+      "quote": "both",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/1/description",
+      "quote": "Pose, eyelids, brow, and mouth establish a haughty peer-rival baseline rather than generic cuteness.",
+      "reviewed_clause_disposition": "semantic: pose and eyelids/brow/mouth jointly establish haughty peer baseline, with no exact brow shape forced"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/1/review_scale",
+      "quote": "thumbnail",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/2/description",
+      "quote": "Fresh or playful styling reads as adult young-person energy while body and facial morphology remain unmistakably adult.",
+      "reviewed_clause_disposition": "semantic: fresh/playful adult presentation and adult morphology constraint"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/2/review_scale",
+      "quote": "both",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/3/description",
+      "quote": "The archetype is carried by the adult peer's haughty, smug, poised baseline and fresh adult styling. A one-up incident, setback, warm crack, or recovery beat is optional; twin tails, small facial features, reference appearance, or a label alone do not establish it.",
+      "reviewed_clause_disposition": "semantic: common haughty/smug/poised styling; optional incident policy; morphology/reference/label exclusions"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/render_gates/3/review_scale",
+      "quote": "both",
+      "reviewed_clause_disposition": "nonsemantic: review-scale control"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/semantics/definition",
+      "quote": "An unmistakably adult peer rival with a youthful but adult presentation, haughty half-lidded eyes, and a smug poised bearing. A teasing one-up incident, small setback, warm crack, or recovery beat may strengthen a fitting scene, but none is a mandatory meaning of the archetype.",
+      "reviewed_clause_disposition": "semantic: adult and peer, adult presentation, half-lidded expression/eye state, poised bearing, optional events"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/semantics/paraphrase_examples/0",
+      "quote": "도도한 성인 라이벌",
+      "reviewed_clause_disposition": "semantic: adult prerequisite, peer-rival context, haughty expression"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/semantics/paraphrase_examples/1",
+      "quote": "잘난 척하는 성인 라이벌",
+      "reviewed_clause_disposition": "semantic: adult prerequisite, peer-rival context, self-superior bearing"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/semantics/paraphrase_examples/2",
+      "quote": "건방지고 도도하지만 앳돼 보이는 성인 인물",
+      "reviewed_clause_disposition": "semantic: adult prerequisite and youthful adult visible presentation, haughty expression, no child inference"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/semantics/paraphrase_examples/3",
+      "quote": "smug adult rival",
+      "reviewed_clause_disposition": "semantic: adult prerequisite, peer-rival context, smug expression"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/semantics/paraphrase_examples/4",
+      "quote": "haughty adult peer",
+      "reviewed_clause_disposition": "semantic: adult prerequisite, peer context, haughty bearing"
+    },
+    {
+      "realization_id": "base",
+      "pointer": "/content/semantics/paraphrase_examples/5",
+      "quote": "teasing one-up",
+      "reviewed_clause_disposition": "semantic: optional teasing one-up alternative, no common mandatory action permission"
+    }
+  ],
+  "exact_proposed_correction_NOT_applied": {
+    "pointer": "/effects",
+    "before": {
+      "dimensions": [],
+      "properties": []
+    },
+    "after": {
+      "dimensions": [
+        "appearance",
+        "expression",
+        "pose"
+      ],
+      "properties": [
+        {
+          "dimension": "appearance",
+          "target": "actor",
+          "property": "eyes.structure.lid_opening"
+        },
+        {
+          "dimension": "appearance",
+          "target": "actor",
+          "property": "presentation.fresh_adult_styling"
+        },
+        {
+          "dimension": "expression",
+          "target": "actor",
+          "property": "face.expression.haughty_smug_baseline"
+        },
+        {
+          "dimension": "pose",
+          "target": "actor",
+          "property": "body.pose.poised_bearing"
+        }
+      ]
+    },
+    "reason": "Empty effects cannot authorize mandatory expression/lid opening/fresh presentation/poised bearing. These are actual visible baseline constraints. Adult declaration/presentation and peer context are already frozen prerequisites; preserve all negative morphology guards."
+  },
+  "unresolved": [
+    {
+      "kind": "source_effects_empty",
+      "detail": "Current corrected source still has no effects. No effect fact can be certified against it, and relabeling visible baseline as context/preservation would waive real mutations. Exact proposed /effects awaits root full-source adjudication."
+    },
+    {
+      "kind": "optional_event_adoption",
+      "detail": "Keep all7 known component IDs, common4/min4 discovery, existing5 baseline evidence. component_ids only validates known-ID coverage; explicit evidence/instruction/gates create duties. Optional one-up/setback/warm-crack/recovery actions may not be silently authorized by base. Current source has only base and no event selections. Root must declare whether this candidate qualifies only unselected-event baseline or how actual independent/combined event choices gain source-bound effects; do not force events, union them or invent narrowed mutually exclusive RIDs."
+    },
+    {
+      "kind": "application_owner_scope",
+      "detail": "participant_role catalog means another participant; explicitly propose applying profile to secondary_subject (the adult peer rival), rather than auto mapping unspecified source actor to main_subject. Needs source application scope/condition adjudication and corresponding independently requested owner. Do not infer another actor from the label."
+    },
+    {
+      "kind": "owned_anatomy_and_age_presentation",
+      "detail": "Adult body/face presentation is required but not permission to alter requester-owned reference anatomy. Existing face, exact declared adult age and unmistakably adult presentation need actual frozen witnesses. Half-lidded is selected lid state; no numerical age, child morphology, exact brow geometry or real personality inference."
+    }
+  ],
+  "dependencies": {
+    "base": []
+  },
+  "qualified_proof_attached": false,
+  "canonical_native_qualified_count": 0,
+  "validation_boundary": "Full source paths enumerated and clause interpretations directly authored; no complete v3 attestation or synthetic successful fixture for unresolved source. Shape inventory is not semantic approval."
+}
