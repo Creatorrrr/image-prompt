@@ -1,5 +1,7 @@
 # Shared candidate and lazy search maintenance
 
+Local EmbeddingGemma installation, separate rebuilds, qualification and Gemini rollback are documented in [local embeddings](local-embeddings.md). The active manifest declares its model space; local document/query evidence is validated separately from Gemini HTTP evidence.
+
 The authored source is `assets/photo_candidate_corpus_manifest.json`. Each `cand_<uuid>` has exactly one payload owner. Managed slots are presentation tags. A candidate may have zero or many persistent `bind_<uuid>` relations. New request-local role proposals can present compatible untagged or differently tagged records without modifying source tags. Preserve intrinsic effects, provenance, binding conditions, owner/carrier relations, conditional obligations and bundle requirements.
 
 The V3 native corpus owns intrinsic conditions and effects once per candidate. Bindings own only role applicability and distinguish direct properties from contextual interpretations; they cannot override candidate guards or carry a second effect payload. Intrinsic source eligibility is evaluated before any role binding. An exact frozen-action record can remain discoverable; its optional presentation still checks every canonical effect against frozen dimensions and property locks. Discovery does not authorize adoption. A declared role's failed condition cannot be bypassed by making an unbound proposal for that same role. A different role is evaluated under its own conditions without inheriting unrelated role policy.

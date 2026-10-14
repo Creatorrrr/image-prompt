@@ -6,7 +6,7 @@ from __future__ import annotations
 import hashlib, math
 from pathlib import Path
 import photo_candidate_corpus as corpus
-from photo_embedding_provider import SPACE, validate_vector, atomic
+from photo_embedding_provider import SPACE, validate_vector, validate_space, validate_execution, atomic
 from photo_visual_retrieval import positive_visual_profile_fields, positive_visual_profile_text
 from bm25f_retrieval import build_bm25f_index
 
@@ -60,7 +60,8 @@ def lexical(c):
 
 def validate(index,c):
     expected={cid:r for cid,r in c['candidates'].items() if r['record_kind'] in POSITIVE_KINDS}
-    if index.get('schema')!=SCHEMA or index.get('space')!=SPACE or index.get('corpus_sha256')!=corpus.digest(c):
+    validate_space(index.get('space'))
+    if index.get('schema')!=SCHEMA or index.get('corpus_sha256')!=corpus.digest(c):
         raise ValueError('native shared index schema/space/source mismatch')
     if set(index.get('entries',{}))!=set(expected):raise ValueError('native shared index coverage mismatch')
     for cid,record in expected.items():
@@ -68,6 +69,8 @@ def validate(index,c):
         if row.get('id')!=cid or row.get('text')!=body or row.get('recipe')!=recipe or row.get('text_sha256')!=hashlib.sha256(body.encode()).hexdigest():
             raise ValueError('native shared index identity/text/recipe mismatch: '+cid)
         validate_vector(row.get('vector'),SPACE['dimensions'])
+        if index['space']['provider']=='embeddinggemma2-local':
+            validate_execution(row.get('embedding_execution') or {},index['space'],body,row['vector'],'document')
     return index
 
 def cosine_rank(index, vector, allowed_ids=None, limit=384, minimum_similarity=0.30):

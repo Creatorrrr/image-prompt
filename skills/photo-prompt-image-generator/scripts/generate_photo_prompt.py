@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import secrets
 import sys
 from pathlib import Path
@@ -35,6 +36,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source-ref", default="main")
     parser.add_argument("--runtime-receipt", help="Save the private generation/pack binding separately from the public pack.")
     args = parser.parse_args(argv)
+    # Backend configuration selects an interpreter, never requester meaning.
+    # This avoids validating the same authored inputs twice on normal installs.
+    if argv is None and args.source_mode=='local_current':
+        from photo_local_embedding import ROOT, runtime_lock
+        configuration=(Path(args.source_root) if args.source_root else ROOT)/'embedding-default.json'
+        if configuration.is_file() and json.loads(configuration.read_bytes()).get('provider')=='embeddinggemma2-local':
+            lock=runtime_lock(verify=False);python=ROOT/lock['python']
+            if Path(sys.prefix).resolve()!=python.parents[1].resolve():
+                os.execv(str(python),[str(python),str(Path(__file__).resolve()),*sys.argv[1:]])
     envelope = generator.load_request_envelope_arg(args.request_envelope_json)
     controls = json.loads(Path(args.creative_controls_json).read_text(encoding="utf-8"))
     core = generator.load_authorial_core_arg(args.authorial_core_json, request_envelope=envelope,
@@ -49,12 +59,34 @@ def main(argv: list[str] | None = None) -> int:
     embodiment = json.loads(Path(args.embodiment_review_json).read_text(encoding="utf-8"))
     # No candidate data is loaded until all authored inputs are validated.
     generator.photo_embodiment.build_policy(core, embodiment)
+    preparation=None
+    if args.query_cache and not args.query_cache.exists() and args.source_mode=='local_current':
+        from photo_local_embedding import ROOT, runtime_lock, preload
+        configuration=(Path(args.source_root) if args.source_root else ROOT)/'embedding-default.json'
+        if configuration.is_file() and json.loads(configuration.read_bytes()).get('provider')=='embeddinggemma2-local':
+            lock=runtime_lock()
+            if Path(sys.prefix).resolve()==(ROOT/lock['python']).parents[1].resolve():
+                from concurrent.futures import ThreadPoolExecutor
+                preparation=ThreadPoolExecutor(max_workers=1);prepared=preparation.submit(preload)
+    # Use the skill's pinned numeric dependencies without changing the caller's
+    # environment. Revalidate all authored inputs in the managed interpreter.
+    if argv is None and args.source_mode=='local_current':
+        from photo_local_embedding import ROOT, runtime_lock
+        source=Path(args.source_root) if args.source_root else ROOT
+        manifest=source/'assets/photo_candidate_search.json'
+        if manifest.is_file() and json.loads(manifest.read_bytes()).get('space',{}).get('provider')=='embeddinggemma2-local':
+            lock=runtime_lock(verify=False);python=ROOT/lock['python']
+            if Path(sys.prefix).resolve()!=python.parents[1].resolve():
+                os.execv(str(python),[str(python),str(Path(__file__).resolve()),*sys.argv[1:]])
     from photo_runtime_sources import RuntimeSnapshotProvider, SKILL_ROOT
     provider = RuntimeSnapshotProvider(Path(args.source_root) if args.source_root else SKILL_ROOT,
         Path(args.runtime_store) if args.runtime_store else None,
         mode=args.source_mode, remote=args.source_remote or "", ref=args.source_ref)
     snapshot = provider.acquire()
     data = snapshot.data.for_core(core)
+    if preparation:
+        try:prepared.result()
+        finally:preparation.shutdown(wait=True)
     visual_intent = generator.load_visual_intent_arg(
         args.visual_intent_json, data[generator.VISUAL_OBLIGATIONS_DATA_KEY],
         data[generator.VISUAL_PROFILE_INDEX_DATA_KEY])

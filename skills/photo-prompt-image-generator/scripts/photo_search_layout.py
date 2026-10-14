@@ -12,7 +12,7 @@ import sys
 import zlib
 import photo_candidate_corpus as c
 import photo_global_index as documents
-from photo_embedding_provider import SPACE, atomic
+from photo_embedding_provider import SPACE, atomic, validate_space, validate_execution
 
 SCHEMA = 'photo-candidate-search-layout/v1'
 MANIFEST = 'photo_candidate_search.json'
@@ -188,7 +188,7 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
                 'profile_lookup': profile_terms, 'slot_catalog': corpus['slot_catalog'],
                 'slot_bindings': corpus['slot_bindings'], 'policies': corpus['policies']}
     metadata_member = json_file('metadata.json.gz', metadata, len(ids))
-    manifest = {'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'posting_codec':POSTING_CODEC, 'space': SPACE, 'corpus_sha256': c.digest(corpus),
+    manifest = {'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'posting_codec':POSTING_CODEC, 'space': vectors['space'], 'corpus_sha256': c.digest(corpus),
                 'index_source_sha256': c.digest(vectors), 'layout_id': identity, 'metadata': metadata_member,
                 'shards': [row for name,row in sorted(members.items()) if name != 'metadata.json.gz'],
                 'lexical_recipe': lexical['recipe_version'], 'endianness': 'little', 'vector_type': 'float64'}
@@ -228,7 +228,9 @@ def vector_body(raw,row):
 def verify(assets, corpus, manifest, vectors=None):
     """Offline complete source/statistics/boundary verification, not a request path."""
     assets=Path(assets)
-    if manifest.get('schema')!=SCHEMA or manifest.get('space')!=SPACE or manifest.get('routing_recipe')!=ROUTING_RECIPE or manifest.get('posting_codec')!=POSTING_CODEC or manifest.get('vector_codec')!=VECTOR_CODEC or manifest.get('corpus_sha256')!=c.digest(corpus):
+    validate_space(manifest.get('space'))
+    if vectors is not None and vectors['space']!=manifest['space']:raise ValueError('layout/vector embedding space mismatch')
+    if manifest.get('schema')!=SCHEMA or manifest.get('routing_recipe')!=ROUTING_RECIPE or manifest.get('posting_codec')!=POSTING_CODEC or manifest.get('vector_codec')!=VECTOR_CODEC or manifest.get('corpus_sha256')!=c.digest(corpus):
         raise ValueError('layout source/space mismatch')
     def read(row):
         p=assets/row['path']
@@ -286,6 +288,8 @@ def verify(assets, corpus, manifest, vectors=None):
             if vectors is not None and vector!=vectors['entries'][cid]['vector']: raise ValueError('vector precision loss')
             recipe,text=documents.text(corpus['candidates'][cid]);ref=meta.get('vector_recipes',{}).get(cid)
             if not ref or ref['recipe']!=recipe or ref['text_sha256']!=hashlib.sha256(text.encode()).hexdigest(): raise ValueError('vector text/recipe mismatch')
+            if manifest['space']['provider']=='embeddinggemma2-local':
+                validate_execution(ref.get('embedding_execution') or {},manifest['space'],text,vector,'document')
             norm=math.sqrt(math.sumprod(vector,vector));unit=[v/norm for v in vector]
             pos=positions[cid];approx=[quant['centers'][d][(codes[pos*384+d//2]>>(4*(d%2)))&15] for d in range(768)]
             residual=math.sqrt(math.fsum((a-b)**2 for a,b in zip(unit,approx)))
