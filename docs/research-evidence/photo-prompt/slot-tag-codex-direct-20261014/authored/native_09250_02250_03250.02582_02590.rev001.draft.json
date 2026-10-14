@@ -1,0 +1,4409 @@
+{
+  "schema": "photo-native-manual-source-fact-draft/v1",
+  "task": "/root/review_09250_10500",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "assigned_range": [
+    2250,
+    3250
+  ],
+  "draft_range": [
+    2582,
+    2590
+  ],
+  "management_batch_complete": false,
+  "actual_whole_original_and5B_after_read_count": 8,
+  "actual_whole_after_reread_count": 0,
+  "source_packet": {
+    "path": "authored/native_09250_02250_03250.02550_02600.packet.json",
+    "raw_sha256": "8ad33e3dcf0f56d5a8b080e0e1f41b77396836e4495f08cb8c960b7644cc97e4",
+    "source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b"
+  },
+  "catalog": {
+    "path": "CATALOG-FINAL-142-V2.json",
+    "canonical_sha256": "0d7cab7b4add7279b0faa629bb5df72829da0c756adc6db21dcd7c09d56b971f"
+  },
+  "literal": {
+    "path": "authored/native_09250_02250_03250.02582_02590.rev001.literals.py",
+    "raw_sha256": "56e39eb37b97bf375b5cdc01537147a410a5ce066473f96523b4b8c2b1a58c4d"
+  },
+  "mechanical_clause_expansion_only": true,
+  "automatic_semantic_classification": false,
+  "records": [
+    {
+      "ordinal": 2582,
+      "candidate_id": "cand_d21b2f75c65055fd98b8140122fdeff8",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "기존작은집게핀헤어액세서리명시대상에만적용하는명사선택안. 착용/추가/실제머리/집장소는본문없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "small claw-clip hair accessory",
+          "en": "small claw-clip hair accessory",
+          "ko": "작은 집게핀 헤어 액세서리",
+          "tags": [
+            "human",
+            "accessory",
+            "hair",
+            "home"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_d21b2f75c65055fd98b8140122fdeff8",
+        "provenance": [
+          {
+            "sha256": "188c5ac1f0dc956374a8d642ccc401b75361c5d51c738fb6cd3122ab76d8e4af",
+            "source": "slot:wearable_accessory:small_claw_clip_hair_accessory"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "small claw-clip hair accessory",
+          "en": "small claw-clip hair accessory",
+          "ko": "작은 집게핀 헤어 액세서리",
+          "tags": [
+            "human",
+            "accessory",
+            "hair",
+            "home"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_d21b2f75c65055fd98b8140122fdeff8",
+        "provenance": [
+          {
+            "sha256": "188c5ac1f0dc956374a8d642ccc401b75361c5d51c738fb6cd3122ab76d8e4af",
+            "source": "slot:wearable_accessory:small_claw_clip_hair_accessory"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "embedding_text": "small claw-clip hair accessory",
+          "en": "small claw-clip hair accessory",
+          "ko": "작은 집게핀 헤어 액세서리",
+          "tags": [
+            "human",
+            "accessory",
+            "hair",
+            "home"
+          ],
+          "application_scope": "Apply only to the same already declared small claw-clip hair accessory; do not add an accessory, wearer or hair, attach it, select a wearing arrangement or change size."
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_d21b2f75c65055fd98b8140122fdeff8",
+        "provenance": [
+          {
+            "sha256": "188c5ac1f0dc956374a8d642ccc401b75361c5d51c738fb6cd3122ab76d8e4af",
+            "source": "slot:wearable_accessory:small_claw_clip_hair_accessory"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply only to the same already declared small claw-clip hair accessory; do not add an accessory, wearer or hair, attach it, select a wearing arrangement or change size.",
+          "reason": "추가동작없는명사를기존의명시small-pin대상에만제한, 착용/머리존재를발명하지않음."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [],
+            "properties": []
+          },
+          "reason": "existing exactsmallclawclip scope의명사기준이며concrete추가/착용/크기변경본문없음. 단독적용제한은root수락전pending."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 83,
+          "sha256": "dec890ffd4547eac38ea7e8321dd91563b2ac7ea5f4bd48ddbb63f79dd2bf5c3"
+        },
+        "candidate_id": "cand_d21b2f75c65055fd98b8140122fdeff8",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "accessories.hair.claw_clip_small",
+            "quote": "small claw-clip hair accessory",
+            "realization_id": "base",
+            "target": "hair"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "작은 집게 헤어핀.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "집 장소·색·머리 형태·새 착용자는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "accessories.hair.claw_clip_small",
+                "quote": "small claw-clip hair accessory",
+                "target": "hair"
+              }
+            ],
+            "rationale": "장식.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wearable_accessory"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "5048a9f8c502e456c0ab56c57fad32413e6c7b9795094a4ceb65e6024b0cd5c3",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 83,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "ffc705e34345b0330c546085877bf8eec169e140bf0da34426be4994a3b38f1c"
+      },
+      "before_full_record_sha256": "5048a9f8c502e456c0ab56c57fad32413e6c7b9795094a4ceb65e6024b0cd5c3",
+      "fiveB_after_full_record_sha256": "5048a9f8c502e456c0ab56c57fad32413e6c7b9795094a4ceb65e6024b0cd5c3",
+      "proposed_after_full_record_sha256": "2a1af2e2feee1adefafca1a54743017d9e9049b95f4a070c4fb9f8d09da4b747",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_d21b2f75c65055fd98b8140122fdeff8": {
+          "candidate_id": "cand_d21b2f75c65055fd98b8140122fdeff8",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_d21b2f75c65055fd98b8140122fdeff8",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "wearable_accessory",
+          "weight": 0.62
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "wearable_accessory",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.62,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_d21b2f75c65055fd98b8140122fdeff8",
+          "reason": "own{}read; namedhairaccessoryclass, noactualwearingclaim.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        }
+      ],
+      "conditions_review": "sourcehumaneligibility retained, doesnotprovehair/wearer. Existingexactsmallaccessory isexplicitnewapplicationcondition, notrolepolicy. Noautomaticexistencefromhaircategory.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "hair_style",
+          "reason": "nohairarrangement"
+        },
+        {
+          "slot_id": "garment_detail",
+          "reason": "separateaccessorynotgarmentconstruction"
+        },
+        {
+          "slot_id": "prop_placement",
+          "reason": "noattachment/position"
+        }
+      ],
+      "facts": [
+        {
+          "id": "pin_u0",
+          "dimension": "subject",
+          "target": "pin",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "small claw-clip hair accessory"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "small claw-clip hair accessory"
+        },
+        {
+          "id": "pin_u1",
+          "dimension": "subject",
+          "target": "pin",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "small claw-clip hair accessory"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "작은 집게핀 헤어 액세서리"
+        },
+        {
+          "id": "pin_u2",
+          "dimension": "subject",
+          "target": "pin",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "small claw-clip hair accessory"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "small claw-clip hair accessory"
+        },
+        {
+          "id": "pin_u3",
+          "dimension": "subject",
+          "target": "pin",
+          "property": "props.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "props.type/v1",
+            "value": "small claw-clip hair accessory"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply only to the same already declared small claw-clip hair accessory; do not add an accessory, wearer or hair, attach it, select a wearing arrangement or change size."
+        }
+      ],
+      "roles": {
+        "wearable_accessory": {
+          "spec_sha256": "7a90ffd01840b5c21db234617fa116d68f574c11eef10f5a2aa262183f9ed645",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "pin_u0",
+            "pin_u1",
+            "pin_u2",
+            "pin_u3"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "pin",
+              "core_role": "primary_prop",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "small claw-clip hair accessory",
+          "fact_refs": [
+            "pin_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "작은 집게핀 헤어 액세서리",
+          "fact_refs": [
+            "pin_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "small claw-clip hair accessory",
+          "fact_refs": [
+            "pin_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply only to the same already declared small claw-clip hair accessory; do not add an accessory, wearer or hair, attach it, select a wearing arrangement or change size.",
+          "fact_refs": [
+            "pin_u3"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "rootreviewexistingexactnounscope/emptyfootprint, actualcore/formalinput pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2583,
+      "candidate_id": "cand_db1f94faa4dd59e69dcb65fc076d1d55",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "온실나무데크바닥과이를둘러싼키큰풀·흰꽃. KO원문들꽃/큰풀·흰색누락을수정하며낮/사람/종추론없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+          "ko": "식물과 들꽃이 둘러싼 온실 나무 데크 바닥",
+          "tags": [
+            "human",
+            "botanical",
+            "greenhouse",
+            "day"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_db1f94faa4dd59e69dcb65fc076d1d55",
+        "provenance": [
+          {
+            "sha256": "a1e74fd04e830718cb11bb48cd53b8a1dd49feb04245f568064aafc58634d954",
+            "source": "slot:location:botanical_greenhouse_deck_floor"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+          "ko": "식물과 들꽃이 둘러싼 온실 나무 데크 바닥",
+          "tags": [
+            "human",
+            "botanical",
+            "greenhouse",
+            "day"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_db1f94faa4dd59e69dcb65fc076d1d55",
+        "provenance": [
+          {
+            "sha256": "a1e74fd04e830718cb11bb48cd53b8a1dd49feb04245f568064aafc58634d954",
+            "source": "slot:location:botanical_greenhouse_deck_floor"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+          "ko": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥",
+          "tags": [
+            "human",
+            "botanical",
+            "greenhouse",
+            "day"
+          ],
+          "application_scope": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day."
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            },
+            {
+              "dimension": "setting",
+              "target": "plants",
+              "property": "background.elements"
+            }
+          ]
+        },
+        "id": "cand_db1f94faa4dd59e69dcb65fc076d1d55",
+        "provenance": [
+          {
+            "sha256": "a1e74fd04e830718cb11bb48cd53b8a1dd49feb04245f568064aafc58634d954",
+            "source": "slot:location:botanical_greenhouse_deck_floor"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "식물과 들꽃이 둘러싼 온실 나무 데크 바닥",
+          "after": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥",
+          "reason": "wildflower미지원종류제거, tallgrasses/whiteflowers EN양성복원."
+        },
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day.",
+          "reason": "기존복합장소의명시기준속성유지, actual장소/주변배치효과를조건과분리."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "setting",
+                "target": "scene",
+                "property": "setting.location"
+              },
+              {
+                "dimension": "setting",
+                "target": "plants",
+                "property": "background.elements"
+              }
+            ]
+          },
+          "reason": "same장소와주변식물의실제배치효과소유명시; wood/white는명시기존대상조건."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 84,
+          "sha256": "66202ee1447748401b963d559b8f569eb6a6632b146024743f8e726ced23537c"
+        },
+        "candidate_id": "cand_db1f94faa4dd59e69dcb65fc076d1d55",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location.greenhouse_deck",
+            "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+            "realization_id": "base",
+            "target": "environment"
+          },
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "background.elements.tall_grasses_white_flowers",
+            "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+            "realization_id": "base",
+            "target": "plants"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.material.wood",
+            "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+            "realization_id": "base",
+            "target": "deck"
+          },
+          {
+            "dimension": "color",
+            "pointer": "/content/en",
+            "property": "color.local.white",
+            "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+            "realization_id": "base",
+            "target": "flowers"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "큰 풀과 흰 꽃에 둘러싸인 온실 나무 데크 바닥.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "야생 꽃·낮·종·인물은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location.greenhouse_deck",
+                "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+                "target": "environment"
+              }
+            ],
+            "rationale": "장소.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "background.elements.tall_grasses_white_flowers",
+                "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+                "target": "plants"
+              }
+            ],
+            "rationale": "배경.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "background_element"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.material.wood",
+                "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+                "target": "deck"
+              }
+            ],
+            "rationale": "재료.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "color",
+                "pointer": "/content/en",
+                "property": "color.local.white",
+                "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+                "target": "flowers"
+              }
+            ],
+            "rationale": "꽃 색.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "color"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "dce1778d8c730a182a0a417284274a19b5b71053099457694976d17c41d934ca",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 84,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "353a86e0e9168acdc14cb290a1c6233cc03cf94649eb25ba69dc6f2238e33e92"
+      },
+      "before_full_record_sha256": "dce1778d8c730a182a0a417284274a19b5b71053099457694976d17c41d934ca",
+      "fiveB_after_full_record_sha256": "dce1778d8c730a182a0a417284274a19b5b71053099457694976d17c41d934ca",
+      "proposed_after_full_record_sha256": "2906b86695d055ce3a484664e317d751d4a0009100b4dd404b55a6978e0fdff6",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_db1f94faa4dd59e69dcb65fc076d1d55": {
+          "candidate_id": "cand_db1f94faa4dd59e69dcb65fc076d1d55",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_db1f94faa4dd59e69dcb65fc076d1d55",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 0.65
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "location",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.65,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_db1f94faa4dd59e69dcb65fc076d1d55",
+          "reason": "own{}read; declaredplace.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "background_element",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.65,
+          "conditions": {},
+          "reason": "actualsurroundingplantsownedbysetting notwholeplantidentity."
+        },
+        {
+          "slot_id": "surface_material",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.65,
+          "conditions": {
+            "subject_applicability": {
+              "allow_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "architecture",
+                "subculture_practice",
+                "worldbuilding_system",
+                "cjk_narrative_world"
+              ],
+              "allow_domains_override_subject_categories": true,
+              "subject_categories": [
+                "object",
+                "food",
+                "plant",
+                "environment",
+                "sign",
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "reason": "actualwood/preciseV2overridepolicy."
+        },
+        {
+          "slot_id": "color",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.65,
+          "conditions": {},
+          "reason": "whiteexplicitflowers notglobalgrade."
+        }
+      ],
+      "conditions_review": "source{} retained. Newexistingdeckandplants areexplicitintrinsicapplicationconditions; catalogpolicyseparate. Plantsaddressbackground_surface doesnotassertwholeplantanatomy. Tallgrassandwhiteflowerswholeunit retained, nohumanfromtags.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "time_of_day",
+          "reason": "daytagnotpositive"
+        },
+        {
+          "slot_id": "subject",
+          "reason": "namedsettingplantsnotwholeprimarysubjectreplacement"
+        },
+        {
+          "slot_id": "environment_detail",
+          "reason": "plantarrangementownedbackgroundratherthanweardust"
+        },
+        {
+          "slot_id": "body_form",
+          "reason": "noactualplantorganstructurechoice"
+        }
+      ],
+      "facts": [
+        {
+          "id": "deck_u0",
+          "dimension": "setting",
+          "target": "deck",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "botanical greenhouse wooden deck floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers"
+        },
+        {
+          "id": "plants_u0",
+          "dimension": "subject",
+          "target": "plants",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers"
+        },
+        {
+          "id": "wood_u0",
+          "dimension": "material",
+          "target": "deck",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "surface.material/v1",
+            "value": "wood"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers"
+        },
+        {
+          "id": "surround_u0",
+          "dimension": "setting",
+          "target": "plants",
+          "property": "background.elements",
+          "mode": "effect",
+          "value": {
+            "type": "background.elements/v1",
+            "value": "tall grasses and white flowers surrounding the deck floor"
+          },
+          "requires": [
+            "deck_u0",
+            "plants_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "deck"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers"
+        },
+        {
+          "id": "white_u0",
+          "dimension": "color",
+          "target": "plants",
+          "property": "color.local",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.local/v1",
+            "value": "white flowers"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers"
+        },
+        {
+          "id": "deck_u1",
+          "dimension": "setting",
+          "target": "deck",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "botanical greenhouse wooden deck floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥"
+        },
+        {
+          "id": "plants_u1",
+          "dimension": "subject",
+          "target": "plants",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥"
+        },
+        {
+          "id": "wood_u1",
+          "dimension": "material",
+          "target": "deck",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "surface.material/v1",
+            "value": "wood"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥"
+        },
+        {
+          "id": "surround_u1",
+          "dimension": "setting",
+          "target": "plants",
+          "property": "background.elements",
+          "mode": "effect",
+          "value": {
+            "type": "background.elements/v1",
+            "value": "tall grasses and white flowers surrounding the deck floor"
+          },
+          "requires": [
+            "deck_u0",
+            "plants_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "deck"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥"
+        },
+        {
+          "id": "white_u1",
+          "dimension": "color",
+          "target": "plants",
+          "property": "color.local",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.local/v1",
+            "value": "white flowers"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥"
+        },
+        {
+          "id": "deck_u2",
+          "dimension": "setting",
+          "target": "deck",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "botanical greenhouse wooden deck floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day."
+        },
+        {
+          "id": "plants_u2",
+          "dimension": "subject",
+          "target": "plants",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day."
+        },
+        {
+          "id": "wood_u2",
+          "dimension": "material",
+          "target": "deck",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "surface.material/v1",
+            "value": "wood"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day."
+        },
+        {
+          "id": "place_u2",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "at the same greenhouse deck floor"
+          },
+          "requires": [
+            "deck_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "deck"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day."
+        },
+        {
+          "id": "surround_u2",
+          "dimension": "setting",
+          "target": "plants",
+          "property": "background.elements",
+          "mode": "effect",
+          "value": {
+            "type": "background.elements/v1",
+            "value": "tall grasses and white flowers surrounding the deck floor"
+          },
+          "requires": [
+            "deck_u0",
+            "plants_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "deck"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day."
+        },
+        {
+          "id": "white_u2",
+          "dimension": "color",
+          "target": "plants",
+          "property": "color.local",
+          "mode": "prerequisite",
+          "value": {
+            "type": "color.local/v1",
+            "value": "white flowers"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day."
+        }
+      ],
+      "roles": {
+        "location": {
+          "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "place_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "background_element": {
+          "spec_sha256": "47a3e36facbeec6ba92d7df008a86af2966f43ac827c8e28ac1f339c7ad66334",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "surround_u0",
+            "surround_u1",
+            "surround_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "surface_material": {
+          "spec_sha256": "10e1ae79963383225dc3e3e86d7de760e6e8c7472b6d8c3a1b366c439b1865e8",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "wood_u0",
+            "wood_u1",
+            "wood_u2"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        },
+        "color": {
+          "spec_sha256": "4e8c16b3614678775dcc0bac4c7ccf275c0bf6a488d22ca79fec85fc3e82a309",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "white_u0",
+            "white_u1",
+            "white_u2"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "deck",
+              "core_role": "foreground_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "plants",
+              "core_role": "background_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "scene",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a botanical greenhouse wooden deck floor surrounded by tall grasses and white flowers",
+          "fact_refs": [
+            "deck_u0",
+            "plants_u0",
+            "wood_u0",
+            "surround_u0",
+            "white_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "키 큰 풀과 흰 꽃이 둘러싼 식물 온실의 나무 데크 바닥",
+          "fact_refs": [
+            "deck_u1",
+            "plants_u1",
+            "wood_u1",
+            "surround_u1",
+            "white_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene at the same already declared botanical greenhouse wooden deck floor surrounded by the same tall grasses and white flowers; retain the named wood, tall grasses and white-flower properties without adding people, choosing a species, wildflower status or time of day.",
+          "fact_refs": [
+            "deck_u2",
+            "plants_u2",
+            "wood_u2",
+            "place_u2",
+            "surround_u2",
+            "white_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            },
+            {
+              "dimension": "setting",
+              "target": "plants",
+              "property": "background.elements"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "rootreviewexistingcompoundscene scope/material-colourbaseline/footprint, actualcore/formalinput pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2584,
+      "candidate_id": "cand_e5331758cea9539ca0f53c613c0ac3bc",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "손목또는collar부근젖은털의광택이인간피부로점차이어지는경계. collar가의복/해부부위인지와OR선택은미정.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "damp fur sheen at the wrist or collar fading into human skin",
+          "clause": "actualwristORcollarowner andanatomicalattachmentversusvisualblend; wholematerial/bodygeometryfootprint",
+          "mode": "effect",
+          "operation": "set_value",
+          "target_intent": "fur/skin/boundary atactuallyselectedregion",
+          "property_intent": "surface.optical_response/body.connection",
+          "typed_value_status": "damp/sheenknown; region/connectioncarrierunselected",
+          "receiver_status": "threeaddressmapprovisionalnotactualanatomicalcoreproof",
+          "reason": "Do notmergeORlocationsorinterpretcollarasmandatorygarment, preserveactualboundarychoice."
+        }
+      ],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "damp fur sheen at the wrist or collar fading into human skin",
+          "ko": "damp fur sheen at the wrist or collar fading into human skin",
+          "tags": [
+            "human",
+            "beastkin",
+            "texture",
+            "aquatic_mammal",
+            "fur_boundary",
+            "macro"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_e5331758cea9539ca0f53c613c0ac3bc",
+        "provenance": [
+          {
+            "sha256": "7581b3f37462f74af2cbf4a6f3c625b38bf14fba61ab787673a7389288895446",
+            "source": "slot:texture:damp_fur_sheen_boundary"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "damp fur sheen at the wrist or collar fading into human skin",
+          "ko": "damp fur sheen at the wrist or collar fading into human skin",
+          "tags": [
+            "human",
+            "beastkin",
+            "texture",
+            "aquatic_mammal",
+            "fur_boundary",
+            "macro"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_e5331758cea9539ca0f53c613c0ac3bc",
+        "provenance": [
+          {
+            "sha256": "7581b3f37462f74af2cbf4a6f3c625b38bf14fba61ab787673a7389288895446",
+            "source": "slot:texture:damp_fur_sheen_boundary"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "damp fur sheen at the wrist or collar fading into human skin",
+          "ko": "손목 또는 collar 부근에서 인간 피부로 점차 이어지는 젖은 털의 윤기",
+          "tags": [
+            "human",
+            "beastkin",
+            "texture",
+            "aquatic_mammal",
+            "fur_boundary",
+            "macro"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_e5331758cea9539ca0f53c613c0ac3bc",
+        "provenance": [
+          {
+            "sha256": "7581b3f37462f74af2cbf4a6f3c625b38bf14fba61ab787673a7389288895446",
+            "source": "slot:texture:damp_fur_sheen_boundary"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "damp fur sheen at the wrist or collar fading into human skin",
+          "after": "손목 또는 collar 부근에서 인간 피부로 점차 이어지는 젖은 털의 윤기",
+          "reason": "전체EN번역, collar원뜻의부위/의복미정성을번역으로확정하지않음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 85,
+          "sha256": "7744929924045954c7abe874ecde5ebb8a8d27ca778dd676bee7809cef497d31"
+        },
+        "candidate_id": "cand_e5331758cea9539ca0f53c613c0ac3bc",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "body.hair.damp_fur",
+            "quote": "damp fur sheen at the wrist or collar fading into human skin",
+            "realization_id": "base",
+            "target": "wrist_or_collar_fur"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.optical_response.damp_sheen",
+            "quote": "damp fur sheen at the wrist or collar fading into human skin",
+            "realization_id": "base",
+            "target": "fur"
+          },
+          {
+            "dimension": "body_geometry",
+            "pointer": "/content/en",
+            "property": "body.connection.fur_fading_into_human_skin",
+            "quote": "damp fur sheen at the wrist or collar fading into human skin",
+            "realization_id": "base",
+            "target": "fur_and_skin"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "손목 또는 옷깃의 젖은 털이 인간 피부로 이어지는 경계.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "수생 포유류 종·변신 단계·두 위치 동시 합치기는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "body.hair.damp_fur",
+                "quote": "damp fur sheen at the wrist or collar fading into human skin",
+                "target": "wrist_or_collar_fur"
+              }
+            ],
+            "rationale": "털.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "body_hair"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.optical_response.damp_sheen",
+                "quote": "damp fur sheen at the wrist or collar fading into human skin",
+                "target": "fur"
+              }
+            ],
+            "rationale": "광학.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "body_geometry",
+                "pointer": "/content/en",
+                "property": "body.connection.fur_fading_into_human_skin",
+                "quote": "damp fur sheen at the wrist or collar fading into human skin",
+                "target": "fur_and_skin"
+              }
+            ],
+            "rationale": "연속 경계.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "anatomical_connection"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "fc45ad78048f20283101a7829f7cc38521b087ec4e4e7ffa89509c8f4e9c08fb",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 85,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "a1cd5c1c489dff9dd713d61623d7f2004299b3f50b3ab76f41313eb775d5b144"
+      },
+      "before_full_record_sha256": "fc45ad78048f20283101a7829f7cc38521b087ec4e4e7ffa89509c8f4e9c08fb",
+      "fiveB_after_full_record_sha256": "fc45ad78048f20283101a7829f7cc38521b087ec4e4e7ffa89509c8f4e9c08fb",
+      "proposed_after_full_record_sha256": "b276f51fb7437b6f14521f475459640ae0f29bbd6d6a148ff5048cf45d5cd56c",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_2b395fb54f2b5c6f99d6ae6f1740396f": {
+          "candidate_id": "cand_e5331758cea9539ca0f53c613c0ac3bc",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_2b395fb54f2b5c6f99d6ae6f1740396f",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "texture",
+          "weight": 0.72
+        },
+        "bind_e5331758cea9539ca0f53c613c0ac3bc": {
+          "candidate_id": "cand_e5331758cea9539ca0f53c613c0ac3bc",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_e5331758cea9539ca0f53c613c0ac3bc",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "body_hair",
+          "weight": 0.72
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "texture",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.72,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_2b395fb54f2b5c6f99d6ae6f1740396f",
+          "reason": "own{}read; sheenopticalnottextureorganization, furclassvsactualregionalhairshape unresolved.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "body_hair",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.72,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_e5331758cea9539ca0f53c613c0ac3bc",
+          "reason": "own{}read; regionalbodyhairskinattachmentrequiresactualowner/selectedwristorcollar, garmentfur notsamebodyhair.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "surface_material",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.72,
+          "conditions": {
+            "subject_applicability": {
+              "allow_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "architecture",
+                "subculture_practice",
+                "worldbuilding_system",
+                "cjk_narrative_world"
+              ],
+              "allow_domains_override_subject_categories": true,
+              "subject_categories": [
+                "object",
+                "food",
+                "plant",
+                "environment",
+                "sign",
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "reason": "actualdampownedfur sheen positive, preciseV2policy."
+        },
+        {
+          "slot_id": "anatomical_connection",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.72,
+          "conditions": {},
+          "reason": "fadingboundaryexplicit butanatomicalconnectionvsappearanceblend andcollarownerunselected."
+        }
+      ],
+      "conditions_review": "source{} retained. Human skinexplicit butnotwholehumanentity. WristORcollarbranchunselected, noRIDs fabricated. Oldmember/provenancebeastkin/aquatic/macro cannotqualifyactualspecies/transformtime/observation.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "transformation_stage",
+          "reason": "spatialfadingnottemporalgrowth"
+        },
+        {
+          "slot_id": "skin_finish",
+          "reason": "sheenownedfur notskin"
+        },
+        {
+          "slot_id": "hair_style",
+          "reason": "nosc al phair"
+        },
+        {
+          "slot_id": "garment_detail",
+          "reason": "collarwordambiguous notgarmentconstructionproof"
+        }
+      ],
+      "facts": [
+        {
+          "id": "damp_u0",
+          "dimension": "material",
+          "target": "fur",
+          "property": "surface.state",
+          "mode": "effect",
+          "value": {
+            "type": "surface.state/v1",
+            "value": "damp"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "damp fur sheen at the wrist or collar fading into human skin"
+        },
+        {
+          "id": "sheen_u0",
+          "dimension": "material",
+          "target": "fur",
+          "property": "surface.optical_response",
+          "mode": "effect",
+          "value": {
+            "type": "surface.optical_response/v1",
+            "value": "damp fur sheen"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "damp fur sheen at the wrist or collar fading into human skin"
+        },
+        {
+          "id": "boundary_u0",
+          "dimension": "body_geometry",
+          "target": "boundary",
+          "property": "body.connection",
+          "mode": "effect",
+          "value": {
+            "type": "body.connection/v1",
+            "value": "fur fading into human skin at wrist or collar, location and ownership unselected"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [
+            "fur",
+            "skin"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "damp fur sheen at the wrist or collar fading into human skin"
+        },
+        {
+          "id": "damp_u1",
+          "dimension": "material",
+          "target": "fur",
+          "property": "surface.state",
+          "mode": "effect",
+          "value": {
+            "type": "surface.state/v1",
+            "value": "damp"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "손목 또는 collar 부근에서 인간 피부로 점차 이어지는 젖은 털의 윤기"
+        },
+        {
+          "id": "sheen_u1",
+          "dimension": "material",
+          "target": "fur",
+          "property": "surface.optical_response",
+          "mode": "effect",
+          "value": {
+            "type": "surface.optical_response/v1",
+            "value": "damp fur sheen"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "손목 또는 collar 부근에서 인간 피부로 점차 이어지는 젖은 털의 윤기"
+        },
+        {
+          "id": "boundary_u1",
+          "dimension": "body_geometry",
+          "target": "boundary",
+          "property": "body.connection",
+          "mode": "effect",
+          "value": {
+            "type": "body.connection/v1",
+            "value": "fur fading into human skin at wrist or collar, location and ownership unselected"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [
+            "fur",
+            "skin"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "손목 또는 collar 부근에서 인간 피부로 점차 이어지는 젖은 털의 윤기"
+        }
+      ],
+      "roles": {
+        "surface_material": {
+          "spec_sha256": "10e1ae79963383225dc3e3e86d7de760e6e8c7472b6d8c3a1b366c439b1865e8",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "damp_u0",
+            "damp_u1",
+            "sheen_u0",
+            "sheen_u1"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "fur",
+              "core_role": "foreground_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "skin",
+              "core_role": "background_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "boundary",
+              "core_role": "relationship_target",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "damp fur sheen at the wrist or collar fading into human skin",
+          "fact_refs": [
+            "damp_u0",
+            "sheen_u0",
+            "boundary_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "손목 또는 collar 부근에서 인간 피부로 점차 이어지는 젖은 털의 윤기",
+          "fact_refs": [
+            "damp_u1",
+            "sheen_u1",
+            "boundary_u1"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "selectedregion/owner/connection/fullfootprint/core/sourceKO/formalinput pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2585,
+      "candidate_id": "cand_e8b030e1d85b596da127bc0d486acbf8",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "외부게시캡션의rate-the-fit댓글/저장공유유도프레이밍. 실제이미지문자/참여수/행동효과없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "rate-the-fit comment bait with save/share social framing",
+          "ko": "rate the fit와 저장/공유를 유도하는 댓글 bait 맥락",
+          "tags": [
+            "adult",
+            "comment_bait",
+            "fit_check",
+            "social"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "text"
+          ],
+          "properties": []
+        },
+        "id": "cand_e8b030e1d85b596da127bc0d486acbf8",
+        "provenance": [
+          {
+            "sha256": "307297781555c311461afa075f825f504df9bf36a163fc78a3a971863d45a252",
+            "source": "slot:caption_context:rate_the_fit_comment_bait"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "rate-the-fit comment bait with save/share social framing",
+          "ko": "rate the fit와 저장/공유를 유도하는 댓글 bait 맥락",
+          "tags": [
+            "adult",
+            "comment_bait",
+            "fit_check",
+            "social"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "text"
+          ],
+          "properties": []
+        },
+        "id": "cand_e8b030e1d85b596da127bc0d486acbf8",
+        "provenance": [
+          {
+            "sha256": "307297781555c311461afa075f825f504df9bf36a163fc78a3a971863d45a252",
+            "source": "slot:caption_context:rate_the_fit_comment_bait"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "rate-the-fit comment bait with save/share social framing",
+          "ko": "rate the fit와 저장/공유를 유도하는 댓글 bait 맥락",
+          "tags": [
+            "adult",
+            "comment_bait",
+            "fit_check",
+            "social"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_e8b030e1d85b596da127bc0d486acbf8",
+        "provenance": [
+          {
+            "sha256": "307297781555c311461afa075f825f504df9bf36a163fc78a3a971863d45a252",
+            "source": "slot:caption_context:rate_the_fit_comment_bait"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "text"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [],
+            "properties": []
+          },
+          "reason": "실제외부게시해석맥락이며visibletext추가명령/관객행동변경없음. Captioncontext는V2explicitexternalpublication, 이미지문자effect로복사안함."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 86,
+          "sha256": "53c00c01043a04214a735cd2dbe9bd7d9fbc015668fbf831b023d8da4d0929ad"
+        },
+        "candidate_id": "cand_e8b030e1d85b596da127bc0d486acbf8",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "viewer_outcome",
+            "pointer": "/content/en",
+            "property": "publication.caption.rate_fit_save_share",
+            "quote": "rate-the-fit comment bait with save/share social framing",
+            "realization_id": "base",
+            "target": "social_caption"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "옷 평가·저장·공유를 유도하는 외부 SNS 맥락.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "가시 글자·성적 표현·실제 참여율은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "viewer_outcome",
+                "pointer": "/content/en",
+                "property": "publication.caption.rate_fit_save_share",
+                "quote": "rate-the-fit comment bait with save/share social framing",
+                "target": "social_caption"
+              }
+            ],
+            "rationale": "캡션 맥락.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "publication_caption_context"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "7eab85300e1faee25c544813851a9f471a234dd3382517e13ed7f58feb646ed0",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 86,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "5ce7f85afdaabd3dc8083bff44c5ead8c5a910409f1822e217b46056485d1f1b"
+      },
+      "before_full_record_sha256": "7eab85300e1faee25c544813851a9f471a234dd3382517e13ed7f58feb646ed0",
+      "fiveB_after_full_record_sha256": "7eab85300e1faee25c544813851a9f471a234dd3382517e13ed7f58feb646ed0",
+      "proposed_after_full_record_sha256": "fa73d5e5b6b976fd83dea500429322f2927de1c77256482ea7e67ba3bd06bd51",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_e8b030e1d85b596da127bc0d486acbf8": {
+          "candidate_id": "cand_e8b030e1d85b596da127bc0d486acbf8",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_e8b030e1d85b596da127bc0d486acbf8",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "publication_caption_context",
+          "weight": 0.75
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "publication_caption_context",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 0.75,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_e8b030e1d85b596da127bc0d486acbf8",
+          "reason": "own{}read; exactexternalcaptionframing, noactualengagementmeasurement.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        }
+      ],
+      "conditions_review": "sourcehumanretainedeligibility. Adulttagnotadultpresence. Contextchoiceexplicitoutsideimage; noactualstyle/moodselectionerased, noemptyfootprintqualificationbeforeformalcore.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "visible_text",
+          "reason": "externalcaptionnotimagelettering"
+        },
+        {
+          "slot_id": "viewer_relation",
+          "reason": "audiencepositionnotstated"
+        },
+        {
+          "slot_id": "attire_context",
+          "reason": "ratingcaptionnotactualwardrobe"
+        }
+      ],
+      "facts": [
+        {
+          "id": "caption_u0",
+          "dimension": "viewer_outcome",
+          "target": "scene",
+          "property": "publication.caption.context",
+          "mode": "context",
+          "value": {
+            "type": "publication.caption.context/v1",
+            "value": "rate-the-fit comment bait with save/share social framing"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "rate-the-fit comment bait with save/share social framing"
+        },
+        {
+          "id": "caption_u1",
+          "dimension": "viewer_outcome",
+          "target": "scene",
+          "property": "publication.caption.context",
+          "mode": "context",
+          "value": {
+            "type": "publication.caption.context/v1",
+            "value": "rate-the-fit comment bait with save/share social framing"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "rate the fit와 저장/공유를 유도하는 댓글 bait 맥락"
+        }
+      ],
+      "roles": {
+        "publication_caption_context": {
+          "spec_sha256": "9057a3cb4f328a5f5646676c9c8af044b01f7446efddff736c18c89f359c2eee",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "caption_u0",
+            "caption_u1"
+          ],
+          "support_modes": [
+            "context"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "scene",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "rate-the-fit comment bait with save/share social framing",
+          "fact_refs": [
+            "caption_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "rate the fit와 저장/공유를 유도하는 댓글 bait 맥락",
+          "fact_refs": [
+            "caption_u1"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "rootreviewexternalcontext/textfootprint, actualformalinput/core pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2586,
+      "candidate_id": "cand_eb6a4f91f1f3587494c71212584bc823",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "기존성인인간주체의의사역할기준에만적용하는명사범위안. 실제면허/진료/새인물/유니폼없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "an adult doctor-role subject",
+          "kind": [
+            "human"
+          ],
+          "ko": "의사 역할의 성인 인물",
+          "primary_context_alternatives": [
+            [
+              "subject:doctor"
+            ],
+            [
+              "subject:doctor-role"
+            ],
+            [
+              "subject:physician"
+            ]
+          ],
+          "tags": [
+            "human",
+            "clinical",
+            "uniform"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_eb6a4f91f1f3587494c71212584bc823",
+        "provenance": [
+          {
+            "sha256": "7c026f95d5fcaf25644ce0ae94136fad970110fad7aaa0f49237ebba932c2ad1",
+            "source": "slot:subject:doctor_role"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "an adult doctor-role subject",
+          "kind": [
+            "human"
+          ],
+          "ko": "의사 역할의 성인 인물",
+          "primary_context_alternatives": [
+            [
+              "subject:doctor"
+            ],
+            [
+              "subject:doctor-role"
+            ],
+            [
+              "subject:physician"
+            ]
+          ],
+          "tags": [
+            "human",
+            "clinical",
+            "uniform"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_eb6a4f91f1f3587494c71212584bc823",
+        "provenance": [
+          {
+            "sha256": "7c026f95d5fcaf25644ce0ae94136fad970110fad7aaa0f49237ebba932c2ad1",
+            "source": "slot:subject:doctor_role"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "an adult doctor-role subject",
+          "kind": [
+            "human"
+          ],
+          "ko": "의사 역할의 성인 인물",
+          "primary_context_alternatives": [
+            [
+              "subject:doctor"
+            ],
+            [
+              "subject:doctor-role"
+            ],
+            [
+              "subject:physician"
+            ]
+          ],
+          "tags": [
+            "human",
+            "clinical",
+            "uniform"
+          ],
+          "application_scope": "Apply only to the same already declared present adult human subject in the doctor role; do not add a subject, change age or role, assert a medical license, choose an examination, patient, uniform or actual clinical practice."
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_eb6a4f91f1f3587494c71212584bc823",
+        "provenance": [
+          {
+            "sha256": "7c026f95d5fcaf25644ce0ae94136fad970110fad7aaa0f49237ebba932c2ad1",
+            "source": "slot:subject:doctor_role"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Apply only to the same already declared present adult human subject in the doctor role; do not add a subject, change age or role, assert a medical license, choose an examination, patient, uniform or actual clinical practice.",
+          "reason": "추가구체동작없는명사역할을기존정확성인인물에만제한; 존재공통namespace양성은newscope에명시."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "subject"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [],
+            "properties": []
+          },
+          "reason": "exactexistingadultdoctorroleapplication안에서추가/역할변경효과없음. 임의context로직업명령숨기지않고root수락전pending."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 87,
+          "sha256": "ef0bbe028ade4aa28f3c64567b6227baf480331004d999b05aeb4460670a8fac"
+        },
+        "candidate_id": "cand_eb6a4f91f1f3587494c71212584bc823",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "subject.role.doctor",
+            "quote": "an adult doctor-role subject",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "age",
+            "pointer": "/content/en",
+            "property": "age.declared.adult",
+            "quote": "an adult doctor-role subject",
+            "realization_id": "base",
+            "target": "main_subject"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "성인 의사 역할.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "실제 면허·진료·제복은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "subject.role.doctor",
+                "quote": "an adult doctor-role subject",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "역할.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "subject"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "age",
+                "pointer": "/content/en",
+                "property": "age.declared.adult",
+                "quote": "an adult doctor-role subject",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "연령.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "age_presentation"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "93c8ede36b3a78eb643856106845f6690ce1cef0722faa4c60693e425f363466",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 87,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "453045fbd9768adadc13c7da731014e643c3b27d482dd4ca76e2bfa0e0ce2130"
+      },
+      "before_full_record_sha256": "93c8ede36b3a78eb643856106845f6690ce1cef0722faa4c60693e425f363466",
+      "fiveB_after_full_record_sha256": "93c8ede36b3a78eb643856106845f6690ce1cef0722faa4c60693e425f363466",
+      "proposed_after_full_record_sha256": "2d4b0d079b0ade61ceef6aedd7343f4d73c45a25171a9d177ee2cffa4e464268",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_eb6a4f91f1f3587494c71212584bc823": {
+          "candidate_id": "cand_eb6a4f91f1f3587494c71212584bc823",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_eb6a4f91f1f3587494c71212584bc823",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "subject",
+          "weight": 0.8
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "subject",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_eb6a4f91f1f3587494c71212584bc823",
+          "reason": "own{}read; doctor-roleprimaryidentity reference.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "age_presentation",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions": {},
+          "reason": "actualadult agecommonnamespace, noappearancefromlicense."
+        }
+      ],
+      "conditions_review": "source{} retained; contentkindhumanactualsourcekind, notexistenceproof. Primarycontextalternativesdoctor/doctor-role/physiciansynonymsnot3actualRIDs. Existingpresentadultactor onlynewscope, nonewsilententity.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "participant_role",
+          "reason": "mainactorrole nototherparticipant"
+        },
+        {
+          "slot_id": "wardrobe_style",
+          "reason": "uniformtagnotbody"
+        },
+        {
+          "slot_id": "action",
+          "reason": "noactualtreatment"
+        },
+        {
+          "slot_id": "declared_person_background",
+          "reason": "roleportrayalnotverifiedqualification"
+        }
+      ],
+      "facts": [
+        {
+          "id": "role_u0",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "subject.role",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.role/v1",
+            "value": "doctor role"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "an adult doctor-role subject"
+        },
+        {
+          "id": "adult_u0",
+          "dimension": "age",
+          "target": "actor",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "an adult doctor-role subject"
+        },
+        {
+          "id": "role_u1",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "subject.role",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.role/v1",
+            "value": "doctor role"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "의사 역할의 성인 인물"
+        },
+        {
+          "id": "adult_u1",
+          "dimension": "age",
+          "target": "actor",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "의사 역할의 성인 인물"
+        },
+        {
+          "id": "present_u2",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply only to the same already declared present adult human subject in the doctor role; do not add a subject, change age or role, assert a medical license, choose an examination, patient, uniform or actual clinical practice."
+        },
+        {
+          "id": "role_u2",
+          "dimension": "subject",
+          "target": "actor",
+          "property": "subject.role",
+          "mode": "prerequisite",
+          "value": {
+            "type": "subject.role/v1",
+            "value": "doctor role"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply only to the same already declared present adult human subject in the doctor role; do not add a subject, change age or role, assert a medical license, choose an examination, patient, uniform or actual clinical practice."
+        },
+        {
+          "id": "adult_u2",
+          "dimension": "age",
+          "target": "actor",
+          "property": "age.declared",
+          "mode": "prerequisite",
+          "value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply only to the same already declared present adult human subject in the doctor role; do not add a subject, change age or role, assert a medical license, choose an examination, patient, uniform or actual clinical practice."
+        }
+      ],
+      "roles": {
+        "subject": {
+          "spec_sha256": "7a6fabe3202e933e6c4f2b052c730205960e2d3f402cc988949f5db7b6a55f93",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "role_u0",
+            "role_u1",
+            "role_u2"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        },
+        "age_presentation": {
+          "spec_sha256": "5695683b25ac9d38e11c652cf55e314a4112f888c64c3589e5f8a1cecdc1b3c6",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "adult_u0",
+            "adult_u1",
+            "adult_u2"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "actor",
+              "core_role": "main_subject",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "an adult doctor-role subject",
+          "fact_refs": [
+            "role_u0",
+            "adult_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "의사 역할의 성인 인물",
+          "fact_refs": [
+            "role_u1",
+            "adult_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Apply only to the same already declared present adult human subject in the doctor role; do not add a subject, change age or role, assert a medical license, choose an examination, patient, uniform or actual clinical practice.",
+          "fact_refs": [
+            "present_u2",
+            "role_u2",
+            "adult_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "rootreviewexactexistingnounscope/emptyfootprint/commonage, actualcore/formalinput pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2587,
+      "candidate_id": "cand_f746a5f50de7541cb661b4028bb72944",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "새벽수산시장경매장안의장소/시점선택. 경매진행/어류개체/노동자/실제빛없음.",
+      "unresolved_source_clauses": [],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "en": "a dawn fish market auction floor",
+          "ko": "a dawn fish market auction floor",
+          "phrase_en": "in a dawn fish market auction floor",
+          "phrase_ko": "in a dawn fish market auction floor",
+          "tags": [
+            "maritime",
+            "market",
+            "worker"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_f746a5f50de7541cb661b4028bb72944",
+        "provenance": [
+          {
+            "sha256": "a7d3d7295326dec6829b42eb58f9ef5fbc9e681caa7411f8135725c9df880d66",
+            "source": "slot:location:fish_market_auction"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "en": "a dawn fish market auction floor",
+          "ko": "a dawn fish market auction floor",
+          "phrase_en": "in a dawn fish market auction floor",
+          "phrase_ko": "in a dawn fish market auction floor",
+          "tags": [
+            "maritime",
+            "market",
+            "worker"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_f746a5f50de7541cb661b4028bb72944",
+        "provenance": [
+          {
+            "sha256": "a7d3d7295326dec6829b42eb58f9ef5fbc9e681caa7411f8135725c9df880d66",
+            "source": "slot:location:fish_market_auction"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "a dawn fish market auction floor",
+          "ko": "새벽의 수산시장 경매장",
+          "phrase_en": "in a dawn fish market auction floor",
+          "phrase_ko": "새벽의 수산시장 경매장에서",
+          "tags": [
+            "maritime",
+            "market",
+            "worker"
+          ],
+          "application_scope": "Set the scene in the same already declared fish-market auction floor at dawn; do not add workers, fish, an ongoing auction, bid text or an illumination source."
+        },
+        "effects": {
+          "dimensions": [
+            "timing",
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "timing",
+              "target": "scene",
+              "property": "timing.time_of_day"
+            },
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        },
+        "id": "cand_f746a5f50de7541cb661b4028bb72944",
+        "provenance": [
+          {
+            "sha256": "a7d3d7295326dec6829b42eb58f9ef5fbc9e681caa7411f8135725c9df880d66",
+            "source": "slot:location:fish_market_auction"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "a dawn fish market auction floor",
+          "after": "새벽의 수산시장 경매장",
+          "reason": "전체영문새벽/장소번역."
+        },
+        {
+          "pointer": "/content/phrase_ko",
+          "before": "in a dawn fish market auction floor",
+          "after": "새벽의 수산시장 경매장에서",
+          "reason": "ENin장소관계번역."
+        },
+        {
+          "pointer": "/content/application_scope",
+          "before": null,
+          "after": "Set the scene in the same already declared fish-market auction floor at dawn; do not add workers, fish, an ongoing auction, bid text or an illumination source.",
+          "reason": "기존장소에actualtime/inside선택명료화. Auction이장소수식인상태에서사건추가안함."
+        },
+        {
+          "pointer": "/effects",
+          "before": {
+            "dimensions": [
+              "setting"
+            ],
+            "properties": []
+          },
+          "after": {
+            "dimensions": [
+              "timing",
+              "setting"
+            ],
+            "properties": [
+              {
+                "dimension": "timing",
+                "target": "scene",
+                "property": "timing.time_of_day"
+              },
+              {
+                "dimension": "setting",
+                "target": "scene",
+                "property": "setting.location"
+              }
+            ]
+          },
+          "reason": "원장소와누락된새벽시점효과소유명시."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 88,
+          "sha256": "68453c607d582b852a838c4d46b865e00405d6bd0be2aa851148647697a9327b"
+        },
+        "candidate_id": "cand_f746a5f50de7541cb661b4028bb72944",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location.fish_market_auction_floor",
+            "quote": "a dawn fish market auction floor",
+            "realization_id": "base",
+            "target": "environment"
+          },
+          {
+            "dimension": "timing",
+            "pointer": "/content/en",
+            "property": "timing.time_of_day.dawn",
+            "quote": "a dawn fish market auction floor",
+            "realization_id": "base",
+            "target": "scene_time"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "새벽 수산시장 경매장.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "경매 진행·어종·노동자는 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location.fish_market_auction_floor",
+                "quote": "a dawn fish market auction floor",
+                "target": "environment"
+              }
+            ],
+            "rationale": "장소.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "timing",
+                "pointer": "/content/en",
+                "property": "timing.time_of_day.dawn",
+                "quote": "a dawn fish market auction floor",
+                "target": "scene_time"
+              }
+            ],
+            "rationale": "시간.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "time_of_day"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "6439b51965e3442b5f296144b77ebeb46e488322dbd1fcd8ccc6bccaf4d3e194",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 88,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "99665b8e8daab5541a63d5702d584a32020ee5776e43a8345e4da0377ae62847"
+      },
+      "before_full_record_sha256": "6439b51965e3442b5f296144b77ebeb46e488322dbd1fcd8ccc6bccaf4d3e194",
+      "fiveB_after_full_record_sha256": "6439b51965e3442b5f296144b77ebeb46e488322dbd1fcd8ccc6bccaf4d3e194",
+      "proposed_after_full_record_sha256": "db5e572a7c29b408d069cd9a14987c5f1887a8cd801fb8d559b54cb76c0b32df",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_f746a5f50de7541cb661b4028bb72944": {
+          "candidate_id": "cand_f746a5f50de7541cb661b4028bb72944",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_f746a5f50de7541cb661b4028bb72944",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "location",
+          "weight": 1.0
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "location",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 1.0,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_f746a5f50de7541cb661b4028bb72944",
+          "reason": "own{}read; actualplace.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "time_of_day",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "weight": 1.0,
+          "conditions": {},
+          "reason": "dawnactualtime notlighttype/look."
+        }
+      ],
+      "conditions_review": "source{} retained. Worker/maritime/markettagsnotcurrententities. Inphraseactualplaceoperator; namedauctionfloornotpositiveactivity. Existingexactplace/coretimingrequired.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "action",
+          "reason": "noauctionprogress"
+        },
+        {
+          "slot_id": "participant_role",
+          "reason": "noworkerperson"
+        },
+        {
+          "slot_id": "light_type",
+          "reason": "dawnnotemitter"
+        },
+        {
+          "slot_id": "prop",
+          "reason": "fishmarketnotvisiblefishproof"
+        }
+      ],
+      "facts": [
+        {
+          "id": "place_u0",
+          "dimension": "setting",
+          "target": "place",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "fish market auction floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a dawn fish market auction floor"
+        },
+        {
+          "id": "dawn_u0",
+          "dimension": "timing",
+          "target": "scene",
+          "property": "timing.time_of_day",
+          "mode": "effect",
+          "value": {
+            "type": "timing.time_of_day/v1",
+            "value": "dawn"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a dawn fish market auction floor"
+        },
+        {
+          "id": "place_u1",
+          "dimension": "setting",
+          "target": "place",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "fish market auction floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "새벽의 수산시장 경매장"
+        },
+        {
+          "id": "dawn_u1",
+          "dimension": "timing",
+          "target": "scene",
+          "property": "timing.time_of_day",
+          "mode": "effect",
+          "value": {
+            "type": "timing.time_of_day/v1",
+            "value": "dawn"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "새벽의 수산시장 경매장"
+        },
+        {
+          "id": "place_u2",
+          "dimension": "setting",
+          "target": "place",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "fish market auction floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "in a dawn fish market auction floor"
+        },
+        {
+          "id": "dawn_u2",
+          "dimension": "timing",
+          "target": "scene",
+          "property": "timing.time_of_day",
+          "mode": "effect",
+          "value": {
+            "type": "timing.time_of_day/v1",
+            "value": "dawn"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "in a dawn fish market auction floor"
+        },
+        {
+          "id": "inside_u2",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "in the same fish market auction floor"
+          },
+          "requires": [
+            "place_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "place"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "in a dawn fish market auction floor"
+        },
+        {
+          "id": "place_u3",
+          "dimension": "setting",
+          "target": "place",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "fish market auction floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "새벽의 수산시장 경매장에서"
+        },
+        {
+          "id": "dawn_u3",
+          "dimension": "timing",
+          "target": "scene",
+          "property": "timing.time_of_day",
+          "mode": "effect",
+          "value": {
+            "type": "timing.time_of_day/v1",
+            "value": "dawn"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "새벽의 수산시장 경매장에서"
+        },
+        {
+          "id": "inside_u3",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "in the same fish market auction floor"
+          },
+          "requires": [
+            "place_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "place"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "새벽의 수산시장 경매장에서"
+        },
+        {
+          "id": "place_u4",
+          "dimension": "setting",
+          "target": "place",
+          "property": "setting.location.identity",
+          "mode": "prerequisite",
+          "value": {
+            "type": "setting.location.identity/v1",
+            "value": "fish market auction floor"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene in the same already declared fish-market auction floor at dawn; do not add workers, fish, an ongoing auction, bid text or an illumination source."
+        },
+        {
+          "id": "dawn_u4",
+          "dimension": "timing",
+          "target": "scene",
+          "property": "timing.time_of_day",
+          "mode": "effect",
+          "value": {
+            "type": "timing.time_of_day/v1",
+            "value": "dawn"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene in the same already declared fish-market auction floor at dawn; do not add workers, fish, an ongoing auction, bid text or an illumination source."
+        },
+        {
+          "id": "inside_u4",
+          "dimension": "setting",
+          "target": "scene",
+          "property": "setting.location",
+          "mode": "effect",
+          "value": {
+            "type": "setting.location/v1",
+            "value": "in the same fish market auction floor"
+          },
+          "requires": [
+            "place_u0"
+          ],
+          "operation": "relocate",
+          "receivers": [
+            "place"
+          ],
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene in the same already declared fish-market auction floor at dawn; do not add workers, fish, an ongoing auction, bid text or an illumination source."
+        }
+      ],
+      "roles": {
+        "location": {
+          "spec_sha256": "484d634682928d06e484f3da88aa77e22e78ca437b3d4adbfdf4780ebf193504",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "inside_u2",
+            "inside_u3",
+            "inside_u4"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        },
+        "time_of_day": {
+          "spec_sha256": "f255df2add4c083484ad25875ff687a1c30b2e6312d6f2b68422d9ed9f8e6640",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "dawn_u0",
+            "dawn_u1",
+            "dawn_u2",
+            "dawn_u3",
+            "dawn_u4"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "place",
+              "core_role": "background_surface",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "scene",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a dawn fish market auction floor",
+          "fact_refs": [
+            "place_u0",
+            "dawn_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "새벽의 수산시장 경매장",
+          "fact_refs": [
+            "place_u1",
+            "dawn_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_en",
+          "quote": "in a dawn fish market auction floor",
+          "fact_refs": [
+            "place_u2",
+            "dawn_u2",
+            "inside_u2"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/phrase_ko",
+          "quote": "새벽의 수산시장 경매장에서",
+          "fact_refs": [
+            "place_u3",
+            "dawn_u3",
+            "inside_u3"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_scope",
+          "quote": "Set the scene in the same already declared fish-market auction floor at dawn; do not add workers, fish, an ongoing auction, bid text or an illumination source.",
+          "fact_refs": [
+            "place_u4",
+            "dawn_u4",
+            "inside_u4"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "timing",
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "timing",
+              "target": "scene",
+              "property": "timing.time_of_day"
+            },
+            {
+              "dimension": "setting",
+              "target": "scene",
+              "property": "setting.location"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "rootreviewexistingplace/timefootprint/KO, actualcore/formalinput pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2588,
+      "candidate_id": "cand_00eca8cab91352df9b72631c8456197a",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "금빛여우같은눈빛의표현효과. 금빛이홍채색/발광/비유인지미정이며실제여우종/구미호/유혹은미지원.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "a golden fox-eye gaze",
+          "clause": "golden gaze actualcolour/emission/metaphor carrier",
+          "mode": "effect actualpropertypending",
+          "operation": "set_value",
+          "target_intent": "actualownedgaze/eyes/iris/visiblelightunselected",
+          "property_intent": "eyes.detail versus lighting colour versus expression appearance",
+          "typed_value_status": "goldenlabelknown; actualmaterial/opticalcarrierunknown",
+          "receiver_status": "primaryfaceaddressnoteye/irisexistenceproof",
+          "reason": "Old5Beyes.color.goldenpositivewasunsupportedirisnarrowing; do notdeletegoldenorconverttocontexttoavoidlock."
+        }
+      ],
+      "original_source": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "fox eye gaze",
+            "구미호 눈빛"
+          ],
+          "en": "a golden fox-eye gaze",
+          "keywords": [
+            "fox",
+            "gumiho",
+            "golden eyes"
+          ],
+          "ko": "금빛 여우 같은 눈빛",
+          "tags": [
+            "human",
+            "expression",
+            "folk",
+            "fox"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_00eca8cab91352df9b72631c8456197a",
+        "provenance": [
+          {
+            "sha256": "7400b9444ed5ef77f3cbd834840875d7dbee48f58eb3b4485c9ae9fff44bd850",
+            "source": "slot:expression:golden_fox_eye_gaze"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "fox eye gaze",
+            "구미호 눈빛"
+          ],
+          "en": "a golden fox-eye gaze",
+          "keywords": [
+            "fox",
+            "gumiho",
+            "golden eyes"
+          ],
+          "ko": "금빛 여우 같은 눈빛",
+          "tags": [
+            "human",
+            "expression",
+            "folk",
+            "fox"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_00eca8cab91352df9b72631c8456197a",
+        "provenance": [
+          {
+            "sha256": "7400b9444ed5ef77f3cbd834840875d7dbee48f58eb3b4485c9ae9fff44bd850",
+            "source": "slot:expression:golden_fox_eye_gaze"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "fox eye gaze",
+            "구미호 눈빛"
+          ],
+          "en": "a golden fox-eye gaze",
+          "keywords": [
+            "fox",
+            "gumiho",
+            "golden eyes"
+          ],
+          "ko": "금빛 여우 같은 눈빛",
+          "tags": [
+            "human",
+            "expression",
+            "folk",
+            "fox"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "id": "cand_00eca8cab91352df9b72631c8456197a",
+        "provenance": [
+          {
+            "sha256": "7400b9444ed5ef77f3cbd834840875d7dbee48f58eb3b4485c9ae9fff44bd850",
+            "source": "slot:expression:golden_fox_eye_gaze"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 89,
+          "sha256": "b440b80af871891e9a549dfa62f9fcee75d78976bdf0d84067931fce56976e6d"
+        },
+        "candidate_id": "cand_00eca8cab91352df9b72631c8456197a",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "expression",
+            "pointer": "/content/en",
+            "property": "eyes.expression.foxlike_gaze",
+            "quote": "a golden fox-eye gaze",
+            "realization_id": "base",
+            "target": "eyes"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "eyes.color.golden",
+            "quote": "a golden fox-eye gaze",
+            "realization_id": "base",
+            "target": "irises"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "금빛 여우 같은 눈빛.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "실제 여우·구미호·유혹·국적은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "expression",
+                "pointer": "/content/en",
+                "property": "eyes.expression.foxlike_gaze",
+                "quote": "a golden fox-eye gaze",
+                "target": "eyes"
+              }
+            ],
+            "rationale": "표현.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "expression"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "eyes.color.golden",
+                "quote": "a golden fox-eye gaze",
+                "target": "irises"
+              }
+            ],
+            "rationale": "색.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "eye_detail"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "495d0dabf111ce1d838cac257e577658b4b48ebd6a18ad6cb76c6e1790904fab",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 89,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "6a5be4184fa10631437592f2115e3cb7082007d464094a9738ff3935b7004ef9"
+      },
+      "before_full_record_sha256": "495d0dabf111ce1d838cac257e577658b4b48ebd6a18ad6cb76c6e1790904fab",
+      "fiveB_after_full_record_sha256": "495d0dabf111ce1d838cac257e577658b4b48ebd6a18ad6cb76c6e1790904fab",
+      "proposed_after_full_record_sha256": "495d0dabf111ce1d838cac257e577658b4b48ebd6a18ad6cb76c6e1790904fab",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_00eca8cab91352df9b72631c8456197a": {
+          "candidate_id": "cand_00eca8cab91352df9b72631c8456197a",
+          "conditions": {
+            "subject_applicability": {
+              "subject_categories": [
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "id": "bind_00eca8cab91352df9b72631c8456197a",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "expression",
+          "weight": 0.8
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "expression",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_00eca8cab91352df9b72631c8456197a",
+          "reason": "ownhuman/animalpolicyread; actualfox-likegazeexpression.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {
+              "subject_categories": [
+                "human",
+                "animal"
+              ]
+            }
+          }
+        },
+        {
+          "slot_id": "eye_detail",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.8,
+          "conditions": {},
+          "reason": "goldengazecannotautomaticallybeiriscolour; coreeye/opticalcarrierneedsactualsourcechoice."
+        }
+      ],
+      "conditions_review": "sourcehumanretained, expressionactualpolicyhumananimalretained. Aliases/keywordsnotpositiveirisfact. Coreprimary_faceaddressdoesnotprovewholefaceexists; actualgazeownercoreunprovided.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "gaze_direction",
+          "reason": "noactualaxis/target"
+        },
+        {
+          "slot_id": "subject",
+          "reason": "noactualfoxentity"
+        },
+        {
+          "slot_id": "light_color",
+          "reason": "noactualemissionreceiver"
+        },
+        {
+          "slot_id": "makeup_style",
+          "reason": "noappliedcosmetics"
+        }
+      ],
+      "facts": [
+        {
+          "id": "fox_u0",
+          "dimension": "expression",
+          "target": "gaze",
+          "property": "eyes.expression",
+          "mode": "effect",
+          "value": {
+            "type": "eyes.expression/v1",
+            "value": "fox-like gaze"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a golden fox-eye gaze"
+        },
+        {
+          "id": "fox_u1",
+          "dimension": "expression",
+          "target": "gaze",
+          "property": "eyes.expression",
+          "mode": "effect",
+          "value": {
+            "type": "eyes.expression/v1",
+            "value": "fox-like gaze"
+          },
+          "requires": [],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "금빛 여우 같은 눈빛"
+        }
+      ],
+      "roles": {
+        "expression": {
+          "spec_sha256": "c6522d8adb08e6c13ce706a7b3f38471ab9c16ac75390507b745de8109f429ff",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "fox_u0",
+            "fox_u1"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "gaze",
+              "core_role": "primary_face",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a golden fox-eye gaze",
+          "fact_refs": [
+            "fox_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "금빛 여우 같은 눈빛",
+          "fact_refs": [
+            "fox_u1"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "goldencarrier/actualeye-core/expressionfullfootprint/formalinput pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    },
+    {
+      "ordinal": 2589,
+      "candidate_id": "cand_061a38be2e2258768a79662e3d6faffb",
+      "task": "/root/review_09250_10500",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "status": "manual_source_fact_draft_pending_after_reread_and_formal_input",
+      "meaning_summary": "단일눈물방울형촛불을주광으로쓰며embedding의촉각적의례조명프레이밍을보존. 받는표면의빛무늬와불꽃자체형태구별.",
+      "unresolved_source_clauses": [
+        {
+          "pointer": "/content/en",
+          "quote": "a single teardrop candle flame as the key light",
+          "clause": "actualflamegeometry role andkey-source placement/receivingsurface/fullsourcefootprint",
+          "mode": "effect",
+          "operation": "set_value",
+          "target_intent": "sameemittingflameplusactualunknownlightreceivers",
+          "property_intent": "emitter.geometry/lighting.source.role versus complete lighting.setup",
+          "typed_value_status": "teardrop/singlecandle/keyroleknown; geometrynamespace/physicalreceiverunknown",
+          "receiver_status": "light_sourceaddressnotactualflamecore/receiving-surfaceproof",
+          "reason": "V2light_shapeisspecifiedreceivingsurface, object_structurephysicalobject/fixturemeaningnotautomaticallyflame; preserveactualshapeandmooduntilboundary/coreclarified."
+        }
+      ],
+      "original_source": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "single teardrop candle flame as tactile ritual key light",
+          "en": "a single teardrop candle flame as the key light",
+          "ko": "초의 눈물형 불꽃",
+          "tags": [
+            "portrait",
+            "light_shape",
+            "candle",
+            "magic"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_061a38be2e2258768a79662e3d6faffb",
+        "provenance": [
+          {
+            "sha256": "523e54a3d211fabb0690616a4aa9ab699591ccc23920b8ade13de58fe871ea50",
+            "source": "slot:light_shape:candle_teardrop_flame"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "existing5B_after": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "single teardrop candle flame as tactile ritual key light",
+          "en": "a single teardrop candle flame as the key light",
+          "ko": "초의 눈물형 불꽃",
+          "tags": [
+            "portrait",
+            "light_shape",
+            "candle",
+            "magic"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_061a38be2e2258768a79662e3d6faffb",
+        "provenance": [
+          {
+            "sha256": "523e54a3d211fabb0690616a4aa9ab699591ccc23920b8ade13de58fe871ea50",
+            "source": "slot:light_shape:candle_teardrop_flame"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "embedding_text": "single teardrop candle flame as tactile ritual key light",
+          "en": "a single teardrop candle flame as the key light",
+          "ko": "주광으로 사용하는 단일 눈물방울형 촛불",
+          "tags": [
+            "portrait",
+            "light_shape",
+            "candle",
+            "magic"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_061a38be2e2258768a79662e3d6faffb",
+        "provenance": [
+          {
+            "sha256": "523e54a3d211fabb0690616a4aa9ab699591ccc23920b8ade13de58fe871ea50",
+            "source": "slot:light_shape:candle_teardrop_flame"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_additional_source_edits": [
+        {
+          "pointer": "/content/ko",
+          "before": "초의 눈물형 불꽃",
+          "after": "주광으로 사용하는 단일 눈물방울형 촛불",
+          "reason": "ENsingle/keylight누락보완, embedding-onlyritual/tactile는KO에자동합집합하지않음."
+        }
+      ],
+      "original_compiled": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_02250_03250_02500_02750.json",
+          "item": 90,
+          "sha256": "a2be61f84972621add9cc6f6adbd015099a93974764bf606a3d4be12eaae780a"
+        },
+        "candidate_id": "cand_061a38be2e2258768a79662e3d6faffb",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.source.candle_flame",
+            "quote": "a single teardrop candle flame as the key light",
+            "realization_id": "base",
+            "target": "key_light"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.shape.teardrop",
+            "quote": "a single teardrop candle flame as the key light",
+            "realization_id": "base",
+            "target": "flame"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.setup.single_candle_key",
+            "quote": "a single teardrop candle flame as the key light",
+            "realization_id": "base",
+            "target": "key_light_setup"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "눈물방울형 촛불 하나를 주광으로 사용.",
+        "packet_sha256": "8c5a8320a962294849053d037a5b488a7cd148a9797dfc80fdfbf19181e6d16c",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "의례·마법·실제 온도·방향은 미정."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_02250_03250",
+          "assignment_sha256": "c3af1d188b8ec9530d1023cae3513bb299f03ee75d355977896136b608686fa3",
+          "model": "gpt-6.1-sol",
+          "range": [
+            2500,
+            2750
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_02250_03250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_02250_03250-2500-2750.json",
+            "sha256": "af316b9731aee3350c24f532280491b04f4b05317f4f94ec757d36a230651ea0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.source.candle_flame",
+                "quote": "a single teardrop candle flame as the key light",
+                "target": "key_light"
+              }
+            ],
+            "rationale": "광원.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_type"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.shape.teardrop",
+                "quote": "a single teardrop candle flame as the key light",
+                "target": "flame"
+              }
+            ],
+            "rationale": "형상.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_shape"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.setup.single_candle_key",
+                "quote": "a single teardrop candle flame as the key light",
+                "target": "key_light_setup"
+              }
+            ],
+            "rationale": "주광 역할 구성.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "lighting"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "69ef85df0c5fa66d775c58ea4c41779a48918d3d612e1650b4e55f8a95421f45",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "original_compiled_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_02250_03250_02500_02750.json",
+        "item": 90,
+        "file_raw_sha256": "cd605d0b0ca984dd71ad8c9d1ccdf72e0c98dad3c8fc576bab6033f72867a5ff",
+        "row_sha256": "754eae0a4c0c0880fa032f06ae862a4ba478a10745f7b22e4b952c61b36f4265"
+      },
+      "before_full_record_sha256": "69ef85df0c5fa66d775c58ea4c41779a48918d3d612e1650b4e55f8a95421f45",
+      "fiveB_after_full_record_sha256": "69ef85df0c5fa66d775c58ea4c41779a48918d3d612e1650b4e55f8a95421f45",
+      "proposed_after_full_record_sha256": "e2e432e5f9358cb4f1660ac1a295d79ac1a6f6b25136c573e7f0f8edab3c870d",
+      "actual_realization_ids": [
+        "base"
+      ],
+      "original_and5B_after_whole_read": true,
+      "proposed_after_whole_read": false,
+      "required_reference_records": {},
+      "explicit_reference_bindings": {},
+      "own_existing_bindings_directly_read_after_semantic_judgment": {
+        "bind_061a38be2e2258768a79662e3d6faffb": {
+          "candidate_id": "cand_061a38be2e2258768a79662e3d6faffb",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_061a38be2e2258768a79662e3d6faffb",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "light_shape",
+          "weight": 0.56
+        }
+      },
+      "binding_intents": [
+        {
+          "slot_id": "light_shape",
+          "role": "omit",
+          "semantic_role": "direct",
+          "weight": 0.56,
+          "conditions_action": "retain_exact_own_binding",
+          "old_binding_id": "bind_061a38be2e2258768a79662e3d6faffb",
+          "reason": "own{}read; actualV2specifiedreceivingsurfacepatterns, thisshapeownedemittingflame.",
+          "exact_conditions_proposal": {
+            "subject_applicability": {}
+          }
+        },
+        {
+          "slot_id": "light_type",
+          "role": "optional",
+          "semantic_role": "direct",
+          "weight": 0.56,
+          "conditions": {},
+          "reason": "actualcandleflameemissionkind."
+        },
+        {
+          "slot_id": "lighting",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.56,
+          "conditions": {},
+          "reason": "keyroleknown butactualsourceplacement/receivingsurfaceunknown, notcoherentsetupyet."
+        },
+        {
+          "slot_id": "object_structure",
+          "role": "pending",
+          "semantic_role": "direct",
+          "weight": 0.56,
+          "conditions": {},
+          "reason": "emittingflamegeometryvsdeclaredphysicalobject/fixtureboundary, transientflamenotautomaticallysolidobject."
+        },
+        {
+          "slot_id": "mood",
+          "role": "pending",
+          "semantic_role": "contextual",
+          "weight": 0.56,
+          "conditions": {},
+          "reason": "actualV2mood semantic_role contextual; tactile ritual impression is retained as effect, but sensory tactile-versus-affective reading needs root review, no automatic mood fit."
+        }
+      ],
+      "conditions_review": "source{} retained. Actualsinglecountownsflame notallsceneemitters; candlelightkeyrolenotcompletesetup. Ritualembeddingactualframingpreservedwithoutassertingongoingritualevent/magic/temperature. Existingflameownerprovisional untilrootcore/actualchoice.",
+      "neighbor_rejections": [
+        {
+          "slot_id": "light_shape",
+          "reason": "notreceivedsurfacepattern"
+        },
+        {
+          "slot_id": "event",
+          "reason": "ritualreference notongoingevent"
+        },
+        {
+          "slot_id": "texture",
+          "reason": "tactilelightimpressionnotmaterialmicrostructure"
+        },
+        {
+          "slot_id": "light_direction",
+          "reason": "keyrole notactualaxis"
+        }
+      ],
+      "facts": [
+        {
+          "id": "candle_u0",
+          "dimension": "lighting",
+          "target": "flame",
+          "property": "lighting.source",
+          "mode": "prerequisite",
+          "value": {
+            "type": "lighting.source/v1",
+            "value": "single candle flame"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a single teardrop candle flame as the key light"
+        },
+        {
+          "id": "shape_u0",
+          "dimension": "appearance",
+          "target": "flame",
+          "property": "emitter.geometry",
+          "mode": "effect",
+          "value": {
+            "type": "emitter.geometry/v1",
+            "value": "teardrop-shaped"
+          },
+          "requires": [
+            "candle_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a single teardrop candle flame as the key light"
+        },
+        {
+          "id": "key_u0",
+          "dimension": "lighting",
+          "target": "flame",
+          "property": "lighting.source.role",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.source.role/v1",
+            "value": "key light"
+          },
+          "requires": [
+            "candle_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a single teardrop candle flame as the key light"
+        },
+        {
+          "id": "candle_u1",
+          "dimension": "lighting",
+          "target": "flame",
+          "property": "lighting.source",
+          "mode": "prerequisite",
+          "value": {
+            "type": "lighting.source/v1",
+            "value": "single candle flame"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "주광으로 사용하는 단일 눈물방울형 촛불"
+        },
+        {
+          "id": "shape_u1",
+          "dimension": "appearance",
+          "target": "flame",
+          "property": "emitter.geometry",
+          "mode": "effect",
+          "value": {
+            "type": "emitter.geometry/v1",
+            "value": "teardrop-shaped"
+          },
+          "requires": [
+            "candle_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "주광으로 사용하는 단일 눈물방울형 촛불"
+        },
+        {
+          "id": "key_u1",
+          "dimension": "lighting",
+          "target": "flame",
+          "property": "lighting.source.role",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.source.role/v1",
+            "value": "key light"
+          },
+          "requires": [
+            "candle_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "주광으로 사용하는 단일 눈물방울형 촛불"
+        },
+        {
+          "id": "candle_u2",
+          "dimension": "lighting",
+          "target": "flame",
+          "property": "lighting.source",
+          "mode": "prerequisite",
+          "value": {
+            "type": "lighting.source/v1",
+            "value": "single candle flame"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "single teardrop candle flame as tactile ritual key light"
+        },
+        {
+          "id": "shape_u2",
+          "dimension": "appearance",
+          "target": "flame",
+          "property": "emitter.geometry",
+          "mode": "effect",
+          "value": {
+            "type": "emitter.geometry/v1",
+            "value": "teardrop-shaped"
+          },
+          "requires": [
+            "candle_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "single teardrop candle flame as tactile ritual key light"
+        },
+        {
+          "id": "key_u2",
+          "dimension": "lighting",
+          "target": "flame",
+          "property": "lighting.source.role",
+          "mode": "effect",
+          "value": {
+            "type": "lighting.source.role/v1",
+            "value": "key light"
+          },
+          "requires": [
+            "candle_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "single teardrop candle flame as tactile ritual key light"
+        },
+        {
+          "id": "ritual_u2",
+          "dimension": "role",
+          "target": "scene",
+          "property": "ritual.reference",
+          "mode": "context",
+          "value": {
+            "type": "ritual.reference/v1",
+            "value": "ritual framing"
+          },
+          "requires": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "single teardrop candle flame as tactile ritual key light"
+        },
+        {
+          "id": "tactile_u2",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "mood.atmosphere",
+          "mode": "effect",
+          "value": {
+            "type": "mood.atmosphere/v1",
+            "value": "tactile ritual-light impression"
+          },
+          "requires": [
+            "candle_u0"
+          ],
+          "operation": "set_value",
+          "receivers": [],
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "single teardrop candle flame as tactile ritual key light"
+        }
+      ],
+      "roles": {
+        "light_type": {
+          "spec_sha256": "2255889e3312890d643e01abb252eac8a9a009891733112aef6d44ee157789bf",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "candle_u0",
+            "candle_u1",
+            "candle_u2"
+          ],
+          "support_modes": [
+            "prerequisite"
+          ]
+        },
+        "mood": {
+          "spec_sha256": "70b1b2a2fcea831fe771b52bd1eb8b3879379d5daf6dbb2fe98a1f26d3bcab26",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "tactile_u2"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "flame",
+              "core_role": "light_source",
+              "origin": "existing",
+              "introduced_by": null
+            },
+            {
+              "target": "scene",
+              "core_role": "scene",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a single teardrop candle flame as the key light",
+          "fact_refs": [
+            "candle_u0",
+            "shape_u0",
+            "key_u0"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "주광으로 사용하는 단일 눈물방울형 촛불",
+          "fact_refs": [
+            "candle_u1",
+            "shape_u1",
+            "key_u1"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "single teardrop candle flame as tactile ritual key light",
+          "fact_refs": [
+            "candle_u2",
+            "shape_u2",
+            "key_u2",
+            "ritual_u2",
+            "tactile_u2"
+          ],
+          "disposition": "semantic"
+        }
+      ],
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "pending_reasons": [
+        "emittergeometry/catalogboundary/receiver/fullfootprint/actualcore/formalinput pending."
+      ],
+      "complete_native_proof": false,
+      "native_signature": false,
+      "formal_root_full_snapshot_assignment_pending": true
+    }
+  ],
+  "registration_global_git_network_model_calls": 0
+}

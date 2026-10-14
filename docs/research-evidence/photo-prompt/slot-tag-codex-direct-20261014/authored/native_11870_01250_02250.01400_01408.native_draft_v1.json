@@ -1,0 +1,3374 @@
+{
+  "actual_direct_reread_count": 8,
+  "canonical_or_operating_applied": false,
+  "catalog_sha256": "5bc5f6d185b6ef6e2d8d3a2bf6e4aa02d73e22143b0529a233fd5f98ddbed908",
+  "formal_assignment_pending": true,
+  "input_bytes_sha256": "5eb5b1f626671b5a9eed20ba0e01e2b0a11de9cd90a119181a8ec6bc2430e438",
+  "input_file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_11870_01250_02250.01400_01450.inputs_v1.json",
+  "model": "gpt-6.1-sol",
+  "proof_or_signature_or_approval_count": 0,
+  "range": [
+    1400,
+    1408
+  ],
+  "reasoning_effort": "high",
+  "records": [
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "9aa1c99a91282246313f370716580248ba72c1b7ce0f56e0a9d084a069acacc1",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "creator"
+          ],
+          "rationale": "Subject portrayal remains real subject E.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "subject",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "adultP"
+          ],
+          "rationale": "Explicit adulthood independent exact P.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "age_presentation",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "prerequisite"
+          ],
+          "weight": 1.0
+        }
+      ],
+      "candidate_id": "cand_6f7935f806d05c90bb2edadd73a352bf",
+      "exact_source_correction_proposals": [
+        {
+          "after": "Apply only to the independently declared existing adult person bound to main_subject, with adult age independently frozen. Select fitness-creator portrayal without adding a person, exercising, physique change, actual profession or sexual styling.",
+          "after_exists": true,
+          "before": null,
+          "before_exists": false,
+          "pointer": "/content/application_contract",
+          "reason": "An existing adult person is portrayed as a fitness creator. Exact owner/application or faithful language clarification only; proposed, not applied."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "subject"
+            ],
+            "properties": [
+              {
+                "dimension": "subject",
+                "property": "subject.portrayal_role",
+                "target": "person"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "subject"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Manual complete semantic mutation scope; no empty/coarse legacy-effects waiver."
+        }
+      ],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "subject",
+          "id": "personP",
+          "mode": "prerequisite",
+          "operation": null,
+          "positive_evidence": [
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "independently declared existing adult person"
+            }
+          ],
+          "property": "entity.presence",
+          "receivers": null,
+          "requires": [],
+          "target": "person",
+          "typed_value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "age",
+          "id": "adultP",
+          "mode": "prerequisite",
+          "operation": null,
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "adult"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "성인"
+            },
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "adult age independently frozen"
+            }
+          ],
+          "property": "age.declared",
+          "receivers": null,
+          "requires": [],
+          "target": "person",
+          "typed_value": {
+            "type": "age.declared/v1",
+            "value": "adult"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "subject",
+          "id": "creator",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "adult fitness creator"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "성인 피트니스 크리에이터"
+            },
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "Select fitness-creator portrayal"
+            }
+          ],
+          "property": "subject.portrayal_role",
+          "receivers": [],
+          "requires": [
+            "personP",
+            "adultP"
+          ],
+          "target": "person",
+          "typed_value": {
+            "type": "subject.portrayal_role/v1",
+            "value": "fitness_creator"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1400,
+      "original_full_record_sha256": "9aa1c99a91282246313f370716580248ba72c1b7ce0f56e0a9d084a069acacc1",
+      "own_binding_manual_classification_and_migration": "Old subject optional/direct1 unrestricted display-only. Age role independent, no athletic body or activity role from label.",
+      "own_bindings_full": {
+        "bind_6f7935f806d05c90bb2edadd73a352bf": {
+          "candidate_id": "cand_6f7935f806d05c90bb2edadd73a352bf",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_6f7935f806d05c90bb2edadd73a352bf",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "subject",
+          "weight": 1.0
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": "main_subject",
+          "origin_proposal": "existing",
+          "rationale": "Existing adult figure, no workout inferred.",
+          "target": "person"
+        }
+      ],
+      "pending": [],
+      "proposed_after_full_record_sha256": "b41a1dd0dd23c06fb67b35f4d0dde00d8ac4a317f4094cc31625f5d68b43158f",
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Apply only to the independently declared existing adult person bound to main_subject, with adult age independently frozen. Select fitness-creator portrayal without adding a person, exercising, physique change, actual profession or sexual styling.",
+          "en": "adult fitness creator",
+          "kind": [
+            "human",
+            "adult"
+          ],
+          "ko": "성인 피트니스 크리에이터",
+          "tags": [
+            "human",
+            "adult",
+            "social",
+            "sports",
+            "athleisure"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": [
+            {
+              "dimension": "subject",
+              "property": "subject.portrayal_role",
+              "target": "person"
+            }
+          ]
+        },
+        "id": "cand_6f7935f806d05c90bb2edadd73a352bf",
+        "provenance": [
+          {
+            "sha256": "61e73a6806a9bb04594df0112f674c64133501d683efdb621cc4dc517c9e9e87",
+            "source": "slot:subject:adult_fitness_creator"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 151,
+          "sha256": "bc42881aea89902afc039ad89c379d3095647e36ebfe1bd15392f02d428f9246"
+        },
+        "candidate_id": "cand_6f7935f806d05c90bb2edadd73a352bf",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "subject.type.fitness_creator",
+            "quote": "adult fitness creator",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "age",
+            "pointer": "/content/en",
+            "property": "age.presentation.adult",
+            "quote": "adult fitness creator",
+            "realization_id": "base",
+            "target": "main_subject"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "An adult fitness creator is the subject.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No current exercise, muscular anatomy or sexual styling is implied."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "subject.type.fitness_creator",
+                "quote": "adult fitness creator",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "An adult fitness creator is the subject.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "subject"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "age",
+                "pointer": "/content/en",
+                "property": "age.presentation.adult",
+                "quote": "adult fitness creator",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "An adult fitness creator is the subject.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "age_presentation"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "9aa1c99a91282246313f370716580248ba72c1b7ce0f56e0a9d084a069acacc1",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 151,
+        "row_sha256": "409c7d3f60e70cd1b6ade7242e64a8377cd51c6936962edf4a08b685a46f887d"
+      },
+      "rejected_boundaries": [
+        "No current exercise, muscular anatomy, health, profession proof, sportswear or sexual context."
+      ],
+      "source_after_existing5B": {
+        "conditions": {},
+        "content": {
+          "en": "adult fitness creator",
+          "kind": [
+            "human",
+            "adult"
+          ],
+          "ko": "성인 피트니스 크리에이터",
+          "tags": [
+            "human",
+            "adult",
+            "social",
+            "sports",
+            "athleisure"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_6f7935f806d05c90bb2edadd73a352bf",
+        "provenance": [
+          {
+            "sha256": "61e73a6806a9bb04594df0112f674c64133501d683efdb621cc4dc517c9e9e87",
+            "source": "slot:subject:adult_fitness_creator"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Conditions empty; human/adult kind preserved as classification, not a witness. No adult permission proxy.",
+      "source_original": {
+        "conditions": {},
+        "content": {
+          "en": "adult fitness creator",
+          "kind": [
+            "human",
+            "adult"
+          ],
+          "ko": "성인 피트니스 크리에이터",
+          "tags": [
+            "human",
+            "adult",
+            "social",
+            "sports",
+            "athleisure"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "subject"
+          ],
+          "properties": []
+        },
+        "id": "cand_6f7935f806d05c90bb2edadd73a352bf",
+        "provenance": [
+          {
+            "sha256": "61e73a6806a9bb04594df0112f674c64133501d683efdb621cc4dc517c9e9e87",
+            "source": "slot:subject:adult_fitness_creator"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "An existing adult person is portrayed as a fitness creator.",
+      "whole_positive_source_units": {
+        "application_contract": [
+          "personP",
+          "adultP",
+          "creator"
+        ],
+        "en": [
+          "adultP",
+          "creator"
+        ],
+        "ko": [
+          "adultP",
+          "creator"
+        ]
+      }
+    },
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "cf021791ff7f83539ebb5b695939888309625bcb4d566760d1548f793bfa2e66",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "up"
+          ],
+          "rationale": "Explicit upward viewing axis.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "camera_direction",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 0.5
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "below"
+          ],
+          "rationale": "Below relation distinct from axis, actual reference pending.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "camera_height",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 0.5
+        }
+      ],
+      "candidate_id": "cand_782fefeb6b5050f3a8b9d96d2a9d07c9",
+      "exact_source_correction_proposals": [],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "camera",
+          "id": "up",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "worm’s-eye view from below"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "아래에서 올려다보는 웜즈아이뷰"
+            }
+          ],
+          "property": "camera.direction",
+          "receivers": [],
+          "requires": [],
+          "target": "camera",
+          "typed_value": {
+            "type": "camera.direction/v1",
+            "value": "upward"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "camera",
+          "id": "below",
+          "mode": "effect",
+          "operation": "relocate",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "from below"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "아래에서"
+            }
+          ],
+          "property": "camera.height",
+          "receivers": [
+            "height_reference"
+          ],
+          "requires": [],
+          "target": "camera",
+          "typed_value": {
+            "type": "camera.height/v1",
+            "value": "below_reference_unresolved"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1401,
+      "original_full_record_sha256": "cf021791ff7f83539ebb5b695939888309625bcb4d566760d1548f793bfa2e66",
+      "own_binding_manual_classification_and_migration": "Old camera_direction optional/direct.5 unrestricted display-only. Low facet does not name actual height reference.",
+      "own_bindings_full": {
+        "bind_782fefeb6b5050f3a8b9d96d2a9d07c9": {
+          "candidate_id": "cand_782fefeb6b5050f3a8b9d96d2a9d07c9",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_782fefeb6b5050f3a8b9d96d2a9d07c9",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "camera_direction",
+          "weight": 0.5
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual recording-camera viewpoint not bound.",
+          "target": "camera"
+        },
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Below reference not explicitly named; do not force primary subject or foreground.",
+          "target": "height_reference"
+        }
+      ],
+      "pending": [
+        "Need actual recording camera/reference and exact application; source from-below reference cannot be guessed as primaryactor/ground."
+      ],
+      "proposed_after_full_record_sha256": "cf021791ff7f83539ebb5b695939888309625bcb4d566760d1548f793bfa2e66",
+      "proposed_source_after": {
+        "conditions": {},
+        "content": {
+          "en": "worm’s-eye view from below",
+          "facets": {
+            "camera_angle": [
+              "low"
+            ]
+          },
+          "ko": "아래에서 올려다보는 웜즈아이뷰",
+          "tags": [
+            "dramatic",
+            "architecture"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_782fefeb6b5050f3a8b9d96d2a9d07c9",
+        "provenance": [
+          {
+            "sha256": "97957f2cebe7e854f0d1ca632b0ccb96a5b41a3272aae7146d26e8d0b1c60e0d",
+            "source": "slot:camera_direction:worms_eye"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 152,
+          "sha256": "3d0c638201ec6fe0a3a7e59bf73011ef1fa8fa84ca71e35c9d9f8664a72baacd"
+        },
+        "candidate_id": "cand_782fefeb6b5050f3a8b9d96d2a9d07c9",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "camera.direction.upward",
+            "quote": "worm’s-eye view from below",
+            "realization_id": "base",
+            "target": "camera"
+          },
+          {
+            "dimension": "camera",
+            "pointer": "/content/en",
+            "property": "camera.height.below_subject",
+            "quote": "worm’s-eye view from below",
+            "realization_id": "base",
+            "target": "camera"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "A worm's-eye view looks upward from below.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No specific focal length, ground contact or architecture is required."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "camera.direction.upward",
+                "quote": "worm’s-eye view from below",
+                "target": "camera"
+              }
+            ],
+            "rationale": "A worm's-eye view looks upward from below.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "camera_direction"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "camera",
+                "pointer": "/content/en",
+                "property": "camera.height.below_subject",
+                "quote": "worm’s-eye view from below",
+                "target": "camera"
+              }
+            ],
+            "rationale": "A worm's-eye view looks upward from below.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "camera_height"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "cf021791ff7f83539ebb5b695939888309625bcb4d566760d1548f793bfa2e66",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 152,
+        "row_sha256": "a5e2115519524a0a91a1e0b19832d4b95927315c3455d8cd0cdb5f12638f202a"
+      },
+      "rejected_boundaries": [
+        "No focal length, architecture, extreme numeric angle, ground contact, body orientation or new device."
+      ],
+      "source_after_existing5B": {
+        "conditions": {},
+        "content": {
+          "en": "worm’s-eye view from below",
+          "facets": {
+            "camera_angle": [
+              "low"
+            ]
+          },
+          "ko": "아래에서 올려다보는 웜즈아이뷰",
+          "tags": [
+            "dramatic",
+            "architecture"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_782fefeb6b5050f3a8b9d96d2a9d07c9",
+        "provenance": [
+          {
+            "sha256": "97957f2cebe7e854f0d1ca632b0ccb96a5b41a3272aae7146d26e8d0b1c60e0d",
+            "source": "slot:camera_direction:worms_eye"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Conditions empty. Actual upward camera axis retained, no physical camera addition or ground contact inferred.",
+      "source_original": {
+        "conditions": {},
+        "content": {
+          "en": "worm’s-eye view from below",
+          "facets": {
+            "camera_angle": [
+              "low"
+            ]
+          },
+          "ko": "아래에서 올려다보는 웜즈아이뷰",
+          "tags": [
+            "dramatic",
+            "architecture"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "camera"
+          ],
+          "properties": []
+        },
+        "id": "cand_782fefeb6b5050f3a8b9d96d2a9d07c9",
+        "provenance": [
+          {
+            "sha256": "97957f2cebe7e854f0d1ca632b0ccb96a5b41a3272aae7146d26e8d0b1c60e0d",
+            "source": "slot:camera_direction:worms_eye"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "A worms-eye viewpoint looks upward from below.",
+      "whole_positive_source_units": {
+        "en": [
+          "up",
+          "below"
+        ],
+        "ko": [
+          "up",
+          "below"
+        ]
+      }
+    },
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "21421b65003e9b885633d55bbebe4459843a1959baf2dac632965bf68ed0794c",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "fact_refs": [
+            "style"
+          ],
+          "rationale": "Explicit whole styling, actual wearer pending.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "wardrobe_style",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "black"
+          ],
+          "rationale": "Black applies local layers, not whole image.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "color",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        }
+      ],
+      "candidate_id": "cand_8fe813abeaa659dba6dddaf4177af3d3",
+      "exact_source_correction_proposals": [],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "appearance",
+          "id": "style",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "girl-crush black stage layers"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "girl-crush black stage layers"
+            }
+          ],
+          "property": "wardrobe.style",
+          "receivers": [
+            "layers"
+          ],
+          "requires": [],
+          "target": "wearer",
+          "typed_value": {
+            "type": "wardrobe.style/v1",
+            "value": "girl_crush_stage_layers"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "appearance",
+          "id": "layers",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "stage layers"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "stage layers"
+            }
+          ],
+          "property": "wardrobe.layers",
+          "receivers": [],
+          "requires": [],
+          "target": "layers",
+          "typed_value": {
+            "type": "wardrobe.layers/v1",
+            "value": "stage_layers_order_unresolved"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "color",
+          "id": "black",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "black stage layers"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "black stage layers"
+            }
+          ],
+          "property": "color.local",
+          "receivers": [],
+          "requires": [],
+          "target": "layers",
+          "typed_value": {
+            "type": "color.local/v1",
+            "value": "black"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1402,
+      "original_full_record_sha256": "21421b65003e9b885633d55bbebe4459843a1959baf2dac632965bf68ed0794c",
+      "own_binding_manual_classification_and_migration": "Old wardrobe_style optional/direct1 human/special deny scope is display-only retained individually. Wardrobe_layering requires separately owned actual layers/order; conditional layer fact not yet sufficient for that binding.",
+      "own_bindings_full": {
+        "bind_8fe813abeaa659dba6dddaf4177af3d3": {
+          "candidate_id": "cand_8fe813abeaa659dba6dddaf4177af3d3",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_8fe813abeaa659dba6dddaf4177af3d3",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "wardrobe_style",
+          "weight": 1.0
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual styled wearer missing.",
+          "target": "wearer"
+        },
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual separate garments versus layers of one garment and their relation not specified.",
+          "target": "layers"
+        }
+      ],
+      "pending": [
+        "Need wearer/layer owners, one-garment-versus-separate-garments topology, actual layering order and application, faithful Korean. No generic layer union or new clothing."
+      ],
+      "proposed_after_full_record_sha256": "21421b65003e9b885633d55bbebe4459843a1959baf2dac632965bf68ed0794c",
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "girl-crush black stage layers",
+          "ko": "girl-crush black stage layers",
+          "tags": [
+            "wardrobe",
+            "fashion",
+            "confident"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_8fe813abeaa659dba6dddaf4177af3d3",
+        "provenance": [
+          {
+            "sha256": "85087199a7b98f18187a09eeaec987580454dbe8786eb7611d0e64a1939b4bc8",
+            "source": "slot:wardrobe_style:girl_crush_black_stage_layers"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 153,
+          "sha256": "472d0adab130cd9e84ec2cdc8ad806e57f5145c831085387313c06e37c4441ef"
+        },
+        "candidate_id": "cand_8fe813abeaa659dba6dddaf4177af3d3",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "wardrobe.style.girl_crush_stage",
+            "quote": "girl-crush black stage layers",
+            "realization_id": "base",
+            "target": "actor"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "wardrobe.layers.stage_layers",
+            "quote": "girl-crush black stage layers",
+            "realization_id": "base",
+            "target": "garments"
+          },
+          {
+            "dimension": "color",
+            "pointer": "/content/en",
+            "property": "color.local.black",
+            "quote": "girl-crush black stage layers",
+            "realization_id": "base",
+            "target": "garments"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "Black layered stage clothing has girl-crush styling.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No minor age, exact garments or personal confidence is inferred."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "wardrobe.style.girl_crush_stage",
+                "quote": "girl-crush black stage layers",
+                "target": "actor"
+              }
+            ],
+            "rationale": "Black layered stage clothing has girl-crush styling.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_style"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "wardrobe.layers.stage_layers",
+                "quote": "girl-crush black stage layers",
+                "target": "garments"
+              }
+            ],
+            "rationale": "Black layered stage clothing has girl-crush styling.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_layering"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "color",
+                "pointer": "/content/en",
+                "property": "color.local.black",
+                "quote": "girl-crush black stage layers",
+                "target": "garments"
+              }
+            ],
+            "rationale": "Black layered stage clothing has girl-crush styling.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "color"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "21421b65003e9b885633d55bbebe4459843a1959baf2dac632965bf68ed0794c",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 153,
+        "row_sha256": "41372208b87374b937d42a16d261cb5dd82da30c872986dcfeaaada7ec7a1e91"
+      },
+      "rejected_boundaries": [
+        "No minor age, confidence personality, exact garments, stage performance, lingerie, material or count."
+      ],
+      "source_after_existing5B": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "girl-crush black stage layers",
+          "ko": "girl-crush black stage layers",
+          "tags": [
+            "wardrobe",
+            "fashion",
+            "confident"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_8fe813abeaa659dba6dddaf4177af3d3",
+        "provenance": [
+          {
+            "sha256": "85087199a7b98f18187a09eeaec987580454dbe8786eb7611d0e64a1939b4bc8",
+            "source": "slot:wardrobe_style:girl_crush_black_stage_layers"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Human for_any intrinsic. Girl-crush is styling label, not age, attraction, personality or actual stage event.",
+      "source_original": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "girl-crush black stage layers",
+          "ko": "girl-crush black stage layers",
+          "tags": [
+            "wardrobe",
+            "fashion",
+            "confident"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_8fe813abeaa659dba6dddaf4177af3d3",
+        "provenance": [
+          {
+            "sha256": "85087199a7b98f18187a09eeaec987580454dbe8786eb7611d0e64a1939b4bc8",
+            "source": "slot:wardrobe_style:girl_crush_black_stage_layers"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "Black stage layers have girl-crush wardrobe styling.",
+      "whole_positive_source_units": {
+        "en": [
+          "style",
+          "layers",
+          "black"
+        ],
+        "ko": [
+          "style",
+          "layers",
+          "black"
+        ]
+      }
+    },
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "8732259ac3d49b8ffdc3e2f4f08750cf2491370e70824b6802f247fc9577c97b",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "fact_refs": [
+            "context"
+          ],
+          "rationale": "Declared fictional folk-attire context, no selected species anatomy.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "contextual",
+          "slot_id": "attire_context",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        }
+      ],
+      "candidate_id": "cand_92b7f0d543d3532d93322ee16b3d0f7e",
+      "exact_source_correction_proposals": [],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "role",
+          "id": "context",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "beastkin tailored folk costume"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "beastkin tailored folk costume"
+            }
+          ],
+          "property": "wardrobe.context",
+          "receivers": [],
+          "requires": [],
+          "target": "costume",
+          "typed_value": {
+            "type": "wardrobe.context/v1",
+            "value": "beastkin_folk_costume"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "appearance",
+          "id": "tailored",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "tailored"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "tailored"
+            }
+          ],
+          "property": "garment.tailoring",
+          "receivers": [
+            "wearer"
+          ],
+          "requires": [],
+          "target": "costume",
+          "typed_value": {
+            "type": "garment.tailoring/v1",
+            "value": "tailored_scope_unresolved"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1403,
+      "original_full_record_sha256": "8732259ac3d49b8ffdc3e2f4f08750cf2491370e70824b6802f247fc9577c97b",
+      "own_binding_manual_classification_and_migration": "Old attire_context optional/contextual1 special human/deny scope display-only. Proposed HP142-unchanged attire scope individually; no garment_fit without actual volume-to-wearer relation or garment_detail from unspecified tailoring word.",
+      "own_bindings_full": {
+        "bind_92b7f0d543d3532d93322ee16b3d0f7e": {
+          "candidate_id": "cand_92b7f0d543d3532d93322ee16b3d0f7e",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "documentary",
+                "craft",
+                "wildlife",
+                "product",
+                "jewelry",
+                "food"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_92b7f0d543d3532d93322ee16b3d0f7e",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "attire_context",
+          "weight": 1.0
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual costume not bound.",
+          "target": "costume"
+        },
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Tailored to wearer versus generic tailored cut is unresolved; no beastkin anatomy invented.",
+          "target": "wearer"
+        }
+      ],
+      "pending": [
+        "Need actual costume/application and tailored intended cut-versus-fit relation/actual wearer; faithful Korean. Do not invent tail openings, ears, species or folk culture."
+      ],
+      "proposed_after_full_record_sha256": "8732259ac3d49b8ffdc3e2f4f08750cf2491370e70824b6802f247fc9577c97b",
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "beastkin tailored folk costume",
+          "ko": "beastkin tailored folk costume",
+          "tags": [
+            "costume",
+            "beastkin",
+            "fantasy"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_92b7f0d543d3532d93322ee16b3d0f7e",
+        "provenance": [
+          {
+            "sha256": "b0020237712dc42f49b7d31ed0f090d5cd6f93c0c1d8ff929759b5a3231ff611",
+            "source": "slot:costume_style:beastkin_tailored_folk_costume"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 154,
+          "sha256": "761c9ea0e1edecfe110abbdb69ea4375b21fa7c8c9c05f6041871670bb5e7d27"
+        },
+        "candidate_id": "cand_92b7f0d543d3532d93322ee16b3d0f7e",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "role",
+            "pointer": "/content/en",
+            "property": "wardrobe.context.beastkin_folk",
+            "quote": "beastkin tailored folk costume",
+            "realization_id": "base",
+            "target": "actor"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "garment.fit.tailored",
+            "quote": "beastkin tailored folk costume",
+            "realization_id": "base",
+            "target": "costume"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "Tailored folk costume is intended for beastkin context.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No specific species anatomy, culture or garment components are supplied."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "role",
+                "pointer": "/content/en",
+                "property": "wardrobe.context.beastkin_folk",
+                "quote": "beastkin tailored folk costume",
+                "target": "actor"
+              }
+            ],
+            "rationale": "Tailored folk costume is intended for beastkin context.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "attire_context"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "garment.fit.tailored",
+                "quote": "beastkin tailored folk costume",
+                "target": "costume"
+              }
+            ],
+            "rationale": "Tailored folk costume is intended for beastkin context.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "garment_fit"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "8732259ac3d49b8ffdc3e2f4f08750cf2491370e70824b6802f247fc9577c97b",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 154,
+        "row_sha256": "6e8881ecd9d2d747e24c8892ac98cf7f6d4ae9f101c085968ec685509e1dd8d2"
+      },
+      "rejected_boundaries": [
+        "No specific species/body part, costume component, real culture, garment fit measurement, production history or new wearer."
+      ],
+      "source_after_existing5B": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "beastkin tailored folk costume",
+          "ko": "beastkin tailored folk costume",
+          "tags": [
+            "costume",
+            "beastkin",
+            "fantasy"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_92b7f0d543d3532d93322ee16b3d0f7e",
+        "provenance": [
+          {
+            "sha256": "b0020237712dc42f49b7d31ed0f090d5cd6f93c0c1d8ff929759b5a3231ff611",
+            "source": "slot:costume_style:beastkin_tailored_folk_costume"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Human for_any intrinsic even though beastkin context named. Cannot use new V4 scopes to waive original human guard.",
+      "source_original": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "beastkin tailored folk costume",
+          "ko": "beastkin tailored folk costume",
+          "tags": [
+            "costume",
+            "beastkin",
+            "fantasy"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_92b7f0d543d3532d93322ee16b3d0f7e",
+        "provenance": [
+          {
+            "sha256": "b0020237712dc42f49b7d31ed0f090d5cd6f93c0c1d8ff929759b5a3231ff611",
+            "source": "slot:costume_style:beastkin_tailored_folk_costume"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "A beastkin-context folk costume is tailored.",
+      "whole_positive_source_units": {
+        "en": [
+          "context",
+          "tailored"
+        ],
+        "ko": [
+          "context",
+          "tailored"
+        ]
+      }
+    },
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "f3af79fa71b87e7f231b5783cf3dc128ba4bec8cfdce7c68db435c8d7979c8d2",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "color"
+          ],
+          "rationale": "144V4 bounded hair-region color; original human source guard remains cumulative.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "hair_color",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 0.9
+        }
+      ],
+      "candidate_id": "cand_9c7f532185435e41ab9faa2d73272140",
+      "exact_source_correction_proposals": [
+        {
+          "after": "Apply only to the independently declared existing head-hair region bound to primary_hair. Select warm auburn-brown hair color on that same region; warm qualifies hue, not physical temperature, light color or emotional warmth.",
+          "after_exists": true,
+          "before": null,
+          "before_exists": false,
+          "pointer": "/content/application_contract",
+          "reason": "The same existing hair region has warm auburn-brown color. Exact owner/application or faithful language clarification only; proposed, not applied."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "hair.color",
+                "target": "hair"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Manual complete semantic mutation scope; no empty/coarse legacy-effects waiver."
+        }
+      ],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "subject",
+          "id": "hairP",
+          "mode": "prerequisite",
+          "operation": null,
+          "positive_evidence": [
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "independently declared existing head-hair region"
+            }
+          ],
+          "property": "anatomy.hair.presence",
+          "receivers": null,
+          "requires": [],
+          "target": "hair",
+          "typed_value": {
+            "type": "anatomy.hair.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "appearance",
+          "id": "color",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "warm auburn-brown hair color"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "따뜻한 오번 브라운 머리색"
+            },
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "Select warm auburn-brown hair color"
+            }
+          ],
+          "property": "hair.color",
+          "receivers": [],
+          "requires": [
+            "hairP"
+          ],
+          "target": "hair",
+          "typed_value": {
+            "type": "hair.color/v1",
+            "value": "warm_auburn_brown"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1404,
+      "original_full_record_sha256": "f3af79fa71b87e7f231b5783cf3dc128ba4bec8cfdce7c68db435c8d7979c8d2",
+      "own_binding_manual_classification_and_migration": "Old hair_color optional/direct.9 HP display policy is not intrinsic hair-class truth. V4 role is unrestricted; proposed role conditions NONE do not remove original for_any human or exact independent hair P. Actual existing binding migration still root-owned.",
+      "own_bindings_full": {
+        "bind_9c7f532185435e41ab9faa2d73272140": {
+          "candidate_id": "cand_9c7f532185435e41ab9faa2d73272140",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_9c7f532185435e41ab9faa2d73272140",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "hair_color",
+          "weight": 0.9
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": "primary_hair",
+          "origin_proposal": "existing",
+          "rationale": "Declared existing head-hair scope; no carrier-to-part inheritance.",
+          "target": "hair"
+        }
+      ],
+      "pending": [],
+      "proposed_after_full_record_sha256": "59d2c19869acdd1aafc8458a17ea1d4e38e83b97579451e34d2226ec58115232",
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Apply only to the independently declared existing head-hair region bound to primary_hair. Select warm auburn-brown hair color on that same region; warm qualifies hue, not physical temperature, light color or emotional warmth.",
+          "en": "warm auburn-brown hair color",
+          "ko": "따뜻한 오번 브라운 머리색",
+          "tags": [
+            "human",
+            "hair",
+            "portrait",
+            "botanical"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "property": "hair.color",
+              "target": "hair"
+            }
+          ]
+        },
+        "id": "cand_9c7f532185435e41ab9faa2d73272140",
+        "provenance": [
+          {
+            "sha256": "e244d70d414879d233d2b451329b16d13740dfc9383e39a54840637cbb29e124",
+            "source": "slot:hair_color:warm_auburn_brown_hair"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 155,
+          "sha256": "9a14bbfc71f27adeb92c3ae1d45399c5ff87c3e1ec884b1352ce51f8d681b4d0"
+        },
+        "candidate_id": "cand_9c7f532185435e41ab9faa2d73272140",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "hair.color.warm_auburn_brown",
+            "quote": "warm auburn-brown hair color",
+            "realization_id": "base",
+            "target": "hair"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "Hair color is warm auburn-brown.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No botanical species, skin tone or global grade is inferred."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "hair.color.warm_auburn_brown",
+                "quote": "warm auburn-brown hair color",
+                "target": "hair"
+              }
+            ],
+            "rationale": "Hair color is warm auburn-brown.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "hair_color"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "f3af79fa71b87e7f231b5783cf3dc128ba4bec8cfdce7c68db435c8d7979c8d2",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 155,
+        "row_sha256": "93dc90eb20b9b67b77febba5c0b16021e906ef851f0ae252c1dd88ab11466497"
+      },
+      "rejected_boundaries": [
+        "No temperature, botanical species, dye chemistry, hairstyle, global grade, skin tone or new hair."
+      ],
+      "source_after_existing5B": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "warm auburn-brown hair color",
+          "ko": "따뜻한 오번 브라운 머리색",
+          "tags": [
+            "human",
+            "hair",
+            "portrait",
+            "botanical"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_9c7f532185435e41ab9faa2d73272140",
+        "provenance": [
+          {
+            "sha256": "e244d70d414879d233d2b451329b16d13740dfc9383e39a54840637cbb29e124",
+            "source": "slot:hair_color:warm_auburn_brown_hair"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Human for_any intrinsic. Warm color is not thermal_state; no wig or represented carrier guessed from broader V4 permission.",
+      "source_original": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "warm auburn-brown hair color",
+          "ko": "따뜻한 오번 브라운 머리색",
+          "tags": [
+            "human",
+            "hair",
+            "portrait",
+            "botanical"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_9c7f532185435e41ab9faa2d73272140",
+        "provenance": [
+          {
+            "sha256": "e244d70d414879d233d2b451329b16d13740dfc9383e39a54840637cbb29e124",
+            "source": "slot:hair_color:warm_auburn_brown_hair"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "The same existing hair region has warm auburn-brown color.",
+      "whole_positive_source_units": {
+        "application_contract": [
+          "hairP",
+          "color"
+        ],
+        "en": [
+          "hairP",
+          "color"
+        ],
+        "ko": [
+          "hairP",
+          "color"
+        ]
+      }
+    },
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "2690ea7768cf7d64ed4621453116f17ae73e7e1b1fd2206978a462120edf5557",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "check"
+          ],
+          "rationale": "Concrete checker-route interaction, same endpoints retained.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "relational_action",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "back"
+          ],
+          "rationale": "Back direction with actual reference pending.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "gaze_direction",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "fact_refs": [
+            "target"
+          ],
+          "rationale": "Explicit route checking target.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "gaze_target",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "fact_refs": [
+            "goal"
+          ],
+          "rationale": "Explicit source goal, authored E rather than inferred private state.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "contextual",
+          "slot_id": "character_intent",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 1.0
+        }
+      ],
+      "candidate_id": "cand_a72a6f4c3cf2536796ea1e9623c857e0",
+      "exact_source_correction_proposals": [],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "action",
+          "id": "check",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "glancing back to check an exit route"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "이탈 동선을 확인하며 뒤돌아보는"
+            }
+          ],
+          "property": "relation.action.checking",
+          "receivers": [
+            "exit_route",
+            "gaze_region"
+          ],
+          "requires": [],
+          "target": "person",
+          "typed_value": {
+            "type": "relation.action.checking/v1",
+            "value": "checking_exit_route_while_glancing_back"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "expression",
+          "id": "back",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "glancing back"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "뒤돌아보는"
+            }
+          ],
+          "property": "gaze.direction",
+          "receivers": [],
+          "requires": [],
+          "target": "gaze_region",
+          "typed_value": {
+            "type": "gaze.direction/v1",
+            "value": "back_reference_unresolved"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "expression",
+          "id": "target",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "glancing back to check an exit route"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "이탈 동선을 확인하며 뒤돌아보는"
+            }
+          ],
+          "property": "gaze.target",
+          "receivers": [
+            "exit_route"
+          ],
+          "requires": [],
+          "target": "gaze_region",
+          "typed_value": {
+            "type": "gaze.target/v1",
+            "value": "exit_route"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "character_response",
+          "id": "goal",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "to check an exit route"
+            }
+          ],
+          "property": "character.intent",
+          "receivers": [
+            "exit_route"
+          ],
+          "requires": [],
+          "target": "person",
+          "typed_value": {
+            "type": "character.intent/v1",
+            "value": "check_exit_route"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1405,
+      "original_full_record_sha256": "2690ea7768cf7d64ed4621453116f17ae73e7e1b1fd2206978a462120edf5557",
+      "own_binding_manual_classification_and_migration": "Old action optional/direct1 unrestricted display-only. V4 relational scope unrestricted; original human source guard retained. Intent/target HP individually contextual/direct scopes.",
+      "own_bindings_full": {
+        "bind_a72a6f4c3cf2536796ea1e9623c857e0": {
+          "candidate_id": "cand_a72a6f4c3cf2536796ea1e9623c857e0",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_a72a6f4c3cf2536796ea1e9623c857e0",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 1.0
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual checker unbound.",
+          "target": "person"
+        },
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual owned gaze region and back reference missing.",
+          "target": "gaze_region"
+        },
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual route missing.",
+          "target": "exit_route"
+        }
+      ],
+      "pending": [
+        "Need actual checker/gaze part/route/coordinate and independent ownership/application; no default eye owner or invented escape history."
+      ],
+      "proposed_after_full_record_sha256": "2690ea7768cf7d64ed4621453116f17ae73e7e1b1fd2206978a462120edf5557",
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "glancing back to check an exit route",
+          "ko": "이탈 동선을 확인하며 뒤돌아보는",
+          "tags": [
+            "human",
+            "tense",
+            "exit_route"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_a72a6f4c3cf2536796ea1e9623c857e0",
+        "provenance": [
+          {
+            "sha256": "7d7471998f19967a7d02167e66fbbda13622f676aee469210443bcd6a9ee51b3",
+            "source": "slot:action:exit_route_glance_back"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 156,
+          "sha256": "ee42374c022dd23c326541e29151e4fca93aae2b37a5bdd595d8edf5e6d4c4dc"
+        },
+        "candidate_id": "cand_a72a6f4c3cf2536796ea1e9623c857e0",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "action.glancing_back",
+            "quote": "glancing back to check an exit route",
+            "realization_id": "base",
+            "target": "actor"
+          },
+          {
+            "dimension": "expression",
+            "pointer": "/content/en",
+            "property": "gaze.target.exit_route",
+            "quote": "glancing back to check an exit route",
+            "realization_id": "base",
+            "target": "actor_gaze"
+          },
+          {
+            "dimension": "character_response",
+            "pointer": "/content/en",
+            "property": "character.intent.checking_exit_route",
+            "quote": "glancing back to check an exit route",
+            "realization_id": "base",
+            "target": "actor"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "A person glances backward to check an exit route.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "No escape success, pursuit or photographic camera direction is inferred."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/en",
+                "property": "action.glancing_back",
+                "quote": "glancing back to check an exit route",
+                "target": "actor"
+              }
+            ],
+            "rationale": "A person glances backward to check an exit route.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "action"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "expression",
+                "pointer": "/content/en",
+                "property": "gaze.target.exit_route",
+                "quote": "glancing back to check an exit route",
+                "target": "actor_gaze"
+              }
+            ],
+            "rationale": "A person glances backward to check an exit route.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "gaze_target"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "character_response",
+                "pointer": "/content/en",
+                "property": "character.intent.checking_exit_route",
+                "quote": "glancing back to check an exit route",
+                "target": "actor"
+              }
+            ],
+            "rationale": "A person glances backward to check an exit route.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "character_intent"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "2690ea7768cf7d64ed4621453116f17ae73e7e1b1fd2206978a462120edf5557",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 156,
+        "row_sha256": "08174058e09dc9198184e1f69ffa40231da45927a23cff2c2566997a12ba142c"
+      },
+      "rejected_boundaries": [
+        "No pursuit, successful exit, current walking, camera direction, private fear or fixed exit position."
+      ],
+      "source_after_existing5B": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "glancing back to check an exit route",
+          "ko": "이탈 동선을 확인하며 뒤돌아보는",
+          "tags": [
+            "human",
+            "tense",
+            "exit_route"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_a72a6f4c3cf2536796ea1e9623c857e0",
+        "provenance": [
+          {
+            "sha256": "7d7471998f19967a7d02167e66fbbda13622f676aee469210443bcd6a9ee51b3",
+            "source": "slot:action:exit_route_glance_back"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Human for_any intrinsic. Glancing/check goal does not establish escaped state or existing route by its tag.",
+      "source_original": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "glancing back to check an exit route",
+          "ko": "이탈 동선을 확인하며 뒤돌아보는",
+          "tags": [
+            "human",
+            "tense",
+            "exit_route"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_a72a6f4c3cf2536796ea1e9623c857e0",
+        "provenance": [
+          {
+            "sha256": "7d7471998f19967a7d02167e66fbbda13622f676aee469210443bcd6a9ee51b3",
+            "source": "slot:action:exit_route_glance_back"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "A person glances back while checking an exit route, with an explicit check goal.",
+      "whole_positive_source_units": {
+        "en": [
+          "check",
+          "back",
+          "target",
+          "goal"
+        ],
+        "ko": [
+          "check",
+          "back",
+          "target"
+        ]
+      }
+    },
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "84ac186ee59be172702f80ada81a96fffb8564b007da32d0e80c9b2d5df9e129",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "fact_refs": [
+            "role"
+          ],
+          "rationale": "Declared suspect role, actual role carrier pending; primary/secondary not automatically chosen.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "contextual",
+          "slot_id": "participant_role",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 0.82
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "off"
+          ],
+          "rationale": "Off-frame E, no visible participant.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "contextual",
+          "slot_id": "offscreen_context",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 0.82
+        }
+      ],
+      "candidate_id": "cand_afb9bd7b845a50a29be182f967232b2f",
+      "exact_source_correction_proposals": [],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "relationship",
+          "id": "role",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "an off-frame suspect"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "프레임 밖 용의자"
+            }
+          ],
+          "property": "participant.role",
+          "receivers": [],
+          "requires": [],
+          "target": "suspect",
+          "typed_value": {
+            "type": "participant.role/v1",
+            "value": "suspect"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "relationship",
+          "id": "off",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "off-frame"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "프레임 밖"
+            }
+          ],
+          "property": "context.offscreen",
+          "receivers": [],
+          "requires": [],
+          "target": "suspect",
+          "typed_value": {
+            "type": "context.offscreen/v1",
+            "value": "off_frame"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1406,
+      "original_full_record_sha256": "84ac186ee59be172702f80ada81a96fffb8564b007da32d0e80c9b2d5df9e129",
+      "own_binding_manual_classification_and_migration": "Old participant_role optional/contextual.82 HP role scope retained. V4 primary-or-secondary scope does not bind an actual person or waive source human.",
+      "own_bindings_full": {
+        "bind_afb9bd7b845a50a29be182f967232b2f": {
+          "candidate_id": "cand_afb9bd7b845a50a29be182f967232b2f",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "wildlife"
+              ],
+              "subject_categories": [
+                "human"
+              ]
+            }
+          },
+          "id": "bind_afb9bd7b845a50a29be182f967232b2f",
+          "role": "optional",
+          "semantic_role": "contextual",
+          "slot_id": "participant_role",
+          "weight": 0.82
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual suspect unbound.",
+          "target": "suspect"
+        },
+        {
+          "explicit_neutral_core_role_proposal": null,
+          "origin_proposal": "unresolved",
+          "rationale": "Actual suspicion role context not supplied; no guilt proof.",
+          "target": "suspicion_context"
+        }
+      ],
+      "pending": [
+        "Need actual suspect/reference and existing/introduction role-application choice. Do not treat suspect role as already frozen to avoid selected relationship E."
+      ],
+      "proposed_after_full_record_sha256": "84ac186ee59be172702f80ada81a96fffb8564b007da32d0e80c9b2d5df9e129",
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "an off-frame suspect",
+          "ko": "프레임 밖 용의자",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "noir"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "relationship"
+          ],
+          "properties": []
+        },
+        "id": "cand_afb9bd7b845a50a29be182f967232b2f",
+        "provenance": [
+          {
+            "sha256": "5aab2b71ceaa92f65b4d4ba6ff70805d453e6bd7997fdda2c4532c9f727eb142",
+            "source": "slot:partner_role:off_frame_suspect"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 157,
+          "sha256": "f191608203888edaf3f641b1ea5e839a38634d06c7501d197502e1a2de56ebce"
+        },
+        "candidate_id": "cand_afb9bd7b845a50a29be182f967232b2f",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "relationship",
+            "pointer": "/content/en",
+            "property": "participant.role.suspect",
+            "quote": "an off-frame suspect",
+            "realization_id": "base",
+            "target": "suspect"
+          },
+          {
+            "dimension": "relationship",
+            "pointer": "/content/en",
+            "property": "context.offscreen.off_frame",
+            "quote": "an off-frame suspect",
+            "realization_id": "base",
+            "target": "suspect"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "A suspect is explicitly off-frame.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "A suspicion role does not prove guilt or add a visible suspect."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "relationship",
+                "pointer": "/content/en",
+                "property": "participant.role.suspect",
+                "quote": "an off-frame suspect",
+                "target": "suspect"
+              }
+            ],
+            "rationale": "A suspect is explicitly off-frame.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "participant_role"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "relationship",
+                "pointer": "/content/en",
+                "property": "context.offscreen.off_frame",
+                "quote": "an off-frame suspect",
+                "target": "suspect"
+              }
+            ],
+            "rationale": "A suspect is explicitly off-frame.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "offscreen_context"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "84ac186ee59be172702f80ada81a96fffb8564b007da32d0e80c9b2d5df9e129",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 157,
+        "row_sha256": "2444aa0dc075f0d846ba885d2cfb713152bfd14a0c6773542cdd57167913fbfc"
+      },
+      "rejected_boundaries": [
+        "No guilt, crime, investigator, visible suspect, noir genre, identity or other person."
+      ],
+      "source_after_existing5B": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "an off-frame suspect",
+          "ko": "프레임 밖 용의자",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "noir"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "relationship"
+          ],
+          "properties": []
+        },
+        "id": "cand_afb9bd7b845a50a29be182f967232b2f",
+        "provenance": [
+          {
+            "sha256": "5aab2b71ceaa92f65b4d4ba6ff70805d453e6bd7997fdda2c4532c9f727eb142",
+            "source": "slot:partner_role:off_frame_suspect"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Human for_any intrinsic; noir metadata not work genre or guilty identity.",
+      "source_original": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "an off-frame suspect",
+          "ko": "프레임 밖 용의자",
+          "tags": [
+            "human",
+            "relationship",
+            "relational",
+            "narrative_safe",
+            "noir"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "relationship"
+          ],
+          "properties": []
+        },
+        "id": "cand_afb9bd7b845a50a29be182f967232b2f",
+        "provenance": [
+          {
+            "sha256": "5aab2b71ceaa92f65b4d4ba6ff70805d453e6bd7997fdda2c4532c9f727eb142",
+            "source": "slot:partner_role:off_frame_suspect"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "An off-frame participant is declared a suspect.",
+      "whole_positive_source_units": {
+        "en": [
+          "role",
+          "off"
+        ],
+        "ko": [
+          "role",
+          "off"
+        ]
+      }
+    },
+    {
+      "actual_realization_ids": [
+        "base"
+      ],
+      "after5B_full_record_sha256": "2962ca264de6e6ac46968350e9b75d041e7eb18f7b5f520dca17de8b4c737f83",
+      "automatic_approval_or_signature_or_proof_created": false,
+      "binding_proposals": [
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "watchP"
+          ],
+          "rationale": "Existing object identity.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "prerequisite"
+          ],
+          "weight": 0.85
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {
+              "allow_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "architecture",
+                "subculture_practice",
+                "worldbuilding_system",
+                "cjk_narrative_world"
+              ],
+              "allow_domains_override_subject_categories": true,
+              "subject_categories": [
+                "object",
+                "food",
+                "plant",
+                "environment",
+                "sign",
+                "human",
+                "animal"
+              ]
+            }
+          },
+          "fact_refs": [
+            "matte"
+          ],
+          "rationale": "Declared matte optical response, not chemical material.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "direct",
+          "slot_id": "surface_material",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 0.85
+        },
+        {
+          "actual_realization_ids": [
+            "base"
+          ],
+          "conditions_proposal": {
+            "subject_applicability": {}
+          },
+          "fact_refs": [
+            "cue"
+          ],
+          "rationale": "Explicit timing-cue function, no inferred event/time.",
+          "role": "optional",
+          "scope": "whole_record",
+          "semantic_role": "contextual",
+          "slot_id": "narrative_clue",
+          "status": "unsigned_binding_proposal_only",
+          "support_modes": [
+            "effect"
+          ],
+          "weight": 0.85
+        }
+      ],
+      "candidate_id": "cand_cc939883e2245be28c87062d5e34154e",
+      "exact_source_correction_proposals": [
+        {
+          "after": "Apply only to the independently declared existing wristwatch bound to primary_prop. Select plain appearance, matte optical response and declared timing-cue function without adding or wearing a watch, showing a time or inferring a timing event.",
+          "after_exists": true,
+          "before": null,
+          "before_exists": false,
+          "pointer": "/content/application_contract",
+          "reason": "The same existing plain matte wristwatch serves as a timing cue. Exact owner/application or faithful language clarification only; proposed, not applied."
+        },
+        {
+          "after": "시간 단서로 쓰이는 장식 없는 무광 손목시계",
+          "after_exists": true,
+          "before": "무광 손목시계",
+          "before_exists": true,
+          "pointer": "/content/ko",
+          "reason": "The same existing plain matte wristwatch serves as a timing cue. Exact owner/application or faithful language clarification only; proposed, not applied."
+        },
+        {
+          "after": {
+            "dimensions": [
+              "appearance",
+              "material",
+              "concept"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "object.appearance",
+                "target": "watch"
+              },
+              {
+                "dimension": "material",
+                "property": "surface.optical_response",
+                "target": "watch"
+              },
+              {
+                "dimension": "concept",
+                "property": "narrative.clue.function",
+                "target": "watch"
+              }
+            ]
+          },
+          "after_exists": true,
+          "before": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "before_exists": true,
+          "pointer": "/effects",
+          "reason": "Manual complete semantic mutation scope; no empty/coarse legacy-effects waiver."
+        }
+      ],
+      "explicit_member_binding_closure_full": {},
+      "literal_native_facts": [
+        {
+          "actual_realization_id": "base",
+          "dimension": "subject",
+          "id": "watchP",
+          "mode": "prerequisite",
+          "operation": null,
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "wristwatch"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "손목시계"
+            },
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "independently declared existing wristwatch"
+            }
+          ],
+          "property": "props.type",
+          "receivers": null,
+          "requires": [],
+          "target": "watch",
+          "typed_value": {
+            "type": "props.type/v1",
+            "value": "wristwatch"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "appearance",
+          "id": "plain",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "plain"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "장식 없는"
+            },
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "Select plain appearance"
+            }
+          ],
+          "property": "object.appearance",
+          "receivers": [],
+          "requires": [
+            "watchP"
+          ],
+          "target": "watch",
+          "typed_value": {
+            "type": "object.appearance/v1",
+            "value": "plain_unadorned"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "material",
+          "id": "matte",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "matte"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "무광"
+            },
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "matte optical response"
+            }
+          ],
+          "property": "surface.optical_response",
+          "receivers": [],
+          "requires": [
+            "watchP"
+          ],
+          "target": "watch",
+          "typed_value": {
+            "type": "surface.optical_response/v1",
+            "value": "matte"
+          }
+        },
+        {
+          "actual_realization_id": "base",
+          "dimension": "concept",
+          "id": "cue",
+          "mode": "effect",
+          "operation": "set_value",
+          "positive_evidence": [
+            {
+              "pointer": "/content/en",
+              "positive_quote": "used as a timing cue"
+            },
+            {
+              "pointer": "/content/ko",
+              "positive_quote": "시간 단서로 쓰이는"
+            },
+            {
+              "pointer": "/content/application_contract",
+              "positive_quote": "declared timing-cue function"
+            }
+          ],
+          "property": "narrative.clue.function",
+          "receivers": [],
+          "requires": [
+            "watchP"
+          ],
+          "target": "watch",
+          "typed_value": {
+            "type": "narrative.clue.function/v1",
+            "value": "timing_cue"
+          }
+        }
+      ],
+      "mandatory_CID_closure_full": {},
+      "manual_complete_recheck_before_formal_input_required": true,
+      "ordinal": 1407,
+      "original_full_record_sha256": "2962ca264de6e6ac46968350e9b75d041e7eb18f7b5f520dca17de8b4c737f83",
+      "own_binding_manual_classification_and_migration": "Old wearable_accessory optional/direct.85 unrestricted display-only. Reject wearing tag absent actual owner/attachment; plainness retained as unbound appearance E rather than erased.",
+      "own_bindings_full": {
+        "bind_cc939883e2245be28c87062d5e34154e": {
+          "candidate_id": "cand_cc939883e2245be28c87062d5e34154e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_cc939883e2245be28c87062d5e34154e",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "wearable_accessory",
+          "weight": 0.85
+        }
+      },
+      "owner_binding_proposals": [
+        {
+          "explicit_neutral_core_role_proposal": "primary_prop",
+          "origin_proposal": "existing",
+          "rationale": "Existing wristwatch; noun does not assert worn attachment.",
+          "target": "watch"
+        }
+      ],
+      "pending": [
+        "Plain unadorned artifact appearance lacks justified direct144V4 slot without invented motif geometry/construction; exact effect retained for root taxonomy/input review."
+      ],
+      "proposed_after_full_record_sha256": "16bf859be2e223457e2726c163c96fdbd72674dd02389ffc2b9ed0a40c9c9927",
+      "proposed_source_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "application_contract": "Apply only to the independently declared existing wristwatch bound to primary_prop. Select plain appearance, matte optical response and declared timing-cue function without adding or wearing a watch, showing a time or inferring a timing event.",
+          "en": "a plain matte wristwatch used as a timing cue",
+          "ko": "시간 단서로 쓰이는 장식 없는 무광 손목시계",
+          "tags": [
+            "human",
+            "accessory",
+            "timing"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance",
+            "material",
+            "concept"
+          ],
+          "properties": [
+            {
+              "dimension": "appearance",
+              "property": "object.appearance",
+              "target": "watch"
+            },
+            {
+              "dimension": "material",
+              "property": "surface.optical_response",
+              "target": "watch"
+            },
+            {
+              "dimension": "concept",
+              "property": "narrative.clue.function",
+              "target": "watch"
+            }
+          ]
+        },
+        "id": "cand_cc939883e2245be28c87062d5e34154e",
+        "provenance": [
+          {
+            "sha256": "2fd29b1352dac849763227bf92b7640c53712608613e507237a8e189b14ae5ee",
+            "source": "slot:wearable_accessory:plain_wristwatch_timing"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "registered5B_full": {
+        "all_roles_considered": true,
+        "authored_decision": {
+          "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/review_01250_02250_01250_01500.json",
+          "item": 158,
+          "sha256": "7b7909a0c4e2a3e002cb9cf0978bcd4667434b444dc1f609757c13cd013cc495"
+        },
+        "candidate_id": "cand_cc939883e2245be28c87062d5e34154e",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "props.type.wristwatch",
+            "quote": "a plain matte wristwatch used as a timing cue",
+            "realization_id": "base",
+            "target": "watch"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.material.matte",
+            "quote": "a plain matte wristwatch used as a timing cue",
+            "realization_id": "base",
+            "target": "watch"
+          },
+          {
+            "dimension": "concept",
+            "pointer": "/content/en",
+            "property": "narrative.clue.timing_cue",
+            "quote": "a plain matte wristwatch used as a timing cue",
+            "realization_id": "base",
+            "target": "watch"
+          }
+        ],
+        "independent_human_review": false,
+        "meaning_summary": "A plain matte wristwatch is used as a timing cue.",
+        "packet_sha256": "e1a922cf703d77895d38be770d857e5dfcaa298c1345a7a3fc1433f518f9697a",
+        "recommended_kind": "visual_option",
+        "reference_sha256": {},
+        "rejected_boundaries": [
+          "The noun wristwatch alone does not prove actual worn attachment or time shown."
+        ],
+        "review_method": "codex_subagent_direct_source_read",
+        "review_provenance": {
+          "assignment_id": "review_01250_02250",
+          "assignment_sha256": "7973664e0d55fb92872c4283e1a453ceafa988e77ff19d0e4db705411e6907e1",
+          "model": "gpt-6.1-sol",
+          "range": [
+            1250,
+            1500
+          ],
+          "reasoning_effort": "high",
+          "task_name": "/root/review_01250_02250",
+          "worker_note": {
+            "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/worker-notes/review_01250_02250-01250-01500.json",
+            "sha256": "474dfaae8dca5e1a29c68216c20e66f823ca080e4364bf26acd201cb35ea81c0"
+          }
+        },
+        "reviewer": "Codex",
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "props.type.wristwatch",
+                "quote": "a plain matte wristwatch used as a timing cue",
+                "target": "watch"
+              }
+            ],
+            "rationale": "A plain matte wristwatch is used as a timing cue.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.material.matte",
+                "quote": "a plain matte wristwatch used as a timing cue",
+                "target": "watch"
+              }
+            ],
+            "rationale": "A plain matte wristwatch is used as a timing cue.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "concept",
+                "pointer": "/content/en",
+                "property": "narrative.clue.timing_cue",
+                "quote": "a plain matte wristwatch used as a timing cue",
+                "target": "watch"
+              }
+            ],
+            "rationale": "A plain matte wristwatch is used as a timing cue.",
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "narrative_clue"
+          }
+        ],
+        "schema": "photo-codex-direct-review/v2",
+        "source_record_sha256": "2962ca264de6e6ac46968350e9b75d041e7eb18f7b5f520dca17de8b4c737f83",
+        "status": "approved",
+        "uncertainties": []
+      },
+      "registered5B_locator": {
+        "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_01250_02250_01250_01500.json",
+        "file_sha256": "db52bb59c3577d8743025dd2b219d5220e95e97e0d9f8e6c767c7e76e279a4d2",
+        "item": 158,
+        "row_sha256": "03b140cd1867fa346b7cf21be074ad573f49e8135a2cab1eabcd86ac23ee4d96"
+      },
+      "rejected_boundaries": [
+        "No worn attachment, actual wrist/owner, clock time, functioning accuracy, event, metal identity or new watch."
+      ],
+      "source_after_existing5B": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "a plain matte wristwatch used as a timing cue",
+          "ko": "무광 손목시계",
+          "tags": [
+            "human",
+            "accessory",
+            "timing"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_cc939883e2245be28c87062d5e34154e",
+        "provenance": [
+          {
+            "sha256": "2fd29b1352dac849763227bf92b7640c53712608613e507237a8e189b14ae5ee",
+            "source": "slot:wearable_accessory:plain_wristwatch_timing"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "source_intrinsic_guard_manual_review": "Human for_any intrinsic. Body translation restores EN plain/cue, no actual accessory wearing.",
+      "source_original": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "en": "a plain matte wristwatch used as a timing cue",
+          "ko": "무광 손목시계",
+          "tags": [
+            "human",
+            "accessory",
+            "timing"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "appearance"
+          ],
+          "properties": []
+        },
+        "id": "cand_cc939883e2245be28c87062d5e34154e",
+        "provenance": [
+          {
+            "sha256": "2fd29b1352dac849763227bf92b7640c53712608613e507237a8e189b14ae5ee",
+            "source": "slot:wearable_accessory:plain_wristwatch_timing"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "status": "unsigned_literal_native_draft_pending_root_review",
+      "whole_meaning": "The same existing plain matte wristwatch serves as a timing cue.",
+      "whole_positive_source_units": {
+        "application_contract": [
+          "watchP",
+          "plain",
+          "matte",
+          "cue"
+        ],
+        "en": [
+          "watchP",
+          "plain",
+          "matte",
+          "cue"
+        ],
+        "ko": [
+          "watchP",
+          "plain",
+          "matte",
+          "cue"
+        ]
+      }
+    }
+  ],
+  "schema": "photo-manual-native-unsigned-draft/v1",
+  "source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b",
+  "task_name": "/root/review_11870_12250"
+}
