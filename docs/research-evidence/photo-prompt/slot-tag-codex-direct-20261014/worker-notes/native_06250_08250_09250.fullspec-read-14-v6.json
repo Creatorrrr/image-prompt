@@ -1,0 +1,416 @@
+{
+  "task_name": "/root/review_06250_07250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "candidate_range": [
+    8625,
+    8650
+  ],
+  "catalog_canonical_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "direct_full_read_specs": {
+    "material_mechanics": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Explicitly declared softness, hardness, rigidity, stiffness, flexibility, deformability or elastic response of one identified material, object material region or material layer, distinct from its identity, optical finish, static geometry and actual motion.",
+      "description_ko": "소유자가 특정된 물질·물건의 재료 영역·재료층에 직접 선언된 부드러움·경도·강성·뻣뻣함·유연성·변형성·탄성 반응. 재질 정체·광학 마감·정적 형상·실제 움직임과 구별하며, 외관만으로 물성을 추정하지 않는다.",
+      "dimensions": [
+        "material"
+      ],
+      "evidence_terms": [
+        "rigid",
+        "stiff",
+        "hard",
+        "soft",
+        "flexible",
+        "elastic",
+        "강성",
+        "경도",
+        "유연성",
+        "탄성"
+      ],
+      "excludes": [
+        "Material names, glossy appearance, crinkling, folds, roundness, a spring/hinge label or a soft visual mood alone without an explicit mechanical-quality proposition.",
+        "Actual motion, a selected transformation stage, part assembly, static layer thickness or object width/height alone; no duplicate role on the same property merely by renaming its carrier.",
+        "Soft anatomical contour, temporal fullness, expression, emotional softness or light softness alone is not constitutive material softness. An independently declared biological or represented carrier is not inferred from the role.",
+        "Do not infer chemistry, modulus, force, numeric hardness, safety, durability, load capacity, a pressure source, pneumatic operation or measured success. Preserve any explicitly stated real value or condition rather than deleting it for lack of measurement certification.",
+        "No mass, density, lightweight claim, temperature or moisture is established by softness, rigidity or flexibility. No new layer, object, body part or actor follows from this slot."
+      ],
+      "id": "material_mechanics",
+      "includes": [
+        "An explicitly rigid toe-ring object retains that same ring as carrier; its circular outline and worn placement are separate facts.",
+        "Explicit soft polymer and flexible pneumatic channels retain their separately declared actual material/channel owners. Deforming edges are actual motion, not proof that every material region is flexible.",
+        "A declared mechanical quality is a source requirement, not a certified measurement. A selected quality is an effect; a separately required existing quality is a prerequisite; an express preservation keeps the exact independently frozen quality."
+      ],
+      "neighbors": [
+        "surface_material",
+        "texture",
+        "material_form",
+        "object_structure",
+        "garment_detail",
+        "physical_motion",
+        "transformation_stage",
+        "sensory_cue",
+        "thermal_state"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "material.mechanics",
+        "material.mechanical",
+        "surface.mechanics"
+      ],
+      "semantic_role": "direct"
+    },
+    "material_thickness": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Explicit physical thickness or thinness of one identified material layer or its bounded cross-section, separate from in-plane width, whole-object outline, optical opacity and material identity.",
+      "description_ko": "소유자가 특정된 재료층 또는 그 경계 단면의 직접 선언된 물리적 두께·얇음. 면 안의 폭·전체 물체 윤곽·광학 불투명도·재질 정체와 구별하고, 층이나 단면을 새로 만들지 않는다.",
+      "dimensions": [
+        "material"
+      ],
+      "evidence_terms": [
+        "thin fabric",
+        "thick edges",
+        "layer thickness",
+        "두께",
+        "얇은 천",
+        "두꺼운 가장자리"
+      ],
+      "excludes": [
+        "Broad/substantial width, long length, large garment volume, a chunky style name or visible edge alone without actual thickness meaning. Ambiguous chunky-band wording must not silently select a cross-sectional axis.",
+        "Optical opacity/transmission, pigment concentration, thin cosmetic coverage, a thin light band, anatomical slenderness or low visual density alone.",
+        "Material softness, stiffness, mass, lightweight status, strength, insulation or chemistry inferred from thickness.",
+        "Physical assembly or whole-object geometry already fully expressed by a specialized construction role does not receive a second thickness fact by renaming that same geometry. Separate positive material-layer thickness can coexist with distinct construction, texture or optical facts.",
+        "Do not invent a separate backing layer, new material body, exact dimension, wearer, body part or product from the role name."
+      ],
+      "id": "material_thickness",
+      "includes": [
+        "An explicitly thin fabric layer in loose trousers retains the material-layer owner; crinkling, garment openings and loose fit have separate meanings.",
+        "A declared plastic layer with bounded thick edges supports its material cross-section thickness. Its transparency, reflections, flexibility and the edge outline remain separately evaluated.",
+        "Mode follows the complete source: selected thickness is an effect; required existing thickness is a prerequisite; explicitly maintained thickness is preservation. Preserve a stated number/unit literally without inventing one."
+      ],
+      "neighbors": [
+        "surface_material",
+        "material_mechanics",
+        "texture",
+        "material_form",
+        "object_structure",
+        "garment_detail",
+        "garment_fit",
+        "silhouette_proportion"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "material.thickness",
+        "surface.layer_thickness",
+        "layer.thickness"
+      ],
+      "semantic_role": "direct"
+    },
+    "physical_mass": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Explicit physical mass or ordinary physical heaviness/lightness declared for one identified carrier or an explicitly owned part, including a stated comparison or literal numeric mass/weight value. Keep physical quantity, owner scope and source claim status distinct from appearance and measured verification.",
+      "description_ko": "하나의 실제 선언된 대상 또는 그 대상이 실제로 소유한 부위의 명시적 물리 질량·무게·가벼움·무거움. 명시된 비교와 질량·무게 수치도 포함하되, 물리량 종류·소유 범위·원문의 주장 수준을 보존하며 외관이나 측정 확인으로 확대하지 않는다.",
+      "dimensions": [
+        "material"
+      ],
+      "evidence_terms": [
+        "mass",
+        "weight",
+        "lightweight",
+        "heavy",
+        "lighter than",
+        "heavier than",
+        "질량",
+        "무게",
+        "경량",
+        "가벼운",
+        "무거운"
+      ],
+      "excludes": [
+        "Visual/compositional weight, metaphorical narrative weight, emotional heaviness, heavy rain intensity, hair weight-line geometry, or a density/size/style label alone without an actual physical mass/weight proposition.",
+        "Lightweight-looking, heavy-looking, airy appearance, dense-looking texture or an evoked heavy/light sensation alone. Preserve that exact appearance or sensory wording, but do not upgrade it to actual mass. Sensory_cue requires its own observable-proxy contract; it is not an automatic fallback tag.",
+        "Thickness, macroscopic volume, garment fit, body contour, packing density, material identity, optical finish, stiffness, flexibility or thermal state alone. None supplies mass by inference, and a broad material.* technical prefix does not expand surface_material prose.",
+        "Body-weight distribution, load-bearing support, a force, pressure, gravitational acceleration, buoyancy, inertia, drag or motion alone. Keep explicit support/contact/motion independently; do not derive a mass or strength from them.",
+        "An ungrounded comparison endpoint, an unspecified collective inventory, a new object or anatomical part introduced to carry the property, or transfer from local part to whole/body/neighbor.",
+        "Actual body weight, health, ability, age, identity or attractiveness inferred from anatomy, clothing size, posture, a material name, perspective, or visible handling effort. No new human, body-weight target or change is supplied by the slot.",
+        "A scale, display number, weighing verb or provenance label alone is not verified mass or a certified measurement. Visible text, a measuring operation and actual declared quantity each retain separate evidence/permission; no force-versus-mass conversion or fabricated number/unit.",
+        "Metadata tags, existing effects/old slot names, negative guards, optional children or source owner category labels cannot supply a positive mass value or mandatory whole-record role."
+      ],
+      "id": "physical_mass",
+      "includes": [
+        "An explicitly lightweight garment or material body, heavy ledger or heavy gate qualifies on its actual declared carrier even without a number, unit or visual weighing demonstration. Do not delete the qualitative meaning because measurement is unavailable.",
+        "A statement that one identified carrier or explicitly owned part is lighter/heavier than another preserves both independently grounded endpoints and its stated comparison basis. No absolute mass, size ratio or density follows.",
+        "A source-stated numeric mass/weight preserves the literal number, unit, referent, quantity kind and stated conditions. It is a declared value unless the source separately states a measurement claim; neither is independently verified by a visible scale or numeral alone. Do not convert mass to force or change units.",
+        "Keep a local part value on that exact part. It does not become the whole owner mass or another region mass, and a whole value does not distribute to parts without an explicit source rule.",
+        "A selected physical mass/heaviness/lightness remains E. A separately required existing declared mass/weight is P; an explicit preserve instruction is PR. Actual change in mass retains both carrier and stated change, without inventing material addition/removal, a cause, rate or endpoint. A role label or an existing-owner selection is never a waiver of the actual selected effect.",
+        "Intrinsic human/adult/domain guards, independent owner selection, permitted operation and actual locks remain mandatory. A literal declared body mass is not inferred from body form; this role neither creates a person nor authorizes a body-weight change."
+      ],
+      "neighbors": [
+        "surface_material",
+        "texture",
+        "object_structure",
+        "garment_detail",
+        "garment_fit",
+        "physical_motion",
+        "scale_relation",
+        "sensory_cue",
+        "body_form",
+        "thermal_state",
+        "contact_point",
+        "prop_state"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "physical.mass",
+        "physical.weight"
+      ],
+      "semantic_role": "direct"
+    },
+    "body_pose": {
+      "applicability": {},
+      "core_fields": [
+        "event",
+        "subject"
+      ],
+      "description": "Explicit whole-body posture or support, or explicitly stated local non-hand articulation of an identified biological, mechanical or represented body. Preserve the declared local part and its existing body ownership without inferring unmentioned anatomy.",
+      "description_ko": "생물·기계·묘사된 몸의 명시적 전신 자세·지지, 또는 직접 선언된 손 이외 국소 부위의 관절 자세. 실제 국소 부위와 기존 몸의 소유 관계를 보존하며 언급하지 않은 해부 부위나 지지 접촉을 추론하지 않는다.",
+      "dimensions": [
+        "pose"
+      ],
+      "evidence_terms": [
+        "seated",
+        "standing",
+        "kneeling",
+        "lying",
+        "pose",
+        "pelvis"
+      ],
+      "excludes": [
+        "A rigid object shape, a camera viewpoint or an activity word alone does not establish a whole-body pose.",
+        "Relative rotation of body axes, hand articulation, concrete action and rendered motion have separate roles when supported.",
+        "Do not turn an unavailable body or limb into a new entity to satisfy a pose.",
+        "Hand/finger articulation keeps hand_pose; explicit axis orientation or relative regional rotation keeps body_orientation. A local pose does not receive duplicate roles solely by renaming the same flexion as a rotation. A joint/hinge label, static object construction or generic believable movement alone does not supply a selected local articulated posture."
+      ],
+      "id": "body_pose",
+      "includes": [
+        "Explicit standing, sitting, lying or other whole-body posture of a declared human, animal, robot or represented body.",
+        "Preserve the actual support and articulated connections when declared. Standing alone does not supply feet, legs, a supporting ground contact or a human body.",
+        "Decide effect versus a required existing posture from the whole source; source-specific category and domain conditions remain cumulative.",
+        "An explicitly bent elbow is a local articulated posture of that same owned elbow; it does not supply a full-body stance, an exact flexion angle, upper-arm/forearm inventory, a second actor or actual bending motion."
+      ],
+      "neighbors": [
+        "action",
+        "camera_movement",
+        "contact_point",
+        "hand_pose",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "body.pose",
+        "pose.",
+        "body.support"
+      ],
+      "semantic_role": "direct"
+    },
+    "season": {
+      "applicability": {},
+      "core_fields": [
+        "setting",
+        "event"
+      ],
+      "description": "Explicit seasonal setting or its declared observable cues, not a season inferred from one ambiguous object.",
+      "description_ko": "계절: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "timing"
+      ],
+      "evidence_terms": [
+        "spring",
+        "summer",
+        "autumn",
+        "winter",
+        "season",
+        "계절"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "season",
+      "includes": [
+        "Explicit seasonal setting or its declared observable cues, not a season inferred from one ambiguous object."
+      ],
+      "neighbors": [
+        "calendar_context",
+        "historical_period",
+        "narrative_phase",
+        "procedure_step",
+        "time_of_day",
+        "transformation_stage"
+      ],
+      "owners": [
+        "context"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "timing.season",
+        "setting.season"
+      ],
+      "semantic_role": "contextual"
+    },
+    "camera_direction": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Camera viewing axis and roll relative to the subject, distinct from height, distance and body orientation.",
+      "description_ko": "카메라 관측 방향과 대상 대비 각도: 높이·관찰 위치·몸 방향이 섞임; 관측축과 위치를 별도 표현",
+      "dimensions": [
+        "camera"
+      ],
+      "evidence_terms": [
+        "view",
+        "angle",
+        "frontal",
+        "oblique",
+        "over-the-shoulder",
+        "roll"
+      ],
+      "excludes": [
+        "높이·관찰 위치·몸 방향이 섞임; 관측축과 위치를 별도 표현"
+      ],
+      "id": "camera_direction",
+      "includes": [
+        "Camera viewing axis and roll relative to the subject, distinct from height, distance and body orientation."
+      ],
+      "neighbors": [
+        "body_orientation",
+        "camera_distance",
+        "camera_height",
+        "viewer_position"
+      ],
+      "owners": [
+        "camera"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "camera.direction",
+        "camera.angle",
+        "camera.roll",
+        "view.direction"
+      ],
+      "semantic_role": "direct"
+    },
+    "camera_movement": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Declared camera movement or support stability during capture, separate from subject movement and its recorded blur.",
+      "description_ko": "카메라 움직임: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "camera"
+      ],
+      "evidence_terms": [
+        "camera shake",
+        "camera movement",
+        "panning",
+        "tripod",
+        "handheld"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "camera_movement",
+      "includes": [
+        "Declared camera movement or support stability during capture, separate from subject movement and its recorded blur."
+      ],
+      "neighbors": [
+        "action",
+        "body_pose",
+        "contact_point",
+        "hand_pose",
+        "motion_rendering",
+        "physical_motion"
+      ],
+      "owners": [
+        "camera"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "camera.movement",
+        "camera.stability"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "body_pose_exact_delta": {
+    "description": {
+      "before": "Explicit whole-body posture, support or articulation of an identified biological, mechanical or represented body, without inferring unmentioned anatomy.",
+      "after": "Explicit whole-body posture or support, or explicitly stated local non-hand articulation of an identified biological, mechanical or represented body. Preserve the declared local part and its existing body ownership without inferring unmentioned anatomy."
+    },
+    "description_ko": {
+      "before": "생물·기계·묘사된 몸의 명시적 전신 자세·지지·관절 배치. 실제 대상과 몸의 범위를 확인하며 언급하지 않은 신체 부위나 지지 접촉을 추론하지 않는다.",
+      "after": "생물·기계·묘사된 몸의 명시적 전신 자세·지지, 또는 직접 선언된 손 이외 국소 부위의 관절 자세. 실제 국소 부위와 기존 몸의 소유 관계를 보존하며 언급하지 않은 해부 부위나 지지 접촉을 추론하지 않는다."
+    },
+    "excludes": {
+      "before": [
+        "A rigid object shape, a camera viewpoint or an activity word alone does not establish a whole-body pose.",
+        "Relative rotation of body axes, hand articulation, concrete action and rendered motion have separate roles when supported.",
+        "Do not turn an unavailable body or limb into a new entity to satisfy a pose."
+      ],
+      "after": [
+        "A rigid object shape, a camera viewpoint or an activity word alone does not establish a whole-body pose.",
+        "Relative rotation of body axes, hand articulation, concrete action and rendered motion have separate roles when supported.",
+        "Do not turn an unavailable body or limb into a new entity to satisfy a pose.",
+        "Hand/finger articulation keeps hand_pose; explicit axis orientation or relative regional rotation keeps body_orientation. A local pose does not receive duplicate roles solely by renaming the same flexion as a rotation. A joint/hinge label, static object construction or generic believable movement alone does not supply a selected local articulated posture."
+      ]
+    },
+    "includes": {
+      "before": [
+        "Explicit standing, sitting, lying or other whole-body posture of a declared human, animal, robot or represented body.",
+        "Preserve the actual support and articulated connections when declared. Standing alone does not supply feet, legs, a supporting ground contact or a human body.",
+        "Decide effect versus a required existing posture from the whole source; source-specific category and domain conditions remain cumulative."
+      ],
+      "after": [
+        "Explicit standing, sitting, lying or other whole-body posture of a declared human, animal, robot or represented body.",
+        "Preserve the actual support and articulated connections when declared. Standing alone does not supply feet, legs, a supporting ground contact or a human body.",
+        "Decide effect versus a required existing posture from the whole source; source-specific category and domain conditions remain cumulative.",
+        "An explicitly bent elbow is a local articulated posture of that same owned elbow; it does not supply a full-body stance, an exact flexion angle, upper-arm/forearm inventory, a second actor or actual bending motion."
+      ]
+    }
+  },
+  "unchanged_145_mechanically_equal": true,
+  "whole_149_semantic_read_claimed": false,
+  "boundary": "Complete new3+changedbody_pose and exact4field delta actuallyread. Season/camera_direction/camera_movement fullread. Unchangedrelevantspecs reused only explicitoldfullreadprovenance/equality. First cat of approval embedded full139->149 review truncated; no completefresh embeddedreview/catalog semanticreadclaimed. Separate approvalcontrolfields/reviewmetadata projection and full acceptance were read; exactafter catalog equality checked mechanically. No historicaldraft/proof rebase."
+}
