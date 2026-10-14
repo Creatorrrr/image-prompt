@@ -261,13 +261,25 @@ def validate_decision(row, data, *, provenance_cache=None, binding_cache=None):
                 or role['scope'] == 'whole_record' and set(role['realization_ids']) != known_rids
                 or not isinstance(role['evidence'], list) or not role['evidence']):
             raise ValueError('role contract, scope or evidence missing')
-        for fact in role['evidence']:
+        covered_rids = set()
+        for evidence in role['evidence']:
+            if 'realization_id' in evidence:
+                rid = evidence['realization_id']
+                if rid not in role['realization_ids']:
+                    raise ValueError('role evidence names a foreign realization')
+                fact = {k: v for k, v in evidence.items() if k != 'realization_id'}
+                fact_rids = [rid]
+            else:
+                fact, fact_rids = evidence, role['realization_ids']
             validate_fact(fact, record, catalog, tag)
-            for rid in role['realization_ids']:
+            for rid in fact_rids:
                 validate_fact(fact, record, catalog, tag, realization_id=rid)
                 if not any({k: v for k, v in item.items() if k != 'realization_id'} == fact
                            and item['realization_id'] == rid for item in row['facts']):
                     raise ValueError('role evidence must be an explicitly authored branch fact')
+                covered_rids.add(rid)
+        if covered_rids != set(role['realization_ids']):
+            raise ValueError('each selected role realization requires its own positive evidence')
     for fact in row['facts']:
         if not isinstance(fact, dict) or 'realization_id' not in fact or fact['realization_id'] not in known_rids:
             raise ValueError('fact must name an actual source realization')
