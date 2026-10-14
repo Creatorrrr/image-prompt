@@ -40,8 +40,11 @@ def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, reali
         selections = dependency_selections or {}
         if not isinstance(selections, dict) or not set(selections) <= set(dependency_choices):
             raise ValueError('role proposal contains foreign dependency selections')
+        descriptor=evidence.owner_selection_descriptors(proof,rid)
         try:
             effect_closure = evidence.effect_closure(cid, proof, rid, selections)
+            if fit['status']!='incompatible' and descriptor is not None and evidence.pending_owner_selection(c.entry(data,cid,realization_id=rid,dependency_selections=selections)):
+                fit.update(status='review_required',reason='explicit_existing_owner_selection_required')
         except ValueError:
             if fit['status'] != 'incompatible':
                 fit.update(status='review_required', reason='actual_dependency_realization_selection_required')
@@ -57,13 +60,15 @@ def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, reali
              'source_record_sha256': reader.meta['record_sha256'][cid] if reader is not None else c.digest(record),
              'applicability_status': fit['status'], 'semantic_role': fit['semantic_role'],
              'adoption': 'optional', 'scope': 'request', 'persistent_tag_write': False}
+    if evidence.native_status(record)=='qualified' and descriptor is not None:
+        value['owner_selection_requirements']=descriptor
     value['proposal_id'] = 'role_' + c.digest(value)[:32]
     return value
 
 
-def entry(data, proposal):
+def entry(data, proposal,*,owner_selections=None):
     return c.entry(data, proposal['candidate_id'], proposal['source_binding_id'],
-                   realization_id=proposal['realization_id'], dependency_selections=proposal['dependency_selections'])
+                   realization_id=proposal['realization_id'], dependency_selections=proposal['dependency_selections'],owner_selections=owner_selections)
 
 
 def validate(data, proposal, eligible_bindings):

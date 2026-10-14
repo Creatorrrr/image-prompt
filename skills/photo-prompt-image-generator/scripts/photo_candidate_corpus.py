@@ -272,7 +272,7 @@ def load(assets, manifest_name=MANIFEST_NAME):
     return validate(corpus)
 
 
-def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, dependency_selections=None):
+def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, dependency_selections=None,owner_selections=None):
     """Native semantic record, optionally with an explicitly selected role."""
     record = corpus['candidates'][candidate_id]
     result = copy.deepcopy(record['content'])
@@ -284,6 +284,8 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
         result['_semantic_evidence_guard'] = copy.deepcopy(record['_semantic_evidence_guard'])
     elif result['_native_qualification'] == 'qualified':
         result['_semantic_evidence_guard'] = photo_semantic_evidence.compact(record, corpus)
+    if owner_selections is not None:
+        result['_native_owner_selections']=copy.deepcopy(owner_selections)
     if dependency_selections is not None:
         result['_native_dependency_selections'] = copy.deepcopy(dependency_selections)
     result.update(copy.deepcopy(record['conditions']))
@@ -321,6 +323,9 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
         proof = result['_semantic_evidence_guard']
         if selected_rid in proof['effect_sets']:
             effects = copy.deepcopy(proof['effect_sets'][selected_rid])
+    if result['_native_qualification']=='qualified' and selected_rid in proof['effect_sets']:
+        descriptor=photo_semantic_evidence.owner_selection_descriptors(proof,selected_rid)
+        if descriptor is not None:result['owner_selection_requirements']=descriptor
     result['affected_dimensions'] = list(effects['dimensions'])
     result['affected_properties'] = copy.deepcopy(effects['properties'])
     return result

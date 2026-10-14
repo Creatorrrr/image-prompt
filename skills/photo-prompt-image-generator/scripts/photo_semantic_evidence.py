@@ -12,6 +12,9 @@ witnesses = load('photo_semantic_witnesses')
 
 SCHEMA = 'photo-candidate-role-evidence/v4'
 OWNER_SCHEMA = 'photo-native-owner-bindings/v2'
+SELECTOR_OWNER_SCHEMA = 'photo-native-owner-bindings/v3'
+OWNER_SELECTION_SCHEMA = 'photo-request-owner-selections/v1'
+MAX_OWNER_SELECTION_ENTRIES = 64
 MODES = frozenset({'effect', 'prerequisite', 'preservation', 'context'})
 OPERATIONS = frozenset({'set_value', 'add_entity', 'remove_entity', 'relocate', 'select_plane'})
 NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounders',
@@ -218,32 +221,113 @@ def _fact_valid(fact):
             raise ValueError('only source-supported preservation can bind the frozen value')
 
 
-def _validate_owner_map(owner_map, facts):
-    if (not isinstance(owner_map, dict) or set(owner_map) != {'schema', 'bindings'}
-            or owner_map['schema'] != OWNER_SCHEMA or not isinstance(owner_map['bindings'], list)
-            or len(owner_map['bindings']) > 32):
+def owner_binding_plan(owner_map):
+    if (not isinstance(owner_map,dict) or set(owner_map)!={'schema','bindings'}
+            or owner_map['schema'] not in {OWNER_SCHEMA,SELECTOR_OWNER_SCHEMA}
+            or not isinstance(owner_map['bindings'],list) or len(owner_map['bindings'])>32):
         raise ValueError('bounded explicit source owner bindings required')
-    result = {}
+    result={}
     for row in owner_map['bindings']:
-        if (not isinstance(row, dict) or set(row) != {'target', 'core_role', 'origin', 'introduced_by'}
-                or not concrete_owned_value(row['target']) or not isinstance(row['core_role'],str)
-                or row['core_role'] not in witnesses.CORE_ROLES
-                or row['target'] in result or row['origin'] not in {'existing', 'introduced'}
-                or row['origin'] == 'existing' and row['introduced_by'] is not None
-                or row['origin'] == 'introduced' and not concrete_owned_value(row['introduced_by'])):
+        modern=owner_map['schema']==SELECTOR_OWNER_SCHEMA
+        fields={'target','origin','introduced_by','selector' if modern else 'core_role'}
+        if (not isinstance(row,dict) or set(row)!=fields or not concrete_owned_value(row['target'])
+                or row['target'] in result or row['origin'] not in {'existing','introduced'}
+                or row['origin']=='existing' and row['introduced_by'] is not None
+                or row['origin']=='introduced' and not concrete_owned_value(row['introduced_by'])):
             raise ValueError('ambiguous or incomplete owner binding')
-        result[row['target']] = row
-    wanted = {fact['target'] for fact in facts}
-    wanted.update(owner for fact in facts if fact['mode'] == 'effect' for owner in fact['receivers'])
-    if set(result) != wanted:
-        raise ValueError('owner map must cover the exact active fact/receiver owners')
-    for target, row in result.items():
-        if row['origin'] == 'introduced':
-            creators = [fact for fact in facts if fact['id'] == row['introduced_by']]
-            if (len(creators) != 1 or creators[0]['mode'] != 'effect'
-                    or creators[0]['operation'] != 'add_entity' or creators[0]['target'] != target):
-                raise ValueError('introduced owner needs its actual add_entity effect')
+        selector=row['selector'] if modern else {'kind':'core_role','role':row['core_role']}
+        if not isinstance(selector,dict) or selector.get('kind') not in {'core_role','selected_existing_owner'}:
+            raise ValueError('unknown explicit owner selector')
+        if selector['kind']=='core_role':
+            if (set(selector)!={'kind','role'} or not isinstance(selector['role'],str)
+                    or selector['role'] not in witnesses.CORE_ROLES):
+                raise ValueError('exact neutral role selector required')
+        elif set(selector)!={'kind'} or row['origin']!='existing' or row['introduced_by'] is not None:
+            raise ValueError('selected owner is existing only with no default')
+        result[row['target']]={**row,'selector_kind':selector['kind'],
+            'core_role':selector.get('role')}
     return result
+
+
+def _validate_owner_map(owner_map, facts):
+    result=owner_binding_plan(owner_map)
+    wanted={fact['target'] for fact in facts}
+    wanted.update(owner for fact in facts if fact['mode']=='effect' for owner in fact['receivers'])
+    if set(result)!=wanted:raise ValueError('owner map must cover the exact active fact/receiver owners')
+    for target,row in result.items():
+        creators=[fact for fact in facts if fact['mode']=='effect' and fact['operation']=='add_entity' and fact['target']==target]
+        if row['selector_kind']=='selected_existing_owner' and creators:
+            raise ValueError('selected existing owner cannot introduce an entity')
+        if row['origin']=='introduced':
+            creators=[fact for fact in creators if fact['id']==row['introduced_by']]
+            if len(creators)!=1:raise ValueError('introduced owner needs its actual add_entity effect')
+    return result
+
+
+def owner_selection_requirements(proof,rid):
+    return sorted(target for target,row in owner_binding_plan(proof['owner_maps'][rid]).items()
+                  if row['selector_kind']=='selected_existing_owner')
+
+
+def pending_owner_selection(entry):
+    if proof_of(entry) is not MISSING and isinstance(proof_of(entry),dict) and proof_of(entry).get('has_owner_selectors') is False:return False
+    if native_status(entry)!='qualified' or entry.get('_native_owner_selections') is not None:return False
+    proof=proof_of(entry);rid=entry.get('_realization_id')
+    ids=[rid] if rid is not None else proof['owner_maps']
+    return any(owner_selection_requirements(proof,choice) or any(
+        pending_owner_selection(_guard_entry(guard['guard'],child_rid,{}))
+        for _,guard in selected_dependencies(proof,choice,entry.get('_native_dependency_selections',{}))
+        for child_rid in guard['guard']['effect_sets']) for choice in ids)
+
+
+def owner_selection_descriptors(proof,rid):
+    if proof.get('has_owner_selectors') is False:return None
+    nodes={}
+    def visit(guard,choice,mode):
+        targets=owner_selection_requirements(guard,choice)
+        if targets:
+            cid=guard.get('candidate_id') or guard['review']['original_review']['candidate_id']
+            key=(cid,choice)
+            if key not in nodes:
+                nodes[key]={'candidate_id':cid,'realization_id':choice,'meaning_sha256':guard['meaning_sha256'],
+                    'qualification_sha256':guard.get('qualification_sha256',c.digest(guard)),
+                    'targets':targets,'adoption_modes':[],
+                    'prerequisite_facts':[{field:copy.deepcopy(fact[field]) for field in ('id','dimension','target','property','mode','value')}
+                        for fact in guard['facts'] if fact['realization_id']==choice and fact['target'] in targets and fact['mode'] in {'prerequisite','preservation'}]}
+            if mode not in nodes[key]['adoption_modes']:nodes[key]['adoption_modes'].append(mode)
+        for dependency,projected in _dependency_guards(guard,choice):
+            for child_rid in dependency['realization_ids']:visit(projected['guard'],child_rid,dependency['selection'])
+    visit(proof,rid,'root')
+    return {'schema':'photo-owner-selection-requirements/v1','nodes':[nodes[key] for key in sorted(nodes)]} if nodes else None
+
+
+def validate_owner_selections(value,core,graph):
+    if value is None:return {}
+    if (not isinstance(value,dict) or set(value)!={'schema','core_sha256','owner_graph_sha256','entries'}
+            or value['schema']!=OWNER_SELECTION_SCHEMA or not _sha256(core.get('canonical_sha256'))
+            or value['core_sha256']!=core['canonical_sha256']
+            or core['canonical_sha256']!=c.digest({key:item for key,item in core.items() if key not in {'canonical_sha256','core_id'}})
+            or value['owner_graph_sha256']!=c.digest(graph) or not isinstance(value['entries'],list)
+            or not 1<=len(value['entries'])<=MAX_OWNER_SELECTION_ENTRIES):
+        raise ValueError('exact frozen core/graph-bound owner selections required')
+    entries={}
+    for row in value['entries']:
+        if (not isinstance(row,dict) or set(row)!={'candidate_id','realization_id','meaning_sha256','qualification_sha256','bindings'}
+                or not isinstance(row['candidate_id'],str) or not c.ID.fullmatch(row['candidate_id'])
+                or not concrete_owned_value(row['realization_id']) or not _sha256(row['meaning_sha256'])
+                or not _sha256(row['qualification_sha256']) or not isinstance(row['bindings'],list) or not 1<=len(row['bindings'])<=32):
+            raise ValueError('bounded exact CID/RID owner selection required')
+        key=(row['candidate_id'],row['realization_id'])
+        if key in entries or any(cid==key[0] for cid,_ in entries):raise ValueError('duplicate/conflicting owner selection CID/RID')
+        targets=set()
+        for binding in row['bindings']:
+            if (not isinstance(binding,dict) or set(binding)!={'target','owner_id'}
+                    or not concrete_owned_value(binding['target']) or binding['target'] in targets
+                    or not concrete_owned_value(binding['owner_id']) or binding['owner_id'] not in graph['owners']):
+                raise ValueError('exact unique source target and existing frozen actual owner required')
+            targets.add(binding['target'])
+        entries[key]=row
+    return entries
 
 
 def member_requirement_paths(record, member_index):
@@ -495,6 +579,8 @@ def compact(record, corpus=None, _stack=()):
     result.pop('source_units'); result.pop('review')
     for fact in result['facts']:
         fact.pop('pointer'); fact.pop('quote')
+    result['candidate_id'] = record['id']
+    result['qualification_sha256'] = c.digest(proof)
     result['dependency_guards'] = {}
     if record['id'] in _stack or len(_stack) > MAX_DEPENDENCY_DEPTH:
         raise ValueError('cyclic or unbounded dependency projection')
@@ -509,6 +595,8 @@ def compact(record, corpus=None, _stack=()):
                 'qualification_sha256':c.digest(child['content']['role_evidence']),
                 'guard': compact(child, corpus, (*_stack, record['id']))})
         result['dependency_guards'][rid] = projected
+    result['has_owner_selectors']=any(owner_selection_requirements(result,rid) for rid in result['owner_maps']) or any(
+        row['guard'].get('has_owner_selectors',False) for rows in result['dependency_guards'].values() for row in rows)
     result['compact_sha256'] = c.digest(result)
     return result
 
@@ -583,12 +671,10 @@ def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entr
                   'properties': sorted(entry.get('affected_properties', []), key=property_key)}
         facts, bindings = _selected_contract(proof, rid, actual)
         frozen = frozen_witnesses(core); graph = frozen['graph']
-        actual_owners = resolve_owner_bindings(proof, rid, graph)
-        for binding in bindings.values():
-            if binding['origin'] == 'existing' and binding['core_role'] not in graph['roles']:
-                return denied
-            if binding['origin'] == 'introduced' and binding['core_role'] in graph['roles']:
-                return denied
+        if allow_unselected and pending_owner_selection(entry):
+            return {'status':'qualified','allowed':True,'search_only':True,
+                    'reason':'explicit_existing_owner_selection_required','owner_selection_requirements':owner_selection_requirements(proof,rid)}
+        actual_owners,owner_bindings = owner_resolution(proof,rid,graph,core=core,owner_selections=entry.get('_native_owner_selections'))
         resolutions = []
         for fact in facts:
             _fact_valid_runtime(fact)
@@ -627,7 +713,7 @@ def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entr
                 if not allow_unselected or chosen is not None:
                     return {**denied, 'reason':'explicit_dependency_realization_required'}
                 results = [admission(_guard_entry(guards['guard'], choice, selections,
-                                        extra_conditions=proof['guard_sets'][rid]['member_conditions'][cid]),
+                                        extra_conditions=proof['guard_sets'][rid]['member_conditions'][cid],owner_selections=entry.get('_native_owner_selections')),
                                      core, allow_unselected=True, _nested=True, _whole_entry=whole_entry) for choice in choices]
                 successful = [row for row in results if row['allowed']]
                 if not successful:
@@ -635,7 +721,7 @@ def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entr
                 children.append({'candidate_id':cid,'search_only':True,'admissions':successful})
                 continue
             result = admission(_guard_entry(guards['guard'], chosen, selections,
-                                  extra_conditions=proof['guard_sets'][rid]['member_conditions'][cid]),
+                                  extra_conditions=proof['guard_sets'][rid]['member_conditions'][cid],owner_selections=entry.get('_native_owner_selections')),
                                core, allow_unselected=allow_unselected, _nested=True, _whole_entry=whole_entry)
             if not result['allowed']:
                 return denied
@@ -645,7 +731,9 @@ def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entr
             return {**denied, 'reason':'unused_or_foreign_dependency_selection'}
         return {'status': 'qualified', 'allowed': True, 'reason': 'whole_native_obligations_verified',
                 'resolved_frozen_facts': resolutions, 'dependencies':children, 'native_guards':guards_receipt,
-                'used_dependency_ids':sorted(used)}
+                'used_dependency_ids':sorted(used),**({'owner_resolution':{'candidate_id':proof.get('candidate_id'),
+                    'realization_id':rid,'meaning_sha256':proof['meaning_sha256'],'qualification_sha256':proof.get('qualification_sha256',c.digest(proof)),
+                    'bindings':owner_bindings}} if owner_bindings else {})}
     except (ValueError, KeyError, TypeError, IndexError):
         return denied
 
@@ -655,10 +743,10 @@ def _same_entity(graph, left, right):
     return left in canonical and right in canonical and canonical[left] == canonical[right]
 
 
-def _guard_entry(proof, rid, selections, *, extra_conditions=None):
+def _guard_entry(proof, rid, selections, *, extra_conditions=None,owner_selections=None):
     actual = proof['effect_sets'][rid]
     return {'_semantic_evidence_guard':proof, '_realization_id':rid,
-            '_native_dependency_selections':selections, '_native_extra_conditions':copy.deepcopy(extra_conditions or []),
+            '_native_dependency_selections':selections, '_native_owner_selections':owner_selections, '_native_extra_conditions':copy.deepcopy(extra_conditions or []),
             'affected_dimensions':actual['dimensions'],'affected_properties':actual['properties']}
 
 
@@ -746,6 +834,17 @@ def _selected_contract(proof, rid, actual):
         if fact['id'] in by_id:
             raise ValueError('duplicate selected fact')
         by_id[fact['id']] = fact
+    assignments = {}
+    for fact in facts:
+        if fact['mode'] != 'effect':
+            continue
+        key = property_key(fact)
+        # Repeated language/source anchors describe the same assignment. There
+        # is no implicit partial-value merge or semantic synonym conversion.
+        value = (c.canonical_bytes(fact['value']), fact['operation'], frozenset(fact['receivers']))
+        if key in assignments and assignments[key] != value:
+            raise ValueError('conflicting effect assignment; author distinct properties or an explicit aggregate value')
+        assignments[key] = value
     for fact in facts:
         if any(ref not in by_id or by_id[ref]['mode'] not in {'prerequisite', 'preservation'}
                or ref == fact['id'] for ref in fact['requires']):
@@ -775,25 +874,58 @@ def _fact_valid_runtime(fact):
     _fact_valid(sample)
 
 
-def resolve_owner_bindings(proof, rid, graph):
-    """Source addresses canonical roles; only the core supplies actual identity.
-
-    Introduced local addresses are separate from frozen entities. They cannot
-    witness existence or inherit an ungrounded disjointness exception.
-    """
-    witnesses.validate_graph(graph)
-    result = {}
-    for row in proof['owner_maps'][rid]['bindings']:
-        role = row['core_role']
-        if row['origin'] == 'existing':
-            if role not in graph['roles']:
-                raise ValueError('required canonical owner role has no explicit frozen binding')
-            result[row['target']] = graph['roles'][role]
+def owner_resolution(proof,rid,graph,*,core=None,owner_selections=None):
+    canonical,_=witnesses.validate_graph(graph);plan=owner_binding_plan(proof['owner_maps'][rid]);result={};bindings=[]
+    entries=validate_owner_selections(owner_selections,core or {},graph)
+    wanted=owner_selection_requirements(proof,rid)
+    # CID is source-owned in the proof review; compact source stores it explicitly.
+    cid=proof.get('candidate_id') or (proof.get('review',{}).get('original_review') or {}).get('candidate_id')
+    entry=entries.get((cid,rid))
+    if wanted:
+        if entry is None:raise ValueError('explicit_existing_owner_selection_required')
+        if (entry['meaning_sha256']!=proof['meaning_sha256']
+                or entry['qualification_sha256']!=proof.get('qualification_sha256',c.digest(proof))
+                or {row['target'] for row in entry['bindings']}!=set(wanted)):
+            raise ValueError('owner selection source/proof/target inventory changed')
+    elif entry is not None:raise ValueError('caller cannot override fixed role owner bindings')
+    supplied={row['target']:row['owner_id'] for row in entry['bindings']} if entry else {}
+    frozen=frozen_witnesses(core) if wanted else None
+    for target,row in plan.items():
+        role=row['core_role']
+        if row['selector_kind']=='selected_existing_owner':
+            owner=supplied[target]
+            matches=[fact for fact in frozen['facts'] if fact['dimension']=='subject' and fact['property']=='entity.presence'
+                and _same_entity(graph,fact['target'],owner) and fact['value']=={'type':'entity.presence/v1','value':'present'}]
+            if len(matches)!=1:raise ValueError('selected existing owner needs exact frozen subject/entity.presence')
+            result[target]=owner
+            bindings.append({'target':target,'selector_kind':row['selector_kind'],'owner_id':owner,
+                             'presence_assertion_id':matches[0]['assertion_id']})
+        elif row['origin']=='existing':
+            if role not in graph['roles']:raise ValueError('required canonical owner role has no explicit frozen binding')
+            result[target]=graph['roles'][role]
         else:
-            if role in graph['roles']:
-                raise ValueError('introduced role is already occupied in the frozen core')
-            result[row['target']] = 'native-introduced:' + proof['meaning_sha256'] + ':' + rid + ':' + row['target']
-    return result
+            if role in graph['roles']:raise ValueError('introduced role is already occupied in the frozen core')
+            result[target]='native-introduced:'+proof['meaning_sha256']+':'+rid+':'+target
+    # Different source addresses can resolve to one actual entity. Compare
+    # assignments before permission footprints discard their values/operations.
+    def actual(target):
+        owner=result[target]
+        return owner if plan[target]['origin']=='introduced' else canonical[owner]
+    assignments={}
+    for fact in proof['facts']:
+        if fact['realization_id']!=rid or fact['mode']!='effect':
+            continue
+        key=(fact['dimension'],actual(fact['target']),fact['property'])
+        value=(c.canonical_bytes(fact['value']),fact['operation'],
+               frozenset(actual(target) for target in fact['receivers']))
+        if key in assignments and assignments[key]!=value:
+            raise ValueError('conflicting actual-owner effect assignment; author distinct properties or an explicit aggregate value')
+        assignments[key]=value
+    return result,bindings
+
+
+def resolve_owner_bindings(proof,rid,graph,*,core=None,owner_selections=None):
+    return owner_resolution(proof,rid,graph,core=core,owner_selections=owner_selections)[0]
 
 
 def permission_scope(entry, core):
@@ -804,7 +936,7 @@ def permission_scope(entry, core):
     proof = proof_of(entry)
     if native_status(entry) == 'qualified':
         rid = entry.get('_realization_id', 'base')
-        mapping = resolve_owner_bindings(proof, rid, frozen['graph'])
+        mapping = resolve_owner_bindings(proof,rid,frozen['graph'],core=core,owner_selections=entry.get('_native_owner_selections'))
         actual = []
         for fact in proof['facts']:
             if fact['realization_id'] == rid and fact['mode'] == 'effect':
@@ -818,7 +950,7 @@ def permission_scope(entry, core):
             if chosen not in choices:
                 raise ValueError('actual dependency realization must be selected before applying effects')
             child_dimensions, child_effects, _ = permission_scope(
-                _guard_entry(guards['guard'], chosen, selections), core)
+                _guard_entry(guards['guard'], chosen, selections,owner_selections=entry.get('_native_owner_selections')), core)
             dimensions.update(child_dimensions); effects.extend(child_effects)
     effects = [dict(zip(PROPERTY_FIELDS, key)) for key in dict.fromkeys(property_key(row) for row in effects)]
     return sorted(dimensions), effects, frozen['graph']
@@ -828,7 +960,7 @@ def existing_owner_allowed(entry, core, contract, catalog):
     return admission(entry, core)['allowed']
 
 
-def property_scope_allowed(core, dimensions, effects, *, record=None, realization_id=None):
+def property_scope_allowed(core, dimensions, effects, *, record=None, realization_id=None,owner_selections=None):
     """Property lock checks use the same explicit identities as native admission."""
     from photo_contracts import property_effects_allowed
     try:
@@ -841,7 +973,7 @@ def property_scope_allowed(core, dimensions, effects, *, record=None, realizatio
                 rid = next(iter(proof['owner_maps']))
             if rid not in proof['owner_maps']:
                 return False
-            owners = resolve_owner_bindings(proof, rid, graph)
+            owners = resolve_owner_bindings(proof,rid,graph,core=core,owner_selections=owner_selections if owner_selections is not None else record.get('_native_owner_selections'))
             for row in mapped or []:
                 row['target'] = owners.get(row['target'], row['target'])
         return property_effects_allowed(core.get('intent_lock') or {}, dimensions, mapped, owner_graph=graph)

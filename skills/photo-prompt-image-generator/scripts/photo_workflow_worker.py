@@ -14,6 +14,10 @@ def audit_bound(state,*,runtime=False,reviews=False):
     composed=read_json(bound_path(state,'composed'));snapshot=RuntimeSnapshotProvider(store=store).from_receipt(pack,receipt)
     with ca.bound_native_source(snapshot.data,snapshot.query_context):
         first=ca.audit_composed_prompt(pack,composed,source_data=snapshot.data,query_context=snapshot.query_context);result={'composed_audit':first}
+        if runtime and 'owner_selections' in composed:
+            stored=read_json(bound_path(state,'composed_audit')).get('native_owner_resolution')
+            if not stored or stored!=first.get('native_owner_resolution'):
+                first['status']='fail';first['failures'].append({'check':'native_owner_resolution','reason':'stored and fresh composed owner resolution differ'})
         if runtime:
             path=bound_path(state,'render_request');result['runtime_audit']=ra.audit_image_render_request(pack,composed,read_json(path),request_path=path)
         if first['status']=='pass' and not first['failures']:

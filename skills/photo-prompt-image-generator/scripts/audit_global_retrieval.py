@@ -81,12 +81,12 @@ def audit(pack,data,context):
             else:
                 for hit in combined:
                     cid=hit['document_id']
-                    possible=realizations.eligible_ids(gd,cid,core,contract,picked,slot)
+                    possible=realizations.eligible_ids(gd,cid,core,contract,picked,slot,allow_owner_selection_pending=True)
                     if not possible:
                         rejected.add(cid);continue
                     p=roles.propose(data,slot,cid,source_roles[cid],declared.get(cid,[]),realization_ids=possible)
                     entry=roles.entry(gd,p)
-                    if p['applicability_status']=='incompatible' or not g.core_entry_eligible(data,core,contract,picked,slot,entry):rejected.add(cid);continue
+                    if p['applicability_status']=='incompatible' or not g.core_entry_eligible(data,core,contract,picked,slot,entry,allow_owner_selection_pending=True):rejected.add(cid);continue
                     expected_proposals[p['proposal_id']]=p;chosen.append((cid,p['proposal_id']))
                     if len(chosen)>=limits[slot]:break
             if trace['desired_proposal_ids']!=[p for _,p in chosen] or trace['role_rejected_candidate_ids']!=sorted(rejected) or trace['role_block_reason']!=blocked:raise ValueError('role guard/adoption projection changed')

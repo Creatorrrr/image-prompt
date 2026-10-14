@@ -45,15 +45,15 @@ def eligible(data,core,controls):
             if not g.visual_profile_context_applicability(entry,text,has_authorial_core_context=True)[0]:continue
             if cid in overridden:continue
         conditional=record['effects'].get('realizations') or record['record_kind']=='visual_bundle'
-        realization_ids = (realizations.eligible_ids(data,cid,core,contract,picked,check_effect_scope=False)
+        realization_ids = (realizations.eligible_ids(data,cid,core,contract,picked,check_effect_scope=False,allow_owner_selection_pending=True)
                            if conditional else ['base'])
         if not realization_ids:continue
         entry['_eligible_realization_ids'] = realization_ids
         bindings=by_candidate.get(cid,[])
         candidates=[]
         for bid,b in bindings:
-            fits=(realizations.eligible_ids(data,cid,core,contract,picked,b['slot_id'],bid)
-                  if conditional else g.core_entry_eligible(data,core,contract,picked,b['slot_id'],c.entry(data,cid,bid)))
+            fits=(realizations.eligible_ids(data,cid,core,contract,picked,b['slot_id'],bid,allow_owner_selection_pending=True)
+                  if conditional else g.core_entry_eligible(data,core,contract,picked,b['slot_id'],c.entry(data,cid,bid),allow_owner_selection_pending=True))
             if guard_policy(b['conditions']['subject_applicability'],contract) and fits:
                 candidates.append(bid)
         blob=reader.meta['positive_blobs'][cid] if reader is not None else ' '.join(v for field in index.fields(record).values() for v in field)
