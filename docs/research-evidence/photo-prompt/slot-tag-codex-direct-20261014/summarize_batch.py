@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 import direct_review as review
+from review_state import partition
 
 
 def validate_coverage(order, rows, start, stop, expected_total, *, allow_sparse=False):
@@ -21,7 +22,8 @@ def validate_coverage(order, rows, start, stop, expected_total, *, allow_sparse=
 
 def summarize(start, stop, expected_total, *, allow_sparse=False):
     progress = review.verify()
-    if progress['direct_approved_records'] != expected_total or progress['pending_decisions']:
+    if (progress['direct_approved_records'] != expected_total
+            or progress['pending_decisions'] and not allow_sparse):
         raise ValueError('unexpected coverage or unresolved source decisions')
     baseline = json.loads((review.HERE / 'BASELINE.json').read_text())
     frozen = review.source()
@@ -29,13 +31,11 @@ def summarize(start, stop, expected_total, *, allow_sparse=False):
     if review.c.digest(current) != baseline['source_sha256']:
         raise ValueError('native source changed; ledger-only reporting is invalid')
     order = json.loads((review.HERE / 'ORDER.json').read_text())
-    rows = {}
+    source_rows = []
     for path in sorted((review.HERE / 'decisions').glob('*.json')):
         for row in json.loads(path.read_text())['decisions']:
-            cid = row['candidate_id']
-            if cid in rows:
-                raise ValueError('duplicate canonical judgement')
-            rows[cid] = row
+            source_rows.append(row)
+    rows, pending, all_rows = partition(source_rows)
     prefix = validate_coverage(order, rows, start, stop, expected_total, allow_sparse=allow_sparse)
     previous = defaultdict(set)
     for binding in frozen['slot_bindings'].values():
@@ -90,7 +90,7 @@ def summarize(start, stop, expected_total, *, allow_sparse=False):
         'relationship_proposals': dict(links), 'source_sha256': baseline['source_sha256'],
         'external_model_calls': 0, 'local_embedding_inferences': 0,
         'cumulative_direct_semantic_records': expected_total,
-        'remaining_unreviewed_records': len(order) - expected_total,
+        'remaining_unreviewed_records': progress['unreviewed_records'],
         'stage05_complete': False, 'stages06_08_complete': False}
     verification = {'schema': 'photo-direct-batch-verification/v1',
         'source_range': [start, stop], 'source_and_references_bound': True,
@@ -104,7 +104,10 @@ def summarize(start, stop, expected_total, *, allow_sparse=False):
         'native_sources_and_bindings_unchanged': True, 'protected_documents_unchanged': True,
         'external_model_calls': 0, 'local_embedding_inferences': 0,
         'stage05_complete': False, 'stages06_08_complete': False,
-        'remaining_unreviewed': len(order) - expected_total, 'next_order_offset': expected_total}
+        'remaining_unreviewed': progress['unreviewed_records'], 'next_order_offset': expected_total}
+    if pending:
+        summary['cumulative_pending_source_judgements'] = len(pending)
+        verification['cumulative_pending_source_judgements'] = len(pending)
     if kind_changes:
         summary['record_kind_change_proposals'] = kind_changes
         summary['reviewed_diagnostic_records'] = sum(
