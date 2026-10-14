@@ -59,7 +59,7 @@ def finalize(pack,data,selected_ids,query_context):
             descriptors=[native.owner_selection_descriptors(proof,rid) for rid in realizations.ids(data['candidates'][cid])]
             nodes={ (row['candidate_id'],row['realization_id']):row for descriptor in descriptors if descriptor for row in descriptor['nodes']}
             if nodes:
-                value['owner_selection_requirements']={'schema':'photo-owner-selection-requirements/v1','nodes':[nodes[key] for key in sorted(nodes)]}
+                value['owner_selection_requirements']={'schema':'photo-owner-selection-requirements/v2' if any(descriptor and descriptor['schema']=='photo-owner-selection-requirements/v2' for descriptor in descriptors) else 'photo-owner-selection-requirements/v1','nodes':[nodes[key] for key in sorted(nodes)]}
                 selected_entry=c.entry(data,cid,realization_id=value.get('realization_id'),
                     dependency_selections=value.get('native_dependency_selections'))
                 if native.pending_owner_selection(selected_entry):
