@@ -1,0 +1,10 @@
+{
+  "status": "failed_before_controlled_checks",
+  "script": "check_mood_noise_root_01.py",
+  "script_raw_sha256": "d5ce82fde99a4311a4e3da59d1214eac520cdaed52372076a6a5a90440be3f72",
+  "error": "AssertionError: forbidden model/provider import: photo_embedding_provider",
+  "cause": "Frozen generator imports pure provider vector validation utilities through runtime metadata modules. The guard rejected the utility import before consumer tests.",
+  "corrective_action": "A new v2 script allows pure provider/local modules, denies heavy model imports and replaces provider.embed/embed_many and local.infer with immediate hard failures before importing generator. Production/proofs unchanged.",
+  "actual_consumer_assertions_executed": 0,
+  "model_provider_Gemini_calls": 0
+}

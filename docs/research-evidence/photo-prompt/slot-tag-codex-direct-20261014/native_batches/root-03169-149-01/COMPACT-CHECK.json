@@ -1,0 +1,167 @@
+{
+  "compact": {
+    "candidate_id": "cand_f1251d5df8735a3d83381e34a2d70b34",
+    "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+    "compact_sha256": "ea3d28974bcbe461ccb5ff601636cc09479e6eb716024ee2563c1cf490964214",
+    "complete": true,
+    "dependencies": {
+      "base": []
+    },
+    "dependency_guards": {
+      "base": []
+    },
+    "effect_sets": {
+      "base": {
+        "dimensions": [
+          "style"
+        ],
+        "properties": [
+          {
+            "dimension": "style",
+            "property": "image.noise",
+            "target": "image"
+          }
+        ]
+      }
+    },
+    "facts": [
+      {
+        "dimension": "subject",
+        "id": "root3169_imageP",
+        "mode": "prerequisite",
+        "property": "entity.presence",
+        "realization_id": "base",
+        "requires": [],
+        "target": "image",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "style",
+        "id": "root3169_en",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "image.noise",
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "root3169_imageP"
+        ],
+        "target": "image",
+        "value": {
+          "type": "image.noise/v1",
+          "value": "ISO 3200 high-sensitivity noise grain"
+        }
+      },
+      {
+        "dimension": "style",
+        "id": "root3169_ko",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "image.noise",
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "root3169_imageP"
+        ],
+        "target": "image",
+        "value": {
+          "type": "image.noise/v1",
+          "value": "ISO 3200 high-sensitivity noise grain"
+        }
+      },
+      {
+        "dimension": "style",
+        "id": "root3169_embedding",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "image.noise",
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "root3169_imageP"
+        ],
+        "target": "image",
+        "value": {
+          "type": "image.noise/v1",
+          "value": "ISO 3200 high-sensitivity noise grain"
+        }
+      },
+      {
+        "dimension": "style",
+        "id": "root3169_application",
+        "mode": "effect",
+        "operation": "set_value",
+        "property": "image.noise",
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "root3169_imageP"
+        ],
+        "target": "image",
+        "value": {
+          "type": "image.noise/v1",
+          "value": "ISO 3200 high-sensitivity noise grain"
+        }
+      }
+    ],
+    "guard_sets": {
+      "base": {
+        "member_conditions": {},
+        "source_conditions": [
+          {},
+          {}
+        ]
+      }
+    },
+    "has_owner_selectors": false,
+    "meaning_sha256": "3cb094ea9d2dbe418e3dbb73b5f48da590add52f6a6542af60954a01b0810dab",
+    "owner_maps": {
+      "base": {
+        "bindings": [
+          {
+            "introduced_by": null,
+            "origin": "existing",
+            "selector": {
+              "kind": "core_role",
+              "role": "image"
+            },
+            "target": "image"
+          }
+        ],
+        "schema": "photo-native-owner-bindings/v3"
+      }
+    },
+    "profile_contracts": {
+      "base": null
+    },
+    "qualification_sha256": "3ffbc5f012704e38198ff4ca7d277452fe8c4b91805f8dd3d50e812e054f1204",
+    "reference_sha256": {},
+    "roles": {
+      "grain_profile": {
+        "fact_refs": [
+          "root3169_en",
+          "root3169_ko",
+          "root3169_embedding",
+          "root3169_application"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "70cc6842d5a2809340d13ab071706cf9c95490bd870a63bd560cac5f59c891eb",
+        "support_modes": [
+          "effect"
+        ]
+      }
+    },
+    "schema": "photo-candidate-role-evidence/v4"
+  },
+  "consumer_tests_completed": false,
+  "full_validation": true,
+  "operating_changes": 0,
+  "proof_sha256": "3ffbc5f012704e38198ff4ca7d277452fe8c4b91805f8dd3d50e812e054f1204",
+  "root_source_decision": true
+}
