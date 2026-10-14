@@ -10,7 +10,7 @@ import photo_candidate_realizations as realizations
 from photo_precore_bridge import load
 witnesses = load('photo_semantic_witnesses')
 
-SCHEMA = 'photo-candidate-role-evidence/v3'
+SCHEMA = 'photo-candidate-role-evidence/v4'
 OWNER_SCHEMA = 'photo-native-owner-bindings/v2'
 MODES = frozenset({'effect', 'prerequisite', 'preservation', 'context'})
 OPERATIONS = frozenset({'set_value', 'add_entity', 'remove_entity', 'relocate', 'select_plane'})
@@ -20,7 +20,7 @@ NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounder
     'forbidden_prompt_terms', 'runtime_forbidden_labels', 'claim_limits', 'research_claim_limits',
     'provenance', 'acceptance', 'review', 'routing', 'conditions', 'applicability', 'retrieval_policy',
     'role_evidence', 'semantic_review', 'affected_dimensions', 'affected_properties',
-    'dimensions', 'properties', 'evidence_field', 'evidence_fields', 'required_evidence_fields',
+    'dimensions', 'properties', 'field', 'review_scale', 'evidence_field', 'evidence_fields', 'required_evidence_fields',
     'contract_version', 'schema', 'activation', 'match_terms', 'any_terms', 'all_terms',
     'evidence_terms', 'must_mention_any', 'context_terms', 'project_glossary_aliases',
     'aliases', 'keywords', 'terms', 'concept_terms', 'exact_terms', 'id', 'ids', 'candidate_id', 'candidate_ids', 'binding_id', 'source_candidate_id', 'family_ids', 'family_id', 'topic_ids', 'topic_id',
@@ -31,15 +31,15 @@ FACT_FIELDS = frozenset({'id', 'realization_id', 'pointer', 'quote', 'dimension'
                          'property', 'mode', 'value', 'requires'})
 PROOF_FIELDS = frozenset({'schema', 'meaning_sha256', 'catalog_sha256', 'complete', 'facts',
                          'roles', 'owner_maps', 'source_units', 'effect_sets', 'review',
-                         'dependencies', 'reference_sha256'})
+                         'dependencies', 'reference_sha256', 'guard_sets', 'profile_contracts'})
 POSITIVE_FIELDS = frozenset({'en', 'ko', 'ja', 'embedding_text', 'concept_units', 'relations',
     'definition', 'definitions_by_topic', 'paraphrases', 'manifestations', 'components',
     'semantics', 'authored_components', 'composition_instruction', 'concept_candidate',
     'render_requirements', 'render_gates', 'render_hard_gates'})
 MISSING = object()
-MAX_FACTS = 128
-MAX_UNITS = 256
-MAX_REALIZATIONS = 8
+MAX_FACTS = 4096
+MAX_UNITS = 2048
+MAX_REALIZATIONS = 32
 MAX_DEPENDENCY_DEPTH = 8
 
 
@@ -367,7 +367,9 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
             or len(proof['source_units']) > MAX_UNITS
             or not isinstance(proof['owner_maps'], dict) or set(proof['owner_maps']) != ids
             or not isinstance(proof['effect_sets'], dict) or set(proof['effect_sets']) != ids
-            or not isinstance(proof['dependencies'], dict) or set(proof['dependencies']) != ids):
+            or not isinstance(proof['dependencies'], dict) or set(proof['dependencies']) != ids
+            or not isinstance(proof['guard_sets'],dict) or set(proof['guard_sets'])!=ids
+            or not isinstance(proof['profile_contracts'],dict) or set(proof['profile_contracts'])!=ids):
         raise ValueError('native facts/units/owner maps must cover actual RIDs')
     facts = {}
     from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
@@ -385,6 +387,10 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
                for ref in fact['requires']):
             raise ValueError('fact requires an actual same-RID frozen obligation')
     for rid in ids:
+        if proof['guard_sets'][rid] != source_guard_set(record,rid,corpus):
+            raise ValueError('native intrinsic/selected/presentation guard inventory changed')
+        if proof['profile_contracts'][rid] != realizations.profile_contract(record,rid):
+            raise ValueError('native selected profile obligation contract changed')
         dependencies = proof['dependencies'][rid]
         expected_members = realizations.member_ids(record, rid)
         if (not isinstance(dependencies, list) or len(dependencies) > 8
@@ -480,7 +486,7 @@ def compact(record, corpus=None, _stack=()):
     if proof is MISSING:
         return None
     if not isinstance(proof, dict) or proof.get('schema') != SCHEMA:
-        raise ValueError('only fully validated native v3 can be compacted')
+        raise ValueError('only fully validated native v4 can be compacted')
     if not _stack:
         if corpus is None:
             raise ValueError('native compact seal requires the full current source/catalog')
@@ -503,6 +509,7 @@ def compact(record, corpus=None, _stack=()):
                 'qualification_sha256':c.digest(child['content']['role_evidence']),
                 'guard': compact(child, corpus, (*_stack, record['id']))})
         result['dependency_guards'][rid] = projected
+    result['compact_sha256'] = c.digest(result)
     return result
 
 
@@ -546,11 +553,12 @@ def frozen_witnesses(core):
         raise ValueError('native qualification requires frozen core v3')
     result = witnesses.read(core.get('semantic_assertions') or [],
                             (core.get('request_binding') or {}).get('active_spans') or [],
-                            core.get('baseline_prompt_en', ''), intent_lock=core.get('intent_lock') or {})
+                            core.get('baseline_prompt_en', ''), intent_lock=core.get('intent_lock') or {},
+                            request_binding=core.get('request_binding') or {})
     return result
 
 
-def admission(entry, core, *, allow_unselected=False, _nested=False):
+def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entry=None):
     """Whole-cue obligations, including effects with no displayed role.
 
     Source carriers must already be frozen; introduced entities never self-witness
@@ -601,6 +609,11 @@ def admission(entry, core, *, allow_unselected=False, _nested=False):
                 return denied
             resolutions.append({'fact_id': fact['id'], 'core_assertion_id': match['assertion_id'],
                                 'owner': actual_owners[fact['target']], 'value': copy.deepcopy(match['value'])})
+        whole_entry = _whole_entry or entry
+        guards_receipt = evaluate_native_guards(entry, core, frozen=frozen,
+            whole_entry=whole_entry, allow_unselected=allow_unselected)
+        if not guards_receipt['allowed']:
+            return {**denied, 'reason':guards_receipt['reason']}
         selections = entry.get('_native_dependency_selections', {})
         if not isinstance(selections, dict) or any(not isinstance(key, str) or not isinstance(value, str)
                                                  for key,value in selections.items()):
@@ -613,15 +626,17 @@ def admission(entry, core, *, allow_unselected=False, _nested=False):
             if chosen not in choices:
                 if not allow_unselected or chosen is not None:
                     return {**denied, 'reason':'explicit_dependency_realization_required'}
-                results = [admission(_guard_entry(guards['guard'], choice, selections),
-                                     core, allow_unselected=True, _nested=True) for choice in choices]
+                results = [admission(_guard_entry(guards['guard'], choice, selections,
+                                        extra_conditions=proof['guard_sets'][rid]['member_conditions'][cid]),
+                                     core, allow_unselected=True, _nested=True, _whole_entry=whole_entry) for choice in choices]
                 successful = [row for row in results if row['allowed']]
                 if not successful:
                     return denied
                 children.append({'candidate_id':cid,'search_only':True,'admissions':successful})
                 continue
-            result = admission(_guard_entry(guards['guard'], chosen, selections),
-                               core, allow_unselected=allow_unselected, _nested=True)
+            result = admission(_guard_entry(guards['guard'], chosen, selections,
+                                  extra_conditions=proof['guard_sets'][rid]['member_conditions'][cid]),
+                               core, allow_unselected=allow_unselected, _nested=True, _whole_entry=whole_entry)
             if not result['allowed']:
                 return denied
             used.update(result.get('used_dependency_ids', []))
@@ -629,7 +644,7 @@ def admission(entry, core, *, allow_unselected=False, _nested=False):
         if not _nested and not allow_unselected and not set(selections) <= used:
             return {**denied, 'reason':'unused_or_foreign_dependency_selection'}
         return {'status': 'qualified', 'allowed': True, 'reason': 'whole_native_obligations_verified',
-                'resolved_frozen_facts': resolutions, 'dependencies':children,
+                'resolved_frozen_facts': resolutions, 'dependencies':children, 'native_guards':guards_receipt,
                 'used_dependency_ids':sorted(used)}
     except (ValueError, KeyError, TypeError, IndexError):
         return denied
@@ -640,10 +655,10 @@ def _same_entity(graph, left, right):
     return left in canonical and right in canonical and canonical[left] == canonical[right]
 
 
-def _guard_entry(proof, rid, selections):
+def _guard_entry(proof, rid, selections, *, extra_conditions=None):
     actual = proof['effect_sets'][rid]
     return {'_semantic_evidence_guard':proof, '_realization_id':rid,
-            '_native_dependency_selections':selections,
+            '_native_dependency_selections':selections, '_native_extra_conditions':copy.deepcopy(extra_conditions or []),
             'affected_dimensions':actual['dimensions'],'affected_properties':actual['properties']}
 
 
@@ -717,6 +732,11 @@ def effect_closure(candidate_id, proof, rid, selections):
 
 
 def _selected_contract(proof, rid, actual):
+    if 'dependency_guards' in proof and proof.get('compact_sha256') != c.digest(
+            {key:value for key,value in proof.items() if key!='compact_sha256'}):
+        raise ValueError('sealed compact native guard changed')
+    if rid not in proof.get('guard_sets',{}) or rid not in proof.get('profile_contracts',{}):
+        raise ValueError('native v4 guard/profile inventory missing')
     if rid not in proof['effect_sets'] or actual != proof['effect_sets'][rid]:
         raise ValueError('actual selected effects changed')
     facts = [fact for fact in proof['facts'] if fact['realization_id'] == rid]
@@ -827,3 +847,168 @@ def property_scope_allowed(core, dimensions, effects, *, record=None, realizatio
         return property_effects_allowed(core.get('intent_lock') or {}, dimensions, mapped, owner_graph=graph)
     except (ValueError, KeyError, TypeError):
         return False
+
+
+SOURCE_GUARD_SCHEMA = 'photo-native-source-guards/v1'
+GUARD_FIELDS = {
+    'preserve_established_scope': {'id','kind','owner_role','scope_kind','known_absent','known_present','unknown'},
+    'owner_relation': {'id','kind','relation','left_role','right_role'},
+    'frozen_value': {'id','kind','owner_role','dimension','property','value'},
+    'frozen_entity_relation': {'id','kind','left_role','right_role','dimension','property','value_type'},
+}
+
+
+def validate_source_guards(block):
+    if (not isinstance(block,dict) or set(block)!={'schema','rules'} or block['schema']!=SOURCE_GUARD_SCHEMA
+            or not isinstance(block['rules'],list) or not 1<=len(block['rules'])<=64):
+        raise ValueError('bounded typed native source guards required')
+    seen=set()
+    from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+    for rule in block['rules']:
+        kind=rule.get('kind') if isinstance(rule,dict) else None
+        if (not isinstance(kind,str) or kind not in GUARD_FIELDS or set(rule)!=GUARD_FIELDS[kind]
+                or not concrete_owned_value(rule['id']) or rule['id'] in seen):
+            raise ValueError('invalid or duplicate typed source guard')
+        seen.add(rule['id'])
+        for key in ('owner_role','left_role','right_role'):
+            if key in rule and (not isinstance(rule[key],str) or rule[key] not in witnesses.CORE_ROLES):
+                raise ValueError('guard roles must use exact neutral protocol addresses')
+        if kind=='preserve_established_scope':
+            if (not isinstance(rule['scope_kind'],str) or rule['scope_kind'] not in witnesses.SCOPE_KINDS or rule['known_absent']!='not_applicable'
+                    or rule['known_present']!='preserve_all_frozen_items' or rule['unknown']!='review_required'):
+                raise ValueError('preservation guards cannot grant a mutation or unknown-state fallback')
+        elif kind=='owner_relation':
+            if not isinstance(rule['relation'],str) or rule['relation'] not in {'part_of','disjoint'} or rule['left_role']==rule['right_role']:
+                raise ValueError('explicit distinct roles and grounded owner relation required')
+        else:
+            if not isinstance(rule['dimension'],str) or rule['dimension'] not in AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS or not concrete_owned_value(rule['property']):
+                raise ValueError('frozen guard requires an exact dimension/property')
+            if kind=='frozen_value' and not witnesses.typed_value(rule['value']):
+                raise ValueError('frozen guard needs an exact typed value')
+            if kind=='frozen_entity_relation' and rule['value_type']!='entity.owner_id/v1':
+                raise ValueError('entity relation guard must bind an actual frozen owner ID')
+
+
+def source_guard_set(record,rid,corpus=None):
+    selected=realizations.branch(record,rid)
+    source_conditions=[copy.deepcopy(record['conditions']),copy.deepcopy(selected['conditions'] if selected else {})]
+    members={}
+    for pointer in record['content'].get('member_candidates',[]):
+        cid=pointer['candidate_id']
+        if cid not in realizations.member_ids(record,rid):continue
+        old={}
+        if pointer.get('binding_id'):
+            if corpus is None:raise ValueError('explicit member presentation guard needs the full source')
+            binding=corpus['slot_bindings'][pointer['binding_id']]
+            if binding['candidate_id']!=cid:raise ValueError('presentation guard belongs to another CID')
+            old=binding['conditions']
+        members[cid]=[copy.deepcopy(pointer.get('conditions',{})),copy.deepcopy(old)]
+    for conditions in [*source_conditions,*(value for rows in members.values() for value in rows)]:
+        c.validate_conditions(conditions,record['id']+'.native_guards')
+    return {'source_conditions':source_conditions,'member_conditions':members}
+
+
+def condition_layers(entry):
+    if native_status(entry)=='qualified':
+        proof=proof_of(entry);rid=entry.get('_realization_id','base')
+        if rid not in proof['guard_sets'] and '_realization_id' not in entry:
+            common=[value['source_conditions'][0] for value in proof['guard_sets'].values()]
+            if not common or any(value!=common[0] for value in common):
+                raise ValueError('unselected source lacks one exact common intrinsic condition')
+            layers=[copy.deepcopy(common[0])]
+        else:
+            layers=copy.deepcopy(proof['guard_sets'][rid]['source_conditions'])
+    else:
+        layers=[copy.deepcopy(entry.get('_source_conditions') or {}),copy.deepcopy(entry.get('_selected_conditions') or {})]
+    layers += [copy.deepcopy(entry.get('_role_conditions') or {}),*copy.deepcopy(entry.get('_native_extra_conditions') or [])]
+    for conditions in layers:c.validate_conditions(conditions,'native condition conjunction')
+    return layers
+
+
+def _pending_dependency_choice(proof,rid,selections):
+    for dependency,projected in selected_dependencies(proof,rid,selections):
+        cid=dependency['candidate_id'];choices=dependency['realization_ids']
+        chosen=selections.get(cid,choices[0] if len(choices)==1 else None)
+        if chosen is None:return True
+        if chosen not in choices:raise ValueError('foreign selected dependency RID')
+        if _pending_dependency_choice(projected['guard'],chosen,selections):return True
+    return False
+
+
+def evaluate_native_guards(entry,core,*,frozen=None,whole_entry=None,allow_unselected=False):
+    frozen=frozen or frozen_witnesses(core);graph=frozen['graph']
+    canonical,ancestors=witnesses.validate_graph(graph)
+    receipts=[];preserved=[];pending=False;whole_entry=whole_entry or entry
+    for layer_index,conditions in enumerate(condition_layers(entry)):
+        block=conditions.get('native_guards')
+        if block is None:continue
+        validate_source_guards(block)
+        for rule in block['rules']:
+            roles={key:graph['roles'].get(rule[key]) for key in ('owner_role','left_role','right_role') if key in rule}
+            if any(owner is None for owner in roles.values()):
+                return {'allowed':False,'reason':'native_guard_owner_not_established'}
+            receipt={'layer':layer_index,'rule_id':rule['id'],'kind':rule['kind'],'owners':roles}
+            kind=rule['kind']
+            if kind=='owner_relation':
+                left,right=roles['left_role'],roles['right_role']
+                satisfied=(canonical[right] in ancestors[canonical[left]] if rule['relation']=='part_of'
+                           else witnesses.owner_relation(graph,left,right)=='disjoint')
+                if not satisfied:return {'allowed':False,'reason':'native_owner_relation_unverified'}
+            elif kind in {'frozen_value','frozen_entity_relation'}:
+                owner=roles.get('owner_role',roles.get('left_role'))
+                matches=[fact for fact in frozen['facts'] if fact['dimension']==rule['dimension']
+                         and fact['property']==rule['property'] and _same_entity(graph,fact['target'],owner)]
+                if len(matches)!=1:return {'allowed':False,'reason':'native_frozen_guard_fact_missing'}
+                expected=rule['value'] if kind=='frozen_value' else {'type':rule['value_type'],'value':roles['right_role']}
+                if witnesses.value_key(matches[0]['value'])!=witnesses.value_key(expected):
+                    return {'allowed':False,'reason':'native_frozen_guard_value_mismatch'}
+                receipt['core_assertion_id']=matches[0]['assertion_id']
+            else:
+                owner=roles['owner_role']
+                scopes=[row for row in frozen['scope_inventories'] if row['scope_kind']==rule['scope_kind']
+                        and _same_entity(graph,row['owner'],owner)]
+                host=(core.get('request_binding') or {}).get('input_inventory')
+                if (len(scopes)!=1 or not host or host['complete'] is not True
+                        or scopes[0]['inventory']['complete'] is not True or scopes[0]['inventory']['state']=='unknown'):
+                    return {'allowed':False,'reason':'native_preservation_scope_review_required'}
+                scope=scopes[0];inv=scope['inventory'];receipt.update(state=inv['state'],scope_assertion_id=scope['assertion_id'])
+                if inv['state']=='known_present':
+                    proof=proof_of(whole_entry);whole_rid=whole_entry.get('_realization_id','base')
+                    selections=whole_entry.get('_native_dependency_selections',{})
+                    if allow_unselected and _pending_dependency_choice(proof,whole_rid,selections):
+                        pending=True;receipt['effect_check']='explicit_dependency_selection_required'
+                    else:
+                        dims,effects,owner_graph=permission_scope(whole_entry,core)
+                        from photo_contracts import property_effects_allowed
+                        locks={'contract_version':'photo-intent-lock/v2','semantic_anchors':[{'dimension':item['dimension'],'target':item['target'],
+                                                   'property':item['property']} for item in inv['items']]}
+                        if not property_effects_allowed(locks,dims,effects,owner_graph=owner_graph):
+                            return {'allowed':False,'reason':'native_established_scope_effect_overlap'}
+                    preserved.append(copy.deepcopy(scope))
+            receipts.append(receipt)
+    return {'allowed':True,'reason':'search_only_dependency_selection_required' if pending else 'all_native_guards_verified',
+            'rules':receipts,'preserved_scopes':preserved,'search_only':pending}
+
+
+def audit_scope_preservation(receipt, interpretation, prompt):
+    required={}
+    def collect(admission_receipt):
+        for scope in (admission_receipt.get('native_guards') or {}).get('preserved_scopes',[]):
+            required[scope['assertion_id']]={item['assertion_id']:item for item in scope['inventory']['items']}
+        for dependency in admission_receipt.get('dependencies',[]):
+            if 'admission' in dependency:collect(dependency['admission'])
+    collect(receipt)
+    evidence=interpretation.get('scope_preservation_evidence',{})
+    if not isinstance(evidence,dict) or set(evidence)!=set(required):
+        raise ValueError('final established scope preservation evidence is incomplete or foreign')
+    for scope,items in required.items():
+        provided=evidence[scope]
+        if not isinstance(provided,dict) or set(provided)!=set(items):
+            raise ValueError('every frozen scope item needs final preservation evidence')
+        for aid,item in items.items():
+            row=provided[aid]
+            if (not isinstance(row,dict) or set(row)!={'owner','value','prompt_evidence'}
+                    or row['owner']!=item['target'] or row['value']!=item['value']
+                    or not isinstance(row['prompt_evidence'],str) or not row['prompt_evidence'].strip()
+                    or row['prompt_evidence'] not in prompt):
+                raise ValueError('final owner/value/prompt evidence differs from the frozen scope')

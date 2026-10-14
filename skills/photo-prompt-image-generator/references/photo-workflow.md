@@ -39,12 +39,20 @@ a new seed/pack. Only one public pack and its exact private receipt are admitted
 The receipt fixes the immutable generation for all subsequent audits.
 
 Discovery and adoption have separate contracts. Before selecting a cue, read its
-complete source, actual realization and whole native v3 facts, prerequisites,
+complete source, actual realization and whole native v4 facts, prerequisites,
 preservation duties, owner bindings and effects. Every selected candidate,
 including a transformed choice, must pass whole-cue admission against the frozen
 core and its property locks. An unqualified source may remain discoverable during
 the corpus migration; it cannot be adopted as a qualified cue. A score or role
 tag cannot supply a missing frozen owner, anatomy, age or property fact.
+
+Intrinsic, selected-branch, explicit presentation and selected dependency
+conditions remain cumulative. Conditional reference or identity preservation
+uses the exact caller input inventory and frozen scope inventory: known absent
+is inapplicable, known present preserves every scoped frozen item, and missing,
+incomplete or unknown information needs review. Equal proposed values still
+count as mutations when checking property locks. Supply literal final-prompt
+`scope_preservation_evidence` for every protected actual owner and typed value.
 
 Use exact candidate IDs and presented realization IDs. For compound choices,
 provide `dependency_selections` by child CID and actual RID when selecting an
@@ -61,6 +69,15 @@ source-defined requirement separate from the child's body. Its manually reviewed
 native binding must match a fact on the actual selected child RID; a new mutation
 outside that child's declared effects needs source correction and rereview.
 Unselected optional edges require no member render evidence.
+
+For a conditional visual profile, read `native_profile_choices` and explicitly
+choose an actual eligible RID. Preserve its exact `selected_profile_contract`
+and provide `selected_profile_evidence` by the selected obligation's required
+fields in the candidate interpretation or transformed decision. Required
+profiles need an explicit choice; optional unselected profiles add no duties.
+The audit compiles render gates from that chosen projection and checks its
+source, meaning, body and obligation hashes. A common registry profile, a
+different branch or the first listed alternative cannot supply this contract.
 
 Compose accepts the existing authored composed schema. It stamps pack/core/lock
 and review SHA bindings; it does not create interpretations, decisions, reasons

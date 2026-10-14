@@ -49,6 +49,7 @@ def materialize_member(data, pointer, *, realization_id=None, dependency_selecti
         raise ValueError('unknown explicit member presentation role')
     member = c.entry(data, pointer['candidate_id'], bid, realization_id=realization_id,
                      dependency_selections=dependency_selections)
+    member['_native_extra_conditions'] = [copy.deepcopy(pointer.get('conditions') or {})]
     requirements = copy.deepcopy(pointer.get('requirements') or {})
     member['_member_requirements'] = requirements
     # These are additional semantic/render obligations, never condition or body overrides.

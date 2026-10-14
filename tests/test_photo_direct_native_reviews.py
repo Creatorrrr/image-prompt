@@ -86,6 +86,9 @@ class NativeReviewsTests(unittest.TestCase):
 
     def attest_proof(self, v):
         p = v['batch']['records'][0]['proof']
+        record=v['batch']['records'][0]['source_after']
+        p['guard_sets']={rid:native.source_guard_set(record,rid,v['current']) for rid in native.realizations.ids(record)}
+        p['profile_contracts']={rid:native.realizations.profile_contract(record,rid) for rid in native.realizations.ids(record)}
         p['review']['native_review']['native_contract_sha256'] = native.native_contract_sha256(p)
 
     def latest(self, v, *, status=None):
@@ -101,6 +104,43 @@ class NativeReviewsTests(unittest.TestCase):
                 'note': v['note_ref'], 'acceptance': self.put(v['root'], 'run/acceptance.json', acceptance)}]}
         self.put(v['root'], 'run/latest.json', manifest)
         return n.verify_latest('run/latest.json', root=v['root'], here=v['here'], expected_count=1)
+
+    def test_exact_root_direct_method_and_child_subagent_method_cannot_impersonate_each_other(self):
+        for task in ['/root',TASK]:
+            with self.subTest(task=task),tempfile.TemporaryDirectory() as directory:
+                v=self.fixture(directory)
+                for doc in (v['assignment'],v['batch'],v['note']):
+                    doc['task_name']=task
+                    if task=='/root':doc.update(model='session_model_unspecified',reasoning_effort='session_effort_unspecified')
+                nr=v['batch']['records'][0]['proof']['review']['native_review']
+                nr.update(reviewer=task,method='codex_direct_source_read' if task=='/root' else 'codex_subagent_direct_source_read')
+                self.attest_proof(v);self.persist(v)
+                self.assertEqual(self.verify(v)['statuses']['approved'],1)
+                nr['method']='codex_subagent_direct_source_read' if task=='/root' else 'codex_direct_source_read'
+                self.attest_proof(v);self.persist(v)
+                with self.assertRaisesRegex(ValueError,'exact root or child assignment'):self.verify(v)
+                nr.update(reviewer='/root' if task!= '/root' else TASK,method='codex_direct_source_read' if task=='/root' else 'codex_subagent_direct_source_read')
+                self.attest_proof(v);self.persist(v)
+                with self.assertRaisesRegex(ValueError,'exact root or child assignment'):self.verify(v)
+
+    def test_assignment_model_effort_are_exact_root_unspecified_or_child_declared_pairs(self):
+        for task,model,effort,valid in [
+            ('/root','session_model_unspecified','session_effort_unspecified',True),
+            (TASK,'gpt-6.1-sol','high',True),
+            ('/root','gpt-6.1-sol','high',False),
+            (TASK,'session_model_unspecified','session_effort_unspecified',False),
+            ('/root','session_model_unspecified','high',False),
+            (TASK,'gpt-6.1-sol','session_effort_unspecified',False),
+            ('/root/','session_model_unspecified','session_effort_unspecified',False)]:
+            with self.subTest(task=task,model=model,effort=effort),tempfile.TemporaryDirectory() as directory:
+                v=self.fixture(directory)
+                for doc in (v['assignment'],v['batch'],v['note']):doc.update(task_name=task,model=model,reasoning_effort=effort)
+                nr=v['batch']['records'][0]['proof']['review']['native_review']
+                nr.update(reviewer=task,method='codex_direct_source_read' if task=='/root' else 'codex_subagent_direct_source_read')
+                self.attest_proof(v);self.persist(v)
+                if valid:self.assertEqual(self.verify(v)['statuses']['approved'],1)
+                else:
+                    with self.assertRaisesRegex(ValueError,'exact root unspecified session or child'):self.verify(v)
 
     def test_read_only_shape_pass_preserves_original_pending_and_has_zero_authority(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -337,7 +377,7 @@ class NativeReviewsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             v = self.fixture(directory)
             v['assignment']['schema'] = 'photo-codex-native-delegation/v1'; self.persist(v)
-            with self.assertRaisesRegex(ValueError, 'root task/model/high'): self.verify(v)
+            with self.assertRaisesRegex(ValueError, 'root authored assignment'): self.verify(v)
 
     def test_duplicate_json_keys_and_nonfinite_values_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -437,6 +477,7 @@ class NativeReviewsTests(unittest.TestCase):
             row = copy.deepcopy(v['batch']['records'][0]); row.update(candidate_id=cid,ordinal=ordinal,
                 source_before=copy.deepcopy(original['candidates'][cid]),source_after=copy.deepcopy(original['candidates'][cid]),original_compiled=loc)
             proof = row['proof']; proof['meaning_sha256'] = native.meaning_sha256(row['source_after'])
+            proof['guard_sets']={rid:native.source_guard_set(row['source_after'],rid,original) for rid in native.realizations.ids(row['source_after'])}
             proof['reference_sha256'] = native.referenced_records(row['source_after'],original)
             proof['review']['original_review'] = dict(candidate_id=cid,source_record_sha256=old['source_record_sha256'],
                 catalog_sha256=old['catalog_sha256'],decision_sha256=dr.c.digest(old),artifact=loc['file']+'#item=1')
@@ -449,6 +490,7 @@ class NativeReviewsTests(unittest.TestCase):
         row['delta'] = [dict(pointer='/conditions',before_exists=True,before={},after_exists=True,
             after={'for_any':['human']},reason='Explicit independently read B correction.')]
         proof = row['proof']; proof['meaning_sha256'] = native.meaning_sha256(row['source_after'])
+        proof['guard_sets']={rid:native.source_guard_set(row['source_after'],rid,final) for rid in native.realizations.ids(row['source_after'])}
         proof['review']['source_correction'] = dict(before_sha256=native.meaning_sha256(row['source_before']),
             after_sha256=proof['meaning_sha256'],rationale='B full corrected source read.')
         proof['review']['native_review']['native_contract_sha256'] = native.native_contract_sha256(proof)

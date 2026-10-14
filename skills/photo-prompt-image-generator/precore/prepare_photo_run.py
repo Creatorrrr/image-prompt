@@ -40,6 +40,8 @@ def init(args):
     envelope = {"contract_version": "photo-request-envelope/v1", "provenance": "requesting_user",
                 "request_id": args.request_id or "request-" + uuid.uuid4().hex, "request_text": request,
                 "request_sha256": digest(raw), "active_spans": spans}
+    if getattr(args,"input_inventory",None) is not None:
+        envelope["input_inventory"] = read_json(args.input_inventory)
     wire.normalize_request_envelope(envelope)
     with locked_state(args.run) as state:
         if state is not None:
@@ -141,6 +143,7 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     p = sub.add_parser("init"); p.add_argument("--run", type=Path, required=True)
     p.add_argument("--request", type=Path, required=True); p.add_argument("--request-id")
+    p.add_argument("--input-inventory", type=Path, help="explicit complete/partial caller input inventory; never inferred")
     group = p.add_mutually_exclusive_group(required=True)
     group.add_argument("--whole-request", action="store_true"); group.add_argument("--spans", type=Path)
     p.add_argument("--mode", choices=("prompt_only", "image"), required=True)

@@ -224,14 +224,25 @@ def compiled_review(root, here, locator, original, cid, packet_ref, source_sha25
     return row
 
 
+def validate_assignment_identity(assignment):
+    """Declarations preserve known child assignment and unknown parent session.
+
+    This validates authored identity fields; it does not observe a model session.
+    """
+    text(assignment['task_name'],'assigned task')
+    pair=(assignment['model'],assignment['reasoning_effort'])
+    expected=(('session_model_unspecified','session_effort_unspecified') if assignment['task_name']=='/root'
+              else ('gpt-6.1-sol','high'))
+    if pair!=expected:raise ValueError('exact root unspecified session or child gpt-6.1-sol/high assignment required')
+
+
 def verify_batch(assignment_path, batch_path, note_path, *, root=None, here=None):
     root = Path(root or dr.ROOT).resolve(); here = Path(here or dr.HERE).resolve()
     assignment = read_json(path_in(root, str(assignment_path)))
     fields(assignment, {'schema', 'actor', 'task_name', 'model', 'reasoning_effort', 'ids', 'ordinals', 'input'}, 'root assignment')
-    if (assignment['schema'] != ASSIGNMENT or assignment['actor'] != '/root'
-            or assignment['model'] != 'gpt-6.1-sol' or assignment['reasoning_effort'] != 'high'):
-        raise ValueError('exact root task/model/high assignment required')
-    text(assignment['task_name'], 'assigned task')
+    if assignment['schema'] != ASSIGNMENT or assignment['actor'] != '/root':
+        raise ValueError('exact root authored assignment required')
+    validate_assignment_identity(assignment)
     inp = artifact(root, assignment['input'])
     fields(inp, {'schema', 'actor', 'ids', 'original_snapshot', 'current_snapshot', 'order',
                  'catalog_review', 'original_decisions', 'original_packets', 'required_revisions'}, 'native input')
@@ -345,7 +356,7 @@ def verify_batch(assignment_path, batch_path, note_path, *, root=None, here=None
             if not (row['source_reread_complete'] and row['reference_reread_complete']):
                 raise ValueError('new native proof requires complete source and dependency read attestation')
             if not isinstance(proof, dict) or proof.get('schema') != native.SCHEMA:
-                raise ValueError('native v3 proof required; no version fallback')
+                raise ValueError('native v4 proof required; no version fallback')
             provenance = proof.get('review', {}).get('original_review')
             expected = {'candidate_id': cid, 'source_record_sha256': old['source_record_sha256'],
                         'catalog_sha256': old['catalog_sha256'], 'decision_sha256': loc['row_sha256'],
@@ -353,8 +364,10 @@ def verify_batch(assignment_path, batch_path, note_path, *, root=None, here=None
             if not exact(provenance, expected):
                 raise ValueError('native proof must preserve actual original compiled file#item provenance')
             nr = proof.get('review', {}).get('native_review', {})
-            if nr.get('reviewer') != assignment['task_name'] or nr.get('method') != 'codex_subagent_direct_source_read':
-                raise ValueError('native proof reviewer must be the exact assigned worker')
+            method = ('codex_direct_source_read' if assignment['task_name'] == '/root'
+                      else 'codex_subagent_direct_source_read')
+            if nr.get('reviewer') != assignment['task_name'] or nr.get('method') != method:
+                raise ValueError('native proof reviewer/method must match the exact root or child assignment')
             correction = proof.get('review', {}).get('source_correction')
             if native.meaning_sha256(before) != native.meaning_sha256(after):
                 if not isinstance(correction, dict) or correction.get('before_sha256') != native.meaning_sha256(before):

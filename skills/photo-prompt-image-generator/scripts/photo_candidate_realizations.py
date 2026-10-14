@@ -11,7 +11,10 @@ PROJECTION_FIELDS = frozenset({'en', 'ko', 'embedding_text', 'concept_units', 'r
 # per-kind extension because their canonical positive meaning lives in definition.
 MECHANISM_PROJECTION_CONTRACT = 'photo-relationship-realization-content/v1'
 MECHANISM_PROJECTION_FIELDS = PROJECTION_FIELDS | {'definition'}
+PROFILE_PROJECTION_FIELDS = PROJECTION_FIELDS | {'authored_components','semantics'}
+PROFILE_COMPILED_FIELDS = ('composition_instruction','required_evidence_fields','evidence_requirements','render_gates')
 PROJECTION_FIELDS_BY_KIND = {'visual_option': PROJECTION_FIELDS,
+                             'visual_profile': PROFILE_PROJECTION_FIELDS,
                              'relationship_mechanism': MECHANISM_PROJECTION_FIELDS}
 # These positive source surfaces are read by index/render consumers but have no
 # selected counterpart in the exact mechanism contract. Fail visibly rather
@@ -38,6 +41,8 @@ def validate_content(record):
             or not record['effects'].get('realizations')
             or not isinstance(choices, dict) or set(choices) != set(ids(record))):
         raise ValueError('primitive realization text must cover every actual branch exactly once')
+    if record['record_kind'] == 'visual_profile':
+        _validate_profile_projections(record)
     if record['record_kind'] == 'relationship_mechanism':
         c.validate_effects(record['effects'], record['id'])
         unsupported = sorted(key for key in MECHANISM_UNPROJECTED_POSITIVE_FIELDS
@@ -67,11 +72,18 @@ def project_content(record, realization_id):
     if choices is None:
         return {}
     branch(record, realization_id)  # Reject foreign choices even without a prior validate call.
-    if record['record_kind'] == 'relationship_mechanism':
+    if record['record_kind'] in {'relationship_mechanism','visual_profile'}:
         # entry() may be used without an earlier corpus validate(). Never emit
         # an unqualified mechanism definition or extra positive source surface.
         validate_content(record)
     selected = copy.deepcopy(choices[realization_id])
+    if record['record_kind']=='visual_profile':
+        from visual_profile_contracts import compile_visual_profile
+        selected = compile_visual_profile(selected)
+        contract = profile_contract(record,realization_id)
+        if '_semantic_evidence_guard' in record and record['_semantic_evidence_guard']['profile_contracts'][realization_id]!=contract:
+            raise ValueError('selected compact profile projection/obligation changed')
+        selected['_selected_profile_contract'] = contract
     # Canonical aliases/keywords can describe both alternatives. They remain
     # in the single search document, but cannot leak into a selected render
     # view or reject it for words belonging only to another choice.
@@ -206,3 +218,61 @@ def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id
             continue
         result.append(rid)
     return result
+
+
+def _validate_profile_projections(record):
+    from visual_profile_contracts import compile_visual_profile
+    content=record['content'];common=content.get('authored_components')
+    if (not isinstance(common,dict) or common.get('contract_version')!='photo-authored-visual-components/v2'):
+        raise ValueError('selected profiles require the exact grouped component source')
+    unprojected={'ja','label_en','label_ko','definitions_by_topic','manifestations','components',
+                 'composition_instruction','render_requirements','render_gates','render_hard_gates',
+                 'required_evidence_fields','evidence_requirements','paraphrases','embedding_texts'}
+    if any(content.get(key) for key in unprojected):
+        raise ValueError('profile has unprojected positive rendering fields')
+    semantics=content.get('semantics') or {}
+    shared_negative={'contrast_examples','confounders','claim_limits','research_claim_limits','failure_modes','exclusions'}
+    if set(semantics)-{'definition','paraphrase_examples'}-shared_negative:
+        raise ValueError('profile has unprojected positive semantic fields')
+    concept=content.get('concept_candidate') or {}
+    if set(concept)-{'concept_terms','affected_dimensions','affected_properties'}:
+        raise ValueError('profile concept projection has unprojected positive fields')
+    for rid,text in content['realization_content'].items():
+        selected_branch=branch(record,rid)
+        if selected_branch and (selected_branch.get('component_units')
+                or 'concept_units' in selected_branch and selected_branch['concept_units']!=text.get('concept_units')):
+            raise ValueError('profile branch cannot override its exact selected positive projection')
+        if (not isinstance(text,dict) or set(text)!=PROFILE_PROJECTION_FIELDS
+                or not isinstance(text['semantics'],dict) or set(text['semantics'])!={'definition','paraphrase_examples'}
+                or not isinstance(text['semantics']['definition'],str) or not text['semantics']['definition'].strip()
+                or not isinstance(text['semantics']['paraphrase_examples'],list)
+                or any(not isinstance(value,str) or not value.strip() for value in text['semantics']['paraphrase_examples'])):
+            raise ValueError('selected profile requires exact seven-field content and two-field semantics')
+        selected=text['authored_components']
+        if (not isinstance(selected,dict) or set(selected)!=set(common)
+                or selected.get('contract_version')!=common['contract_version']
+                or selected.get('components')!=common.get('components') or selected.get('discovery')!=common.get('discovery')
+                or not isinstance(selected.get('obligations'),list)
+                or selected['obligations'][:len(common.get('obligations',[]))]!=common.get('obligations')):
+            raise ValueError('selected profile cannot change common component definitions/discovery/obligations')
+        compile_visual_profile(text)
+
+
+def compiled_profile_material(profile):
+    return {**{key:copy.deepcopy(profile.get(key)) for key in PROFILE_COMPILED_FIELDS},
+            'component_semantics':copy.deepcopy((profile.get('semantics') or {}).get('component_semantics'))}
+
+
+def profile_contract(record,rid):
+    if record['record_kind']!='visual_profile' or record['content'].get('realization_content') is None:
+        return None
+    validate_content(record);branch(record,rid)
+    import photo_semantic_evidence as native
+    import photo_candidate_corpus as c
+    from visual_profile_contracts import compile_visual_profile
+    selected=record['content']['realization_content'][rid]
+    meaning=(record['_semantic_evidence_guard']['meaning_sha256'] if '_semantic_evidence_guard' in record
+             else native.meaning_sha256(record))
+    return {'schema':'photo-selected-visual-profile/v1','candidate_id':record['id'],'realization_id':rid,
+            'meaning_sha256':meaning,'projection_sha256':c.digest(selected),
+            'compiled_sha256':c.digest(compiled_profile_material(compile_visual_profile(selected)))}

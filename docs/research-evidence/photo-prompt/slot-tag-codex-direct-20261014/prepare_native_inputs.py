@@ -135,12 +135,11 @@ def prepare(plan_ref, name, *, actor, root=None, here=None, expected_count=revie
         raise ValueError('full18250 exact source/current/order inventory required')
     assignment=plan['assignment']
     reviews.fields(assignment,{'task_name','model','reasoning_effort','start','end','ids'},'explicit root range assignment')
-    reviews.text(assignment['task_name'],'actual assigned task')
+    reviews.validate_assignment_identity(assignment)
     start,end=assignment['start'],assignment['end']; ids=assignment['ids']
-    if (assignment['model']!='gpt-6.1-sol' or assignment['reasoning_effort']!='high'
-            or type(start) is not int or type(end) is not int or not 0<=start<end<=len(order)
+    if (type(start) is not int or type(end) is not int or not 0<=start<end<=len(order)
             or not isinstance(ids,list) or ids!=order[start:end]):
-        raise ValueError('exact root task/model/high/CID/order range required')
+        raise ValueError('exact root task/CID/order range required')
     catalog=reviews.artifact(root,plan['catalog_approval'])
     reviews.fields(catalog,{'schema','actor','status','catalog','catalog_count','catalog_ids','catalog_sha256','review','reason'},'root final catalog approval')
     reviews.text(catalog['reason'],'final catalog approval rationale')

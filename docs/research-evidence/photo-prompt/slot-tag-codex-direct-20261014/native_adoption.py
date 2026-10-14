@@ -144,8 +144,8 @@ def build_preview(source, baseline, order, rows, manual, *, actor, expected_coun
     """
     if actor != '/root':
         raise ValueError('native adoption preview is root-only')
-    if native.SCHEMA != 'photo-candidate-role-evidence/v3':
-        raise ValueError('strict native v3 implementation required; no version fallback')
+    if native.SCHEMA != 'photo-candidate-role-evidence/v4':
+        raise ValueError('strict native v4 implementation required; no version fallback')
     if expected_count == PRODUCTION_COUNT:
         raise ValueError('full source production preview requires latest-native v2; historical v1 disabled')
     review.assert_source_snapshot(source, source, baseline, order)
@@ -343,7 +343,9 @@ def _exact_approvals(authored, expected, fields, label):
 def validate_preview_conditions(conditions, *, binding=False):
     """Reject policy fields the current consumer would silently ignore."""
     if binding:
-        require_fields(conditions,{'subject_applicability'},'binding condition contract')
+        if not isinstance(conditions,dict) or set(conditions) not in [{'subject_applicability'},{'subject_applicability','native_guards'}]:
+            raise ValueError('exact presentation policy/native guard conjunction required')
+        review.c.validate_conditions(conditions,'binding condition contract')
     else:
         review.c.validate_conditions(conditions,'native preview source')
     policy=conditions.get('subject_applicability',{})
@@ -407,6 +409,17 @@ def verify_member_migrations(original,current,rows,authored):
     if seen!=set(required): raise ValueError('every former member binding guard needs explicit condition migration approval')
 
 
+def verify_catalog_approval(approval,catalog,root,reviews):
+    require_fields(approval,{'schema','actor','artifact','catalog_sha256','slot_count','slot_ids','reason'},'current catalog approval')
+    reason(approval['reason'])
+    approved=reviews.artifact(root,approval['artifact'])
+    if (approval['schema']!='photo-native-catalog-approval/v1' or approval['actor']!='/root'
+            or not exact(approved,catalog) or approval['catalog_sha256']!=review.c.digest(catalog)
+            or type(approval['slot_count']) is not int or approval['slot_count']!=len(catalog)
+            or approval['slot_ids']!=sorted(catalog)):
+        raise ValueError('exact approved current catalog artifact/hash/count/roster required')
+
+
 def build_preview_v2(latest_manifest_path, manual, *, actor, expected_count=PRODUCTION_COUNT, root=None, here=None):
     """Reverify accepted latest reviews and preview explicitly authored policies.
 
@@ -417,8 +430,8 @@ def build_preview_v2(latest_manifest_path, manual, *, actor, expected_count=PROD
     import native_reviews as reviews
     root = Path(root or review.ROOT).resolve(); here = Path(here or review.HERE).resolve()
     if actor != '/root': raise ValueError('native adoption preview is root-only')
-    if native.SCHEMA != 'photo-candidate-role-evidence/v3':
-        raise ValueError('strict native v3 implementation required; no version fallback')
+    if native.SCHEMA != 'photo-candidate-role-evidence/v4':
+        raise ValueError('strict native v4 implementation required; no version fallback')
     latest = reviews.verify_latest(latest_manifest_path, root=root, here=here, expected_count=expected_count)
     manifest = reviews.read_json(reviews.path_in(root,str(latest_manifest_path)))
     if review.c.digest(manifest) != latest['manifest_sha256']:
@@ -427,15 +440,14 @@ def build_preview_v2(latest_manifest_path, manual, *, actor, expected_count=PROD
     current = reviews.artifact(root,manifest['current_snapshot'])
     require_fields(manual, {'schema','actor','latest_manifest_sha256','original_source_sha256',
         'current_source_sha256','catalog_sha256','member_contract','records','source_approvals',
-        'reference_approvals','binding_approvals','policy_approval','member_guard_migrations'}, 'native v2 manual qualification')
+        'reference_approvals','binding_approvals','policy_approval','member_guard_migrations','catalog_approval'}, 'native v2 manual qualification')
     if (manual['schema'] != SCHEMA_V2 or manual['actor'] != '/root'
             or manual['member_contract'] != MEMBER_CONTRACT
             or any(manual[k] != latest[k] for k in ('original_source_sha256','current_source_sha256','catalog_sha256'))
             or manual['latest_manifest_sha256'] != latest['manifest_sha256']
             or not isinstance(manual['records'],dict) or set(manual['records']) != set(latest['records'])):
         raise ValueError('exact full latest current source/catalog/manual v2 contract required')
-    if expected_count == PRODUCTION_COUNT and len(current['slot_catalog']) != 141:
-        raise ValueError('production preview requires the fully reviewed current141 catalog')
+    verify_catalog_approval(manual['catalog_approval'],current['slot_catalog'],root,reviews)
     # Global policy semantics also require a separate exact root review. Their
     # fingerprint was already required to match every contributing native batch.
     policy = manual['policy_approval']

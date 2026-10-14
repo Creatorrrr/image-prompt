@@ -8,6 +8,7 @@ import copy
 import hashlib
 import json
 import re
+import photo_semantic_witnesses as _native_witnesses
 from photo_semantic_witnesses import normalize_check as _native_witness_check, is_native_fact as _native_fact_row
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Set
 import creative_controls
@@ -153,6 +154,7 @@ def normalize_request_envelope(payload: Any) -> JsonDict:
         "request_text",
         "request_sha256",
         "active_spans",
+        "input_inventory",
     }
     unknown_fields = sorted(set(payload) - allowed_fields)
     if unknown_fields:
@@ -233,6 +235,8 @@ def normalize_request_envelope(payload: Any) -> JsonDict:
         "request_sha256": request_sha256,
         "active_spans": spans,
     }
+    if "input_inventory" in payload:
+        normalized["input_inventory"] = _native_witnesses.validate_input_inventory(payload["input_inventory"],request_sha256)
     normalized["canonical_sha256"] = canonical_json_sha256(normalized)
     normalized["envelope_id"] = normalized["canonical_sha256"][:16]
     return normalized
@@ -552,6 +556,11 @@ def normalize_semantic_assertions(
                 raise ValueError(
                     f"semantic assertion {assertion_id!r} has invalid axis key {key!r}"
                 )
+            if key == "inventory" and _native_witnesses.is_scope_inventory(item):
+                if not isinstance(raw_value,str):
+                    raise ValueError("scope inventory axes require exact canonical JSON text")
+                axes[key] = raw_value
+                continue
             values = (
                 [clean_spaces(str(value)) for value in raw_value]
                 if isinstance(raw_value, list)
@@ -725,7 +734,7 @@ def normalize_semantic_assertions(
             "authorial core v3 allows at most one required character_response assertion"
         )
     # Candidate-free native witnesses cannot pass through generic axis coercion.
-    _native_witness_check(payload, normalized, envelope.get("active_spans") or [], baseline_prompt_en, intent_lock)
+    _native_witness_check(payload, normalized, envelope.get("active_spans") or [], baseline_prompt_en, intent_lock, request_binding=envelope)
     return normalized
 
 def normalize_request_lineage(
@@ -1117,6 +1126,8 @@ def normalize_authorial_core(
         "request_envelope_sha256": str(request_envelope.get("canonical_sha256") or ""),
         "active_spans": copy.deepcopy(request_envelope.get("active_spans") or []),
     }
+    if "input_inventory" in request_envelope:
+        normalized["request_binding"]["input_inventory"] = copy.deepcopy(request_envelope["input_inventory"])
     runtime_forbidden_labels = [
         str(item).strip()
         for item in normalize_list(payload.get("runtime_forbidden_labels"))

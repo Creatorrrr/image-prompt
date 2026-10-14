@@ -5,6 +5,9 @@ are exact typed strings/string lists, never guessed semantic entailments.
 """
 from __future__ import annotations
 import copy
+import hashlib
+import json
+import re
 
 SCHEMA = 'photo-frozen-semantics/v1'
 MAX_ROWS = 64
@@ -24,6 +27,7 @@ KINDS = {
     'equivalent': {'left', 'right'},
     'part_of': {'left', 'right'},
     'disjoint': {'left', 'right'},
+    'scope_inventory': {'owner', 'scope_kind', 'inventory'},
 }
 
 
@@ -45,7 +49,7 @@ def value_key(value):
     return value['type'], tuple(item) if isinstance(item, list) else item
 
 
-def read(assertions, spans, baseline, *, intent_lock=None):
+def read(assertions, spans, baseline, *, intent_lock=None, request_binding=None):
     """Validate the bounded native namespace inside normalized assertions.
 
     The calling core validator binds these spans to the exact user envelope.
@@ -61,11 +65,12 @@ def read(assertions, spans, baseline, *, intent_lock=None):
               if isinstance(row, dict) and concrete(row.get('source_span_id', row.get('span_id')))
               and isinstance(row.get('text'), str) and row['text'].strip()}
     graph = {'schema': SCHEMA, 'owners': {}, 'roles': {}, 'equivalent': [], 'part_of': [], 'disjoint': []}
-    facts, fact_ids, row_ids = [], set(), set()
+    facts, fact_ids, row_ids, scopes = [], set(), set(), []
     for row in native:
         axes = row['axes']; kind = axes.get('kind')
         if (set(row) != ROW_FIELDS or axes.get('native_schema') != SCHEMA or not isinstance(kind,str) or kind not in KINDS
-                or set(axes) != {'native_schema', 'kind'} | KINDS[kind]
+                or set(axes) not in [({'native_schema', 'kind'} | KINDS[kind]),
+                    *([{'native_schema', 'kind'} | KINDS[kind] | {'scope_kinds','source_input_ids'}] if kind=='fact' else [])]
                 or not concrete(row['assertion_id']) or row['assertion_id'] in row_ids
                 or row.get('polarity') != 'required'
                 or not isinstance(row.get('affected_dimensions'), list)
@@ -90,6 +95,11 @@ def read(assertions, spans, baseline, *, intent_lock=None):
             if axes['role'] not in CORE_ROLES or not concrete(axes['owner']) or axes['role'] in graph['roles']:
                 raise ValueError('duplicate or unknown canonical core role')
             graph['roles'][axes['role']] = axes['owner']
+        elif kind == 'scope_inventory':
+            if not concrete(axes['owner']) or axes['scope_kind'] not in SCOPE_KINDS:
+                raise ValueError('invalid explicit scope inventory owner/kind')
+            scopes.append({'assertion_id':row['assertion_id'],'owner':axes['owner'],
+                           'scope_kind':axes['scope_kind'],'inventory':decode_inventory(axes['inventory'])})
         elif kind == 'fact':
             value = {'type': axes['value_type'], 'value': axes['value']}
             if not concrete(axes['owner']) or not concrete(axes['property']) or not typed_value(value):
@@ -100,6 +110,9 @@ def read(assertions, spans, baseline, *, intent_lock=None):
             fact_ids.add(key)
             facts.append({'assertion_id': row['assertion_id'], 'dimension': row['dimension'],
                           'target': axes['owner'], 'property': axes['property'], 'value': copy.deepcopy(value)})
+            if 'scope_kinds' in axes:
+                facts[-1].update(scope_kinds=copy.deepcopy(axes['scope_kinds']),
+                                 source_input_ids=copy.deepcopy(axes['source_input_ids']))
         else:
             if not concrete(axes['left']) or not concrete(axes['right']) or axes['left'] == axes['right']:
                 raise ValueError('owner relation requires two explicit owners')
@@ -121,18 +134,19 @@ def read(assertions, spans, baseline, *, intent_lock=None):
         if key in known:
             raise ValueError('aliased owners carry duplicate or contradictory facts')
         known.add(key)
-    result={'schema': SCHEMA, 'graph': graph, 'facts': facts}
+    validate_scope_inventories(scopes,facts,graph,request_binding)
+    result={'schema': SCHEMA, 'graph': graph, 'facts': facts, 'scope_inventories':scopes}
     if intent_lock is not None:validate_lock_support(assertions,result,intent_lock)
     return result
 
 
-def normalize_check(raw, normalized, spans, baseline, intent_lock=None):
+def normalize_check(raw, normalized, spans, baseline, intent_lock=None, request_binding=None):
     """Do not accept dict/bool/number coercion or whitespace loss in native axes."""
     for before, after in zip(raw, normalized):
         axes = before.get('axes') if isinstance(before, dict) else None
         if isinstance(axes, dict) and 'native_schema' in axes and axes != after['axes']:
             raise ValueError('native semantic axes must survive normalization exactly')
-    read(normalized, spans, baseline, intent_lock=intent_lock)
+    read(normalized, spans, baseline, intent_lock=intent_lock, request_binding=request_binding)
 
 
 def validate_graph(graph):
@@ -242,3 +256,115 @@ def validate_lock_support(assertions, frozen, intent_lock):
             for anchor in intent_lock.get('semantic_anchors') or [])
         if not supported:
             raise ValueError('native frozen fact needs its whole dimension or exact owner/property anchor')
+
+
+SCOPE_KINDS = frozenset({'reference_appearance','requester_identity'})
+INPUT_SCHEMA = 'photo-request-input-inventory/v1'
+SCOPE_SCHEMA = 'photo-frozen-scope-inventory/v1'
+MAX_INPUTS = 32
+
+
+def canonical(value):
+    return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
+
+
+def digest(value):
+    return hashlib.sha256(canonical(value).encode('utf-8')).hexdigest()
+
+
+def validate_input_inventory(value, request_sha256):
+    if (not isinstance(value,dict) or set(value)!={'schema','complete','items'}
+            or value['schema']!=INPUT_SCHEMA or type(value['complete']) is not bool
+            or not isinstance(value['items'],list) or len(value['items'])>MAX_INPUTS):
+        raise ValueError('explicit bounded request input inventory required')
+    ids=set()
+    for item in value['items']:
+        if (not isinstance(item,dict) or set(item)!={'id','kind','sha256'}
+                or not concrete(item['id']) or item['id'] in ids
+                or item['kind'] not in {'request_text','text','reference_image','identity_reference','other'}
+                or not isinstance(item['sha256'],str) or re.fullmatch(r'[0-9a-f]{64}',item['sha256']) is None
+                or item['kind']=='request_text' and item['sha256']!=request_sha256):
+            raise ValueError('invalid, duplicate or stale request input entry')
+        ids.add(item['id'])
+    if value["complete"] and sum(item["kind"]=="request_text" for item in value["items"])!=1:
+        raise ValueError("complete input inventory must include the exact request text once")
+    return copy.deepcopy(value)
+
+
+def input_binding(envelope):
+    result={'request_sha256':envelope.get('request_sha256'),
+            'request_envelope_sha256':envelope.get('request_envelope_sha256',envelope.get('canonical_sha256'))}
+    if 'input_inventory' in envelope:
+        inventory=validate_input_inventory(envelope['input_inventory'],result['request_sha256'])
+        result['input_inventory_sha256']=digest(inventory)
+    return result
+
+
+def decode_inventory(text):
+    def unique(pairs):
+        result={}
+        for key,value in pairs:
+            if key in result:raise ValueError('duplicate scope inventory key')
+            result[key]=value
+        return result
+    if not isinstance(text,str) or len(text)>65536:
+        raise ValueError('scope inventory must be bounded exact canonical JSON text')
+    value=json.loads(text,object_pairs_hook=unique,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('invalid number')))
+    if canonical(value)!=text:
+        raise ValueError('scope inventory canonical JSON must survive wire exactly')
+    return value
+
+
+def is_scope_inventory(row):
+    axes=row.get('axes') if isinstance(row,dict) else None
+    return isinstance(axes,dict) and axes.get('native_schema')==SCHEMA and axes.get('kind')=='scope_inventory'
+
+
+def validate_scope_inventories(scopes, facts, graph, request_binding):
+    scoped=[fact for fact in facts if 'scope_kinds' in fact]
+    if not scopes and not scoped:return
+    if not isinstance(request_binding,dict) or 'input_inventory' not in request_binding:
+        raise ValueError('scope evidence requires independently pinned request input inventory')
+    host=validate_input_inventory(request_binding['input_inventory'],request_binding.get('request_sha256'))
+    bound=input_binding(request_binding)
+    if set(bound)!={'request_sha256','request_envelope_sha256','input_inventory_sha256'} or any(
+            not isinstance(value,str) or re.fullmatch(r'[0-9a-f]{64}',value) is None for value in bound.values()):
+        raise ValueError('scope evidence needs exact request/envelope/input inventory SHA')
+    input_ids=[item['id'] for item in host['items']]
+    canonical_owners,ancestors=validate_graph(graph)
+    for fact in scoped:
+        kinds,ids=fact['scope_kinds'],fact['source_input_ids']
+        if (not isinstance(kinds,list) or not kinds or len(kinds)!=len(set(kinds)) or not set(kinds)<=SCOPE_KINDS
+                or not isinstance(ids,list) or not 1<=len(ids)<=8 or any(not concrete(x) for x in ids)
+                or len(ids)!=len(set(ids)) or not set(ids)<=set(input_ids)):
+            raise ValueError('scoped frozen fact requires explicit exact input provenance')
+    seen=set()
+    by_id={fact['assertion_id']:fact for fact in facts}
+    for scope in scopes:
+        owner=canonical_owners.get(scope['owner'])
+        key=(owner,scope['scope_kind'])
+        if owner is None or key in seen:raise ValueError('duplicate/undeclared scope inventory owner')
+        seen.add(key);inv=scope['inventory']
+        if (not isinstance(inv,dict) or set(inv)!={'schema','complete','input_binding','reviewed_input_ids','state','items'}
+                or inv['schema']!=SCOPE_SCHEMA or type(inv['complete']) is not bool
+                or inv['input_binding']!=bound or inv['reviewed_input_ids']!=input_ids
+                or inv['state'] not in {'known_absent','known_present','unknown'}
+                or not isinstance(inv['items'],list) or len(inv['items'])>MAX_ROWS):
+            raise ValueError('stale, incomplete or invalid scope inventory binding')
+        expected={fact['assertion_id'] for fact in scoped if scope['scope_kind'] in fact['scope_kinds']
+            and (canonical_owners[fact['target']]==owner or owner in ancestors[canonical_owners[fact['target']]])}
+        present=set()
+        for item in inv['items']:
+            if not isinstance(item,dict) or set(item)!={'assertion_id','dimension','target','property','value'}:
+                raise ValueError('scope item must repeat the exact independently frozen fact')
+            aid=item['assertion_id'];fact=by_id.get(aid)
+            if (aid in present or aid not in expected or fact is None
+                    or item!={name:fact[name] for name in item}):
+                raise ValueError('scope item owner/value/input provenance differs from its frozen fact')
+            present.add(aid)
+        if inv['state']=='known_absent' and (present or expected):
+            raise ValueError('known absence contradicts established scoped facts')
+        if inv['state']=='known_present' and not present:
+            raise ValueError('present scope must list established protected items')
+        if inv['complete'] and host['complete'] and inv['state']=='known_present' and present!=expected:
+            raise ValueError('complete present inventory omits scoped frozen facts')

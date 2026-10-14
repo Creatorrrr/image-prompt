@@ -247,6 +247,7 @@ class NativeAdoptionTests(unittest.TestCase):
             qualification = manual['records'][A]; proof = qualification['proof']
             qualification['meaning_sha256'] = native.meaning_sha256(after)
             proof['meaning_sha256'] = qualification['meaning_sha256']
+            proof['guard_sets']={rid:native.source_guard_set(after,rid,source) for rid in native.realizations.ids(after)}
             proof['review']['source_correction'] = {'before_sha256': native.meaning_sha256(before),
                 'after_sha256': native.meaning_sha256(after), 'rationale': 'Explicit fixture source guard refinement.'}
             proof['review']['native_review']['native_contract_sha256'] = native.native_contract_sha256(proof)
@@ -331,6 +332,11 @@ class NativeAdoptionV2Tests(unittest.TestCase):
             records={A:dict(review_sha256=review.c.digest(latest['records'][A]),proof_sha256=review.c.digest(latest['records'][A]['proof']),
                 bindings={'surface_material':copy.deepcopy(next(iter(v['current']['slot_bindings'].values())))})},
             source_approvals=[],reference_approvals=[],binding_approvals=[],policy_approval=None,member_guard_migrations=[])
+        artifact=helper.put(v['root'],'run/approved-catalog.json',v['current']['slot_catalog'])
+        manual['catalog_approval']={'schema':'photo-native-catalog-approval/v1','actor':'/root',
+            'artifact':artifact,'catalog_sha256':review.c.digest(v['current']['slot_catalog']),
+            'slot_count':len(v['current']['slot_catalog']),'slot_ids':sorted(v['current']['slot_catalog']),
+            'reason':'Root explicitly reviewed the complete isolated current catalog.'}
         return helper,v,manual
 
     def build(self,v,manual):
@@ -340,6 +346,9 @@ class NativeAdoptionV2Tests(unittest.TestCase):
         helper.attest_proof(v); helper.persist(v); latest=helper.latest(v)
         manual.update(latest_manifest_sha256=latest['manifest_sha256'],current_source_sha256=latest['current_source_sha256'],catalog_sha256=latest['catalog_sha256'])
         manual['records'][A].update(review_sha256=review.c.digest(latest['records'][A]),proof_sha256=review.c.digest(latest['records'][A]['proof']))
+        manual['catalog_approval'].update(artifact=helper.put(v['root'],'run/approved-catalog.json',v['current']['slot_catalog']),
+            catalog_sha256=review.c.digest(v['current']['slot_catalog']),slot_count=len(v['current']['slot_catalog']),
+            slot_ids=sorted(v['current']['slot_catalog']))
         return latest
 
     def test_v2_uses_new_native_review_despite_historical_pending_and_preserves_provenance(self):
@@ -352,6 +361,26 @@ class NativeAdoptionV2Tests(unittest.TestCase):
             self.assertTrue(proposed['candidates'][A]['content']['role_evidence']['review']['original_review']['artifact'].endswith('#item=1'))
             self.assertFalse(ledger['native_changes_applied']); self.assertFalse(ledger['production_count_gate'])
             self.assertFalse(ledger['full_runtime_consumer_integration_verified'])
+
+    def test_v2_current_catalog_approval_binds_exact_artifact_roster_hash_without_magic_count(self):
+        with tempfile.TemporaryDirectory() as directory:
+            helper,v,manual=self.fixture(directory)
+            self.assertNotEqual(len(v['current']['slot_catalog']),141)
+            self.assertNotEqual(len(v['current']['slot_catalog']),142)
+            self.build(v,manual)
+        for defect in ['missing','actor','schema','hash','count','bool','roster','artifact','unknown']:
+            with self.subTest(defect=defect),tempfile.TemporaryDirectory() as directory:
+                helper,v,manual=self.fixture(directory);approval=manual['catalog_approval']
+                if defect=='missing':manual.pop('catalog_approval')
+                elif defect=='actor':approval['actor']='/root/worker'
+                elif defect=='schema':approval['schema']='guessed'
+                elif defect=='hash':approval['catalog_sha256']='0'*64
+                elif defect=='count':approval['slot_count']+=1
+                elif defect=='bool':approval['slot_count']=True
+                elif defect=='roster':approval['slot_ids']+=['invented_role']
+                elif defect=='artifact':approval['artifact']=helper.put(v['root'],'run/wrong-catalog.json',{})
+                else:approval['automatic_approval']=True
+                with self.assertRaises(ValueError):self.build(v,manual)
 
     def test_v2_requires_exact_schema_root_count_latest_source_and_proof(self):
         for defect in ('schema','actor','manifest','source','catalog','proof','review','unknown','role'):
