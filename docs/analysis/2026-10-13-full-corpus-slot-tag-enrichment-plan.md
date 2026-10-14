@@ -170,6 +170,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 최신 판정은 source correction 제안, 코드·fixture 통과, 연구용 preview, 운영 적용을 구분한다. 후속 재독에서 의미 불확실성이 드러났다면 앞선 형상 검사 통과만으로 승인하지 않고 별도 불변 revision과 루트 통합을 요구한다. 최종 5단계 종료와 6단계 적용은 18,250개 ID 모두의 현재 source/catalog에 유효한 최신 직접 승인·진단 판정, 보류·누락 0건, 전체 dependency 자격 근거를 확인한 뒤에만 허용한다. 직접 검토에 사용할 새 catalog는 142개로 확정했다. `object_structure`, `liquid_inclusion`, `surface_pattern`을 추가하고 기존 18개 역할의 범위·경계·적용 정책을 근거와 함께 정비했다. [확정 명세](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/CATALOG-FINAL-142.json)의 canonical SHA-256은 `e7ad376ae1e195ada8268259015b29751f33a24f47e23899c7b7e9329b4a3e28`이다. 이는 다음 직접 재심사의 입력 확정이며 운영 적용이나 후보 native 승인이 아니다. 최종 질의 범위는 이 142개 전체다. 기존 139개 역할의 scene-free 검색 기준선과 141개 중간 제안에 대한 판정은 최종 native/runtime 검증을 대신하지 않는다.
 
+후속 식물 후보 검토로 142개 카탈로그의 `body_form`, `anatomical_connection` 두 명세에서 식물과 명시된 해부학적 표현물의 소유 범위를 명료화했다. 다음 정식 재심사에는 [142개 v2 명세](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/CATALOG-FINAL-142-V2.json), canonical SHA-256 `0d7cab7b4add7279b0faa629bb5df72829da0c756adc6db21dcd7c09d56b971f`를 사용한다. 앞선 `e7ad…a3e28` 파일은 역사 입력으로 보존한다. 직물 꽃장식·가지 모양 공예물·식물 문양을 살아 있는 식물이나 해부 구조로 확대하지 않으며, 생존·성장·종을 형태에서 추론하지 않는다. 명세 확정은 해당 후보 사실의 자동 승인이나 운영 적용을 뜻하지 않는다.
+
 검증: 각 배치의 ID·긍정 인용·원본/수정 후 hash·선택 분기·owner/property·효과·조건을 대조하고, 의미 변경은 관련 옵션·프로필·묶음·참조에 전파한다. 운영 원본을 고친 배치는 새 local index closure·runtime publication·실제 acquire까지 검증한 뒤 커밋한다. 대장만 작성한 배치는 운영 데이터를 바꾸지 않는다. 5단계 종료 조건은 직접 검토 승인 집합이 18,250/18,250, 누락·미검토·미해결 보류 0건, Gemini 신규 호출 0건이다.
 
 산출물: 직접 검토 기준 snapshot·입력/검증 보조 도구, 전체 확정 태그안·긍정 인용·소유자·분기 근거 대장, 필요한 source 보정과 native 검증, 배치별 검증·커밋, 실제 직접 검토 coverage.
