@@ -44,9 +44,107 @@ MAX_FACTS = 4096
 MAX_UNITS = 2048
 MAX_REALIZATIONS = 32
 MAX_DEPENDENCY_DEPTH = 8
+GUARD_SUPPORT_SCHEMA = 'photo-native-guard-role-support/v1'
+MAX_GUARD_SUPPORTS = 512
+MAX_RID_GUARD_SUPPORTS = 64
+GUARD_SUPPORT_FIELDS = frozenset({'schema','id','realization_id','pointer','quote','mode',
+    'guard','endpoints','semantic_projection'})
 SOURCE_UNIT_FIELDS = frozenset({'realization_id', 'pointer', 'quote', 'fact_refs', 'disposition'})
 REFERENCE_UNIT_FIELDS = SOURCE_UNIT_FIELDS | {'reference_relation', 'retained_constraint_rationale'}
 REFERENCE_RELATIONS = frozenset({'partial_restatement', 'selected_output_constraint', 'same_selected_owner'})
+
+
+def _proof_fields_valid(proof):
+    return set(proof) in (PROOF_FIELDS, PROOF_FIELDS | {'guard_supports'})
+
+
+def _guard_support_rows(proof):
+    if 'guard_supports' not in proof:
+        return []
+    rows=proof['guard_supports']
+    if not isinstance(rows,list) or not 1<=len(rows)<=MAX_GUARD_SUPPORTS:
+        raise ValueError('bounded nonempty explicit guard supports required')
+    return rows
+
+
+def _guard_support_rule(proof,row):
+    """Exact own-source common/branch locator; presentation cannot self-certify."""
+    rid=row['realization_id'];ref=row['guard'];cid=_proof_cid(proof)
+    fields={'schema','declaring_candidate_id','declaring_realization_id',
+        'source_condition_index','conditions_sha256','rule_id','rule_sha256'}
+    if (not isinstance(ref,dict) or set(ref)!=fields or ref['declaring_candidate_id']!=cid
+            or ref['declaring_realization_id']!=rid or type(ref['source_condition_index']) is not int
+            or ref['source_condition_index'] not in (0,1)
+            or not _sha256(ref['conditions_sha256']) or not _sha256(ref['rule_sha256'])):
+        raise ValueError('guard support requires exact own CID/RID/source condition locator')
+    cond=proof['guard_sets'][rid]['source_conditions'][ref['source_condition_index']]
+    block=cond.get('native_guards')
+    if not isinstance(block,dict) or ref['schema']!=block.get('schema'):
+        raise ValueError('guard support schema differs from actual source guard')
+    validate_source_guards(block)
+    rules=[rule for rule in block['rules'] if rule['id']==ref['rule_id']]
+    if (len(rules)!=1 or c.digest(cond)!=ref['conditions_sha256']
+            or c.digest(rules[0])!=ref['rule_sha256']
+            or rules[0]['kind'] not in {'owner_relation','frozen_entity_relation'}):
+        raise ValueError('guard support source condition/rule changed or unsupported predicate')
+    return rules[0]
+
+
+def _validate_guard_supports(proof, *, record=None):
+    """A manual relation projection is not a scalar frozen fact or a mutation."""
+    from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+    rows=_guard_support_rows(proof)
+    if not rows:return {}
+    result={};counts={};cid=_proof_cid(proof)
+    compact='dependency_guards' in proof
+    expected=GUARD_SUPPORT_FIELDS-({'pointer','quote'} if compact else set())
+    fact_ids={fact['id'] for fact in proof['facts']}
+    for row in rows:
+        if (not isinstance(row,dict) or set(row)!=expected or row['schema']!=GUARD_SUPPORT_SCHEMA
+                or not concrete_owned_value(row['id']) or row['id'] in result or row['id'] in fact_ids
+                or not concrete_owned_value(row['realization_id'])
+                or row['realization_id'] not in proof['effect_sets'] or row['mode']!='prerequisite'):
+            raise ValueError('invalid/duplicate guard support or non-prerequisite mode')
+        rid=row['realization_id'];counts[rid]=counts.get(rid,0)+1
+        if counts[rid]>MAX_RID_GUARD_SUPPORTS:raise ValueError('too many actual-RID guard supports')
+        rule=_guard_support_rule(proof,row);ref=row['guard'];eps=row['endpoints']
+        v2=ref['schema']==SOURCE_TARGET_GUARD_SCHEMA
+        keys={'left','right'} if v2 else {'left_role','right_role'}
+        if not isinstance(eps,dict) or set(eps)!=keys:
+            raise ValueError('guard support endpoints must preserve the actual schema keys')
+        own_plan=owner_binding_plan(proof['owner_maps'][rid])
+        for key,ep in eps.items():
+            if (not isinstance(ep,dict) or set(ep)!={'candidate_id','target'}
+                    or not isinstance(ep['candidate_id'],str) or not c.ID.fullmatch(ep['candidate_id'])
+                    or not concrete_owned_value(ep['target'])):
+                raise ValueError('explicit source-owner endpoint required, never actual-owner constants')
+            if v2:
+                if ep!={k:rule[key][k] for k in ('candidate_id','target')}:
+                    raise ValueError('guard support endpoint differs from actual source-target rule')
+            elif ep['candidate_id']!=cid:
+                raise ValueError('v1 support endpoint must belong to its own source')
+            if ep['candidate_id']==cid:
+                plan=own_plan.get(ep['target'])
+                if plan is None or plan['origin']!='existing':
+                    raise ValueError('guard support requires explicitly bound existing endpoints')
+                if not v2 and plan['selector_kind']=='core_role' and plan['core_role']!=rule[key]:
+                    raise ValueError('v1 endpoint mapping differs from its actual neutral role')
+        projection=row['semantic_projection']
+        if (not isinstance(projection,dict) or set(projection)!=set(PROPERTY_FIELDS)
+                or not all(concrete_owned_value(projection[k]) for k in PROPERTY_FIELDS)
+                or projection['dimension'] not in AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+                or not any(ep=={'candidate_id':cid,'target':projection['target']} for ep in eps.values())):
+            raise ValueError('guard support requires explicit owned semantic projection')
+        if rule['kind']=='frozen_entity_relation' and any(projection[k]!=rule[k] for k in ('dimension','property')):
+            raise ValueError('frozen relation projection cannot rewrite its actual property taxonomy')
+        if not compact:
+            if not isinstance(row['pointer'],str) or not isinstance(row['quote'],str) or not row['quote'].strip():
+                raise ValueError('direct positive guard source anchor required')
+            if record is not None and (row['pointer'] not in primary_paths(record,rid)
+                    or row['quote'] not in positive_string(record,row['pointer'],realization_id=rid)):
+                raise ValueError('guard support differs from its own positive source')
+        result[row['id']]=row
+    return result
 
 
 def meaning_material(record):
@@ -153,15 +251,20 @@ def _validate_source_units(record, proof, facts, rid):
              if isinstance(unit, dict) and unit.get('realization_id') == rid]
     primary = primary_paths(record, rid)
     normal, references, direct = {}, {}, set()
+    supports=_validate_guard_supports(proof,record=record);direct_guards=set()
     for unit in units:
         reference = unit.get('disposition') == 'semantic_reference'
-        expected = REFERENCE_UNIT_FIELDS if reference else SOURCE_UNIT_FIELDS
+        guard_refs=unit.get('guard_refs',[])
+        expected = REFERENCE_UNIT_FIELDS if reference else SOURCE_UNIT_FIELDS | ({'guard_refs'} if 'guard_refs' in unit else set())
         if (set(unit) != expected or not isinstance(unit['pointer'], str)
                 or not isinstance(unit['disposition'], str)
                 or unit['disposition'] not in {'semantic', 'nonsemantic', 'semantic_reference'}
                 or unit['quote'] != positive_string(record, unit['pointer'], realization_id=rid)):
             raise ValueError('invalid full-string source-unit disposition')
-        _strings(unit['fact_refs'], 'source unit facts', empty=unit['disposition'] == 'nonsemantic')
+        if 'guard_refs' in unit:
+            if unit['disposition']!='semantic':raise ValueError('only direct ordinary semantic units can ground guard supports')
+            _strings(guard_refs,'source unit guard supports')
+        _strings(unit['fact_refs'], 'source unit facts', empty=unit['disposition'] == 'nonsemantic' or bool(guard_refs))
         if reference:
             if (unit['pointer'] not in primary or unit['pointer'] in references
                     or not isinstance(unit['reference_relation'], str)
@@ -181,6 +284,11 @@ def _validate_source_units(record, proof, facts, rid):
             raise ValueError('unit borrows a foreign fact/source')
         normal[unit['pointer']] = unit
         direct.update(unit['fact_refs'])
+        if any(ref not in supports or supports[ref]['realization_id']!=rid
+                or supports[ref]['pointer']!=unit['pointer'] or supports[ref]['quote'] not in unit['quote']
+                for ref in guard_refs):
+            raise ValueError('unit borrows a foreign guard support/source')
+        direct_guards.update(guard_refs)
     for pointer, unit in references.items():
         # A direct unit may cover distinct local clauses at this same field.
         # Calling the field nonsemantic at the same time is contradictory.
@@ -191,7 +299,8 @@ def _validate_source_units(record, proof, facts, rid):
                for ref in unit['fact_refs']):
             raise ValueError('semantic reference needs a distinct same-RID direct semantic anchor')
     if (not primary <= normal.keys() | references.keys()
-            or direct != {fact['id'] for fact in facts.values() if fact['realization_id'] == rid}):
+            or direct != {fact['id'] for fact in facts.values() if fact['realization_id'] == rid}
+            or direct_guards!={row['id'] for row in supports.values() if row['realization_id']==rid}):
         raise ValueError('complete source-unit/fact disposition required')
 
 
@@ -457,7 +566,7 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
     proof = record['content'].get('role_evidence', MISSING)
     if proof is MISSING:
         return  # Stage 5C only: source remains explicitly unqualified.
-    if (not isinstance(proof, dict) or set(proof) != PROOF_FIELDS or proof['schema'] != SCHEMA
+    if (not isinstance(proof, dict) or not _proof_fields_valid(proof) or proof['schema'] != SCHEMA
             or proof['complete'] is not True or proof['meaning_sha256'] != meaning_sha256(record)
             or proof['catalog_sha256'] != (catalog_sha256 or c.digest(catalog))
             or not isinstance(proof['review'], dict)
@@ -529,6 +638,7 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
                or facts[ref]['mode'] not in {'prerequisite', 'preservation'} or ref == fact['id']
                for ref in fact['requires']):
             raise ValueError('fact requires an actual same-RID frozen obligation')
+    supports=_validate_guard_supports(proof,record=record)
     for rid in ids:
         if proof['guard_sets'][rid] != source_guard_set(record,rid,corpus):
             raise ValueError('native intrinsic/selected/presentation guard inventory changed')
@@ -582,14 +692,17 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
         _validate_source_units(record, proof, facts, rid)
     if any(not isinstance(unit, dict) or unit.get('realization_id') not in ids for unit in proof['source_units']):
         raise ValueError('source unit names a foreign RID')
-    if record['record_kind'] == 'diagnostic' and (proof['roles'] or proof['facts']):
+    if record['record_kind'] == 'diagnostic' and (proof['roles'] or proof['facts'] or supports):
         raise ValueError('diagnostic cannot certify positive semantic facts')
     for tag, role in proof['roles'].items():
-        if (tag not in catalog or not isinstance(role, dict) or set(role) !=
-                {'spec_sha256', 'scope', 'realization_ids', 'fact_refs', 'support_modes'}):
+        if (tag not in catalog or not isinstance(role, dict) or set(role) not in (
+                {'spec_sha256', 'scope', 'realization_ids', 'fact_refs', 'support_modes'},
+                {'spec_sha256', 'scope', 'realization_ids', 'fact_refs', 'support_modes','guard_refs'})):
             raise ValueError('unknown role or native role contract')
         spec = catalog[tag]
-        _strings(role['realization_ids'], 'role RIDs'); _strings(role['fact_refs'], 'role facts')
+        guard_refs=role.get('guard_refs',[])
+        if 'guard_refs' in role:_strings(guard_refs,'role guard supports')
+        _strings(role['realization_ids'], 'role RIDs'); _strings(role['fact_refs'], 'role facts',empty=bool(guard_refs))
         _strings(role['support_modes'], 'role modes')
         if (role['spec_sha256'] != c.digest(spec) or role['scope'] not in {'whole_record', 'positive_alternative'}
                 or not set(role['realization_ids']) <= ids or not set(role['support_modes']) <= MODES
@@ -605,8 +718,20 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
                     or fact['mode'] == 'context' and spec['semantic_role'] != 'contextual'):
                 raise ValueError('role fact is outside its reviewed spec/mode/actual RID')
             covered.add(fact['realization_id'])
+        for ref in guard_refs:
+            support=supports.get(ref)
+            if support is None:raise ValueError('role needs direct same-source guard support')
+            projection=support['semantic_projection']
+            if (support['realization_id'] not in role['realization_ids'] or support['mode'] not in role['support_modes']
+                    or projection['dimension'] not in spec['dimensions']
+                    or not any(projection['property']==prefix.rstrip('.') or projection['property'].startswith(
+                        prefix if prefix.endswith('.') else prefix+'.') for prefix in spec['property_prefixes'])):
+                raise ValueError('role guard support is outside its reviewed spec/mode/actual RID')
+            covered.add(support['realization_id'])
         if covered != set(role['realization_ids']):
             raise ValueError('role needs source support on every qualified RID')
+        if guard_refs and set(role['support_modes'])!={facts[ref]['mode'] for ref in role['fact_refs']}|{supports[ref]['mode'] for ref in guard_refs}:
+            raise ValueError('guard-backed role modes must match its actual direct support union')
 
 
 def compact(record, corpus=None, _stack=()):
@@ -623,6 +748,8 @@ def compact(record, corpus=None, _stack=()):
     result.pop('source_units'); result.pop('review')
     for fact in result['facts']:
         fact.pop('pointer'); fact.pop('quote')
+    for support in result.get('guard_supports',[]):
+        support.pop('pointer');support.pop('quote')
     result['candidate_id'] = record['id']
     result['qualification_sha256'] = c.digest(proof)
     result['dependency_guards'] = {}
@@ -654,7 +781,7 @@ def qualification(spec, record, realization_id='base'):
             result['reason'] = 'incomplete_or_unsupported_native_evidence'
         return result
     proof = proof_of(record)
-    if '_semantic_evidence_guard' not in record and (set(proof) != PROOF_FIELDS
+    if '_semantic_evidence_guard' not in record and (not _proof_fields_valid(proof)
             or proof.get('meaning_sha256') != meaning_sha256(record)
             or (proof.get('review') or {}).get('native_review',{}).get('native_contract_sha256') != native_contract_sha256(proof)):
         return {**result,'native_qualification':'invalid','reason':'native_source_authoring_binding_changed'}
@@ -666,6 +793,8 @@ def qualification(spec, record, realization_id='base'):
     if realization_id not in role['realization_ids']:
         return {**result, 'status': 'incompatible', 'reason': 'role_not_supported_by_selected_realization'}
     selected = [fact for fact in proof['facts'] if fact['id'] in role['fact_refs'] and fact['realization_id'] == realization_id]
+    selected_guards=[row for row in proof.get('guard_supports',[])
+        if row['id'] in role.get('guard_refs',[]) and row['realization_id']==realization_id]
     selected_effects = (realizations.effects(record, realization_id) if record['effects'].get('realizations')
                         else record['effects'])
     actual = with_projection(record, selected_effects)
@@ -673,8 +802,18 @@ def qualification(spec, record, realization_id='base'):
         _selected_contract(proof, realization_id, actual)
     except (ValueError, KeyError, TypeError):
         return {**result, 'reason': 'qualified_actual_effect_set_changed'}
-    if not selected:
+    if not selected and not selected_guards:
         return {**result, 'reason': 'role_has_no_selected_fact'}
+    if selected_guards:
+        return {**result,'status':'eligible','reason':'source_reviewed_guard_evidence_requires_admission',
+            'fact_refs':[fact['id'] for fact in selected],
+            'guard_refs':[row['id'] for row in selected_guards],
+            'guard_admission_required':True,
+            'matched_guard_supports':[{'guard_support_id':row['id'],'mode':row['mode'],
+                'guard':copy.deepcopy(row['guard']),'semantic_projection':copy.deepcopy(row['semantic_projection'])}
+                for row in selected_guards],
+            'support_modes':sorted({fact['mode'] for fact in selected}|{row['mode'] for row in selected_guards}),
+            'matched_properties':[dict(zip(PROPERTY_FIELDS,key)) for key in dict.fromkeys(property_key(fact) for fact in selected)]}
     return {**result, 'status': 'eligible', 'reason': 'source_reviewed_mode_specific_evidence',
             'fact_refs': [fact['id'] for fact in selected], 'support_modes': sorted({fact['mode'] for fact in selected}),
             'matched_properties': [dict(zip(PROPERTY_FIELDS, key)) for key in dict.fromkeys(property_key(fact) for fact in selected)]}
@@ -746,6 +885,7 @@ def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entr
             whole_entry=whole_entry, allow_unselected=allow_unselected)
         if not guards_receipt['allowed']:
             return {**denied, 'reason':guards_receipt['reason']}
+        resolved_guard_supports=_guard_support_admission(entry,frozen,guards_receipt,actual_owners)
         selections = entry.get('_native_dependency_selections', {})
         if not isinstance(selections, dict) or any(not isinstance(key, str) or not isinstance(value, str)
                                                  for key,value in selections.items()):
@@ -781,6 +921,7 @@ def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entr
             validate_joint_effect_assignments([entry], core)
         return {'status': 'qualified', 'allowed': True, 'reason': 'whole_native_obligations_verified',
                 'resolved_frozen_facts': resolutions, 'dependencies':children, 'native_guards':guards_receipt,
+                **({'resolved_guard_supports':resolved_guard_supports} if 'guard_supports' in proof else {}),
                 'used_dependency_ids':sorted(used),**({'search_only':True} if search_only else {}),**({'owner_resolution':{'candidate_id':proof.get('candidate_id'),
                     'realization_id':rid,'meaning_sha256':proof['meaning_sha256'],'qualification_sha256':proof.get('qualification_sha256',c.digest(proof)),
                     'bindings':owner_bindings}} if owner_bindings else {})}
@@ -878,6 +1019,7 @@ def _selected_contract(proof, rid, actual):
         raise ValueError('native v4 guard/profile inventory missing')
     if rid not in proof['effect_sets'] or actual != proof['effect_sets'][rid]:
         raise ValueError('actual selected effects changed')
+    _validate_guard_supports(proof)
     facts = [fact for fact in proof['facts'] if fact['realization_id'] == rid]
     by_id = {}
     for fact in facts:
@@ -1185,6 +1327,72 @@ def _pending_dependency_choice(proof,rid,selections):
     return False
 
 
+def _guard_support_enabled(entry):
+    proof=proof_of(entry)
+    return isinstance(proof,dict) and any(row['realization_id']==entry.get('_realization_id','base')
+        for row in _guard_support_rows(proof))
+
+
+def _guard_execution_metadata(proof,rid,index,conditions,rule,graph):
+    """Opt-in source provenance, reconstructed rather than a caller receipt."""
+    if conditions!=proof['guard_sets'][rid]['source_conditions'][index]:
+        raise ValueError('guard execution differs from its sealed own source layer')
+    cid=_proof_cid(proof)
+    return {'guard_schema':conditions['native_guards']['schema'],
+        'declaring_candidate_id':cid,'declaring_realization_id':rid,
+        'activation_candidate_id':cid,'activation_realization_id':rid,
+        'source_layer':'source_common' if index==0 else 'source_branch',
+        'source_condition_index':index,'pointer':'/source_conditions/'+str(index),
+        'conditions_sha256':c.digest(conditions),'rule_sha256':c.digest(rule),
+        'meaning_sha256':proof['meaning_sha256'],
+        'qualification_sha256':proof.get('qualification_sha256',c.digest(proof)),
+        'reference_sha256':copy.deepcopy(proof['reference_sha256']),
+        'owner_graph_sha256':c.digest(graph)}
+
+
+def _guard_support_admission(entry,frozen,receipt,actual_owners):
+    """Bind reviewed relation support to a fresh, actually executed predicate."""
+    proof=proof_of(entry);rid=entry.get('_realization_id','base');cid=_proof_cid(proof)
+    selected=[row for row in _validate_guard_supports(proof).values() if row['realization_id']==rid]
+    if not selected or receipt.get('search_only'):
+        return []
+    graph=frozen['graph'];canonical,_=witnesses.validate_graph(graph);resolved=[]
+    for row in selected:
+        rule=_guard_support_rule(proof,row);ref=row['guard'];index=ref['source_condition_index']
+        candidates=[item for item in receipt['rules'] if
+            item.get('guard_schema')==ref['schema'] and item.get('declaring_candidate_id')==cid
+            and item.get('declaring_realization_id')==rid and item.get('activation_candidate_id')==cid
+            and item.get('activation_realization_id')==rid and item.get('source_condition_index')==index
+            and item.get('source_layer')==('source_common' if index==0 else 'source_branch')
+            and item.get('conditions_sha256')==ref['conditions_sha256']
+            and item.get('rule_id')==ref['rule_id'] and item.get('rule_sha256')==ref['rule_sha256']
+            and item.get('kind')==rule['kind'] and item.get('status')=='verified']
+        if len(candidates)!=1:raise ValueError('guard support lacks one exact executed source predicate')
+        item=candidates[0]
+        if (item.get('owner_graph_sha256')!=c.digest(graph)
+                or item.get('meaning_sha256')!=proof['meaning_sha256']
+                or item.get('qualification_sha256')!=proof.get('qualification_sha256',c.digest(proof))
+                or item.get('reference_sha256')!=proof['reference_sha256']):
+            raise ValueError('guard support executed source/qualification/owner closure changed')
+        v2=ref['schema']==SOURCE_TARGET_GUARD_SCHEMA
+        if v2 and item.get('endpoints')!={key:rule[key] for key in row['endpoints']}:
+            raise ValueError('executed source-target endpoints differ from reviewed guard')
+        owners=item['owners']
+        if item.get('canonical_owners')!={key:canonical[value] for key,value in owners.items()}:
+            raise ValueError('executed canonical owner closure changed')
+        for key,ep in row['endpoints'].items():
+            if ep['candidate_id']!=cid:continue  # v2 evaluator checked the exact required selected closure.
+            actual=actual_owners[ep['target']]
+            if (canonical[actual]!=canonical[owners[key]] if v2 else actual!=owners[key]):
+                raise ValueError('guard support owner binding differs from actual schema execution')
+        if rule['kind']=='frozen_entity_relation' and not concrete_owned_value(item.get('core_assertion_id')):
+            raise ValueError('frozen relation support lacks its executed core assertion')
+        resolved.append({'guard_support_id':row['id'],'realization_id':rid,'mode':row['mode'],
+            'semantic_projection':copy.deepcopy(row['semantic_projection']),
+            'guard':copy.deepcopy(ref),'execution':copy.deepcopy(item)})
+    return resolved
+
+
 def _evaluate_role_guards(entry,core,*,frozen=None,whole_entry=None,allow_unselected=False):
     frozen=frozen or frozen_witnesses(core);graph=frozen['graph']
     canonical,ancestors=witnesses.validate_graph(graph)
@@ -1199,6 +1407,10 @@ def _evaluate_role_guards(entry,core,*,frozen=None,whole_entry=None,allow_unsele
             if any(owner is None for owner in roles.values()):
                 return {'allowed':False,'reason':'native_guard_owner_not_established'}
             receipt={'layer':layer_index,'rule_id':rule['id'],'kind':rule['kind'],'owners':roles}
+            if layer_index<2 and _guard_support_enabled(entry):
+                proof=proof_of(entry);rid=entry.get('_realization_id','base')
+                receipt.update(_guard_execution_metadata(proof,rid,layer_index,conditions,rule,graph),
+                    canonical_owners={key:canonical[value] for key,value in roles.items()})
             kind=rule['kind']
             if kind=='owner_relation':
                 left,right=roles['left_role'],roles['right_role']
@@ -1236,6 +1448,7 @@ def _evaluate_role_guards(entry,core,*,frozen=None,whole_entry=None,allow_unsele
                         if not property_effects_allowed(locks,dims,effects,owner_graph=owner_graph):
                             return {'allowed':False,'reason':'native_established_scope_effect_overlap'}
                     preserved.append(copy.deepcopy(scope))
+            if 'guard_schema' in receipt:receipt['status']='verified'
             receipts.append(receipt)
     return {'allowed':True,'reason':'search_only_dependency_selection_required' if pending else 'all_native_guards_verified',
             'rules':receipts,'preserved_scopes':preserved,'search_only':pending}
@@ -1326,6 +1539,9 @@ def _own_guard_targets(proof,rid):
         if block['schema']==SOURCE_TARGET_GUARD_SCHEMA:
             targets.update(ep['target'] for rule in block['rules'] for ep in _guard_endpoints(rule)
                            if ep['candidate_id']==cid)
+    for row in _guard_support_rows(proof):
+        if row['realization_id']==rid:
+            targets.update(ep['target'] for ep in row['endpoints'].values() if ep['candidate_id']==cid)
     return targets
 
 
@@ -1488,6 +1704,12 @@ def _evaluate_target_guards(entry,core,*,frozen,whole_entry=None,allow_unselecte
             pairs={key:endpoint(rule[key],frame) for key in ('owner','left','right') if key in rule}
             receipt={key:copy.deepcopy(value) for key,value in frame.items() if key not in {'block','allowed'}}
             receipt.update(rule_id=rule['id'],kind=rule['kind'],endpoints=copy.deepcopy({key:rule[key] for key in pairs}),owners=pairs)
+            if (_guard_support_enabled(entry) and frame['declaring_candidate_id']==active
+                    and frame['layer'] in {'source_common','source_branch'}):
+                receipt.update(guard_schema=frame['block']['schema'],rule_sha256=c.digest(rule),
+                    source_layer=frame['layer'],source_condition_index=0 if frame['layer']=='source_common' else 1,
+                    owner_graph_sha256=c.digest(graph),
+                    canonical_owners={key:canonical[value] if value is not None else None for key,value in pairs.items()})
             if any(value is None for value in pairs.values()):
                 pending=True;receipt['status']='review_required';receipts.append(receipt);continue
             kind=rule['kind']
