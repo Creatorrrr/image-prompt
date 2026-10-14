@@ -230,6 +230,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 실제 source guard의 관계를 prerequisite 역할 근거로 연결하는 선택 기능도 구현했다. 같은 CID/RID의 실제 공통·선택 분기 조건, 전체 rule·명세, 직접 인용과 양 끝점에 결합하고, 독립 core에서 그 조건을 새로 실행한 검증 receipt가 있어야 채택한다. scalar 사실·새 효과·변경 권한은 만들지 않으며, 조건만으로 값을 발명하지 않는다. 별도 검토 21개·53개 subtest와 루트 통합 회귀 411회·고유 399개·991개 subtest를 통과했다. 첫 루트 회귀의 오류 2건은 선택 기능이 없는 최소 입력에도 review/CID를 요구하던 결합을 고쳐 해결했고 실패 자료를 보존했다. 이전 담당자 광역 테스트가 임시 fixture 9개를 실제 로컬 임베딩했던 이력도 보존했으며, 수정한 maintenance fixture와 최종 루트 검증에서는 실제 모델·provider 실행을 차단했다. [관계 근거 통합 보고서](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-GUARD-SUPPORT-INTEGRATION-01.json)는 같은 공간 벡터 18,180개 재사용 publication·acquire 결과와 실제 원본 승인 0건을 구분한다. Gemini 호출은 0건이다. 17437·1264는 새 의미 심사·proof가 필요하며, 일반 scalar 사실의 역할 view와 B2 집합 소비자 연결은 남아 있다.
 
+동일 canonical 사실의 [수동 역할 view 기반](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-PURE-ROLE-VIEW-INTEGRATION-01.json)도 별도 구현·검토했다. 전체 명세·원래 사실/모드·ordinary 근거·canonical 인용 안의 정확한 의미 구절·모든 실제 끝점·전제/guard closure에 결합하며 가짜 속성이나 효과를 만들지 않는다. 맥락을 직접 근거로 바꾸거나 보존 sentinel로 새 자질을 증명하지 않는다. 담당자와 루트의 각각 22개·41개 subtest는 순수 형상·불변성·외부 고정 binding 검증이며, 잘 생긴 거짓 해석을 기계가 판정한다는 뜻은 아니다. 실제 native 역할 조회·compact/lazy/pack 소비자·전체 E 잠금·runtime 연결은 아직 완료하지 않았다.
+
 ## 6단계 — 확정 연결 적용과 무결성 검증
 
 5단계의 직접 검토 승인 대장과 현재 source/catalog hash가 일치하는 추가·제거 관계만 native 원본에 적용한다. Gemini 초안·단순 유사도·규칙 출력에서 관계를 자동 수입하지 않는다. 기존 후보 ID와 계속 유효한 binding ID는 유지한다. 새로운 binding ID는 후보·슬롯 관계와 검토한 계약에 따라 안정적으로 생성하고 재실행해도 같은 관계가 중복되지 않도록 한다. 동일 후보·동일 슬롯의 불필요한 다중 관계는 허용하지 않는다. 조건별 변형이 필요하면 한 관계 안에 명시적인 적용 대안을 기록하며 검색 투표를 추가하지 않는다.
