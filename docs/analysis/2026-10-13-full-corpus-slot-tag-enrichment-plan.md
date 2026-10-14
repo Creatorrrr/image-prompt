@@ -190,6 +190,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 1278/1296의 [두 원본 보완안](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-SOURCE-GUARD-V2-TWO-SOURCE-SELECTION-01.json)은 전체 원본·현재·수정안·기존 5B·binding과 43개 사실·7개 단위·23개 관련 최종 명세를 루트가 직접 읽고 다음 심사 입력용으로 선택했다. 손의 따뜻한 인상과 실제 물리 온도는 구분하며, “두 손”은 같은 소유자의 실제 참여 손 두 개로 한정하고 전체 해부학적 손 개수는 주장하지 않는다. 영문의 단순 held 구절로 한국어 감싼 의미를 증명하던 두 사실 초안은 다음 정식 proof에서 재설계해야 한다. 원본 입력 선택은 proof·태그·운영 승인이 아니다. 11128/17437도 원본을 그대로 보존한 새 144개 v4 입력 두 개를 준비하여 전체 원문·분기·명세를 새로 읽도록 배정했다.
 
+첫 50개(1250–1299)의 [세 번째 정식 심사](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-03/ROOT-SEMANTIC-REOPEN-01.json)는 담당자의 33개 긍정·17개 보류 판정과 265개 사실·115개 단위 형상 검사를 보존한다. 독립 담당자가 50개 원문·수정본·기존 5B·자기 binding 및 33개 proof 전체를 다시 읽었고, 루트는 1250/1251/1289의 개별 인용 범위와 1290의 명시적 환경 열 상태 누락을 확인해 배치 전체 승인을 보류했다. 기존 긍정 proof의 형상 통과를 의미 승인으로 바꾸지 않는다. [인용별 번역·적용문 보완](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/root_quote_local_source_clarifications_v1.json)은 원문에 이미 있는 시간·실내 위치·자연스러운 자세 의미를 각 언어의 자체 근거로 확인하도록 새 입력만 제안한다. 11128의 공통 한국어 자세에도 같은 인용 문제가 있어 보완 대상에 포함했다. 과거 배치·proof·승인 이력은 그대로 보존한다.
+
 검증: 각 배치의 ID·긍정 인용·원본/수정 후 hash·선택 분기·owner/property·효과·조건을 대조하고, 의미 변경은 관련 옵션·프로필·묶음·참조에 전파한다. 운영 원본을 고친 배치는 새 local index closure·runtime publication·실제 acquire까지 검증한 뒤 커밋한다. 대장만 작성한 배치는 운영 데이터를 바꾸지 않는다. 5단계 종료 조건은 직접 검토 승인 집합이 18,250/18,250, 누락·미검토·미해결 보류 0건, Gemini 신규 호출 0건이다.
 
 산출물: 직접 검토 기준 snapshot·입력/검증 보조 도구, 전체 확정 태그안·긍정 인용·소유자·분기 근거 대장, 필요한 source 보정과 native 검증, 배치별 검증·커밋, 실제 직접 검토 coverage.

@@ -1,0 +1,41 @@
+"""Isolated, manually declared synthetic admission witnesses; never production core retrofit."""
+import json,gzip,copy,hashlib,sys
+from pathlib import Path
+R=Path('docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014');G=Path('/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/534cde26ba2156cf1760542d5be3a36e82b5457972d85f69d2a2fa8a7c0d50d2');sys.path[:0]=[str(G/'scripts'),str(G/'precore')]
+import photo_candidate_corpus as c
+import photo_semantic_evidence as n
+D=R/'native-inputs/prepared/review11870-01250-01300-03';I=json.loads((D/'INPUT.json').read_text());S=json.loads(gzip.decompress(Path(I['current_snapshot']['file']).read_bytes()));cp=R/'authored/native_11870_formal03_checkpoint_01285_01290.json';J=json.loads(cp.read_text())
+def assertion(aid,kind,dimension='subject',**axes):return {'assertion_id':aid,'dimension':dimension,'polarity':'required','source_span_ids':['fixture_request'],'affected_dimensions':[dimension],'axes':{'native_schema':'photo-frozen-semantics/v1','kind':kind,**axes},'evidence':{'meaning':'Independent isolated fixture declares people A and B, mirror M, image I, camera C, subject S and scene L only where listed. Count remains locked.'}}
+def core(roles,values,opendims):
+ text='Independent isolated fixture declares people A and B, mirror M, image I, camera C, subject S and scene L only where listed. Count remains locked.'
+ rows=[]
+ for idx,(role,owner) in enumerate(roles):rows.extend([assertion('o'+str(idx),'owner',owner=owner,owner_kind='entity'),assertion('r'+str(idx),'role',owner=owner,role=role)])
+ for idx,(dim,owner,prop,typ,val) in enumerate(values):rows.append(assertion('f'+str(idx),'fact',dimension=dim,owner=owner,property=prop,value_type=typ,value=val))
+ return {'contract_version':'photo-authorial-core/v3','subject':text,'baseline_prompt_en':text,'request_binding':{'active_spans':[{'source_span_id':'fixture_request','text':text}]},'semantic_assertions':rows,'user_exclusions':[],'intent_lock':{'contract_version':'photo-intent-lock/v2','locked_dimensions':['age','concept','count','event','identity','subject'],'open_dimensions':opendims,'semantic_anchors':[]}}
+pair=core([('main_subject','person_A'),('secondary_subject','person_B'),('primary_prop','mirror_M'),('image','image_I')],[('subject','person_A','entity.presence','entity.presence/v1','present'),('subject','person_A','entity.type','entity.type/v1','human'),('subject','person_B','entity.presence','entity.presence/v1','present'),('subject','person_B','entity.type','entity.type/v1','human'),('subject','mirror_M','props.type','props.type/v1','mirror'),('subject','image_I','entity.presence','entity.presence/v1','present')],['composition','framing']);pair['semantic_assertions'].append(assertion('two_actual_people','disjoint',left='person_A',right='person_B'))
+pan=core([('recording_camera','camera_C'),('image','image_I'),('main_subject','subject_S')],[('subject','camera_C','entity.presence','entity.presence/v1','present'),('subject','image_I','entity.presence','entity.presence/v1','present'),('subject','subject_S','entity.presence','entity.presence/v1','present')],['camera'])
+scene=core([('scene','scene_L')],[('subject','scene_L','entity.presence','entity.presence/v1','present')],['setting'])
+def removed(k,p,owner=None):z=copy.deepcopy(k);z['semantic_assertions']=[x for x in z['semantic_assertions']if not(x['axes']['kind']=='fact'and x['axes']['property']==p and(owner is None or x['axes']['owner']==owner))];return z
+nodisjoint=copy.deepcopy(pair);nodisjoint['semantic_assertions']=[x for x in nodisjoint['semantic_assertions']if x['axes']['kind']!='disjoint']
+wrongmirror=copy.deepcopy(pair);next(x for x in wrongmirror['semantic_assertions']if x['axes'].get('property')=='props.type')['axes']['value']='ordinary_glass'
+def entry(ordinal):
+ row=next(x for x in J['records']if x['ordinal']==ordinal);rec=copy.deepcopy(row['source_after']);rec['content']['role_evidence']=row['proof'];S['candidates'][row['candidate_id']]=rec;return c.entry(S,row['candidate_id'],realization_id='base')
+cases=[(1286,'two_independent_actual_humans_and_disjoint',pair,True),(1286,'role_names_without_disjoint',nodisjoint,False),(1286,'no_second_human_type',removed(pair,'entity.type','person_B'),False),(1286,'no_second_presence',removed(pair,'entity.presence','person_B'),False),(1286,'no_mirror_type',removed(pair,'props.type'),False),(1286,'glass_not_mirror',wrongmirror,False),(1288,'three_common_presence',pan,True),(1288,'missing_subject',removed(pan,'entity.presence','subject_S'),False),(1288,'missing_camera',removed(pan,'entity.presence','camera_C'),False),(1289,'scene_presence',scene,True),(1289,'scene_role_only',removed(scene,'entity.presence'),False)]
+results=[]
+for ordinal,label,k,expect in cases:
+ e=entry(ordinal);full=copy.deepcopy(e);full.pop('_semantic_evidence_guard');compact=copy.deepcopy(e);compact.pop('role_evidence',None)
+ for v,en in [('full',full),('compact',compact)]:
+  result=n.admission(en,k);assert result['allowed']==expect,(ordinal,label,v,result);results.append({'ordinal':ordinal,'case':label,'view':v,'expected':expect,'result':result,'core_sha256':c.digest(k)})
+import prompt_generator as generator
+permissions=[];consumers=[]
+for ordinal,k,dim,target,prop in [(1288,pan,'camera','image_I','image.sharpness.subject'),(1289,scene,'setting','scene_L','setting.location')]:
+ e=entry(ordinal);assert n.property_scope_allowed(k,e['affected_dimensions'],e['affected_properties'],record=e)
+ anchored=copy.deepcopy(k);anchored['intent_lock']['semantic_anchors'].append({'dimension':dim,'target':target,'property':prop});assert not n.property_scope_allowed(anchored,e['affected_dimensions'],e['affected_properties'],record=e);permissions.append({'ordinal':ordinal,'open_allowed':True,'same_owner_property_anchor_denied':True})
+ contract={'subject_category':'human','domains':[],'adult_allowed':False,'intent_constraints':{'subject_categories':['human'],'domains':[]}};picked={'subject':{'kind':['human'],'tags':['human']}};assert generator.core_entry_eligible(S,k,contract,picked,'',e)
+ closed=copy.deepcopy(k);closed['intent_lock']['open_dimensions'].remove(dim);closed['intent_lock']['locked_dimensions'].append(dim);assert not generator.core_entry_eligible(S,closed,contract,picked,'',e);consumers.append({'ordinal':ordinal,'same_fixture_open_allowed':True,'closed_actual_effect_denied':True})
+e=entry(1286);contract={'subject_category':'human','domains':[],'adult_allowed':False,'intent_constraints':{'subject_categories':['human'],'domains':[]}};picked={'subject':{'kind':['human'],'tags':['human']}};assert not generator.core_entry_eligible(S,pair,contract,picked,'',e);consumers.append({'ordinal':1286,'typed_admission_positive':True,'actual_visible_count_E_required_locked_denied':True,'count_not_opened_for_test':True})
+mods={}
+for name,m in sorted(sys.modules.items()):
+ if getattr(m,'__file__',None)and(name.startswith('photo_')or name=='prompt_generator'or Path(m.__file__).resolve().is_relative_to(G)):
+  p=Path(m.__file__).resolve();assert p.is_relative_to(G);mods[name]={'file':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+O=R/'authored/native_11870_formal03_checks_01285_01290_v1.json';assert not O.exists();out={'schema':'photo-native-isolated-source-admission-checkpoint/v1','task_name':'/root/review_11870_12250','model':'gpt-6.1-sol','reasoning_effort':'high','input_sha256':c.digest(I),'source_checkpoint':{'file':str(cp),'sha256':c.digest(J)},'frozen_generation':G.name,'module_paths_sha256':mods,'synthetic_cases':results,'property_permission_checks':permissions,'consumer_checks':consumers,'synthetic_admission_assertions':22,'property_assertions':4,'consumer_assertions':5,'normal_independent_core_freeze_runtime_final_pixels_or_operating_checks':False,'boundary':'Only isolated literal primitive fixtures, actual two-person disjoint and exact custom human/mirror P mandatory. Visible count E remains locked. No all runtime binding eligibility/corefreeze/runtime/final/render/operating proof.','os_network_denied':True,'provider_keys_absent':True,'model_network_calls':0};O.write_text(json.dumps(out,ensure_ascii=False,sort_keys=True,indent=2)+'\n');print(O,c.digest(out),hashlib.sha256(O.read_bytes()).hexdigest());print('22 admission+4 property+5 consumer assertions passed')

@@ -1,0 +1,86 @@
+"""Literal manually authored formal03 facts; helpers only serialize and bind metadata."""
+import json,gzip,hashlib,sys,copy
+from pathlib import Path
+R=Path('docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014');D=R/'native-inputs/prepared/review11870-01250-01300-03';G=Path('/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/534cde26ba2156cf1760542d5be3a36e82b5457972d85f69d2a2fa8a7c0d50d2')
+sys.path[:0]=[str(G/'scripts'),str(G/'precore')]
+import photo_candidate_corpus as c
+# Load read-only research helper with frozen corpus already pinned, then restore paths before every late import.
+sys.path.insert(0,str(R));import direct_review as direct
+sys.path=[x for x in sys.path if x not in [str(Path('skills/photo-prompt-image-generator/scripts').resolve()),str(G/'scripts'),str(G/'precore')]]
+sys.path[:0]=[str(G/'scripts'),str(G/'precore')]
+import photo_semantic_evidence as n
+import photo_candidate_realizations as real
+I=json.loads((D/'INPUT.json').read_text());A=json.loads((D/'ASSIGNMENT.json').read_text());P=json.loads((D/'PREPARED-PACKET.json').read_text());S=json.loads(gzip.decompress(Path(I['current_snapshot']['file']).read_bytes()));CAT=I['catalog_review']['after'];CH=c.digest(CAT)
+assert CH=='5bc5f6d185b6ef6e2d8d3a2bf6e4aa02d73e22143b0529a233fd5f98ddbed908'
+assert c.digest(I)=='db1f809df8dc01e11f9855d4c9554a767e5a1dcb2a1e60a7dfc0eb196c20630a'
+ROWS=[];CHECKS=[]
+def F(fid,ptr,q,d,t,p,mode,vt,value,requires,operation=None,receivers=None):
+ f={'id':fid,'realization_id':'base','pointer':'/content/'+ptr,'quote':q,'dimension':d,'target':t,'property':p,'mode':mode,'value':{'type':vt,'value':value},'requires':requires}
+ if mode=='effect':assert operation is not None and receivers is not None;f.update(operation=operation,receivers=receivers)
+ return f
+def unit(ptr,refs):return (ptr,refs)
+def delta(before,after,reason):
+ # Identity diff only: author already chose the exact complete assigned after source.
+ changes=[]
+ for field in ['content','conditions','effects','provenance','record_kind']:
+  if before[field]!=after[field]:changes.append({'pointer':'/'+field,'before_exists':True,'before':before[field],'after_exists':True,'after':after[field],'reason':reason})
+ return changes
+def row(ordinal,status,rationale,facts=None,roles=None,owners=None,units=None):
+ cid=A['ids'][ordinal-1250];before=P['original_records'][cid];after=P['current_records'][cid];old=P['historical_compiled_rows'][cid];revision=I['required_revisions'][cid]
+ proof=None
+ if status=='approved':
+  assert facts is not None and roles is not None and owners is not None and units is not None
+  proof={'schema':n.SCHEMA,'meaning_sha256':n.meaning_sha256(after),'catalog_sha256':CH,'complete':True,'facts':facts,'roles':{tag:{'spec_sha256':c.digest(CAT[tag]),'scope':'whole_record','realization_ids':['base'],'fact_refs':refs,'support_modes':modes} for tag,refs,modes in roles},'owner_maps':{'base':owners if isinstance(owners,dict) else {'schema':'photo-native-owner-bindings/v2','bindings':[{'target':target,'core_role':role,'origin':'existing','introduced_by':None} for target,role in owners]}},'source_units':[{'realization_id':'base','pointer':'/content/'+ptr,'quote':after['content'][ptr],'fact_refs':refs,'disposition':'semantic'} for ptr,refs in units],'effect_sets':{'base':{'dimensions':sorted(after['effects']['dimensions']),'properties':sorted(after['effects']['properties'],key=n.property_key)}},'dependencies':{'base':[]},'reference_sha256':{},'guard_sets':{'base':{'source_conditions':[after['conditions'],{}],'member_conditions':{}}},'profile_contracts':{'base':None},'review':{'basis':rationale,'whole_source_reviewed':True,'source_correction':None if n.meaning_sha256(before)==n.meaning_sha256(after) else {'before_sha256':n.meaning_sha256(before),'after_sha256':n.meaning_sha256(after),'rationale':'Fresh whole assigned source correction reread, including exact owner/application and complete actual effects; exact root-selected formal03 input only. '+rationale},'original_review':{'candidate_id':cid,'source_record_sha256':old['source_record_sha256'],'catalog_sha256':old['catalog_sha256'],'decision_sha256':I['original_decisions'][cid]['row_sha256'],'artifact':I['original_decisions'][cid]['file']+'#item='+str(I['original_decisions'][cid]['item'])},'native_review':{'reviewer':'/root/review_11870_12250','method':'codex_subagent_direct_source_read','native_contract_sha256':''}}}
+  proof['review']['native_review']['native_contract_sha256']=n.native_contract_sha256(proof)
+  record=copy.deepcopy(after);record['content']['role_evidence']=proof
+  n.validate(record,CAT,catalog_sha256=CH,corpus=S)
+  CHECKS.append({'ordinal':ordinal,'full_source_validation':True,'proof_sha256':c.digest(proof),'native_signature':proof['review']['native_review']['native_contract_sha256']})
+ ROWS.append({'candidate_id':cid,'ordinal':ordinal,'status':status,'rationale':rationale,'source_before':before,'source_after':after,'delta':delta(before,after,'Exact assigned INPUT original-to-current correction, freshly whole-source reviewed. '+rationale),'original_compiled':I['original_decisions'][cid],'proof':proof,'dependency_records':{},'reference_bindings':{},'source_reread_complete':True,'reference_reread_complete':True,'revision':{'prior_review':revision['prior_review'],'memo_artifacts':revision['memo_artifacts'],'rationale':'Fresh formal03 whole-source/native-namespace/owner/effect review. '+rationale}})
+
+
+# Fresh full-source manual judgments; catalog roles never erase untagged actual effects.
+row(1280,'approved','Fresh full03 original/current/5B/prior02/self binding/root approval25/independent memo read against current location/narrative_core/reality_anchor. Existing scene common entity.presence P. Current actual selected room-with-window setting AND authored ghost-bride association remain separate setting and concept E consistently in four fields; not room-only E, unfrozen C or already-ghost P. No bride, ghost, haunting, prior event or supernatural appearance invented. Location optional direct .58 unrestricted binding retained. Association alone is not explicit central event/problem and narrative.association is outside narrative_core prefixes, so no forced extra narrative role; full concept E still retained and concept-locked actual consumer must deny. Source proof approval does not mean reusable admission.',[
+ F('sceneP','application_contract','independently declared existing scene','subject','scene','entity.presence','prerequisite','entity.presence/v1','present',[]),
+ F('roomEn','en','window room','setting','scene','setting.location','effect','setting.location/v1','room_with_window',['sceneP'],'set_value',[]),
+ F('ghostEn','en','ghost-bride','concept','scene','narrative.association','effect','narrative.association/v1','authored_ghost_bride_association',['sceneP'],'set_value',[]),
+ F('roomKo','ko','창가 방','setting','scene','setting.location','effect','setting.location/v1','room_with_window',['sceneP'],'set_value',[]),
+ F('ghostKo','ko','유령 신부','concept','scene','narrative.association','effect','narrative.association/v1','authored_ghost_bride_association',['sceneP'],'set_value',[]),
+ F('roomEmb','embedding_text','window room','setting','scene','setting.location','effect','setting.location/v1','room_with_window',['sceneP'],'set_value',[]),
+ F('ghostEmb','embedding_text','ghost-bride','concept','scene','narrative.association','effect','narrative.association/v1','authored_ghost_bride_association',['sceneP'],'set_value',[]),
+ F('roomApp','application_contract','room-with-window setting','setting','scene','setting.location','effect','setting.location/v1','room_with_window',['sceneP'],'set_value',[]),
+ F('ghostApp','application_contract','its authored ghost-bride association','concept','scene','narrative.association','effect','narrative.association/v1','authored_ghost_bride_association',['sceneP'],'set_value',[])],[('location',['roomEn','roomKo','roomEmb','roomApp'],['effect'])],[('scene','scene')],[unit('en',['roomEn','ghostEn']),unit('ko',['roomKo','ghostKo']),unit('embedding_text',['roomEmb','ghostEmb']),unit('application_contract',['sceneP','roomApp','ghostApp'])])
+row(1281,'approved','Fresh whole03 source/5B/prior02/self binding/root approval26/independent memo against full current location/season. Existing scene common subject/entity.presence P. Summer timing and beach-shoreline setting both selected E in4 fields, even contextual season role; no prior already-summer P or free context. No swimmers, weather, country or exact geography. Original unrestricted optional direct location .52 preserved, season independent unrestricted spec.',[
+ F('sceneP','application_contract','independently declared scene','subject','scene','entity.presence','prerequisite','entity.presence/v1','present',[]),
+ F('shoreEn','en','beach shoreline','setting','scene','setting.location','effect','setting.location/v1','beach_shoreline',['sceneP'],'set_value',[]),
+ F('summerEn','en','summer','timing','scene','timing.season','effect','timing.season/v1','summer',['sceneP'],'set_value',[]),
+ F('shoreKo','ko','해변 물가','setting','scene','setting.location','effect','setting.location/v1','beach_shoreline',['sceneP'],'set_value',[]),
+ F('summerKo','ko','여름','timing','scene','timing.season','effect','timing.season/v1','summer',['sceneP'],'set_value',[]),
+ F('shoreEmb','embedding_text','beach shoreline','setting','scene','setting.location','effect','setting.location/v1','beach_shoreline',['sceneP'],'set_value',[]),
+ F('summerEmb','embedding_text','summer','timing','scene','timing.season','effect','timing.season/v1','summer',['sceneP'],'set_value',[]),
+ F('shoreApp','application_contract','Select beach-shoreline setting','setting','scene','setting.location','effect','setting.location/v1','beach_shoreline',['sceneP'],'set_value',[]),
+ F('summerApp','application_contract','summer seasonal timing','timing','scene','timing.season','effect','timing.season/v1','summer',['sceneP'],'set_value',[])],[('location',['shoreEn','shoreKo','shoreEmb','shoreApp'],['effect']),('season',['summerEn','summerKo','summerEmb','summerApp'],['effect'])],[('scene','scene')],[unit('en',['shoreEn','summerEn']),unit('ko',['shoreKo','summerKo']),unit('embedding_text',['shoreEmb','summerEmb']),unit('application_contract',['sceneP','shoreApp','summerApp'])])
+row(1282,'approved','Fresh complete03 source/5B/prior02/self binding/root approval27/independent memo against full current mood/image_artifact/reality_anchor. Existing scene common entity presence P. Selected glitch-anxiety affective mood changes atmosphere E in all4 strings despite contextual role. Full corrected embedding explicitly excludes robot concept/identity/scene-anchor proof; no actual robot, encoding glitch, air property or private emotion. Keywords are metadata not evidence. Original optional contextual mood .66 unrestricted preserved.',[
+ F('sceneP','application_contract','independently declared scene','subject','scene','entity.presence','prerequisite','entity.presence/v1','present',[]),
+ F('moodEn','en','glitch anxiety','atmosphere','scene','mood.atmosphere','effect','mood.atmosphere/v1','glitch_anxiety',['sceneP'],'set_value',[]),
+ F('moodKo','ko','글리치 불안감','atmosphere','scene','mood.atmosphere','effect','mood.atmosphere/v1','glitch_anxiety',['sceneP'],'set_value',[]),
+ F('moodEmb','embedding_text','glitch anxiety as an affective mood','atmosphere','scene','mood.atmosphere','effect','mood.atmosphere/v1','glitch_anxiety',['sceneP'],'set_value',[]),
+ F('moodApp','application_contract','Glitch anxiety is a mood selection','atmosphere','scene','mood.atmosphere','effect','mood.atmosphere/v1','glitch_anxiety',['sceneP'],'set_value',[])],[('mood',['moodEn','moodKo','moodEmb','moodApp'],['effect'])],[('scene','scene')],[unit('en',['moodEn']),unit('ko',['moodKo']),unit('embedding_text',['moodEmb']),unit('application_contract',['sceneP','moodApp'])])
+row(1283,'approved','Fresh full03 original/current/5B/prior02/self binding/root approval28/independent memo read against current camera_direction/composition/occasion_context. Existing camera/image/scene common entity presence and precise crowd entity.type crowd P retained; secondary_subject role alone cannot prove crowd. Actual upward low axis, beyond-crowd frame boundary with crowd receiver, and concert occasion are three E consistently in3 strings. No crowd creation/count, person identity, exact camera height or successful performance. Contextual occasion still changes event and must remain event-locked; no runtime reusable success from source proof. Original optional direct unrestricted composition .6 retained; added occasion has exact separate domain exclusions.',[
+ F('cameraP','application_contract','independently declared existing camera','subject','camera','entity.presence','prerequisite','entity.presence/v1','present',[]),
+ F('imageP','application_contract','existing camera, image','subject','image','entity.presence','prerequisite','entity.presence/v1','present',[]),
+ F('crowdP','application_contract','crowd and scene bound to recording_camera, image, secondary_subject and scene','subject','crowd','entity.type','prerequisite','entity.type/v1','crowd',[]),
+ F('sceneP','application_contract','scene bound to recording_camera, image, secondary_subject and scene','subject','scene','entity.presence','prerequisite','entity.presence/v1','present',[]),
+ F('angleEn','en','low concert angle','camera','camera','camera.direction','effect','camera.direction/v1','upward_low_angle',['cameraP'],'set_value',[]),
+ F('frameEn','en','from beyond the crowd','composition','image','composition.view_boundary','effect','composition.view_boundary/v1','beyond_crowd',['imageP','crowdP'],'set_value',['crowd']),
+ F('concertEn','en','concert','event','scene','occasion.context','effect','occasion.context/v1','concert',['sceneP'],'set_value',[]),
+ F('angleKo','ko','올려다보는 콘서트 로우앵글','camera','camera','camera.direction','effect','camera.direction/v1','upward_low_angle',['cameraP'],'set_value',[]),
+ F('frameKo','ko','관중 너머','composition','image','composition.view_boundary','effect','composition.view_boundary/v1','beyond_crowd',['imageP','crowdP'],'set_value',['crowd']),
+ F('concertKo','ko','콘서트','event','scene','occasion.context','effect','occasion.context/v1','concert',['sceneP'],'set_value',[]),
+ F('angleApp','application_contract','Select the upward low angle','camera','camera','camera.direction','effect','camera.direction/v1','upward_low_angle',['cameraP'],'set_value',[]),
+ F('frameApp','application_contract','beyond-crowd layout','composition','image','composition.view_boundary','effect','composition.view_boundary/v1','beyond_crowd',['imageP','crowdP'],'set_value',['crowd']),
+ F('concertApp','application_contract','concert occasion','event','scene','occasion.context','effect','occasion.context/v1','concert',['sceneP'],'set_value',[])],[('camera_direction',['angleEn','angleKo','angleApp'],['effect']),('composition',['frameEn','frameKo','frameApp'],['effect']),('occasion_context',['concertEn','concertKo','concertApp'],['effect'])],[('camera','recording_camera'),('image','image'),('crowd','secondary_subject'),('scene','scene')],[unit('en',['angleEn','frameEn','concertEn']),unit('ko',['angleKo','frameKo','concertKo']),unit('application_contract',['cameraP','imageP','crowdP','sceneP','angleApp','frameApp','concertApp'])])
+row(1284,'pending','Fresh03 whole before/current/5B/prior02/self binding/root approval29/independent memo against full current focus/image_detail and atomic owner guide. Exact source still binds actual eyes directly to primary_face without resolving separate eyes node versus face carrier. Primary_face role cannot be renamed into eyes nor carrier anatomy presence silently changed to separate owner. Selected eye focus plane meaning is clear, not mere image acuity; no album release/format or camera lens inferred. Original requires_any_tags kpop OR album remains intrinsic; optional direct focus .45 unrestricted retained. No new source correction authorized in03; proof null for pinned actual owner scope only.')
+if __name__=='__main__':
+ assert [r['ordinal']for r in ROWS]==list(range(1280,1285))
+ modules={k:{'path':v.__file__,'sha256':hashlib.sha256(Path(v.__file__).read_bytes()).hexdigest()}for k,v in sys.modules.items()if k.startswith('photo_')and getattr(v,'__file__',None)};assert all(Path(v['path']).is_relative_to(G)for v in modules.values()),modules
+ out=R/'authored/native_11870_formal03_checkpoint_01280_01285.json';assert not out.exists();payload={'schema':'photo-native-manual-review-small-checkpoint/v1','task_name':'/root/review_11870_12250','model':'gpt-6.1-sol','reasoning_effort':'high','assignment_sha256':c.digest(A),'input_sha256':c.digest(I),'actual_read_count':5,'records':ROWS,'full_source_checks':CHECKS,'frozen_generation':str(G),'loaded_photo_module_paths_sha256':modules,'boundary':'Fresh5 only/4 worker source proofs and1pending; not50, root acceptance0. Actual concept1280/event1283 E stay locked, source proof not reusable runtime.'};out.write_text(json.dumps(payload,ensure_ascii=False,sort_keys=True,indent=2)+'\n');print(str(out),c.digest(payload),hashlib.sha256(out.read_bytes()).hexdigest());print('4 source proofs validated/1pending; no admission yet')
