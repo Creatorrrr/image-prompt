@@ -35,7 +35,7 @@ FACT_FIELDS = frozenset({'id', 'realization_id', 'pointer', 'quote', 'dimension'
 PROOF_FIELDS = frozenset({'schema', 'meaning_sha256', 'catalog_sha256', 'complete', 'facts',
                          'roles', 'owner_maps', 'source_units', 'effect_sets', 'review',
                          'dependencies', 'reference_sha256', 'guard_sets', 'profile_contracts'})
-POSITIVE_FIELDS = frozenset({'en', 'ko', 'ja', 'embedding_text', 'concept_units', 'relations',
+POSITIVE_FIELDS = frozenset({'en', 'ko', 'ja', 'phrase_en', 'phrase_ko', 'embedding_text', 'concept_units', 'relations',
     'definition', 'definitions_by_topic', 'paraphrases', 'manifestations', 'components',
     'semantics', 'authored_components', 'composition_instruction', 'concept_candidate',
     'render_requirements', 'render_gates', 'render_hard_gates'})
