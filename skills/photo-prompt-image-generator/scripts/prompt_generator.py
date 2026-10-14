@@ -4658,14 +4658,29 @@ def candidate_pack_visual_profile_obligation(
     context_text: str = "",
     request_text: str = "",
 ) -> JsonDict:
-    """Materialize one profile into the same auditable obligation shape."""
+    """Materialize one explicitly selected profile source into an obligation."""
 
+    selected_contract = profile.get("_selected_profile_contract")
+    if profile.get("realization_content") and selected_contract is None:
+        raise ValueError("profile obligation requires one explicit actual realization")
     profile = compile_visual_profile(
         profile,
         context_text=context_text,
         request_text=request_text,
         matches=intent_alias_matches,
     )
+    if selected_contract is not None:
+        import photo_candidate_realizations as _profile_realizations
+        import photo_candidate_corpus as _profile_corpus
+        if (not isinstance(selected_contract,dict)
+                or set(selected_contract)!={"schema","candidate_id","realization_id","meaning_sha256","projection_sha256","compiled_sha256"}
+                or selected_contract["schema"]!="photo-selected-visual-profile/v1"
+                or selected_contract["candidate_id"]!=profile.get("id")
+                or selected_contract["realization_id"]!=profile.get("_realization_id")
+                or selected_contract["compiled_sha256"]!=_profile_corpus.digest(_profile_realizations.compiled_profile_material(profile))
+                or profile.get("_semantic_evidence_guard") is not None and
+                    profile["_semantic_evidence_guard"]["profile_contracts"][selected_contract["realization_id"]]!=selected_contract):
+            raise ValueError("selected profile obligation source/RID/hash changed")
     render_gates = [
         copy.deepcopy(gate)
         for gate in profile.get("render_gates") or []
@@ -4722,7 +4737,75 @@ def candidate_pack_visual_profile_obligation(
         obligation["visual_relation"] = copy.deepcopy(profile["visual_relation"])
     if bindings:
         obligation["bindings"] = copy.deepcopy(bindings)
+    if selected_contract is not None:
+        obligation["native_profile_contract"] = copy.deepcopy(selected_contract)
     return obligation
+
+
+def native_required_profile_ids(profiles,core,controls=None,visual_intent=None):
+    """Re-read existing request activation policy from frozen candidate-free input."""
+    registry={'profiles':profiles}
+    request=core.get('source_request','')
+    spans=(core.get('request_binding') or {}).get('active_spans') or []
+    if controls is not None:
+        creative_controls.validate(controls,request)
+        spans,_=creative_controls.split_request_spans({'request_text':request,'active_spans':spans},controls)
+    rows=[{'source':'user_requirement','text':row['text'],'polarity':'required'} for row in spans if row.get('text')]
+    rows.append({'source':'authorial_core_baseline','text':core.get('baseline_prompt_en',''),'polarity':'advisory'})
+    resolution=resolve_visual_profile_hits(registry,rows,user_definitions=core.get('user_definitions') or [],
+        adult_context=candidate_pack_visual_obligation_adult_context(rows,None))
+    required={row['profile_id'] for row in resolution['hits'] if row.get('match_basis')=='exact' and row.get('hard_eligible') is True}
+    required.update(row['profile_id'] for row in (visual_intent or {}).get('obligations',[]))
+    return required & {row['id'] for row in profiles}
+
+
+def candidate_pack_native_profile_choices(data, result, trace, resolution):
+    """Defer conditional profile duties until one explicit actual RID is chosen.
+
+    Request activation is retained separately from source-native qualification.
+    Every source choice stays bounded and source-owned; no common/default choice.
+    """
+    import photo_candidate_realizations as realizations
+    import photo_candidate_corpus as corpus
+    registry=data.get(VISUAL_OBLIGATIONS_DATA_KEY) or {}
+    core=result['provenance']['authorial_core']
+    controls=result['provenance']['creative_controls']
+    contract,picked=frozen_core_context(data,core,controls)
+    selected=set(result['provenance']['global_candidate_ids'])
+    hits={row['profile_id']:row for row in resolution.get('hits',[])}
+    explicit=native_required_profile_ids(registry.get('profiles') or [],core,
+        controls if isinstance(controls,dict) and 'canonical_sha256' in controls else None,result['provenance'].get('visual_intent'))
+    rows=[]
+    for profile in registry.get('profiles') or []:
+        cid=profile['id']
+        if not profile.get('realization_content'):continue
+        hit=hits.get(cid,{})
+        required=cid in explicit or hit.get('match_basis')=='exact' and hit.get('hard_eligible') is True
+        if not required and cid not in selected:continue
+        record=data['candidates'][cid]
+        choices=[]
+        for rid in realizations.eligible_ids(data,cid,core,contract,picked,check_effect_scope=False):
+            entry=corpus.entry(data,cid,realization_id=rid)
+            # Absent native proof remains discoverable. It cannot supply a
+            # completed source/meaning/obligation qualification certificate.
+            qualified=entry.get('_native_qualification')=='qualified'
+            obligation=candidate_pack_visual_profile_obligation(entry,registry,
+                activation_source='native_actual_realization',source_intent_ids=[]) if qualified else None
+            import photo_semantic_evidence as native
+            dimensions,properties=(native.permission_scope(entry,core)[:2] if qualified else
+                (entry['affected_dimensions'],entry['affected_properties']))
+            choices.append({'realization_id':rid,'qualification':entry.get('_native_qualification'),
+                'selected_profile_contract':copy.deepcopy(entry.get('_selected_profile_contract')),
+                'obligation':obligation,'en':entry.get('en'),'ko':entry.get('ko'),
+                'concept_units':copy.deepcopy(entry.get('concept_units') or []),
+                'relations':copy.deepcopy(entry.get('relations') or []),
+                'affected_dimensions':copy.deepcopy(dimensions),
+                'affected_properties':copy.deepcopy(properties)})
+        if required and not choices:
+            raise ValueError('required native profile has no compatible actual realization; explicit review required')
+        rows.append({'candidate_id':cid,'required':bool(required),
+            'source_record_sha256':corpus.digest(record),'choices':choices})
+    return {'schema':'photo-native-profile-choices/v1','profiles':rows} if rows else None
 
 
 def candidate_pack_visual_obligations(
@@ -4851,6 +4934,8 @@ def candidate_pack_visual_obligations(
             if explicit is not None
             else [str(row["source_intent_id"]) for row in matched_sources]
         )
+        if profile.get("realization_content"):
+            continue  # Deferred actual-RID obligations live in native_profile_choices.
         obligation = candidate_pack_visual_profile_obligation(
             profile,
             registry,
@@ -4995,6 +5080,8 @@ def candidate_pack_visual_concept_candidates(
             or not native_property_scope_allowed(core, scope.get("affected_dimensions") or [], scope.get("affected_properties"), entry=profile)
         ):
             continue
+        if profile.get("realization_content"):
+            continue  # Deferred actual-RID obligations live in native_profile_choices.
         obligation = candidate_pack_visual_profile_obligation(
             profile,
             registry,
@@ -7532,6 +7619,7 @@ def build_candidate_pack(
     visual_profile_resolution = candidate_pack_resolve_visual_profiles(
         data, result, trace, response_context
     )
+    native_profile_choices = candidate_pack_native_profile_choices(data,result,trace,visual_profile_resolution)
     visual_obligations = candidate_pack_visual_obligations(
         data, result, trace, response_context, visual_profile_resolution
     )
@@ -7652,6 +7740,8 @@ def build_candidate_pack(
     )
     if visual_intent is not None:
         pack["visual_intent"] = copy.deepcopy(visual_intent)
+    if native_profile_choices is not None:
+        pack["native_profile_choices"] = native_profile_choices
     if visual_obligations is not None:
         pack["visual_obligations"] = visual_obligations
     if visual_concept_candidates is not None:
@@ -7715,6 +7805,11 @@ def build_candidate_pack(
     candidate_pack_recompute_id(pack)
     projected=candidate_pack_project(pack,candidate_pack_version)
     projected=photo_native_pack.finalize(projected,data,selected_ids,query_context)
+    for profile in (native_profile_choices or {}).get('profiles',[]):
+        cid=profile['candidate_id']
+        if cid in projected['candidate_pool']:
+            for choice in profile['choices']:
+                projected['candidate_pool'][cid].setdefault('realization_views',{}).setdefault(choice['realization_id'],{}).update(copy.deepcopy(choice))
     return candidate_pack_recompute_id(projected)
 
 
@@ -8222,11 +8317,20 @@ def native_property_scope_allowed(core, dimensions, properties, *, entry=None, d
     return native.property_scope_allowed(core, dimensions, properties, record=entry, realization_id=realization_id)
 
 
-def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True) -> bool:
+def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True, _condition_layer=False) -> bool:
     import photo_semantic_evidence
-    native_admission = photo_semantic_evidence.admission(entry, core, allow_unselected=not check_effect_scope)
-    if not native_admission['allowed']:
-        return False
+    if not _condition_layer:
+        native_admission = photo_semantic_evidence.admission(entry, core, allow_unselected=not check_effect_scope)
+        if not native_admission['allowed']:
+            return False
+        try:
+            layers = photo_semantic_evidence.condition_layers(entry)
+            for layer in layers:
+                if not core_entry_eligible(data,core,contract,picked,slot,{**entry,**layer},
+                        check_effect_scope=False,_condition_layer=True):
+                    return False
+        except (ValueError,KeyError,TypeError):
+            return False
     if entry.get("requires_adult_context") and not contract.get("adult_allowed"):
         return False
     if not photo_global_retrieval.guard_policy(entry.get("subject_applicability") or {}, contract):

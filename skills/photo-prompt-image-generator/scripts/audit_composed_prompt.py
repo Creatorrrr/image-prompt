@@ -819,6 +819,14 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
     for candidate in (pack.get("candidate_bundles") or {}).get("candidates") or []:
         if isinstance(candidate, dict) and candidate.get("id"):
             candidates[str(candidate["id"])] = candidate
+    candidates=copy.deepcopy(candidates)
+    # Advisory presentations may omit native source fields. Restore only the
+    # pinned identity/choice carrier so an explicit actual RID is still required.
+    for cid,row in candidates.items():
+        owned=(pack.get('candidate_pool') or {}).get(cid,{})
+        if ((owned.get('authored_record') or {}).get('effects') or {}).get('realizations'):
+            row['authored_record']=copy.deepcopy(owned['authored_record'])
+            row['realization_views']=copy.deepcopy(owned.get('realization_views') or {})
     return candidates
 
 
@@ -1400,6 +1408,32 @@ def normalized_unique_count(values: Sequence[str]) -> int:
     return len({str(value).strip().lower() for value in values if str(value).strip()})
 
 
+def native_profile_choice_rows(pack):
+    value=pack.get('native_profile_choices')
+    if value is None:return []
+    if (not isinstance(value,dict) or set(value)!={'schema','profiles'}
+            or value['schema']!='photo-native-profile-choices/v1' or not isinstance(value['profiles'],list)
+            or len(value['profiles'])>64):
+        raise ValueError('bounded native profile choices required')
+    seen=set()
+    for profile in value['profiles']:
+        if (not isinstance(profile,dict) or set(profile)!={'candidate_id','required','source_record_sha256','choices'}
+                or not isinstance(profile['candidate_id'],str) or profile['candidate_id'] in seen
+                or type(profile['required']) is not bool or not isinstance(profile['choices'],list) or len(profile['choices'])>32):
+            raise ValueError('exact unique profile choice source required')
+        seen.add(profile['candidate_id']);rids=set()
+        for choice in profile['choices']:
+            if (not isinstance(choice,dict) or set(choice)!={'realization_id','qualification','selected_profile_contract',
+                    'obligation','en','ko','concept_units','relations','affected_dimensions','affected_properties'}
+                    or not isinstance(choice['realization_id'],str) or choice['realization_id'] in rids
+                    or not isinstance(choice['qualification'],str) or choice['qualification'] not in {'qualified','unqualified','invalid'}
+                    or choice['qualification']=='qualified' and not isinstance(choice['obligation'],dict)
+                    or choice['qualification']!='qualified' and choice['obligation'] is not None):
+                raise ValueError('exact unique actual profile choice required')
+            rids.add(choice['realization_id'])
+    return value['profiles']
+
+
 def derive_effective_visual_obligation_contract(
     pack: dict[str, Any],
     composed: dict[str, Any] | None,
@@ -1530,6 +1564,27 @@ def derive_effective_visual_obligation_contract(
         obligations.append(copy.deepcopy(obligation))
         seen_profile_ids.add(profile_id)
         selected_candidate_ids.append(candidate_id)
+    transformed=[row for row in (composed_object.get('creative_augmentation_brief') or {}).get('decisions',[])
+                 if isinstance(row,dict) and row.get('decision')=='transformed']
+    native_chosen=normalize_chosen_candidate_ids(composed_object.get('chosen_candidate_ids'))
+    native_chosen.update(chosen_ids)
+    native_chosen.update(row.get('candidate_id') for row in transformed if row.get('candidate_id'))
+    interpretations={row.get('candidate_id'):row for row in [*(composed_object.get('candidate_interpretations') or []),*transformed] if isinstance(row,dict)}
+    try: native_profiles=native_profile_choice_rows(pack)
+    except ValueError as exc:
+        failures.append({'check':'native_profile_selection','reason':str(exc)});native_profiles=[]
+    for profile in native_profiles:
+        cid=profile['candidate_id']
+        if cid not in native_chosen:
+            if profile['required']:failures.append({'check':'native_profile_selection','reason':'required actual profile choice missing','candidate_id':cid})
+            continue
+        actual=(interpretations.get(cid) or {}).get('realization_id')
+        choice=next((row for row in profile['choices'] if row['realization_id']==actual),None)
+        if (choice is None or choice.get('qualification')!='qualified' or not isinstance(choice.get('obligation'),dict)
+                or cid in seen_profile_ids):
+            failures.append({'check':'native_profile_selection','reason':'one unique qualified actual profile obligation required','candidate_id':cid})
+            continue
+        obligations.append(copy.deepcopy(choice['obligation']));seen_profile_ids.add(cid)
     if not obligations:
         return None, failures
     required_hard_gates = list(
@@ -1581,6 +1636,17 @@ def audit_visual_obligations(
         composed,
     )
     supplied_evidence = composed.get("visual_obligation_evidence")
+    native_ids={item['id'] for item in (contract or {}).get('obligations',[]) if item.get('native_profile_contract')}
+    if native_ids:
+        supplied_evidence=copy.deepcopy(supplied_evidence) if isinstance(supplied_evidence,dict) else {}
+        transformed=[row for row in (composed.get('creative_augmentation_brief') or {}).get('decisions',[])
+                     if isinstance(row,dict) and row.get('decision')=='transformed']
+        for item in [*(composed.get('candidate_interpretations') or []),*transformed]:
+            if not isinstance(item,dict) or item.get('candidate_id') not in native_ids:continue
+            cid=item['candidate_id'];local=item.get('selected_profile_evidence')
+            if cid in supplied_evidence and supplied_evidence[cid]!=local:
+                selection_failures.append({'check':'native_profile_evidence','reason':'conflicting local and visual obligation evidence','candidate_id':cid})
+            elif isinstance(local,dict):supplied_evidence[cid]=copy.deepcopy(local)
     if not isinstance(contract, dict) or contract.get("enabled") is not True:
         if supplied_evidence not in (None, {}):
             selection_failures.append(
@@ -2902,7 +2968,8 @@ def audit_candidate_semantic_contracts(
                 trusted = photo_candidate_semantics.semantic_source(
                     source_entry, str(candidate.get("slot") or ""), source_data.get("candidate_semantic_policy")
                 )
-                if candidate.get('native_bundle_contract') == photo_candidate_semantics.NATIVE_BUNDLE_CONTRACT:
+                if (candidate.get('native_bundle_contract') == photo_candidate_semantics.NATIVE_BUNDLE_CONTRACT
+                        or candidate.get('selected_profile_contract')):
                     import photo_semantic_evidence as native
                     import photo_candidate_corpus as corpus
                     interpretation=by_id.get(candidate_id,{})
@@ -3166,7 +3233,7 @@ def authorial_core_intent_contract_valid(
     if not isinstance(source_request, str) or not source_request or not isinstance(binding, dict):
         return False
     if (
-        set(binding)
+        set(binding) - {"input_inventory"}
         != {
             "contract_version",
             "request_id",
@@ -3229,6 +3296,13 @@ def authorial_core_intent_contract_valid(
         "request_sha256": str(binding.get("request_sha256") or ""),
         "active_spans": spans,
     }
+    if "input_inventory" in binding:
+        try:
+            from photo_precore_bridge import load as _neutral_inventory_load
+            reconstructed_envelope["input_inventory"] = _neutral_inventory_load("photo_semantic_witnesses").validate_input_inventory(
+                binding["input_inventory"],binding["request_sha256"])
+        except (ValueError,KeyError,TypeError):
+            return False
     if binding.get("request_envelope_sha256") != canonical_json_sha256(reconstructed_envelope):
         return False
 
@@ -3410,7 +3484,7 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any], *, creative_
         visual_spans = authorial_core_visual_spans(core, creative_control_snapshot)
         from photo_precore_bridge import load as _neutral_load
         _native_witnesses=_neutral_load('photo_semantic_witnesses')
-        _native_witnesses.read(assertions, visual_spans, core.get('baseline_prompt_en', ''),intent_lock=intent_lock)
+        _native_witnesses.read(assertions, visual_spans, core.get('baseline_prompt_en', ''),intent_lock=intent_lock,request_binding=binding)
     except (ValueError, TypeError, KeyError, AttributeError):
         return False
     span_ids = {
@@ -5682,6 +5756,101 @@ def audit_native_member_requirement_evidence(source_data, closure, selections, i
                     raise ValueError('selected member unit/relation evidence is missing or not literal in the final prompt')
 
 
+def audit_selected_native_profile(entry, interpretation, prompt):
+    contract=entry.get('_selected_profile_contract')
+    if contract is None:return
+    obligation=candidate_semantics_generator.candidate_pack_visual_profile_obligation(
+        entry,{},activation_source='native_actual_realization',source_intent_ids=[])
+    if interpretation.get('selected_profile_contract')!=contract:
+        raise ValueError('final selected profile contract must match exact CID/RID/meaning/obligation')
+    evidence=interpretation.get('selected_profile_evidence')
+    required=obligation['prompt_binding']['required_evidence_fields']
+    if not isinstance(evidence,dict) or set(evidence)!=set(required):
+        raise ValueError('final profile evidence must cover exactly the selected obligations')
+    for field in required:
+        phrase=evidence[field];rule=obligation['evidence_requirements'][field]
+        if (not isinstance(phrase,str) or not phrase.strip() or phrase not in prompt
+                or len(phrase.split())<rule['min_content_words']
+                or not any(text_contains_term(phrase,term) for term in rule['must_mention_any'])
+                or any(text_contains_term(phrase,term) for term in rule.get('must_not_contain',[]))):
+            raise ValueError('selected profile duty has missing/invalid literal final evidence')
+
+
+def audit_native_profile_choices(pack,composed,source_data,chosen,interpretations):
+    """The presented choice never substitutes for current canonical source proof."""
+    import photo_candidate_corpus as corpus
+    import photo_candidate_realizations as realizations
+    import photo_semantic_evidence as native
+    value=pack.get('native_profile_choices')
+    native_profile_choice_rows(pack)
+    refs=set((source_data.get('policies') or {}).get('visual_profile_refs') or [])
+    refs.update(cid for cid in chosen if cid in source_data['candidates'] and source_data['candidates'][cid]['record_kind']=='visual_profile')
+    reader=source_data.get('_search_reader')
+    guards=reader.meta['guards'] if reader is not None else source_data['candidates']
+    projected=[corpus.entry(source_data,cid) for cid in sorted(refs)
+               if guards[cid]['content'].get('realization_content')]
+    core=pack.get('authorial_core') or {};controls=pack.get('creative_controls')
+    required=candidate_semantics_generator.native_required_profile_ids(projected,core,
+        controls if isinstance(controls,dict) and 'canonical_sha256' in controls else None,pack.get('visual_intent'))
+    projected_ids={row['id'] for row in projected}
+    if value is None:
+        if required or chosen & projected_ids:
+            raise ValueError('selected/request-required conditional profile has no source-bound actual choice inventory')
+        return
+    if (not isinstance(value,dict) or set(value)!={'schema','profiles'}
+            or value['schema']!='photo-native-profile-choices/v1' or not isinstance(value['profiles'],list)
+            or len(value['profiles'])>64):
+        raise ValueError('bounded native profile choices required')
+    seen=set()
+    for profile in value['profiles']:
+        if (not isinstance(profile,dict) or set(profile)!={'candidate_id','required','source_record_sha256','choices'}
+                or type(profile['required']) is not bool or profile['candidate_id'] in seen):
+            raise ValueError('exact unique profile choice source required')
+        cid=profile['candidate_id'];seen.add(cid);record=source_data['candidates'][cid]
+        if cid in required and profile['required'] is not True:
+            raise ValueError('request-required native profile cannot downgrade activation')
+        if (record['record_kind']!='visual_profile' or not record['content'].get('realization_content')
+                or profile['source_record_sha256']!=corpus.digest(record)
+                or not isinstance(profile['choices'],list) or len(profile['choices'])>32):
+            raise ValueError('profile choices no longer match the pinned source')
+        available={}
+        for choice in profile['choices']:
+            if (not isinstance(choice,dict) or set(choice)!={'realization_id','qualification','selected_profile_contract',
+                    'obligation','en','ko','concept_units','relations','affected_dimensions','affected_properties'}
+                    or choice['realization_id'] in available):
+                raise ValueError('exact unique actual profile choice required')
+            rid=choice['realization_id'];entry=corpus.entry(source_data,cid,realization_id=rid)
+            dimensions,properties=(native.permission_scope(entry,pack.get('authorial_core') or {})[:2] if native.native_status(record)=='qualified' else
+                (entry['affected_dimensions'],entry['affected_properties']))
+            expected={'realization_id':rid,'qualification':native.native_status(record),
+                'selected_profile_contract':entry.get('_selected_profile_contract'),
+                'obligation':candidate_semantics_generator.candidate_pack_visual_profile_obligation(entry,{},
+                    activation_source='native_actual_realization',source_intent_ids=[]) if native.native_status(record)=='qualified' else None,
+                'en':entry.get('en'),'ko':entry.get('ko'),'concept_units':entry.get('concept_units') or [],
+                'relations':entry.get('relations') or [],'affected_dimensions':dimensions,
+                'affected_properties':properties}
+            # Policies may add generic evidence checks, but native source duties
+            # and exact obligation/source bindings cannot be weakened.
+            provided=copy.deepcopy(choice);expected_obligation=expected.pop('obligation');provided_obligation=provided.pop('obligation')
+            if provided!=expected or (provided_obligation is None)!=(expected_obligation is None):
+                raise ValueError('profile selected projection/qualification changed')
+            if expected_obligation is not None:
+                for key in ('id','composition_instruction','component_semantics','evidence_requirements','render_gates','native_profile_contract'):
+                    if provided_obligation.get(key)!=expected_obligation[key]:
+                        raise ValueError('profile selected compiled obligations changed')
+                if provided_obligation.get('prompt_binding',{}).get('required_evidence_fields')!=expected_obligation['prompt_binding']['required_evidence_fields']:
+                    raise ValueError('profile selected evidence fields changed')
+            available[rid]=choice
+        if profile['required'] and cid not in chosen:
+            raise ValueError('request-activated profile requires an explicit actual realization selection')
+        if cid in chosen:
+            selected=(interpretations.get(cid) or {}).get('realization_id')
+            if selected not in available or available[selected]['qualification']!='qualified':
+                raise ValueError('chosen profile requires one presented qualified actual realization')
+
+    if not required<=seen:raise ValueError('request-required native profile choice inventory is missing')
+
+
 def audit_native_adoptions(pack, composed, source_data):
     """Search recall never certifies a chosen cue's whole actual native effects."""
     import photo_candidate_corpus as corpus
@@ -5695,6 +5864,9 @@ def audit_native_adoptions(pack, composed, source_data):
     interpretations = {row.get('candidate_id'): row for row in
         [*(composed.get('candidate_interpretations') or []), *transformed] if isinstance(row, dict)}
     failures = []
+    try: audit_native_profile_choices(pack,composed,source_data,chosen,interpretations)
+    except (ValueError,KeyError,TypeError) as exc:
+        failures.append({'check':'native_profile_choices','reason':str(exc)})
     for cid in sorted(chosen):
         try:
             # Noncanonical authorial decisions retain their separate audit. A
@@ -5709,12 +5881,18 @@ def audit_native_adoptions(pack, composed, source_data):
                 raise ValueError('chosen cue has no pinned canonical native source')
             native.validate(source_data['candidates'][source_id], source_data['slot_catalog'], corpus=source_data)
             interpretation = interpretations.get(cid, {})
-            entry = corpus.entry(source_data, source_id,
+            presented=(pack.get('candidate_pool') or {}).get(cid,{})
+            binding_id=interpretation.get('binding_id',presented.get('binding_id'))
+            if presented.get('binding_id') and binding_id!=presented['binding_id']:
+                raise ValueError('chosen presentation binding differs from the source-bound pack')
+            entry = corpus.entry(source_data, source_id, binding_id,
                 realization_id=interpretation.get('realization_id'),
                 dependency_selections=interpretation.get('dependency_selections'))
             receipt = native.admission(entry, core)
             if receipt['status'] != 'qualified' or not receipt['allowed']:
                 raise ValueError(receipt.get('reason', 'native whole-cue admission failed'))
+            native.audit_scope_preservation(receipt,interpretation,str(composed.get('prompt_en') or ''))
+            audit_selected_native_profile(entry,interpretation,str(composed.get('prompt_en') or ''))
             constraints, picked = candidate_semantics_generator.frozen_core_context(
                 source_data, core, pack.get('creative_controls') or {})
             import photo_candidate_realizations as realizations
@@ -5731,6 +5909,8 @@ def audit_native_adoptions(pack, composed, source_data):
                 child_selections = {key:value for key,value in selections.items() if key in relevant}
                 child_entry = corpus.entry(source_data, selected_id, realization_id=rid,
                     dependency_selections=child_selections)
+                audit_selected_native_profile(child_entry, interpretation if selected_id==source_id else interpretations.get(selected_id,{}),
+                    str(composed.get('prompt_en') or ''))
                 if not candidate_semantics_generator.core_entry_eligible(source_data, core, constraints, picked, '', child_entry):
                     raise ValueError('selected source intrinsic conditions or native effect scope are incompatible')
                 branch = realizations.branch(child_record, rid)

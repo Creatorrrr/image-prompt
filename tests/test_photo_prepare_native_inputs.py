@@ -63,6 +63,24 @@ class PrepareNativeInputsTests(unittest.TestCase):
     def write(self,v):
         return prep.write_inputs(v['plan_ref'],'isolated-input',actor='/root',root=v['root'],here=v['here'],expected_count=len(v['original']['candidates']))
 
+    def test_root_session_unspecified_and_child_declared_assignment_pairs_are_not_interchangeable(self):
+        for task,model,effort,valid in [
+            ('/root','session_model_unspecified','session_effort_unspecified',True),
+            ('/root/native_test_worker','gpt-6.1-sol','high',True),
+            ('/root','gpt-6.1-sol','high',False),
+            ('/root/native_test_worker','session_model_unspecified','session_effort_unspecified',False),
+            ('/root','session_model_unspecified','high',False),
+            ('/root/native_test_worker','gpt-6.1-sol','session_effort_unspecified',False)]:
+            with self.subTest(task=task,model=model,effort=effort),tempfile.TemporaryDirectory() as directory:
+                v=self.fixture(directory);v['plan']['assignment'].update(task_name=task,model=model,reasoning_effort=effort)
+                self.persist(v)
+                if valid:
+                    _,docs=self.build(v)
+                    assigned=docs['ASSIGNMENT.json']
+                    self.assertEqual((assigned['task_name'],assigned['model'],assigned['reasoning_effort']),(task,model,effort))
+                else:
+                    with self.assertRaisesRegex(ValueError,'exact root unspecified session or child'):self.build(v)
+
     def test_pure_deterministic_preparation_preserves_history_and_has_zero_actual_reads(self):
         with tempfile.TemporaryDirectory() as directory:
             v=self.fixture(directory); before={p:p.read_bytes() for p in v['root'].rglob('*') if p.is_file()}

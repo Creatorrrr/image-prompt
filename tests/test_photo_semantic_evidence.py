@@ -1,4 +1,4 @@
-"""Native v3 source fixtures: declared facts are not mutation permissions."""
+"""Native v4 source fixtures: declared facts are not mutation permissions."""
 import copy
 import json
 import unittest
@@ -35,7 +35,7 @@ def source(text, facts, specs, bindings, *, effects=None, correction=None):
         if f['quote'] is None:f['quote']=text
     proof={'schema':e.SCHEMA,'meaning_sha256':e.meaning_sha256(record),'catalog_sha256':c.digest(specs),
         'complete':True,'facts':facts,'roles':{},'owner_maps':bindings,'effect_sets':{},'source_units':[],
-        'dependencies':{},'reference_sha256':{},
+        'dependencies':{},'reference_sha256':{},'guard_sets':{},'profile_contracts':{},
         'review':{'basis':'manually reviewed native fixture','whole_source_reviewed':True,'source_correction':correction,
             'original_review':{'candidate_id':record['id'],'source_record_sha256':'a'*64,
                 'catalog_sha256':c.digest(specs),'decision_sha256':'b'*64,'artifact':'fixture/explicit-original-review.json'},
@@ -57,6 +57,8 @@ def seal(data, support, *, cid=A):
     proof['effect_sets']={rid:e.effect_set(record,rid) for rid in r.ids(record)}
     proof['dependencies']={rid:proof['dependencies'].get(rid,[]) for rid in r.ids(record)}
     proof['reference_sha256']=e.referenced_records(record,data)
+    proof['guard_sets']={rid:e.source_guard_set(record,rid,data) for rid in r.ids(record)}
+    proof['profile_contracts']={rid:r.profile_contract(record,rid) for rid in r.ids(record)}
     proof['source_units']=[]
     for rid in r.ids(record):
         for pointer in sorted(e.primary_paths(record,rid)|{f['pointer'] for f in proof['facts'] if f['realization_id']==rid}):
@@ -421,7 +423,7 @@ class NativeRoleAddressTests(unittest.TestCase):
     def test_routing_fragments_cannot_enlarge_meaning_even_with_fresh_attestation(self):
         for key in ['activation','match_terms','any_terms','all_terms','evidence_terms','must_mention_any',
                     'context_terms','project_glossary_aliases','aliases','keywords','terms','concept_terms','evidence_fields',
-                    'family_ids','topic_ids','priority_dimension','unrecognized_source_id']:
+                    'family_ids','topic_ids','priority_dimension','unrecognized_source_id','field','review_scale']:
             data=reviewed_source();record=data['candidates'][A]
             record['content']['semantics']={key:['a satin garment surface']}
             proof=record['content']['role_evidence'];proof['meaning_sha256']=e.meaning_sha256(record)

@@ -17,6 +17,7 @@ Use the normal assertion fields with `polarity: required`, active
 | `equivalent` | `left`, `right` |
 | `part_of` | `left`, `right` |
 | `disjoint` | `left`, `right` |
+| `scope_inventory` | `owner`, `scope_kind`, `inventory` |
 
 Every row uses `native_schema: photo-frozen-semantics/v1`. Owner, role and
 relationship rows use `dimension: subject` and `affected_dimensions: [subject]`.
@@ -25,6 +26,41 @@ list. Required facts need a whole-dimension lock or protection by an existing
 requester property anchor covering the same actual owner and exact property or
 its ancestor. A narrower anchor cannot protect a broader fact. Keep a partially
 specified dimension open; declaring a fact does not broaden the request's locks.
+
+`scope_inventory` rows also use required subject assertions and the subject
+lock. Their `scope_kind` is `reference_appearance` or `requester_identity`.
+Author these before retrieval only when grounded in the actual request. The
+`inventory` is a canonical JSON string: sorted keys, compact separators,
+unescaped Unicode and no duplicate keys or nonfinite numbers.
+
+For these scopes, supply `--input-inventory FILE` at run initialization. Its
+exact object is `{schema: "photo-request-input-inventory/v1", complete: true,
+items: [...]}`. Each item contains exactly `id`, `kind`, and `sha256`; hashes
+are the actual input bytes' lowercase SHA-256. List the exact request once as
+`request_text`, plus every other supplied input. Other allowed kinds are
+`text`, `reference_image`, `identity_reference`, and `other`. There are at most
+32 distinct IDs. Completeness is the caller's explicit assertion, not an
+independently observed fact. An omitted inventory stays omitted. Text can
+establish identity or appearance without an image file.
+
+The decoded scope inventory has exactly `schema`, `complete`, `input_binding`,
+`reviewed_input_ids`, `state`, and `items`, with schema
+`photo-frozen-scope-inventory/v1`. Bind the actual request, request envelope and
+input inventory hashes as `request_sha256`, `request_envelope_sha256` and
+`input_inventory_sha256`. Review every listed input ID. Use `known_present`
+with a nonempty complete item list, `known_absent` with no items, or `unknown`
+when the information is unresolved. Missing inputs, incomplete review, a stale
+binding or a conflicting scoped fact cannot support a known-absent assertion.
+
+Each item repeats one scoped frozen fact's exact `assertion_id`, `dimension`,
+`target` (actual owner), `property`, and typed `value` (`type`, `value`). A
+scoped fact adds both `scope_kinds` and `source_input_ids` to its usual axes;
+these are explicit provenance declarations. Include all scoped facts belonging
+to the owner or its explicitly grounded owned parts. Do not create an owner,
+part relationship or protected fact merely to complete this inventory. A fact
+without scope provenance cannot silently become a scoped item. Final delivery
+checks literal evidence of preservation for the same actual owners and values;
+literal binding does not establish image pixels or semantic entailment.
 
 Declare each actual owner once. A role maps a common protocol address to that
 owner's run-local ID. The available addresses are `main_subject`,

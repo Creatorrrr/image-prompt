@@ -31,14 +31,17 @@ class NativeFactWireTests(unittest.TestCase):
             'source_text':'linen blanket','dimension':'material','prompt_evidence':'fine fibers'})
         return raw
 
-    def freeze(self,directory,raw,request_text=None,control_overrides=None,selection_override=None):
+    def freeze(self,directory,raw,request_text=None,control_overrides=None,selection_override=None,input_inventory=None):
         request=json.loads((FIXTURE/'request-envelope.json').read_bytes())
         if request_text is not None:
             request['request_text']=request_text;request['active_spans'][0]['end']=len(request_text)
         request_path=directory/'request';request_path.write_text(request['request_text'])
         spans=directory/'spans';spans.write_text(json.dumps([{key:row[key] for key in ['span_id','start','end']} for row in request['active_spans']]))
         run=directory/'run'
-        preparation.init(argparse.Namespace(request=request_path,spans=spans,whole_request=False,
+        inventory_path=None
+        if input_inventory is not None:
+            inventory_path=directory/'input-inventory.json';inventory_path.write_text(json.dumps(input_inventory))
+        preparation.init(argparse.Namespace(input_inventory=inventory_path,request=request_path,spans=spans,whole_request=False,
             request_id=request['request_id'],run=run,mode='prompt_only'))
         controls=json.loads((FIXTURE/'creative-controls.json').read_bytes())
         context=directory/'context';context.write_text(json.dumps(controls['context']))

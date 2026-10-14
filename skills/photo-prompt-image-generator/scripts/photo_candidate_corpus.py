@@ -30,7 +30,7 @@ TAG_ID = re.compile(r'[a-z][a-z0-9_]*\Z')
 INTRINSIC_CONDITION_FIELDS = frozenset({'for_any', 'for_all', 'exclude_for_any', 'not_for',
     'requires_any_tags', 'requires_any', 'requires_all_tags', 'requires_all',
     'exclude_any_tags', 'exclude_any', 'requires_primary_any_tags', 'requires_facets', 'exclude_facets',
-    'subject_applicability', 'requires_adult_context'})
+    'subject_applicability', 'requires_adult_context','native_guards'})
 
 
 def canonical_bytes(value):
@@ -87,7 +87,8 @@ def validate_effects(value, field, *, branches=True):
         contract = value['realizations']
         if (not isinstance(contract, dict) or set(contract) != {'mode', 'branches'}
                 or contract['mode'] not in {'one', 'optional'}
-                or not isinstance(contract['branches'], list) or not contract['branches']):
+                or not isinstance(contract['branches'], list) or not 1<=len(contract['branches'])
+                    or len(contract['branches'])+(contract['mode']=='optional')>32):
             raise ValueError(f'{field}: invalid conditional effect contract')
         seen_ids = set()
         for row in contract['branches']:
@@ -116,7 +117,10 @@ def validate_conditions(conditions, field):
     if not isinstance(conditions, dict) or not set(conditions) <= INTRINSIC_CONDITION_FIELDS:
         raise ValueError(f'{field}: invalid intrinsic condition contract')
     for key, value in conditions.items():
-        if key == 'requires_adult_context':
+        if key == 'native_guards':
+            import photo_semantic_evidence
+            photo_semantic_evidence.validate_source_guards(value)
+        elif key == 'requires_adult_context':
             if type(value) is not bool:
                 raise ValueError(f'{field}: adult condition must be boolean')
         elif key == 'subject_applicability':
@@ -189,9 +193,10 @@ def validate(corpus):
         if key in seen:
             raise ValueError(f'duplicate candidate/tag relationship: {key}')
         seen.add(key)
-        if (set(row['conditions']) != {'subject_applicability'}
+        if (set(row['conditions']) not in [{'subject_applicability'},{'subject_applicability','native_guards'}]
                 or not isinstance(row['conditions']['subject_applicability'], dict)):
             raise ValueError(f'{binding_id}: role conditions cannot override intrinsic meaning')
+        validate_conditions(row['conditions'],binding_id)
     # Candidate refs are explicit, qualified native IDs, never bare label aliases.
     def references(value):
         if isinstance(value, str):
@@ -282,12 +287,15 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
     if dependency_selections is not None:
         result['_native_dependency_selections'] = copy.deepcopy(dependency_selections)
     result.update(copy.deepcopy(record['conditions']))
+    result['_source_conditions'] = copy.deepcopy(record['conditions'])
+    result['_selected_conditions'] = {}
     effects = record['effects']
     if realization_id is not None:
         import photo_candidate_realizations as realizations
         effects = realizations.effects(record, realization_id)
         selected = realizations.branch(record, realization_id)
         result['_realization_id'] = realization_id
+        result['_selected_conditions'] = copy.deepcopy(selected['conditions'] if selected else {})
         result.update(realizations.project_content(record, realization_id))
         result.pop('realization_content', None)
         if selected:
