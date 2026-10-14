@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 import re
 import sys
+from types import SimpleNamespace
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
@@ -28,7 +29,8 @@ NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounder
     'research_source_urls', 'tags', 'facets', 'reject_substitutes', 'contrast_examples',
     'forbidden_prompt_terms', 'runtime_forbidden_labels', 'role_evidence', 'semantic_review',
     'claim_limits', 'research_claim_limits'})
-STRUCTURED_CORRECTION_PATHS = frozenset({'/effects', '/conditions', '/content/realization_content'})
+STRUCTURED_CORRECTION_PATHS = frozenset({'/effects', '/conditions', '/content/realization_content',
+    '/content/authored_components', '/content/semantics/component_semantics'})
 
 
 def write(path, value):
@@ -119,14 +121,19 @@ def corrected_record(record, corrections):
             raise ValueError('duplicate or empty source correction')
         seen.add(path)
         if path in STRUCTURED_CORRECTION_PATHS:
-            current = (result['content'].get('realization_content')
-                       if path == '/content/realization_content' else result[path[1:]])
-            if current != change['before'] or not isinstance(change['after'], dict):
+            keys = path[1:].split('/')
+            parent = result
+            for key in keys[:-1]:
+                if not isinstance(parent, dict) or key not in parent:
+                    raise ValueError('missing structured correction parent')
+                parent = parent[key]
+            if not isinstance(parent, dict):
+                raise ValueError('structured correction parent must be an object')
+            current = parent.get(keys[-1])
+            if (c.canonical_bytes(current) != c.canonical_bytes(change['before'])
+                    or not isinstance(change['after'], dict)):
                 raise ValueError('structured correction differs from exact source value')
-            if path == '/content/realization_content':
-                result['content']['realization_content'] = copy.deepcopy(change['after'])
-            else:
-                result[path[1:]] = copy.deepcopy(change['after'])
+            parent[keys[-1]] = copy.deepcopy(change['after'])
             structured = True
             continue
         if not all(isinstance(change[k], str) and change[k].strip() for k in ('before', 'after')):
@@ -150,6 +157,12 @@ def corrected_record(record, corrections):
         c.validate_effects(result['effects'], result['id'])
         from photo_candidate_realizations import validate_content
         validate_content(result)
+        if seen & {'/content/authored_components', '/content/semantics/component_semantics'}:
+            from visual_profile_contracts import compile_visual_profile
+            # Native compilation checks shape and projection consistency only.
+            if not isinstance(result['content'].get('authored_components'), dict):
+                raise ValueError('native profile correction requires authored_components')
+            compile_visual_profile(result['content'])
         available = {item['candidate_id'] for item in result['content'].get('member_candidates', [])}
         components = {item['id'] for item in result['content'].get('components', [])}
         for branch in result['effects'].get('realizations', {}).get('branches', []):
@@ -370,6 +383,11 @@ def delegated_provenance(note_path, authored_path, packet_sha256, cid, *, cache=
 
 def validate_review_provenance(row, *, cache=None):
     provenance = row['review_provenance']
+    if isinstance(provenance, dict) and provenance.get('schema') == 'photo-codex-sparse-amendment-provenance/v1':
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import delegated_amendments
+        return delegated_amendments.validate_provenance(SimpleNamespace(**globals()), row, cache=cache)
+
     if not isinstance(provenance, dict) or set(provenance) != {
             'assignment_id', 'task_name', 'model', 'reasoning_effort', 'range',
             'assignment_sha256', 'worker_note'}:
@@ -387,6 +405,16 @@ def validate_review_provenance(row, *, cache=None):
     pending = ordinal in note['unresolved_ordinals']
     if pending != (row['status'] not in {'approved', 'diagnostic_reviewed'}):
         raise ValueError('unresolved worker judgement cannot be counted as approved')
+
+
+def authored_item(document, item):
+    if type(item) is not int or item < 1:
+        raise ValueError('authored item must be a positive integer')
+    if 'decisions' in document:
+        return document['decisions'][item - 1]
+    if document.get('schema') == 'photo-codex-direct-review-amendment/v1':
+        return document['amendments'][item - 1]['decision']
+    raise ValueError('unknown authored decision document')
 
 
 def source():
@@ -485,7 +513,7 @@ def verify():
                 if authored_path not in authored_documents:
                     authored_documents[authored_path] = c.decode(authored_path.read_bytes())
                 authored_document = authored_documents[authored_path]
-                authored = authored_document['decisions'][location['item'] - 1]
+                authored = authored_item(authored_document, location['item'])
                 if location['sha256'] != c.digest(authored) or any(row[k] != v for k, v in authored.items()):
                     raise ValueError('compiled row differs from explicitly authored decision')
                 packet = packets[row['packet_sha256']]
