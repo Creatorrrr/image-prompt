@@ -71,6 +71,32 @@ class DirectReviewTests(unittest.TestCase):
                     review.delegated_provenance('run/worker-notes/test.json',
                         'run/authored/test.json', row['packet_sha256'], B)
 
+    def test_same_worker_can_have_distinct_nonoverlapping_assignments(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                path = here / 'DELEGATION-ASSIGNMENTS.json'
+                registry = review.c.decode(path.read_bytes())
+                first = registry['assignments']['review_test'];first['stop'] = 1
+                registry['assignments']['review_next'] = {**first, 'start': 1, 'stop': 2}
+                review.write(path, registry)
+                provenance = review.delegated_provenance('run/worker-notes/test.json',
+                    'run/authored/test.json', review.c.digest(packet), A)
+                self.assertEqual(provenance['assignment_id'], 'review_test')
+
+    def test_reassigned_tail_cannot_be_registered_by_the_old_worker(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                path = here / 'DELEGATION-ASSIGNMENTS.json'
+                registry = review.c.decode(path.read_bytes())
+                registry['reassignments'] = [{'from_assignment':'review_test', 'start':0, 'stop':1,
+                                             'to_assignment':'new_worker'}]
+                review.write(path, registry)
+                with self.assertRaisesRegex(ValueError, 'explicitly reassigned'):
+                    review.delegated_provenance('run/worker-notes/test.json',
+                        'run/authored/test.json', review.c.digest(packet), A)
+
     def test_delegated_worker_cannot_claim_another_model_or_incomplete_read(self):
         with tempfile.TemporaryDirectory() as directory:
             root, here, note, packet = self.delegated_fixture(directory)
@@ -80,9 +106,46 @@ class DirectReviewTests(unittest.TestCase):
                                    ('stop', 3)]:
                     changed = {**note, key: value}
                     review.write(here / 'worker-notes/test.json', changed)
-                    with self.assertRaisesRegex(ValueError, 'identity, assigned range'):
+                    with self.assertRaisesRegex(ValueError, 'identity, assigned range|unique dispatched'):
                         review.delegated_provenance('run/worker-notes/test.json',
                             'run/authored/test.json', review.c.digest(packet), A)
+
+    def test_complete_snapshot_catches_unreviewed_records_and_binding_changes(self):
+        data = fixture();data['candidates'][B] = {**copy.deepcopy(data['candidates'][A]), 'id':B}
+        baseline = {'source_sha256':review.c.digest(data),
+                    'catalog_sha256':review.c.digest(data['slot_catalog']), 'candidate_count':2}
+        review.assert_source_snapshot(data, copy.deepcopy(data), baseline, [A, B])
+        for changed in ['unreviewed_candidate', 'binding']:
+            current = copy.deepcopy(data)
+            if changed == 'unreviewed_candidate':current['candidates'][B]['content']['en'] = 'changed'
+            else:next(iter(current['slot_bindings'].values()))['weight'] = 0.75
+            with self.subTest(changed=changed), self.assertRaisesRegex(ValueError, 'snapshot changed'):
+                review.assert_source_snapshot(data, current, baseline, [A, B])
+        with self.assertRaisesRegex(ValueError, 'exactly once'):
+            review.assert_source_snapshot(data, copy.deepcopy(data), baseline, [A, A])
+
+    def test_claim_limit_cannot_supply_a_positive_role_fact(self):
+        data = fixture();row = decision(data)
+        data['candidates'][A]['content']['semantics'] = {'claim_limits':['glossy fabric is not proven']}
+        row.update(review.binding(data, A))
+        row['roles'][0]['evidence'][0].update(pointer='/content/semantics/claim_limits/0')
+        with self.assertRaisesRegex(ValueError, 'not positive evidence'):
+            review.validate_decision(row, data)
+
+    def test_incorrect_claim_limit_can_be_corrected_without_becoming_positive_evidence(self):
+        data = fixture();row = decision(data)
+        record = data['candidates'][A]
+        record['content']['semantics'] = {'claim_limits':['An unrelated belt must be present.']}
+        row.update(review.binding(data, A))
+        row['corrections'] = [{'pointer':'/content/semantics/claim_limits/0',
+            'before':'An unrelated belt must be present.',
+            'after':'Preserve the already declared garment surface.',
+            'reason':'Repair a source-specific copied guard without adding a belt.'}]
+        review.validate_decision(row, data)
+        row['roles'][0]['evidence'][0].update(pointer='/content/semantics/claim_limits/0',
+                                             quote='garment surface')
+        with self.assertRaisesRegex(ValueError, 'not positive evidence'):
+            review.validate_decision(row, data)
 
     def test_attested_pending_judgement_cannot_be_promoted_to_approval(self):
         with tempfile.TemporaryDirectory() as directory:
