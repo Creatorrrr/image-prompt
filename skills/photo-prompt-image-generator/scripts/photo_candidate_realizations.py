@@ -167,6 +167,9 @@ def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id
     import photo_candidate_corpus as c
     import prompt_generator as g
     record = data['candidates'][candidate_id]
+    if (binding_id is not None and c.binding_review_status(data, binding_id) == 'deferred'
+            or c.deferred_dependency_bindings(data, record)):
+        return []
     result = []
     for rid in ids(record):
         selected = branch(record, rid)

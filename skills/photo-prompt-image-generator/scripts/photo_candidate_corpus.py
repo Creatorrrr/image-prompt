@@ -38,6 +38,34 @@ def binding_review_status(corpus, binding_id):
     return 'reviewed' if binding_id in state.get('reviewed', {}) else 'inherited'
 
 
+def deferred_dependency_bindings(corpus, record):
+    """Conservatively suspend bundle presentation with a deferred member edge.
+
+    This reads only reference metadata, never performs semantic classification.
+    Optional members also suspend the bundle until selective presentation has
+    been reviewed; silently deleting them would change the original source.
+    """
+    if not corpus['policies'].get(BINDING_REVIEW_POLICY, {}).get('deferred'):
+        return []
+    reader = corpus.get('_search_reader')
+    records = reader.meta['guards'] if reader is not None else corpus['candidates']
+    seen, result = set(), set()
+
+    def visit(row):
+        cid = row['id']
+        if cid in seen:
+            return
+        seen.add(cid)
+        for pointer in row['content'].get('member_candidates', []):
+            bid = pointer.get('binding_id')
+            if bid is not None and binding_review_status(corpus, bid) == 'deferred':
+                result.add(bid)
+            visit(records[pointer['candidate_id']])
+
+    visit(record)
+    return sorted(result)
+
+
 def validate_binding_reviews(corpus):
     state = corpus['policies'].get(BINDING_REVIEW_POLICY)
     if state is None:
@@ -343,6 +371,8 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
             raise ValueError('role belongs to a different candidate')
         if binding_review_status(corpus, binding_id) == 'deferred':
             raise ValueError('slot binding deferred pending semantic review')
+        if deferred_dependency_bindings(corpus, record):
+            raise ValueError('member binding deferred pending semantic review')
         result['_role_conditions'] = copy.deepcopy(binding['conditions'])
         result['_native_presentation_guard']={'record':copy.deepcopy(binding),'sha256':digest(binding)}
         result['_presentation_role'] = binding['slot_id']
@@ -366,7 +396,8 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
 def role_entries(corpus, tag):
     """A native role view, not a source tree or candidate identity namespace."""
     for binding_id, binding in corpus['slot_bindings'].items():
-        if binding['slot_id'] == tag and binding_review_status(corpus, binding_id) != 'deferred':
+        if (binding['slot_id'] == tag and binding_review_status(corpus, binding_id) != 'deferred'
+                and not deferred_dependency_bindings(corpus, corpus['candidates'][binding['candidate_id']])):
             yield entry(corpus, binding['candidate_id'], binding_id)
 
 
