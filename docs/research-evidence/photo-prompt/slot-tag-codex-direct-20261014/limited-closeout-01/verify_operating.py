@@ -55,7 +55,13 @@ if args.mode == 'integrity':
     report = dict(common, mode='integrity', canonical_corpus_sha256=expected, original_full_fields_equal=True, candidate_ids_equal=True, duplicate_candidate_slot_pairs=0, source_binding_policy_catalog_loss=0, orphan_bindings=0, full_graph_and_reference_validation='c.load -> c.validate PASS on entire current authored corpus', bindings=12089, c_module=c.__file__)
     save('INTEGRITY.json', report)
 else:
+    # Runtime acquisition uses the installed workspace model, while generation
+    # snapshots intentionally contain no copied model package. Code is pinned
+    # below before acquisition; no setup/download or inference is performed.
+    sys.path[:0] = [str(SKILL / 'scripts'), str(SKILL / 'precore')]
     import photo_runtime_sources as runtime
+    import photo_local_embedding as local_embedding
+    assert local_embedding.ROOT == SKILL
     prior = read(R / 'permission-envelope-native-integration-01/ROOT-ACQUIRE-v4.json')
     pins = {}
     for row in prior['code_pins']:
@@ -74,7 +80,7 @@ else:
     assert dict(actual) == original['candidates'][cid]
     assert reader.metrics['payload_reads'] - before['payload_reads'] == 1
     assert reader.cache_limit == 64 * 1024 * 1024 and len(reader.descriptors) <= 64
-    report = dict(common, mode='acquire', generation_id=snapshot.generation_id, cache_status=snapshot.cache_status, source_fingerprint=snapshot.manifest['source_fingerprint'], current_code_pins=pins, actual_sample_id=cid, actual_payload_equal_original=True, metrics_before=before, metrics_after=dict(reader.metrics), cache_limit_bytes=reader.cache_limit, descriptor_count=len(reader.descriptors), corpus_sha256=expected, index_and_vector_rebuild_needed=False, prior_search_receipt_compose_evidence_reused='batch-validation-01/ROOT-INTEGRATION.json; inactive research source102 with quality WARN, not current operating semantic adoption')
+    report = dict(common, mode='acquire', generation_id=snapshot.generation_id, cache_status=snapshot.cache_status, source_fingerprint=snapshot.manifest['source_fingerprint'], current_code_pins=pins, actual_sample_id=cid, actual_payload_equal_original=True, metrics_before=before, metrics_after=dict(reader.metrics), cache_limit_bytes=reader.cache_limit, descriptor_count=len(reader.descriptors), corpus_sha256=expected, index_and_vector_rebuild_needed=False, installed_model_root=str(local_embedding.ROOT), preparation_history='First check imported the frozen generation local-embedding module, whose snapshot intentionally has no model package. It failed before acquisition/inference. Corrected only verification import paths to the existing installed workspace runtime; code pins unchanged, no setup/download/production edit.', prior_search_receipt_compose_evidence_reused='batch-validation-01/ROOT-INTEGRATION.json; inactive research source102 with quality WARN, not current operating semantic adoption')
     save('OPERATING-VERIFICATION.json', report)
     reader.close()
 print(json.dumps(report))
