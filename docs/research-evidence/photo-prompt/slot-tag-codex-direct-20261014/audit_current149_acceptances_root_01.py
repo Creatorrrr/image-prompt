@@ -1,5 +1,5 @@
 """Inventory existing accepted current149 judgments; never create approvals."""
-import gzip,hashlib,importlib.abc,json,subprocess,sys
+import argparse,gzip,hashlib,importlib.abc,json,subprocess,sys
 from pathlib import Path
 ROOT=Path.cwd();R=ROOT/'docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014'
 G=Path('/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839')
@@ -13,8 +13,14 @@ sys.path.insert(0,str(R));import native_reviews as nr
 sys.path[:0]=[str(G/'scripts'),str(G/'precore')]
 def read(p):return json.loads(gzip.decompress(p.read_bytes())if p.suffix=='.gz'else p.read_bytes())
 def ref(p):return dict(file=str(p.relative_to(ROOT)),file_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),sha256=c.digest(read(p)))
-source_path=R/'native-inputs/root-diagnostic6-kind-source-plan-23/CURRENT-PROPOSAL.json.gz';source=read(source_path)
-assert c.digest(source)=='39ab970ec8a42550f6afb41163ae6e2e76c1403f60f76cb9e5a962e3197dd65c'
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--source',type=Path,default=R/'native-inputs/root-diagnostic6-kind-source-plan-23/CURRENT-PROPOSAL.json.gz')
+parser.add_argument('--expected-sha256',default='39ab970ec8a42550f6afb41163ae6e2e76c1403f60f76cb9e5a962e3197dd65c')
+parser.add_argument('--output',type=Path,default=R/'ROOT-CURRENT149-APPROVAL-INVENTORY-01.json')
+args=parser.parse_args()
+source_path=args.source.resolve();source=read(source_path)
+assert source_path.is_relative_to(R) and c.digest(source)==args.expected_sha256
+assert args.output.resolve().is_relative_to(R) and not args.output.exists()
 catalog=c.digest(source['slot_catalog']);assignments={}
 for p in(R/'native-inputs/prepared').glob('*/ASSIGNMENT.json'):assignments.setdefault(c.digest(read(p)),[]).append(p)
 accepted={};history=[];stale=[];older=[]
@@ -48,7 +54,7 @@ for row in proofs:
 value=dict(schema='photo-root-existing-current149-approval-inventory/v1',actor='/root',current_source=ref(source_path),catalog_sha256=catalog,whole_inventory=18250,
  existing_root_accepted_current_equal_unique_candidates=len(proofs),records=sorted(proofs,key=lambda r:r['ordinal']),accepted_history=history,stale_untransferred_rows=stale,older_catalog_batches_not_transferred=older,role_candidate_counts=roles,
  remaining_without_existing_current_equal_root_approval=18250-len(proofs),new_approvals_created=0,automatic_latest_manifest_created=False,operating_native_qualified_count=0,operating_changes=0,Gemini_calls=0,
- boundary='Read-only inventory of exact already accepted positive research judgments on current149/source102, deduplicating identical proof values and rechecking whole source plus full closure/binding identity. No unaccepted draft/diagnostic batch is imported. This is not a complete latest18250 selection, semantic re-review, operational application, final hybrid retrieval or stage5–8 completion.')
-out=R/'ROOT-CURRENT149-APPROVAL-INVENTORY-01.json'
+ boundary='Read-only inventory of exact already accepted positive research judgments on the explicitly pinned current source/catalog, deduplicating identical proof values and rechecking whole source plus full closure/binding identity. No unaccepted draft/diagnostic batch is imported. This is not a complete latest18250 selection, semantic re-review, operational application, final hybrid retrieval or stage5–8 completion.')
+out=args.output
 with out.open('xb')as f:f.write(c.canonical_bytes(value)+b'\n')
 print(json.dumps(dict(existing_current_equal_approved=len(proofs),accepted_current149_batches=len(history),stale_rows=len(stale),older_catalog_batches=len(older),operating_native=0,new_approvals=0)))
