@@ -1,0 +1,20 @@
+{
+  "schema": "photo-native-permission-source-only-utility-fix-proposal/v4",
+  "task": "/root/review_11870_12250",
+  "file": "skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py",
+  "before_raw_sha256": "28a73db7a5c378174e07d3c73905e56525f36d862c08a74532709572d521aa43",
+  "after_raw_sha256": "722a4be059b95c6a875cffa00d106ba63d7288c16ea8b155f13eb0e4f183104a",
+  "exact_diff": "--- v3\n+++ proposed-v4\n@@ -1495,6 +1495,8 @@\n     \"\"\"Actual triples stay actual; source-addressed effects use the shared view.\"\"\"\n     from photo_contracts import property_effects_allowed\n     try:\n+        if record is not None and permission_envelope.required(record) and native_status(record)!='qualified':\n+            return False\n         graph=frozen_witnesses(core)['graph'];mapped=copy.deepcopy(effects)\n         if record is not None and native_status(record)=='qualified':\n             proof=proof_of(record);rid=realization_id or record.get('_realization_id')\n@@ -2076,6 +2078,8 @@\n \n \n def permission_scope(entry,core,*,source_data=None):\n+    if permission_envelope.required(entry) and native_status(entry)!='qualified':\n+        raise ValueError('mandatory permission source requires qualified source obligations')\n     if source_data is not None and permission_envelope.authoritative_native_source(source_data,entry) and not permission_envelope.matches_source(source_data,entry):\n         raise ValueError('actual native source transport mismatch')\n     \"\"\"v2 conditions and final permission share one strict selected-root audit.\"\"\"\n",
+  "reason": "Known mandatory source-only entry cannot supply native permission; source-only structural preparation remains allowed and unqualified. Both utility return conventions preserve existing API: permission_scope raises ValueError, boolean property_scope_allowed returns False. No source/proof/authority/schema/E/Rx changes.",
+  "callers_read": [
+    "prompt_generator.native_property_scope_allowed:8328-8342",
+    "prompt_generator.core_entry_eligible strict scope:8377",
+    "prompt_generator profile choice descriptive scope:4788-4815",
+    "photo_candidate_semantics.native_bundle_view:110-140",
+    "audit_composed_prompt selected realization:2968-2992,3096-3118",
+    "audit_composed_prompt.native_property_effects_allowed:5730-5748",
+    "audit_composed_prompt profile verification:5838-5858",
+    "audit_composed_prompt.audit_native_adoptions:6030-6045"
+  ],
+  "impact": "Record-aware wrappers now deny required/unqualified sources. Selected strict adoption already rejects through admission. Qualified records retain existing B1/transport/plan/guard/property checks. Raw record=None property primitive is unchanged and supplies no source adoption authority. Descriptive unqualified discovery that explicitly reads affected_properties is unchanged."
+}

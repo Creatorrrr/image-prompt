@@ -5918,6 +5918,11 @@ def audit_native_adoptions(pack,composed,source_data,*,resolution_out=None):
     try:
         with native.bound_selected_resolution(entries,core) as context:
             output={};failures=_audit_native_adoptions(pack,composed,source_data,resolution_out=output)
+            if 'native_permission_receipt' in composed or 'native_preservation_receipt' in composed:
+                raise ValueError('native permission/preservation receipts are auditor output, never composed input')
+            final_preservation=native.audit_final_scalar_preservation(entries,core)
+            if final_preservation is not None:
+                output['native_preservation_receipt']=final_preservation
             if not failures and resolution_out is not None and output:
                 if context['scoped']:
                     output.update(schema='photo-native-owner-resolution/v2',

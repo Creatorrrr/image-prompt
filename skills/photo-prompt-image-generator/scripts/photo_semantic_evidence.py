@@ -9,6 +9,7 @@ import contextlib
 import contextvars
 import photo_native_owner_resolution as owner_resolver
 import photo_semantic_role_views as manual_views
+import photo_native_permission as permission_envelope
 import photo_candidate_corpus as c
 import photo_candidate_realizations as realizations
 from photo_precore_bridge import load
@@ -30,7 +31,7 @@ NEGATIVE = frozenset({'confusion_boundaries', 'research_confusions', 'confounder
     'research_source_urls', 'tags', 'facets', 'reject_substitutes', 'contrast_examples',
     'forbidden_prompt_terms', 'runtime_forbidden_labels', 'claim_limits', 'research_claim_limits',
     'provenance', 'acceptance', 'review', 'routing', 'conditions', 'applicability', 'retrieval_policy',
-    'role_evidence', 'semantic_review', 'affected_dimensions', 'affected_properties',
+    'role_evidence', 'semantic_review', 'permission_envelope', 'affected_dimensions', 'affected_properties',
     'dimensions', 'properties', 'field', 'review_scale', 'evidence_field', 'evidence_fields', 'required_evidence_fields',
     'contract_version', 'schema', 'activation', 'match_terms', 'any_terms', 'all_terms',
     'evidence_terms', 'must_mention_any', 'context_terms', 'project_glossary_aliases',
@@ -63,7 +64,7 @@ REFERENCE_RELATIONS = frozenset({'partial_restatement', 'selected_output_constra
 
 
 def _proof_fields_valid(proof):
-    return PROOF_FIELDS <= set(proof) <= PROOF_FIELDS | {'guard_supports','manual_role_views'}
+    return PROOF_FIELDS <= set(proof) <= PROOF_FIELDS | {'guard_supports','manual_role_views','permission_envelopes'}
 
 
 def _guard_support_rows(proof):
@@ -682,8 +683,13 @@ def _lookup_manual_view_authority(record,source_data):
 def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
     if '_semantic_evidence_guard' in record:
         raise ValueError('native source validation requires full positive source, not a compact guard')
+    if corpus is not None and record['id'] in corpus.get('candidates',{}):
+        authoritative=corpus['candidates'][record['id']]
+        if permission_envelope.declaration(authoritative) is not None and c.digest(record)!=c.digest(authoritative):
+            raise ValueError('mandatory source differs from actual full corpus authority')
     proof = record['content'].get('role_evidence', MISSING)
     if proof is MISSING:
+        permission_envelope.validate_source_only_declaration(record)
         return  # Stage 5C only: source remains explicitly unqualified.
     if (not isinstance(proof, dict) or not _proof_fields_valid(proof) or proof['schema'] != SCHEMA
             or proof['complete'] is not True or proof['meaning_sha256'] != meaning_sha256(record)
@@ -850,6 +856,7 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
         if guard_refs and set(role['support_modes'])!={facts[ref]['mode'] for ref in role['fact_refs']}|{supports[ref]['mode'] for ref in guard_refs}:
             raise ValueError('guard-backed role modes must match its actual direct support union')
     _validate_manual_view_usage(proof)
+    permission_envelope.validate_declaration(record,proof)
 
 
 def compact(record, corpus=None, _stack=()):
@@ -902,6 +909,9 @@ def qualification(spec, record, realization_id='base', *, source_data=None):
             result['reason'] = 'incomplete_or_unsupported_native_evidence'
         return result
     proof = proof_of(record)
+    try:permission_envelope.transport(record)
+    except (ValueError,KeyError,TypeError):
+        return {**result,'native_qualification':'invalid','reason':'independent_source_transport_authority_required'}
     if '_semantic_evidence_guard' not in record and (not _proof_fields_valid(proof)
             or proof.get('meaning_sha256') != meaning_sha256(record)
             or (proof.get('review') or {}).get('native_review',{}).get('native_contract_sha256') != native_contract_sha256(proof)):
@@ -962,7 +972,17 @@ def frozen_witnesses(core):
     return result
 
 
-def admission(entry,core,*,allow_unselected=False,_nested=False,_whole_entry=None):
+def admission(entry,core,*,allow_unselected=False,_nested=False,_whole_entry=None,source_data=None):
+    if source_data is not None and permission_envelope.authoritative_native_source(source_data,entry) and not permission_envelope.matches_source(source_data,entry):
+        return {'status':'invalid','allowed':False,'reason':'actual_native_source_transport_mismatch'}
+    if native_status(entry)=='qualified':
+        try:permission_envelope.transport(entry)
+        except (ValueError,KeyError,TypeError):
+            return {'status':'invalid','allowed':False,'reason':'source_bound_native_transport_required'}
+    if permission_envelope.required(entry):
+        if permission_envelope.session_binding() is None:
+            return {'status':'invalid','allowed':False,'reason':'mandatory_permission_authority_plan_missing'}
+        allow_unselected=False
     if native_status(entry)!='qualified':return _admission(entry,core,allow_unselected=allow_unselected,_nested=_nested,_whole_entry=_whole_entry)
     try:
         proof=proof_of(entry);rid=entry.get('_realization_id','base')
@@ -995,6 +1015,8 @@ def _admission(entry, core, *, allow_unselected=False, _nested=False, _whole_ent
     """
     status = native_status(entry)
     if status == 'unqualified':
+        if permission_envelope.required(entry):
+            return {'status':'invalid','allowed':False,'reason':'mandatory_permission_source_unqualified'}
         return {'status': status, 'allowed': True, 'reason': 'stage05c_search_pool_only_not_native_adoption'}
     denied = {'status': 'invalid', 'allowed': False, 'reason': 'native_obligation_unverified'}
     if status != 'qualified':
@@ -1086,6 +1108,7 @@ def _admission(entry, core, *, allow_unselected=False, _nested=False, _whole_ent
             validate_joint_effect_assignments([entry], core)
         return {'status': 'qualified', 'allowed': True, 'reason': 'whole_native_obligations_verified',
                 'resolved_frozen_facts': resolutions, 'dependencies':children, 'native_guards':guards_receipt,
+                **({'permission_envelope':copy.deepcopy(context['permission_envelope_receipt'])} if context.get('permission_envelope_receipt') else {}),
                 **({'resolved_guard_supports':resolved_guard_supports} if 'guard_supports' in proof else {}),
                 'used_dependency_ids':sorted(used),**({'search_only':True} if search_only else {}),**({'owner_resolution':{'candidate_id':proof.get('candidate_id'),
                     'realization_id':rid,'meaning_sha256':proof['meaning_sha256'],'qualification_sha256':proof.get('qualification_sha256',c.digest(proof)),
@@ -1273,6 +1296,7 @@ def _resolve_selected_native_contracts(entries,core,*,node_only=False):
     selections=validate_owner_selections(owner_selection,core,graph)
     def visit(entry,path):
         proof=proof_of(entry);rid=entry.get('_realization_id','base');cid=_proof_cid(proof)
+        permission_envelope.transport(entry)
         if native_status(entry)!='qualified' or not isinstance(cid,str) or not c.ID.fullmatch(cid):raise ValueError('qualified source CID required')
         if cid in path or len(path)>MAX_DEPENDENCY_DEPTH:raise ValueError('cyclic/unbounded selected source')
         actual={'dimensions':sorted(entry.get('affected_dimensions',[])), 'properties':sorted(entry.get('affected_properties',[]),key=property_key)}
@@ -1300,7 +1324,8 @@ def _resolve_selected_native_contracts(entries,core,*,node_only=False):
             'selected_children':children}
         node['projection_sha256']=owner_resolver.node_digest(node)
         if cid in nodes and nodes[cid]!=node:raise ValueError('conflicting selected source/RID/mapping closure')
-        nodes[cid]=node;source_entries[cid]={'proof_sha256':c.digest(proof),'dependency_selections':copy.deepcopy(choices)}
+        nodes[cid]=node;source_entries[cid]={'proof_sha256':c.digest(proof),'dependency_selections':copy.deepcopy(choices),
+            'permission_required':permission_envelope.required(entry)}
     for entry in entries:
         visit(entry,());root={'candidate_id':_proof_cid(proof_of(entry)),'realization_id':entry.get('_realization_id','base')}
         if root not in roots:roots.append(root)
@@ -1318,7 +1343,8 @@ def _resolve_selected_native_contracts(entries,core,*,node_only=False):
             raise ValueError('conflicting actual-owner effect assignment' if len(nodes)==1 else 'conflicting joint effect assignment') from exc
         raise
     return {'view':view,'nodes':{row['candidate_id']:row for row in view['nodes']},'entries':source_entries,
-        'core_sha256':c.digest(core),'owner_selections':copy.deepcopy(owner_selection),'frozen':frozen,'scoped':scoped}
+        'core_sha256':c.digest(core),'owner_selections':copy.deepcopy(owner_selection),'frozen':frozen,'scoped':scoped,
+        'permission_session_binding':permission_envelope.session_binding()}
 
 
 def _context_has_node(context,entry,core):
@@ -1333,6 +1359,7 @@ def _context_has_node(context,entry,core):
 def _context_covers(context,entries,core,*,allow_partial=False):
     if context is not None and context.get('discovery_partial') and not allow_partial:return False
     if context is None or context['core_sha256']!=c.digest(core):return False
+    if context.get('permission_session_binding')!=permission_envelope.session_binding():return False
     roots={row['candidate_id'] for row in context['view']['roots']}
     def closure_matches(entry,path=()):
         if not _context_has_node(context,entry,core):return False
@@ -1381,9 +1408,13 @@ def _context_covers(context,entries,core,*,allow_partial=False):
 @contextlib.contextmanager
 def bound_selected_resolution(entries,core):
     active=_ACTIVE_RESOLUTION.get()
-    if _context_covers(active,entries,core):yield active;return
+    if _context_covers(active,entries,core):
+        active['permission_envelope_receipt']=permission_envelope.enforce(active,entries,core)
+        yield active;return
     context=_resolve_selected_native_contracts(entries,core);token=_ACTIVE_RESOLUTION.set(context)
-    try:yield context
+    try:
+        context['permission_envelope_receipt']=permission_envelope.enforce(context,entries,core)
+        yield context
     finally:_ACTIVE_RESOLUTION.reset(token)
 
 
@@ -1464,6 +1495,8 @@ def property_scope_allowed(core, dimensions, effects, *, record=None, realizatio
     """Actual triples stay actual; source-addressed effects use the shared view."""
     from photo_contracts import property_effects_allowed
     try:
+        if record is not None and permission_envelope.required(record) and native_status(record)!='qualified':
+            return False
         graph=frozen_witnesses(core)['graph'];mapped=copy.deepcopy(effects)
         if record is not None and native_status(record)=='qualified':
             proof=proof_of(record);rid=realization_id or record.get('_realization_id')
@@ -2044,7 +2077,11 @@ def _evaluate_native_guards(entry,core,*,frozen=None,whole_entry=None,allow_unse
         'search_only':pending}
 
 
-def permission_scope(entry,core):
+def permission_scope(entry,core,*,source_data=None):
+    if permission_envelope.required(entry) and native_status(entry)!='qualified':
+        raise ValueError('mandatory permission source requires qualified source obligations')
+    if source_data is not None and permission_envelope.authoritative_native_source(source_data,entry) and not permission_envelope.matches_source(source_data,entry):
+        raise ValueError('actual native source transport mismatch')
     """v2 conditions and final permission share one strict selected-root audit."""
     if native_status(entry)=='qualified' and _has_target_guards(entry):
         root=entry.get('_native_guard_root') or entry
@@ -2055,3 +2092,9 @@ def permission_scope(entry,core):
         if root is not entry and not admission(entry,core,_nested=True,_whole_entry=root)['allowed']:
             raise ValueError('native member presentation guard permission denied')
     return _collect_permission_scope(entry,core)
+
+
+def audit_final_scalar_preservation(entries,core):
+    if not entries:return None
+    with bound_selected_resolution(entries,core) as context:
+        return permission_envelope.final_preservation(context,entries,core)

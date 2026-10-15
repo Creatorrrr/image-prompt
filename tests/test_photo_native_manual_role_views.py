@@ -45,6 +45,8 @@ def attach(data,role,refs,facets,*,cid=A,view_id='manual_facet'):
         'manual_boundary_rationale':'No unmentioned strike, new owner, body part or unrelated clause is inferred.'}
     proof.setdefault('manual_role_views',[]).append(view)
     proof['roles'][role].setdefault('view_refs',[]).append(view_id);reattest(data,cid)
+    from tests.test_photo_semantic_evidence import trust_fixture_authority
+    trust_fixture_authority(data)
     return data
 
 

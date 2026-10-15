@@ -1,0 +1,1324 @@
+{
+  "active_trusted_session": null,
+  "actual_core": {
+    "baseline_prompt_en": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open.",
+    "canonical_sha256": "4cd4faa44a4ab0d6700a41e541248ff65884cb413a215ed45b8622c76de8dd91",
+    "contract_version": "photo-authorial-core/v3",
+    "core_id": "4cd4faa44a4ab0d6",
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "locked_dimensions": [
+        "subject",
+        "identity",
+        "count",
+        "age",
+        "event",
+        "concept"
+      ],
+      "open_dimensions": [
+        "framing"
+      ],
+      "semantic_anchors": [
+        {
+          "dimension": "framing",
+          "property": "subject.visibility",
+          "target": "X"
+        },
+        {
+          "dimension": "framing",
+          "property": "framing.visible_in",
+          "target": "X"
+        }
+      ]
+    },
+    "request_binding": {
+      "active_spans": [
+        {
+          "input_id": "request",
+          "source_span_id": "request_1",
+          "span_id": "request_1",
+          "text": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        }
+      ],
+      "input_inventory": {
+        "complete": true,
+        "items": [
+          {
+            "id": "request",
+            "kind": "request_text",
+            "sha256": "0ae4fea83f353f0d1f93ff2913f6cecea4c94be3e203d39b59ee5dcc67f27841"
+          }
+        ],
+        "schema": "photo-request-input-inventory/v1"
+      },
+      "request_envelope_sha256": "30f87ee3cb9fc19a79bd0c1d56bb17c6997f37768880b580f3fc05724608adac",
+      "request_sha256": "0ae4fea83f353f0d1f93ff2913f6cecea4c94be3e203d39b59ee5dcc67f27841"
+    },
+    "semantic_assertions": [
+      {
+        "affected_dimensions": [
+          "subject"
+        ],
+        "assertion_id": "owner_0",
+        "axes": {
+          "kind": "owner",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "X",
+          "owner_kind": "entity"
+        },
+        "dimension": "subject",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "subject"
+        ],
+        "assertion_id": "owner_1",
+        "axes": {
+          "kind": "owner",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "I",
+          "owner_kind": "entity"
+        },
+        "dimension": "subject",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "subject"
+        ],
+        "assertion_id": "owner_2",
+        "axes": {
+          "kind": "owner",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "I2",
+          "owner_kind": "entity"
+        },
+        "dimension": "subject",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "subject"
+        ],
+        "assertion_id": "presence_X",
+        "axes": {
+          "kind": "fact",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "X",
+          "property": "entity.presence",
+          "value": "present",
+          "value_type": "entity.presence/v1"
+        },
+        "dimension": "subject",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "subject"
+        ],
+        "assertion_id": "presence_I",
+        "axes": {
+          "kind": "fact",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "I",
+          "property": "entity.presence",
+          "value": "present",
+          "value_type": "entity.presence/v1"
+        },
+        "dimension": "subject",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "subject"
+        ],
+        "assertion_id": "presence_I2",
+        "axes": {
+          "kind": "fact",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "I2",
+          "property": "entity.presence",
+          "value": "present",
+          "value_type": "entity.presence/v1"
+        },
+        "dimension": "subject",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "framing"
+        ],
+        "assertion_id": "visible",
+        "axes": {
+          "kind": "fact",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "X",
+          "property": "subject.visibility",
+          "value": "visible",
+          "value_type": "subject.visibility/v1"
+        },
+        "dimension": "framing",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "framing"
+        ],
+        "assertion_id": "image_relation",
+        "axes": {
+          "kind": "fact",
+          "native_schema": "photo-frozen-semantics/v1",
+          "owner": "X",
+          "property": "framing.visible_in",
+          "value": "I",
+          "value_type": "entity.owner_id/v1"
+        },
+        "dimension": "framing",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      },
+      {
+        "affected_dimensions": [
+          "subject"
+        ],
+        "assertion_id": "images_disjoint",
+        "axes": {
+          "kind": "disjoint",
+          "left": "I",
+          "native_schema": "photo-frozen-semantics/v1",
+          "right": "I2"
+        },
+        "dimension": "subject",
+        "evidence": {
+          "meaning": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open."
+        },
+        "polarity": "required",
+        "source_span_ids": [
+          "request_1"
+        ]
+      }
+    ],
+    "source_request": "The independent item X exists and is visible in image I. Images I and I2 exist separately. Macro framing is open.",
+    "subject": "Existing controlled item and images",
+    "user_exclusions": []
+  },
+  "actual_fullsource_final_audit": [
+    {
+      "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "check": "native_candidate_adoption",
+      "reason": "mandatory permission authority/plan missing"
+    }
+  ],
+  "actual_source": {
+    "candidates": {
+      "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": {
+        "conditions": {
+          "native_guards": {
+            "rules": [
+              {
+                "dimension": "framing",
+                "id": "same_image",
+                "kind": "frozen_entity_relation",
+                "left": {
+                  "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "kind": "source_target",
+                  "target": "item"
+                },
+                "property": "framing.visible_in",
+                "right": {
+                  "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "kind": "source_target",
+                  "target": "image"
+                },
+                "value_type": "entity.owner_id/v1"
+              }
+            ],
+            "schema": "photo-native-source-guards/v3"
+          }
+        },
+        "content": {
+          "en": "On the independently declared existing image select macro shot scale of the existing physical item. The same item remains visible in that selected image with a separate frozen framing.visible_in relation. Do not add an image, item, body or hidden part.",
+          "permission_envelope": {
+            "realizations": {
+              "base": {
+                "basis": [
+                  {
+                    "fact_ref": "macroE",
+                    "rationale": "Manually read explicit macro selection; no alternate E or scope.",
+                    "unit_pointer": "/content/en"
+                  }
+                ],
+                "canonical_effect_refs": [
+                  "macroE"
+                ],
+                "preservation": [
+                  {
+                    "fact_ref": "visiblePR",
+                    "image_target": "image",
+                    "relation_guard_id": "same_image",
+                    "relation_property": "framing.visible_in"
+                  }
+                ]
+              }
+            },
+            "schema": "photo-native-permission-envelope/v1"
+          },
+          "role_evidence": {
+            "catalog_sha256": "da1574dde9b96b21f010db5f161a8dea2326db863a29dc4cd6653685c28fcde7",
+            "complete": true,
+            "dependencies": {
+              "base": []
+            },
+            "effect_sets": {
+              "base": {
+                "dimensions": [
+                  "framing"
+                ],
+                "properties": [
+                  {
+                    "dimension": "framing",
+                    "property": "shot.scale",
+                    "target": "image"
+                  }
+                ]
+              }
+            },
+            "facts": [
+              {
+                "dimension": "subject",
+                "id": "itemP",
+                "mode": "prerequisite",
+                "pointer": "/content/en",
+                "property": "entity.presence",
+                "quote": "existing physical item",
+                "realization_id": "base",
+                "requires": [],
+                "target": "item",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "dimension": "subject",
+                "id": "imageP",
+                "mode": "prerequisite",
+                "pointer": "/content/en",
+                "property": "entity.presence",
+                "quote": "independently declared existing image",
+                "realization_id": "base",
+                "requires": [],
+                "target": "image",
+                "value": {
+                  "type": "entity.presence/v1",
+                  "value": "present"
+                }
+              },
+              {
+                "dimension": "framing",
+                "id": "visiblePR",
+                "mode": "preservation",
+                "pointer": "/content/en",
+                "property": "subject.visibility",
+                "quote": "same item remains visible in that selected image",
+                "realization_id": "base",
+                "requires": [
+                  "itemP",
+                  "imageP"
+                ],
+                "target": "item",
+                "value": {
+                  "type": "subject.visibility/v1",
+                  "value": "visible"
+                }
+              },
+              {
+                "dimension": "framing",
+                "id": "macroE",
+                "mode": "effect",
+                "operation": "set_value",
+                "pointer": "/content/en",
+                "property": "shot.scale",
+                "quote": "select macro shot scale",
+                "realization_id": "base",
+                "receivers": [
+                  "item"
+                ],
+                "requires": [
+                  "itemP",
+                  "imageP",
+                  "visiblePR"
+                ],
+                "target": "image",
+                "value": {
+                  "type": "shot.scale/v1",
+                  "value": "macro"
+                }
+              }
+            ],
+            "guard_sets": {
+              "base": {
+                "member_conditions": {},
+                "source_conditions": [
+                  {
+                    "native_guards": {
+                      "rules": [
+                        {
+                          "dimension": "framing",
+                          "id": "same_image",
+                          "kind": "frozen_entity_relation",
+                          "left": {
+                            "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            "kind": "source_target",
+                            "target": "item"
+                          },
+                          "property": "framing.visible_in",
+                          "right": {
+                            "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                            "kind": "source_target",
+                            "target": "image"
+                          },
+                          "value_type": "entity.owner_id/v1"
+                        }
+                      ],
+                      "schema": "photo-native-source-guards/v3"
+                    }
+                  },
+                  {}
+                ]
+              }
+            },
+            "meaning_sha256": "e2e8a246fff5c331e65bdfe2f82ceb550adcfdf843875718198e074eb1d2fecc",
+            "owner_maps": {
+              "base": {
+                "bindings": [
+                  {
+                    "introduced_by": null,
+                    "origin": "existing",
+                    "selector": {
+                      "kind": "selected_existing_owner"
+                    },
+                    "target": "item"
+                  },
+                  {
+                    "introduced_by": null,
+                    "origin": "existing",
+                    "selector": {
+                      "kind": "selected_existing_owner"
+                    },
+                    "target": "image"
+                  }
+                ],
+                "schema": "photo-native-owner-bindings/v3"
+              }
+            },
+            "permission_envelopes": {
+              "realizations": {
+                "base": {
+                  "basis": [
+                    {
+                      "fact_ref": "macroE",
+                      "rationale": "Manually read explicit macro selection; no alternate E or scope.",
+                      "unit_pointer": "/content/en"
+                    }
+                  ],
+                  "canonical_effect_refs": [
+                    "macroE"
+                  ],
+                  "preservation": [
+                    {
+                      "fact_ref": "visiblePR",
+                      "image_target": "image",
+                      "relation_guard_id": "same_image",
+                      "relation_property": "framing.visible_in"
+                    }
+                  ]
+                }
+              },
+              "schema": "photo-native-permission-envelope/v1"
+            },
+            "profile_contracts": {
+              "base": null
+            },
+            "reference_sha256": {},
+            "review": {
+              "basis": "manually reviewed native fixture",
+              "native_review": {
+                "method": "codex_direct_source_read",
+                "native_contract_sha256": "efd96b3de736904cc770a08f44e52ab5e16e6031b7b59558e58124d18dbd175d",
+                "reviewer": "Codex native fixture author"
+              },
+              "original_review": {
+                "artifact": "fixture/explicit-original-review.json",
+                "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "catalog_sha256": "da1574dde9b96b21f010db5f161a8dea2326db863a29dc4cd6653685c28fcde7",
+                "decision_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "source_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "source_correction": null,
+              "whole_source_reviewed": true
+            },
+            "roles": {
+              "fixture_shot": {
+                "fact_refs": [
+                  "macroE"
+                ],
+                "realization_ids": [
+                  "base"
+                ],
+                "scope": "whole_record",
+                "spec_sha256": "37bdf51a88254d000d469f1475ead0398566b058b7a50bb10529aa58767d16db",
+                "support_modes": [
+                  "effect"
+                ]
+              }
+            },
+            "schema": "photo-candidate-role-evidence/v4",
+            "source_units": [
+              {
+                "disposition": "semantic",
+                "fact_refs": [
+                  "itemP",
+                  "imageP",
+                  "visiblePR",
+                  "macroE"
+                ],
+                "pointer": "/content/en",
+                "quote": "On the independently declared existing image select macro shot scale of the existing physical item. The same item remains visible in that selected image with a separate frozen framing.visible_in relation. Do not add an image, item, body or hidden part.",
+                "realization_id": "base"
+              }
+            ]
+          }
+        },
+        "effects": {
+          "dimensions": [
+            "framing"
+          ],
+          "properties": [
+            {
+              "dimension": "framing",
+              "property": "shot.scale",
+              "target": "image"
+            }
+          ]
+        },
+        "id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "provenance": [
+          {
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "source": "authored test"
+          }
+        ],
+        "record_kind": "visual_option"
+      }
+    },
+    "policies": {},
+    "schema": "photo-candidate-corpus/v3",
+    "slot_bindings": {},
+    "slot_catalog": {
+      "fixture_shot": {
+        "applicability": {},
+        "core_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "description": "Declared fixture role for fixture_shot",
+        "description_ko": "검증용 fixture_shot",
+        "dimensions": [
+          "framing"
+        ],
+        "evidence_terms": [
+          "light"
+        ],
+        "excludes": [
+          "A property owned by a different carrier"
+        ],
+        "id": "fixture_shot",
+        "includes": [
+          "A declared property on the fixture owner"
+        ],
+        "neighbors": [],
+        "owners": [
+          "fixture_owner"
+        ],
+        "priority": "core",
+        "property_prefixes": [
+          "shot.scale"
+        ],
+        "semantic_role": "direct"
+      }
+    }
+  },
+  "actual_source_declared_required": true,
+  "boundary": "Synthetic before-fix report. Passing stripped paths are defects, never approval; real source final audit rejects missing plan. No actual source/canonical/Git/model/network change.",
+  "code_pins": {
+    "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py": "1c40cdd5e0c05fe8e53becc4d23e6a907e681473fa5a123254aadf76ffc3f5ad",
+    "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_semantic_evidence.py": "6313de182a0e73e026b419c64b092ced4a67258df3ea77bb695d686364295e73",
+    "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py": "c7cba5732ef623c32ad3ac13459985fc8d1a2d00b26194d3d0ce2fd41f8c6138"
+  },
+  "compact_admission": {
+    "allowed": true,
+    "dependencies": [],
+    "native_guards": {
+      "allowed": true,
+      "preserved_scopes": [],
+      "reason": "all_native_guards_verified",
+      "rules": [
+        {
+          "activation_candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "activation_realization_id": "base",
+          "conditions_sha256": "e0ffe10826e67ee0f4847621c3ca74b2e01a85bb73ad9feb980c55150e6415ee",
+          "core_assertion_id": "image_relation",
+          "declaring_candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "declaring_realization_id": "base",
+          "endpoints": {
+            "left": {
+              "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "kind": "source_target",
+              "target": "item"
+            },
+            "right": {
+              "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "kind": "source_target",
+              "target": "image"
+            }
+          },
+          "kind": "frozen_entity_relation",
+          "layer": "source_common",
+          "meaning_sha256": "e2e8a246fff5c331e65bdfe2f82ceb550adcfdf843875718198e074eb1d2fecc",
+          "owners": {
+            "left": "X",
+            "right": "I"
+          },
+          "pointer": "/source_conditions/0",
+          "qualification_sha256": "ca12ef209033450d56752ffa1c13c00d6a237d09bedf6c837135be9592ccc695",
+          "reference_sha256": {},
+          "rule_id": "same_image",
+          "status": "verified"
+        }
+      ],
+      "search_only": false
+    },
+    "owner_resolution": {
+      "bindings": [
+        {
+          "owner_id": "X",
+          "presence_assertion_id": "presence_X",
+          "selector_kind": "selected_existing_owner",
+          "target": "item"
+        },
+        {
+          "owner_id": "I",
+          "presence_assertion_id": "presence_I",
+          "selector_kind": "selected_existing_owner",
+          "target": "image"
+        }
+      ],
+      "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "meaning_sha256": "e2e8a246fff5c331e65bdfe2f82ceb550adcfdf843875718198e074eb1d2fecc",
+      "qualification_sha256": "ca12ef209033450d56752ffa1c13c00d6a237d09bedf6c837135be9592ccc695",
+      "realization_id": "base"
+    },
+    "reason": "whole_native_obligations_verified",
+    "resolved_frozen_facts": [
+      {
+        "core_assertion_id": "presence_X",
+        "fact_id": "itemP",
+        "owner": "X",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "core_assertion_id": "presence_I",
+        "fact_id": "imageP",
+        "owner": "I",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "core_assertion_id": "visible",
+        "fact_id": "visiblePR",
+        "owner": "X",
+        "value": {
+          "type": "subject.visibility/v1",
+          "value": "visible"
+        }
+      }
+    ],
+    "status": "qualified",
+    "used_dependency_ids": []
+  },
+  "compact_consumer_with_actual_source_data": true,
+  "compact_permission_scope": [
+    [
+      "framing"
+    ],
+    [
+      {
+        "dimension": "framing",
+        "property": "shot.scale",
+        "target": "I"
+      },
+      {
+        "dimension": "framing",
+        "property": "shot.scale",
+        "target": "X"
+      }
+    ],
+    {
+      "disjoint": [
+        [
+          "I",
+          "I2"
+        ]
+      ],
+      "equivalent": [],
+      "owners": {
+        "I": "entity",
+        "I2": "entity",
+        "X": "entity"
+      },
+      "part_of": [],
+      "roles": {},
+      "schema": "photo-frozen-semantics/v1"
+    }
+  ],
+  "forged_compact_entry": {
+    "_native_owner_selections": {
+      "core_sha256": "4cd4faa44a4ab0d6700a41e541248ff65884cb413a215ed45b8622c76de8dd91",
+      "entries": [
+        {
+          "bindings": [
+            {
+              "owner_id": "X",
+              "target": "item"
+            },
+            {
+              "owner_id": "I",
+              "target": "image"
+            }
+          ],
+          "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "meaning_sha256": "e2e8a246fff5c331e65bdfe2f82ceb550adcfdf843875718198e074eb1d2fecc",
+          "qualification_sha256": "ca12ef209033450d56752ffa1c13c00d6a237d09bedf6c837135be9592ccc695",
+          "realization_id": "base"
+        }
+      ],
+      "owner_graph_sha256": "3323e3875cba33073387cb562088e7bbd6e60779d6b51cd4fd31d97eae7e3ee1",
+      "schema": "photo-request-owner-selections/v1"
+    },
+    "_native_qualification": "qualified",
+    "_realization_id": "base",
+    "_selected_conditions": {},
+    "_semantic_evidence_guard": {
+      "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "catalog_sha256": "da1574dde9b96b21f010db5f161a8dea2326db863a29dc4cd6653685c28fcde7",
+      "compact_sha256": "49847085bb438449d82dbd7ca3f5c6385c43d7be72a62fc735cf6c21992fd535",
+      "complete": true,
+      "dependencies": {
+        "base": []
+      },
+      "dependency_guards": {
+        "base": []
+      },
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "framing"
+          ],
+          "properties": [
+            {
+              "dimension": "framing",
+              "property": "shot.scale",
+              "target": "image"
+            }
+          ]
+        }
+      },
+      "facts": [
+        {
+          "dimension": "subject",
+          "id": "itemP",
+          "mode": "prerequisite",
+          "property": "entity.presence",
+          "realization_id": "base",
+          "requires": [],
+          "target": "item",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "dimension": "subject",
+          "id": "imageP",
+          "mode": "prerequisite",
+          "property": "entity.presence",
+          "realization_id": "base",
+          "requires": [],
+          "target": "image",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          }
+        },
+        {
+          "dimension": "framing",
+          "id": "visiblePR",
+          "mode": "preservation",
+          "property": "subject.visibility",
+          "realization_id": "base",
+          "requires": [
+            "itemP",
+            "imageP"
+          ],
+          "target": "item",
+          "value": {
+            "type": "subject.visibility/v1",
+            "value": "visible"
+          }
+        },
+        {
+          "dimension": "framing",
+          "id": "macroE",
+          "mode": "effect",
+          "operation": "set_value",
+          "property": "shot.scale",
+          "realization_id": "base",
+          "receivers": [
+            "item"
+          ],
+          "requires": [
+            "itemP",
+            "imageP",
+            "visiblePR"
+          ],
+          "target": "image",
+          "value": {
+            "type": "shot.scale/v1",
+            "value": "macro"
+          }
+        }
+      ],
+      "guard_sets": {
+        "base": {
+          "member_conditions": {},
+          "source_conditions": [
+            {
+              "native_guards": {
+                "rules": [
+                  {
+                    "dimension": "framing",
+                    "id": "same_image",
+                    "kind": "frozen_entity_relation",
+                    "left": {
+                      "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "kind": "source_target",
+                      "target": "item"
+                    },
+                    "property": "framing.visible_in",
+                    "right": {
+                      "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                      "kind": "source_target",
+                      "target": "image"
+                    },
+                    "value_type": "entity.owner_id/v1"
+                  }
+                ],
+                "schema": "photo-native-source-guards/v3"
+              }
+            },
+            {}
+          ]
+        }
+      },
+      "has_owner_selectors": true,
+      "meaning_sha256": "e2e8a246fff5c331e65bdfe2f82ceb550adcfdf843875718198e074eb1d2fecc",
+      "owner_maps": {
+        "base": {
+          "bindings": [
+            {
+              "introduced_by": null,
+              "origin": "existing",
+              "selector": {
+                "kind": "selected_existing_owner"
+              },
+              "target": "item"
+            },
+            {
+              "introduced_by": null,
+              "origin": "existing",
+              "selector": {
+                "kind": "selected_existing_owner"
+              },
+              "target": "image"
+            }
+          ],
+          "schema": "photo-native-owner-bindings/v3"
+        }
+      },
+      "profile_contracts": {
+        "base": null
+      },
+      "qualification_sha256": "ca12ef209033450d56752ffa1c13c00d6a237d09bedf6c837135be9592ccc695",
+      "reference_sha256": {},
+      "roles": {
+        "fixture_shot": {
+          "fact_refs": [
+            "macroE"
+          ],
+          "realization_ids": [
+            "base"
+          ],
+          "scope": "whole_record",
+          "spec_sha256": "37bdf51a88254d000d469f1475ead0398566b058b7a50bb10529aa58767d16db",
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "schema": "photo-candidate-role-evidence/v4"
+    },
+    "_source_conditions": {
+      "native_guards": {
+        "rules": [
+          {
+            "dimension": "framing",
+            "id": "same_image",
+            "kind": "frozen_entity_relation",
+            "left": {
+              "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "kind": "source_target",
+              "target": "item"
+            },
+            "property": "framing.visible_in",
+            "right": {
+              "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "kind": "source_target",
+              "target": "image"
+            },
+            "value_type": "entity.owner_id/v1"
+          }
+        ],
+        "schema": "photo-native-source-guards/v3"
+      }
+    },
+    "affected_dimensions": [
+      "framing"
+    ],
+    "affected_properties": [
+      {
+        "dimension": "framing",
+        "property": "shot.scale",
+        "target": "image"
+      }
+    ],
+    "en": "On the independently declared existing image select macro shot scale of the existing physical item. The same item remains visible in that selected image with a separate frozen framing.visible_in relation. Do not add an image, item, body or hidden part.",
+    "id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "native_guards": {
+      "rules": [
+        {
+          "dimension": "framing",
+          "id": "same_image",
+          "kind": "frozen_entity_relation",
+          "left": {
+            "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "kind": "source_target",
+            "target": "item"
+          },
+          "property": "framing.visible_in",
+          "right": {
+            "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "kind": "source_target",
+            "target": "image"
+          },
+          "value_type": "entity.owner_id/v1"
+        }
+      ],
+      "schema": "photo-native-source-guards/v3"
+    },
+    "owner_selection_requirements": {
+      "nodes": [
+        {
+          "adoption_modes": [
+            "root"
+          ],
+          "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "meaning_sha256": "e2e8a246fff5c331e65bdfe2f82ceb550adcfdf843875718198e074eb1d2fecc",
+          "prerequisite_facts": [
+            {
+              "dimension": "subject",
+              "id": "itemP",
+              "mode": "prerequisite",
+              "property": "entity.presence",
+              "target": "item",
+              "value": {
+                "type": "entity.presence/v1",
+                "value": "present"
+              }
+            },
+            {
+              "dimension": "subject",
+              "id": "imageP",
+              "mode": "prerequisite",
+              "property": "entity.presence",
+              "target": "image",
+              "value": {
+                "type": "entity.presence/v1",
+                "value": "present"
+              }
+            },
+            {
+              "dimension": "framing",
+              "id": "visiblePR",
+              "mode": "preservation",
+              "property": "subject.visibility",
+              "target": "item",
+              "value": {
+                "type": "subject.visibility/v1",
+                "value": "visible"
+              }
+            }
+          ],
+          "qualification_sha256": "ca12ef209033450d56752ffa1c13c00d6a237d09bedf6c837135be9592ccc695",
+          "realization_id": "base",
+          "targets": [
+            "image",
+            "item"
+          ]
+        }
+      ],
+      "schema": "photo-owner-selection-requirements/v1"
+    },
+    "permission_envelope": {
+      "realizations": {
+        "base": {
+          "basis": [
+            {
+              "fact_ref": "macroE",
+              "rationale": "Manually read explicit macro selection; no alternate E or scope.",
+              "unit_pointer": "/content/en"
+            }
+          ],
+          "canonical_effect_refs": [
+            "macroE"
+          ],
+          "preservation": [
+            {
+              "fact_ref": "visiblePR",
+              "image_target": "image",
+              "relation_guard_id": "same_image",
+              "relation_property": "framing.visible_in"
+            }
+          ]
+        }
+      },
+      "schema": "photo-native-permission-envelope/v1"
+    },
+    "record_kind": "visual_option"
+  },
+  "forged_full_record": {
+    "conditions": {
+      "native_guards": {
+        "rules": [
+          {
+            "dimension": "framing",
+            "id": "same_image",
+            "kind": "frozen_entity_relation",
+            "left": {
+              "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "kind": "source_target",
+              "target": "item"
+            },
+            "property": "framing.visible_in",
+            "right": {
+              "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "kind": "source_target",
+              "target": "image"
+            },
+            "value_type": "entity.owner_id/v1"
+          }
+        ],
+        "schema": "photo-native-source-guards/v3"
+      }
+    },
+    "content": {
+      "en": "On the independently declared existing image select macro shot scale of the existing physical item. The same item remains visible in that selected image with a separate frozen framing.visible_in relation. Do not add an image, item, body or hidden part.",
+      "role_evidence": {
+        "catalog_sha256": "da1574dde9b96b21f010db5f161a8dea2326db863a29dc4cd6653685c28fcde7",
+        "complete": true,
+        "dependencies": {
+          "base": []
+        },
+        "effect_sets": {
+          "base": {
+            "dimensions": [
+              "framing"
+            ],
+            "properties": [
+              {
+                "dimension": "framing",
+                "property": "shot.scale",
+                "target": "image"
+              }
+            ]
+          }
+        },
+        "facts": [
+          {
+            "dimension": "subject",
+            "id": "itemP",
+            "mode": "prerequisite",
+            "pointer": "/content/en",
+            "property": "entity.presence",
+            "quote": "existing physical item",
+            "realization_id": "base",
+            "requires": [],
+            "target": "item",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "subject",
+            "id": "imageP",
+            "mode": "prerequisite",
+            "pointer": "/content/en",
+            "property": "entity.presence",
+            "quote": "independently declared existing image",
+            "realization_id": "base",
+            "requires": [],
+            "target": "image",
+            "value": {
+              "type": "entity.presence/v1",
+              "value": "present"
+            }
+          },
+          {
+            "dimension": "framing",
+            "id": "visiblePR",
+            "mode": "preservation",
+            "pointer": "/content/en",
+            "property": "subject.visibility",
+            "quote": "same item remains visible in that selected image",
+            "realization_id": "base",
+            "requires": [
+              "itemP",
+              "imageP"
+            ],
+            "target": "item",
+            "value": {
+              "type": "subject.visibility/v1",
+              "value": "visible"
+            }
+          },
+          {
+            "dimension": "framing",
+            "id": "macroE",
+            "mode": "effect",
+            "operation": "set_value",
+            "pointer": "/content/en",
+            "property": "shot.scale",
+            "quote": "select macro shot scale",
+            "realization_id": "base",
+            "receivers": [
+              "item"
+            ],
+            "requires": [
+              "itemP",
+              "imageP",
+              "visiblePR"
+            ],
+            "target": "image",
+            "value": {
+              "type": "shot.scale/v1",
+              "value": "macro"
+            }
+          }
+        ],
+        "guard_sets": {
+          "base": {
+            "member_conditions": {},
+            "source_conditions": [
+              {
+                "native_guards": {
+                  "rules": [
+                    {
+                      "dimension": "framing",
+                      "id": "same_image",
+                      "kind": "frozen_entity_relation",
+                      "left": {
+                        "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "kind": "source_target",
+                        "target": "item"
+                      },
+                      "property": "framing.visible_in",
+                      "right": {
+                        "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "kind": "source_target",
+                        "target": "image"
+                      },
+                      "value_type": "entity.owner_id/v1"
+                    }
+                  ],
+                  "schema": "photo-native-source-guards/v3"
+                }
+              },
+              {}
+            ]
+          }
+        },
+        "meaning_sha256": "c521836610e1941fe765e906652035da7e5dbe9e57e8fe20a3392552d588f74a",
+        "owner_maps": {
+          "base": {
+            "bindings": [
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "item"
+              },
+              {
+                "introduced_by": null,
+                "origin": "existing",
+                "selector": {
+                  "kind": "selected_existing_owner"
+                },
+                "target": "image"
+              }
+            ],
+            "schema": "photo-native-owner-bindings/v3"
+          }
+        },
+        "profile_contracts": {
+          "base": null
+        },
+        "reference_sha256": {},
+        "review": {
+          "basis": "manually reviewed native fixture",
+          "native_review": {
+            "method": "codex_direct_source_read",
+            "native_contract_sha256": "59b580628d5ad43422146de4d6019c88a4cf11cbf4125fd7604de76e44668970",
+            "reviewer": "Codex native fixture author"
+          },
+          "original_review": {
+            "artifact": "fixture/explicit-original-review.json",
+            "candidate_id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "catalog_sha256": "da1574dde9b96b21f010db5f161a8dea2326db863a29dc4cd6653685c28fcde7",
+            "decision_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "source_record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "source_correction": null,
+          "whole_source_reviewed": true
+        },
+        "roles": {
+          "fixture_shot": {
+            "fact_refs": [
+              "macroE"
+            ],
+            "realization_ids": [
+              "base"
+            ],
+            "scope": "whole_record",
+            "spec_sha256": "37bdf51a88254d000d469f1475ead0398566b058b7a50bb10529aa58767d16db",
+            "support_modes": [
+              "effect"
+            ]
+          }
+        },
+        "schema": "photo-candidate-role-evidence/v4",
+        "source_units": [
+          {
+            "disposition": "semantic",
+            "fact_refs": [
+              "itemP",
+              "imageP",
+              "visiblePR",
+              "macroE"
+            ],
+            "pointer": "/content/en",
+            "quote": "On the independently declared existing image select macro shot scale of the existing physical item. The same item remains visible in that selected image with a separate frozen framing.visible_in relation. Do not add an image, item, body or hidden part.",
+            "realization_id": "base"
+          }
+        ]
+      }
+    },
+    "effects": {
+      "dimensions": [
+        "framing"
+      ],
+      "properties": [
+        {
+          "dimension": "framing",
+          "property": "shot.scale",
+          "target": "image"
+        }
+      ]
+    },
+    "id": "cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "provenance": [
+      {
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "authored test"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  "full_forged_qualification_against_actual_corpus": true,
+  "schema": "native-permission-stripped-optin-beforefix-probe/v1"
+}
