@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "exit_code": 1,
+  "error": "AssertionError: remaining deferred dependencies must still block presentation",
+  "cause": "Verifier incorrectly expected unbound raw c.entry lookup to apply presentation eligibility. Existing source storage lookup intentionally remains available.",
+  "correction": "Use actual realization eligibility, which checks deferred member dependencies before presentation. No operating code or guards changed."
+}
