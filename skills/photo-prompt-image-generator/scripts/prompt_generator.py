@@ -8345,6 +8345,10 @@ def native_property_scope_allowed(core, dimensions, properties, *, entry=None, d
 def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True, _condition_layer=False,allow_owner_selection_pending=False) -> bool:
     import photo_semantic_evidence
     if not _condition_layer:
+        if ((photo_semantic_evidence.native_status(entry)=='qualified'
+                or photo_semantic_evidence.permission_envelope.authoritative_native_source(data,entry))
+                and not photo_semantic_evidence.permission_envelope.matches_source(data,entry)):
+            return False
         native_admission = photo_semantic_evidence.admission(entry, core, allow_unselected=not check_effect_scope or allow_owner_selection_pending)
         if not native_admission['allowed']:
             return False

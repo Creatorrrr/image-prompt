@@ -49,7 +49,10 @@ def attach(data,rows,tag,*,cid=A):
     p['roles'][tag]={'spec_sha256':c.digest(data['slot_catalog'][tag]),
         'scope':'whole_record' if set(ids)==set(r.ids(data['candidates'][cid])) else 'positive_alternative',
         'realization_ids':ids,'fact_refs':[],'guard_refs':[row['id'] for row in rows],'support_modes':['prerequisite']}
-    reattest(data,cid);return data
+    reattest(data,cid)
+    from tests.test_photo_semantic_evidence import trust_fixture_authority
+    trust_fixture_authority(data)
+    return data
 
 
 def relation_source(schema='v1',kind='owner_relation',relation='part_of',cid=A):
@@ -260,7 +263,10 @@ class GuardRoleSupportTests(unittest.TestCase):
         # Actual old v1 receipt keeps its original shape too.
         data=relation_source();p=data['candidates'][A]['content']['role_evidence'];p.pop('guard_supports');p['roles']={}
         p['owner_maps']['base']=owner_map();p['source_units'][0].pop('guard_refs');p['source_units'][0]['disposition']='nonsemantic';reattest(data)
-        c.validate(data);entry=c.entry(data,A)
+        c.validate(data)
+        from tests.test_photo_semantic_evidence import trust_fixture_authority
+        trust_fixture_authority(data)
+        entry=c.entry(data,A)
         self.assertEqual(c.digest(data['candidates'][A]),'21033d5d364addb53e267241234ddc46aae8f0bf8d204a35fe9c1c16e99a5c3b')
         self.assertEqual(e.admission(entry,relation_core()),{
             'status':'qualified','allowed':True,'reason':'whole_native_obligations_verified',

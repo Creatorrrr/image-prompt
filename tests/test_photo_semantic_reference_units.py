@@ -42,6 +42,8 @@ def referenced_source(*, local_fact=False):
                                  if u['pointer'] != '/content/render_gates/0']
     proof['source_units'].append(reference('/content/render_gates/0', gate, ['underlight']))
     reattest(data)
+    from tests.test_photo_semantic_evidence import trust_fixture_authority
+    trust_fixture_authority(data)
     return data
 
 
@@ -133,6 +135,8 @@ class SemanticReferenceUnitTests(unittest.TestCase):
         p['source_units'].append(reference('/content/render_gates/0', record['content']['render_gates'][0], ['effect']))
         reattest(data)
         c.validate(data)
+        from tests.test_photo_semantic_evidence import trust_fixture_authority
+        trust_fixture_authority(data)
         guards_before = copy.deepcopy(p['guard_sets'])
         for view in [data, {**data, 'candidates': {A: layout.guard_record(record, data)}}]:
             entry = c.entry(view, A)

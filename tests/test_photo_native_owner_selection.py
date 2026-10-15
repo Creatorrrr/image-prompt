@@ -598,6 +598,8 @@ class ResolvedEffectAssignmentTests(unittest.TestCase):
     def data(self,record):
         value=source('placeholder',[],{'texture':slot('texture',['material'],property_prefixes=['texture.'])},{'base':owner_map()})
         value['candidates'][A]=copy.deepcopy(record)
+        from tests.test_photo_semantic_evidence import trust_fixture_authority
+        trust_fixture_authority(value)
         return value
 
     def views(self,data):

@@ -30,6 +30,8 @@ class SemanticReferenceWorkflowTests(unittest.TestCase):
                     'this local reference adds no effect or permission.'})
             reattest(data, cid=joint.P)
             joint.c.validate(data)
+            from tests.test_photo_semantic_evidence import trust_fixture_authority
+            trust_fixture_authority(data)
             self.assertEqual(len([unit for unit in proof['source_units']
                                   if unit['disposition'] == 'semantic_reference']), 1)
             self.assertEqual(before, parent['content']['role_evidence']['effect_sets'])

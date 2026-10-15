@@ -50,6 +50,19 @@ def owner_map(*owners):
         'introduced_by':None} for left,right in owners]}
 
 
+def trust_fixture_authority(data):
+    """Explicit test-author trust act, distinct from structural validation.
+
+    Fixture signatures/meaning are synthetic. Invalid adversarial structures
+    receive no capability; production validators never issue authority.
+    """
+    try:
+        e.permission_envelope.freeze_source_authority(data,expected_snapshot_sha256=c.digest(data),
+            reviewer='explicit independently authored synthetic fixture source')
+    except (ValueError,KeyError,TypeError,IndexError):
+        pass  # Invalid fixture remains untrusted for its negative test.
+
+
 def seal(data, support, *, cid=A):
     """Only fixture serialization; fact modes/values/owners are explicitly authored above."""
     record=data['candidates'][cid];proof=record['content']['role_evidence']
@@ -76,6 +89,7 @@ def seal(data, support, *, cid=A):
         proof['review']['source_correction']['after_sha256']=proof['meaning_sha256']
     proof['review']['original_review']['candidate_id']=record['id']
     proof['review']['native_review']['native_contract_sha256']=e.native_contract_sha256(proof)
+    trust_fixture_authority(data)
     return data
 
 

@@ -351,6 +351,9 @@ class RuntimeSnapshotProvider:
                 data=generator.load_runtime_data(root/'assets');bound=BoundRuntimeData(data)
                 if bound['_corpus_sha256']!=manifest['search_layout']['corpus_sha256'] or bound['_global_index_sha256']!=manifest['search_layout']['layout_sha256']:raise ValueError('generation layout binding mismatch')
             except (OSError,ValueError,KeyError,TypeError) as exc:raise FreshnessError('source_invalid','lazy generation load failed: '+str(exc)) from exc
+            import photo_native_permission
+            photo_native_permission._register_generation_transports(bound['_guard_source']['candidates'],
+                source_fingerprint=manifest['source_fingerprint'],corpus_sha256=manifest['search_layout']['corpus_sha256'])
             snapshot=RuntimeSnapshot(generation,root,freeze(manifest),bound,'lazy_verified');self._snapshots[generation]=snapshot
             while len(self._snapshots)>2:self._snapshots.pop(next(iter(self._snapshots)))
             return snapshot
