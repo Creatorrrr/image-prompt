@@ -52,6 +52,8 @@ def eligible(data,core,controls):
         bindings=by_candidate.get(cid,[])
         candidates=[]
         for bid,b in bindings:
+            if c.binding_review_status(data, bid) == 'deferred':
+                continue
             fits=(realizations.eligible_ids(data,cid,core,contract,picked,b['slot_id'],bid,allow_owner_selection_pending=True)
                   if conditional else g.core_entry_eligible(data,core,contract,picked,b['slot_id'],c.entry(data,cid,bid),allow_owner_selection_pending=True))
             if guard_policy(b['conditions']['subject_applicability'],contract) and fits:
