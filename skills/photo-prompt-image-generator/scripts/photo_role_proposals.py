@@ -34,6 +34,8 @@ def propose(data, slot, cid, eligible_bindings, declared_bindings=None, *, reali
         fit.update(status='incompatible', reason='declared_role_conditions_not_satisfied')
     if any(c.binding_review_status(data, key) == 'deferred' for key in declared):
         fit.update(status='incompatible', reason='declared_role_semantic_review_deferred')
+    if c.deferred_dependency_bindings(data, record):
+        fit.update(status='incompatible', reason='dependency_binding_semantic_review_deferred')
     dependency_choices = {}; effect_closure = []
     if evidence.native_status(record) == 'qualified':
         proof = (record['_semantic_evidence_guard'] if '_semantic_evidence_guard' in record
