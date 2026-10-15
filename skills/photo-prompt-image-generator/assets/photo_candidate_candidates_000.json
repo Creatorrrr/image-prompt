@@ -18361,53 +18361,353 @@
       "conditions": {}
     },
     "cand_afdb9168ea8c53ad921a8574ed5248d1": {
-      "content": {
-        "aliases": [
-          "깔끔하고 연속적인 사진 경계",
-          "clean continuous photographic edges"
-        ],
-        "concept_units": [
-          "object contours remain continuous",
-          "small surface details remain readable"
-        ],
-        "core_assertion_discovery": true,
-        "embedding_text": "clean continuous photographic edges; object contours remain continuous; small surface details remain readable",
-        "en": "clean continuous photographic edges",
-        "keywords": [
-          "clean continuous photographic edges"
-        ],
-        "ko": "깔끔하고 연속적인 사진 경계",
-        "relations": [
-          {
-            "id": "effect_owner",
-            "object": "whole_image",
-            "subject": "clean continuous photographic edges",
-            "type": "applies_to"
-          }
-        ]
-      },
-      "effects": {
-        "dimensions": [
-          "style"
-        ],
-        "properties": [
-          {
-            "dimension": "style",
-            "property": "image.detail",
-            "target": "image_plane"
-          }
-        ]
-      },
-      "id": "cand_afdb9168ea8c53ad921a8574ed5248d1",
-      "provenance": [
+  "conditions": {},
+  "content": {
+    "aliases": [
+      "깔끔하고 연속적인 사진 경계",
+      "clean continuous photographic edges"
+    ],
+    "application_contract": "For this application, use the independently declared existing whole-image context as image_plane, on the same actual image addressed by the original applies_to whole_image relation. Apply clean continuous photographic edge rendering as the original style/image_plane/image.detail effect. Independently establish, on this same image, that the rendered object contours are continuous and the small surface details are readable, and preserve both of those properties throughout the selected change. These are two preservation obligations, not new contour or detail mutations; they do not create objects, surfaces or details. The image address and its existence must be independently grounded; neither the desired clean-edge value nor the two preservation witnesses may be fabricated from this candidate. Retain the original image.detail property and target exactly, the entire original whole-image scope, and every actual affected image-owner, alias, ancestor, property and whole-dimension lock. Do not move the effect to a physical object, rename its property to evade a lock, or treat preservation as permission to alter physical topology. If either preservation witness or the necessary complete actual affected scope is unknown, this application remains pending.",
+    "concept_units": [
+      "object contours remain continuous",
+      "small surface details remain readable"
+    ],
+    "core_assertion_discovery": true,
+    "embedding_text": "clean continuous photographic edges; object contours remain continuous; small surface details remain readable",
+    "en": "clean continuous photographic edges",
+    "keywords": [
+      "clean continuous photographic edges"
+    ],
+    "ko": "깔끔하고 연속적인 사진 경계",
+    "relations": [
+      {
+        "id": "effect_owner",
+        "object": "whole_image",
+        "subject": "clean continuous photographic edges",
+        "type": "applies_to"
+      }
+    ],
+    "role_evidence": {
+      "schema": "photo-candidate-role-evidence/v4",
+      "meaning_sha256": "0fe037b92e143001aba9f15fa3aa77fe0afa76c637724a0b5a15404007507e36",
+      "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+      "complete": true,
+      "facts": [
         {
-          "sha256": "c62e576f724d2a7065d13f8f65e66da9df1f2f544ce1282aeff8afac97d360e0",
-          "source": "slot:quality:pe_clean_edges"
+          "id": "carrier_present",
+          "realization_id": "base",
+          "pointer": "/content/application_contract",
+          "quote": "independently declared existing whole-image context",
+          "dimension": "subject",
+          "target": "image_plane",
+          "property": "entity.presence",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.presence/v1",
+            "value": "present"
+          },
+          "requires": []
+        },
+        {
+          "id": "carrier_kind",
+          "realization_id": "base",
+          "pointer": "/content/application_contract",
+          "quote": "independently declared existing whole-image context",
+          "dimension": "subject",
+          "target": "image_plane",
+          "property": "entity.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "entity.type/v1",
+            "value": "image"
+          },
+          "requires": []
+        },
+        {
+          "id": "contoursPR",
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "object contours remain continuous",
+          "dimension": "style",
+          "target": "image_plane",
+          "property": "image.contour.continuity",
+          "mode": "preservation",
+          "value": {
+            "type": "image.contour.continuity/v1",
+            "value": "continuous"
+          },
+          "requires": [
+            "carrier_present",
+            "carrier_kind"
+          ]
+        },
+        {
+          "id": "detailsPR",
+          "realization_id": "base",
+          "pointer": "/content/concept_units/1",
+          "quote": "small surface details remain readable",
+          "dimension": "style",
+          "target": "image_plane",
+          "property": "image.small_surface_detail.readability",
+          "mode": "preservation",
+          "value": {
+            "type": "image.small_surface_detail.readability/v1",
+            "value": "readable"
+          },
+          "requires": [
+            "carrier_present",
+            "carrier_kind"
+          ]
+        },
+        {
+          "id": "edgeE",
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "clean continuous photographic edges",
+          "dimension": "style",
+          "target": "image_plane",
+          "property": "image.detail",
+          "mode": "effect",
+          "value": {
+            "type": "image.detail/v1",
+            "value": "clean_continuous_photographic_edges"
+          },
+          "requires": [
+            "carrier_present",
+            "carrier_kind",
+            "contoursPR",
+            "detailsPR"
+          ],
+          "operation": "set_value",
+          "receivers": []
+        },
+        {
+          "id": "whole_scopeC",
+          "realization_id": "base",
+          "pointer": "/content/application_contract",
+          "quote": "on the same actual image addressed by the original applies_to whole_image relation",
+          "dimension": "style",
+          "target": "image_plane",
+          "property": "image.effect_scope",
+          "mode": "context",
+          "value": {
+            "type": "image.effect_scope/v1",
+            "value": "whole_image"
+          },
+          "requires": [
+            "carrier_present",
+            "carrier_kind"
+          ]
         }
       ],
-      "record_kind": "visual_option",
-      "conditions": {}
-    },
+      "source_units": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_contract",
+          "quote": "For this application, use the independently declared existing whole-image context as image_plane, on the same actual image addressed by the original applies_to whole_image relation. Apply clean continuous photographic edge rendering as the original style/image_plane/image.detail effect. Independently establish, on this same image, that the rendered object contours are continuous and the small surface details are readable, and preserve both of those properties throughout the selected change. These are two preservation obligations, not new contour or detail mutations; they do not create objects, surfaces or details. The image address and its existence must be independently grounded; neither the desired clean-edge value nor the two preservation witnesses may be fabricated from this candidate. Retain the original image.detail property and target exactly, the entire original whole-image scope, and every actual affected image-owner, alias, ancestor, property and whole-dimension lock. Do not move the effect to a physical object, rename its property to evade a lock, or treat preservation as permission to alter physical topology. If either preservation witness or the necessary complete actual affected scope is unknown, this application remains pending.",
+          "fact_refs": [
+            "carrier_present",
+            "carrier_kind",
+            "whole_scopeC"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/application_contract",
+          "quote": "For this application, use the independently declared existing whole-image context as image_plane, on the same actual image addressed by the original applies_to whole_image relation. Apply clean continuous photographic edge rendering as the original style/image_plane/image.detail effect. Independently establish, on this same image, that the rendered object contours are continuous and the small surface details are readable, and preserve both of those properties throughout the selected change. These are two preservation obligations, not new contour or detail mutations; they do not create objects, surfaces or details. The image address and its existence must be independently grounded; neither the desired clean-edge value nor the two preservation witnesses may be fabricated from this candidate. Retain the original image.detail property and target exactly, the entire original whole-image scope, and every actual affected image-owner, alias, ancestor, property and whole-dimension lock. Do not move the effect to a physical object, rename its property to evade a lock, or treat preservation as permission to alter physical topology. If either preservation witness or the necessary complete actual affected scope is unknown, this application remains pending.",
+          "fact_refs": [
+            "edgeE",
+            "contoursPR",
+            "detailsPR"
+          ],
+          "disposition": "semantic_reference",
+          "reference_relation": "selected_output_constraint",
+          "retained_constraint_rationale": "The complete application repeats the selected original edge-rendering E and requires both contour-continuity and detail-readability PR on the same image. Their ordinary facts are directly anchored to the exact EN and separate concept_units. This reference adds no new fact or permission, and retains every original image.detail/whole-image/actual-scope lock and negative bound."
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "clean continuous photographic edges",
+          "fact_refs": [
+            "edgeE"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "깔끔하고 연속적인 사진 경계",
+          "fact_refs": [
+            "edgeE"
+          ],
+          "disposition": "semantic_reference",
+          "reference_relation": "partial_restatement",
+          "retained_constraint_rationale": "The exact local field retains its own complete location/phase/quiet or edge-rendering clauses only. Independent carrier presence/type and same-owner/whole-scope requirements are anchored to the ordinary full application contract. No qualifier absent from this local field is promoted into a new fact. All local negative limits and the disclosed quiet interpretation remain binding."
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "clean continuous photographic edges; object contours remain continuous; small surface details remain readable",
+          "fact_refs": [
+            "edgeE",
+            "contoursPR",
+            "detailsPR"
+          ],
+          "disposition": "semantic_reference",
+          "reference_relation": "partial_restatement",
+          "retained_constraint_rationale": "The exact local field retains its own complete location/phase/quiet or edge-rendering clauses only. Independent carrier presence/type and same-owner/whole-scope requirements are anchored to the ordinary full application contract. No qualifier absent from this local field is promoted into a new fact. All local negative limits and the disclosed quiet interpretation remain binding."
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "object contours remain continuous",
+          "fact_refs": [
+            "contoursPR"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/1",
+          "quote": "small surface details remain readable",
+          "fact_refs": [
+            "detailsPR"
+          ],
+          "disposition": "semantic"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/subject",
+          "quote": "clean continuous photographic edges",
+          "fact_refs": [
+            "edgeE"
+          ],
+          "disposition": "semantic_reference",
+          "reference_relation": "partial_restatement",
+          "retained_constraint_rationale": "The exact relation subject restates the same clean-edge rendering E; its target is bound by the complete relation and ordinary App same-image clause."
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/object",
+          "quote": "whole_image",
+          "fact_refs": [
+            "whole_scopeC"
+          ],
+          "disposition": "semantic_reference",
+          "reference_relation": "same_selected_owner",
+          "retained_constraint_rationale": "This is the whole-image endpoint of the original applies_to relation, explicitly bound to that same independent image in the ordinary App. It creates no other image or physical object and does not move the original image_plane effect."
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/type",
+          "quote": "applies_to",
+          "fact_refs": [],
+          "disposition": "nonsemantic"
+        }
+      ],
+      "roles": {
+        "image_detail": {
+          "spec_sha256": "4582e06ce33f6c5cc2dd1cd36b9586882ef06b51d6e8e16445a7c32448c9bc1a",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "fact_refs": [
+            "edgeE"
+          ],
+          "support_modes": [
+            "effect"
+          ]
+        }
+      },
+      "owner_maps": {
+        "base": {
+          "schema": "photo-native-owner-bindings/v2",
+          "bindings": [
+            {
+              "target": "image_plane",
+              "core_role": "image",
+              "origin": "existing",
+              "introduced_by": null
+            }
+          ]
+        }
+      },
+      "effect_sets": {
+        "base": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "style",
+              "property": "image.detail",
+              "target": "image_plane"
+            }
+          ]
+        }
+      },
+      "dependencies": {
+        "base": []
+      },
+      "reference_sha256": {},
+      "guard_sets": {
+        "base": {
+          "source_conditions": [
+            {},
+            {}
+          ],
+          "member_conditions": {}
+        }
+      },
+      "profile_contracts": {
+        "base": null
+      },
+      "review": {
+        "basis": "Preserve original style/image_plane/image.detail E and same whole_image relation. Continuous rendered contours and readable small surface details are two separate literal PR requirements on that same independent image; no physical topology change or arbitrary object receiver. A merely present image or an arbitrary same-value sentinel does not satisfy those exact PR values. The explicit selected existing scene/image address is independently grounded. Both carrier presence and type are exact P, not invented from a role or candidate and not a pre-frozen desired location/rendering. Every E has target-only Rx[] because this selected contract changes the same scene or whole image rather than separately owned physical objects. All original dimensions, properties, intrinsic primary-tag gates and old binding conditions remain. Full original/current/exact5B/ownbindings/emptyclosure and exact origin entries were reread for the source proposal and exact source96 afters reread now; fixed149 used and necessary neighbor fullspecs remain exact. Negative limits remain in whole App semantic/reference units. In6220 the applies_to token is connector-only; the complete same-image relation is positively retained by whole_scopeC and App, never discarded. All required PRs remain PR; no sentinel trait is used as a positive role fact.",
+        "whole_source_reviewed": true,
+        "source_correction": {
+          "before_sha256": "5fcd5971d664dd1eee76835dbde7618ab5315181ccb4c3990bdf97a18f1558af",
+          "after_sha256": "0fe037b92e143001aba9f15fa3aa77fe0afa76c637724a0b5a15404007507e36",
+          "rationale": "Preserve original style/image_plane/image.detail E and same whole_image relation. Continuous rendered contours and readable small surface details are two separate literal PR requirements on that same independent image; no physical topology change or arbitrary object receiver. A merely present image or an arbitrary same-value sentinel does not satisfy those exact PR values. Use only the exact root-selected source96 after; no new source change is authored inside this proof."
+        },
+        "original_review": {
+          "candidate_id": "cand_afdb9168ea8c53ad921a8574ed5248d1",
+          "source_record_sha256": "ebbe2513f1549d706c736433786d5e389cd648d6266eeba713df02dd9ab2f377",
+          "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+          "decision_sha256": "cd4d1ae965fdadfc0bb01b597d33f33ed809b103e78966188cc3e8954bcce8ca",
+          "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_05250_06250_06000_06250.json#item=221"
+        },
+        "native_review": {
+          "reviewer": "/root/review_05250_06250",
+          "method": "codex_subagent_direct_source_read",
+          "native_contract_sha256": "c00062d408b1e23c4ac1e21f538bbced1ad4bc315ea22706aa32aa8384ea95ef"
+        }
+      }
+    }
+  },
+  "effects": {
+    "dimensions": [
+      "style"
+    ],
+    "properties": [
+      {
+        "dimension": "style",
+        "property": "image.detail",
+        "target": "image_plane"
+      }
+    ]
+  },
+  "id": "cand_afdb9168ea8c53ad921a8574ed5248d1",
+  "provenance": [
+    {
+      "sha256": "c62e576f724d2a7065d13f8f65e66da9df1f2f544ce1282aeff8afac97d360e0",
+      "source": "slot:quality:pe_clean_edges"
+    }
+  ],
+  "record_kind": "visual_option"
+},
     "cand_df0cc386ae385f919a8b64b0436c14cb": {
       "content": {
         "aliases": [
