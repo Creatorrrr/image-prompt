@@ -27,6 +27,33 @@ CORPUS_FIELDS = frozenset({'schema', 'candidates', 'slot_catalog', 'slot_binding
 ID = re.compile(r'cand_[0-9a-f]{32}\Z')
 BINDING_ID = re.compile(r'bind_[0-9a-f]{32}\Z')
 TAG_ID = re.compile(r'[a-z][a-z0-9_]*\Z')
+BINDING_REVIEW_POLICY = '_slot_binding_review'
+
+
+def binding_review_status(corpus, binding_id):
+    """Migration review state is separate from native semantic qualification."""
+    state = corpus['policies'].get(BINDING_REVIEW_POLICY, {})
+    if binding_id in state.get('deferred', {}):
+        return 'deferred'
+    return 'reviewed' if binding_id in state.get('reviewed', {}) else 'inherited'
+
+
+def validate_binding_reviews(corpus):
+    state = corpus['policies'].get(BINDING_REVIEW_POLICY)
+    if state is None:
+        return
+    if (not isinstance(state, dict) or set(state) != {'schema', 'deferred', 'reviewed'}
+            or state['schema'] != 'photo-slot-binding-review/v1'
+            or any(not isinstance(state[k], dict) for k in ('deferred', 'reviewed'))):
+        raise ValueError('invalid slot binding review policy')
+    if set(state['deferred']) & set(state['reviewed']):
+        raise ValueError('binding cannot be both reviewed and deferred')
+    for group in ('deferred', 'reviewed'):
+        for bid, row in state[group].items():
+            if (bid not in corpus['slot_bindings'] or not isinstance(row, dict)
+                    or set(row) != {'reason', 'source_citation'}
+                    or any(not isinstance(v, str) or not v.strip() for v in row.values())):
+                raise ValueError('invalid or dangling binding review decision')
 INTRINSIC_CONDITION_FIELDS = frozenset({'for_any', 'for_all', 'exclude_for_any', 'not_for',
     'requires_any_tags', 'requires_any', 'requires_all_tags', 'requires_all',
     'exclude_any_tags', 'exclude_any', 'requires_primary_any_tags', 'requires_facets', 'exclude_facets',
@@ -197,6 +224,7 @@ def validate(corpus):
                 or not isinstance(row['conditions']['subject_applicability'], dict)):
             raise ValueError(f'{binding_id}: role conditions cannot override intrinsic meaning')
         validate_conditions(row['conditions'],binding_id)
+    validate_binding_reviews(corpus)
     # Candidate refs are explicit, qualified native IDs, never bare label aliases.
     def references(value):
         if isinstance(value, str):
@@ -313,6 +341,8 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
         binding = corpus['slot_bindings'][binding_id]
         if binding['candidate_id'] != candidate_id:
             raise ValueError('role belongs to a different candidate')
+        if binding_review_status(corpus, binding_id) == 'deferred':
+            raise ValueError('slot binding deferred pending semantic review')
         result['_role_conditions'] = copy.deepcopy(binding['conditions'])
         result['_native_presentation_guard']={'record':copy.deepcopy(binding),'sha256':digest(binding)}
         result['_presentation_role'] = binding['slot_id']
@@ -336,7 +366,7 @@ def entry(corpus, candidate_id, binding_id=None, *, realization_id=None, depende
 def role_entries(corpus, tag):
     """A native role view, not a source tree or candidate identity namespace."""
     for binding_id, binding in corpus['slot_bindings'].items():
-        if binding['slot_id'] == tag:
+        if binding['slot_id'] == tag and binding_review_status(corpus, binding_id) != 'deferred':
             yield entry(corpus, binding['candidate_id'], binding_id)
 
 
