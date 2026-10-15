@@ -17,7 +17,7 @@ def read(p):return json.loads(gzip.decompress(p.read_bytes()) if p.suffix=='.gz'
 def save(p,v):
  with p.open('xb') as f:f.write(c.canonical_bytes(v)+b'\n')
 def ref(p):return dict(file=str(p.relative_to(ROOT)),file_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),sha256=c.digest(read(p)))
-def prepare_sparse(name,rows,original,current,current_ref,order_ref,catalog_review,memo_ref,prior=None):
+def prepare_sparse(name,rows,original,current,current_ref,order_ref,catalog_review,memo_ref,prior=None,*,task_name='/root/review_05250_06250'):
  order=nr.artifact(ROOT,order_ref);ids=[r['candidate_id'] for r in rows];ordinals=[r['ordinal'] for r in rows]
  assert len(order)==len(set(order))==18250 and set(order)==set(original['candidates'])==set(current['candidates'])
  assert len(ids)==len(set(ids)) and ordinals==sorted(set(ordinals)) and [order[o] for o in ordinals]==ids
@@ -35,7 +35,7 @@ def prepare_sparse(name,rows,original,current,current_ref,order_ref,catalog_revi
  out=R/'native-inputs/prepared'/name;out.mkdir(exist_ok=False)
  inp=dict(schema=nr.INPUT,actor='/root',ids=ids,original_snapshot=ref(R/'SOURCE.json.gz'),current_snapshot=current_ref,order=order_ref,catalog_review=catalog_review,original_decisions=selection,original_packets=packets,required_revisions=required)
  save(out/'INPUT.json',inp)
- assignment=dict(schema=nr.ASSIGNMENT,actor='/root',task_name='/root/review_05250_06250',model='gpt-6.1-sol',reasoning_effort='high',ids=ids,ordinals=ordinals,input=ref(out/'INPUT.json'));nr.validate_assignment_identity(assignment);save(out/'ASSIGNMENT.json',assignment)
+ assignment=dict(schema=nr.ASSIGNMENT,actor='/root',task_name=task_name,model='gpt-6.1-sol',reasoning_effort='high',ids=ids,ordinals=ordinals,input=ref(out/'INPUT.json'));nr.validate_assignment_identity(assignment);save(out/'ASSIGNMENT.json',assignment)
  packet=dict(schema=prep.PACKET,preparation_plan=memo_ref,assignment_sha256=c.digest(assignment),input_sha256=c.digest(inp),prepared_count=len(ids),actual_read_count=0,ids=ids,ordinals=ordinals,
   original_records={cid:original['candidates'][cid] for cid in ids},current_records={cid:current['candidates'][cid] for cid in ids},references=closures,reference_bindings=bindings,historical_compiled_rows=historical,
   historical_statuses={cid:r['status'] for cid,r in historical.items()},original_compiled_artifacts={cid:loc['file']+'#item='+str(loc['item']) for cid,loc in selection.items()})

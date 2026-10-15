@@ -2,7 +2,7 @@
 import argparse,gzip,hashlib,importlib.abc,json,subprocess,sys
 from pathlib import Path
 ROOT=Path.cwd();R=ROOT/'docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014'
-G=Path('/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839')
+G=Path('/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/fe5b593c819806a31803e40c620e6f2b28c3b54103f451dd6f38920f2d537258')
 class Deny(importlib.abc.MetaPathFinder):
  def find_spec(self,fullname,path=None,target=None):
   if fullname.split('.')[0]in{'torch','transformers','sentence_transformers','tensorflow','jax','mlx','google','openai','anthropic','requests','httpx'}:raise AssertionError(fullname)
@@ -23,11 +23,15 @@ assert source_path.is_relative_to(R) and c.digest(source)==args.expected_sha256
 assert args.output.resolve().is_relative_to(R) and not args.output.exists()
 catalog=c.digest(source['slot_catalog']);assignments={}
 for p in(R/'native-inputs/prepared').glob('*/ASSIGNMENT.json'):assignments.setdefault(c.digest(read(p)),[]).append(p)
-accepted={};history=[];stale=[];older=[]
+accepted={};history=[];stale=[];older=[];diagnostic_only=[]
 for acceptance_path in sorted((R/'native_batches').glob('*/ROOT-ACCEPTANCE.json')):
  folder=acceptance_path.parent;batch_path=folder/'BATCH.json';batch=read(batch_path)
  if not any(r['status']=='approved' and r['proof']['catalog_sha256']==catalog for r in batch['records']):
-  older.append(dict(batch=ref(batch_path),reason='No approved row on exact current149 catalog. Historical acceptance is not transferred.'));continue
+  if any(r['status']=='diagnostic_reviewed' and r['proof']['catalog_sha256']==catalog for r in batch['records']):
+   diagnostic_only.append(dict(batch=ref(batch_path),reason='Current-catalog diagnostic-only batch is outside this positive approval inventory; its separate acceptance is not counted here.'))
+  else:
+   older.append(dict(batch=ref(batch_path),reason='No approved or diagnostic-reviewed row on exact current149 catalog. Historical acceptance is not transferred.'))
+  continue
  choices=assignments[batch['assignment_sha256']];assert len(choices)==1
  assignment=choices[0];verified=nr.verify_batch(assignment,batch_path,folder/'NOTE.json',root=ROOT,here=R);nr.verify_acceptance(ROOT,ref(acceptance_path),verified)
  assert verified['catalog_sha256']==catalog and verified['policies_sha256']==c.digest(source['policies'])
@@ -52,7 +56,7 @@ proofs=list(accepted.values());roles={}
 for row in proofs:
  for tag in row['roles']:roles[tag]=roles.get(tag,0)+1
 value=dict(schema='photo-root-existing-current149-approval-inventory/v1',actor='/root',current_source=ref(source_path),catalog_sha256=catalog,whole_inventory=18250,
- existing_root_accepted_current_equal_unique_candidates=len(proofs),records=sorted(proofs,key=lambda r:r['ordinal']),accepted_history=history,stale_untransferred_rows=stale,older_catalog_batches_not_transferred=older,role_candidate_counts=roles,
+ existing_root_accepted_current_equal_unique_candidates=len(proofs),records=sorted(proofs,key=lambda r:r['ordinal']),accepted_history=history,stale_untransferred_rows=stale,older_catalog_batches_not_transferred=older,current_catalog_diagnostic_only_batches_outside_positive_inventory=diagnostic_only,role_candidate_counts=roles,
  remaining_without_existing_current_equal_root_approval=18250-len(proofs),new_approvals_created=0,automatic_latest_manifest_created=False,operating_native_qualified_count=0,operating_changes=0,Gemini_calls=0,
  boundary='Read-only inventory of exact already accepted positive research judgments on the explicitly pinned current source/catalog, deduplicating identical proof values and rechecking whole source plus full closure/binding identity. No unaccepted draft/diagnostic batch is imported. This is not a complete latest18250 selection, semantic re-review, operational application, final hybrid retrieval or stage5–8 completion.')
 out=args.output
