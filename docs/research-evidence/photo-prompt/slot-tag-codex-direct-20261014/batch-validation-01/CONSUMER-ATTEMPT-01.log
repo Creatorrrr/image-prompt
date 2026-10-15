@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/batch-validation-01/run.py", line 288, in <module>
+    {'prepare':prepare,'build':build,'consume':consume}[a.action]()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/batch-validation-01/run.py", line 210, in consume
+    published=runtime_provider.publisher.publish(observation=research_scope)
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_runtime_sources.py", line 214, in publish
+    source,_=capture_sources(self.root,full=True);_require_implementation(source,generator)
+             ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_runtime_sources.py", line 130, in capture_sources
+    source['embedding']=installed_binding()
+                        ~~~~~~~~~~~~~~~~~^^
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_local_embedding.py", line 90, in installed_binding
+    lock=runtime_lock(root)
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/batch-validation-01/run.py", line 110, in <lambda>
+    local.runtime_lock=lambda root=installation,verify=True:original_lock(root,verify=verify)
+                                                            ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_local_embedding.py", line 60, in runtime_lock
+    raise RuntimeError('local_model_missing_or_unsafe: '+name)
+RuntimeError: local_model_missing_or_unsafe: 1_Pooling/config.json
