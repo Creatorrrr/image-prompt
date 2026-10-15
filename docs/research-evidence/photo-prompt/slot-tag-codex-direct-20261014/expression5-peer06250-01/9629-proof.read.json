@@ -1,0 +1,418 @@
+{
+  "ordinal": 9629,
+  "candidate_id": "cand_7842cc93b00056fca2cd43390370c14c",
+  "proof": {
+    "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+    "complete": true,
+    "dependencies": {
+      "base": []
+    },
+    "effect_sets": {
+      "base": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      }
+    },
+    "facts": [
+      {
+        "dimension": "expression",
+        "id": "scrunch",
+        "mode": "effect",
+        "operation": "set_value",
+        "pointer": "/content/application_contract",
+        "property": "face.expression",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/application_contract",
+          "sha256": "4bbd59d0deb2b74876308323e7dd7c944815661a5e33044380f1bf7ed72add4b"
+        },
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "owner_present",
+          "face_present",
+          "nose_present",
+          "skin_nose_bridge_present",
+          "owner_human"
+        ],
+        "target": "main_subject",
+        "value": {
+          "type": "expression/v1",
+          "value": "actual_same_nosebridge_scrunch_short_visible_creases_andKOtension_response_not_permanentagewrinkles_or_cosmeticmark"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "owner_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "entity.presence",
+        "quote": "independently declared existing human actor",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "owner_human",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "entity.type",
+        "quote": "existing human actor selected for the original source target main_subject",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "entity.type/v1",
+          "value": "human"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "face_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "anatomy.face.presence",
+        "quote": "an existing face, nose and actual skin over that nose bridge",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "anatomy.face.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "nose_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "anatomy.nose.presence",
+        "quote": "an existing face, nose and actual skin over that nose bridge",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "anatomy.nose.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "skin_nose_bridge_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "anatomy.skin.nose_bridge.presence",
+        "quote": "an existing face, nose and actual skin over that nose bridge",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "anatomy.skin.nose_bridge.presence/v1",
+          "value": "present"
+        }
+      }
+    ],
+    "guard_sets": {
+      "base": {
+        "member_conditions": {},
+        "source_conditions": [
+          {
+            "for_any": [
+              "human"
+            ]
+          },
+          {}
+        ]
+      }
+    },
+    "manual_role_views": [
+      {
+        "candidate_id": "cand_7842cc93b00056fca2cd43390370c14c",
+        "canonical_fact_refs": [
+          {
+            "fact_id": "scrunch",
+            "fact_sha256": "b9871c4778f1c7fb2d915745adc9bfebd130bd222d8085928783de35b199030f",
+            "mode": "effect"
+          }
+        ],
+        "endpoint_refs": [
+          {
+            "fact_id": "scrunch",
+            "position": "target"
+          }
+        ],
+        "id": "same_scrunch_facial_geometry",
+        "manual_boundary_rationale": "Same selected existing human actor owns an actual scrunched nose-bridge response with short skin creases, stated local tension and noncosmetic location. Expression and facial_geometry are two views of the same original whole E. No optical skin finish, constitutive mechanics, stable anatomical aging or private emotion is inferred. The local facet is an exact substring inside the whole complete App quoted by this original E, not an invented E from a weaker partial phrase. No body_form, skin_finish, lip_finish, age, gaze or new actor/part is added.",
+        "manual_semantic_facet": "Same owned local facial contour/configuration; transient observable response is within facial_geometry.",
+        "normal_anchors": [
+          {
+            "facet_quote": "visibly scrunched nose bridge with its short visible skin creases and stated local tension",
+            "fact_id": "scrunch",
+            "full_field_sha256": "4bbd59d0deb2b74876308323e7dd7c944815661a5e33044380f1bf7ed72add4b",
+            "pointer": "/content/application_contract",
+            "source_unit_sha256": "1b1637aeb7111a86192444e4b0aba0a0a155f481c45958d68ebdca78651fea46",
+            "start": 304,
+            "stop": 394
+          }
+        ],
+        "realization_id": "base",
+        "requires_refs": [
+          "face_present",
+          "nose_present",
+          "owner_human",
+          "owner_present",
+          "skin_nose_bridge_present"
+        ],
+        "role_id": "facial_geometry",
+        "schema": "photo-manual-semantic-role-view/v1",
+        "spec_sha256": "5dc26b4775aeca1c2ff508dd4442d8f9ddeb37d47d3dc1edfdafe93fb2a431f5",
+        "whole_closure_sha256": "a492d3e803f23a1d7eadccef6abdf4cc8ff7b74d41fb3e4ccadb6de80f127390",
+        "whole_value_retained": "Keep the complete original expression/main_subject/face.expression typed value, set_value, effect mode, target-only Rx[], all selected-human/anatomy P and original closed-seam/open-aperture PR requirements. This view displays only an explicitly supported facet of that same aggregate E."
+      }
+    ],
+    "meaning_sha256": "8dee30328d68409d54f538062999e958dd1d1a9728f11b9032ffee862b33fdd3",
+    "owner_maps": {
+      "base": {
+        "bindings": [
+          {
+            "introduced_by": null,
+            "origin": "existing",
+            "selector": {
+              "kind": "selected_existing_owner"
+            },
+            "target": "main_subject"
+          }
+        ],
+        "schema": "photo-native-owner-bindings/v3"
+      }
+    },
+    "profile_contracts": {
+      "base": null
+    },
+    "reference_sha256": {},
+    "review": {
+      "basis": "Same selected existing human actor owns an actual scrunched nose-bridge response with short skin creases, stated local tension and noncosmetic location. Expression and facial_geometry are two views of the same original whole E. No optical skin finish, constitutive mechanics, stable anatomical aging or private emotion is inferred. Complete original/current source, exact original5B and all ownbindings/empty closure/specs were directly read in disclosed frozen artifacts. Source26 complete after equals the actually read plan05 whole after; this final review inspects the complete37 fact scopes/58 whole positive fields/seven view scopes without claiming a new read of unchanged body fields.",
+      "native_review": {
+        "method": "codex_subagent_direct_source_read",
+        "native_contract_sha256": "9bb95bd4d2538a0ca15a4cc7c0a0a2e2a7f6003e10a31ce7c2a63f75c37b8655",
+        "reviewer": "/root/review_12250_13000"
+      },
+      "original_review": {
+        "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_09250_10500_09500_09750.json#item=130",
+        "candidate_id": "cand_7842cc93b00056fca2cd43390370c14c",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "decision_sha256": "85c4348e3e876eb9ed6416f5a34b61e7becc36ec627b23d31cc11677bfb45638",
+        "source_record_sha256": "40f70f9c8fc9e74e65be24643c3699f38507c430b07dd3a9c83008e63aa4e152"
+      },
+      "source_correction": {
+        "after_sha256": "8dee30328d68409d54f538062999e958dd1d1a9728f11b9032ffee862b33fdd3",
+        "before_sha256": "7479fd12cf67ce740895f407044534a8dfd7762fe62c3d55d8846d3af49a2986",
+        "rationale": "Exact root-selected source26 after; preserve original whole meaning provenance and every original positive source clause/conditions/effects. No further source edit is proposed."
+      },
+      "whole_source_reviewed": true
+    },
+    "roles": {
+      "expression": {
+        "fact_refs": [
+          "scrunch"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "67afc20b958d23d2e75a477532d8e570347d0123513bb0241cbb5c0f107d6a44",
+        "support_modes": [
+          "effect"
+        ]
+      },
+      "facial_geometry": {
+        "fact_refs": [
+          "scrunch"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "5dc26b4775aeca1c2ff508dd4442d8f9ddeb37d47d3dc1edfdafe93fb2a431f5",
+        "support_modes": [
+          "effect"
+        ],
+        "view_refs": [
+          "same_scrunch_facial_geometry"
+        ]
+      }
+    },
+    "schema": "photo-candidate-role-evidence/v4",
+    "source_units": [
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/en",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/en",
+          "sha256": "f2600eaac8785d46941a91f525c2d131646134b88085ab5ee5a6ef45dda0b131"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: nose_bridge_scrunched, wrinkle_on_same_nose_not_cosmetic. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/ko",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/ko",
+          "sha256": "e66d37fe1bf63573fd543665a2630b32ba68017aaf68b7a818c6d39fe9e1efe9"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: nose_bridge_scrunched. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/embedding_text",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/embedding_text",
+          "sha256": "5470035fbc2cfdbb92c49ea1dedbcf5e59469e24ef3ad84454f398c2496d43c5"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: nose_bridge_scrunched, wrinkle_on_same_nose_not_cosmetic, named_nose_wrinkle_response. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/concept_units/0",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/concept_units/0",
+          "sha256": "321f85191aecd3cbfbe4dbf319d4652f7c17c6692351171ef9a9663aba513c45"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: nose_bridge_scrunched. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/concept_units/1",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/concept_units/1",
+          "sha256": "100122d32cdfb82eb6e41d7b14388ce5731b9910f782103ead759226423a710e"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: wrinkle_on_same_nose_not_cosmetic. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/paraphrases/0",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/paraphrases/0",
+          "sha256": "3869416e3a686cddc9bc24697adf3c8c47b248adc53a000a7f054fa7a83a0a3b"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: nose_skin_bunched, short_visible_creases, local_tension. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/paraphrases/1",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/paraphrases/1",
+          "sha256": "23c278846d6682f4654fc5f055dcf8f12fd99f7858d314f47ac38f1fb6b50798"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: nose_skin_bunched, short_visible_creases. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/relations/0/subject",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/relations/0/subject",
+          "sha256": "22e2d98b26ac1805538fd0474ed12bb739a9afc5cdf916a8704a2e48610c1acc"
+        },
+        "realization_id": "base",
+        "reference_relation": "same_selected_owner",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: original_actor_owner_scope. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/relations/0/object",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/relations/0/object",
+          "sha256": "cfaf72d222a6cd0de77ba5a4bfd3c23719af96b018e1a0a0cf6d9d9fd905788c"
+        },
+        "realization_id": "base",
+        "reference_relation": "same_selected_owner",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: declared_actor_local_face_scope. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "scrunch"
+        ],
+        "pointer": "/content/relations/0/type",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/relations/0/type",
+          "sha256": "a62fdafa3b17dab9ee3d15c7e2be9dbe031e9ee23a3fa791921d19dd7be11cb0"
+        },
+        "realization_id": "base",
+        "reference_relation": "same_selected_owner",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: declared_owner_scope_only. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic",
+        "fact_refs": [
+          "scrunch",
+          "owner_present",
+          "owner_human",
+          "face_present",
+          "nose_present",
+          "skin_nose_bridge_present"
+        ],
+        "pointer": "/content/application_contract",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/application_contract",
+          "sha256": "4bbd59d0deb2b74876308323e7dd7c944815661a5e33044380f1bf7ed72add4b"
+        },
+        "realization_id": "base"
+      }
+    ]
+  }
+}

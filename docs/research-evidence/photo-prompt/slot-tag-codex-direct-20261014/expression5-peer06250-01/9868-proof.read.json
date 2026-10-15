@@ -1,0 +1,418 @@
+{
+  "ordinal": 9868,
+  "candidate_id": "cand_576262fcbe645c63a5fb88baee36d336",
+  "proof": {
+    "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+    "complete": true,
+    "dependencies": {
+      "base": []
+    },
+    "effect_sets": {
+      "base": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      }
+    },
+    "facts": [
+      {
+        "dimension": "expression",
+        "id": "lips",
+        "mode": "effect",
+        "operation": "set_value",
+        "pointer": "/content/application_contract",
+        "property": "face.expression",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/application_contract",
+          "sha256": "de2d3491d14c0da10ecfc6ff15d163a75ce6ab39401d6b9b01bee75128bb3991"
+        },
+        "realization_id": "base",
+        "receivers": [],
+        "requires": [
+          "owner_present",
+          "face_present",
+          "mouth_present",
+          "lips_present",
+          "owner_human"
+        ],
+        "target": "main_subject",
+        "value": {
+          "type": "expression/v1",
+          "value": "actualvisible_taut_thinnedlooking_lipmargins_relatively_straightmouthline_not_permanentbodymorphology"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "owner_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "entity.presence",
+        "quote": "independently declared existing human actor",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "entity.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "owner_human",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "entity.type",
+        "quote": "existing human actor selected for the original source target main_subject",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "entity.type/v1",
+          "value": "human"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "face_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "anatomy.face.presence",
+        "quote": "an existing face, mouth and lips",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "anatomy.face.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "mouth_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "anatomy.mouth.presence",
+        "quote": "an existing face, mouth and lips",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "anatomy.mouth.presence/v1",
+          "value": "present"
+        }
+      },
+      {
+        "dimension": "subject",
+        "id": "lips_present",
+        "mode": "prerequisite",
+        "pointer": "/content/application_contract",
+        "property": "anatomy.lips.presence",
+        "quote": "an existing face, mouth and lips",
+        "realization_id": "base",
+        "requires": [],
+        "target": "main_subject",
+        "value": {
+          "type": "anatomy.lips.presence/v1",
+          "value": "present"
+        }
+      }
+    ],
+    "guard_sets": {
+      "base": {
+        "member_conditions": {},
+        "source_conditions": [
+          {
+            "for_any": [
+              "human"
+            ]
+          },
+          {}
+        ]
+      }
+    },
+    "manual_role_views": [
+      {
+        "candidate_id": "cand_576262fcbe645c63a5fb88baee36d336",
+        "canonical_fact_refs": [
+          {
+            "fact_id": "lips",
+            "fact_sha256": "abd9feba34fd199f585a527f241c0ceebbc6ba0975c5fee36a57065e473871c9",
+            "mode": "effect"
+          }
+        ],
+        "endpoint_refs": [
+          {
+            "fact_id": "lips",
+            "position": "target"
+          }
+        ],
+        "id": "same_lips_facial_geometry",
+        "manual_boundary_rationale": "Same selected existing human owns taut-looking relatively thinned lip margins with a relatively straight mouth line as one visible response. Expression and facial_geometry share the one original aggregate E, without permanent lip remodeling, optical lip finish, material modulus, emotion, age or extra subject. The local facet is an exact substring inside the whole complete App quoted by this original E, not an invented E from a weaker partial phrase. No body_form, skin_finish, lip_finish, age, gaze or new actor/part is added.",
+        "manual_semantic_facet": "Same owned local facial contour/configuration; transient observable response is within facial_geometry.",
+        "normal_anchors": [
+          {
+            "facet_quote": "taut-looking, relatively thinned lip margins accompanied by the relatively straight mouth line",
+            "fact_id": "lips",
+            "full_field_sha256": "de2d3491d14c0da10ecfc6ff15d163a75ce6ab39401d6b9b01bee75128bb3991",
+            "pointer": "/content/application_contract",
+            "source_unit_sha256": "3d2ba270218d14a7859c4fb886d45dd8fbb6a75c09085b3d0841739c92242a1f",
+            "start": 272,
+            "stop": 366
+          }
+        ],
+        "realization_id": "base",
+        "requires_refs": [
+          "face_present",
+          "lips_present",
+          "mouth_present",
+          "owner_human",
+          "owner_present"
+        ],
+        "role_id": "facial_geometry",
+        "schema": "photo-manual-semantic-role-view/v1",
+        "spec_sha256": "5dc26b4775aeca1c2ff508dd4442d8f9ddeb37d47d3dc1edfdafe93fb2a431f5",
+        "whole_closure_sha256": "a492d3e803f23a1d7eadccef6abdf4cc8ff7b74d41fb3e4ccadb6de80f127390",
+        "whole_value_retained": "Keep the complete original expression/main_subject/face.expression typed value, set_value, effect mode, target-only Rx[], all selected-human/anatomy P and original closed-seam/open-aperture PR requirements. This view displays only an explicitly supported facet of that same aggregate E."
+      }
+    ],
+    "meaning_sha256": "a411971f703f216793e8dc22301aeefe671ca50cff56c3d8f92ae9ef9d9561cc",
+    "owner_maps": {
+      "base": {
+        "bindings": [
+          {
+            "introduced_by": null,
+            "origin": "existing",
+            "selector": {
+              "kind": "selected_existing_owner"
+            },
+            "target": "main_subject"
+          }
+        ],
+        "schema": "photo-native-owner-bindings/v3"
+      }
+    },
+    "profile_contracts": {
+      "base": null
+    },
+    "reference_sha256": {},
+    "review": {
+      "basis": "Same selected existing human owns taut-looking relatively thinned lip margins with a relatively straight mouth line as one visible response. Expression and facial_geometry share the one original aggregate E, without permanent lip remodeling, optical lip finish, material modulus, emotion, age or extra subject. Complete original/current source, exact original5B and all ownbindings/empty closure/specs were directly read in disclosed frozen artifacts. Source26 complete after equals the actually read plan05 whole after; this final review inspects the complete37 fact scopes/58 whole positive fields/seven view scopes without claiming a new read of unchanged body fields.",
+      "native_review": {
+        "method": "codex_subagent_direct_source_read",
+        "native_contract_sha256": "c35e400a40955413afe7ee6bba7878673d6e50a865b868f71d766f2c960d2cf8",
+        "reviewer": "/root/review_12250_13000"
+      },
+      "original_review": {
+        "artifact": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_09250_10500_09750_10000.json#item=119",
+        "candidate_id": "cand_576262fcbe645c63a5fb88baee36d336",
+        "catalog_sha256": "4723660c37d3f665f883a81f0e8d35b8c690307406d18d63ade654527d5bec9c",
+        "decision_sha256": "de30977899668f57a1b4fd3ab8724ee57b66d24486f93ccaf70f7b16cb915d07",
+        "source_record_sha256": "dff3681d01cd5841fac3064506cddddda13565f677d35ac1d4f7eff2ea351847"
+      },
+      "source_correction": {
+        "after_sha256": "a411971f703f216793e8dc22301aeefe671ca50cff56c3d8f92ae9ef9d9561cc",
+        "before_sha256": "ac5bda229cd3f8b372710dfca037901ebe30d35caa9446466147a32b8292784d",
+        "rationale": "Exact root-selected source26 after; preserve original whole meaning provenance and every original positive source clause/conditions/effects. No further source edit is proposed."
+      },
+      "whole_source_reviewed": true
+    },
+    "roles": {
+      "expression": {
+        "fact_refs": [
+          "lips"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "67afc20b958d23d2e75a477532d8e570347d0123513bb0241cbb5c0f107d6a44",
+        "support_modes": [
+          "effect"
+        ]
+      },
+      "facial_geometry": {
+        "fact_refs": [
+          "lips"
+        ],
+        "realization_ids": [
+          "base"
+        ],
+        "scope": "whole_record",
+        "spec_sha256": "5dc26b4775aeca1c2ff508dd4442d8f9ddeb37d47d3dc1edfdafe93fb2a431f5",
+        "support_modes": [
+          "effect"
+        ],
+        "view_refs": [
+          "same_lips_facial_geometry"
+        ]
+      }
+    },
+    "schema": "photo-candidate-role-evidence/v4",
+    "source_units": [
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/en",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/en",
+          "sha256": "3ce93bec8f7b5afce067dbfe536af3f6ec7277ec8bfa5ef99e6fa64bd98dd3f2"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: taut_looking_relatively_thinned_lip_margins, relatively_straight_mouth_line. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/ko",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/ko",
+          "sha256": "dbf6869957176a2e264d96ddb9c1c42bb04f974e175ed8cf732674895740881e"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: horizontally_taut_lip_response. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/embedding_text",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/embedding_text",
+          "sha256": "f95996d92805d9b60f7819c1deb2d313f172675fe89baa876ada342baef7956e"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: horizontally_taut_lip_response, taut_looking_relatively_thinned_lip_margins, relatively_straight_mouth_line, named_lip_tightening_response. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/concept_units/0",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/concept_units/0",
+          "sha256": "e1e03aa47cce314cdde575725c9c43c22c8d33ad48f789b81af97699b78a598f"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: taut_looking_relatively_thinned_lip_margins. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/concept_units/1",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/concept_units/1",
+          "sha256": "06da05d5d01dd8aa275e2b9d5d757d987e4e69d6a67fe781a4099c221c19709c"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: relatively_straight_mouth_line_with_taut_lip_margins. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/paraphrases/0",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/paraphrases/0",
+          "sha256": "8a07dd84444f7f48085852ff0ca4259a87a0b7ea9b4a0670fb160128c7e796e7"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: horizontally_taut_lip_margins, relatively_straight_mouth_line. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/paraphrases/1",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/paraphrases/1",
+          "sha256": "d937c1219ba476380fce8dcbb4d60e292cabbe05f70677fd8ab45c671d75951d"
+        },
+        "realization_id": "base",
+        "reference_relation": "partial_restatement",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: taut_thinned_lip_margins, relatively_straight_mouth_line. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/relations/0/subject",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/relations/0/subject",
+          "sha256": "22e2d98b26ac1805538fd0474ed12bb739a9afc5cdf916a8704a2e48610c1acc"
+        },
+        "realization_id": "base",
+        "reference_relation": "same_selected_owner",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: original_actor_owner_scope. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/relations/0/object",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/relations/0/object",
+          "sha256": "cfaf72d222a6cd0de77ba5a4bfd3c23719af96b018e1a0a0cf6d9d9fd905788c"
+        },
+        "realization_id": "base",
+        "reference_relation": "same_selected_owner",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: declared_actor_local_face_scope. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic_reference",
+        "fact_refs": [
+          "lips"
+        ],
+        "pointer": "/content/relations/0/type",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/relations/0/type",
+          "sha256": "a62fdafa3b17dab9ee3d15c7e2be9dbe031e9ee23a3fa791921d19dd7be11cb0"
+        },
+        "realization_id": "base",
+        "reference_relation": "same_selected_owner",
+        "retained_constraint_rationale": "Manually reviewed exact whole positive unit. Retain only these actual partial facets/owner scope: declared_owner_scope_only. This reference neither independently entails the complete aggregate value nor creates a new fact, owner, effect, role or permission. The complete selected App is the direct anchor for the one unchanged aggregate E; all original local constraints remain conjunctive."
+      },
+      {
+        "disposition": "semantic",
+        "fact_refs": [
+          "lips",
+          "owner_present",
+          "owner_human",
+          "face_present",
+          "mouth_present",
+          "lips_present"
+        ],
+        "pointer": "/content/application_contract",
+        "quote": {
+          "exact_whole_source_string_ref": "/source_after/content/application_contract",
+          "sha256": "de2d3491d14c0da10ecfc6ff15d163a75ce6ab39401d6b9b01bee75128bb3991"
+        },
+        "realization_id": "base"
+      }
+    ]
+  }
+}

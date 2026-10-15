@@ -1,0 +1,875 @@
+{
+  "schema": "photo-worker-five-pilot-plan05-human-owner-P-revision-note/v1",
+  "task_name": "/root/review_12250_13000",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "stop": "2026-10-15T01:30:21.224292+00:00",
+  "plan_file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/native_12250_approval_pilot149_source25_plan_05.json",
+  "canonical_sha256": "644991678f9a8241de3cea3d476b71787ebd0c85dfdbe1a81b6271227fa92185",
+  "raw_sha256": "3a695f0fe2252c14fd492003007962dbf923cc4efc1be15bcf18f43386398d80",
+  "facts": 37,
+  "original_E": 5,
+  "added_human_P": 5,
+  "same_fact_role_views": 7,
+  "source_after_same04": 5,
+  "additional_whole_source_or_spec_reread_count": 0,
+  "new_P_and_E_requires_delta_directly_reread_count": 5,
+  "roleview_local_basis_reused_actual_prior_read": 7,
+  "whole_source_units_reused_actual_prior_read": 58,
+  "prototype_pinned_modules": {
+    "photo_semantic_evidence": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/scripts/photo_semantic_evidence.py",
+      "raw_sha256": "6833e00c03ee4aa1222ea1a9e7c5304d8a98d62ad1d3d0e3ff6a3d666bb313e9"
+    },
+    "photo_precore_photo_semantic_witnesses": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/precore/photo_semantic_witnesses.py",
+      "raw_sha256": "cc9bfca271ae1650c28a08b379bc84030b38a5cbcf9918c18d55d50a93094a58"
+    },
+    "photo_candidate_corpus": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/scripts/photo_candidate_corpus.py",
+      "raw_sha256": "b00b200643fe672ba4fc84e162333d937b0ee83ddb0ab431b1a67169cda52da4"
+    },
+    "photo_precore_bridge": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/188c56270ebc2c973defd3307d8fa43df60e55701baa30c45367a4e2e3efe2bb/scripts/photo_precore_bridge.py",
+      "raw_sha256": "714048b4c78b722347ea621506879a5fa3dd7bdae3dc5bc3d1d9d031406f45a2"
+    }
+  },
+  "mechanical_exact_delta_checks": "PASS",
+  "frozen_owner_typed_value_primitive_controls": [
+    {
+      "name": "genuine_selected_human",
+      "fixture": {
+        "source_text": "Existing H is explicitly human. Select H. Existing O is a disjoint object.",
+        "assertions": [
+          {
+            "assertion_id": "H",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "H",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H is explicitly human. Select H. Existing O is a disjoint object."
+            }
+          },
+          {
+            "assertion_id": "O",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "O",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H is explicitly human. Select H. Existing O is a disjoint object."
+            }
+          },
+          {
+            "assertion_id": "distinct",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "disjoint",
+              "left": "H",
+              "right": "O"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H is explicitly human. Select H. Existing O is a disjoint object."
+            }
+          },
+          {
+            "assertion_id": "type0",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "fact",
+              "owner": "H",
+              "property": "entity.type",
+              "value_type": "entity.type/v1",
+              "value": "human"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H is explicitly human. Select H. Existing O is a disjoint object."
+            }
+          }
+        ],
+        "frozen": {
+          "schema": "photo-frozen-semantics/v1",
+          "graph": {
+            "schema": "photo-frozen-semantics/v1",
+            "owners": {
+              "H": "entity",
+              "O": "entity"
+            },
+            "roles": {},
+            "equivalent": [],
+            "part_of": [],
+            "disjoint": [
+              [
+                "H",
+                "O"
+              ]
+            ]
+          },
+          "facts": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "scope_inventories": []
+        }
+      },
+      "results": [
+        {
+          "ordinal": 9629,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": true
+        },
+        {
+          "ordinal": 9762,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": true
+        },
+        {
+          "ordinal": 9834,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": true
+        },
+        {
+          "ordinal": 9853,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": true
+        },
+        {
+          "ordinal": 9868,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": true
+        }
+      ],
+      "expected": "allow",
+      "PASS": true
+    },
+    {
+      "name": "selected_object_plus_separate_human",
+      "fixture": {
+        "source_text": "Existing O is explicitly an object. Select O. Existing H is explicitly a separate disjoint human.",
+        "assertions": [
+          {
+            "assertion_id": "H",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "H",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is explicitly an object. Select O. Existing H is explicitly a separate disjoint human."
+            }
+          },
+          {
+            "assertion_id": "O",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "O",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is explicitly an object. Select O. Existing H is explicitly a separate disjoint human."
+            }
+          },
+          {
+            "assertion_id": "distinct",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "disjoint",
+              "left": "H",
+              "right": "O"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is explicitly an object. Select O. Existing H is explicitly a separate disjoint human."
+            }
+          },
+          {
+            "assertion_id": "type0",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "fact",
+              "owner": "O",
+              "property": "entity.type",
+              "value_type": "entity.type/v1",
+              "value": "object"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is explicitly an object. Select O. Existing H is explicitly a separate disjoint human."
+            }
+          },
+          {
+            "assertion_id": "type1",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "fact",
+              "owner": "H",
+              "property": "entity.type",
+              "value_type": "entity.type/v1",
+              "value": "human"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is explicitly an object. Select O. Existing H is explicitly a separate disjoint human."
+            }
+          }
+        ],
+        "frozen": {
+          "schema": "photo-frozen-semantics/v1",
+          "graph": {
+            "schema": "photo-frozen-semantics/v1",
+            "owners": {
+              "H": "entity",
+              "O": "entity"
+            },
+            "roles": {},
+            "equivalent": [],
+            "part_of": [],
+            "disjoint": [
+              [
+                "H",
+                "O"
+              ]
+            ]
+          },
+          "facts": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "O",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "object"
+              }
+            },
+            {
+              "assertion_id": "type1",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "scope_inventories": []
+        }
+      },
+      "results": [
+        {
+          "ordinal": 9629,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "O",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "object"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9762,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "O",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "object"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9834,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "O",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "object"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9853,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "O",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "object"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9868,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "O",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "object"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        }
+      ],
+      "expected": "deny",
+      "PASS": true
+    },
+    {
+      "name": "selected_object_missing_type_plus_separate_human",
+      "fixture": {
+        "source_text": "Existing O is selected without a type fact. Existing H is explicitly a separate disjoint human.",
+        "assertions": [
+          {
+            "assertion_id": "H",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "H",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is selected without a type fact. Existing H is explicitly a separate disjoint human."
+            }
+          },
+          {
+            "assertion_id": "O",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "O",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is selected without a type fact. Existing H is explicitly a separate disjoint human."
+            }
+          },
+          {
+            "assertion_id": "distinct",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "disjoint",
+              "left": "H",
+              "right": "O"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is selected without a type fact. Existing H is explicitly a separate disjoint human."
+            }
+          },
+          {
+            "assertion_id": "type0",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "fact",
+              "owner": "H",
+              "property": "entity.type",
+              "value_type": "entity.type/v1",
+              "value": "human"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing O is selected without a type fact. Existing H is explicitly a separate disjoint human."
+            }
+          }
+        ],
+        "frozen": {
+          "schema": "photo-frozen-semantics/v1",
+          "graph": {
+            "schema": "photo-frozen-semantics/v1",
+            "owners": {
+              "H": "entity",
+              "O": "entity"
+            },
+            "roles": {},
+            "equivalent": [],
+            "part_of": [],
+            "disjoint": [
+              [
+                "H",
+                "O"
+              ]
+            ]
+          },
+          "facts": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "entity.type/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "scope_inventories": []
+        }
+      },
+      "results": [
+        {
+          "ordinal": 9629,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9762,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9834,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9853,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9868,
+          "selected_actual_owner": "O",
+          "exact_same_owner_matches": [],
+          "owner_type_P_satisfied": false
+        }
+      ],
+      "expected": "deny",
+      "PASS": true
+    },
+    {
+      "name": "selected_human_wrong_type_namespace",
+      "fixture": {
+        "source_text": "Existing H has the exact category/v1 human fact only. Select H. Existing O is a disjoint object.",
+        "assertions": [
+          {
+            "assertion_id": "H",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "H",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H has the exact category/v1 human fact only. Select H. Existing O is a disjoint object."
+            }
+          },
+          {
+            "assertion_id": "O",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "owner",
+              "owner": "O",
+              "owner_kind": "entity"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H has the exact category/v1 human fact only. Select H. Existing O is a disjoint object."
+            }
+          },
+          {
+            "assertion_id": "distinct",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "disjoint",
+              "left": "H",
+              "right": "O"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H has the exact category/v1 human fact only. Select H. Existing O is a disjoint object."
+            }
+          },
+          {
+            "assertion_id": "type0",
+            "dimension": "subject",
+            "affected_dimensions": [
+              "subject"
+            ],
+            "axes": {
+              "native_schema": "photo-frozen-semantics/v1",
+              "kind": "fact",
+              "owner": "H",
+              "property": "entity.type",
+              "value_type": "category/v1",
+              "value": "human"
+            },
+            "polarity": "required",
+            "source_span_ids": [
+              "scope"
+            ],
+            "evidence": {
+              "meaning": "Existing H has the exact category/v1 human fact only. Select H. Existing O is a disjoint object."
+            }
+          }
+        ],
+        "frozen": {
+          "schema": "photo-frozen-semantics/v1",
+          "graph": {
+            "schema": "photo-frozen-semantics/v1",
+            "owners": {
+              "H": "entity",
+              "O": "entity"
+            },
+            "roles": {},
+            "equivalent": [],
+            "part_of": [],
+            "disjoint": [
+              [
+                "H",
+                "O"
+              ]
+            ]
+          },
+          "facts": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "category/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "scope_inventories": []
+        }
+      },
+      "results": [
+        {
+          "ordinal": 9629,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "category/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9762,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "category/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9834,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "category/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9853,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "category/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        },
+        {
+          "ordinal": 9868,
+          "selected_actual_owner": "H",
+          "exact_same_owner_matches": [
+            {
+              "assertion_id": "type0",
+              "dimension": "subject",
+              "target": "H",
+              "property": "entity.type",
+              "value": {
+                "type": "category/v1",
+                "value": "human"
+              }
+            }
+          ],
+          "owner_type_P_satisfied": false
+        }
+      ],
+      "expected": "deny",
+      "PASS": true
+    }
+  ],
+  "primitive_control_candidate_checks": 20,
+  "full_native_admission_executed": false,
+  "formal_native_qualification_or_source_approval_count": 0,
+  "required_freshINPUT_controls": [
+    "All original anatomy P and original seam/open PR on selected owner remain required. Genuine selected human with these facts and other conditions/permissions passes whole admission.",
+    "Select object O with explicit object type and all otherwise matching anatomy/state witnesses; separately present disjoint H is human and satisfies global for_any human. Whole admission must deny on O entity.type.",
+    "O without its type plus separate human must deny; wrong type namespace with human scalar must deny."
+  ],
+  "boundary": "Frozen actual owner and typed-value primitive comparisons executed, not a complete source/native admission. Current source26 freshINPUT must perform the whole native gates, source/binding guards and permission checks. Synthetic independent request controls do not approve or reinterpret any actual source.",
+  "source_text_effect_address_value_mode_operation_Rx_owner_condition_binding_changes": 0,
+  "E_requires_additions": 5,
+  "runtime_engine_predicate_development": 0,
+  "production_source_catalog_status_proof_git_changes": 0,
+  "provider_network_model_calls": 0
+}
