@@ -1,0 +1,46 @@
+사용자 요청 원문: "클로드와 논의하고 개선 방안을 작성해줘"
+
+현재 작업 디렉터리는 /Users/chasoik/Projects/image-prompt 입니다. 이 요청은 개선 계획과 second opinion만입니다. 코드를 수정하거나 평가/모델을 실행하거나 CURRENT/config/데이터/커밋을 변경하지 말고, 필요한 파일만 읽어 근거 기반으로 한국어 답변을 stdout에 주세요. 스스로 claude를 재호출하거나 다른 agent를 만들지 마세요. 기존 dirty 작업이 많으므로 read-only 분석만 하세요.
+
+사용자의 실제 목적: 틀린 후보도 Creativity 소재로 쓸 수 있어 부적합을 엄격히 제거하는 것은 중요하지 않습니다. 적합한 후보를 되도록 잘 회수하고, 실사용할 수 있으면 완벽할 필요는 없습니다. 전체 후보 전수 개선을 시도하려 했지만 조건부 파일럿에서 HOLD됐습니다. 이번에는 과거처럼 실험을 반복만 하지 않고 이득을 검증할 수 있는 제한된 개선안을 원합니다.
+
+유지할 제약:
+- 공통 positive 후보 풀 전체 검색 (18,180 CID/18,182 actual RID), 슬롯 태그로 사전 제한 금지.
+- 슬롯당 BM25F 검색 정확히 1회, 로컬 임베딩/cosine 검색 정확히 1회. 검색어 두 개/두 번 조회/복수 dense vectors로 우회 금지.
+- Gemini 호출 금지. 기존 로컬 EmbeddingGemma 2와 판정 재사용. 전수 의미 검토 금지.
+- CURRENT와 설치된 H-only+F2 경로 유지. 이번 요청에서는 구현하지 않고 계획만 작성.
+- native 적용 조건/효과/권한과 검색 텍스트 구분. 부적합 수/precision/모든 목표 완벽 무회귀를 주요 기준으로 삼지 않기.
+- 데이터 보강이 필요하다면 기존 검토96/Luna 결과41/기존12 사례를 우선 재사용. 새 의미 검토는 최소화.
+
+확인한 최근 상태:
+HEAD 96980795b (앞선 1~5단계 커밋 완료).
+E=docs/research-evidence/photo-prompt/candidate-semantic-renewal-20261018
+읽을 핵심 파일:
+1. E/REPORT.md, CRITERIA.json, QUALIFICATION.json, DIAGNOSIS.json, PILOT-WORKLOAD.json
+2. docs/plans/candidate-semantic-renewal.md
+3. skills/photo-prompt-image-generator/scripts/photo_candidate_documents.py (B/C 컴파일러)
+4. skills/photo-prompt-image-generator/scripts/photo_candidate_evaluation.py
+5. skills/photo-prompt-image-generator/scripts/photo_installed_h_f2.py, retrieval-runtime.json
+6. E/pilot.py, baseline/EVALUATION.json 및 QUERIES.json.gz (필요한 목표/쿼리만)
+7. 실제 설치된 release 경로는 photo_installed_h_f2.release() 또는 코드로 확인 가능. 필요하면 해당 release의 photo_h_f2_search.py / photo_h_f2_encoder.py / photo_recall_first.py를 읽어 주세요. src 아래 예전 native 모듈을 현재 기본 경로로 오인하지 말아 주세요.
+8. 변경 손실 cand_727d42f4301d59ea99094f5da0db7f20 의 E/reviews/luna-01/*.json 및 candidate-authoring/v1 정본(원문 근거가 필요할 때).
+
+최근 결과:
+- A 설치 기준선: 적합126연결 중55(43.65%), 지원40목표 중28(70%). 과거 다른 baseline59/30과 혼합하면 안 됨.
+- B 기존 primary manifestation 추가 시도: 이미 D에 들어 있어 dedup 후 실제 변경0. A/B 똑같음. 따라서 유효한 문서 구조 ablation으로 볼 수 없음.
+- C 보강41개의 English summary와 aliases를 기존 D prefix 뒤에 덧붙이고, BM25F core_meaning/aliases에도 추가: 55/126,29/40. 4개 새로 회수/4개 손실. 나머지49 retain은 새 문서에 미반영. 새 판정은 없음.
+- 96원문 검토는 옵션48,프로필24,번들12,메커니즘6,개념3,진단3. enrich41, retain49,defer2,needs_semantic_edit1,diagnostic3.
+- 변경41문서의 기존 적합 연결은30/126. 나머지 유지38,파일럿밖55,보류2,편집필요1.
+- 한 손실의 dense rank1->28, RRF2->52, BM25F529->225. 나머지3손실은 문서와 dense값 동일하지만 순위 경쟁에 밀림.
+- 기존 별도4합성요청8목표의 알려진적합29개는 A/B/C29/29 유지(7개지원목표). 이건 새 독립평가가 아님.
+- 62/126 이상 + 목표28이상 + C>B 최소1 사전 기준 미달로 전수6~8단계 미실행. Native 원문/조건/효과 변경 없음.
+- 225개 전체 순위를 저장 점수로 독립 재계산했고 main/fresh metrics 일치, 관련72테스트 통과.
+
+논의해 주세요:
+A. 주된 문제를 관측 사실과 아직 가설인 항목으로 나눠 주세요. 데이터 의미 품질/문서 표현/단일 H query/embedding/RRF 경쟁/평가 목표 중 어디가 우선인지 실제 경로 근거로 판단해 주세요.
+B. 같은 D를 sparse+dense에 쓰고 설명을 뒤에 붙이는 것이 적절한가? 원문 저장의 무손실 보존과 검색용 임베딩 입력의 무조건 prefix 보존을 분리할 수 있는가? BM25F 문서와 dense 문서를 분리해도 각각검색1회 제약을 지키는 구체적 설계를 검토해 주세요. 더 나은 대안이 있으면 비교해 주세요.
+C. 새로운 설명/검토를 늘리기 전에 저장 A/C 점수와 126기존긍정으로 검증할 수 있는 병목/ceiling/ablation을 제시해 주세요. oracle은 진단 상한이며 실제 구현 가능한 성능/미래평가 점수로 오인하면 안 됩니다.
+D. query와 document와 fusion을 한꺼번에 튜닝하지 않고 효과를 분리하는 1순위 소수 arm, 파라미터/시도 상한, 사전 선택 기준을 제안해 주세요. 126건은 이미 반복 사용했으므로 별도 untouched 검증 또는 제한된 새 요청의 필요성도 평가하세요. 단순히 기준을 낮춰 PASS 만드는 방향은 원치 않습니다.
+E. 사용자 목적에 맞는 6~8단계 정도의 실현 가능한 다음 계획을 주시되, 변경 파일/입력, 검증, 진행/중단 조건, 운영 gate를 구체화해 주세요. 개발용 진단과 운영 적용 기준은 구분하고 CURRENT는 끝까지 유지하는 계획으로 작성해 주세요. 전수 데이터 보강은 이번 다음 계획에 넣지 않아도 됩니다.
+
+핵심적인 반대 의견이나 현재 Codex 판단의 과장이 있다면 분명하게 지적해 주세요. 전체 답변을 stdout으로 반환해 주세요.
