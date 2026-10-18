@@ -115,6 +115,10 @@ def verify(output=None):
     with ThreadPoolExecutor(max_workers=4) as pool:
         for path,actual in zip(paths,pool.map(state.stamp,paths)):
             if actual!=b['files'][path]:failures.append(path)
+    extra=E/'REPLAY-PROTECTED.json.gz'
+    if extra.exists():
+        for path,before in state.read(extra).items():
+            if state.stamp(path)!=before:failures.append(path+': replay source changed')
     for rel in removed:
         if (ROOT/rel).exists() or (ROOT/rel).is_symlink():failures.append(rel+': reappeared')
     for root,row in b['repositories'].items():
