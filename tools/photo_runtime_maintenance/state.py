@@ -149,12 +149,13 @@ def verify(allow=(), output=None):
         raise ValueError('allowlist overlaps original dirty work')
     failures = []
     checked = 0
-    for path, before in baseline['files'].items():
-        if path in allow:
-            continue
-        if not same(before, stamp(path)):
-            failures.append(path)
-        checked += 1
+    paths = [p for p in baseline['files'] if p not in allow]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        actual = pool.map(stamp, paths)
+        for path, after in zip(paths, actual):
+            if not same(baseline['files'][path], after):
+                failures.append(path)
+            checked += 1
     for root, row in baseline['repositories'].items():
         current = status(root)
         for path, state in row['status'].items():
