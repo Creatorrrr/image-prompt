@@ -6,6 +6,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'skills/photo-prompt-
 from photo_candidate_authoring import digest
 from photo_candidate_review import validate, SCHEMA
 from photo_candidate_documents import project, field_index
+from photo_candidate_evaluation import measure, qualified
 
 
 def fixture():
@@ -75,5 +76,28 @@ class SourceReview(unittest.TestCase):
     def test_diagnostic_cannot_become_positive_by_annotation(self):
         record, row = fixture();record['meaning']['retrieval_class'] = 'diagnostic';row['source_sha256'] = digest(record)
         with self.assertRaises(ValueError): validate(row, record, {})
+
+    def test_recall_ignores_unjudged_hits_but_requires_actual_RID(self):
+        pairs = [('a','one','base'), ('a','two','right'), ('b','three','base')]
+        orders = {'a':['unjudged|base','one|base','two|wrong'], 'b':['three|base'], 'unknown':[]}
+        result = measure(orders,pairs,8)
+        self.assertEqual(result['positive_pairs'],3)
+        self.assertEqual(result['supported_goals'],2)
+        self.assertEqual(result['retrieved_positive_pairs'],2)
+        self.assertEqual(result['goals_with_positive_at_k'],2)
+
+    def test_duplicate_pairs_and_missing_goals_do_not_shrink_denominator(self):
+        with self.assertRaises(ValueError): measure({'a':[]}, [('a','one','base')]*2)
+        with self.assertRaises(ValueError): measure({'a':[]}, [('b','one','base')])
+
+    def test_gate_requires_five_points_and_incremental_data_gain(self):
+        pairs = [('a',str(i),'base') for i in range(126)]
+        a = measure({'a':[str(i)+'|base' for i in range(55)]},pairs,126)
+        b = measure({'a':[str(i)+'|base' for i in range(62)]},pairs,126)
+        c = measure({'a':[str(i)+'|base' for i in range(62)]},pairs,126)
+        criteria = {'minimum_C':{'FIT8':62,'goals8':1,'additional_FIT_vs_B':1}}
+        self.assertEqual(qualified(a,b,c,criteria)['status'],'HOLD')
+        c = measure({'a':[str(i)+'|base' for i in range(63)]},pairs,126)
+        self.assertEqual(qualified(a,b,c,criteria)['status'],'PASS')
 
 if __name__ == '__main__': unittest.main()
