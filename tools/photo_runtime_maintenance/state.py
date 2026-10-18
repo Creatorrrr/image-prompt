@@ -156,6 +156,12 @@ def verify(allow=(), output=None):
             if not same(baseline['files'][path], after):
                 failures.append(path)
             checked += 1
+    supplementary = EVIDENCE/'ADDITIONAL-PROTECTED.json.gz'
+    if supplementary.exists():
+        for path, before in read(supplementary).items():
+            if not same(before,stamp(path)):
+                failures.append(path)
+            checked += 1
     for root, row in baseline['repositories'].items():
         current = status(root)
         for path, state in row['status'].items():
