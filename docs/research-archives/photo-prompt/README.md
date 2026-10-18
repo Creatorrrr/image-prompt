@@ -21,3 +21,30 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/photo_runtime_maintenance/bundles.py \
 
 복원 도구는 파일 목록·hash·경로를 검증하고 기존 디렉터리를 덮어쓰지 않는다.
 운영 선택, CURRENT, issued receipt는 변경하지 않는다.
+
+## 비활성 후보 보강·독립 lane 실험
+
+`source-review-and-lane-experiments.zip.part001` 등은 32MiB 이하로 나눈 하나의
+ZIP이다. `EXPERIMENT-LOCK.json`이 각 부분과 합친 보관물 및 모든 파일의 hash를
+검증한다. 두 이전 평가, Claude 논의, 모듈 6개와 테스트 2개의 원래 경로를 보존했다.
+운영에서는 이 파일들을 자동으로 읽거나 import하지 않는다.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 tools/photo_runtime_maintenance/bundles.py \
+  --archive docs/research-archives/photo-prompt/source-review-and-lane-experiments.zip \
+  --lock docs/research-archives/photo-prompt/EXPERIMENT-LOCK.json \
+  --destination /tmp/photo-experiments-restored
+```
+
+`--archive`는 부분 파일들을 합쳤을 때의 이름이며 단일 ZIP 파일이 따로 존재할
+필요는 없다. 복원에는 모델·연구 checkout·원래 평가 소스가 필요하지 않다.
+저장된 전체 순위와 집계를 재감사하고 실험 테스트를 실행하려면 다음을 사용한다.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 tools/photo_runtime_maintenance/archive_experiments.py
+```
+
+위 명령은 임시 트리에 복원하고 네트워크·원래 연구 경로 접근을 차단한다.
+기존 225개 순위와 최신 225개 순위, 실험 테스트 17개를 확인한다. `--remove`는
+최초 정리 실행용 옵션이므로 일반 재현에서는 사용하지 않는다. 새 모델 추론이나
+의미 판정, 운영 전환은 수행하지 않는다.

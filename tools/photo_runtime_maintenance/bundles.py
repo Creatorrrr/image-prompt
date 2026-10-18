@@ -8,6 +8,7 @@ import shutil
 import stat
 import tempfile
 import zipfile
+from contextlib import contextmanager
 
 from state import read, sha, write
 
@@ -30,12 +31,53 @@ def pack(destination, members):
             member.external_attr = (stat.S_IFREG | (p.stat().st_mode & 0o777)) << 16
             z.writestr(member, raw, compresslevel=9)
             sealed[relative] = {'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}
-    return {'archive_sha256': sha(destination), 'files': sealed}
+    seal = {'archive_sha256': sha(destination), 'files': sealed}
+    return split_archive(destination,seal) if destination.stat().st_size>32*1024*1024 else seal
+
+
+def split_archive(archive, seal, chunk_bytes=32*1024*1024):
+    """Keep Git members below 32 MiB; the joined ZIP retains its exact hash."""
+    archive = Path(archive)
+    if sha(archive)!=seal['archive_sha256'] or type(chunk_bytes) is not int or chunk_bytes<=0:
+        raise ValueError('invalid split source or budget')
+    parts = []
+    with archive.open('rb') as stream:
+        while raw := stream.read(chunk_bytes):
+            part = archive.with_name(archive.name+'.part'+str(len(parts)+1).zfill(3))
+            with part.open('xb') as out:
+                out.write(raw)
+            parts.append({'name':part.name,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()})
+    archive.unlink()
+    return {**seal,'parts':parts}
+
+
+@contextmanager
+def joined_archive(archive,seal):
+    archive = Path(archive)
+    if 'parts' not in seal:
+        yield archive
+        return
+    names = [p['name'] for p in seal['parts']]
+    if len(names)!=len(set(names)) or not names:
+        raise ValueError('invalid split archive closure')
+    with tempfile.TemporaryDirectory(prefix='photo-archive-join-') as temp:
+        target = Path(temp)/'joined.zip'
+        with target.open('xb') as out:
+            for row in seal['parts']:
+                safe_name(row['name'])
+                if '/' in row['name']:
+                    raise ValueError('split member must be a sibling')
+                p = archive.with_name(row['name'])
+                if p.is_symlink() or p.stat().st_size!=row['bytes'] or sha(p)!=row['sha256']:
+                    raise ValueError('split archive part mismatch')
+                with p.open('rb') as source:
+                    shutil.copyfileobj(source,out)
+        yield target
 
 
 def safe_name(name):
     p = PurePosixPath(name)
-    if not name or p.is_absolute() or '..' in p.parts or '\\' in name or str(p) != name:
+    if not name or not p.parts or p.is_absolute() or '..' in p.parts or '\\' in name or str(p) != name:
         raise ValueError('unsafe archive member')
 
 
@@ -44,8 +86,13 @@ def restore(archive, seal, destination):
     archive, destination = Path(archive), Path(destination)
     if destination.exists() or destination.is_symlink():
         raise ValueError('restore destination must not exist')
-    if sha(archive) != seal['archive_sha256']:
-        raise ValueError('archive hash mismatch')
+    with joined_archive(archive,seal) as joined:
+        if sha(joined) != seal['archive_sha256']:
+            raise ValueError('archive hash mismatch')
+        return _restore_zip(joined,seal,destination)
+
+
+def _restore_zip(archive,seal,destination):
     with zipfile.ZipFile(archive) as z:
         names = z.namelist()
         if len(names) != len(set(names)) or set(names) != set(seal['files']):

@@ -1,33 +1,15 @@
-# Independent candidate search documents (inactive until quality qualification)
+# Archived independent-lane experiment
 
-`photo_candidate_lane_documents.py` owns the versioned v2 projection. D1 adds
-accepted source-only summaries/aliases to the existing sparse fields and keeps
-the original D input exactly. D1b additionally appends each complete accepted
-English summary to dense D, without aliases. Both use one vector per actual RID.
-The old v1 source-review compiler remains unchanged for historical replay.
+D1/D1b/Q1 did not pass the operating quality gate. Their source projection,
+builder, tests, reviews, complete saved scores and original guide are preserved
+in `docs/research-archives/photo-prompt/source-review-and-lane-experiments.zip`
+(verified split parts plus `EXPERIMENT-LOCK.json`). They are no longer modules
+on the skill's operating Python path.
 
-Sparse additions must be the exact summary/alias in a parent-accepted review,
-bound to the same CID/RID/source hash and exact primary source quotes. The native
-record, conditions, effects, bindings and meaning authority remain unchanged.
-Unreviewed records retain both inputs. Diagnostic, deferred and retain reviews
-cannot be promoted through this sidecar. Sparse values have one field owner;
-cross-lane token equality is replaced by exact per-lane reconstruction checks.
+Use the repository's `docs/research-archives/photo-prompt/README.md` to restore
+the original relative tree and run its offline replay. The archived inputs and
+FREEZE hashes are unchanged. Existing independent-lane cache generations also
+retain their self-contained code and are not removed by this cleanup.
 
-`photo_candidate_lane_generation.py` copies the complete qualified baseline
-source and its original D/fields. It carries the original baseline manifest,
-native code manifest, approved review sidecars and exact kernel/projection code.
-Its independent content-addressed schema validates these closures, source/RID
-coverage, vector execution proofs and complete global F2 DF/length statistics.
-F2 weights/normalization, query tokenizer, RRF10, top8 and CID dedup stay fixed.
-The old qualified kernel is unchanged. There is no tag partition, prefilter,
-reranker or implicit remote provider.
-
-Generation builds go into an explicit `independent-lane-generations` experiment
-store and never write CURRENT or `retrieval-runtime.json`. `Generation.index()`
-executes the carried kernel's actual one-BM25F/one-cosine search. The new schema
-is deliberately not accepted by the installed v1 dispatcher. Deployment needs
-a qualified self-contained release and its managed-path validation; a saved
-experiment manifest or passing unit tests alone do not activate this path.
-
-Verified split-document contracts/builders remain useful inactive assets after
-a quality HOLD. Old issued runs keep their original sealed code and receipts.
+The installed H-only+F2 release and all CURRENT/issued receipts remain selected
+as before. Restoring or auditing this archive never activates its experiments.
