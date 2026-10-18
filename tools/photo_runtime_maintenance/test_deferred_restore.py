@@ -3,9 +3,12 @@ import hashlib
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 from deferred_restore import publish_exclusive, restore_rows
 from deferred_gc import rollback
+import deferred_checks
+import deferred_replay
 
 
 class RecoveryTests(unittest.TestCase):
@@ -63,6 +66,18 @@ class RecoveryTests(unittest.TestCase):
         identity=old.stat().st_ino
         self.assertEqual(rollback([(original,old)]),[])
         self.assertEqual(original.stat().st_ino,identity);self.assertFalse(old.exists())
+
+    def test_existing_failed_suite_evidence_cannot_be_overwritten(self):
+        evidence=self.root/'OPERATING-fixed.json';evidence.write_bytes(b'original failed evidence')
+        with mock.patch.object(deferred_checks,'E',self.root):
+            with self.assertRaises(FileExistsError):deferred_checks.suite('fixed')
+        self.assertEqual(evidence.read_bytes(),b'original failed evidence')
+
+    def test_existing_historical_replay_evidence_cannot_be_overwritten(self):
+        group='a'*64;evidence=self.root/('REPLAY-fixed-'+group[:12]+'.json');evidence.write_bytes(b'original')
+        with mock.patch.object(deferred_replay,'E',self.root):
+            with self.assertRaises(FileExistsError):deferred_replay.replay(group,'fixed')
+        self.assertEqual(evidence.read_bytes(),b'original')
 
 
 if __name__=='__main__':unittest.main()
