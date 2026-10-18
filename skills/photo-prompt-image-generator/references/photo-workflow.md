@@ -24,6 +24,8 @@ authored. An explicit zero-choice composed selection is similarly required.
 Camera direction/height requirements come from the author's separate ownership
 declaration; the workflow never infers a capture camera from a depicted device.
 
+New runs use the installed H-only+F2 default. Follow [installed-h-f2.md](installed-h-f2.md) to author and seal the per-slot expression plan, then use:
+
 ```bash
 python skills/photo-prompt-image-generator/scripts/photo_workflow.py retrieve --run RUN
 python skills/photo-prompt-image-generator/scripts/photo_workflow.py view --run RUN
@@ -31,12 +33,9 @@ python skills/photo-prompt-image-generator/scripts/photo_workflow.py compose-aud
 python skills/photo-prompt-image-generator/scripts/photo_workflow.py prepare-render --run RUN --parameters transport.json --lane api
 ```
 
-Retrieve optionally accepts `--seed`, `--runtime-store`, `--visual-intent`, and
-the existing remote source policy flags. The first transaction preserves its
-seed and policy. A complete staging pair may be verified and admitted on resume;
-an incomplete or failed pair requires reconciliation. It cannot silently publish
-a new seed/pack. Only one public pack and its exact private receipt are admitted.
-The receipt fixes the immutable generation for all subsequent audits.
+No policy/generation/store options are required. The installed release is independent of CURRENT and the research checkout. Missing files fail closed. New material retrieval accepts only local hybrid H-F2; keyword-only, precap, remote source and nonzero seed overrides are rejected. Repeated retrieve and resume reuse exact issued material evidence. The receipt pins the immutable generation for later views and audits. An incomplete material transaction requires reconciliation; it is never retried as a fresh search automatically.
+
+H-F2 materials and the native guard pack remain separate. Native whole-source adoption requires its original contract; creative material decisions grant no native authority. Existing bound native runs continue through their original local implementation.
 
 Discovery and adoption have separate contracts. Before selecting a cue, read its
 complete source, actual realization and whole native v4 facts, prerequisites,

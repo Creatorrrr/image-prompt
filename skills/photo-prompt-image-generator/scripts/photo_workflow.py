@@ -513,6 +513,10 @@ def resume(args):
 
 
 def main(argv=None):
+    from photo_installed_h_f2 import dispatch
+    routed = dispatch(argv)
+    if routed is not None:
+        return routed
     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     sub = parser.add_subparsers(dest="command", required=True)
     for command in ("status", "retrieve", "resume", "view", "compose-audit", "prepare-render", "authorize", "render-api", "native-plan", "native-started", "native-result", "review-shape", "review-audit", "retry-prepare", "attach-retry", "deliver"):

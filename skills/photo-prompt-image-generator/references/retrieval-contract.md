@@ -1,6 +1,10 @@
-# Global retrieval contract
+# Retrieval contracts
 
-Freeze and validate the requester envelope, v3 authorial core, creative controls and embodiment review before reading candidates. The default public CLI searches every positive native record compatible with its independently frozen subject/context/exclusions. Slot tags describe roles; they are neither storage parents nor an admission filter.
+The installed default is [H-only+F2](installed-h-f2.md): whole positive pool, one BM25F lane and one local cosine lane per searched slot, RRF10 and top8 without an eligibility prefilter. The installed release is selected independently of native CURRENT. Its views and audits reuse issued scores without new searches. The native contracts below describe already bound native searches and the zero-slot guard/audit path; their old 64/4/2 discovery caps do not apply to H-F2 top8 results.
+
+## Native discovery and audit contracts
+
+Freeze and validate the requester envelope, v3 authorial core, creative controls and embodiment review before reading candidates. The native discovery CLI searches every positive native record compatible with its independently frozen subject/context/exclusions. Slot tags describe roles; they are neither storage parents nor an admission filter.
 
 One global record contributes one BM25F document and one vector. Each slot independently fuses exact cosine and global lexical ranks under `photo-slot-retrieval/v2`. The public `photo-candidate-pack/v10` stores each retrieved payload once in `candidate_pool`; role and optional presentation views use native references. It admits at most 64 unique candidates with role caps 4/2 after the slot searches. Untagged records are discoverable. Inspect the complete authored record and source constraints before adoption; a rank or tag grants no permission.
 
@@ -10,7 +14,7 @@ Exact requester-defined profile meanings and complete opt-in contracts remain di
 
 ## Independent slots and lazy shared search
 
-The operating path is `photo_slot_queries` → `photo_slot_retrieval` → `photo_sharded_search` with `SearchReader`. Every requested/active slot searches the entire context-eligible positive common pool. Persistent bindings are guarded source relations, not lookup partitions; request-local role proposals preserve original conditions/effects and add no source tags. Global BM25F DF/length normalization stays identical across shards. Exact cosine uses original float64 values. Quantized coordinates supply outward residual bounds only; they do not replace exact ranking vectors.
+The native discovery path is `photo_slot_queries` → `photo_slot_retrieval` → `photo_sharded_search` with `SearchReader`. Every requested/active slot searches the entire context-eligible positive common pool. Persistent bindings are guarded source relations, not lookup partitions; request-local role proposals preserve original conditions/effects and add no source tags. Global BM25F DF/length normalization stays identical across shards. Exact cosine uses original float64 values. Quantized coordinates supply outward residual bounds only; they do not replace exact ranking vectors.
 
 Both lanes and RRF execute independently for each slot before the global unique 64 and core/support 4/2 display limits. A slot excluded from display by budget still has a completed search trace. Missing provider evidence is an error, rather than an automatic keyword fallback. Corpus, catalog, binding, layout, per-slot context, ranks, role proposals and pruning proofs bind the V10 pack/V3 receipt. The native view dereferences each candidate payload once with presentation-specific eligibility; optional source meaning never changes because it was presented in another role.
 
