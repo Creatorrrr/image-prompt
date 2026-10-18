@@ -1,6 +1,9 @@
 # 사진 스킬 운영·재현 보존 및 실험·산출물 정리 계획
 
-2026-10-19 · 계획 작성 완료 · 정리 실행 전
+2026-10-19 · 8단계 실행 완료 · 불명확한 항목 보류 · 운영/CURRENT 유지
+
+실행 결과: `docs/research-evidence/photo-prompt/runtime-cleanup-20261019/REPORT.md`.
+아래는 승인된 계획이며 실제 제거·아카이브·보류 범위는 실행 리포트를 따른다.
 
 ## 목적과 고정 조건
 
@@ -241,8 +244,9 @@ receipt 재생을 분리해 확인한다. 원본 issued run과 운영 store에�
 별도 index 등으로 분리하며 `git add -A`로 섞지 않는다. 생성물 제거는 Git 커밋만으로
 복구되지 않을 수 있으므로 검증된 보관물·복원 도구를 먼저 확보한다.
 
-현재 요청에서는 이 계획 문서만 작성한다. 파일 이동·삭제, 운영 코드 변경, 설치·publish,
-CURRENT 전환, commit/push는 실행하지 않는다.
+계획 작성 후 사용자의 실행 요청으로 8단계를 진행했다. 단계별 검증 후 이번 변경만
+커밋했으며, 설치·publish·CURRENT 전환·push는 수행하지 않았다. 추가 레거시 4개
+범위와 역사 shard/store 등 불명확한 참조는 보류했다.
 
 ## 참조
 
@@ -250,6 +254,6 @@ CURRENT 전환, commit/push는 실행하지 않는다.
 - 진입·기존 run 분기: `skills/photo-prompt-image-generator/scripts/photo_installed_h_f2.py`
 - 유지보수·미참조 생성물 보호: `skills/photo-prompt-image-generator/references/maintenance.md`
 - 비활성 lane 계약: `skills/photo-prompt-image-generator/references/candidate-lane-generation.md`
-- 최근 품질 HOLD: `docs/research-evidence/photo-prompt/candidate-recall-followup-20261019/REPORT.md`
-- 기존 평가 재현: `docs/research-evidence/photo-prompt/candidate-semantic-renewal-20261018/audit_saved.py`
-- 최근 평가 재현: `docs/research-evidence/photo-prompt/candidate-recall-followup-20261019/audit.py`
+- 이전 품질 HOLD·평가 원본: `docs/research-archives/photo-prompt/EXPERIMENT-LOCK.json`
+- 복원·재현 안내: `docs/research-archives/photo-prompt/README.md`
+- 기존·최근 평가 재현: `tools/photo_runtime_maintenance/archive_experiments.py`
