@@ -13,6 +13,8 @@ TESTS = ('tests/test_photo_candidate_authoring.py','tests/test_photo_candidate_l
 
 
 def main():
+    if (EVIDENCE/'STAGE03.json').exists():
+        raise ValueError('classification already sealed; do not replace the cleanup action list')
     b = read(EVIDENCE/'BASELINE.json.gz')
     dirty = b['repositories'][str(ROOT)]['status']
     exp_files = [p for name in EXPERIMENTS for p in files(ROOT/'docs/research-evidence/photo-prompt'/name)]
