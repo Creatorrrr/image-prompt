@@ -100,6 +100,8 @@ def worker(root):
 
 
 def replay(group,label,backend='git'):
+    output=E/('REPLAY-'+label+'-'+group[:12]+'.json')
+    if output.exists():raise FileExistsError('historical replay output already exists; choose a fresh label')
     row=next(r for r in state.read(E/'TARGETS.json.gz')['shards'] if r['id']==group)
     original=Path(row['duplicate']['generation'])
     with tempfile.TemporaryDirectory(prefix='photo-historical-validator-') as temp:
@@ -122,7 +124,7 @@ def replay(group,label,backend='git'):
             'original_reads_denied':True,'original_writes_denied':True,'network_denied':True,
             'Gemini_calls':0,'CURRENT_writes':0}
         if p.returncode==0:result.update(json.loads(p.stdout))
-        state.write(E/('REPLAY-'+label+'-'+group[:12]+'.json'),result)
+        state.write(output,result)
         print('historical validator',group[:12],result['status'],flush=True)
         if result['status']!='PASS':print(p.stderr[-4000:]+p.stdout[-1000:]);raise ValueError('historical validator replay failed')
         return result
