@@ -5,6 +5,7 @@ import tempfile
 import unittest
 
 from deferred_restore import publish_exclusive, restore_rows
+from deferred_gc import rollback
 
 
 class RecoveryTests(unittest.TestCase):
@@ -50,6 +51,18 @@ class RecoveryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             restore_rows([{**self.row,'git_blob':'0'*40}],self.root/'restored','git')
         self.assertFalse((self.root/'restored').exists())
+
+    def test_rollback_keeps_concurrent_user_file_and_quarantine(self):
+        original=self.root/'original';old=self.root/'quarantined'
+        original.write_bytes(b'new user work');old.write_bytes(b'old source')
+        self.assertEqual(rollback([(original,old)]),[str(original)])
+        self.assertEqual(original.read_bytes(),b'new user work');self.assertEqual(old.read_bytes(),b'old source')
+
+    def test_rollback_restores_original_without_recreating_bytes(self):
+        original=self.root/'original';old=self.root/'quarantined';old.write_bytes(b'old source')
+        identity=old.stat().st_ino
+        self.assertEqual(rollback([(original,old)]),[])
+        self.assertEqual(original.stat().st_ino,identity);self.assertFalse(old.exists())
 
 
 if __name__=='__main__':unittest.main()
