@@ -173,7 +173,8 @@ def verify(allow=(), output=None):
               'allowed_paths': sorted(allow), 'failures': failures, 'Gemini_calls': 0, 'CURRENT_writes': 0}
     if output:
         write(output, result)
-    print(json.dumps(result, ensure_ascii=False), flush=True)
+    print(json.dumps({k:v for k,v in result.items() if k!='allowed_paths'} |
+                     {'allowed_path_count':len(allow)}, ensure_ascii=False), flush=True)
     if failures:
         raise ValueError('protected state changed')
     return result
