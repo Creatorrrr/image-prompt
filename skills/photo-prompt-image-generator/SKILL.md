@@ -43,7 +43,7 @@ Use `precore/prepare_photo_run.py init --run RUN --request request.txt --spans s
 
 When the request needs an explicit inventory of reference appearance or requester identity, pass the caller-authored `--input-inventory inputs.json` during `init` and follow the neutral frozen witness contract. List every supplied text or reference input with its actual hash, including the request. Text can establish either scope. Missing files or an omitted inventory do not establish that a scope is absent; preserve an unknown state when completeness is unresolved.
 
-After freeze, use `scripts/photo_workflow.py retrieve --run RUN`, `view`, `compose-audit --composed final.json`, and `prepare-render --parameters transport.json --lane api|native`, all with `--run RUN`. Choice lists, literal evidence and review judgments remain authored. Prompt-only delivery uses `deliver`; it does not read keys or invoke images. Read [references/photo-workflow.md](references/photo-workflow.md) only after core freeze for execution, recovery and coordinator input details. Existing individual entrypoints remain supported.
+After freeze, use `scripts/photo_workflow.py retrieve --run RUN`, `view`, `compose-audit --composed final.json`, and `prepare-render --parameters transport.json --lane api|native`, all with `--run RUN`. Choice lists, literal evidence and review judgments remain authored. Prompt-only delivery uses `deliver`; it does not read keys or invoke images. Read [references/photo-workflow.md](references/photo-workflow.md) only after core freeze for execution, recovery and coordinator input details. New searches use the installed H-only+F2 release by default. Use the managed commands for retrieval, views and audits; individual native entrypoints remain available for already bound native runs.
 
 ## Phase 0 — Resolve Meaning Independently
 
@@ -352,51 +352,32 @@ cp skills/photo-prompt-image-generator/precore/visual_feature_catalog.json visua
 
 If validation fails, correct the record or rebuild the affected pre-core artifacts before opening candidate data. An `agent_visual_choice` phrase included intact in a mandatory anchor, definition, or required assertion is an ownership conflict: narrow the mandatory evidence or correct its provenance from the actual request, rather than relabeling the choice to pass. Inspect `warnings` even when the command succeeds: revise repeated reasons or evidence, and review any delivery-and-technique majority against the request before proceeding. The group-majority warning is a review cue, not an automatic rejection of a justified composition choice. Any baseline change also invalidates the embodiment-review hash, core, derived intent-lock binding, and selection hash. The validator checks the supplied catalog against the current permitted file in live runs; use `--historical-catalog` only to verify an archived record against its saved snapshot after the run. It confirms structure and literal binding; it cannot prove that selection preceded drafting or that the resulting image is good.
 
-Pass the envelope with `--request-envelope-json`, the core with `--authorial-core-json`, to the generator; it always returns candidate-pack v9. The generator canonicalizes both, rejects unsupported or ungrounded fields, and binds their hashes and active spans to retrieval, the public pack, composition, and runtime.
+Freeze the envelope and authorial core through the managed precore entrypoint before retrieval. Their exact normalized hashes and active spans bind the material plan, native guard pack, composition and runtime.
 
 ## Phase 2 — Retrieve After the Core Is Frozen
 
-Only now may the generator acquire the published native generation, load compact source/routing metadata, and read the candidate payloads, posting pages and exact vector extents required for retrieval or mandatory profiles.
-
-Generate exactly one pack:
+Only after freeze, prepare the neutral slot material and directly author what each slot should express. Read [installed H-only+F2](references/installed-h-f2.md) for the row shape and execution. Do not load candidates before writing and sealing the expression plan.
 
 ```bash
-.venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
-  --request-envelope-json request_envelope.json \
-  --authorial-core-json authorial_core.json \
-  --creative-controls-json creative_controls.json \
-  --embodiment-review-json embodiment_review.json \
-  --output-file candidate_pack.json
+.venv/bin/python skills/photo-prompt-image-generator/scripts/photo_workflow.py prepare-slot-intents --run RUN
+# Write authored-intents.json with the overall intent and one reviewed row per requested slot.
+.venv/bin/python skills/photo-prompt-image-generator/scripts/build_photo_slot_intents.py --run RUN --authored authored-intents.json --output slot-plan.json
+.venv/bin/python skills/photo-prompt-image-generator/scripts/photo_workflow.py seal-slot-intents --run RUN --plan slot-plan.json
+.venv/bin/python skills/photo-prompt-image-generator/scripts/photo_workflow.py retrieve --run RUN
+.venv/bin/python skills/photo-prompt-image-generator/scripts/photo_workflow.py view --run RUN
 ```
 
-The generator derives retrieval from the active requester spans and frozen core, removes true requester exclusions, and retains runtime-forbidden labels for meaning retrieval. The pack must not define the baseline after the fact.
+The ordinary `retrieve` command selects the installed, sealed H-only+F2 release without a policy, generation or store flag. It searches the entire existing positive common pool independently for each row marked `search`: one global BM25F search and one local embedding/cosine search with the same directly authored H text. Slot tags, context eligibility and native admission do not prefilter this material search. F2 preserves meaning and original lookup cues with global field statistics; RRF10 combines the two lanes per actual realization, then deduplicates by candidate and returns top8 for each searched slot. There is no second query, reranker, Gemini fallback or automatic data rebuild. `not_applicable` and `unresolved` rows perform no search.
 
-The generator takes initial artistic controls from the supplied snapshot. Conflicting later CLI controls are rejected; update the pre-core inputs and rebuild instead of silently changing the creative direction after freezing. Every generated pack requires this binding.
+Write role focus and scene context from the intended photograph and the slot's expressive purpose, including the relevant target, action, relation and conditions. Do not copy the full baseline into every query. Candidate-free role definitions help delimit the purpose; they do not create facts or permissions. The plan binds the exact frozen core, controls and neutral catalog. A missing plan requests authoring; it never substitutes an automatically generated query.
 
-Bound v9 runs use independent slot queries for adult-axis possibilities and other optional roles. Eligibility follows the frozen scope and context. Each operating slot runs global BM25F and its actual provider query embedding, combines exact cosine and lexical ranks by RRF, and records both execution states. Explicit keyword-only mode is diagnostic. A hit proposes material for contextual interpretation; the composer still evaluates its complete source constraints.
+The installed release owns its code, canonical candidate snapshot, F2 index and verified document vectors. It reads no research checkout or experiment output at runtime. `retrieval-runtime.json` selects that installed release; the existing native `CURRENT` stays unchanged. Missing or altered release files block execution rather than fall back to an older search. Existing bound native runs retain their original receipt path. See the installed reference for maintenance and data freshness.
 
-Basic-prompt authoring does not receive a slot list or candidate data. The frozen core determines the normally active slots; maintenance can explicitly request catalog slots. Each slot independently searches the same entire positive common pool, subject to the frozen context guards, with a query bound to the frozen global context and its candidate-free slot definition. Existing role tags and binding counts do not restrict discovery. An embedding hit can be returned without a lexical hit. The unique 64-candidate and per-role 4/2 limits apply after every slot search, with shared payloads and separate role references. Execution traces distinguish inactive, completed, empty, context-blocked and display-budget states. Explicit requester meaning remains mandatory independently of optional retrieval. All optional candidates may be rejected, leaving the independently written baseline intact.
+The material view exposes complete source meaning, conditions and effects, separately from the native guard contract. Use `view --candidate-id CID` for full source detail or `view --material-page N` for further pages of at most64 unique sources. Paging, repeat retrieve, resume and composition verification reuse issued evidence and perform no extra search. Every searched slot keeps its own top8; the reading page budget does not discard another slot's results.
 
-The pack records `photo-slot-retrieval/v2` in `global_retrieval`, binding the frozen core, controls, shared corpus, role bindings, catalog, published layout and exact per-slot query contexts. Copy its exact `canonical_sha256` into `global_retrieval_sha256` in both the composed prompt and runtime request. A private issued V3 receipt preserves the query contexts. Audits replay the exact lane scores, role allocation and complete routing/pruning proof with the needed source shards; added, omitted or substituted candidates fail. Complete source/index verification occurs during publication and explicit maintenance.
+Review the candidate's whole meaning against the frozen requester intent before using it. `native_approval: false` means the result grants no whole-source adoption authority. Record any material decision in `h_f2_material_decisions` with exact slot/CID/RID/source hash, `use: inspiration_only|skip`, and an authored rationale. Compatible authorial ideas must still respect complete source constraints and requester locks; a distinctive whole cue cannot evade its native adoption contract by being renamed inspiration. Do not insert H-F2 result IDs into native chosen lists. Selecting no material is valid.
 
-Candidate-pack v9 separates three jobs:
-
-- Requester-owned anchors, definitions and required `semantic_assertions` govern meaning. The frozen baseline records the initial realization; its unbound authorial choices remain editable. The v3 core itself is non-revisable inside the pack run. Correcting a frozen requirement needs a rebuilt envelope/core/pack; use clear existing requester intent without asking again, and ask only when that meaning remains unresolved.
-- `semantic_clarification` and BM25F/embedding retrieval are post-core assistance. Exact request-scoped profile terms may retain their declared hard meaning. BM25F-only, embedding-only, and fused approximate hits are optional and can never create an assertion, required evidence phrase, or render gate.
-- `creative_augmentation` is sampled only after hard applicability, conflict, identity/species/no-people, safety, negative, and requester-exclusion filters. Creativity levels `0–1` permit `near`, level `2` permits `near + adjacent`, and level `3` also permits `lateral`; seed selects within the allowed range. Every transformed choice declares `affected_dimensions` within its applicable dimension boundary and remains subordinate to the locked meaning; Phase 3 describes the scoped adult-axis exception.
-
-V10 compiles frozen character-response axes and evidence through `photo-character-response/v1`, and other required assertions through `photo-semantic-assertion-obligations/v1`. Character meaning comes only from the frozen typed assertion. The composed audit recomputes these contracts from the core. Semantic clarification projects the actual frozen duties and keeps `authorial_direction` as separate context; it does not promote the entire `interpreted_intent` or `visual_priorities` into requirements. Retrieval consistency, labels, scores, and array order never create hard evidence or revise a frozen meaning; every creative candidate may be rejected. Consult `references/retrieval-contract.md` only for retrieval diagnostics or implementation details.
-
-Interpret post-core applicability against the whole request and frozen evidence. An unmatched expression, missing field, unsupported prerequisite, or different relation signature does not by itself prove a different meaning. Before explaining a questionable rejection, use the [diagnostic guidance](references/retrieval-contract.md#interpreting-applicability-diagnostics) to identify what was actually checked. Preserve the returned status and all required bindings; semantic judgment cannot bypass a gate, revise the frozen core, or invent evidence. Clear requester meaning remains authoritative when local data does not recognize it.
-
-Read the compact composition view before loading full optional candidate details:
-
-```bash
-.venv/bin/python skills/photo-prompt-image-generator/scripts/compose_pack_view.py \
-  --pack candidate_pack.json --output composer_view.json
-```
-
-The view binds the unchanged source pack and presents requirements plus a candidate catalog. Use repeatable `--candidate-id <id>` to read full details for candidates under consideration. Review every mandatory requirement, retrieve a selected candidate's complete constraints before using it, and keep the original pack as the audit input. The view is a reading aid, not a replacement or mutable pack. Modern v9 semantic surfaces preserve short `concept_units` and directed `relations`; keep each unit intact when interpreting its meaning. Selecting a relational candidate requires literal `relation_evidence`, and selecting an optional bundle also requires `component_evidence` for every component. Read the complete selection contract in the detail view and `references/composition-contract.md`. Bundle members form one joint choice; their associated profile IDs never acquire automatic hard authority.
+The separate native guard pack has zero search slots and preserves mandatory meanings, profile duties, negative policy and final composition auditing. Keep its original bindings and compose through `photo_workflow.py compose-audit`. Material discovery never supplies a hard assertion, required owner, prerequisite or render permission. All source conditions, complete adopted contracts and frozen requester evidence remain binding. Read [composition-contract.md](references/composition-contract.md) for those duties.
 
 ### Optional post-core visual intent
 
@@ -460,14 +441,15 @@ Compare the complete final prompt with the active requester meaning, locks, excl
 Write the pack and composed object to files, then run:
 
 ```bash
-.venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py \
-  --pack candidate_pack.json \
-  --composed composed_prompt.json
+.venv/bin/python skills/photo-prompt-image-generator/scripts/photo_workflow.py compose-audit \
+  --run RUN --composed composed_prompt.json
 ```
 
 Fix every failure. `negative_intent_guard_contract`, `negative_intent_guard_terms`, `negative_intent_guard_baseline`, and `negative_intent_guard_prompt` are blocking failures: they mean either the pack carries an ungrounded semantic suppression or positive prompt prose is trying to delete meaning with a blanket negative directive. Do not generate an image from an unaudited prompt.
 
 `embodiment_preflight` failures block missing, stale, unsupported, or unresolved review records. The validator checks records and literal actuation; the agent must actually inspect spatial consistency. It does not detect arbitrary anatomical contradictions from prose. Every generated pack requires the baseline-review flag above; a non-body scene uses an explicit `not_applicable` review.
+
+For an installed H-F2 run, keep using managed `prepare-render`, `native-plan`, `render-api` and review commands so the same sealed release performs its audits; do not pass its pack to a different standalone source implementation.
 
 If image generation was requested, read `references/image-runtime.md`, copy `source_intent_lock_sha256` into the exact runtime request, and when present also copy `render_repair_contract_sha256`. Audit it with `scripts/audit_image_render_request.py`, generate, preserve the output and ledger record, then record and audit the exact generic repair hard-gate set with `scripts/audit_image_render_review.py`. Prompt/audit success is preflight evidence, not proof that rendered pixels satisfy the request.
 
