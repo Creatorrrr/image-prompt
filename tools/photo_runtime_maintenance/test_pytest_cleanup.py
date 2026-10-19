@@ -8,6 +8,7 @@ import stat
 import zipfile
 
 import pytest_checks
+import pytest_gc
 import pytest_proof
 import pytest_restore
 from pytest_restore import restore_zip
@@ -77,6 +78,28 @@ class PytestCleanupTests(unittest.TestCase):
         with mock.patch.object(pytest_checks,'E',self.root):
             with self.assertRaises(FileExistsError):pytest_checks.run_check('OPERATING','old')
         self.assertEqual(evidence.read_bytes(),b'previous failure')
+
+    def test_gc_source_change_defers_without_touching_work(self):
+        (self.root/'cache').write_bytes(b'old');(self.root/'source.py').write_bytes(b'old source')
+        row={'path':'cache','analysis':{'source':'source.py'},'preflight':'READY',
+            'before':state.stamp(self.root/'cache'),'source_before':state.stamp(self.root/'source.py')}
+        (self.root/'source.py').write_bytes(b'new work')
+        with mock.patch.object(pytest_gc,'ROOT',self.root):
+            with self.assertRaises(ValueError):pytest_gc.preflight(row)
+        self.assertEqual((self.root/'source.py').read_bytes(),b'new work')
+
+    def test_pytest_quarantine_unknown_file_prevents_deletion(self):
+        q=self.root/'q';q.mkdir();(q/'cache').write_bytes(b'old')
+        row={'path':'cache','before':state.stamp(q/'cache')};(q/'user-work').write_bytes(b'keep')
+        with self.assertRaises(ValueError):pytest_gc.delete_verified(q,[row],lambda _:None)
+        self.assertEqual((q/'cache').read_bytes(),b'old');self.assertEqual((q/'user-work').read_bytes(),b'keep')
+
+    def test_pytest_native_failure_blocks_finalization_before_lock(self):
+        state.write(self.root/'NATIVE-final.json',{'status':'FAIL','test_count':70})
+        state.write(self.root/'OFFLINE-FINAL.json',{'status':'PASS','files':65})
+        with mock.patch.object(pytest_gc,'E',self.root):
+            with self.assertRaises(ValueError):pytest_gc.finalize()
+        self.assertFalse((self.root/'FINALIZE.LOCK').exists())
 
 
 if __name__=='__main__':unittest.main()
