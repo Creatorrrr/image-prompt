@@ -9,6 +9,7 @@ import zipfile
 
 import history_proof
 import history_restore
+import history_checks
 from history_restore import restore_zip
 from deferred_restore import publish_exclusive
 import state
@@ -87,6 +88,18 @@ class HistoryRecoveryTests(unittest.TestCase):
         with mock.patch.object(history_proof,'git',side_effect=RuntimeError('no object; no fetch')):
             with self.assertRaises(RuntimeError):history_proof.compile_rows([row],self.root/'new')
         self.assertFalse((self.root/'new').exists())
+
+    def test_failed_suite_evidence_is_not_overwritten(self):
+        output=self.root/'OPERATING-old.json';output.write_bytes(b'original failure')
+        with mock.patch.object(history_checks,'E',self.root):
+            with self.assertRaises(FileExistsError):history_checks.suite('old')
+        self.assertEqual(output.read_bytes(),b'original failure')
+
+    def test_single_check_refuses_existing_output(self):
+        output=self.root/'NATIVE-old.json';output.write_bytes(b'original evidence')
+        with mock.patch.object(history_checks,'E',self.root):
+            with self.assertRaises(FileExistsError):history_checks.run_check('NATIVE','old')
+        self.assertEqual(output.read_bytes(),b'original evidence')
 
 
 if __name__=='__main__':unittest.main()
