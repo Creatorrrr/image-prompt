@@ -5,8 +5,6 @@ Unresolved ownership stays unresolved; projection never creates a property lock.
 """
 from __future__ import annotations
 
-import re
-from photo_camera_clauses import bounded_camera_clauses
 
 
 
