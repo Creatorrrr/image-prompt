@@ -59,7 +59,6 @@ LOADED_ENVIRONMENT = environment_binding()
 
 def algorithm_binding(generator) -> dict:
     from bm25f_retrieval import BM25F_INDEX_RECIPE_VERSION, BM25F_TOKENIZER_RECIPE_VERSION, canonical_bm25f_policy
-    get = generator.get if isinstance(generator, dict) else lambda key: getattr(generator, key)
     return {"code": LOADED_CODE, "environment": LOADED_ENVIRONMENT,
             "policy": canonical_bm25f_policy(photo_global_index.POLICY),
             "policy_version": "photo-global-bm25f-policy/v1",

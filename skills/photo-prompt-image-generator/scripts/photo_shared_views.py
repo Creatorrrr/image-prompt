@@ -1,8 +1,6 @@
 """Native logical views of shared records; never reads an ownership tree."""
 import copy
-from pathlib import Path
 import photo_candidate_corpus as c
-import photo_global_index as index
 
 def source(data):return {key:data[key] for key in c.CORPUS_FIELDS}
 
