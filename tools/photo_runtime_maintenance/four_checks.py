@@ -104,11 +104,74 @@ def installed():
     finally:installed_checks.profile=original_profile
 
 
+def history(kind):
+    import copy
+    import hashlib
+    import shutil
+    import archive_experiments
+    import bundles
+    import installed_checks
+    import logic_checks
+    import native_replay
+    output=scope.E/('HISTORY-'+kind+'.json')
+    if output.exists():raise FileExistsError('historical evidence already exists')
+    if kind=='frozen':
+        result=native_replay.audit(installed_checks.FIXTURE)
+        new(output,result)
+        if result['status']!='PASS':raise ValueError('original frozen audit failed')
+    elif kind=='archive':
+        with tempfile.TemporaryDirectory(prefix='four-archive-') as tmp:
+            restored=bundles.restore(archive_experiments.BUNDLE,state.read(archive_experiments.LOCK),Path(tmp)/'root')
+            original_run=subprocess.run
+            def closed_source_run(command,*args,**kwargs):
+                if isinstance(command,(list,tuple)) and command and command[0]=='/usr/bin/sandbox-exec':
+                    command=list(command);index=command.index('-p')+1
+                    command[index]+='(deny file-read* '+ ' '.join('(subpath '+json.dumps(str(scope.SKILL/part))+')' for part in ('scripts','precore'))+')'
+                return original_run(command,*args,**kwargs)
+            subprocess.run=closed_source_run
+            raw=Path(tmp)/'result.json'
+            try:archive_experiments.replay(restored,raw)
+            finally:subprocess.run=original_run
+            new(output,{**state.read(raw),'original_working_source_reads_denied':True})
+    elif kind=='negative':
+        logic_checks.cli_negative(output)
+    elif kind=='native-view':
+        fixture=installed_checks.FIXTURE;original=state.read(fixture/'workflow.json')
+        projects=state.read(scope.E/'PRIVATE-PROJECTS.json')['projects']
+        with tempfile.TemporaryDirectory(prefix='four-native-view-') as tmp:
+            run=Path(tmp)/'run';shutil.copytree(fixture,run,symlinks=True)
+            def rewire(value):
+                if isinstance(value,str):return value.replace(str(fixture),str(run))
+                if isinstance(value,list):return [rewire(v) for v in value]
+                if isinstance(value,dict):return {k:rewire(v) for k,v in value.items()}
+                return value
+            workflow=rewire(copy.deepcopy(original));workflow.pop('h_f2_binding',None)
+            state.write(run/'workflow.json',workflow)
+            results={}
+            for label in ('control','combined'):
+                entry=Path(projects[label])/'skills/photo-prompt-image-generator/scripts/photo_workflow.py'
+                python=scope.SKILL/'.runtime/embedding-python/bin/python'
+                process=subprocess.run(['/usr/bin/sandbox-exec','-p',four_patch.policy(),str(python),str(entry),
+                    'view','--run',str(run)],env=checks.environment(),capture_output=True,text=True,timeout=90)
+                results[label]={'exit_code':process.returncode,'stdout_sha256':hashlib.sha256(process.stdout.encode()).hexdigest(),
+                    'stderr':process.stderr}
+                if process.returncode:raise ValueError('derived native public view failed: '+process.stderr)
+                value=json.loads(process.stdout)
+                if value.get('contract_version')!='photo-composer-view/v4':raise ValueError('native view was not used')
+            if results['control']['stdout_sha256']!=results['combined']['stdout_sha256']:
+                raise ValueError('native public view changed')
+            new(output,{'status':'PASS','cases':results,
+                'fixture':'private derived native route using original issued native pack; not an additional historical original run',
+                'exact_native_public_view_equal':True,'original_writes':0,'Gemini_calls':0,'CURRENT_writes':0})
+    else:raise ValueError('unknown historical check')
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('kind',choices=('operating','native','managed-control','managed-combined','installed'))
+    parser.add_argument('kind',choices=('operating','native','managed-control','managed-combined','installed','history-frozen','history-archive','history-negative','history-native-view'))
     parser.add_argument('--label',default='final')
     args=parser.parse_args()
     if args.kind in ('operating','native'):source(args.kind,args.label)
     elif args.kind.startswith('managed-'):managed(args.kind.removeprefix('managed-'))
+    elif args.kind.startswith('history-'):history(args.kind.removeprefix('history-'))
     else:installed()
