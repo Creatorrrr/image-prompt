@@ -5,7 +5,10 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import json
+import os
 from pathlib import Path
+import re
+import signal
 import subprocess
 import sys
 import tempfile
@@ -37,6 +40,27 @@ def fingerprint(output):
     state.write(output,json.loads(p.stdout))
 
 
+def native_verbose(output):
+    """Same nine modules, with a private live log for this long regression run."""
+    python=ROOT/'skills/photo-prompt-image-generator/.runtime/embedding-python/bin/python'
+    code="import os,sys,unittest;root=sys.argv.pop(1);os.chdir(root);sys.path.insert(0,root);r=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromNames(sys.argv[1:]));sys.exit(not r.wasSuccessful())"
+    log=Path(os.environ['PHOTO_HISTORY_NATIVE_LOG'])
+    with log.open('x') as stream:
+        child=subprocess.Popen(['/usr/bin/sandbox-exec','-p',checks.profile(),str(python),'-I','-c',code,
+            str(ROOT),*checks.GROUPS['native']],cwd=ROOT,env=checks.environment(),stdout=subprocess.PIPE,
+            stderr=stream,text=True,start_new_session=True)
+        try:stdout,_=child.communicate(timeout=1200)
+        except subprocess.TimeoutExpired:
+            os.killpg(child.pid,signal.SIGTERM);stdout,_=child.communicate()
+            state.write(output,{'status':'TIMEOUT','stdout':stdout,'stderr':log.read_text()})
+            raise ValueError('native regression exceeded 1200 seconds')
+    stderr=log.read_text();count=sum(map(int,re.findall(r'Ran (\d+) tests?',stderr)))
+    state.write(output,{'status':'PASS' if child.returncode==0 else 'FAIL','group':'native',
+        'modules':checks.GROUPS['native'],'test_count':count,'exit_code':child.returncode,
+        'stdout':stdout,'stderr':stderr,'network_denied':True,'Gemini_calls':0,'CURRENT_writes':0})
+    if child.returncode or count!=70:raise ValueError('native regression population or result changed')
+
+
 def child(kind,output):
     original=subprocess.Popen;receipts=[];extra=denials()
     def guarded_popen(*args,**kwargs):
@@ -52,7 +76,7 @@ def child(kind,output):
     subprocess.Popen=guarded_popen
     try:
         if kind=='OPERATING':checks.run('operating',output)
-        elif kind=='NATIVE':checks.run('native',output)
+        elif kind=='NATIVE':native_verbose(output)
         elif kind=='INSTALLED':installed_checks.main(output)
         elif kind=='MANAGED':managed_smoke.main(output)
         elif kind=='FINGERPRINT':fingerprint(output)
@@ -86,8 +110,13 @@ def run_check(kind,label):
     if output.exists():raise FileExistsError('check evidence exists; use a new label')
     with tempfile.TemporaryDirectory(prefix='history-check-') as temp:
         raw=Path(temp)/'result.json'
+        env=checks.environment()
+        if kind=='NATIVE':
+            env['PHOTO_HISTORY_NATIVE_LOG']=str(Path(temp)/'native.log')
+            new(E/('NATIVE-'+label+'-progress.json'),{'private_log':env['PHOTO_HISTORY_NATIVE_LOG'],
+                'scope':'live progress only; complete log retained in final result'})
         p=subprocess.run([sys.executable,'-B',str(Path(__file__).resolve()),'child',kind,str(raw)],
-            env=checks.environment(),capture_output=True,text=True,timeout=1500 if kind=='NATIVE' else 900)
+            env=env,capture_output=True,text=True,timeout=1500 if kind=='NATIVE' else 900)
         result=state.read(raw) if raw.exists() else {'status':'FAIL'}
         result['worker']={'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
         new(output,result)

@@ -135,5 +135,42 @@ class HistoryRecoveryTests(unittest.TestCase):
         with self.assertRaises(ValueError):history_gc.validate_quarantine(folder,[row])
         self.assertTrue((folder/'user-directory').is_dir())
 
+    def test_failed_native_gate_prevents_final_deletion(self):
+        state.write(self.root/'NATIVE-final.json',{'status':'FAIL','test_count':70})
+        state.write(self.root/'OFFLINE-FINAL.json',{'status':'PASS','files':228})
+        kept=self.root/'cache';kept.write_bytes(b'original')
+        with mock.patch.object(history_gc,'E',self.root):
+            with self.assertRaises(ValueError):history_gc.finalize()
+        self.assertEqual(kept.read_bytes(),b'original');self.assertFalse((self.root/'FINALIZE.LOCK').exists())
+
+    def test_incomplete_recovery_gate_prevents_final_deletion(self):
+        state.write(self.root/'NATIVE-final.json',{'status':'PASS','test_count':70})
+        state.write(self.root/'OFFLINE-FINAL.json',{'status':'PASS','files':227})
+        with mock.patch.object(history_gc,'E',self.root):
+            with self.assertRaises(ValueError):history_gc.finalize()
+        self.assertFalse((self.root/'FINALIZE.LOCK').exists())
+
+    def test_exact_closed_quarantine_can_be_removed(self):
+        folder=self.root/'q';(folder/'parent').mkdir(parents=True);p=folder/'parent/cache';p.write_bytes(b'old')
+        row={'path':'parent/cache','before':state.stamp(p)};deleted=[]
+        kept=self.root/'user-work';kept.write_bytes(b'keep')
+        history_gc.delete_verified(folder,[row],deleted.append)
+        self.assertEqual(deleted,['parent/cache']);self.assertFalse(folder.exists());self.assertEqual(kept.read_bytes(),b'keep')
+
+    def test_final_deletion_refuses_quarantine_with_new_user_file(self):
+        folder=self.root/'q';folder.mkdir();p=folder/'cache';p.write_bytes(b'old')
+        row={'path':'cache','before':state.stamp(p)};(folder/'new-user-work').write_bytes(b'keep')
+        with self.assertRaises(ValueError):history_gc.delete_verified(folder,[row],lambda p:None)
+        self.assertEqual(p.read_bytes(),b'old');self.assertEqual((folder/'new-user-work').read_bytes(),b'keep')
+
+    def test_incomplete_independent_zip_gate_prevents_deletion(self):
+        for name,value in [('NATIVE-final.json',{'status':'PASS','test_count':70}),
+            ('OFFLINE-FINAL.json',{'status':'PASS','files':228}),('SUITE-absent-B.json',{'status':'PASS'}),
+            ('SAFETY-07-FINAL.json',{'status':'PASS'}),('ZIP-INDEPENDENT.json',{'status':'PASS','files':227})]:
+            state.write(self.root/name,value)
+        with mock.patch.object(history_gc,'E',self.root):
+            with self.assertRaises(ValueError):history_gc.finalize()
+        self.assertFalse((self.root/'FINALIZE.LOCK').exists())
+
 
 if __name__=='__main__':unittest.main()
