@@ -25,9 +25,9 @@ BINARIES = {'cb0d0d0a':Path('/opt/homebrew/bin/python3.12'),
             '2b0e0d0a':Path('/opt/homebrew/bin/python3.14')}
 
 
-def git(*args):
+def git(*args,read_denials=''):
     return subprocess.check_output(['/usr/bin/sandbox-exec','-p',
-        '(version 1)(allow default)(deny network*)','git','--no-lazy-fetch','-C',str(ROOT),*args],
+        checks.profile()+read_denials,'git','--no-lazy-fetch','-C',str(ROOT),*args],
         env=dict(os.environ,GIT_NO_LAZY_FETCH='1'),timeout=120)
 
 
@@ -106,7 +106,7 @@ def compile_child(specification,destination):
         target.chmod(row['mode'])
 
 
-def compile_rows(rows,destination):
+def compile_rows(rows,destination,read_denials=''):
     destination=Path(destination)
     if destination.exists() or destination.is_symlink():raise FileExistsError('recovery destination exists')
     names=[r['path'] for r in rows]
@@ -120,7 +120,7 @@ def compile_rows(rows,destination):
         for row in rows:
             oid=row['git_blob']
             if oid not in sources:
-                raw=git('cat-file','blob',oid)
+                raw=git('cat-file','blob',oid,read_denials=read_denials)
                 if hashlib.sha256(raw).hexdigest()!=row['source_sha256']:raise ValueError('source blob differs')
                 source=temp/(oid+'.py');source.write_bytes(raw);sources[oid]=source
             spec={**row,'source':str(sources[oid])}
@@ -130,7 +130,7 @@ def compile_rows(rows,destination):
             if expected and state.sha(binary.resolve())!=expected:raise ValueError('recovery interpreter changed')
             path=temp/(magic+'.json');state.write(path,spec)
             launch="import sys,runpy;from pathlib import Path;p=sys.argv.pop(1);sys.path.insert(0,str(Path(p).parent));runpy.run_path(p,run_name='__main__')"
-            subprocess.run(['/usr/bin/sandbox-exec','-p',checks.profile(),str(binary),'-I','-c',launch,
+            subprocess.run(['/usr/bin/sandbox-exec','-p',checks.profile()+read_denials,str(binary),'-I','-c',launch,
                 str(Path(__file__).resolve()),'compile-child',str(path),str(staged)],
                 env=checks.environment(),check=True,timeout=120)
         publish_exclusive(staged,destination)
@@ -232,8 +232,9 @@ def refine_parent_commits():
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('command',choices=['prove','refine','compile-child'])
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('command',choices=['prove','refine','restore','compile-child'])
     p.add_argument('specification',nargs='?');p.add_argument('destination',nargs='?');a=p.parse_args()
     if a.command=='prove':prove()
     elif a.command=='refine':refine_parent_commits()
+    elif a.command=='restore':compile_rows(load_lock()['rows'],Path(a.specification))
     else:compile_child(a.specification,a.destination)
