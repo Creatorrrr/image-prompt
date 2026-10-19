@@ -5,7 +5,6 @@ idea in the current scene; search scores establish discoverability only.
 """
 from __future__ import annotations
 
-import math
 from typing import Any
 
 from bm25f_retrieval import build_bm25f_index, rank_bm25f, tokenize_bm25f_text

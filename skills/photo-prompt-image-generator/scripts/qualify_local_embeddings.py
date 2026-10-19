@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """Offline paired, same-corpus retrieval qualification from frozen inputs."""
 import argparse
-import collections
 import hashlib
 import json
 from pathlib import Path
-import time
 import photo_candidate_corpus as c
 from photo_embedding_provider import atomic,embed_many,GEMINI_SPACE
 from photo_local_embedding import space as local_space

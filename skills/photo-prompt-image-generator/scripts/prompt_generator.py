@@ -9,21 +9,16 @@ Photo prompt generator
 
 from __future__ import annotations
 
-import argparse
 import copy
 import functools
 import hashlib
 import json
 import math
-import os
 import random
 import re
-import secrets
 import sys
-import time
-from collections import Counter
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Set
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Set
 
 _SCRIPTS_IMPORT_DIR = str(Path(__file__).resolve().parent)
 _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
@@ -7850,50 +7845,12 @@ def dictionary_hash(data):
 
 
 
-def get_gemini_api_key(api_key: Optional[str] = None) -> str:
-    key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
-    if not key:
-        raise RuntimeError(
-            "GEMINI_API_KEY or GOOGLE_API_KEY is required for Gemini semantic embeddings."
-        )
-    return key
 
 
-@functools.lru_cache(maxsize=4)
-def cached_gemini_client(api_key: str) -> Any:
-    """Reuse the SDK transport while keeping each embedding request isolated."""
-    from google import genai
-
-    return genai.Client(api_key=api_key)
 
 
-def extract_embedding_values(response: Any) -> List[List[float]]:
-    embeddings = getattr(response, "embeddings", None)
-    if embeddings is None and isinstance(response, dict):
-        embeddings = response.get("embeddings")
-    if embeddings is None:
-        embedding = getattr(response, "embedding", None)
-        if embedding is None and isinstance(response, dict):
-            embedding = response.get("embedding")
-        embeddings = [embedding] if embedding is not None else []
-
-    values_list: List[List[float]] = []
-    for embedding in embeddings:
-        values = getattr(embedding, "values", None)
-        if values is None and isinstance(embedding, dict):
-            values = embedding.get("values")
-        if values is None:
-            raise RuntimeError("Gemini embedding response did not include vector values.")
-        values_list.append([float(value) for value in values])
-    return values_list
 
 
-def round_embedding_vector(vector: Sequence[float], dimensions: int) -> List[float]:
-    if len(vector) != dimensions:
-        raise ValueError(
-            f"Gemini returned {len(vector)} embedding dimensions, expected {dimensions}."
-        )
-    return [round(float(value), 6) for value in vector]
 
 
 

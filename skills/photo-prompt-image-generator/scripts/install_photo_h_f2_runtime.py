@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
-import sys
 import tempfile
 
 from photo_installed_h_f2 import (CONFIG, SCHEMA, SKILL_ROOT, default_store,

@@ -4,7 +4,6 @@ No filesystem index loader, writer, runtime cache, or query execution path.
 """
 from __future__ import annotations
 import hashlib, math
-from pathlib import Path
 import photo_candidate_corpus as corpus
 from photo_embedding_provider import SPACE, validate_vector, validate_space, validate_execution, atomic
 from photo_visual_retrieval import positive_visual_profile_fields, positive_visual_profile_text
