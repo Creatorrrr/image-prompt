@@ -12,7 +12,7 @@ import sys
 
 from photo_retry_projection import project
 from photo_workflow_state import (WorkflowError, atomic_write, bound_path, commit_stage, digest, encode,
-    load_state, locked_state, read_json, save_state, value, verify_freeze)
+    load_state, locked_state, read_json, value, verify_freeze)
 from photo_workflow_worker import audit_bound
 
 

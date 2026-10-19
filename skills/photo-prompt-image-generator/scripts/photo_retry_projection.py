@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import re
 from photo_precore_bridge import load
-from photo_workflow_state import WorkflowError, digest, encode
+from photo_workflow_state import WorkflowError
 
 contracts = load("photo_authoring_contracts")
 wire = load("photo_authoring_wire")

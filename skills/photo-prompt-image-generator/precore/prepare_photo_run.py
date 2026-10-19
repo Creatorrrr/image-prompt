@@ -12,7 +12,7 @@ import photo_authoring_wire as wire
 import photo_camera_authoring as camera
 import photo_embodiment_review as embodiment
 import photo_feature_selection as features
-from photo_run_files import (VERSION, WorkflowError, bound_path, commit_stage, digest, encode,
+from photo_run_files import (VERSION, WorkflowError, commit_stage, digest, encode,
                              locked_state, read_json, save_state, value, verify_freeze)
 
 
