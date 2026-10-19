@@ -1,5 +1,4 @@
 """Pinned metadata and bounded, checksum-verified on-demand shard readers."""
-from array import array
 from collections import OrderedDict
 from collections.abc import Mapping
 import copy
