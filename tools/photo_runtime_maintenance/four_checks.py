@@ -78,8 +78,37 @@ def source(group, label='final'):
     if result['status']!='PASS':raise ValueError('modified-source '+group+' failed: '+stderr[-5000:])
 
 
+def managed(kind):
+    import managed_smoke
+    output=scope.E/('MANAGED-'+kind+'.json')
+    if output.exists():raise FileExistsError('managed evidence already exists')
+    projects=state.read(scope.E/'PRIVATE-PROJECTS.json')['projects']
+    original_root=managed_smoke.ROOT;original_profile=managed_smoke.profile
+    managed_smoke.ROOT=Path(projects[kind])
+    managed_smoke.profile=lambda:four_patch.policy()+'(deny file-read* (regex "/site-packages/torch(/|$)"))'
+    try:managed_smoke.main(output)
+    finally:managed_smoke.ROOT=original_root;managed_smoke.profile=original_profile
+    result=state.read(output)
+    if result['status']!='PASS' or len(result['commands'])!=5:raise ValueError('managed H-F2 qualification failed')
+
+
+def installed():
+    import installed_checks
+    output=scope.E/'INSTALLED.json'
+    if output.exists():raise FileExistsError('installed evidence already exists')
+    if not (state.EVIDENCE/'FIXTURE-PROTECTED.json.gz').exists():
+        raise ValueError('original fixture protection must already exist; do not create old evidence')
+    original_profile=installed_checks.profile
+    installed_checks.profile=lambda:four_patch.policy()+'(deny file-read* (regex "/site-packages/torch(/|$)"))'
+    try:installed_checks.main(output)
+    finally:installed_checks.profile=original_profile
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('kind',choices=('operating','native'))
+    parser.add_argument('kind',choices=('operating','native','managed-control','managed-combined','installed'))
     parser.add_argument('--label',default='final')
-    args=parser.parse_args();source(args.kind,args.label)
+    args=parser.parse_args()
+    if args.kind in ('operating','native'):source(args.kind,args.label)
+    elif args.kind.startswith('managed-'):managed(args.kind.removeprefix('managed-'))
+    else:installed()
