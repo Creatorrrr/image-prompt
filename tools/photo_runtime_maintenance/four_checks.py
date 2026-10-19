@@ -1,0 +1,85 @@
+"""Fresh checks against the changed private source and the unchanged sealed runtime."""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import tempfile
+
+import checks
+import four_patch
+import four_state as scope
+from history_state import new
+import state
+
+
+SOURCE_RUNNER = r'''
+import os,sys,unittest,json,hashlib
+from pathlib import Path
+project=Path(sys.argv.pop(1)).resolve();os.chdir(project);sys.path.insert(0,str(project))
+suite=unittest.defaultTestLoader.loadTestsFromNames(sys.argv[1:])
+import bm25f_retrieval,photo_native_pack,photo_camera_evidence,photo_runtime_sources
+modules={}
+for m in (bm25f_retrieval,photo_native_pack,photo_camera_evidence,photo_runtime_sources):
+ p=Path(m.__file__).resolve()
+ if not p.is_relative_to(project):raise AssertionError('unchanged source fallback: '+str(p))
+ modules[m.__name__]={'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+for m,name in [(bm25f_retrieval,'_normalized_lexicon'),(photo_native_pack,'resolve_rows'),
+ (photo_camera_evidence,'legacy_camera_clauses'),(photo_runtime_sources,'publish_if_ready')]:
+ if hasattr(m,name):raise AssertionError('tested source still contains '+name)
+result=unittest.TextTestRunner(verbosity=2).run(suite)
+print(json.dumps({'status':'PASS' if result.wasSuccessful() and not result.skipped else 'FAIL',
+ 'tests':result.testsRun,'skipped':len(result.skipped),'loaded_changed_modules':modules}))
+sys.exit(not result.wasSuccessful() or bool(result.skipped))
+'''
+
+
+def source(group, label='final'):
+    output=scope.E/('SOURCE-'+group+'-'+label+'.json')
+    if output.exists():raise FileExistsError('never overwrite check evidence')
+    project=Path(state.read(scope.E/'PRIVATE-PROJECTS.json')['projects']['combined'])
+    expected=state.read(scope.E/'PATCHES.json')['patches']['combined']['candidate_files']
+    for path,sha in expected.items():
+        if state.sha(project/path)!=sha:raise ValueError('private candidate drift')
+    log=project/('source-'+group+'-'+label+'.log')
+    new(scope.E/('SOURCE-'+group+'-'+label+'-progress.json'),{'private_log':str(log),
+        'final_log':output.name,'scope':'temporary progress only; complete log retained in final evidence'})
+    python=scope.SKILL/'.runtime/embedding-python/bin/python'
+    env=checks.environment();env['PHOTO_RUNTIME_STORE']=str(project/'.test-runtime')
+    policy=four_patch.policy()+'(deny file-read* (regex "/site-packages/torch(/|$)"))'
+    print(group,'private live log:',log,flush=True)
+    with log.open('x') as stream:
+        child=subprocess.Popen(['/usr/bin/sandbox-exec','-p',policy,str(python),'-I','-c',SOURCE_RUNNER,
+            str(project),*checks.GROUPS[group]],cwd=project,env=env,stdout=subprocess.PIPE,
+            stderr=stream,text=True,start_new_session=True)
+        try:stdout,_=child.communicate(timeout=1200)
+        except subprocess.TimeoutExpired:
+            os.killpg(child.pid,signal.SIGTERM);stdout,_=child.communicate()
+            new(output,{'status':'TIMEOUT','stdout':stdout,'stderr':log.read_text()})
+            raise ValueError('source regression timeout')
+    stderr=log.read_text()
+    # Some existing native tests print their own records before the final runner summary.
+    try:result=json.loads(stdout.splitlines()[-1])
+    except ValueError:result={'status':'HARNESS_UNAVAILABLE'}
+    result.update(group=group,exit_code=child.returncode,stdout=stdout,stderr=stderr,
+        modules=checks.GROUPS[group],source='modified private working source',
+        network_denied=True,live_production_source_reads_denied=True,
+        original_writes_denied=True,torch_module_read_denied=True,Gemini_calls=0,CURRENT_writes=0)
+    wanted=48 if group=='operating' else 70
+    if child.returncode or result.get('tests')!=wanted or result.get('skipped')!=0:result['status']='FAIL'
+    for row in result.get('loaded_changed_modules',{}).values():
+        rel=str(Path(row['path']).relative_to(project.resolve()))
+        if row['sha256']!=expected[rel]:result['status']='FAIL'
+    new(output,result)
+    print(group,result['status'],result.get('tests'),'tests',flush=True)
+    if result['status']!='PASS':raise ValueError('modified-source '+group+' failed: '+stderr[-5000:])
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('kind',choices=('operating','native'))
+    parser.add_argument('--label',default='final')
+    args=parser.parse_args();source(args.kind,args.label)

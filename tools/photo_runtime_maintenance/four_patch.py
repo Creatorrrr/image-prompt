@@ -60,6 +60,11 @@ def copy_code(project):
         (skill/part).mkdir(parents=True)
         for source in (scope.SKILL/part).glob('*.py'):
             shutil.copy2(source,skill/part/source.name)
+        for source in (scope.SKILL/part).rglob('*'):
+            if source.is_file() and source.suffix not in {'.py','.pyc','.pyo'} and '__pycache__' not in source.parts:
+                destination=skill/part/source.relative_to(scope.SKILL/part)
+                destination.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copy2(source,destination)
     for filename in ('retrieval-runtime.json','embedding-default.json','embedding-runtime.lock.json'):
         shutil.copy2(scope.SKILL/filename,skill/filename)
     return skill
