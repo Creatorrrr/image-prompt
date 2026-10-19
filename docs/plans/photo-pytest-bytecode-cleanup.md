@@ -1,6 +1,9 @@
 # pytest bytecode 65개 추가 정리 계획
 
-2026-10-19 · 계획 작성 · 정리 실행 전
+2026-10-19 · 8단계 실행 완료 · pytest bytecode 65개 정리 · H 단독+F2/CURRENT 유지
+
+실행 결과: `docs/research-evidence/photo-prompt/runtime-pytest-cleanup-20261019/REPORT.md`.
+실제 정리·보존·검증 결과와 복원 명령은 실행 리포트와 README를 따른다.
 
 ## 목표와 고정 입력
 
