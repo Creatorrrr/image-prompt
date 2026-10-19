@@ -84,8 +84,8 @@ def managed(kind):
     if output.exists():raise FileExistsError('managed evidence already exists')
     projects=state.read(scope.E/'PRIVATE-PROJECTS.json')['projects']
     original_root=managed_smoke.ROOT;original_profile=managed_smoke.profile
-    managed_smoke.ROOT=Path(projects[kind])
-    managed_smoke.profile=lambda:four_patch.policy()+'(deny file-read* (regex "/site-packages/torch(/|$)"))'
+    managed_smoke.ROOT=scope.ROOT if kind=='applied' else Path(projects[kind])
+    managed_smoke.profile=lambda:(checks.profile() if kind=='applied' else four_patch.policy())+'(deny file-read* (regex "/site-packages/torch(/|$)"))'
     try:managed_smoke.main(output)
     finally:managed_smoke.ROOT=original_root;managed_smoke.profile=original_profile
     result=state.read(output)
@@ -135,7 +135,7 @@ def history(kind):
             new(output,{**state.read(raw),'original_working_source_reads_denied':True})
     elif kind=='negative':
         logic_checks.cli_negative(output)
-    elif kind=='native-view':
+    elif kind in ('native-view','native-view-applied'):
         fixture=installed_checks.FIXTURE;original=state.read(fixture/'workflow.json')
         projects=state.read(scope.E/'PRIVATE-PROJECTS.json')['projects']
         with tempfile.TemporaryDirectory(prefix='four-native-view-') as tmp:
@@ -148,17 +148,20 @@ def history(kind):
             workflow=rewire(copy.deepcopy(original));workflow.pop('h_f2_binding',None)
             state.write(run/'workflow.json',workflow)
             results={}
-            for label in ('control','combined'):
-                entry=Path(projects[label])/'skills/photo-prompt-image-generator/scripts/photo_workflow.py'
+            labels=('control','combined','applied') if kind=='native-view-applied' else ('control','combined')
+            for label in labels:
+                project=scope.ROOT if label=='applied' else Path(projects[label])
+                entry=project/'skills/photo-prompt-image-generator/scripts/photo_workflow.py'
                 python=scope.SKILL/'.runtime/embedding-python/bin/python'
-                process=subprocess.run(['/usr/bin/sandbox-exec','-p',four_patch.policy(),str(python),str(entry),
+                policy=checks.profile() if label=='applied' else four_patch.policy()
+                process=subprocess.run(['/usr/bin/sandbox-exec','-p',policy,str(python),str(entry),
                     'view','--run',str(run)],env=checks.environment(),capture_output=True,text=True,timeout=90)
                 results[label]={'exit_code':process.returncode,'stdout_sha256':hashlib.sha256(process.stdout.encode()).hexdigest(),
                     'stderr':process.stderr}
                 if process.returncode:raise ValueError('derived native public view failed: '+process.stderr)
                 value=json.loads(process.stdout)
                 if value.get('contract_version')!='photo-composer-view/v4':raise ValueError('native view was not used')
-            if results['control']['stdout_sha256']!=results['combined']['stdout_sha256']:
+            if any(r['stdout_sha256']!=results['control']['stdout_sha256'] for r in results.values()):
                 raise ValueError('native public view changed')
             new(output,{'status':'PASS','cases':results,
                 'fixture':'private derived native route using original issued native pack; not an additional historical original run',
@@ -168,7 +171,7 @@ def history(kind):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('kind',choices=('operating','native','managed-control','managed-combined','installed','history-frozen','history-archive','history-negative','history-native-view'))
+    parser.add_argument('kind',choices=('operating','native','managed-control','managed-combined','managed-applied','installed','history-frozen','history-archive','history-negative','history-native-view','history-native-view-applied'))
     parser.add_argument('--label',default='final')
     args=parser.parse_args()
     if args.kind in ('operating','native'):source(args.kind,args.label)

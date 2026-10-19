@@ -31,18 +31,6 @@ def role_cards(pack):
         result[tag]={**{k:v for k,v in view.items() if k!='candidate_refs'},'candidates':rows}
     return result
 
-def resolve_rows(pack,section,key='candidates'):
-    value=pack.get(section) or {};refs=value.get(key) or []
-    if isinstance(pack,WorkingPack):return refs
-    result=[]
-    for ref in refs:
-        if 'candidate_id' in ref and ref['candidate_id'] in pack['candidate_pool']:
-            row=copy.deepcopy(pack['candidate_pool'][ref['candidate_id']])
-            context=copy.deepcopy(ref.get('view_context') or {})
-            if context.pop('_native_view',None)=='bundle':row.update(copy.deepcopy(row['bundle_view']))
-            row.update(context);result.append(row)
-        else:result.append(ref)  # Policy-authored guidance is not a corpus candidate.
-    return result
 
 def finalize(pack,data,selected_ids,query_context):
     pool={};bindings={};views={};proposals=pack['global_retrieval']['role_proposals']

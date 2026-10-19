@@ -174,8 +174,6 @@ def _normalized_lexicon_cached(terms: tuple[str, ...]) -> tuple[str, ...]:
     return tuple(sorted(expanded, key=lambda value: (-len(value), value)))
 
 
-def _normalized_lexicon(terms: Iterable[Any]) -> tuple[str, ...]:
-    return _normalized_lexicon_cached(tuple(str(term) for term in terms))
 
 
 class _PreparedLexicon:
