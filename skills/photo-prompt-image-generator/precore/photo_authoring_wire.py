@@ -35,7 +35,6 @@ from photo_authoring_contracts import (
     REQUEST_ENVELOPE_CONTRACT_VERSION,
     REQUEST_LINEAGE_V2_CONTRACT_VERSION,
     REQUIRED_INTENT_LOCK_DIMENSIONS,
-    SUBJECT_CATEGORIES,
     authored_subject_category,
     canonical_json_sha256,
 )

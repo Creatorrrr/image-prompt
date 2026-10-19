@@ -894,20 +894,6 @@ def visual_profile_exact_term_rows(registry: JsonDict) -> List[JsonDict]:
 
 
 
-def _bm25f_lexicon_from_documents(
-    documents: Mapping[str, JsonDict],
-    fields: Sequence[str] = ("aliases",),
-) -> List[str]:
-    return sorted(
-        {
-            clean_spaces(str(value))
-            for document in documents.values()
-            for field in fields
-            for value in document.get(field) or []
-            if clean_spaces(str(value))
-        },
-        key=lambda value: (-len(value), value.casefold()),
-    )
 
 
 
@@ -1221,13 +1207,6 @@ def values_as_set(item: JsonDict, *keys: str) -> Set[str]:
 
 
 
-def candidate_pack_float(value: Any, digits: int = 6) -> Optional[float]:
-    if value is None:
-        return None
-    try:
-        return round(float(value), digits)
-    except (TypeError, ValueError):
-        return None
 
 
 def candidate_pack_candidate_id(scope, raw_id, slot=None):
@@ -1418,80 +1397,6 @@ def candidate_pack_direct_subject_categories(subject: str) -> list[str]:
     return ['human']
 
 
-def candidate_pack_assertion_discovery(
-    data: JsonDict, core: JsonDict, documents: JsonDict, bm25f: JsonDict,
-    *, include_visual_priorities: bool = False, include_frozen_baseline: bool = False,
-) -> List[str]:
-    """Find source-opted-in options per frozen assertion, never hard duties.
-
-    Whole-scene similarity must not hide an explicitly
-    authored observation. All additions still require open dimensions and
-    source-declared property compatibility. No keyword or concept IDs route
-    this lane, and exclusions are checked before lexical ranking.
-    """
-    policy = (data.get("candidate_semantic_policy") or {}).get("core_assertion_discovery") or {}
-    if not policy or not bm25f:
-        return []
-    lock = core.get("intent_lock") or {}
-    open_dimensions = set(lock.get("open_dimensions") or [])
-    assertions = [a for a in core.get("semantic_assertions") or [] if isinstance(a, dict)]
-
-    def assertion_text(assertion: JsonDict) -> str:
-        def values(node: Any) -> List[str]:
-            if isinstance(node, dict):
-                return [text for value in node.values() for text in values(value)]
-            if isinstance(node, list):
-                return [text for value in node for text in values(value)]
-            return [str(node).replace("_", " ")] if isinstance(node, str) else []
-        axes = assertion.get("axes") or {}
-        # Camera review states are protocol metadata, not observations. Only
-        # the author's literal owner/axis evidence can opt in a discovery.
-        axis_values = [] if "camera_axis_review" in axes else values(axes)
-        return clean_spaces(" ".join(values(assertion.get("evidence")) + axis_values))
-
-    minimum = policy["minimum_shared_content_words"]
-    excluded = [str(text) for text in core.get("user_exclusions") or []]
-    excluded.extend(assertion_text(a) for a in assertions if a.get("polarity") == "excluded")
-    allowed: JsonDict = {}
-    for document_id, source in documents.items():
-        dimensions = normalize_list(source.get("affected_dimensions"))
-        if (source.get("core_assertion_discovery") is not True
-                or not dimensions or not set(dimensions) <= open_dimensions
-                or not native_property_scope_allowed(core, dimensions, source.get("affected_properties"), entry=source)):
-            continue
-        blob = candidate_pack_entry_blob(source, extra=[
-            *normalize_list(source.get("concept_units")), *normalize_list(source.get("concept_terms")),
-            *normalize_list(source.get("paraphrases")),
-        ])
-        tokens = candidate_pack_relevance_tokens(blob)
-        if any(intent_alias_matches(blob, text) or len(tokens & candidate_pack_relevance_tokens(text)) >= minimum
-               for text in excluded if clean_spaces(text)):
-            continue
-        allowed[document_id] = tokens
-    found: List[str] = []
-    queries = [assertion_text(a) for a in assertions
-               if a.get("polarity") in {"advisory", "required"}]
-    if include_visual_priorities:
-        # These are already-authored observations, not requester assertions.
-        # Keep them advisory and subject to the same opt-in/effect/lock guards.
-        queries.extend(str(value) for value in core.get("visual_priorities") or []
-                       if isinstance(value, str) and value.strip())
-    if include_frozen_baseline:
-        # Only the component-constrained profile lane opts into these
-        # frozen authorial observations. They remain optional discoveries.
-        queries.extend(str(core.get(field) or "") for field in
-                       ("baseline_prompt_en", "interpreted_intent") if core.get(field))
-    for query in queries:
-        tokens = candidate_pack_relevance_tokens(query)
-        eligible = {key for key, source_tokens in allowed.items() if len(tokens & source_tokens) >= minimum}
-        for hit in rank_bm25f(bm25f, {"assertion_evidence": query}, allowed_ids=eligible,
-                              limit=policy["maximum_per_assertion"]):
-            document_id = str(hit.get("document_id") or "")
-            if document_id and document_id not in found:
-                found.append(document_id)
-        if len(found) >= policy["maximum_candidates"]:
-            break
-    return found[:policy["maximum_candidates"]]
 
 
 def candidate_pack_conflicts(
@@ -3227,42 +3132,6 @@ def authorial_core_retrieval_text(
     return query, provenance
 
 
-def authorial_core_bm25f_query_fields(core: JsonDict) -> JsonDict:
-    """Project a frozen core into fielded retrieval input without classifying it.
-
-    These fields are authored before retrieval.  BM25F may rank optional
-    material from them, but it is never allowed to create a semantic assertion
-    or promote one of its own hits into a hard requirement.
-    """
-
-    request_binding = (
-        core.get("request_binding")
-        if isinstance(core.get("request_binding"), dict)
-        else {}
-    )
-    active_request = [
-        clean_spaces(str(item.get("text") or ""))
-        for item in request_binding.get("active_spans") or []
-        if isinstance(item, dict) and clean_spaces(str(item.get("text") or ""))
-    ]
-    if not active_request and clean_spaces(str(core.get("source_request") or "")):
-        active_request = [clean_spaces(str(core.get("source_request") or ""))]
-    return {
-        "active_request": active_request,
-        "interpreted_intent": [
-            clean_spaces(str(core.get("interpreted_intent") or ""))
-        ],
-        "event": [clean_spaces(str(core.get("event") or ""))],
-        "subject": [clean_spaces(str(core.get("subject") or ""))],
-        "visual_priorities": [
-            clean_spaces(str(value))
-            for value in core.get("visual_priorities") or []
-            if clean_spaces(str(value))
-        ],
-        "baseline_prompt": [
-            clean_spaces(str(core.get("baseline_prompt_en") or ""))
-        ],
-    }
 
 
 def resolve_character_response_intent(core: Any) -> JsonDict:
