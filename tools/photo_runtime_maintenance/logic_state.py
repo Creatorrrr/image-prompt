@@ -160,6 +160,37 @@ def verify(output=None):
     return result
 
 
+def checkpoint(output):
+    """Fast stage check; full protected-file verification is a separate final gate."""
+    baseline = load_baseline()
+    skill = ROOT/'skills/photo-prompt-image-generator'
+    selected = {p:s for p,s in baseline['files'].items() if p in baseline['pointers']
+        or (Path(p).parent in {skill/'scripts',skill/'precore'} and Path(p).suffix == '.py')
+        or Path(p).name in {'retrieval-runtime.json','embedding-default.json','embedding-runtime.lock.json'}
+        or (Path(p).suffix == '.pyc' and Path(p).is_relative_to(ROOT))}
+    failures = [p for p,s in selected.items() if state.stamp(p) != s]
+    for work,row in baseline['repositories'].items():
+        current = state.status(work)
+        if work == str(ROOT):
+            current = {p:s for p,s in current.items() if not owned(p)}
+        if current != row['status']:
+            failures.append(work+': original status')
+        if state.git(work,'diff','--cached','--raw','-z').decode() != row['staged']:
+            failures.append(work+': staged')
+        if work != str(ROOT) and (state.git(work,'rev-parse','HEAD').decode().strip() != row['head']
+                                  or state.sha(row['index_path']) != row['index_sha256']):
+            failures.append(work+': other checkout')
+    if pointers() != baseline['pointers']:
+        failures.append('CURRENT inventory')
+    result = {'status':'FAIL' if failures else 'PASS','stage_protected_paths':len(selected),
+        'CURRENT_count':len(baseline['pointers']),'failures':failures,
+        'scope':'source/config/cache/pointers and original repository states; final full-file verification is separate'}
+    new(output,result)
+    if failures:
+        raise ValueError('stage checkpoint failed: '+str(failures[:10]))
+    return result
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command',choices=('freeze','verify'))
