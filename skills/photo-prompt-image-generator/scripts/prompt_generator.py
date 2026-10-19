@@ -141,7 +141,6 @@ CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v2"
 CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
-VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION = "photo-visual-obligation-registry/v3"
 VISUAL_PROFILE_RESOLUTION_CONTRACT_VERSION = "photo-visual-profile-resolution/v1"
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
@@ -7606,24 +7605,6 @@ def compatible_with_slot_context(
 # Frozen-core candidate retrieval
 # -----------------------------------------------------------------------------
 
-DIMENSION_FIELDS = {
-    "subject": ["subject"], "identity": ["subject"], "age": ["subject"],
-    "count": ["subject"], "species": ["subject"], "role": ["subject"],
-    "appearance": ["subject", "style"], "body_geometry": ["subject", "event"],
-    "setting": ["setting"], "timing": ["setting", "event"],
-    "action": ["event"], "event": ["event"], "pose": ["event", "subject"],
-    "relationship": ["event", "subject"], "character_response": ["event"],
-    "expression": ["event", "visual_priorities"],
-    "atmosphere": ["setting", "visual_priorities"],
-    "lighting": ["style", "setting", "visual_priorities"],
-    "style": ["style", "visual_priorities"], "color": ["style", "visual_priorities"],
-    "material": ["subject", "setting", "visual_priorities"],
-    "framing": ["style", "visual_priorities"],
-    "composition": ["style", "visual_priorities"],
-    "camera": ["style", "visual_priorities"], "format": ["style"],
-    "text": ["event", "visual_priorities"],
-    "viewer_outcome": ["visual_priorities"], "sexual_tone": ["subject", "style"],
-}
 
 
 

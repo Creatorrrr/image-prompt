@@ -15,24 +15,6 @@ from pathlib import Path
 from typing import Any
 
 VERSION = "photo-composer-view/v4"
-OPTIONAL_PATHS = (
-    ("photographic_integration", "category_candidates"),
-    ("visual_proposition", "core_candidates"),
-    ("visual_proposition", "tension_candidates"),
-    ("photographic_craft", "dimension_candidates"),
-    ("visual_concept_candidates", "candidates"),
-    ("creative_augmentation", "candidates"),
-    ("character_response", "advisory_retrieval", "candidates"),
-    ("candidate_bundles", "candidates"),
-)
-SUMMARY_FIELDS = (
-    "concept_terms", "applicability", "conflicts_with", "affected_dimensions",
-    "slot", "axis", "source_candidate_id", "semantic_band", "hard_eligible", "semantic_consistency",
-    "concept_units", "relations", "adoption", "semantic_surface_version",
-    "affected_properties", "expression_scope", "contextual_status", "retrieval_evidence",
-    "context_requirements", "context_prerequisites", "context_preflight",
-    "scene_retrieval_support", "retrieval_status",
-)
 
 
 def canonical_bytes(value: Any) -> bytes:
