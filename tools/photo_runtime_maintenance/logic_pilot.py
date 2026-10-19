@@ -1,11 +1,8 @@
 """Controlled source-only fingerprint experiments; never edit/publish original generations."""
 import argparse
 import ast
-import difflib
-import hashlib
 import json
 from pathlib import Path
-import shutil
 import subprocess
 import tempfile
 

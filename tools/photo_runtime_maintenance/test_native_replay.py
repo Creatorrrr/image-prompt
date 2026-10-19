@@ -140,16 +140,24 @@ class ReplayBoundary(unittest.TestCase):
 
     def test_failed_frozen_worker_never_falls_back(self):
         process = subprocess.CompletedProcess([],2,'','missing original dependency')
-        with patch.object(replay.subprocess,'run',return_value=process) as child:
+        trusted = {replay.inspect_run(self.run)['code_sha256']}
+        with patch.object(replay,'TRUSTED_CODE_SHA256',trusted),patch.object(replay.subprocess,'run',return_value=process) as child:
             result = replay.audit(self.run)
         self.assertEqual(result['status'],'DEFER')
         self.assertEqual(child.call_count,1)
         self.assertEqual(result['reason'],'original_frozen_audit_unavailable')
 
+    def test_self_consistent_unreviewed_generation_is_not_executable(self):
+        with patch.object(replay.subprocess,'run') as child:
+            with self.assertRaisesRegex(ValueError,'unreviewed_executable_source_closure'):
+                replay.audit(self.run)
+        child.assert_not_called()
+
     def test_worker_gets_only_verified_generation_no_live_module_path(self):
         process = subprocess.CompletedProcess([],0,json.dumps({'status':'PASS',
             'generation_id':self.generation.name}),'')
-        with patch.dict(os.environ,{'GEMINI_API_KEY':'test','PYTHONPATH':'/untrusted'}),patch.object(
+        trusted = {replay.inspect_run(self.run)['code_sha256']}
+        with patch.object(replay,'TRUSTED_CODE_SHA256',trusted),patch.dict(os.environ,{'GEMINI_API_KEY':'test','PYTHONPATH':'/untrusted'}),patch.object(
                 replay.subprocess,'run',return_value=process) as child:
             result = replay.audit(self.run)
         command = child.call_args.args[0]
@@ -158,6 +166,7 @@ class ReplayBoundary(unittest.TestCase):
         self.assertNotIn('GEMINI_API_KEY',child.call_args.kwargs['env'])
         self.assertNotIn('PYTHONPATH',child.call_args.kwargs['env'])
         self.assertIn('(deny network*)',command[2])
+        self.assertIn('pyc|pyo|so|dylib|zip',command[2])
         self.assertTrue(result['live_source_fallback_denied'])
 
 
