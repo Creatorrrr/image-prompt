@@ -64,7 +64,7 @@ def retrieve(args):
                       "embedding_env_file": str(args.embedding_env_file.resolve()) if getattr(args,"embedding_env_file",None) else None,
                       "query_cache": str(args.query_cache.resolve()) if getattr(args,"query_cache",None) else None, "started": False}
             atomic_write(transaction, encode(intent))
-        from photo_runtime_sources import RuntimeSnapshotProvider, default_store, SKILL_ROOT
+        from photo_runtime_sources import RuntimeSnapshotProvider, default_store
         pack_path, receipt_path = staging / "pack.json", staging / "receipt.json"
         if not pack_path.exists() or not receipt_path.exists():
             if intent["started"]:
@@ -450,7 +450,6 @@ def native_result(args):
             raise WorkflowError("concrete_native_result_required")
         flags += ["--status", "success", "--image-path", str(path)]
     else:
-        from image_attempt_evidence import validate_evidence
         evidence = read_json(observed["evidence_path"])
         if digest(Path(observed["evidence_path"]).read_bytes()) != observed["evidence_sha256"]:
             raise WorkflowError("stale_native_error_evidence")

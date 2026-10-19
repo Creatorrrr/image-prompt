@@ -78,48 +78,9 @@ finally:
 
 
 SUPPORTED_CANDIDATE_PACK_VERSIONS = {"photo-candidate-pack/v10"}
-MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS = 100
-MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS = 240
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
-MOE_RESPONSE_EVIDENCE_DIMENSIONS = {
-    "actor_phrase": "subject",
-    "aesthetic_baseline_phrase": "style",
-    "affective_leak_phrase": "expression",
-    "active_denial_phrase": "expression",
-    "care_action_anchor_phrase": "relationship",
-    "relationship_gaze_anchor_phrase": "relationship",
-    "concealed_affection_phrase": "expression",
-    "benevolent_affect_phrase": "expression",
-    "baseline_phrase": "role",
-    "event_phase_phrase": "event",
-    "trigger_phrase": "event",
-    "target_phrase": "event",
-    "visible_response_phrase": "expression",
-    "immediate_consequence_phrase": "event",
-    "continuity_phrase": "event",
-    "background_control_phrase": "setting",
-    "focal_plane_phrase": "composition",
-    "reference_identity_phrase": "identity",
-}
-MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS = {
-    "aesthetic_style_default": ("style",),
-    "aesthetic_expression_default": ("expression",),
-    "affective_balance_default": ("expression",),
-    "generic_character_response_mechanism": (
-        "event",
-        "expression",
-        "pose",
-        "relationship",
-    ),
-    "generic_relationship_register": ("relationship", "expression"),
-    "default_sensual_support": ("sexual_tone", "style", "composition"),
-    "generic_expression_negative_suppression": ("expression",),
-    "generic_style_negative_suppression": ("style",),
-    "generic_appearance_negative_suppression": ("appearance",),
-    "generic_text_negative_suppression": ("text",),
-}
 ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS = {
     "sexual_tone",
     "style",
@@ -129,106 +90,6 @@ ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS = {
     "body_geometry",
     "framing",
     "lighting",
-}
-MOE_WARM_AFFECT_GROUPS = (
-    ("softened eye", "soft eyes", "eyes soften", "gentle eye", "warm eye"),
-    (
-        "lower lids soften",
-        "softened lower lids",
-        "lower eyelids soften",
-        "softened lower eyelids",
-    ),
-    (
-        "almost-smile",
-        "almost smile",
-        "near-smile",
-        "near smile",
-        "smile threatens",
-        "smile starts",
-    ),
-    (
-        "mouth corner lifts",
-        "lifted mouth corner",
-        "pleased mouth corner",
-        "relieved mouth corner",
-    ),
-    ("mouth corner starts to lift", "mouth corner begins to lift"),
-    ("fond", "fondness", "pleased", "relieved", "tender", "warmth"),
-    (
-        "playful embarrassment",
-        "playfully embarrassed",
-        "bashful delight",
-        "private delight",
-    ),
-)
-MOE_NEGATIVE_AFFECT_CUES = (
-    "annoyed",
-    "angry",
-    "averted gaze",
-    "bored",
-    "cold stare",
-    "frown",
-    "irritated",
-    "listless",
-    "pout",
-    "pursed",
-    "sad",
-    "scowl",
-    "skeptical",
-    "sullen",
-)
-MOE_WARM_EXPRESSION_DEFAULT_MARKERS = (
-    "softened eye",
-    "soft eyes",
-    "eyes soften",
-    "gentle eye",
-    "warm eye",
-    "lower lids soften",
-    "softened lower lids",
-    "lower eyelids soften",
-    "softened lower eyelids",
-    "almost-smile",
-    "almost smile",
-    "near-smile",
-    "near smile",
-    "smile threatens",
-    "smile starts",
-    "mouth corner lifts",
-    "lifted mouth corner",
-    "pleased mouth corner",
-    "relieved mouth corner",
-    "mouth corner starts to lift",
-    "mouth corner begins to lift",
-    "fondness",
-    "playful embarrassment",
-    "playfully embarrassed",
-    "bashful delight",
-    "private delight",
-)
-MOE_NEGATIVE_DEFAULT_TERMS_BY_RULE = {
-    "generic_expression_negative_suppression": (
-        "blank bored expression",
-        "listless expression",
-        "pure scowl without a warm micro-expression",
-    ),
-    "generic_style_negative_suppression": (
-        "generic sparkle overlays",
-        "decorative blush circles",
-        "unrequested heart symbols",
-        "heart-shaped pupils",
-        "heart-shaped latte art",
-        "cartoon motion lines",
-        "manga reaction marks",
-        "comic emphasis marks",
-    ),
-    "generic_appearance_negative_suppression": ("oversized anime eyes",),
-    "generic_text_negative_suppression": (
-        "readable background text",
-        "pseudo-writing",
-        "menu board lettering",
-        "chalkboard writing",
-        "signage behind the subject",
-    ),
 }
 SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v2"
 CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
@@ -5805,7 +5666,6 @@ def audit_selected_native_profile(entry, interpretation, prompt):
 def audit_native_profile_choices(pack,composed,source_data,chosen,interpretations):
     """The presented choice never substitutes for current canonical source proof."""
     import photo_candidate_corpus as corpus
-    import photo_candidate_realizations as realizations
     import photo_semantic_evidence as native
     value=pack.get('native_profile_choices')
     native_profile_choice_rows(pack)

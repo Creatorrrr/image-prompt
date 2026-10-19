@@ -108,7 +108,6 @@ NATIVE_BUNDLE_CONTRACT = 'photo-native-selected-members/v1'
 def native_bundle_view(data, bundle, pack, realization_id, dependency_selections=None,owner_selections=None):
     """Expose root obligations separately from explicitly adopted child choices."""
     import photo_candidate_corpus as c
-    import photo_candidate_realizations as realizations
     import photo_semantic_evidence as native
     import photo_shared_views as views
     import prompt_generator as g

@@ -9,7 +9,6 @@ import copy
 PROJECTION_FIELDS = frozenset({'en', 'ko', 'embedding_text', 'concept_units', 'relations'})
 # The existing primitive shape is unchanged. Mechanisms have an explicit
 # per-kind extension because their canonical positive meaning lives in definition.
-MECHANISM_PROJECTION_CONTRACT = 'photo-relationship-realization-content/v1'
 MECHANISM_PROJECTION_FIELDS = PROJECTION_FIELDS | {'definition'}
 PROFILE_PROJECTION_FIELDS = PROJECTION_FIELDS | {'authored_components','semantics'}
 PROFILE_COMPILED_FIELDS = ('composition_instruction','required_evidence_fields','evidence_requirements','render_gates')

@@ -82,7 +82,6 @@ def validate_source_only_declaration(record):
 
 def validate_declaration(record, proof):
     """Symmetric source/proof opt-in, with direct ordinary source E anchors."""
-    import photo_semantic_evidence as n
     d = declaration(record)
     if d is None:
         _require('permission_envelopes' not in proof, 'proof cannot introduce a permission contract')
@@ -412,7 +411,6 @@ def required(entry):
 
 def enforce(context, entries, core):
     """Same B1 view and exact authority, mandatory even through compact/lazy routes."""
-    import photo_semantic_evidence as n
     active=_ACTIVE.get()
     expected_required = set()
     if active is not None:

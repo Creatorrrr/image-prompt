@@ -20,7 +20,6 @@ DIMENSIONS = frozenset({
     "body_geometry", "expression", "lighting", "framing", "composition",
     "camera", "color", "atmosphere",
 })
-AXIS_DIMENSIONS = {axis: DIMENSIONS for axis in AXES}
 EXPLICIT_OPEN_DIMENSIONS = frozenset({"role", "setting", "relationship", "timing"})
 READINGS = frozenset({"relevant", "potential", "irrelevant", "conflicting", "uncertain"})
 
