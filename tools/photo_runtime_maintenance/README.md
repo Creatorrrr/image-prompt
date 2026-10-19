@@ -32,3 +32,17 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/photo_runtime_maintenance/managed_smoke.
 `state.py capture`, `classify.py`, `source_bundle.py`, `archive_experiments.py --remove`는
 2026-10-19 정리의 고정 기준선/실행용이다. 완료된 기준선을 다시 만들거나
 보호 목록을 새 상태로 덮어써서 정리 검증을 통과시키면 안 된다.
+
+과거 실행과 provider 기록만 검증하려면 별도 진입점을 사용한다.
+
+```sh
+python3 -B tools/photo_runtime_maintenance/native_replay.py inspect --run RUN
+python3 -B tools/photo_runtime_maintenance/native_replay.py verify --run RUN
+python3 -B tools/photo_runtime_maintenance/native_replay.py audit --run RUN
+python3 -B tools/photo_runtime_maintenance/historical_evidence.py --result RESULT_JSON --output /tmp/new-history-check.json
+```
+
+`inspect`는 원래 receipt/manifest/코드 연결, `verify`는 전체 세대 파일 hash,
+`audit`는 원래 봉인 코드의 receipt·구성 감사를 확인한다. 새 임베딩·원격 호출·
+CURRENT 전환과 현재 소스로의 fallback은 제공하지 않는다. 필요한 원본이 없으면
+거부/보류한다. 상세 범위와 남은 레거시는 `docs/research-archives/photo-prompt/REPLAY.md`를 따른다.
