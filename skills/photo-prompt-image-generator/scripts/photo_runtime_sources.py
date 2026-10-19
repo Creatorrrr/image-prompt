@@ -438,14 +438,6 @@ def verify_pack_bindings(pack: dict, snapshot: RuntimeSnapshot, generator, *, re
             raise FreshnessError("source_invalid", "full candidate pack differs from pinned generation recomputation")
 
 
-def publish_if_ready(root: Path, store: Path | None = None) -> bool:
-    """Post-success maintenance hook; an unfinished other index stays pending."""
-    try:
-        SnapshotPublisher(root, store).publish()
-        return True
-    except (OSError, ValueError) as exc:
-        print(f"Runtime publication pending: {exc}", file=sys.stderr)
-        return False
 
 
 class RemoteSourceUpdater:

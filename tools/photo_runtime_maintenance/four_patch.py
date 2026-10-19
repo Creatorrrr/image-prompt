@@ -134,4 +134,57 @@ def prepare():
         'Gemini_calls':0,'CURRENT_writes':0})
 
 
-if __name__=='__main__':prepare()
+def apply_qualified():
+    """Apply the already qualified exact patch once; never publish a generation."""
+    if (scope.E/'APPLICATION.json').exists() or (scope.E/'APPLY-INTENT.json').exists():
+        raise FileExistsError('application already started; inspect instead of repeating')
+    for number in range(1,7):
+        if state.read(scope.E/('STAGE'+str(number).zfill(2)+'.json'))['status']!='PASS':
+            raise ValueError('required stage did not pass')
+    targets=state.read(scope.E/'TARGETS.json')['targets']
+    current=state.status(scope.ROOT)
+    if state.git(scope.ROOT,'diff','--cached','--name-only'):
+        raise ValueError('preserve original staging')
+    originals={}
+    for target in targets:
+        path=scope.ROOT/target['path']
+        if target['path'] in current or state.sha(path)!=target['source_sha256']:
+            raise ValueError('target changed; defer before application')
+        originals[target['path']]=path.read_bytes()
+    patch=state.read(scope.E/'PATCHES.json')['patches']['combined']
+    archive=scope.ROOT/patch['path']
+    if state.sha(archive)!=patch['sha256']:raise ValueError('patch archive changed')
+    raw=gzip.decompress(archive.read_bytes())
+    if hashlib.sha256(raw).hexdigest()!=patch['raw_sha256']:raise ValueError('raw patch changed')
+    with tempfile.TemporaryDirectory(prefix='four-apply-') as temp:
+        file=Path(temp)/'qualified.patch';file.write_bytes(raw)
+        subprocess.run(['git','-C',str(scope.ROOT),'apply','--check',str(file)],check=True)
+        new(scope.E/'APPLY-INTENT.json',{'original_files':{t['path']:t['source_sha256'] for t in targets},
+            'candidate_files':patch['candidate_files'],'patch_raw_sha256':patch['raw_sha256'],
+            'gate_evidence':{str(n):state.sha(scope.E/('STAGE'+str(n).zfill(2)+'.json')) for n in range(1,7)}})
+        subprocess.run(['git','-C',str(scope.ROOT),'apply',str(file)],check=True)
+        try:
+            for target in targets:
+                rel=target['path'];path=scope.ROOT/rel
+                if state.sha(path)!=patch['candidate_files'][rel]:raise ValueError('applied bytes differ from tested copy')
+                tree=ast.parse(originals[rel]);tree.body=[n for n in tree.body if not (isinstance(n,ast.FunctionDef) and n.name==target['name'])]
+                if ast.dump(tree,include_attributes=False)!=ast.dump(ast.parse(path.read_bytes()),include_attributes=False):
+                    raise ValueError('unapproved AST change')
+        except Exception:
+            subprocess.run(['git','-C',str(scope.ROOT),'apply','--reverse','--check',str(file)],check=True)
+            subprocess.run(['git','-C',str(scope.ROOT),'apply','--reverse',str(file)],check=True)
+            raise
+    stat=state.git(scope.ROOT,'diff','--numstat','--',*sorted(scope.SOURCE_PATHS)).decode().splitlines()
+    if sum(int(s.split('\t')[0]) for s in stat)!=0 or sum(int(s.split('\t')[1]) for s in stat)!=50:
+        raise ValueError('diff exceeds exact 50-line removal')
+    new(scope.E/'APPLICATION.json',{'status':'APPLIED_PENDING_POSTCHECKS','applied':patch['candidate_files'],
+        'functions':list(scope.FUNCTIONS),'removed_lines':50,'raw_patch_sha256':patch['raw_sha256'],
+        'remaining_AST_equal':True,'source_publish_calls':0,'Gemini_calls':0,'CURRENT_writes':0})
+    print('Applied qualified four-function patch; exactly 50 removed source lines',flush=True)
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('command',choices=('prepare','apply'),nargs='?',default='prepare')
+    args=parser.parse_args()
+    prepare() if args.command=='prepare' else apply_qualified()
