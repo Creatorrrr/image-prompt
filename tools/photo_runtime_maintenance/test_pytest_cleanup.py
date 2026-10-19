@@ -101,5 +101,28 @@ class PytestCleanupTests(unittest.TestCase):
             with self.assertRaises(ValueError):pytest_gc.finalize()
         self.assertFalse((self.root/'FINALIZE.LOCK').exists())
 
+    def test_pytest_skipped_native_test_does_not_qualify_deletion(self):
+        state.write(self.root/'NATIVE-final.json',{'status':'PASS','test_count':70,'stderr':'OK (skipped=1)'})
+        state.write(self.root/'OFFLINE-FINAL.json',{'status':'PASS','files':65})
+        with mock.patch.object(pytest_gc,'E',self.root):
+            with self.assertRaises(ValueError):pytest_gc.finalize()
+        self.assertFalse((self.root/'FINALIZE.LOCK').exists())
+
+    def test_pytest_incomplete_offline_recovery_blocks_deletion(self):
+        state.write(self.root/'NATIVE-final.json',{'status':'PASS','test_count':70})
+        state.write(self.root/'OFFLINE-FINAL.json',{'status':'PASS','files':64})
+        with mock.patch.object(pytest_gc,'E',self.root):
+            with self.assertRaises(ValueError):pytest_gc.finalize()
+        self.assertFalse((self.root/'FINALIZE.LOCK').exists())
+
+    def test_pytest_incomplete_independent_zip_blocks_deletion(self):
+        for name,value in [('NATIVE-final.json',{'status':'PASS','test_count':70}),
+            ('OFFLINE-FINAL.json',{'status':'PASS','files':65}),('SUITE-absent-B.json',{'status':'PASS'}),
+            ('SAFETY-07-FINAL.json',{'status':'PASS','tests':53,'failures':0,'errors':0}),('ZIP-INDEPENDENT.json',{'status':'PASS','files':64})]:
+            state.write(self.root/name,value)
+        with mock.patch.object(pytest_gc,'E',self.root):
+            with self.assertRaises(ValueError):pytest_gc.finalize()
+        self.assertFalse((self.root/'FINALIZE.LOCK').exists())
+
 
 if __name__=='__main__':unittest.main()

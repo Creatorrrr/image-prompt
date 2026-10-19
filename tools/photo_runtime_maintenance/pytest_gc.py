@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import re
 import sys
 import subprocess
 import tempfile
@@ -144,10 +145,14 @@ def require_final_qualification():
     native=state.read(E/'NATIVE-final.json');offline=state.read(E/'OFFLINE-FINAL.json')
     if native['status']!='PASS' or native['test_count']!=70:
         raise ValueError('final native regression not qualified')
+    if re.search(r'skipped=[1-9][0-9]*',native.get('stderr','')):
+        raise ValueError('native skipped tests do not qualify final deletion')
     if offline['status']!='PASS' or offline['files']!=65:
         raise ValueError('final offline recovery not qualified')
     if state.read(E/'SUITE-absent-B.json')['status']!='PASS':raise ValueError('last absence suite not qualified')
-    if state.read(E/'SAFETY-07.json')['status']!='PASS':raise ValueError('final safety tests not qualified')
+    safety=state.read(E/'SAFETY-07-FINAL.json')
+    if safety['status']!='PASS' or safety['tests']!=53 or safety['failures'] or safety['errors']:
+        raise ValueError('final safety tests not qualified')
     independent=state.read(E/'ZIP-INDEPENDENT.json')
     if independent['status']!='PASS' or independent['files']!=65:
         raise ValueError('independent original-byte recovery not qualified')
