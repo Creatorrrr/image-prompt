@@ -87,14 +87,27 @@ def child(kind,output):
         elif kind=='POLICY':
             available=[ROOT/r['path'] for r in targets() if (ROOT/r['path']).is_file()]
             if QUARANTINE.exists():available.extend(p for p in QUARANTINE.rglob('*.pyc') if p.is_file())
-            if not available:raise ValueError('need an existing forbidden file to prove read denial')
-            original_file=available[0];quarantined=next((p for p in available if p.is_relative_to(QUARANTINE)),None)
-            probes=[original_file]+([quarantined] if quarantined and quarantined!=original_file else [])
-            code="from pathlib import Path;import sys;\nfor name in sys.argv[1:]:\n try:Path(name).read_bytes()\n except PermissionError:pass\n else:raise SystemExit('forbidden cache was readable')\n"
+            reference=None
+            if available:
+                original_file=available[0];quarantined=next((p for p in available if p.is_relative_to(QUARANTINE)),None)
+                probes=[original_file]+([quarantined] if quarantined and quarantined!=original_file else [])
+                exceptions='PermissionError'
+            else:
+                # After GC, prove absence and bind to the earlier real existing-file denial.
+                baseline=state.read(E/'POLICY-baseline.json')
+                expected=hashlib.sha256((checks.profile()+extra).encode()).hexdigest()
+                if baseline['status']!='PASS' or any(r['profile_sha256']!=expected
+                        for r in baseline['cache_read_policy']['sandbox_commands']):
+                    raise ValueError('post-cleanup read policy differs from proved baseline')
+                probes=[ROOT/targets()[0]['path']];exceptions='(PermissionError,FileNotFoundError)'
+                reference='POLICY-baseline.json'
+            code="from pathlib import Path;import sys;\nfor name in sys.argv[1:]:\n try:Path(name).read_bytes()\n except "+exceptions+":pass\n else:raise SystemExit('forbidden cache was readable')\n"
             p=subprocess.run(['/usr/bin/sandbox-exec','-p',checks.profile(),sys.executable,'-I','-c',code,*map(str,probes)],
                 capture_output=True,text=True,env=checks.environment(),timeout=30)
             if p.returncode:raise ValueError('cache read denial not enforced: '+p.stderr+p.stdout)
-            state.write(output,{'status':'PASS','existing_files_denied':list(map(str,probes))})
+            state.write(output,{'status':'PASS','existing_files_denied':list(map(str,probes)) if available else [],
+                'absence_probes':list(map(str,probes)) if not available else [],
+                'earlier_existing_file_policy_proof':reference})
         else:raise ValueError('unknown check kind')
         result=state.read(output)
         if not receipts:raise ValueError('regression ran without a sandbox receipt')
