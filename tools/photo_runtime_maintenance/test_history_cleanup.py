@@ -10,6 +10,8 @@ import zipfile
 import history_proof
 import history_restore
 import history_checks
+import history_gc
+from deferred_gc import rollback
 from history_restore import restore_zip
 from deferred_restore import publish_exclusive
 import state
@@ -100,6 +102,38 @@ class HistoryRecoveryTests(unittest.TestCase):
         with mock.patch.object(history_checks,'E',self.root):
             with self.assertRaises(FileExistsError):history_checks.run_check('NATIVE','old')
         self.assertEqual(output.read_bytes(),b'original evidence')
+
+    def test_rollback_never_overwrites_concurrent_work(self):
+        original=self.root/'original';saved=self.root/'saved'
+        original.write_bytes(b'new user work');saved.write_bytes(b'old cache')
+        self.assertEqual(rollback([(original,saved)]),[str(original)])
+        self.assertEqual(original.read_bytes(),b'new user work');self.assertEqual(saved.read_bytes(),b'old cache')
+
+    def test_rollback_preserves_original_inode(self):
+        original=self.root/'original';saved=self.root/'saved';saved.write_bytes(b'old cache');inode=saved.stat().st_ino
+        self.assertEqual(rollback([(original,saved)]),[]);self.assertEqual(original.stat().st_ino,inode)
+
+    def test_unowned_quarantine_member_prevents_finalization(self):
+        folder=self.root/'quarantine';folder.mkdir();(folder/'cache').write_bytes(b'old')
+        row={'path':'cache','before':state.stamp(folder/'cache')}
+        (folder/'new-user-work').write_bytes(b'keep')
+        with self.assertRaises(ValueError):history_gc.validate_quarantine(folder,[row])
+        self.assertEqual((folder/'new-user-work').read_bytes(),b'keep')
+
+    def test_source_changed_since_freeze_is_deferred(self):
+        root=self.root/'repo';root.mkdir();(root/'cache').write_bytes(b'old');(root/'source.py').write_bytes(b'old source')
+        row={'path':'cache','analysis':{'source':'source.py'},'preflight':'READY',
+            'before':state.stamp(root/'cache'),'source_before':state.stamp(root/'source.py')}
+        (root/'source.py').write_bytes(b'new user work')
+        with mock.patch.object(history_gc,'ROOT',root):
+            with self.assertRaises(ValueError):history_gc.preflight(row)
+        self.assertEqual((root/'source.py').read_bytes(),b'new user work')
+
+    def test_unowned_empty_quarantine_directory_is_preserved(self):
+        folder=self.root/'quarantine';folder.mkdir();(folder/'cache').write_bytes(b'old')
+        row={'path':'cache','before':state.stamp(folder/'cache')};(folder/'user-directory').mkdir()
+        with self.assertRaises(ValueError):history_gc.validate_quarantine(folder,[row])
+        self.assertTrue((folder/'user-directory').is_dir())
 
 
 if __name__=='__main__':unittest.main()
