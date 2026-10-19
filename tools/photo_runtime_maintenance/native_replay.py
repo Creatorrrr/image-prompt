@@ -13,6 +13,12 @@ import checks
 import state as maintenance
 
 HASH = re.compile(r'[0-9a-f]{64}\Z')
+# Reviewed source closures, not IDs supplied by the run being inspected.
+# New historical implementations require a separate provenance review.
+TRUSTED_CODE_SHA256 = {
+    '493f1830db1f564c8acfe0218a24c8445990aa3ec968b948e80d187cfa9f7f90',
+    '44420ac87edc68f5c1236d9e155a47aec3ee7a4096b597b5ddbd4c0e61f1dfcb',
+}
 
 
 def require(condition, reason):
@@ -151,11 +157,15 @@ print(json.dumps({'status':'PASS','generation_id':snapshot.generation_id,'audit_
 
 def audit(run):
     verified = inspect_run(run,full=True)
+    require(verified['code_sha256'] in TRUSTED_CODE_SHA256,'unreviewed_executable_source_closure')
     python = maintenance.ROOT/'skills/photo-prompt-image-generator/.runtime/embedding-python/bin/python'
     # Root itself stays readable for bound input files, never for executable source fallback.
     live = maintenance.ROOT/'skills/photo-prompt-image-generator'
     policy = checks.profile()+'(deny file-read* '+ ' '.join(
         '(subpath '+json.dumps(str(live/p))+')' for p in ('scripts','precore'))+')'
+    # Source hashes must not be bypassed by an undeclared cached/extension module.
+    pattern = '^'+re.escape(verified['generation_root'])+r'/.*\.(pyc|pyo|so|dylib|zip)$'
+    policy += '(deny file-read* (regex '+json.dumps(pattern)+'))'
     process = subprocess.run(['/usr/bin/sandbox-exec','-p',policy,str(python),'-I','-c',WORKER,
         verified['generation_root'],verified['run'],verified['generation_id']],capture_output=True,text=True,
         env=checks.environment(),timeout=240)

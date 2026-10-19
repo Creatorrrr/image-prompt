@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -59,7 +60,25 @@ def run(kind, label):
     if output.exists():
         raise FileExistsError('use a fresh evidence label')
     if kind in ('OPERATING','NATIVE'):
-        checks.run(kind.lower(),output)
+        if kind == 'NATIVE':
+            import history_checks
+            with tempfile.TemporaryDirectory(prefix='logic-native-log-') as temp:
+                log = str(Path(temp)/'native.log')
+                previous = os.environ.get('PHOTO_HISTORY_NATIVE_LOG')
+                os.environ['PHOTO_HISTORY_NATIVE_LOG'] = log
+                scope.new(scope.E/('NATIVE-'+label+'-progress.json'),{
+                    'private_live_log':log,'final_log':'NATIVE-'+label+'.json',
+                    'scope':'temporary progress; full stderr retained in final evidence'})
+                print('native live log:',log,flush=True)
+                try:
+                    history_checks.native_verbose(output)
+                finally:
+                    if previous is None:
+                        os.environ.pop('PHOTO_HISTORY_NATIVE_LOG',None)
+                    else:
+                        os.environ['PHOTO_HISTORY_NATIVE_LOG'] = previous
+        else:
+            checks.run(kind.lower(),output)
         result = state.read(output)
         expected = 48 if kind == 'OPERATING' else 70
         if result['test_count'] != expected or re.search(r'\bskipped[= ]',result['stderr']):
@@ -80,7 +99,7 @@ def run(kind, label):
             '-p','test_native_replay.py','-v']
         process = subprocess.run(command,env=checks.environment(),capture_output=True,text=True,timeout=60)
         count = sum(map(int,re.findall(r'Ran (\d+) tests?',process.stderr)))
-        result = {'status':'PASS' if process.returncode == 0 and count == 15 else 'FAIL',
+        result = {'status':'PASS' if process.returncode == 0 and count == 16 else 'FAIL',
             'test_count':count,'exit_code':process.returncode,'stdout':process.stdout,'stderr':process.stderr,
             'network_denied':True,'model_calls':0,'Gemini_calls':0,'CURRENT_writes':0}
         scope.new(output,result)

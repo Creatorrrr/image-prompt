@@ -26,6 +26,11 @@ python3 -B tools/photo_runtime_maintenance/native_replay.py audit --run RUN
 거부/보류하고 다른 세대나 현재 소스로 넘어가지 않는다. 새 generation·CURRENT·
 receipt는 만들지 않는다. 원래 run의 경로와 내용을 고치지 않는다.
 
+실행 가능한 코드는 검토한 설치본 94개 및 보존된 native 세대 74개의 코드 집합으로
+제한한다. 자체 manifest/receipt를 맞췄어도 미등록 코드 집합은 실행하지 않는다.
+미등록 세대는 inspect/verify로 자료를 확인할 수 있지만 audit는 추가 출처 검토까지
+보류한다. 검증한 소스 대신 미등록 bytecode·확장 모듈을 읽는 경로도 차단한다.
+
 실제 검증한 것은 기존 설치 run 1건의 원래 native receipt·구성 감사다. 원래 store가
 없는 과거 실행 41건을 새로 복원하거나 모두 재현한 것으로 해석하지 않는다.
 
