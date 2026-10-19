@@ -4,7 +4,10 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest import mock
+import stat
+import zipfile
 
+import pytest_checks
 import pytest_proof
 import pytest_restore
 from pytest_restore import restore_zip
@@ -58,6 +61,22 @@ class PytestCleanupTests(unittest.TestCase):
         seal.write_bytes(b'tampered')
         with mock.patch.object(pytest_restore,'E',self.root),mock.patch.object(pytest_restore,'SEAL',seal):
             with self.assertRaises(ValueError):pytest_restore.load_seal()
+
+    def test_unicode_normalization_collision_never_publishes(self):
+        archive=self.root/'collision.zip';seal={'files':{}}
+        with zipfile.ZipFile(archive,'w') as z:
+            for name in ('\u00e9.pyc','e\u0301.pyc'):
+                info=zipfile.ZipInfo(name);info.external_attr=(stat.S_IFREG|0o640)<<16
+                z.writestr(info,b'old');seal['files'][name]={'bytes':3,'sha256':hashlib.sha256(b'old').hexdigest(),'mode':0o640}
+        seal['archive_sha256']=state.sha(archive)
+        with self.assertRaises(ValueError):restore_zip(archive,seal,self.root/'new')
+        self.assertFalse((self.root/'new').exists())
+
+    def test_regression_worker_preserves_previous_failure_evidence(self):
+        evidence=self.root/'OPERATING-old.json';evidence.write_bytes(b'previous failure')
+        with mock.patch.object(pytest_checks,'E',self.root):
+            with self.assertRaises(FileExistsError):pytest_checks.run_check('OPERATING','old')
+        self.assertEqual(evidence.read_bytes(),b'previous failure')
 
 
 if __name__=='__main__':unittest.main()
