@@ -131,6 +131,11 @@ def verify(output=None):
         for p,actual in zip(paths,pool.map(state.stamp,paths)):
             if actual != baseline['files'][p]:
                 failures.append(p)
+    historical = E/'HISTORICAL-EVIDENCE.json'
+    extra = state.read(historical)['original_files'] if historical.exists() else {}
+    for path,stamp in extra.items():
+        if state.stamp(path) != stamp:
+            failures.append(path+': historical evidence changed')
     for work,row in baseline['repositories'].items():
         dirty = state.status(work)
         if work == str(ROOT):
@@ -150,6 +155,7 @@ def verify(output=None):
         if Path(p).exists() or Path(p).is_symlink():
             failures.append(p+': prior cache reappeared')
     result = {'status':'FAIL' if failures else 'PASS','protected_paths':len(paths),
+        'additional_historical_paths':len(extra),
         'CURRENT_count':len(baseline['pointers']),'failures':failures,
         'source_changes':0,'Gemini_calls':0,'CURRENT_writes':0}
     if output:
@@ -168,6 +174,9 @@ def checkpoint(output):
         or (Path(p).parent in {skill/'scripts',skill/'precore'} and Path(p).suffix == '.py')
         or Path(p).name in {'retrieval-runtime.json','embedding-default.json','embedding-runtime.lock.json'}
         or (Path(p).suffix == '.pyc' and Path(p).is_relative_to(ROOT))}
+    historical = E/'HISTORICAL-EVIDENCE.json'
+    if historical.exists():
+        selected.update(state.read(historical)['original_files'])
     failures = [p for p,s in selected.items() if state.stamp(p) != s]
     for work,row in baseline['repositories'].items():
         current = state.status(work)
