@@ -6412,9 +6412,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     return 0 if result["status"] == "pass" else 1
 
 
-def english_prompt_word_count(text: str) -> int:
-    """Count image-prompt words consistently across the contract and audit."""
-    return len(re.findall(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", str(text or "")))
 
 
 if __name__ == "__main__":

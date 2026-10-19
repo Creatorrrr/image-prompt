@@ -468,8 +468,6 @@ def character_axis_value_matches(data: JsonDict, axis: str, value: Any) -> JsonD
     return axis_value_matches(value, character_axis_class_aliases(data, axis))
 
 
-def character_axis_value_classes(data: JsonDict, axis: str, value: Any) -> Set[str]:
-    return set(character_axis_value_matches(data, axis, value)["classes"])
 
 
 def validate_character_mechanism_graph(data: JsonDict) -> None:
@@ -7848,15 +7846,6 @@ def dictionary_hash(data):
 
 
 
-def cosine_similarity(a: Sequence[float], b: Sequence[float]) -> float:
-    if not a or not b:
-        return 0.0
-    numerator = sum(x * y for x, y in zip(a, b))
-    norm_a = math.sqrt(sum(x * x for x in a))
-    norm_b = math.sqrt(sum(y * y for y in b))
-    if norm_a <= 0 or norm_b <= 0:
-        return 0.0
-    return numerator / (norm_a * norm_b)
 
 
 
@@ -8215,12 +8204,6 @@ DIMENSION_FIELDS = {
 
 
 
-def core_focal_hit_supported(index: dict, query_terms: set[str], document_id: str) -> bool:
-    """Require authored content overlap, not function words or boilerplate."""
-    fields = index["documents"][document_id]["fields"]
-    terms = {term for name, field in fields.items() if name != "semantic_caption"
-             for term in field["term_frequencies"]}
-    return bool(query_terms & terms)
 
 def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, dict]:
     constraints = resolve_request_intent_constraints(data, None, {}, authorial_core=core)
@@ -8496,27 +8479,6 @@ def load_runtime_data(source_path=None,*,inventory=None):
 
 
 
-def filter_authorial_negative_entries(
-    entries: Sequence[Entry],
-    core: JsonDict,
-    *,
-    identity_preservation_enabled: bool,
-) -> tuple[List[Entry], List[str]]:
-    """Remove downstream negatives that can author a different image meaning."""
-
-    kept: List[Entry] = []
-    suppressed: List[str] = []
-    for entry in entries:
-        term = localize(entry, "en").strip()
-        if authorial_negative_term_allowed(
-            term,
-            core,
-            identity_preservation_enabled=identity_preservation_enabled,
-        ):
-            kept.append(entry)
-        elif term:
-            suppressed.append(term)
-    return kept, suppressed
 
 
 def authorial_negative_term_allowed(
