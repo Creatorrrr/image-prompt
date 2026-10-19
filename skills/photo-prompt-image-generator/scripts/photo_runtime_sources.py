@@ -24,10 +24,9 @@ from photo_global_index_storage import atomic_write, canonical_bytes, decode, di
 from photo_candidate_sources import SourceInventory
 import photo_candidate_corpus
 import photo_global_index
-import photo_shared_views
 import photo_native_pack
 import photo_search_layout
-from photo_search_reader import SearchReader, LazyRuntimeData, identity
+from photo_search_reader import LazyRuntimeData, identity
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 GENERATION_SCHEMA = "photo-runtime-generation/v3"
