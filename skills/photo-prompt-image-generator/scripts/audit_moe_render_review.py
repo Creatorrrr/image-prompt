@@ -158,7 +158,6 @@ def audit_moe_render_review(
     """Return a deterministic promotion decision from declared review gates."""
     schema_failures: list[dict[str, Any]] = []
     failed_hard_gates: list[dict[str, Any]] = []
-    qualification = {}
     base_required_gates: list[str] = []
     character_contract, character_gates, character_failures = (
         derive_character_response_render_gates(pack, composed)
@@ -296,12 +295,6 @@ def audit_moe_render_review(
                     "reason": "unsupported visual-obligations contract_version",
                 }
             )
-        visual_required_gates = [
-            str(value)
-            for value in visual_contract.get("required_hard_gates") or []
-            if isinstance(value, str) and value.strip()
-        ]
-        missing_from_qualification = sorted(set(visual_required_gates) - set(base_required_gates))
     if (
         has_character_contract
         or has_embodiment_contract
@@ -418,11 +411,6 @@ def audit_moe_render_review(
             }
         )
     technical_qualified = not schema_failures and (not failed_hard_gates)
-    comparison_accepted = (
-        better_than_baseline == "accepted"
-        if baseline_available
-        else better_than_baseline == "not_applicable"
-    )
     representative_eligible = False
     if not technical_qualified:
         qualification_status = "failed_technical_hard_gates"
