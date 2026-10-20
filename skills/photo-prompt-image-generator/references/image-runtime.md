@@ -24,7 +24,7 @@ A missing native local path alone does not authorize a new paid API call. Use th
 
 ## Saving
 
-Copy a native result into `generated_images/<concept>-<timestamp>/` only when the tool returns a concrete accessible local path or creates a file that can be identified exactly. Do not reconstruct files from UI blobs, app caches, screenshots, browser logs, or inferred names.
+Copy a native result into `generated/images/<concept>-<timestamp>/` only when the tool returns a concrete accessible local path or creates a file that can be identified exactly. Do not reconstruct files from UI blobs, app caches, screenshots, browser logs, or inferred names.
 
 If no concrete path exists, finish as preview-only and say no worktree copy or ledger record was created.
 

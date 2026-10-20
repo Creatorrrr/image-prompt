@@ -5,7 +5,6 @@
     "local_inbox": {
       "enabled": true,
       "collection_method": "local_inbox",
-      "path": "data/raw/inbox",
       "rate_limit_per_run": 200,
       "policy_note": "User-supplied files only."
     },
@@ -28,7 +27,9 @@
     "x_api": {
       "enabled": true,
       "collection_method": "official_api",
-      "required_env": ["X_BEARER_TOKEN"],
+      "required_env": [
+        "X_BEARER_TOKEN"
+      ],
       "endpoint": "https://api.x.com/2/tweets/search/recent",
       "query": "(\"AI image\" OR \"image prompt\" OR \"prompt share\") has:images -is:retweet",
       "rate_limit_per_run": 50,
@@ -37,7 +38,9 @@
     "threads_official": {
       "enabled": false,
       "collection_method": "official_api",
-      "required_env": ["THREADS_ACCESS_TOKEN"],
+      "required_env": [
+        "THREADS_ACCESS_TOKEN"
+      ],
       "search_endpoint": "",
       "query": "AI image prompt",
       "rate_limit_per_run": 50,

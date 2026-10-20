@@ -19,7 +19,7 @@ PROJECT_ROOT = SKILL_DIR.parents[1]
 if str(SKILL_DIR / "scripts") not in sys.path:
     sys.path.insert(0, str(SKILL_DIR / "scripts"))
 from image_attempt_evidence import validate_evidence
-DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
+DEFAULT_LEDGER = PROJECT_ROOT / "generated" / "photo-runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}

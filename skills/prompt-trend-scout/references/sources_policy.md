@@ -29,7 +29,7 @@ Every adapter must be declared in `assets/source_registry.json`.
 
 ## Output Rules
 
-- Raw source text, author handles, and media stay under gitignored `data/raw`.
+- Raw source text, author handles, and media stay under gitignored `generated/trend-scout/raw`.
 - Reports must not include source handles, raw prompts, raw captions, or source media.
 - "Do not repost", "do not steal", watermark, and credit-required signals become `no_raw_reuse` and `no_republish`.
 - Private abstraction is allowed; raw reuse or reupload is not.

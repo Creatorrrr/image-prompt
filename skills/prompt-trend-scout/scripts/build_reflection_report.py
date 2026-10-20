@@ -4,12 +4,14 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 from pathlib import Path
+import shlex
 from typing import Any
 
 from common import default_data_dir, read_records, run_id, utc_now, write_json
 
 
-def build_markdown(report: dict[str, Any]) -> str:
+def build_markdown(report: dict[str, Any], *, report_path: Path | None = None) -> str:
+    report_path = report_path or default_data_dir() / "reports" / f"{report['report_id']}.json"
     candidates = report["candidates"]
     lines = [
         f"# Prompt Trend Reflection Report - {report['report_id']}",
@@ -63,7 +65,7 @@ def build_markdown(report: dict[str, Any]) -> str:
             "",
             "```bash",
             "python3 skills/prompt-trend-scout/scripts/apply_reflection.py \\",
-            f"  --report skills/prompt-trend-scout/data/reports/{report['report_id']}.json \\",
+            f"  --report {shlex.quote(str(report_path))} \\",
             "  --select <candidate_id>,<candidate_id> \\",
             "  --approved-by \"<reviewer>\" \\",
             "  --dry-run",
@@ -115,12 +117,12 @@ def build_report(
         "candidates": candidates,
         "report_markdown": "",
     }
-    report["report_markdown"] = build_markdown(report)
     data_root = default_data_dir(data_dir)
     out_dir = Path(output_dir) if output_dir else data_root / "reports"
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / f"{report_id}.json"
     md_path = out_dir / f"{report_id}.md"
+    report["report_markdown"] = build_markdown(report, report_path=json_path)
     write_json(json_path, report)
     md_path.write_text(report["report_markdown"], encoding="utf-8")
     return {"report_id": report_id, "json": str(json_path), "markdown": str(md_path), "report": report}
