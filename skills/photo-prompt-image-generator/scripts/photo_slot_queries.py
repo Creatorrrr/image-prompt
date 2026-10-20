@@ -44,7 +44,7 @@ def inputs(core, controls, catalog, slot, language='en'):
 
 def context(core, controls, catalog, slot, cache, language='en', *, space=None, result=None):
     space=space or default_space()
-    text, fields, binding = inputs(core, controls, catalog, slot, language)
+    text, _fields, binding = inputs(core, controls, catalog, slot, language)
     row = result or embed(text, binding, cache,space=space)
     value = {'schema': CONTEXT_SCHEMA, 'text': text, 'text_sha256': hashlib.sha256(text.encode()).hexdigest(),
              'binding': binding, 'space': space, 'vector': row['vector'], 'vector_sha256': row['vector_sha256'],

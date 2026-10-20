@@ -23,7 +23,8 @@ DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}
-VALID_CANDIDATE_PACK_VERSIONS = {"v9"}
+CURRENT_CANDIDATE_PACK_VERSION = "v10"
+VALID_CANDIDATE_PACK_VERSIONS = {CURRENT_CANDIDATE_PACK_VERSION}
 MODERN_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v2"
 
 
@@ -205,6 +206,9 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
             raise ValueError("--reference-sha256 must be a 64-character SHA-256")
     if args.image_call_count is not None and args.image_call_count < 1:
         raise ValueError("--image-call-count must be at least 1")
+    if (args.candidate_pack_version is not None
+            and args.candidate_pack_version not in VALID_CANDIDATE_PACK_VERSIONS):
+        raise ValueError(f"new records require candidate-pack version {CURRENT_CANDIDATE_PACK_VERSION}")
     optional_provenance = {
         "arm_id": args.arm_id,
         "worktree_id": args.worktree_id,
@@ -260,8 +264,10 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
 
 
 def build_independent_manifest(entry: dict[str, object], args: argparse.Namespace) -> dict[str, object]:
-    if args.candidate_pack_version != 'v9':
-        raise ValueError('independent manifests require candidate-pack version v9')
+    if args.candidate_pack_version != CURRENT_CANDIDATE_PACK_VERSION:
+        raise ValueError(f'independent manifests require candidate-pack version {CURRENT_CANDIDATE_PACK_VERSION}')
+    if entry.get('candidate_pack_version') != args.candidate_pack_version:
+        raise ValueError('manifest candidate-pack version differs from its ledger entry')
     common_required_values = {'arm_id': args.arm_id, 'worktree_id': args.worktree_id, 'skill_sha256': args.skill_sha256, 'source_ref': args.source_ref, 'candidate_pack_version': args.candidate_pack_version, 'image_call_count': args.image_call_count}
     contract_version = MODERN_INDEPENDENT_RUN_MANIFEST_VERSION
     required_values = {**common_required_values, **{'authorial_core_sha256': args.authorial_core_sha256, 'intent_lock_sha256': args.intent_lock_sha256}}
@@ -358,8 +364,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--skill-sha256", default=None, help="SHA-256 of the frozen skill snapshot used by the arm.")
     parser.add_argument("--source-ref", default=None, help="Commit or source-snapshot identity used by the arm.")
     parser.add_argument("--candidate-pack-version", choices=sorted(VALID_CANDIDATE_PACK_VERSIONS), default=None, help="Candidate-pack version used by the arm.")
-    parser.add_argument("--authorial-core-sha256", default=None, help="Canonical pre-pack authorial core SHA-256 for v9.")
-    parser.add_argument("--intent-lock-sha256", default=None, help="Canonical requesting-user intent-lock SHA-256 for v9.")
+    parser.add_argument("--authorial-core-sha256", default=None, help="Canonical pre-pack authorial core SHA-256 for the current candidate pack.")
+    parser.add_argument("--intent-lock-sha256", default=None, help="Canonical requesting-user intent-lock SHA-256 for the current candidate pack.")
     parser.add_argument("--render-repair-contract-sha256", default=None, help="Canonical generic render-repair contract SHA-256, when enabled.")
     parser.add_argument("--failed-repair-gate-id", action="append", default=[], help="Failed generic repair hard-gate ID. Repeatable.")
     parser.add_argument("--reference-sha256", action="append", default=[], help="SHA-256 for an attached reference input. Repeatable.")

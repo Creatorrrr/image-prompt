@@ -208,7 +208,7 @@ def attach_child(args):
 
 def verify_child(state):
     proof, context = value(state, "retry_proof"), value(state, "retry_context")
-    actual, parent = recompute(proof)
+    actual, _parent = recompute(proof)
     if actual != context or context["projection_sha256"] != proof["projection_sha256"]:
         raise WorkflowError("retry_projection_mismatch")
     from photo_precore_bridge import load

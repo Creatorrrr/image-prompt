@@ -20,7 +20,7 @@ from photo_installed_h_f2 import (CONFIG, SCHEMA, SKILL_ROOT, default_store,
 def install(source_store, generation_id, *, destination=None, skill_root=SKILL_ROOT):
     source_store = Path(source_store).resolve()
     destination = Path(destination or default_store()).resolve()
-    native, manifest, native_manifest = release(source_store, generation_id, full=True)
+    _native, manifest, native_manifest = release(source_store, generation_id, full=True)
     require(manifest["CID_count"] > 0 and manifest["RID_count"] >= manifest["CID_count"], "empty candidate release")
     before = {str(p): file_sha(p) for p in destination.parent.rglob("CURRENT.json")}
     destination.mkdir(parents=True, exist_ok=True)

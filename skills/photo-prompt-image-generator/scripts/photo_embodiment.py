@@ -22,7 +22,7 @@ from __future__ import annotations
 def policy_from_pack(pack: dict) -> dict:
     marker = (pack.get("provenance") or {}).get("embodiment_preflight_required")
     if pack.get("contract_version") != "photo-candidate-pack/v10" or marker is not True:
-        raise ValueError("embodiment preflight requires a v9 pack and its explicit provenance marker")
+        raise ValueError("embodiment preflight requires a v10 pack and its explicit provenance marker")
     policy = pack.get("embodiment_preflight")
     if not isinstance(policy, dict):
         raise ValueError("required embodiment preflight is missing")

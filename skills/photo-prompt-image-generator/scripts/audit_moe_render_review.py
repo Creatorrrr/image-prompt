@@ -111,7 +111,7 @@ def derive_character_response_render_gates(
         failures.append(
             {
                 "check": "character_response_contract",
-                "reason": "typed character-response render review requires an original v9 pack and v3 core",
+                "reason": "typed character-response render review requires an original v10 pack and v3 core",
             }
         )
     if not isinstance(composed, dict):
@@ -158,7 +158,6 @@ def audit_moe_render_review(
     """Return a deterministic promotion decision from declared review gates."""
     schema_failures: list[dict[str, Any]] = []
     failed_hard_gates: list[dict[str, Any]] = []
-    base_required_gates: list[str] = []
     character_contract, character_gates, character_failures = (
         derive_character_response_render_gates(pack, composed)
     )
@@ -211,7 +210,7 @@ def audit_moe_render_review(
         )
     required_gates = list(
         dict.fromkeys(
-            base_required_gates + character_gates + effective_visual_gates + embodiment_gates
+            character_gates + effective_visual_gates + embodiment_gates
         )
     )
     if not required_gates:
@@ -416,8 +415,6 @@ def audit_moe_render_review(
         qualification_status = "failed_technical_hard_gates"
     elif genuinely_moe == "rejected" or better_than_baseline == "rejected":
         qualification_status = "rejected_by_requesting_user"
-    elif representative_eligible:
-        qualification_status = "representative_eligible"
     elif has_character_contract:
         qualification_status = "character_response_technical_qualified_user_judgment_pending"
     else:
@@ -459,7 +456,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--composed",
         help=(
-            "Audited composed-prompt JSON; required for typed v9 character response "
+            "Audited composed-prompt JSON; required for typed V10 character response "
             "or when the pack exposes optional visual concept candidates"
         ),
     )
