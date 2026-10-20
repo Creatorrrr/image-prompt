@@ -33,7 +33,7 @@ Then route by mode:
 - series: additionally read [05-series-and-selection.md](references/05-series-and-selection.md).
 - revise: read the methodology, composition, compiler, and quality-control references; preserve the source prompt's authored core while repairing only the stated problem.
 
-Use [keyword-to-prompt-examples.md](examples/keyword-to-prompt-examples.md) only when an example materially helps resolve ambiguity. Acceptance behavior is recorded in [acceptance-cases.md](tests/acceptance-cases.md).
+Use [keyword-to-prompt-examples.md](examples/keyword-to-prompt-examples.md) only when an example materially helps resolve ambiguity.
 
 ## Core workflow
 

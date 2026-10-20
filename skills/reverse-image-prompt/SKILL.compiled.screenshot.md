@@ -9,7 +9,7 @@ description: Reverse engineer a standalone English text-to-image prompt from a p
 
 Turn one image into a standalone English text-to-image prompt preserving its primary perceptual proposition, composition, visible relationships, form, surface, light, color, medium, crop, and meaningful imperfections. Default to faithful reconstruction.
 
-First distinguish image work from maintenance of this skill. For structure review or revision, inspect the requested files and `references/behavior-evaluation.md`; an image is required only for an image-dependent test. For image work, inspect the exact attached/local source. Ask for a missing source only when the requested result depends on it. Process multiple images independently unless the user asks to combine them. User instructions determine the task scope and take precedence over skill defaults.
+First distinguish image work from maintenance of this skill. For structure review or revision, inspect the requested sources and check module/manifest integrity with `tools/validate_modules.py` and `tools/gen_manifest.py --check`; an image is required only for an image-dependent test. For image work, inspect the exact attached/local source. Ask for a missing source only when the requested result depends on it. Process multiple images independently unless the user asks to combine them. User instructions determine the task scope and take precedence over skill defaults.
 
 ## Intent and analysis profile
 
@@ -45,9 +45,9 @@ Conditional references:
 
 - Named downstream generator: `references/model-adapters.md`. It owns supported tool settings and formatting, while core salience and causal order remain authoritative.
 - Delegation, analysis harness/model binding, or execution telemetry: `references/analysis-runtime.md`. Read its task-adaptive effort policy before spawning lanes or a critic. Analysis configuration is separate from generator settings and never enters the production prompt.
+- Persisted audited analysis plans and atomic obligations: `references/analysis-plan-contract.md`.
 - Selected color or lighting fidelity with measurement, controlled revision, generation, or source/render comparison: `references/color-reproduction-evaluation.md` or `references/lighting-reproduction-evaluation.md`.
 - Measured surface vocabulary or a surface descriptor/label: `references/surface-color-language.md`. Composite/friendly lighting language: `references/lighting-language.md`. Use current-source axes and explicit provenance; never start from a preferred label or demographic proxy.
-- Skill evaluation/revision: `references/behavior-evaluation.md`.
 
 ## Route and analyze
 

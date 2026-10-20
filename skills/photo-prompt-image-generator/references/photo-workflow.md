@@ -125,8 +125,8 @@ Prompt-only runs reject actual rendering. Prepare and audit before requesting
 any missing authorization for a concrete execution.
 
 ```bash
-python skills/photo-prompt-image-generator/scripts/photo_workflow.py render-api --run RUN --ledger runs/image_runs.ndjson --dry-run
-python skills/photo-prompt-image-generator/scripts/photo_workflow.py render-api --run RUN --ledger runs/image_runs.ndjson --attempts 2
+python skills/photo-prompt-image-generator/scripts/photo_workflow.py render-api --run RUN --ledger generated/photo-runs/image_runs.ndjson --dry-run
+python skills/photo-prompt-image-generator/scripts/photo_workflow.py render-api --run RUN --ledger generated/photo-runs/image_runs.ndjson --attempts 2
 ```
 
 Dry-run reads no API key, invokes no provider, and appends no attempt row. Actual
@@ -195,7 +195,7 @@ Mechanical error routes require corresponding observed provider evidence.
 
 ```bash
 python skills/photo-prompt-image-generator/scripts/prepare_retry_context.py prepare \
-  --run PARENT_RUN --attempt exact-ledger-row.json --ledger runs/image_runs.ndjson \
+  --run PARENT_RUN --attempt exact-ledger-row.json --ledger generated/photo-runs/image_runs.ndjson \
   --current-envelope child-envelope.json --decision repair-decision.json --output RETRY_DIR
 python skills/photo-prompt-image-generator/scripts/photo_workflow.py attach-retry \
   --run CHILD_RUN --proof RETRY_DIR/retry_proof.json

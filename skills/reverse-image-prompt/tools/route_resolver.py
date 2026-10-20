@@ -360,67 +360,13 @@ def resolve_analysis_route(
     return {**route, "route_fingerprint": analysis_route_fingerprint(route)}
 
 
-def load_scenarios(path: Path) -> list[dict[str, Any]]:
-    data = json.loads(path.read_text(encoding="utf-8"))
-    if isinstance(data, dict):
-        return list(data.get("scenarios", []))
-    if isinstance(data, list):
-        return data
-    raise ValueError("scenario file must contain a JSON-compatible YAML object or list")
 
 
-def check_scenarios(path: Path, manifest: dict[str, Any]) -> int:
-    scenarios = load_scenarios(path)
-    failures: list[str] = []
-    results: list[dict[str, Any]] = []
-    module_meta = module_map(manifest)
-
-    for scenario in scenarios:
-        sid = scenario.get("id", "<unnamed>")
-        try:
-            resolved = resolve_modules(scenario.get("facets", {}), manifest)
-        except Exception as exc:  # noqa: BLE001 - CLI should show fixture failure plainly.
-            expected_error = scenario.get("expect_error_contains")
-            if expected_error and str(expected_error) in str(exc):
-                results.append({"id": sid, "expected_error": str(exc)})
-                continue
-            failures.append(f"{sid}: resolver error: {exc}")
-            continue
-
-        if scenario.get("expect_error_contains"):
-            failures.append(f"{sid}: expected resolver error containing {scenario['expect_error_contains']!r}")
-            continue
-
-        module_set = set(resolved)
-        missing = [mid for mid in scenario.get("expect_includes", []) if mid not in module_set]
-        unexpected = [mid for mid in scenario.get("expect_excludes", []) if mid in module_set]
-        if missing:
-            failures.append(f"{sid}: missing expected modules: {', '.join(missing)}")
-        if unexpected:
-            failures.append(f"{sid}: unexpected modules: {', '.join(unexpected)}")
-
-        non_core_count = sum(int(module_meta[mid].get("tier", 99)) != 0 for mid in resolved)
-        maximum = int(scenario.get("max_non_core_modules", MAX_NON_CORE_MODULES))
-        if non_core_count > maximum:
-            failures.append(f"{sid}: selected {non_core_count} non-core modules, maximum is {maximum}")
-
-        results.append({"id": sid, "non_core_count": non_core_count, "modules": resolved})
-
-    if failures:
-        print("ROUTING FAILED")
-        for failure in failures:
-            print(f"- {failure}")
-        print(json.dumps(results, indent=2, ensure_ascii=False))
-        return 1
-
-    print(json.dumps({"status": "ok", "scenario_count": len(scenarios), "results": results}, indent=2, ensure_ascii=False))
-    return 0
 
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--facets", default="", help="JSON object containing detected facets")
-    parser.add_argument("--scenarios", default="", help="JSON-compatible YAML scenario fixture")
     parser.add_argument(
         "--analysis-route",
         action="store_true",
@@ -435,8 +381,6 @@ def main(argv: list[str]) -> int:
     args = parser.parse_args(argv)
 
     manifest = load_manifest(ROOT)
-    if args.scenarios:
-        return check_scenarios(Path(args.scenarios), manifest)
     if args.facets:
         facets = json.loads(args.facets)
         if args.analysis_route:
@@ -457,7 +401,6 @@ def main(argv: list[str]) -> int:
         non_core_count = sum(int(modules[mid].get("tier", 99)) != 0 for mid in resolved)
         print(json.dumps({"non_core_count": non_core_count, "modules": resolved}, indent=2, ensure_ascii=False))
         return 0
-    parser.error("provide --facets or --scenarios")
     return 2
 
 
