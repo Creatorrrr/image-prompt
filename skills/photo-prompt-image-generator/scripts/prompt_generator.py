@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 Photo prompt generator
-- Tags are managed in a JSON file.
+- Candidates share one common pool with many-to-many slot tags.
 - A frozen authorial core owns the scene; all retrieved candidates are optional.
-- The public entrypoint is generate_photo_prompt.py.
+- The post-core managed entrypoint is photo_workflow.py; generate_photo_prompt.py provides explicit native retrieval.
 """
 
 from __future__ import annotations
@@ -535,7 +535,7 @@ def build_negative_intent_guard(
     *,
     identity_preservation_enabled: bool,
 ) -> JsonDict:
-    """Build the public, recomputable v9 negative-intent boundary."""
+    """Build the public, recomputable current negative-intent boundary."""
 
     guard: JsonDict = {
         "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
@@ -5894,7 +5894,7 @@ def candidate_pack_visual_proposition(
 
 def candidate_pack_contract_version(version: str) -> str:
     if version not in {"v9", NATIVE_CANDIDATE_PACK_CONTRACT}:
-        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v9")
+        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected the v9 input alias or the full native contract name")
     return NATIVE_CANDIDATE_PACK_CONTRACT
 
 
@@ -6886,7 +6886,7 @@ def candidate_pack_compose_current(
         else {}
     )
     if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
-        raise ValueError("v9 candidate pack requires photo-authorial-core/v3")
+        raise ValueError("V10 candidate pack requires photo-authorial-core/v3")
     semantic_sources: Dict[str, JsonDict] = {}
 
     def capture_semantic_sources(value: Any) -> None:
@@ -7181,7 +7181,7 @@ def build_candidate_pack(
     if authorial_core is not None:
         pack["authorial_core"] = copy.deepcopy(authorial_core)
     if authorial_core is None:
-        raise ValueError("v9 candidate pack requires a pre-pack authorial core")
+        raise ValueError("V10 candidate pack requires a pre-pack authorial core")
     pack["provenance"]["creativity"] = provenance.get("creativity", CREATIVE_CONTROL_DEFAULTS["creativity"])
     pack["provenance"]["candidate_pool_creativity"] = provenance.get("candidate_pool_creativity")
     pack["provenance"]["retrieval_query"] = copy.deepcopy(provenance.get("retrieval_query", {}))
@@ -7883,7 +7883,7 @@ def authorial_negative_term_allowed(
     *,
     identity_preservation_enabled: bool,
 ) -> bool:
-    """Return whether a v9 runtime-negative item is intent-safe.
+    """Return whether a current runtime-negative item is intent-safe.
 
     Generic safety, taste, count, action, relationship, expression, wardrobe,
     and genre suppressions are intentionally absent from the automatic lane.

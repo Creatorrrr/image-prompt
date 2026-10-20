@@ -1,4 +1,4 @@
-"""Run current native auditors against the exact pinned v9 generation."""
+"""Run current native auditors against the exact pinned native generation."""
 from pathlib import Path
 from photo_workflow_state import bound_path,read_json
 

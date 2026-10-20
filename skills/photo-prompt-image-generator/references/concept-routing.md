@@ -8,7 +8,7 @@ Generation accepts only the frozen request envelope, authorial core, creative co
 
 For the normal skill path, the byte-exact request envelope and `photo-authorial-core/v3` already exist before this reference becomes available. Exact active requester spans remain authoritative, while semantic retrieval uses their true-exclusion-redacted text together with the independently authored contextual interpretation, standalone baseline prompt, request-scoped definitions, recorded interpretation resolutions, visible priorities, and runtime-only labels. A profile or candidate may not backfill or revise that initial core. Routing and augmentation are subordinate to locked dimensions.
 
-`user_definitions` has request-local precedence over registry aliases. `user_exclusions` is a negative filter and never a positive query field. When it explicitly excludes people, v9 reuses the existing no-people guard; this can suppress the configured eligible-human adult-fashion default but does not create a new adult/safety policy.
+`user_definitions` has request-local precedence over registry aliases. `user_exclusions` is a negative filter and never a positive query field. When it explicitly excludes people, V10 reuses the existing no-people guard; this can suppress the configured eligible-human adult-fashion default but does not create a new adult/safety policy.
 
 ## Route Explicit Creative Intent
 
@@ -24,7 +24,7 @@ Every high creative-direction run receives the viewer contract automatically. A 
 
 ## Route Typed Character Responses
 
-In v9, natural multilingual text is interpreted before retrieval and frozen as a generic `character_response` semantic assertion. The generator never invokes the raw moe router, never selects a fixed archetype route, and never turns a lexical or BM25F hit into behavior meaning. It compiles the assertion's actor/baseline/trigger/target/action/leak/response/consequence/continuity evidence into `photo-character-response/v1`; its optional behavior nodes are retrieved only after that contract exists.
+In V10, natural multilingual text is interpreted before retrieval and frozen as a generic `character_response` semantic assertion. The generator never invokes the raw moe router, never selects a fixed archetype route, and never turns a lexical or BM25F hit into behavior meaning. It compiles the assertion's actor/baseline/trigger/target/action/leak/response/consequence/continuity evidence into `photo-character-response/v1`; its optional behavior nodes are retrieved only after that contract exists.
 
 `photo-character-mechanism-graph/v2` is the single authored source for post-core character-response concept profiles. A profile declares multilingual aliases and paraphrases, abstract axis requirements and exclusions, generic semantic relations, evidence roles, confounders, and optional runtime-node IDs. It must not declare a camera, pose, facial geometry, fixed gaze direction, prop, role, or relationship register. The same generated semantic index contains the concept, its contrast documents, and only its linked mechanism nodes; no separate keyword-meaning database is consulted.
 

@@ -256,7 +256,7 @@ def audit_negative_intent_guard(
             {
                 "check": "negative_intent_guard_contract",
                 "reason": (
-                    "v9 pack must expose the exact recomputable requester-first negative-intent boundary"
+                    "V10 pack must expose the exact recomputable requester-first negative-intent boundary"
                 ),
                 "expected": expected,
                 "actual": actual,
@@ -3941,7 +3941,7 @@ def audit_authorial_authorship_policy(
         return [
             {
                 "check": "authorial_authorship_policy_contract",
-                "reason": "the v9 authorship policy and core binding must match the frozen open dimensions and hashes",
+                "reason": "the current authorship policy and core binding must match the frozen open dimensions and hashes",
             }
         ], 0, 0, 0
     return [], minimum_decisions, 0, minimum_evidence
@@ -3991,7 +3991,7 @@ def audit_authorial_core(
         failures.append(
             {
                 "check": "authorial_core_prompt_budget",
-                "reason": "v9 prompt_en exceeds the absolute photographic prompt bounds",
+                "reason": "prompt_en exceeds the absolute photographic prompt bounds",
                 "minimum_words": minimum_words,
                 "recommended_maximum_words": recommended_maximum_words,
                 "absolute_maximum_words": absolute_maximum_words,
@@ -4119,7 +4119,7 @@ def audit_authorial_core(
         failures.append(
             {
                 "check": "authorial_core_integrity",
-                "reason": "v9 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
+                "reason": "V10 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
             }
         )
     binding = (
@@ -4227,7 +4227,7 @@ def audit_authorial_core(
             failures.append(
                 {
                     "check": "intent_preservation_contract",
-                    "reason": "v9 pack does not preserve the canonical requester-priority intent boundary",
+                    "reason": "V10 pack does not preserve the canonical requester-priority intent boundary",
                 }
             )
     raw_evidence = binding.get("preserved_evidence")
@@ -5113,7 +5113,7 @@ def audit_character_response_v8(
         failures.append(
             {
                 "check": "character_response_contract",
-                "reason": "v9 character response is not bound to one typed assertion and its frozen generic evidence",
+                "reason": "typed character response is not bound to one typed assertion and its frozen generic evidence",
             }
         )
     contract_material = copy.deepcopy(contract)
