@@ -1,27 +1,0 @@
-Loading weights:   0%|          | 0/413 [00:00<?, ?it/s]Loading weights: 100%|██████████| 413/413 [00:00<00:00, 12815.33it/s]
-{"query_vectors": 149, "local_queries_ready": true}
-Traceback (most recent call last):
-  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/batch-validation-01/run.py", line 294, in <module>
-    {'prepare':prepare,'build':build,'consume':consume}[a.action]()
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/batch-validation-01/run.py", line 257, in consume
-    pack=g.generate_candidate_pack(snapshot.data,core,controls,embodiment,query_context=context,requested_slots=slots)
-  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/prompt_generator.py", line 8481, in generate_candidate_pack
-    return build_candidate_pack(result,data)
-  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/prompt_generator.py", line 7604, in build_candidate_pack
-    slots, global_retrieval, contract = retrieve_global_candidates(data,authorial_core,provenance['creative_controls'],query_context,provenance['retrieval_mode'])
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/prompt_generator.py", line 8431, in retrieve_global_candidates
-    return photo_slot_retrieval.retrieve(data,core,controls,query_context,retrieval_mode,
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        requested_slots=getattr(data,'requested_slots',None),language=getattr(data,'query_language','en'))
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_slot_retrieval.py", line 51, in retrieve
-    vh,proof=search.cosine_rank(reader,vector,allowed,limit) if mode=='hybrid_required' else ([],None)
-             ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_sharded_search.py", line 75, in cosine_rank
-    np=numpy_runtime();query_array=np.asarray(unit,dtype=np.float64)
-  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839/scripts/photo_local_embedding.py", line 85, in numpy_runtime
-    if numpy.__version__!=lock['runtime']['packages']['numpy']:raise ValueError('local numeric dependency version mismatch')
-                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: local numeric dependency version mismatch
