@@ -11,4 +11,4 @@ The package keeps routing and output behavior in SKILL.md and separates the long
 - 05: series continuity, selection, and sequencing
 - 06: 100-point quality control and repair
 
-Examples and behavioral acceptance cases are included for maintainers. The project installation is the matching link under .agents/skills.
+Examples support keyword interpretation and prompt drafting. The project installation is the matching link under .agents/skills.

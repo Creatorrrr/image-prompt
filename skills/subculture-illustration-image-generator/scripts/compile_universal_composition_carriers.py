@@ -19,7 +19,7 @@ from typing import Any, Iterable, Mapping
 
 
 PROFILE_KEY = "composition_literal_carrier_profiles"
-CURRENT_HOLDOUT = "universal_scene_current_holdout_v2.jsonl"
+TARGET_INVENTORY = "universal_composition_targets_v1.json"
 SEMANTIC_ASSET = "illustration_universal_semantic_bindings_v1.json"
 CANDIDATE_ASSET = "illustration_universal_scene_candidates_v1.json"
 COMPATIBILITY_ASSET = "illustration_universal_compatibility_graph_v1.json"
@@ -84,15 +84,6 @@ def _load_json(path: Path) -> dict[str, Any]:
     return payload
 
 
-def _load_jsonl(path: Path) -> list[dict[str, Any]]:
-    rows = [
-        json.loads(line)
-        for line in path.read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
-    if not rows or not all(isinstance(row, dict) for row in rows):
-        raise ValueError(f"{path.name} must contain JSON objects")
-    return rows
 
 
 def _carrier_phrase(target_id: str) -> str:
@@ -121,68 +112,19 @@ def _ordered_unique(items: Iterable[tuple[str, ...]]) -> list[tuple[str, ...]]:
     return sorted(set(items))
 
 
-def compile_profiles(rows: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
-    identity_keys: list[tuple[str, str]] = []
-    fixed_slot_keys: list[tuple[str, str]] = []
-    event_role_keys: list[tuple[str, str]] = []
-    for row in rows:
-        contract = row["canonical_scene_contract"]
-        identity = contract["identity_core"]
-        for entity in identity["entities"]:
-            identity_keys.extend(
-                (str(fact["id"]), "asserted_presence")
-                for fact in entity["feature_facts"]
-            )
-        identity_keys.extend(
-            (str(fact["id"]), "asserted_presence")
-            for fact in identity["scene_facts"]
-        )
-        identity_keys.extend(
-            (str(fact["id"]), "forbidden")
-            for fact in identity["forbidden_facts"]
-        )
-        for slot in contract["slot_states"]:
-            if slot["state"] != "fixed":
-                continue
-            fixed_slot_keys.extend(
-                (str(slot["slot_id"]), str(binding["value_id"]))
-                for binding in slot["value_phrase_bindings"]
-            )
-        event_role_keys.extend(
-            (str(role["role_id"]), str(role["value_id"]))
-            for role in contract["event_roles"]
-            if role["state"] == "fixed"
-        )
-
-    identity_profiles = [
-        {
-            "fact_id": fact_id,
-            "polarity": polarity,
-            "required_lexeme_groups": _profile_groups(fact_id),
-        }
-        for fact_id, polarity in _ordered_unique(identity_keys)
-    ]
-    fixed_slot_profiles = [
-        {
-            "slot_id": slot_id,
-            "value_id": value_id,
-            "required_lexeme_groups": _profile_groups(value_id),
-        }
-        for slot_id, value_id in _ordered_unique(fixed_slot_keys)
-    ]
-    event_role_profiles = [
-        {
-            "role_id": role_id,
-            "value_id": value_id,
-            "required_lexeme_groups": _profile_groups(value_id),
-        }
-        for role_id, value_id in _ordered_unique(event_role_keys)
-    ]
-    return {
-        "identity_core": identity_profiles,
-        "fixed_slots": fixed_slot_profiles,
-        "event_roles": event_role_profiles,
-    }
+def compile_profiles(inventory):
+    if inventory.get('schema') != 'subculture-illustration-composition-targets/v1':
+        raise ValueError('invalid composition target inventory')
+    targets = inventory['targets']
+    if set(targets) != {'identity_core', 'fixed_slots', 'event_roles'}:
+        raise ValueError('invalid composition target groups')
+    identity_keys = [(r['fact_id'], r['polarity']) for r in targets['identity_core']]
+    fixed_slot_keys = [(r['slot_id'], r['value_id']) for r in targets['fixed_slots']]
+    event_role_keys = [(r['role_id'], r['value_id']) for r in targets['event_roles']]
+    identity_profiles = [{'fact_id': fact_id, 'polarity': polarity, 'required_lexeme_groups': _profile_groups(fact_id)} for fact_id, polarity in _ordered_unique(identity_keys)]
+    fixed_slot_profiles = [{'slot_id': slot_id, 'value_id': value_id, 'required_lexeme_groups': _profile_groups(value_id)} for slot_id, value_id in _ordered_unique(fixed_slot_keys)]
+    event_role_profiles = [{'role_id': role_id, 'value_id': value_id, 'required_lexeme_groups': _profile_groups(value_id)} for role_id, value_id in _ordered_unique(event_role_keys)]
+    return {'identity_core': identity_profiles, 'fixed_slots': fixed_slot_profiles, 'event_roles': event_role_profiles}
 
 
 def _encoded(payload: Mapping[str, Any]) -> bytes:
@@ -211,7 +153,7 @@ def compile_assets(asset_dir: Path) -> dict[Path, bytes]:
     semantic = _load_json(semantic_path)
     _load_json(candidate_path)
     _load_json(compatibility_path)
-    profiles = compile_profiles(_load_jsonl(asset_dir / CURRENT_HOLDOUT))
+    profiles = compile_profiles(_load_json(asset_dir / TARGET_INVENTORY))
 
     updated_semantic: dict[str, Any] = {}
     inserted = False

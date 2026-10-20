@@ -18,7 +18,7 @@ Canonical skill path: `skills/subculture-illustration-image-generator`.
 - Viewer need, focal discovery, causal affect, and reinspection: `references/viewer-experience-contract.md`
 - Cover, key-art, card, scroll, and adaptation behavior: `references/format-contracts.md`
 - Image generation, artifact saving, and pixel review: `references/image-runtime.md`
-- Research, graph, format, and test maintenance: `references/maintenance.md`
+- Current asset, graph, and format maintenance: `references/maintenance.md`
 - Canonical meaning, typed visual variants, explicit activation, sparse selection, and v7 audit: `references/moe-element-contract.md`
 
 Do not load all references for a simple prompt request.
@@ -38,7 +38,7 @@ Do not load all references for a simple prompt request.
 - `scripts/compile_universal_composition_carriers.py`: deterministic compiler for exact fact/polarity, slot/value, and role/value targets into normalized English composition carriers; it also refreshes the raw-byte sibling bindings.
 - `scripts/universal_scene_runtime.py`: v3 literal-contract validation and topic-independent one-event selection. It is not a natural-language parser.
 - `scripts/audit_composed_prompt.py`: fail-closed final-prompt audit.
-- `scripts/validate_illustration_assets.py`: research, graph, format, and holdout validator.
+- `scripts/validate_illustration_assets.py`: current source-contract, graph, format, and asset-integrity validator.
 - `assets/illustration_mechanism_graph_v1.json`: visual/router/guard nodes and compatible bundles.
 - `assets/illustration_format_profiles_v1.json`: six format families and typed variants.
 - `assets/illustration_topic_crosswalk_v1.json`: 24 topic routes and local aliases.
@@ -51,21 +51,8 @@ Do not load all references for a simple prompt request.
 - `assets/research_evidence_moe_elements/moe_meaning_contracts_v1.json` and `illustration_moe_grammar_v3.json`: normalized canonical definitions, essential/non-equivalent semantics, typed semantic axes, sensitive runtime-label policy, required visible component groups, fidelity class, adult-subject rule, and single-frame/sequence/interaction capability for all 29 elements. They enrich only explicitly requested elements and are never an automatic tagger or replacement scene selector.
 - `assets/research_evidence_moe_elements/image_search_evidence_v1.json`, `moe_meaning_contracts_v2.json`, and `illustration_moe_grammar_v4.json`: qualitative image-search queries and limitations, exact/variant/carrier/related alias typing, candidate-subtype-to-variant ownership, all-of/any-of visual anchors, topology, camera, temporal, interaction, negative-confound, and supported-output-mode contracts for all 29 elements. Sensitive canonical meaning stays in v1; v2 adds observable geometry without weakening or relabeling it.
 - `assets/research_evidence_moe_elements/moe_visual_additions_v1.json` and `illustration_moe_grammar_v5.json`: source-traceable definitions, claims, visual evidence, exact/variant/carrier/related/ambiguous aliases, adult rules, candidates, and effective hashes for NTR, the initial six additions, and gumiho, dragon, dokkaebi, ghost, robot, assassin, soldier, aircraft pilot, tights, and bandage. The v5 file is a manifest; v4 remains the immutable base.
-- `assets/research_evidence_moe_elements/qualification_v3.json`: bounded 12-case v5 semantic-binding and prompt-component preflight. It is not rendered-pixel or population-preference evidence.
-- `assets/research_evidence_moe_elements/qualification_v4.json`: deterministic preflight for all 29 canonical IDs and all 124 typed aliases, including rejection of six related-only search terms. It is not rendered-pixel evidence.
-- `assets/research_evidence_moe_elements/qualification_v5.json`: deterministic preflight for all 45 effective canonical IDs and all 267 merged typed aliases, including related-only and ambiguous-alias rejection. It is not rendered-pixel evidence.
 - `assets/research_evidence_illustration/`: source-traceable research shards; do not copy source prose into prompts.
 - `assets/research_evidence_universal_scene/`: independently audited 20-topic evidence for the universal layer; matrices are synthesis, not independent sources.
-- `assets/universal_scene_prompt_holdout_v1.jsonl` and `assets/universal_scene_contract_holdout_v1.jsonl`: immutable historical request/scene-contract sources; regression evidence, never templates for deriving a new request.
-- `assets/universal_scene_contract_holdout_v2.jsonl`, `assets/universal_scene_current_holdout_v2.jsonl`, and their manifest/crosswalk: reviewed post-contract current oracle with explicit v1 lineage and compiled runtime obligations. It is prompt-only source evidence, not runtime or pixel evidence.
-- `assets/prompt_qualification_v3/`: versioned universal-scene prompt qualification when produced; regression evidence and never a scene-contract or prompt template. Its presence alone is not a generalization or pixel-quality claim.
-- `assets/prompt_qualification_v2/`: immutable historical 24-case qualification with typed primary/fallback second-look plans. Validate it only through explicit v2 replay; never relabel it as v3.
-- `assets/prompt_qualification_v1/`: immutable historical v1 evidence. Validate it only through explicit v1 replay; never rewrite or relabel it as newer evidence.
-- `assets/render_case01_v2_preflight/`: generation-free successor for the one exhausted v1 render failure. It freezes the exact v2 pack, prompt, audit, primary/fallback roles, and approval boundary; it is not pixel PASS evidence.
-- `assets/render_case01_v2_visual_review.json`: versioned outcome of that successor. Both declared roles are preserved as failures, so it keeps the aggregate product qualification at five of six rather than promoting a prompt-audit PASS.
-- `assets/render_case01_v3_preflight/`: authorized structural successor that preserves the v1/v2 failures while replacing their fragile line- and substrate-aligned cues with an isolated moving bell primary and a pattern-free stone-state fallback.
-- `assets/render_case01_v3_visual_review.json`: versioned one-attempt pixel PASS. The primary object relation survives native and 320px review, the fallback is correctly not attempted, and the preserved aggregate is six of six.
-- `assets/render_illustration_quality_visual_review_v1.json`: versioned native/thumbnail/crop/sequence qualification. Its current `partial` outcome preserves one exhausted failure and must not be described as six-case PASS.
 
 ## Workflow
 
