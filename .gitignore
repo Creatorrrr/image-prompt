@@ -1,64 +1,20 @@
+# Private local configuration and required execution environments.
+.env
+.env.*
+.venv/
+/skills/photo-prompt-image-generator/.runtime/
+
+# User data and all new generated outputs.
+/generated/
+
+# Python caches, editor state, and transient runtime files.
 .DS_Store
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
-.venv/
-.env
-.env.*
-
-# IDE settings
 .idea/
-
-# Generated local outputs
-/artifacts/*
-!/artifacts/.gitignore
-/outputs/*
-!/outputs/.gitignore
-/output/
-/.codex-artifacts/
-/.codex_runs/
-/generated/
-/generated_prompts/
-/runs/
-/tmp/
-/eval_tmp/
-/tmp_eval/
-/tmp_review/
-/generated_images/
-/review_images/
-/.codex-analysis/
-
-# Large reproducibility archives stay local; retain their manifests and hashes.
-/docs/research-evidence/**/source_snapshot.tar*
-/docs/research-evidence/**/skill_source_snapshot.tar*
-
-# Machine-local links in the historical baseline replay are not snapshot bytes.
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/artifacts
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/docs
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/output
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/outputs
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/skills/aoyama-girls-photo-prompt
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/skills/prompt-trend-scout
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/skills/reverse-image-prompt
-/docs/research-evidence/photo-prompt/realistic-background-implementation-20260912/baseline/skills/subculture-illustration-image-generator
-
-# Temporary validation scripts and images; keep only the directory guide.
-/temps/*
-!/temps/README.md
-
-# Prompt Trend Scout private runtime cache
-/skills/prompt-trend-scout/data/
-
-# Local runtime stores
-/docs/research-evidence/**/runtime_store/
-/docs/research-evidence/**/*runtime-store/
-/docs/research-evidence/**/baseline-test-store/
-/skills/photo-prompt-image-generator/data/runs/**/runtime_store/
-/skills/photo-prompt-image-generator/data/runs/**/*runtime-store/
-
-# Locks and temporary build files
 *.LOCK
 *.tmp
 *.partial
@@ -66,9 +22,3 @@ __pycache__/
 *.embedding-attempts/
 .pending-*
 .write-*
-
-# Local embedding cache
-/docs/research-evidence/**/frozen-visual-cache.local.json
-
-# Skill-owned local embedding installation (never hide search shards).
-/skills/photo-prompt-image-generator/.runtime/
