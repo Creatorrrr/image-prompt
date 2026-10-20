@@ -46,3 +46,37 @@ python3 -B tools/photo_runtime_maintenance/historical_evidence.py --result RESUL
 `audit`는 원래 봉인 코드의 receipt·구성 감사를 확인한다. 새 임베딩·원격 호출·
 CURRENT 전환과 현재 소스로의 fallback은 제공하지 않는다. 필요한 원본이 없으면
 거부/보류한다. 상세 범위와 남은 레거시는 `docs/research-archives/photo-prompt/REPLAY.md`를 따른다.
+
+## 미사용 import 일괄 검사
+
+`ruff.toml`은 현행 사진 스킬의 `scripts/`와 `precore/` Python만 검사한다.
+Ruff 버전은 CI와 동일하게 고정하며 모델·이미지 API·runtime store를 읽지 않는다.
+
+```sh
+python3 -m pip install 'ruff==0.15.1'
+ruff check --no-cache skills/photo-prompt-image-generator/scripts skills/photo-prompt-image-generator/precore
+ruff check --no-cache --fix skills/photo-prompt-image-generator/scripts skills/photo-prompt-image-generator/precore
+```
+
+현재 규칙은 `F401`뿐이다. 포맷 변경·import 정렬·unsafe fix는 추가하지 않는다.
+GitHub Actions의 `Photo skill unused imports`도 같은 버전·명령으로 PR/main을 검사한다.
+새 위반은 가능한 한 한 번에 검토·정리하고 관련 실행 검증 후 묶어서 커밋한다.
+기존 미커밋 작업은 자동 수정 결과와 별도로 보존하며 검토한 변경만 stage한다.
+
+보존 예외는 다음 세 종류로 고정했다.
+
+- generator 22개와 contextual appeal 1개의 공개 재노출은 `name as name`으로
+  명시한다. 모듈의 공개 이름이나 import 순서를 바꾸지 않는다.
+- `qualify_local_hybrid.c`는 모듈 로딩 순서를 보존하는 줄 단위 `# noqa: F401`이다.
+- `photo_local_embedding.py`는 현재 설치본의 `worker_sha256`에 묶여 있어
+  설정의 단일 파일 예외로 보존한다. 해당 파일의 바이트는 변경하지 않는다.
+  별도 release 갱신 시에만 이 예외를 다시 검토한다.
+
+연구/재현 archive, 설치된 봉인 코드, 데이터/색인/모델과 CURRENT는 자동 수정
+대상이 아니다. 일반 `ruff check --fix .`도 이 범위·예외를 적용하지만 위의 두
+디렉터리를 명시하면 큰 데이터 디렉터리 탐색을 피할 수 있다. 예외를 파일 전체나
+규칙 전체로 확장해 새 미사용 import를 숨기지 않는다.
+
+Ruff의 [재노출 규칙](https://docs.astral.sh/ruff/rules/unused-import/)과
+[범위 설정](https://docs.astral.sh/ruff/configuration/)을 따른다. import lint는
+동적 소비·과거 재현·데이터의 미사용 여부를 판정하는 도구가 아니다.

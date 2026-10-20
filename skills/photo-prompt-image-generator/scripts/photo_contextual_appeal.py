@@ -9,7 +9,7 @@ from typing import Any
 
 from bm25f_retrieval import build_bm25f_index, rank_bm25f, tokenize_bm25f_text
 from photo_candidate_context import (
-    VERSION as CONTEXT_VERSION, PRESERVED_FIELDS, audit_context, compile_context,
+    VERSION as CONTEXT_VERSION, PRESERVED_FIELDS, audit_context, compile_context as compile_context,
 )
 
 VERSION = "photo-contextual-appeal/v2"

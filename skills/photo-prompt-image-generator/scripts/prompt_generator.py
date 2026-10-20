@@ -25,7 +25,7 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
-    import photo_camera_evidence
+    import photo_camera_evidence as photo_camera_evidence
     import photo_runtime_sources
     import photo_candidate_semantics
     import photo_candidate_context
@@ -37,11 +37,11 @@ try:
         hard_activation_is_supported,
     )
     from photo_contracts import (
-        ADULT_APPEAL_AXIS_DIMENSIONS,
-        ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
+        ADULT_APPEAL_AXIS_DIMENSIONS as ADULT_APPEAL_AXIS_DIMENSIONS,
+        ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION as ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
         AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
-        AUTHORIAL_CORE_CONTRACT_VERSION,
+        AUTHORIAL_CORE_CONTRACT_VERSION as AUTHORIAL_CORE_CONTRACT_VERSION,
         AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS,
         AUTHORIAL_CORE_V3_CONTRACT_VERSION,
         AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS,
@@ -54,31 +54,31 @@ try:
         AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
         CHARACTER_RESPONSE_CONTRACT_VERSION,
         DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
-        INTENT_LOCK_CONTRACT_VERSION,
-        INTENT_LOCK_PROPERTY_CONTRACT_VERSION,
+        INTENT_LOCK_CONTRACT_VERSION as INTENT_LOCK_CONTRACT_VERSION,
+        INTENT_LOCK_PROPERTY_CONTRACT_VERSION as INTENT_LOCK_PROPERTY_CONTRACT_VERSION,
         intent_property_locks,
         authored_subject_category,
         property_effects_allowed,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
         NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
-        RENDER_REPAIR_ALLOWED_AXES,
-        RENDER_REPAIR_CONTACT_EXPECTATIONS,
+        RENDER_REPAIR_ALLOWED_AXES as RENDER_REPAIR_ALLOWED_AXES,
+        RENDER_REPAIR_CONTACT_EXPECTATIONS as RENDER_REPAIR_CONTACT_EXPECTATIONS,
         RENDER_REPAIR_CONTRACT_VERSION,
-        RENDER_REPAIR_DIMENSION_AXES,
-        RENDER_REPAIR_IMPORTANCE_VALUES,
-        RENDER_REPAIR_INTERACTION_STATES,
-        RENDER_REPAIR_RELATION_ORIGINS,
-        REQUEST_BINDING_CONTRACT_VERSION,
-        REQUEST_ENVELOPE_CONTRACT_VERSION,
+        RENDER_REPAIR_DIMENSION_AXES as RENDER_REPAIR_DIMENSION_AXES,
+        RENDER_REPAIR_IMPORTANCE_VALUES as RENDER_REPAIR_IMPORTANCE_VALUES,
+        RENDER_REPAIR_INTERACTION_STATES as RENDER_REPAIR_INTERACTION_STATES,
+        RENDER_REPAIR_RELATION_ORIGINS as RENDER_REPAIR_RELATION_ORIGINS,
+        REQUEST_BINDING_CONTRACT_VERSION as REQUEST_BINDING_CONTRACT_VERSION,
+        REQUEST_ENVELOPE_CONTRACT_VERSION as REQUEST_ENVELOPE_CONTRACT_VERSION,
         REQUEST_LINEAGE_V2_CONTRACT_VERSION,
-        REQUIRED_INTENT_LOCK_DIMENSIONS,
+        REQUIRED_INTENT_LOCK_DIMENSIONS as REQUIRED_INTENT_LOCK_DIMENSIONS,
         SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION,
         canonical_json_sha256,
     )
     from photo_visual_retrieval import (
-        positive_visual_profile_fields,
-        positive_visual_profile_text,
+        positive_visual_profile_fields as positive_visual_profile_fields,
+        positive_visual_profile_text as positive_visual_profile_text,
     )
     import photo_candidate_corpus
     import photo_shared_views
@@ -86,12 +86,12 @@ try:
     import photo_global_index
     import photo_global_retrieval
     from bm25f_retrieval import (
-        build_bm25f_index,
-        normalize_bm25f_text,
-        rank_bm25f,
-        reciprocal_rank_fusion,
+        build_bm25f_index as build_bm25f_index,
+        normalize_bm25f_text as normalize_bm25f_text,
+        rank_bm25f as rank_bm25f,
+        reciprocal_rank_fusion as reciprocal_rank_fusion,
         tokenize_bm25f_text,
-        validate_bm25f_index,
+        validate_bm25f_index as validate_bm25f_index,
     )
 finally:
     if _SCRIPTS_IMPORT_DIR_ADDED:
