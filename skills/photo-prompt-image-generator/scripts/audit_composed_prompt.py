@@ -730,19 +730,6 @@ def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
                 "reason": "current pack must not expose candidate IDs as precomputed intent-coverage answers",
             }
         )
-    provenance = pack.get("provenance") if isinstance(pack.get("provenance"), dict) else {}
-    private_provenance_keys = sorted(
-        {
-            "argv",
-            "preset_id",
-            "sample_prompt_id",
-            "concept_gate_results",
-            "concept_scene_variants",
-            "character_response",
-            "adult_appeal",
-        }
-        & set(provenance)
-    )
     quality_profile = (
         pack.get("quality_profile") if isinstance(pack.get("quality_profile"), dict) else {}
     )
@@ -3967,7 +3954,6 @@ def audit_authorial_core(
     warnings: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     pack = photo_native_pack.read_view(pack)
-    pack_version = str(pack.get('contract_version') or '')
     failures, minimum_decisions, minimum_open_dimensions, minimum_evidence = (
         audit_authorial_authorship_policy(pack)
     )
@@ -3983,8 +3969,6 @@ def audit_authorial_core(
         else None
     )
     expected_budget = expected_authorial_prompt_budget_contract()
-    uses_current_advisory_budget = recorded_budget == expected_budget
-    uses_advisory_budget = True
     if recorded_budget != expected_budget:
         failures.append(
             {
@@ -4454,7 +4438,8 @@ def audit_semantic_clarification(
                     failures.append({"check": "character_response_diagnostics", "reason": "profile diagnostic differs from frozen assertion and authored rules"})
         except (OSError, ValueError, KeyError, TypeError) as error:
             failures.append({"check": "meaning_diagnostics_source", "reason": str(error)})
-    pack_candidate_ids = candidate_ids_from_pack(pack) | set(candidate_map)
+    # Retain frozen-pack validation and conversion failures while discarding the ID set.
+    candidate_ids_from_pack(pack) | set(candidate_map)
     decisions = [
         row
         for row in composed.get("semantic_clarification_decisions") or []
@@ -5745,7 +5730,7 @@ def _native_adoption_entries(pack,composed,source_data):
         if isinstance(row,dict) and row.get('decision')=='transformed']
     chosen.update(row['candidate_id'] for row in transformed if row.get('candidate_id'))
     interpretations={row.get('candidate_id'):row for row in [*(composed.get('candidate_interpretations') or []),*transformed] if isinstance(row,dict)}
-    entries=[];core=pack.get('authorial_core') or {}
+    entries=[]
     for cid in sorted(chosen):
         try:
             presented=(pack.get('candidate_pool') or {}).get(cid,{})

@@ -1725,7 +1725,6 @@ def candidate_pack_mandatory_intents(
         if isinstance(provenance.get("authorial_core"), dict)
         else {}
     )
-    typed_v3 = authorial_core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION
     intent_anchors = (
         (authorial_core.get("intent_lock") or {}).get("semantic_anchors") or []
         if authorial_core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
@@ -1737,7 +1736,8 @@ def candidate_pack_mandatory_intents(
             continue
         source = str(source_row.get('source') or '')
         source_text = str(source_row.get('text') or '')
-        character_response = resolve_character_response_intent(authorial_core)
+        # Preserve typed-assertion validation even when its resolved value is unused.
+        resolve_character_response_intent(authorial_core)
         positive_source_text = source_text
         anchored_terms = [
             clean_spaces(str(anchor.get('prompt_evidence') or ''))
@@ -2071,11 +2071,6 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
     creative_direction_required = bool(
         creativity is not None and creativity >= CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR
     )
-    response = (
-        provenance.get("character_response")
-        if isinstance(provenance.get("character_response"), dict)
-        else {}
-    )
     core = (
         provenance.get("authorial_core")
         if isinstance(provenance.get("authorial_core"), dict)
@@ -2344,7 +2339,6 @@ def candidate_pack_contextual_adult_appeal(
     contract = candidate_pack_adult_appeal_metadata(data, result, {}, authorial_core=authorial_core)
     core = authorial_core
     lock = core["intent_lock"]
-    locked = set(lock.get("locked_dimensions") or [])
     scope = contract["dimension_scope"]
     scope["contract_version"] = photo_contextual_appeal.SCOPE_VERSION
     scope["axis_allowed_dimensions"] = {
@@ -2369,7 +2363,6 @@ def candidate_pack_contextual_adult_appeal(
             }
         }
     )
-    prompt_id = str((result.get("provenance") or {}).get("prompt_id") or "")
     frozen_contract, _ = frozen_core_context(data, core, snapshot)
     constraints = {
         **frozen_contract,
@@ -6210,10 +6203,8 @@ def candidate_pack_project_quality_surfaces(projected: JsonDict) -> None:
                 "content_form": "unordered_inspiration_terms",
             }
         )
-    guidance_values = [
-        craft.pop("prompt_guidance_en", None),
-        craft.pop("prompt_guidance_ko", None),
-    ]
+    craft.pop("prompt_guidance_en", None)
+    craft.pop("prompt_guidance_ko", None)
     # The popped prompt guidance came from the private top-ranked strategy.
     # Its concepts are already represented inside the unordered dimension
     # candidates; publishing a separate summary would reveal the winner again.
@@ -7757,7 +7748,6 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
         return False
     dimensions = entry.get("affected_dimensions") or []
     lock = core.get("intent_lock") or {}
-    properties = entry.get("affected_properties") or []
     owner_pending=allow_owner_selection_pending and (photo_semantic_evidence.pending_owner_selection(entry)
         or (not _condition_layer and native_admission.get("search_only",False)))
     if owner_pending and not set(dimensions)<=set(lock.get('open_dimensions') or []):return False

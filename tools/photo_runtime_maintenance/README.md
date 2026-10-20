@@ -47,7 +47,7 @@ python3 -B tools/photo_runtime_maintenance/historical_evidence.py --result RESUL
 CURRENT 전환과 현재 소스로의 fallback은 제공하지 않는다. 필요한 원본이 없으면
 거부/보류한다. 상세 범위와 남은 레거시는 `docs/research-archives/photo-prompt/REPLAY.md`를 따른다.
 
-## 미사용 import 일괄 검사
+## 미사용 import·지역 변수 일괄 검사
 
 `ruff.toml`은 현행 사진 스킬의 `scripts/`와 `precore/` Python만 검사한다.
 Ruff 버전은 CI와 동일하게 고정하며 모델·이미지 API·runtime store를 읽지 않는다.
@@ -58,7 +58,7 @@ ruff check --no-cache skills/photo-prompt-image-generator/scripts skills/photo-p
 ruff check --no-cache --fix skills/photo-prompt-image-generator/scripts skills/photo-prompt-image-generator/precore
 ```
 
-현재 규칙은 `F401`뿐이다. 포맷 변경·import 정렬·unsafe fix는 추가하지 않는다.
+현재 규칙은 미사용 import `F401`과 지역 변수 `F841`이다. 포맷 변경·import 정렬·unsafe fix는 추가하지 않는다.
 GitHub Actions의 `Photo skill unused imports`도 같은 버전·명령으로 PR/main을 검사한다.
 새 위반은 가능한 한 한 번에 검토·정리하고 관련 실행 검증 후 묶어서 커밋한다.
 기존 미커밋 작업은 자동 수정 결과와 별도로 보존하며 검토한 변경만 stage한다.
@@ -80,3 +80,9 @@ GitHub Actions의 `Photo skill unused imports`도 같은 버전·명령으로 PR
 Ruff의 [재노출 규칙](https://docs.astral.sh/ruff/rules/unused-import/)과
 [범위 설정](https://docs.astral.sh/ruff/configuration/)을 따른다. import lint는
 동적 소비·과거 재현·데이터의 미사용 여부를 판정하는 도구가 아니다.
+
+`F841`은 검사만 활성화하며 자동 수정 대상은 계속 `F401`로 제한한다.
+지역 변수 정리는 반환값 사용과 호출 효과를 구분해 수동 검토한다. 계약 검증,
+예외 발생, `dict.pop()` 같은 데이터 변경은 유지한다. 기존 미커밋 코드의 위반을
+없애기 위해 해당 사용자 작업을 함께 수정·커밋하거나 파일 전체를 예외 처리하지 않는다.
+[Ruff F841 문서](https://docs.astral.sh/ruff/rules/unused-variable/)를 참고한다.

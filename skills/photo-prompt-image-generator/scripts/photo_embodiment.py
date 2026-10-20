@@ -84,7 +84,8 @@ def render_gate_ids(pack: dict, composed: dict | None) -> tuple[list[str], list[
     failures = audit_composed(pack, composed or {})
     if failures:
         return [], failures
-    policy = policy_from_pack(pack)
+    # Validate the frozen policy even though no returned fields are needed here.
+    policy_from_pack(pack)
     review = composed["embodiment_review"]["review"]
     if review["scope"] == "not_applicable":
         return [], []
