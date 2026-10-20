@@ -1,6 +1,6 @@
 # Retrieval contracts
 
-The installed default is [H-only+F2](installed-h-f2.md): whole positive pool, one BM25F lane and one local cosine lane per searched slot, RRF10 and top8 without an eligibility prefilter. The installed release is selected independently of native CURRENT. Its views and audits reuse issued scores without new searches. The native contracts below describe already bound native searches and the zero-slot guard/audit path; their old 64/4/2 discovery caps do not apply to H-F2 top8 results.
+The installed default is [H-only+F2](installed-h-f2.md): whole positive pool, independent slot queries plus active-request-topic and frozen-baseline queries, each with one BM25F lane and one local cosine lane, RRF10 and its own top8 without an eligibility prefilter. The installed release is selected independently of native CURRENT. Its views and audits reuse issued scores without new searches. The native contracts below describe already bound native searches and the zero-slot guard/audit path; their old 64/4/2 discovery caps do not apply to H-F2 top8 results.
 
 ## Native discovery and audit contracts
 

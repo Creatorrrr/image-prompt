@@ -61,7 +61,28 @@ identical text: `Photographic role: {role_focus}` followed, when nonempty, by
 `Scene context: {scene_context}` on a new line. There is one global F2 BM25F
 evaluation and one full local cosine evaluation per searched slot. A fresh text
 uses one proof-bound local query embedding; an exact existing proof may be
-reused. No second query, reranker, Gemini or remote fallback is available.
+reused. These slot query texts and bindings remain unchanged by the additional
+whole-scene searches below. No reranker, Gemini or remote fallback is available.
+
+Every new retrieval also issues two independent queries after core freeze:
+
+- `__request_topic__`: this arm's active requester spans, using the existing
+  positive-text projection to remove creative-control assignments and explicit
+  exclusions. Inactive arms and delivery text outside active spans are omitted.
+- `__baseline_prompt__`: the complete frozen `baseline_prompt_en`, through the
+  same explicit-exclusion firewall.
+
+Neither query is derived from a slot or from `overall_intent`. Both run even
+when there are no searched slots. Each receives one BM25F lane and one full
+local cosine lane, RRF10/CID dedup and its own top8. Results are not pooled into
+or allowed to displace a slot's top8. `query_scopes` identifies `slot`,
+`request_topic` and `baseline_prompt`; the two reserved IDs appear alongside
+slot IDs in `materials`. Read and review these complete sources with the same
+requester-lock and native-adoption boundaries as slot material.
+
+Frozen source, controls, plan and projection provenance bind the new queries.
+Missing active request scope or an empty positive query stops retrieval rather
+than searching another arm or substituting an invented query.
 
 F2 keeps original lookup cues and meaning fields, with frozen weights, global
 document frequencies and nonempty normalization on its designated fields. The
@@ -73,11 +94,13 @@ every result fits or that every useful candidate is recovered.
 
 Use `view --candidate-id CID` for full source detail and
 `view --material-page N` for reading pages of at most64 unique sources. This
-page cap does not truncate the stored per-slot top8. Repeat retrieve, view,
+page cap does not truncate any stored top8. Repeat retrieve, view,
 resume, compose-audit and deliver reuse issued scores and add zero searches.
 
 Material decisions are optional authored rows in `h_f2_material_decisions`:
-`{slot, candidate_id, realization_id, source_sha256, use, rationale}`. `use` is
+`{slot, candidate_id, realization_id, source_sha256, use, rationale}`. For
+whole-scene material, `slot` retains its originating reserved search ID
+(`__request_topic__` or `__baseline_prompt__`). `use` is
 `skip` or `inspiration_only`. Read complete source conditions and effects;
 preserve requester locks. The native guard pack carries hard duties and
 performs zero slot searches. Do not put material IDs into native chosen lists
@@ -107,3 +130,14 @@ change do not silently update this pinned release. Prepare and qualify a new
 whole-pool generation, then install it explicitly. Existing H-F2 runs keep their
 issued release; already bound older native runs keep their native receipt path.
 An incomplete search transaction requires reconciliation, not automatic retry.
+
+For a code-only query/workflow update, first run
+`scripts/stage_photo_h_f2_code.py --destination STAGING_STORE`. This copies the
+currently installed sealed data and replaces only the two maintained query and
+workflow modules, rebinds code/algorithm manifests, and leaves the previous
+release and CURRENT intact. Run focused query tests and real retrieval/receipt
+checks before selecting it as the default. The installer accepts `--no-activate`
+to copy and validate a release, including its local runtime, without changing
+`retrieval-runtime.json`; test it with explicit generation/store options, then
+run the installer without that flag to select it. This path does not publish
+dirty working candidate data or rebuild document vectors.

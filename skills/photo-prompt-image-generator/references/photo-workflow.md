@@ -24,7 +24,7 @@ authored. An explicit zero-choice composed selection is similarly required.
 Camera direction/height requirements come from the author's separate ownership
 declaration; the workflow never infers a capture camera from a depicted device.
 
-New runs use the installed H-only+F2 default. Follow [installed-h-f2.md](installed-h-f2.md) to author and seal the per-slot expression plan, then use:
+New runs use the installed H-only+F2 default: independent slot searches plus separate active-request-topic and frozen-baseline searches, each retaining its own top8. Follow [installed-h-f2.md](installed-h-f2.md) to author and seal the per-slot expression plan, then use:
 
 ```bash
 python skills/photo-prompt-image-generator/scripts/photo_workflow.py retrieve --run RUN
