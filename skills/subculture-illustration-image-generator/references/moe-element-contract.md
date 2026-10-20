@@ -121,25 +121,11 @@ Wrap an ordinary pack and compose a v7 draft:
 
 Use `--grammar-version v4` only for historical v6 visual replay, `v3` for historical v5 meaning-only replay, and `v2` for historical v4 replay.
 
-Focused validation:
+Validate current assets and composition carriers:
 
 ```bash
-.venv/bin/python -m unittest tests.test_subculture_illustration_moe_elements -v
-.venv/bin/python skills/subculture-illustration-image-generator/scripts/qualify_moe_grammar_v4.py --check
-.venv/bin/python skills/subculture-illustration-image-generator/scripts/qualify_moe_grammar_v5.py --check
-ruff check \
-  skills/subculture-illustration-image-generator/scripts/build_moe_meaning_contracts_v2.py \
-  skills/subculture-illustration-image-generator/scripts/build_moe_visual_additions_v1.py \
-  skills/subculture-illustration-image-generator/scripts/compile_moe_grammar_v4.py \
-  skills/subculture-illustration-image-generator/scripts/compile_moe_grammar_v5.py \
-  skills/subculture-illustration-image-generator/scripts/moe_meaning_contract.py \
-  skills/subculture-illustration-image-generator/scripts/moe_visual_contract.py \
-  skills/subculture-illustration-image-generator/scripts/moe_visual_addition.py \
-  skills/subculture-illustration-image-generator/scripts/moe_element_runtime.py \
-  skills/subculture-illustration-image-generator/scripts/generate_moe_candidate_pack.py \
-  skills/subculture-illustration-image-generator/scripts/qualify_moe_grammar_v4.py \
-  skills/subculture-illustration-image-generator/scripts/qualify_moe_grammar_v5.py \
-  tests/test_subculture_illustration_moe_elements.py
+.venv/bin/python skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py
+.venv/bin/python skills/subculture-illustration-image-generator/scripts/compile_universal_composition_carriers.py --check
 ```
 
-The focused suite directly covers historical v2/v4, v3/v5, and v4/v6 replay plus all 45 v5 canonical selections, all 267 merged typed aliases, related/ambiguous rejection, variant-lineage isolation, prompt composition/audit, sensitive-label omission, contract/component/media mutation rejection, and frozen retry/photo hashes. The 312-case v5 qualification is semantic/visual prompt preflight only. Neither check runs image generation, pixel review, universal 24x417, hidden 1,152-run qualification, or exhaustive pairwise combinations.
+The validator checks current authenticated source/meaning contracts, typed candidates, compatibility, composition carriers, retry policy, and moe grammar. The compiler check verifies deterministic reproduction of the current composition assets. Use the build/compile checks above when their inputs change. These checks establish asset integrity and reproducibility; they do not run historical qualification suites, image generation, pixel review, or audience-quality evaluation.
