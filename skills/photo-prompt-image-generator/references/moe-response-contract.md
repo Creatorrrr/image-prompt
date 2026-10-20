@@ -1,6 +1,6 @@
 # Moe Response Contract
 
-For the normal v9 workflow, use `character_response` when the candidate pack contains `photo-character-response/v1`. Its semantics were authored and frozen in `photo-authorial-core/v3`; use its typed axes and frozen evidence directly. The removed raw-text router supplies no runtime interpretation.
+For the normal V10 workflow, use `character_response` when the candidate pack contains `photo-character-response/v1`. Its semantics were authored and frozen in `photo-authorial-core/v3`; use its typed axes and frozen evidence directly. The removed raw-text router supplies no runtime interpretation.
 
 ## Typed V10 Character Response
 

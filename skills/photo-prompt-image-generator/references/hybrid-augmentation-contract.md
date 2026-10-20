@@ -37,7 +37,7 @@ V10 keeps an active adult-fashion contract at top-level `adult_appeal` rather th
 
 ## Contextual adult appeal
 
-Bound v9 packs use `photo-contextual-appeal/v2` and dimension scope v4. Both axes can express contextual relationships through their declared unlocked portrayal, clothing, action and photographic dimensions. Read [contextual appeal](contextual-appeal.md) for the conditional review fields.
+Bound V10 packs use `photo-contextual-appeal/v2` and dimension scope v4. Both axes can express contextual relationships through their declared unlocked portrayal, clothing, action and photographic dimensions. Read [contextual appeal](contextual-appeal.md) for the conditional review fields.
 
 Current scope v4 preserves whole-dimension and property locks. Role, setting,
 relationship and timing effects additionally require an explicit open dimension;
