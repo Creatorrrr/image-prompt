@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import copy
 import unittest
 from pathlib import Path
 
@@ -14,7 +15,7 @@ RECORDER = ROOT / "skills/photo-prompt-image-generator/scripts/record_image_run.
 
 
 class PhotoRunManifestTests(unittest.TestCase):
-    def run_recorder(self, directory, version="v9", status="success", extra=(), omit=()):
+    def run_recorder(self, directory, version="v10", status="success", extra=(), omit=()):
         directory = Path(directory)
         values = {
             "--ts": "2026-09-05T12:00:00+09:00",
@@ -48,7 +49,7 @@ class PhotoRunManifestTests(unittest.TestCase):
         return subprocess.run(argv, cwd=ROOT, capture_output=True, text=True)
 
     def test_text_only_success_and_blocked_attempts_write_one_manifest_and_ledger_row(self):
-        for version in ("v9",):
+        for version in ("v10",):
             for status in ("success", "safety_block"):
                 with self.subTest(version=version, status=status), tempfile.TemporaryDirectory() as tmp:
                     result = self.run_recorder(tmp, version=version, status=status)
@@ -92,6 +93,72 @@ class PhotoRunManifestTests(unittest.TestCase):
                 self.assertIn(flag.removeprefix("--").replace("-", "_"), result.stderr)
                 self.assertFalse((Path(tmp) / "ledger.ndjson").exists())
                 self.assertFalse((Path(tmp) / "manifest.json").exists())
+
+
+    def test_current_emitted_versions_and_enums_match_the_public_schema(self):
+        schema = json.loads((RECORDER.parent.parent / "assets/run_ledger.schema.json").read_bytes())
+        for status in ("success", "safety_block", "error"):
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as directory:
+                result = self.run_recorder(directory, status=status)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                row = json.loads((Path(directory) / "ledger.ndjson").read_text())
+                manifest = json.loads((Path(directory) / "manifest.json").read_text())
+                self.assertEqual(row["candidate_pack_version"], "v10")
+                self.assertEqual(manifest["candidate_pack_version"], row["candidate_pack_version"])
+                self.assertEqual(manifest["contract_version"], "photo-independent-run-manifest/v2")
+                self.assertFalse(set(row) - set(schema["properties"]))
+                for key, value in row.items():
+                    choices = schema["properties"][key].get("enum")
+                    if choices is not None:
+                        self.assertIn(value, choices, key)
+
+    def test_old_or_unknown_versions_cannot_create_new_records(self):
+        for version in ("v2", "v6", "v9", "v11"):
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as directory:
+                result = self.run_recorder(directory, version=version, status="safety_block")
+                self.assertEqual(result.returncode, 2)
+                self.assertFalse((Path(directory) / "ledger.ndjson").exists())
+                self.assertFalse((Path(directory) / "manifest.json").exists())
+
+    def test_appending_current_record_preserves_historical_row_bytes(self):
+        schema = json.loads((RECORDER.parent.parent / "assets/run_ledger.schema.json").read_bytes())
+        for version in ("v2", "v3", "v4", "v5", "v6", "v9"):
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as directory:
+                old = (json.dumps({"ts": "2026-09-01T00:00:00Z", "run_id": "a" * 16,
+                                  "prompt_id": "b" * 16, "prompt_en": "An older preserved photograph.",
+                                  "attempt": 1, "status": "safety_block", "candidate_pack_version": version},
+                                  separators=(",", ":")) + "\n").encode()
+                ledger = Path(directory) / "ledger.ndjson"
+                ledger.write_bytes(old)
+                result = self.run_recorder(directory, status="safety_block")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertTrue(ledger.read_bytes().startswith(old))
+                rows = ledger.read_bytes().splitlines()
+                self.assertEqual(len(rows), 2)
+                self.assertEqual(json.loads(rows[1])["candidate_pack_version"], "v10")
+                self.assertIn(version, schema["properties"]["candidate_pack_version"]["enum"])
+
+    def test_direct_builders_reject_obsolete_or_conflicting_versions(self):
+        import sys
+        sys.path.insert(0, str(RECORDER.parent))
+        import record_image_run as recorder
+        args = recorder.parse_args(["--ts", "2026-10-20T00:00:00Z", "--prompt-en", "A copper bell.",
+                                    "--attempt", "1", "--status", "safety_block",
+                                    "--candidate-pack-version", "v10", "--arm-id", "one",
+                                    "--worktree-id", "isolated", "--skill-sha256", "a" * 64,
+                                    "--source-ref", "frozen", "--image-call-count", "1",
+                                    "--authorial-core-sha256", "b" * 64, "--intent-lock-sha256", "c" * 64,
+                                    "--independent-no-cross-arm-inputs"])
+        entry = recorder.build_entry(args)
+        obsolete = copy.copy(args)
+        obsolete.candidate_pack_version = "v9"
+        with self.assertRaisesRegex(ValueError, "new records require"):
+            recorder.build_entry(obsolete)
+        with self.assertRaisesRegex(ValueError, "independent manifests require"):
+            recorder.build_independent_manifest(entry, obsolete)
+        changed = dict(entry, candidate_pack_version="v9")
+        with self.assertRaisesRegex(ValueError, "differs from its ledger entry"):
+            recorder.build_independent_manifest(changed, args)
 
 
 if __name__ == "__main__":

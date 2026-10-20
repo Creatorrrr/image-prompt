@@ -125,6 +125,8 @@ For a text-only attempt, omit `--reference-sha256`; the independent manifest rec
 
 Count actual tool invocations, keeping preparation/audit failures and unknown interruption outcomes separate. `image_call_count` is cumulative within an arm; do not sum successive cumulative values. Preserve failed outcomes and immediate `retry_of` links. A user-supplied successful image from ChatGPT or another surface has separate `origin: user_supplied` provenance, user-reported prompt/reference bindings and observed file hashes. It is not a new native retry or a revision of earlier failed outcomes. Record an unobserved external model, timestamp or attempt count as unknown; the prompt-authoring model is not an image-model identifier.
 
+New versioned records use `--candidate-pack-version v10`, matching the actual `photo-candidate-pack/v10`. The recorder accepts only the current version for new writes, and independent manifests keep their separate `photo-independent-run-manifest/v2` wire shape. The public ledger schema also accepts preserved historical version values, including v9, for reading mixed old/new ledgers. Existing rows, original manifests and sealed execution code are never rewritten or relabeled by this change. Installed releases continue using their own sealed recorder until a separately qualified release is selected.
+
 `assets/run_ledger.schema.json` is the public record contract. Keep its required keys, optional provenance fields, and enums synchronized with `record_image_run.py`; focused tests compare recorder output against that schema.
 
 Report the image tool used and whether a repo-local copy was created.

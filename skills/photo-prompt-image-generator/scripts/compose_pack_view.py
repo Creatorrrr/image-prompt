@@ -29,7 +29,7 @@ def source_pack(payload: Any) -> dict[str, Any]:
     if isinstance(payload, list) and len(payload) == 1:
         payload = payload[0]
     if not isinstance(payload, dict) or payload.get("contract_version") != "photo-candidate-pack/v10":
-        raise ValueError("composer view requires exactly one original v9 candidate pack")
+        raise ValueError("composer view requires exactly one original v10 candidate pack")
     hashable = dict(payload, pack_id=None)
     if payload.get("pack_id") != digest(hashable)[:16]:
         raise ValueError("source pack_id does not match the immutable pack content")

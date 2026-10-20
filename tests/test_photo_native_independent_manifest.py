@@ -24,7 +24,9 @@ class NativeIndependentManifestTests(unittest.TestCase):
         self.assertEqual(recorded.worktree_id, "isolated-evidence")
         self.assertEqual(recorded.skill_sha256, "a" * 64)
         self.assertEqual(recorded.source_ref, "generation:immutable")
-        self.assertEqual(recorded.candidate_pack_version, "v9")
+        self.assertEqual(recorded.candidate_pack_version, "v10")
+        from photo_native_pack import CONTRACT
+        self.assertEqual(recorded.candidate_pack_version, CONTRACT.rsplit("/", 1)[1])
         self.assertTrue(recorded.independent_no_cross_arm_inputs)
         self.assertEqual(recorded.manifest, Path("arm/run_manifest.json"))
 
