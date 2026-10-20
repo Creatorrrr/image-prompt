@@ -28,7 +28,7 @@ RECORD = SCRIPT_DIR / "record_image_run.py"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 from image_attempt_evidence import capture_api_error, write_evidence
-from photo_api_render import prepare_api_render, save_preflight, PreflightError
+from photo_api_render import prepare_api_render, save_preflight
 
 
 @dataclass(frozen=True)
