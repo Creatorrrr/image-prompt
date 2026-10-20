@@ -13,8 +13,9 @@ class LocalInboxAdapter:
         self.config = config
 
     def fetch(self, query: str = "", since: str = "", limit: int = 50) -> list[dict[str, Any]]:
-        inbox = Path(self.config.config.get("path", "data/raw/inbox"))
-        if not inbox.is_absolute():
+        configured = self.config.config.get("path")
+        inbox = Path(configured) if configured else self.config.data_dir / "raw" / "inbox"
+        if configured and not inbox.is_absolute():
             inbox = self.config.skill_dir / inbox
         if not inbox.exists():
             return []

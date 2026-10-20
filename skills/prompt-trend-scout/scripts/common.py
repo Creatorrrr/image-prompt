@@ -50,7 +50,7 @@ def load_registry(path_text: str | None = None) -> dict[str, Any]:
 
 
 def default_data_dir(path_text: str | None = None) -> Path:
-    return resolve_skill_path(path_text, SKILL_DIR / "data")
+    return resolve_skill_path(path_text, PROJECT_ROOT / "generated" / "trend-scout")
 
 
 def json_files(path: Path) -> list[Path]:

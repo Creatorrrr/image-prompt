@@ -14,7 +14,7 @@ Use this skill to run a read-only trend scout that turns outside prompt examples
 - Use only official APIs, explicitly allowed feeds, or local files supplied by the user.
 - Do not use browser scraping, private endpoints, cookies, session replay, or any workaround that bypasses platform controls.
 - Do not call or implement social actions such as liking, replying, reposting, following, bookmarking, messaging, or publishing.
-- Keep raw source text and media only under this skill's gitignored `data/` cache.
+- Keep raw source text and media only under the project's gitignored `generated/trend-scout/` cache.
 - Strip author signatures, handles, watermarks, tool signatures, credit boilerplate, and promotional calls to action before analysis.
 - Treat "do not repost", "do not steal", watermark, or credit-required signals as `no_raw_reuse` and `no_republish`; still allow private abstraction into visual grammar.
 - Emit reports and candidates only as abstract visual grammar, tag candidates, candidate bundle ideas, drift gates, and review notes.
@@ -34,12 +34,12 @@ The pipeline is:
 2. `sanitize_examples.py`: remove signatures/promos and attach reuse flags.
 3. `analyze_corpus.py`: convert sanitized examples into abstract candidates.
 4. `diff_against_photo_prompt.py`: compare candidates against `photo_candidate_corpus_manifest.json` in read-only mode.
-5. `build_reflection_report.py`: write `data/reports/<report_id>.md` and `.json`.
+5. `build_reflection_report.py`: write `generated/trend-scout/reports/<report_id>.md` and `.json`.
 6. `validate_harvest_schema.py`: validate every emitted record and leakage gate.
 
 The default enabled source family is multi-SNS, but collection is fail-closed:
 
-- `local_inbox`: enabled by default and safest. Put user-supplied JSON files under `data/raw/inbox/`.
+- `local_inbox`: enabled by default and safest. Put user-supplied JSON files under `generated/trend-scout/raw/inbox/`.
 - `rss_atom` and `activitypub_public`: enabled but produce no output until feeds/URLs are configured.
 - `x_api`: enabled only when `X_BEARER_TOKEN` and a query are configured.
 - `threads_official`: disabled until official Threads API access and endpoint configuration are present.
@@ -66,7 +66,7 @@ Reports are proposals only. To inspect an approved subset:
 
 ```bash
 python3 skills/prompt-trend-scout/scripts/apply_reflection.py \
-  --report skills/prompt-trend-scout/data/reports/<report_id>.json \
+  --report generated/trend-scout/reports/<report_id>.json \
   --select <candidate_id>,<candidate_id> \
   --approved-by "<reviewer>" \
   --dry-run

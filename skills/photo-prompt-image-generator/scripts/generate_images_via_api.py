@@ -312,7 +312,7 @@ def main(argv=None) -> int:
     parser.add_argument("--model", default="gpt-image-2")
     parser.add_argument("--size", default="1024x1536")
     parser.add_argument("--attempts", type=int, default=2)
-    parser.add_argument("--out-base", type=Path, default=PROJECT_ROOT / "generated_images")
+    parser.add_argument("--out-base", type=Path, default=PROJECT_ROOT / "generated" / "images")
     parser.add_argument("--ledger", type=Path)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
