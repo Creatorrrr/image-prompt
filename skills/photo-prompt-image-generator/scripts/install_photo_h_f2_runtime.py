@@ -17,9 +17,11 @@ from photo_installed_h_f2 import (CONFIG, SCHEMA, SKILL_ROOT, default_store,
                                 digest, file_sha, read, release, require, runtime_python)
 
 
-def install(source_store, generation_id, *, destination=None, skill_root=SKILL_ROOT):
+def install(source_store, generation_id, *, destination=None, skill_root=SKILL_ROOT, activate=True):
     source_store = Path(source_store).resolve()
     destination = Path(destination or default_store()).resolve()
+    config_path = Path(skill_root) / CONFIG
+    prior_config = config_path.read_bytes() if activate else None
     _native, manifest, native_manifest = release(source_store, generation_id, full=True)
     require(manifest["CID_count"] > 0 and manifest["RID_count"] >= manifest["CID_count"], "empty candidate release")
     before = {str(p): file_sha(p) for p in destination.parent.rglob("CURRENT.json")}
@@ -68,6 +70,7 @@ def install(source_store, generation_id, *, destination=None, skill_root=SKILL_R
     program = """import sys;sys.path.insert(0,sys.argv[1])
 from photo_h_f2_generation import Generation
 from photo_runtime_sources import RuntimeSnapshotProvider
+import photo_h_f2_workflow
 g=Generation(sys.argv[2],sys.argv[3],full=True)
 RuntimeSnapshotProvider(store=sys.argv[2]).load_generation(g.manifest['native_generation_id'])
 print('deployed H-F2 and native validators PASS')
@@ -80,11 +83,16 @@ print('deployed H-F2 and native validators PASS')
                             str(destination), generation_id], env=env, capture_output=True, text=True)
     require(check.returncode == 0, check.stderr)
     require({str(p): file_sha(p) for p in destination.parent.rglob("CURRENT.json")} == before, "CURRENT changed during install")
+    if not activate:
+        return {"status": "pass", "store": str(destination), "generation_id": generation_id,
+                "positive_CIDs": manifest["CID_count"], "RIDs": manifest["RID_count"],
+                "CURRENT_writes": 0, "activated": False}
     config = {"schema": SCHEMA, "policy": "photo-h-f2/v1", "store_subdirectory": "h-f2-installed",
               "generation_id": generation_id, "native_generation_id": manifest["native_generation_id"],
               "code_sha256": digest(native_manifest["source"]["code"])}
     require(destination == default_store().resolve(), "default config must refer to the default installed store")
-    path = Path(skill_root) / CONFIG
+    path = config_path
+    require(path.read_bytes() == prior_config, "installed default changed during validation; recheck before selecting a release")
     temporary = path.with_suffix(".partial")
     temporary.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n")
     os.replace(temporary, path)
@@ -97,5 +105,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-store", type=Path, required=True)
     parser.add_argument("--generation-id", required=True)
+    parser.add_argument("--no-activate", action="store_true", help="install and validate for explicit-generation tests without changing the default")
     args = parser.parse_args()
-    print(json.dumps(install(args.source_store, args.generation_id), ensure_ascii=False, indent=2))
+    print(json.dumps(install(args.source_store, args.generation_id, activate=not args.no_activate), ensure_ascii=False, indent=2))
