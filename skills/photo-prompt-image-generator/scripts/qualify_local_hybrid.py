@@ -5,10 +5,9 @@ import hashlib
 import json
 from pathlib import Path
 import time
-import photo_candidate_corpus as c
+import photo_candidate_corpus as c  # noqa: F401 - preserve native qualifier module loading order
 import prompt_generator as g
 import photo_slot_queries as queries
-import photo_slot_retrieval as slots
 import audit_global_retrieval as audit
 from photo_search_reader import SearchReader,LazyRuntimeData
 from photo_embedding_provider import atomic,load_env

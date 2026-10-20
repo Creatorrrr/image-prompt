@@ -1,0 +1,19 @@
+# Limit import linting to the maintained photo skill, including nested modules.
+required-version = "==0.15.1"
+target-version = "py312"
+force-exclude = true
+unsafe-fixes = false
+include = [
+    "skills/photo-prompt-image-generator/scripts/**/*.py",
+    "skills/photo-prompt-image-generator/precore/**/*.py",
+]
+extend-exclude = ["docs", "tools", "tests", "**/.runtime", "**/node_modules"]
+
+[lint]
+select = ["F401"]
+fixable = ["F401"]
+
+[lint.per-file-ignores]
+# Its exact bytes are bound by the installed H-F2 worker_sha256. Revisit only
+# with a separately qualified release; do not edit it for import cleanup.
+"skills/photo-prompt-image-generator/scripts/photo_local_embedding.py" = ["F401"]

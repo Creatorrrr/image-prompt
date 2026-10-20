@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import photo_candidate_corpus as c
 from photo_embedding_provider import atomic,embed_many,GEMINI_SPACE
 from photo_local_embedding import space as local_space
 
