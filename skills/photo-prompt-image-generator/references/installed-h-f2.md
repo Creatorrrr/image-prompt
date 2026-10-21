@@ -1,5 +1,39 @@
 # Installed H-only+F2 search
 
+New runs use H-F2 material v2 and a core-derived `photo-validation-context/v1`.
+No empty native candidate pack or separate `creative_augmentation` stage is
+created. Validation compiles frozen meaning, controls, source obligations,
+negative policy and embodiment checks directly. Historical material v1/native
+V10 runs keep their original sealed implementation and records.
+
+## Creativity and one-pass sampling
+
+Each query still ranks the whole positive corpus once with BM25F and local
+cosine. Apply the existing phase/literal/primary-source scope projection first,
+then take a CID-deduplicated rank window and draw a uniform sample without
+replacement. Creativity never relaxes requester locks or source conditions.
+
+| creativity | rank window per query | sample limit per query |
+| --- | ---: | ---: |
+| 0 | 8 | 4 |
+| 1 | 32 | 8 |
+| 2 | 96 | 12 |
+| 3 | 256 | 16 |
+
+A new run records a fresh 128-bit `sampling_seed` before searching. Query ID and
+query hash derive independent random streams from that seed. Save the policy,
+window IDs/hash and sampled IDs; receipt audits replay the exact sample without
+search or model calls. Resume/view reuse issued evidence and never resample.
+When fewer compatible sources exist, return only those sources without padding.
+Current goals store `candidates`; historical goals retain `top8`. Every returned
+query/CID/RID occurrence still needs its source-bound material decision. Compare
+candidate-informed alternatives with the frozen baseline; adoption is optional.
+Use the bound creativity level for [candidate-informed reconstruction](composition-contract.md#creativity-and-reconstruction), from necessary changes at 0 to active whole-photograph alternatives at 3. This authoring guidance does not change the sampling windows, return limits, source conditions or receipt replay above, and does not reactivate the historical creative-augmentation sampler.
+`pack`/`pack_id` remain transport names for historical CLI compatibility, but the
+new artifact is a validation context with no native candidate inventory or
+creative-guide payload. Image records identify this format as `h-f2-v2`.
+
+
 The maintained weak-slot source contains 18,368 positive candidate records and
 70 diagnostic records. The installed config separately selects the immutable
 release and its exact CID/RID population for new managed runs. Source edits alone
@@ -74,8 +108,8 @@ Every new retrieval also issues two independent queries after core freeze:
 
 Neither query is derived from a slot or from `overall_intent`. Both run even
 when there are no searched slots. Each receives one BM25F lane and one full
-local cosine lane, RRF10/CID dedup and its own top8. Results are not pooled into
-or allowed to displace a slot's top8. `query_scopes` identifies `slot`,
+local cosine lane, RRF10/CID dedup and its own creativity-bounded sample. Results are not pooled into
+or allowed to displace a slot's sample. `query_scopes` identifies `slot`,
 `request_topic` and `baseline_prompt`; the two reserved IDs appear alongside
 slot IDs in `materials`. Read and review these complete sources with the same
 requester-lock and native-adoption boundaries as slot material.
@@ -86,25 +120,25 @@ than searching another arm or substituting an invented query.
 
 F2 keeps original lookup cues and meaning fields, with frozen weights, global
 document frequencies and nonempty normalization on its designated fields. The
-two complete ranks combine by RRF10 on the same CID/RID, followed by CID dedup
-and top8. No relevance threshold or native eligibility pruning removes material
+two complete ranks combine by RRF10 on the same CID/RID, followed by CID dedup. New runs then apply the sampling policy above. No relevance threshold or native eligibility pruning removes material
 before retrieval. Payloads remain lazy; exact full-pool cosine can read all
 vector extents. This is a recall-oriented material search, not a claim that
 every result fits or that every useful candidate is recovered.
 
 Use `view --candidate-id CID` for full source detail and
 `view --material-page N` for reading pages of at most64 unique sources. This
-page cap does not truncate any stored top8. Repeat retrieve, view,
+page cap does not truncate any stored candidate list. Repeat retrieve, view,
 resume, compose-audit and deliver reuse issued scores and add zero searches.
 
-Material decisions are optional authored rows in `h_f2_material_decisions`:
+Material decisions keep the existing authored rows in `h_f2_material_decisions`:
 `{slot, candidate_id, realization_id, source_sha256, use, rationale}`. For
 whole-scene material, `slot` retains its originating reserved search ID
 (`__request_topic__` or `__baseline_prompt__`). `use` is
 `skip` or `inspiration_only`. Read complete source conditions and effects;
-preserve requester locks. The native guard pack carries hard duties and
-performs zero slot searches. Do not put material IDs into native chosen lists
+preserve requester locks. The core validation context carries hard duties and performs no candidate searches. Do not put material IDs into native chosen lists
 or treat `native_approval: false` as a whole-source adoption permission.
+
+For new compositions, follow [candidate-informed alternatives and comparison](composition-contract.md#candidate-informed-alternatives-and-comparison). Review every distinct returned source across the material pages and record each returned query/CID/RID occurrence. Repeated sources may refer to one candidate-specific review. Put the concrete source finding, alternative comparison reference, and retained final effect or reason for non-use in `rationale`; a slot-wide sufficiency statement is not a candidate-specific review. Compare concrete compatible alternatives with the baseline before selecting the final prompt. Final use of every candidate remains optional. The material decision fields, requester locks and audit commands are unchanged; archived decision lists retain their original validation contract.
 
 ## Installation and freshness
 
@@ -148,7 +182,7 @@ the new code inventory. The two-module helper above applies to updates confined
 to query/workflow modules; it does not publish edits to that wider closure.
 
 For a reviewed wider code-only fix, the helper also accepts repeated `--member`
-paths naming existing sealed `scripts/*.py` or `precore/*.py` members. An optional
+paths naming existing or new `scripts/*.py` or `precore/*.py` members. An optional
 `--overlay-root` supplies exactly those reviewed files. Use an overlay built by
 applying only the intended patch to the installed source when the working file
 also contains unrelated edits. The stager verifies the complete expected code
@@ -176,7 +210,7 @@ Required, optional, negative and quoted context are separate: spell residue,
 vanitas support, former luxury decline, a quiet event setting and a failed recipe
 retain their complete source meaning. Unsupported owners do not borrow unrelated
 or generic timing sources. If no compatible source exists, a supported request
-returns zero with a reason; no extra search or ordinary top8 padding is used.
+returns zero with a reason; no extra search or ordinary-source padding is used.
 Other intents retain ordinary retrieval. All scored sources and scores remain
 in the common pool and saved full order.
 

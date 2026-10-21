@@ -172,7 +172,7 @@ print(json.dumps({'python':sys.executable,'numpy':numpy.__version__,
                             capture_output=True, text=True)
     require(result.returncode == 0, "bound Python dependency check failed: " + result.stderr)
     details = json.loads(result.stdout)
-    compatible = details["new_record_versions"] == ["v10"] and details["bound_pack_version_derivation"]
+    compatible = set(details["new_record_versions"]) in ({"v10"}, {"v10", "h-f2-v2"}) and details["bound_pack_version_derivation"]
     return {"status": "pass" if compatible else "fail", "generation_id": generation_id or config["generation_id"],
             "native_generation_id": manifest["native_generation_id"], "runtime_python": str(python),
             "check": "dependencies_and_installed_recorder", **details,

@@ -1,5 +1,14 @@
 # Composition Contract
 
+New H-F2 material v2 uses `photo-validation-context/v1`, not a native candidate
+pack. Its source-bound sampled materials are reviewed through the candidate
+comparison procedure below and `h_f2_material_decisions`; do not add
+`creative_augmentation_brief` or put material IDs into native chosen lists.
+The validation context carries the existing core/controls/meaning/embodiment
+contracts. Historical native V10 fields described below apply only to native
+packs; old frozen records are never rewritten. See [installed H-F2](installed-h-f2.md)
+for the per-query creativity windows, limits and recorded sampling seed.
+
 For `adult_appeal.contextual_retrieval`, add the short conditional review and
 baseline/alternative comparison inside `adult_appeal_brief` as described in
 [contextual appeal](contextual-appeal.md). The general creative sample does not
@@ -8,11 +17,11 @@ interpretation/evidence fields; there is no required adoption count.
 
 Post-core only. This reference must not participate in initial meaning resolution or baseline authoring. Follow `SKILL.md` for user authority, retry-only parent access, and the compact composition view. Full source packs remain the audit input; a view never replaces them.
 
-## Candidate Pack V10: Normal Skill Contract
+## Native Candidate Pack V10: Historical Route
 
 The serialized pack contract is `photo-candidate-pack/v10`. The generator retains `v9` as an input selector for that current contract; it does not identify a serialized V9 pack. The full wire name is also accepted; the shorthand `v10` is not a generator selector.
 
-The normal skill path supplies one external `photo-request-envelope/v1`, one `photo-authorial-core/v3`, and the pre-core creative-control snapshot with `--creative-controls-json`. The core binds the snapshot hash. The CLI returns V10 and requires the envelope, core, controls and embodiment review for every generation.
+The native candidate-pack path supplies one external `photo-request-envelope/v1`, one `photo-authorial-core/v3`, and the pre-core creative-control snapshot with `--creative-controls-json`. The core binds the snapshot hash. The CLI returns V10 and requires the envelope, core, controls and embodiment review for every generation.
 
 The request envelope is frozen before delegation. It contains the complete byte-exact requester text, its SHA-256, and one or more exact non-overlapping active spans. Multi-topic runs keep the same raw requester text and select only exact arm-local topic and governing global-modifier spans; an agent-authored per-arm paraphrase is invalid. The agent writes an initial core before reading any pack, profile, registry, project reference, fixture, or prior result. A retry may inspect only the parent hashes, preserved frozen fields, effective hard obligations, and relevant defect evidence allowed by `SKILL.md`; previous candidate inventories and optional prose remain unavailable. The core contains that same complete raw text, a context-resolved interpretation, concrete subject/setting/event, two to six visual priorities, a standalone 48–1,280-word English baseline prompt with a default recommended maximum of 720 words, optional request-scoped definitions, true requester exclusions, optional runtime-only labels, optional style evidence, `interpretation_provenance`, mandatory empty `unresolved_ambiguities`, and an `agent_prepack` provenance marker. V10 packs expose `photo-authorial-prompt-budget/v3`: 48 and 1,280 are blocking bounds, 720 is advisory, and required literal evidence expands the advisory ceiling by a 320-word headroom. Scene development, situational clarity, emotional credibility, and hard evidence may justify longer prose within the absolute bound. The prompt-budget contract is required and must be V3; archived artifacts retain their original budgets as evidence. Continue only through newly authored native inputs and current audits.
 
@@ -59,7 +68,7 @@ Apply this review to every considered candidate using the whole request, regardl
 
 - **Meaning:** compare the complete definition, visible components, participants, properties and directed relations with requester meaning and frozen evidence. A shared word or broad impression is insufficient; an unfamiliar expression is not evidence of contradiction.
 - **Applicability:** assess the actual prerequisites and joint effects against the final scene, open dimensions and property locks. A prerequisite may be supplied through an authorized open choice or an admitted joint bundle when the declared contract permits it. An unselected candidate, imagined context, or generic atmosphere cannot supply it. Preserve the candidate's full effects, including effects outside its slot.
-- **Preference:** compare compatible, realizable options with the baseline by their contribution to the intended photograph. Keeping the baseline can be preferable even when another option is valid. A different agent-chosen action is not automatically a requester prohibition; determine ownership from the locks and evidence.
+- **Preference:** realize distinct compatible candidate changes in complete alternative prompts before comparing their contribution with the baseline. Follow the comparison procedure below; the absence of a defect in the baseline is not a preference decision. Keeping the baseline can be preferable after that comparison. A different agent-chosen action is not automatically a requester prohibition; determine ownership from the locks and evidence.
 
 State material reasons in existing supported decision fields or concise run notes. Distinguish actual meaning conflict, unmet prerequisites or scope, unresolved recognition, and compatible options that were not preferred. Do not add new decision enums or interpretation rows for rejected ordinary candidates. If an eligibility explanation appears inconsistent with the evidence, consult the [retrieval diagnostic guidance](retrieval-contract.md#interpreting-applicability-diagnostics); keep the source pack and gates intact.
 
@@ -67,9 +76,50 @@ Use the resulting judgment with these reasoning outcomes and existing fields, no
 
 - **Adopt the complete meaning:** use existing selection/interpretation fields and satisfy all concept, relation, component, conditional and opt-in evidence. New prose is allowed; check joint effects with other selections.
 - **Use independently justified generic attributes:** decline the contractual candidate and record a material refinement in `authorial_decisions` within open scope. Do not retain its distinctive compound meaning, omit its prerequisites, or relabel it as authorial to evade its contract.
-- **Decline:** leave the optional candidate unselected, using an existing rejected decision where required. No replacement or extra detail is owed; retaining the baseline is valid.
+- **Decline:** leave the optional candidate unselected, using an existing rejected decision where required. Record its actual conflict, prerequisite gap, redundancy, or comparative disadvantage. No replacement or extra final detail is owed; retaining the baseline is valid after the comparison procedure below.
 
 For example, a daylight-only scene may use an independently justified gentle transition from its existing window light without adopting a softbox candidate or adding that apparatus. Required meanings remain binding; uncertain optional additions can be withheld without inventing new exclusions or claiming that mechanical audit guarantees semantic or image quality.
+
+### Candidate-informed alternatives and comparison
+
+Apply this procedure after retrieval and before choosing a new composed prompt. Keep the frozen baseline intact as a comparison option; freezing its independent origin does not make it the preferred final answer. Keep the same requester meaning, resolved controls, reference scope, prompt budget, and hard obligations across the options. Do not turn replaceable baseline staging into an extra requester constraint to avoid considering a candidate.
+
+#### Creativity and reconstruction
+
+Read the selected creativity definition from the bound `creative_controls` snapshot. It governs how actively candidate material may reshape the photograph as well as the requested interpretive freedom. Apply these directions within the existing open dimensions and property locks:
+
+| creativity | Candidate-informed authoring and comparison |
+|---|---|
+| 0 | Realize the request directly. Compare compatible changes by whether they are needed for faithful meaning, legibility or consistency; retain only those needed changes. Novelty or an unused source is not a reason to expand the scene. |
+| 1 | Explore restrained local additions, replacements and subtractions close to the requested direction. Prefer a change when its concrete expressive benefit justifies its whole-image tradeoffs. |
+| 2 | Actively develop alternatives that reorganize connected open choices around compatible material. Compare changes to the authorial direction as well as local improvements; the existing arrangement need not remain the organizing center. |
+| 3 | Actively develop whole-photograph reconstructions from requester requirements and compatible material. Treat the independent baseline as one possible realization; substantially replace its agent-authored staging when the new direction serves the requested freedom. Do not restrict exploration to fixing defects or adding to the existing scene. |
+
+The preserved core meaning consists of every requester requirement, definition, exclusion, reference-use duty and effective hard obligation, not the smallest surviving amount of baseline prose. Do not promote an invented circumstance or preferred motif to a requirement merely because it supplies the baseline's story or hierarchy. Conversely, this guidance never demotes an existing frozen anchor, assertion, owner requirement or adopted contract. If correcting overbroad ownership would change a frozen binding, use the existing rebuild or scoped retry path; do not edit the core or required evidence in place.
+
+Review all returned sources and perform the concrete-alternative comparison below at every level. These reconstruction directions change exploration and qualitative preference criteria without altering decision-coverage duties or source prerequisites, adding proposal/adoption counts or a rewrite-percentage quota, or changing the existing creativity-dependent sampling policy. At 2–3, assess the expressive value of reinterpretation itself as part of fidelity to the requested controls. Distance from the initial staging, removal of an optional motif, or the need to write a different scene is not by itself a comparative disadvantage. Coherence and legibility apply to the proposed new scene, not to keeping the old arrangement intact. Novelty alone does not establish a better photograph, and a precise request never gains invented freedom.
+
+Baseline selection remains valid. At 0, candidate-specific findings may show that no change is needed. At 1, compare the actual local benefits and costs. At 2–3, first explore the viable reorganizations or reconstructions and explain their concrete tradeoffs; baseline completeness or familiarity alone does not justify rejecting them. If scope or prerequisites prevent such alternatives, state that evidence rather than manufacturing a change or claiming that broad reconstruction occurred.
+
+#### Compare and record the complete options
+
+Read every distinct returned H-F2 CID/RID and its complete source conditions and effects, paging the material view as needed. A duplicate source with the same hash may be reviewed once, with its originating queries linked to that review. Continue the existing review and decision coverage for considered native candidates, clarifications, and creative samples; their contracts and decision enums do not change.
+
+Separate actual meaning conflict, unmet prerequisites or locked effects, and a contribution already fully realized in the baseline from artistic preference. Ground a conflict in the exact source requirement and relevant requester anchor, property, or missing prerequisite. Ground redundancy in the candidate's actual visible meaning and literal baseline evidence; shared terminology alone is not redundancy. Do not invent a contradictory alternative merely to reject it. If no distinct compatible change is available, record these candidate-specific findings and retain the baseline without manufacturing an alternative.
+
+For a candidate that can make a distinct, compatible change within open scope, write its concrete realization in a complete standalone English alternative before choosing between that realization and the baseline. Compatible candidates may share an alternative when their complete effects form a coherent photograph; keep materially different realizations separate. Consider replacement, subtraction, and reorganization as well as additions. A candidate label, a list of possible changes, or an assertion that the baseline is already sufficient is not an alternative. This requires no fixed proposal count and no candidate adoption. A source already completely realized in the baseline needs no artificial extra change.
+
+Compare each viable alternative and the baseline as complete photographs using the same applicable criteria: requester fidelity and required legibility, subject presence, situational clarity, purpose and connected causes and responses, emotional credibility, whole-image direction, visual hierarchy, and the resolved control strengths including level-matched reinterpretation. First check that the proposed realization can preserve the existing locks, literal evidence, full candidate conditions, and physical consistency. Then assess its benefits and tradeoffs without giving either the initial wording or novelty an automatic preference. Keep the comparison qualitative; do not add a scoring threshold or detail quota. Select the final prompt only after this comparison. If the final selection combines or materially revises compared options, update its complete text and comparative assessment before the existing audits.
+
+Save `composition-comparison.md` beside the composed object as current-run authoring evidence. Record:
+
+- The exact baseline path and hash, the frozen creativity level and its effect on the comparison, the requester-owned invariants versus replaceable authorial choices, and each alternative's ID and complete prompt text. Identify candidate CID/RID/source hashes and the actual open dimensions and properties changed by each alternative.
+- Concrete strengths and tradeoffs of the baseline and each alternative on the same criteria, the chosen option, and why it serves the request better. When the baseline wins, identify what the candidate-informed alternatives would change and why those changes are less useful; a generic claim of completeness is insufficient.
+- Each candidate's source meaning, the option in which it was realized or the evidenced reason no distinct compatible realization was possible, and its final use or non-use. Cite the actual source detail and relevant baseline, alternative, or final phrase. Distinguish incompatibility, unmet scope or prerequisites, genuine redundancy, and a compatible option that was not preferred. Shared findings may be referenced, but do not replace different candidates' reasons with a slot-wide rejection sentence.
+
+For every returned H-F2 query/CID/RID occurrence, keep the existing exact `h_f2_material_decisions` fields. Put its candidate-specific finding, comparison reference, and final effect or reason for non-use in `rationale`; add no unsupported fields or new `use` values. `inspiration_only` describes an independently justified contribution actually retained in the final prompt, with its literal final evidence identified. A candidate explored only in an unchosen alternative is `skip`. These values never establish native whole-source adoption; all existing native selection, prerequisite, owner, and complete-source requirements remain binding. Use the ordinary native interpretation and creative-decision fields where their contracts apply. Final material refinements still belong in `authorial_decisions` and applicable scope declarations.
+
+Before `compose-audit`, check that the returned material occurrences have decisions, that every preference-based rejection points to a concrete level-matched comparison, and that the chosen complete text matches `prompt_en`. This is an authored review requirement, not a new wire schema or a claim that the mechanical auditor can judge artistic superiority or reconstruction strength. Keep the comparison document outside the frozen core, retrieval queries, and runtime prompt. Apply the expanded authoring guidance to new compositions; archived snapshots retain their embedded control definitions and original validation contract and are not rewritten or required to acquire new prose. Preserve the existing hashes, evidence, negative policy, candidate limits, and audit commands; refresh the required final embodiment review when the chosen prompt changes. An unchosen alternative does not create an adopted obligation or authorize rendering. Rendering any option still requires the user's existing image-generation scope.
 
 ### Explicit existing-owner selection
 
@@ -228,7 +278,7 @@ A frozen `viewer_experience` control adds the separate topic-neutral `photo-view
 
 `intent_contract` and `coverage.intent_constraints` describe typed source, polarity, subject category, domain and negative-presence constraints. Excluded and advisory rows never become positive mandatory prose. Required typed assertions and request-scoped visual obligations preserve their independent authority.
 
-Every composed object must bind `global_retrieval.canonical_sha256` as `global_retrieval_sha256`, in addition to `pack_id` and the frozen intent-lock binding. Audits recompute the ordinary candidate inventory from its authored source. Candidate adoption is optional, including for a singleton inventory. Retain the independently written baseline when it best serves the request, whether optional material is incompatible, unrealizable within scope, or valid but less useful.
+Every composed object must bind `global_retrieval.canonical_sha256` as `global_retrieval_sha256`, in addition to `pack_id` and the frozen intent-lock binding. Audits recompute the ordinary candidate inventory from its authored source. Candidate adoption is optional, including for a singleton inventory. Retain the independently written baseline when the comparison procedure supports that choice, whether optional material is incompatible, unrealizable within scope, or valid but less useful.
 
 ## Moe Response and Event Timing
 
