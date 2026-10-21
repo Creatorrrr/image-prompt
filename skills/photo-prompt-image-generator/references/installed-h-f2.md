@@ -1,10 +1,16 @@
 # Installed H-only+F2 search
 
-The maintained weak-slot source contains 18,368 positive candidate records and
-70 diagnostic records. The installed config separately selects the immutable
+The maintained weak-slot source contains 18,509 positive candidate records and
+91 diagnostic records. The installed config separately selects the immutable
 release and its exact CID/RID population for new managed runs. Source edits alone
 do not switch the installed release. Slot tags never partition or prefilter the
 whole positive search pool.
+
+The [biopunk and body-horror data extension](biopunk-body-horror-semantics.md)
+adds 141 complete visual options and 21 diagnostic/context records, with 162
+semantic cards, 259 keyword routes and 202 optional role bindings. The scoped
+source/index commit leaves the installed-runtime pointer unchanged; see the
+[validation boundary](biopunk-body-horror-validation-20261021.md).
 
 After independent core freeze, run `photo_workflow.py prepare-slot-intents
 --run RUN`. Add repeatable `--slot SLOT` only to choose a smaller explicit
