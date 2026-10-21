@@ -117,6 +117,10 @@ def validate_api_render_input(path: Path, expected_sha256: str, entry: dict) -> 
         # The saved original bytes are authoritative. JSON previews may sort
         # mapping keys; frozen controls also retain an ordered authoring brief.
         original_inputs[label] = {**row, "value": original}
+    from record_image_run import candidate_pack_version
+    version = candidate_pack_version(original_inputs["pack"]["value"])
+    if entry.get("candidate_pack_version") not in (None, version):
+        raise ValueError("API attempt pack version differs from actual pack")
     execution = document["execution"]
     fresh = audit_inputs(original_inputs, model=execution["model"], size=execution["size"], runtime_store=document["runtime_store"])
     if any(document.get(key) != value for key, value in fresh.items()):
@@ -137,4 +141,4 @@ def validate_api_render_input(path: Path, expected_sha256: str, entry: dict) -> 
     # The existing error recorder recomputes runtime text; bind it as well.
     if entry.get("runtime_prompt_en", execution["runtime_prompt_en"]) != execution["runtime_prompt_en"]:
         raise ValueError("API attempt runtime prompt mismatch")
-    return {"api_render_input_json": str(Path(path).resolve()), "api_render_input_sha256": expected_sha256}
+    return {"candidate_pack_version": version, "api_render_input_json": str(Path(path).resolve()), "api_render_input_sha256": expected_sha256}

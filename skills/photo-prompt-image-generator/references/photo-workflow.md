@@ -10,9 +10,11 @@ meaning, writes the photograph, chooses candidates, and reviews actual pixels.
 `precore/prepare_photo_run.py` provides `init`, `controls`, `canonicalize`, and
 `freeze`. Every command except `canonicalize` uses `--run RUN`. Init requires
 `--request FILE`, an explicit `--spans FILE` or `--whole-request`, and
-`--mode prompt_only|image`. A spans file is an array of objects with exactly
-`span_id`, `start`, and `end`; indices refer to Unicode characters. Raw request
-bytes preserve CRLF. Controls requires an authored `--context FILE`; optional
+`--mode prompt_only|image`. A spans file is an array of objects with required
+`span_id`, `start`, and `end`, and optional `text`; indices refer to Unicode
+characters. A supplied `text` must equal that exact request slice. Unknown keys,
+non-integer offsets and mismatched quotes fail before creating the run. Raw
+request bytes preserve CRLF. Controls requires an authored `--context FILE`; optional
 `--overrides FILE` and `--seed INTEGER` use the existing resolver.
 
 Freeze accepts the existing raw v3 core plus authored `--selection FILE` and
@@ -173,14 +175,22 @@ and audit it instead. Existing manual native execution remains available.
 
 ## Pixel review
 
-`review-shape --run RUN --image ACTUAL_FILE` derives applicable gates, exact image
-SHA, and required observation scales. It leaves reviewer, statuses, evidence and
-user judgments unfilled. Shapes separate instructions from review wire objects.
+`review-shape --run RUN --image ACTUAL_FILE --baseline-available yes|no` derives
+applicable gates, exact image SHA, and required observation scales. Declare whether
+a real comparison baseline exists. Reviewer, gate statuses and evidence remain
+unfilled; observability starts as `unreviewed`. Requester judgment starts as
+`pending`, its source as `not_yet_received`, and comparison as `not_applicable`
+only when no baseline exists. These are pending states, never acceptance. Shapes separate instructions from review wire objects.
 Author the applicable reviews, then run `review-audit --run RUN` with
 `--generic-review FILE` and/or `--visual-review FILE`. Both existing auditors run
 against the exact generation. The workflow also checks declared visual scales.
 A valid failure record is admitted with technical qualification `fail`; malformed
-records are rejected. Pixel truth and artistic quality remain the reviewer's
+records are rejected with field paths before full native audit when possible.
+Author `observability` as `visible`, `partial`, or `unobservable`; a complete gate
+can pass only with `visible`. Check every required relation/component together
+at its declared scales. New managed submissions require this field; the standalone auditors keep
+historical v1 rows without it readable.
+Pixel truth and artistic quality remain the reviewer's
 observations, and user acceptance remains actual requester feedback.
 
 ## Retry coordinator and child binding

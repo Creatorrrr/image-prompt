@@ -47,3 +47,21 @@ An explicitly opted-in `guard_supports` proof can use a directly quoted, exact o
 The entry-level typed-human filter honors a catalog's explicit `allow_domains_override_subject_categories` only when the actual request domains intersect that catalog's `allow_domains`. This exception does not remove an explicit actor owner, source/binding conditions, subject/domain denials, adult restrictions or `no_people`. Candidate routing tags cannot create a catalog exception.
 
 A scoped149 migration uses `photo_scoped_slot_adoption.py` with an exact authored catalog and per-binding decisions. It does not relax the separate full-native review tool or qualify a source from tags. `_slot_binding_review` records inherited/relationship-reviewed/deferred status separately from native evidence. Deferred bindings keep their original IDs and bytes for dependency references, but role enumeration, proposal replay and explicit bound entry reject them; the source remains in the common search pool and unrelated roles keep their own guards. A reviewed tag without native source evidence remains `review_required`. Never turn a deferred relation into an unbound presentation of that same role.
+
+## Verify the installed recorder before maintenance
+
+Run `python3 skills/photo-prompt-image-generator/scripts/photo_installed_h_f2.py
+--check-runtime` from the repository root. This read-only check resolves the
+selected sealed release and its bound Python, imports NumPy and that release's
+actual recorder, and verifies v10 new-write support and actual-pack version
+derivation. For a staged release supply both `--source-store STORE` and
+`--generation-id ID`. It performs no image calls or source writes. Use the
+reported `runtime_python` for standalone NumPy maintenance helpers; an arbitrary
+`.venv` may lack the dependency. A working-source fix does not update installed
+code: stage a reviewed member allowlist, qualify it, install without activation,
+and activate only after verification. Preserve data, CURRENT and old run history.
+
+The composer may copy an omitted disabled (`intensity: 0`) appeal-axis metadata
+entry from the frozen pack. It never fills positive-intensity evidence, changes
+a supplied value, writes prompt text, or supplies a reviewer/requester judgment.
+Missing positive axes and conflicting values still fail the existing audit.

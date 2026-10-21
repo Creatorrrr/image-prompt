@@ -25,8 +25,60 @@ def validate_visual_scales(review, contracts):
             raise WorkflowError("required_review_scale_unobserved")
 
 
+def input_failures(review, role):
+    """Cheap syntax checks before source loading; final native audit still runs."""
+    from audit_image_render_review import observability_failure
+    from audit_moe_render_review import USER_JUDGMENT_VALUES, USER_JUDGMENT_SOURCES
+    failures = []
+    def fail(path, reason):
+        failures.append({"check": path, "reason": reason})
+    if not isinstance(review, dict):
+        return [{"check": role, "reason": "review must be a JSON object"}]
+    if role == "visual_review":
+        user = review.get("user_judgment")
+        if not isinstance(user, dict):
+            fail("user_judgment", "an explicit user judgment record is required")
+        else:
+            if type(user.get("baseline_available")) is not bool:
+                fail("user_judgment.baseline_available", "must be true or false")
+            for field in ("genuinely_moe", "better_than_baseline"):
+                if not isinstance(user.get(field), str) or user.get(field) not in USER_JUDGMENT_VALUES:
+                    fail("user_judgment." + field, "must be accepted, rejected, pending, or not_applicable")
+            if not isinstance(user.get("source"), str) or user.get("source") not in USER_JUDGMENT_SOURCES:
+                fail("user_judgment.source", "must be requesting_user or not_yet_received")
+        rows = review.get("hard_gates")
+        if not isinstance(rows, dict):
+            fail("hard_gates", "must be an object"); rows = {}
+        rows = [("hard_gates." + str(k), v) for k,v in rows.items()]
+    else:
+        values = review.get("gates")
+        if not isinstance(values, list):
+            fail("gates", "must be a list"); values = []
+        rows = [("gates[" + str(i) + "]", v) for i,v in enumerate(values)]
+    for path, row in rows:
+        if not isinstance(row, dict):
+            fail(path, "must be an object"); continue
+        if not isinstance(row.get("status"), str) or row.get("status") not in {"pass", "fail"}:
+            fail(path + ".status", "author pass or fail after direct pixel inspection")
+        if not isinstance(row.get("evidence"), str) or len(row["evidence"].strip()) < 12:
+            fail(path + ".evidence", "provide image-grounded evidence")
+        scales = row.get("reviewed_scales")
+        if not isinstance(scales, list) or not scales or any(not isinstance(v, str) or v not in {"native", "thumbnail"} for v in scales) or len(scales) != len(set(scales)):
+            fail(path + ".reviewed_scales", "declare unique actually inspected native/thumbnail scales")
+        if "observability" not in row:
+            fail(path + ".observability", "new managed reviews require explicit observed coverage")
+        error = observability_failure(row, path)
+        if error:
+            failures.append(error)
+    return failures
+
+
 def review_shape(args):
     from photo_workflow import ensure, one
+    baseline = getattr(args, "baseline_available", None)
+    if baseline not in {"yes", "no"}:
+        raise WorkflowError("explicit_baseline_availability_required")
+    baseline = baseline == "yes"
     with locked_state(args.run) as state:
         ensure(state)
         contracts = audit_bound(state, runtime=True)
@@ -41,7 +93,7 @@ def review_shape(args):
             shape = {"schema_version": "photo-image-render-review/v1", "pack_id": pack["pack_id"],
                 "source_render_repair_contract_sha256": repair["canonical_sha256"], "result": {"path": image, "sha256": image_sha},
                 "reviewer": {"reviewer_id": None, "method": "direct_pixel_inspection"}, "gates": [
-                    {"gate_id": gate["id"], "status": None, "reviewed_scales": [], "evidence": None,
+                    {"gate_id": gate["id"], "status": None, "reviewed_scales": [], "evidence": None, "observability": "unreviewed",
                      "required_scales": ["native", "thumbnail"] if gate["review_scale"] == "both" else [gate["review_scale"]]}
                     for target in repair["targets"] for gate in target["render_gates"]]}
             # required_scales is instructions outside the review wire.
@@ -53,8 +105,8 @@ def review_shape(args):
             contract = (contracts.get("character") or contracts.get("effective_visual") or {"contract_version": "photo-embodiment-preflight/v1"})
             shape = {"schema_version": "moe-render-review/v1", "pack_id": pack["pack_id"],
                 "contract_version": contract["contract_version"], "reviewer": None, "result_image": image, "result_sha256": image_sha,
-                "hard_gates": {gate["id"]: {"status": None, "evidence": None, "reviewed_scales": []} for gate in visual},
-                "user_judgment": {"baseline_available": None, "genuinely_moe": None, "better_than_baseline": None, "source": None, "evidence": None}}
+                "hard_gates": {gate["id"]: {"status": None, "evidence": None, "reviewed_scales": [], "observability": "unreviewed"} for gate in visual},
+                "user_judgment": {"baseline_available": baseline, "genuinely_moe": "pending", "better_than_baseline": "pending" if baseline else "not_applicable", "source": "not_yet_received", "evidence": "No requesting-user judgment has been received."}}
             outputs["visual_review_shape"] = encode({"review": shape, "gate_definitions": visual})
             available.append("visual")
         commit_stage(args.run, state, state["phase"], outputs)
@@ -78,6 +130,9 @@ def review_audit(args):
             raise WorkflowError("authored_review_required")
         for role in outputs:
             review = read_json(bound_path(pending, role))
+            failures = input_failures(review, role)
+            if failures:
+                return {"status": "fail", "record_valid": False, "input_failures": failures, "native_audit_started": False}
             raw_path = review.get("result", {}).get("path") if role == "generic_review" else review.get("result_image")
             expected_sha = review.get("result", {}).get("sha256") if role == "generic_review" else review.get("result_sha256")
             path = Path(raw_path) if isinstance(raw_path, str) else None

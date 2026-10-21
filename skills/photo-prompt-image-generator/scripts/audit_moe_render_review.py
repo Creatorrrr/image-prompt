@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import audit_composed_prompt
+from audit_image_render_review import observability_failure
 
 
 REVIEW_SCHEMA_VERSION = "moe-render-review/v1"
@@ -320,6 +321,9 @@ def audit_moe_render_review(
                 {"gate": gate, "status": "missing", "reason": "required hard gate is missing"}
             )
             continue
+        observation_error = observability_failure(item, f"hard_gates.{gate}")
+        if observation_error:
+            schema_failures.append(observation_error)
         status = str(item.get("status") or "").strip()
         evidence = str(item.get("evidence") or "").strip()
         if status not in {"pass", "fail"}:
@@ -346,6 +350,8 @@ def audit_moe_render_review(
             {"check": "user_judgment", "reason": "render review requires user_judgment"}
         )
         user_judgment = {}
+    if type(user_judgment.get("baseline_available")) is not bool:
+        schema_failures.append({"check": "user_judgment.baseline_available", "reason": "baseline availability must be an explicitly authored boolean"})
     baseline_available = user_judgment.get("baseline_available") is True
     genuinely_moe = str(user_judgment.get("genuinely_moe") or "").strip()
     better_than_baseline = str(user_judgment.get("better_than_baseline") or "").strip()

@@ -22,6 +22,25 @@ def stamp(row, key, expected):
     row[key] = expected
 
 
+def normalize_input_spans(request, spans):
+    """Accept offsets and an optional exact quote; never silently discard it."""
+    if not isinstance(spans, list):
+        raise WorkflowError("invalid_span_shape")
+    result = []
+    required = {"span_id", "start", "end"}
+    for span in spans:
+        if not isinstance(span, dict) or not required <= set(span) or set(span) - required - {"text"}:
+            raise WorkflowError("explicit_span_offsets_required")
+        start, end = span["start"], span["end"]
+        if type(start) is not int or type(end) is not int or not 0 <= start < end <= len(request):
+            raise WorkflowError("invalid_span_offsets")
+        quote = request[start:end]
+        if "text" in span and span["text"] != quote:
+            raise WorkflowError("span_text_mismatch")
+        result.append({**span, "text": quote})
+    return result
+
+
 def init(args):
     raw = args.request.read_bytes()
     request = raw.decode("utf-8")
@@ -29,14 +48,7 @@ def init(args):
         spans = [{"span_id": "request", "start": 0, "end": len(request)}]
     else:
         spans = read_json(args.spans)
-    if not isinstance(spans, list):
-        raise WorkflowError("invalid_span_shape")
-    for span in spans:
-        if not isinstance(span, dict) or set(span) != {"span_id", "start", "end"}:
-            raise WorkflowError("explicit_span_offsets_required")
-        if type(span["start"]) is not int or type(span["end"]) is not int:
-            raise WorkflowError("invalid_span_offsets")
-        span["text"] = request[span["start"]:span["end"]]
+    spans = normalize_input_spans(request, spans)
     envelope = {"contract_version": "photo-request-envelope/v1", "provenance": "requesting_user",
                 "request_id": args.request_id or "request-" + uuid.uuid4().hex, "request_text": request,
                 "request_sha256": digest(raw), "active_spans": spans}

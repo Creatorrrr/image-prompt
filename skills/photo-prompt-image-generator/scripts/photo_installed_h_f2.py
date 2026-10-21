@@ -150,3 +150,47 @@ def dispatch(argv=None, *, skill_root=SKILL_ROOT):
         print(json.dumps({"status": "error", "code": "installed_h_f2_unavailable",
                           "detail": str(error)}, ensure_ascii=False), file=sys.stderr)
         return 2
+
+
+def check_runtime(*, skill_root=SKILL_ROOT, source_store=None, generation_id=None):
+    """Read-only dependency and installed-writer check, using its bound Python."""
+    skill_root = Path(skill_root).resolve()
+    config = read(skill_root / CONFIG)
+    require(bool(source_store) == bool(generation_id), "supply both source store and generation")
+    store = Path(source_store or default_store()).resolve()
+    native, manifest, _ = release(store, generation_id or config["generation_id"])
+    python = runtime_python(skill_root, manifest)
+    program = """import json,sys;sys.path.insert(0,sys.argv[1])
+import numpy
+import record_image_run as recorder
+print(json.dumps({'python':sys.executable,'numpy':numpy.__version__,
+ 'recorder_file':recorder.__file__,
+ 'new_record_versions':sorted(recorder.VALID_CANDIDATE_PACK_VERSIONS),
+ 'bound_pack_version_derivation':callable(getattr(recorder,'candidate_pack_version',None))}))
+"""
+    result = subprocess.run([str(python), "-I", "-c", program, str(native / "scripts")],
+                            capture_output=True, text=True)
+    require(result.returncode == 0, "bound Python dependency check failed: " + result.stderr)
+    details = json.loads(result.stdout)
+    compatible = details["new_record_versions"] == ["v10"] and details["bound_pack_version_derivation"]
+    return {"status": "pass" if compatible else "fail", "generation_id": generation_id or config["generation_id"],
+            "native_generation_id": manifest["native_generation_id"], "runtime_python": str(python),
+            "check": "dependencies_and_installed_recorder", **details,
+            "reason": None if compatible else "installed_recorder_version_mismatch",
+            "image_calls": 0, "source_writes": 0}
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Check the bound maintenance Python and actual installed writer.", allow_abbrev=False)
+    parser.add_argument("--check-runtime", action="store_true", required=True)
+    parser.add_argument("--source-store", type=Path)
+    parser.add_argument("--generation-id")
+    args = parser.parse_args()
+    try:
+        result = check_runtime(source_store=args.source_store, generation_id=args.generation_id)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        raise SystemExit(0 if result["status"] == "pass" else 1)
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        print(json.dumps({"status": "error", "check": "dependencies_and_installed_recorder", "detail": str(error)}))
+        raise SystemExit(2)
