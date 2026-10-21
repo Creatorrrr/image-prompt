@@ -24,12 +24,16 @@ VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}
 CURRENT_CANDIDATE_PACK_VERSION = "v10"
-VALID_CANDIDATE_PACK_VERSIONS = {CURRENT_CANDIDATE_PACK_VERSION}
+VALID_CANDIDATE_PACK_VERSIONS = {CURRENT_CANDIDATE_PACK_VERSION, "h-f2-v2"}
 MODERN_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v2"
 
 
 def candidate_pack_version(pack: dict) -> str:
     """Derive a new record's version from its actual serialized pack contract."""
+    if isinstance(pack, dict) and pack.get("contract_version") == "photo-validation-context/v1":
+        from photo_validation_context import validate
+        validate(pack)
+        return "h-f2-v2"
     expected = "photo-candidate-pack/" + CURRENT_CANDIDATE_PACK_VERSION
     if not isinstance(pack, dict) or pack.get("contract_version") != expected:
         raise ValueError("recording requires actual " + expected)
@@ -272,7 +276,7 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
 
 
 def build_independent_manifest(entry: dict[str, object], args: argparse.Namespace) -> dict[str, object]:
-    if args.candidate_pack_version != CURRENT_CANDIDATE_PACK_VERSION:
+    if args.candidate_pack_version not in VALID_CANDIDATE_PACK_VERSIONS:
         raise ValueError(f'independent manifests require candidate-pack version {CURRENT_CANDIDATE_PACK_VERSION}')
     if entry.get('candidate_pack_version') != args.candidate_pack_version:
         raise ValueError('manifest candidate-pack version differs from its ledger entry')

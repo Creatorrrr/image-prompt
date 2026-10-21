@@ -99,7 +99,7 @@ class Index:
                 'query_scope':{'analysis':scope,'correction':correction,'literal_text':literal,'primary_focus':focus,'event_phase':phase}}
 
 
-def present_material(rows,phase,*,literal=None,focus=None):
+def present_material(rows,phase,*,literal=None,focus=None,maximum=8):
     """Witnessed material presentation after unchanged complete score lanes.
 
     A recognized property request exposes its proved role/carrier sources without
@@ -108,7 +108,7 @@ def present_material(rows,phase,*,literal=None,focus=None):
     native source qualification or permission to adopt any complete candidate.
     """
     from photo_h_f2_event_phase import present_material as phase_present
-    base,projection=phase_present(rows,phase)
+    base,projection=phase_present(rows,phase,maximum=maximum)
     if phase.get('request') is not None:return base,projection
     literal=literal or {};focus=focus or {};allowed=None;excluded=set(phase.get('rejected_completed_sources',{}));mode=None
     request=literal.get('request',{})
@@ -125,9 +125,9 @@ def present_material(rows,phase,*,literal=None,focus=None):
     excluded.update(focus.get('conflicting_ids',[]))
     if allowed is None and not excluded:return base,projection
     compatible=[r for r in rows if r['id'] not in excluded and (allowed is None or r['id'] in allowed)]
-    chosen=compatible[:8]
+    chosen=compatible[:maximum]
     return chosen,{**projection,'mode':mode or 'explicit_source_exclusion',
-        'available':len(compatible),'returned':len(chosen),'unfilled':8-len(chosen),
+        'available':len(compatible),'returned':len(chosen),'unfilled':maximum-len(chosen),
         'returned_ids':[r['id'] for r in chosen],'excluded_source_ids':sorted(excluded),
         'unknown_source_padding':allowed is None,'reason':'no_independently_requested_positive_change' if mode=='nonpositive_scope_without_requested_change' else 'source_witnesses_only' if allowed is not None else 'explicitly_excluded_source_meaning',
         'role_source_focus':req,'literal_source_request':request if literal.get('schema')=='photo-h-f2-primary-carried-literal/v3' else None,
