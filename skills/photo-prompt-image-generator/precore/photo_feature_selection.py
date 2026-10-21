@@ -1,12 +1,14 @@
 """Neutral feature catalog and current authored selection validators."""
 from __future__ import annotations
 import hashlib
+import json
 import re
 from pathlib import Path
 from typing import Any
 from photo_authoring_wire import clean_spaces
 
-CATALOG_VERSION = "photo-precore-feature-catalog/v1"
+CATALOG_VERSION = "photo-precore-feature-catalog/v2"
+LEGACY_CATALOG_VERSION = "photo-precore-feature-catalog/v1"
 
 SELECTION_VERSION = "photo-precore-feature-selection/v1"
 
@@ -62,10 +64,12 @@ def _sha(value: Any, label: str) -> str:
         _fail(f"{label} must be a lowercase SHA-256 hex digest")
     return value
 
-def validate_catalog(payload: Any) -> dict[str, dict[str, Any]]:
+def validate_catalog(payload: Any, *, historical_catalog: bool = False) -> dict[str, dict[str, Any]]:
     catalog = _object(payload, "catalog")
     _only_fields(catalog, {"schema_version", "categories"}, "catalog")
-    if catalog.get("schema_version") != CATALOG_VERSION:
+    version = catalog.get("schema_version")
+    legacy = historical_catalog and version == LEGACY_CATALOG_VERSION
+    if version != CATALOG_VERSION and not legacy:
         _fail("catalog schema_version is unsupported")
     categories = catalog.get("categories")
     if not isinstance(categories, list):
@@ -110,13 +114,17 @@ def validate_catalog(payload: Any) -> dict[str, dict[str, Any]]:
         )
         if set(source_examples) & set(added_examples):
             _fail(f"{category_id} repeats a source example as an addition")
+        if not legacy and (source_examples or added_examples):
+            _fail(f"{category_id} current catalog must not contain visual examples")
         source_number = category.get("source_number")
         if type(source_number) is int:
             source_numbers.append(source_number)
-            if not source_examples or "origin" in category or "added_reason" in category:
-                _fail(f"{category_id} must keep source examples and source provenance")
+            if "origin" in category or "added_reason" in category:
+                _fail(f"{category_id} must keep source provenance")
+            if legacy and not source_examples:
+                _fail(f"{category_id} historical catalog must keep source examples")
         elif source_number is None:
-            if source_examples or category.get("origin") != "added" or not added_examples:
+            if source_examples or category.get("origin") != "added" or (legacy and not added_examples):
                 _fail(f"{category_id} has invalid added-category provenance")
             _nonempty(category.get("added_reason"), f"{category_id} added_reason")
         else:
@@ -203,8 +211,16 @@ def validate_selection(
     envelope: Any,
     core: Any,
     embodiment_review: Any,
+    *,
+    historical_catalog: bool = False,
 ) -> dict[str, Any]:
-    categories = validate_catalog(catalog)
+    categories = validate_catalog(catalog, historical_catalog=historical_catalog)
+    try:
+        bound_catalog = json.loads(catalog_bytes)
+    except (ValueError, UnicodeError):
+        _fail("catalog bytes must contain valid JSON")
+    if bound_catalog != catalog:
+        _fail("catalog payload does not match catalog bytes")
     record = _object(selection, "selection")
     _only_fields(
         record,
@@ -225,7 +241,7 @@ def validate_selection(
         _fail("selection contract_version is unsupported")
     if record.get("catalog_path") != CATALOG_PATH:
         _fail("selection catalog_path is not the permitted pre-core catalog")
-    if record.get("catalog_schema_version") != CATALOG_VERSION:
+    if record.get("catalog_schema_version") != catalog["schema_version"]:
         _fail("selection catalog_schema_version is unsupported")
     catalog_digest = hashlib.sha256(catalog_bytes).hexdigest()
     if _sha(record.get("catalog_sha256"), "selection catalog_sha256") != catalog_digest:

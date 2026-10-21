@@ -1,6 +1,7 @@
 """Issued material evidence is separate from native adoption authority."""
 from pathlib import Path
 import uuid
+import photo_h_f2_sampling as sampling
 import photo_candidate_corpus as c
 import photo_recall_first as rf
 from photo_recall_generation import read,write,file_sha
@@ -14,9 +15,15 @@ from photo_h_f2_event_phase import compile_contracts as phase_contracts, order_p
 def issue(generation,packet,raw,native_pack,native_receipt):
  rf.require(packet['generation_id']==generation.id,'wrong material generation')
  audit_packet(generation,packet,raw)
- receipt={'schema':'photo-h-f2-receipt/v1','request_id':uuid.uuid4().hex,'generation_id':generation.id,
+ modern=packet['schema']=='photo-h-f2-material-pack/v2'
+ if modern:
+  from photo_validation_context import validate
+  import photo_creative_controls as controls
+  validate(native_pack)
+  rf.require(packet['sampling_policy']==sampling.policy(controls.runtime_values(native_pack['creative_controls'])['creativity']),'sampling controls changed')
+ receipt={'schema':'photo-h-f2-receipt/v2' if modern else 'photo-h-f2-receipt/v1','request_id':uuid.uuid4().hex,'generation_id':generation.id,
   'material_sha256':packet['canonical_sha256'],'raw_files':packet['raw_files'],
-  'native_pack_sha256':c.digest(native_pack),'native_receipt_sha256':c.digest(native_receipt),'native_approval':False}
+  ('validation_context_sha256' if modern else 'native_pack_sha256'):c.digest(native_pack),('validation_receipt_sha256' if modern else 'native_receipt_sha256'):c.digest(native_receipt),'native_approval':False}
  receipt['canonical_sha256']=c.digest(receipt)
  write(generation.store/'h-f2-receipts'/(receipt['request_id']+'.json'),receipt)
  return receipt
@@ -25,11 +32,12 @@ def verify_bound(state):
  binding=state['h_f2_binding'];generation=Generation(binding['store'],binding['generation_id'])
  packet=value(state,'h_f2_material');receipt=value(state,'h_f2_receipt')
  issued=read(generation.store/'h-f2-receipts'/(receipt['request_id']+'.json'))
- rf.require(receipt==issued and receipt['schema']=='photo-h-f2-receipt/v1','receipt was not issued by this runtime')
+ modern=packet.get('schema')=='photo-h-f2-material-pack/v2'
+ rf.require(receipt==issued and receipt['schema']==('photo-h-f2-receipt/v2' if modern else 'photo-h-f2-receipt/v1'),'receipt was not issued by this runtime')
  rf.require(receipt['canonical_sha256']==c.digest({k:v for k,v in receipt.items() if k!='canonical_sha256'}),'receipt checksum mismatch')
  rf.require(packet['canonical_sha256']==c.digest({k:v for k,v in packet.items() if k!='canonical_sha256'})==receipt['material_sha256'],'material checksum mismatch')
  rf.require(packet['generation_id']==receipt['generation_id']==generation.id,'mixed material generation')
- rf.require(c.digest(value(state,'pack'))==receipt['native_pack_sha256'] and c.digest(value(state,'runtime_receipt'))==receipt['native_receipt_sha256'],'native audit evidence changed')
+ rf.require(c.digest(value(state,'pack'))==receipt['validation_context_sha256' if modern else 'native_pack_sha256'] and c.digest(value(state,'runtime_receipt'))==receipt['validation_receipt_sha256' if modern else 'native_receipt_sha256'],'native audit evidence changed')
  rf.require(packet['query_set']['core_sha256']==c.digest(value(state,'authorial_core_normalized')),'material core changed')
  for p,h in receipt['raw_files'].items():
   rf.require(Path(p).name==p and file_sha(Path(binding['raw_directory'])/p)==h,'raw scores changed')
@@ -39,6 +47,9 @@ def verify_bound(state):
  plan,material=_sealed_slot_plan(state)
  rf.require(packet['query_set']==prepare(material['core'],material['controls'],material['catalog'],plan),'bound goal or H input changed')
  rf.require(generation.manifest['native_generation_id']==value(state,'runtime_receipt')['generation_id'],'native generation changed')
+ if modern:
+  import photo_creative_controls as controls
+  rf.require(packet['sampling_policy']==sampling.policy(controls.runtime_values(value(state,'pack')['creative_controls'])['creativity']),'sampling controls changed')
  audit_packet(generation,packet,binding['raw_directory'])
  return packet
 
@@ -46,6 +57,10 @@ def audit_packet(generation,packet,raw):
  """Reconstruct saved rankings, without querying the corpus or invoking a model."""
  import numpy as np
  rf.require(set(packet['goals'])==set(packet['queries'])==set(packet['query_set']['slots']),'goal/query scope changed')
+ modern=packet.get('schema')=='photo-h-f2-material-pack/v2'
+ rf.require(packet.get('schema') in ('photo-h-f2-material-pack/v1','photo-h-f2-material-pack/v2'),'unknown material schema')
+ if modern:
+  settings=packet['sampling_policy'];rf.require(settings==sampling.policy(settings['creativity']),'sampling policy changed')
  sources=set();ids=[m['id'] for m in generation.metadata]
  documents={d['id']:d['text'] for d in read(generation.root/'documents.json.gz')['rows']}
  contracts=compile_contracts(documents,rf.tokens,source_units=generation.primary_units)
@@ -85,11 +100,14 @@ def audit_packet(generation,packet,raw):
    rf.require([ids[i] for i in order]==[row['id'] for row in full],'saved full order is not witnessed phase/literal/RRF10 order')
    rf.require(goal.get('query_scope')=={'analysis':analysis,'correction':correction,'literal_text':literal,'primary_focus':focus,'event_phase':phase},'lexical, literal or event-phase scope changed')
    rf.require(c.digest(full)==goal['full_order_sha256'],'full order trace changed')
-   presented,projection=present_material(full,phase,literal=literal,focus=focus)
+   presented,projection=present_material(full,phase,literal=literal,focus=focus,maximum=settings['rank_window'] if modern else 8)
+   if modern:
+    presented,evidence=sampling.sample(presented,settings['creativity'],packet['sampling_seed'],slot,q['text_sha256'])
+    rf.require(goal.get('sampling')==evidence,'sampling window, seed or selected IDs changed')
    rf.require(goal.get('material_projection')==projection,'material source-witness projection changed')
-   rf.require(len(goal['top8'])==len(presented),'source-witnessed top8 budget changed')
-   for row,expected in zip(goal['top8'],presented,strict=True):
-    rf.require(all(row[k]==v for k,v in expected.items()),'top8 CID/RID/score changed')
+   rf.require(len(sampling.candidates(goal))==len(presented),'source-witnessed material budget changed')
+   for row,expected in zip(sampling.candidates(goal),presented,strict=True):
+    rf.require(all(row[k]==v for k,v in expected.items()),'material CID/RID/score changed')
     source=packet['sources'][row['cid']];record=generation.body.record(row['cid'])
     rf.require(source==record and row['source_sha256']==c.digest(record),'mixed candidate source')
     rf.require(row['rid'] in record['meaning']['primary'] and row['native_approval'] is False,'foreign realization or authority')
@@ -107,7 +125,10 @@ def audit_decisions(state,composed):
   key=(row['slot'],row['candidate_id'],row['realization_id'])
   rf.require(key not in seen,'duplicate material decision');seen.add(key)
   goal=packet['goals'].get(row['slot'],{})
-  source=next((r for r in goal.get('top8',[]) if r['cid']==row['candidate_id'] and r['rid']==row['realization_id']),None)
+  source=next((r for r in sampling.candidates(goal) if r['cid']==row['candidate_id'] and r['rid']==row['realization_id']),None)
   rf.require(source is not None and source['source_sha256']==row['source_sha256'],'decision refers to foreign material')
   rf.require(row['use'] in ('skip','inspiration_only') and isinstance(row['rationale'],str) and row['rationale'].strip(),'material is not a native adoption authority')
+ if packet['schema']=='photo-h-f2-material-pack/v2':
+  expected={(scope,r['cid'],r['rid']) for scope,goal in packet['goals'].items() for r in sampling.candidates(goal)}
+  rf.require(seen==expected,'every sampled material occurrence requires a decision')
  return packet

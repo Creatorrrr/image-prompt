@@ -26,7 +26,7 @@ authored. An explicit zero-choice composed selection is similarly required.
 Camera direction/height requirements come from the author's separate ownership
 declaration; the workflow never infers a capture camera from a depicted device.
 
-New runs use the installed H-only+F2 default: independent slot searches plus separate active-request-topic and frozen-baseline searches, each retaining its own top8. Follow [installed-h-f2.md](installed-h-f2.md) to author and seal the per-slot expression plan, then use:
+New runs use the installed H-only+F2 default: independent slot searches plus separate active-request-topic and frozen-baseline searches, each retaining its own creativity-bounded, seed-replayable sample. Follow [installed-h-f2.md](installed-h-f2.md) to author and seal the per-slot expression plan, then use:
 
 ```bash
 python skills/photo-prompt-image-generator/scripts/photo_workflow.py retrieve --run RUN
@@ -37,7 +37,7 @@ python skills/photo-prompt-image-generator/scripts/photo_workflow.py prepare-ren
 
 No policy/generation/store options are required. The installed release is independent of CURRENT and the research checkout. Missing files fail closed. New material retrieval accepts only local hybrid H-F2; keyword-only, precap, remote source and nonzero seed overrides are rejected. Repeated retrieve and resume reuse exact issued material evidence. The receipt pins the immutable generation for later views and audits. An incomplete material transaction requires reconciliation; it is never retried as a fresh search automatically.
 
-H-F2 materials and the native guard pack remain separate. Native whole-source adoption requires its original contract; creative material decisions grant no native authority. Existing bound native runs continue through their original local implementation.
+H-F2 materials and the directly compiled core validation context remain separate; new runs do not build an empty native pack or use the legacy creative-augmentation sampler. Native whole-source adoption requires its original contract; creative material decisions grant no native authority. Existing bound native runs continue through their original local implementation.
 
 Discovery and adoption have separate contracts. Before selecting a cue, read its
 complete source, actual realization and whole native v4 facts, prerequisites,
@@ -211,4 +211,4 @@ python skills/photo-prompt-image-generator/scripts/photo_workflow.py attach-retr
   --run CHILD_RUN --proof RETRY_DIR/retry_proof.json
 ```
 
-Retries require a current `photo-workflow-run/v2` parent, its native v10 pack and issued runtime receipt v3. Archived runs retain their evidence; create and audit a fresh native run before retrying. No parent-manifest import or historical worker is supported.
+Retries require a current `photo-workflow-run/v2` parent, its core validation context or native V10 pack and issued runtime receipt V3. Archived runs retain their evidence; create and audit a fresh current run before retrying. No parent-manifest import or historical worker is supported.

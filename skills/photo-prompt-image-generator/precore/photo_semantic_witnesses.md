@@ -112,34 +112,6 @@ If separate part nodes matter, declare their actual `part_of` relationships.
 Only author the atomic parts supported by the independent request and baseline.
 A face-presence assertion does not automatically create eyes, a mouth or lips.
 
-For example, these fragments describe an already requester-specified red cup.
-They assume an active span `topic`, the literal baseline phrase `red ceramic
-cup`, and an existing color property anchor with target `cup_01` and property
-`surface.color`. They are not a complete core or instructions to add a cup:
-
-```json
-[
-  {
-    "assertion_id": "cup_owner", "dimension": "subject", "polarity": "required",
-    "source_span_ids": ["topic"], "affected_dimensions": ["subject"],
-    "axes": {"native_schema": "photo-frozen-semantics/v1", "kind": "owner", "owner": "cup_01", "owner_kind": "object"},
-    "evidence": {"subject_phrase": "red ceramic cup"}
-  },
-  {
-    "assertion_id": "cup_role", "dimension": "subject", "polarity": "required",
-    "source_span_ids": ["topic"], "affected_dimensions": ["subject"],
-    "axes": {"native_schema": "photo-frozen-semantics/v1", "kind": "role", "role": "main_subject", "owner": "cup_01"},
-    "evidence": {"subject_phrase": "red ceramic cup"}
-  },
-  {
-    "assertion_id": "cup_color", "dimension": "color", "polarity": "required",
-    "source_span_ids": ["topic"], "affected_dimensions": ["color"],
-    "axes": {"native_schema": "photo-frozen-semantics/v1", "kind": "fact", "owner": "cup_01", "property": "surface.color", "value_type": "surface.color/v1", "value": "red"},
-    "evidence": {"color_phrase": "red ceramic cup"}
-  }
-]
-```
-
 The complete core permits at most 64 assertion rows in total and 32 actual
 owners. Keep only grounded necessary facts and relationships; do not merge
 owners, drop required meanings or broaden locks to fit. The neutral helper
