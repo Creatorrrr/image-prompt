@@ -1,0 +1,239 @@
+{
+  "slot": "camera_direction",
+  "diagnosis": {
+    "category": "data_gap",
+    "reason": "A bounded semantic inventory finds adequate vertical-overhead and roll concepts but no substantive non-aerial moderate-downward tabletop axis option. Three-quarter facial views and body rotation are not replacements. The principal weakness is a real data gap in camera-owned pitch/plane relations; baseline ranking evidence is recorded separately when available and cannot turn neighboring meanings into equivalent sources.",
+    "existing_candidates": [
+      {
+        "cid": "cand_dae33e5fd4fd518ca85ab87a982c773a",
+        "meaning": "Near-vertical downward view of a table plane.",
+        "source_excerpt": "The camera looks nearly vertically down onto the table plane.",
+        "limitation": "Directly supports overhead, not a moderate downward axis. Existing contextual definition explicitly separates vertical and oblique elevated viewpoints."
+      },
+      {
+        "cid": "cand_6b1a917c1c5655d38390ec142e74f9d5",
+        "meaning": "Vertical optical axis over a flat selected surface.",
+        "source_excerpt": "The camera axis points straight down over the selected surface.",
+        "limitation": "Adequate overhead option; adding another overhead synonym would duplicate it."
+      },
+      {
+        "cid": "cand_f631077dc7de5b0fbc3a388981672ce6",
+        "meaning": "Eye-height oblique view of facial frontal and lateral planes.",
+        "source_excerpt": "At eye height, an oblique view shows both the frontal and lateral planes of the face.",
+        "limitation": "Three-quarter names a facial azimuth relation here, not downward tabletop pitch; also fixes eye height."
+      },
+      {
+        "cid": "cand_1a82f54e05995425b948bd66c209e781",
+        "meaning": "Drone-specific downward oblique viewpoint.",
+        "source_excerpt": "oblique downward drone viewpoint",
+        "limitation": "Direction is relevant but bound to aerial capture wording; weak as a tabletop still-life axis description and has no visible plane relation detail."
+      },
+      {
+        "cid": "cand_3bb52cce56ec5968aa8963d3b84a8df9",
+        "meaning": "Camera roll measured through stable scene reference lines.",
+        "source_excerpt": "the camera roll rotates a stable scene reference relative to the image axes",
+        "limitation": "Useful roll boundary but existing record requires human context and main portrait; does not supply downward pitch."
+      },
+      {
+        "cid": "cand_121465065ec25c5a85b588e0d588a4ed",
+        "meaning": "Subject torso and shoulders rotate relative to camera.",
+        "source_excerpt": "the torso and shoulder plane turn obliquely to the camera",
+        "limitation": "Pose effect, not camera-axis effect. A stationary camera can see this through subject rotation."
+      },
+      {
+        "cid": "cand_5964d83cc75f5550bfce97f2c6c33158",
+        "meaning": "Visible eye axes point toward lens independently of face orientation.",
+        "source_excerpt": "The visible pupils point toward the camera while head direction is stated separately.",
+        "limitation": "Expression/gaze effect, not capture-camera pitch or yaw."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.usa.canon.com/learning/training-articles/training-articles-list/cooking-with-the-camera-tips-for-amazing-food-photography",
+      "title": "Canon — Cooking with the Camera: Tips for Amazing Food Photography",
+      "supports": "Distinguishes straight-on, three-quarter and overhead food angles; relates visible tops versus side/layers to subject form. This supports the angle boundary, not an exact universal degree."
+    },
+    {
+      "url": "https://cse.buffalo.edu/courses/cse668/peter/lec/02.html",
+      "title": "University at Buffalo CSE668 — 3-D Imaging Models",
+      "supports": "Models optical-axis orientation and camera location as separate extrinsic quantities; rotation R and translation t have distinct roles. Supports direction versus height/distance and object/world versus camera coordinates."
+    },
+    {
+      "url": "https://web.stanford.edu/class/cs248/pdf/CS248-2017.pptx.pdf",
+      "title": "Stanford CS248 — Camera position and rotation",
+      "supports": "Separates position from pitch, yaw and roll; roll is rotation about the viewing direction. Axis names depend on coordinate convention."
+    },
+    {
+      "url": "https://www.adobe.com/au/creativecloud/video/production/cinematography/camera-shots-and-angles/dutch-angle-shot.html",
+      "title": "Adobe — What is a Dutch angle shot and how is it used?",
+      "supports": "A canted frame makes normally horizontal or vertical scene lines diagonal. Supports roll versus pitch and subject lean; its emotional associations are optional conventions, not required effects."
+    }
+  ],
+  "method": {
+    "installed_generation": "dc25145b60431e9f75856af4a6200a28874e2e500cd978cb804e3cee4c5005f2",
+    "native_generation": "9d253c2ed263bd6c048b75f2dd593f6fcfc91cb96984622d8917de2e87e5dfd1",
+    "installed_review": "Full positive documents.json.gz inventory without tag prefilter, followed by hash-checked BodyReader.record and installed photo_canonical_source.native for seven neighboring/confusable sources. Full native payloads, intrinsic conditions and effects retained in existing-source-review.json.",
+    "working_review": "Inspected authored V3 content across every candidate module for camera-owned meanings and tabletop/oblique combinations; compared meaning through installed decoded native rather than raw schemas.",
+    "retrieval_execution": "Read parent-executed unchanged-query baseline-current.json; verified query SHA256 against task-input.json and retained all 128 result rows in baseline-slot.json. One BM25F and one local cosine call over the global positive pool; no agent-side rerun or post-change gain claim.",
+    "public_sources": "Web-opened Canon USA, Buffalo, Stanford PDF and Adobe; Canon Asia search surfaced relevant material but its page returned 403 and is not used as evidentiary authority."
+  },
+  "confusion_boundaries": [
+    {
+      "boundary": "Axis inclination versus height/distance",
+      "rule": "Pitch is an angular relation; an elevated position alone does not specify where the optical axis points. Raising or lowering the camera and changing distance are separate translation choices."
+    },
+    {
+      "boundary": "Three-quarter table angle versus three-quarter face/body",
+      "rule": "Table use describes downward inclination; facial/body use often describes azimuth or subject rotation. Name the reference surface and visible top/side relation."
+    },
+    {
+      "boundary": "Viewing axis versus subject rotation",
+      "rule": "A static final projection supplies a relative orientation, not a history of which participant moved. Do not add subject rotation or camera motion to satisfy the camera role."
+    },
+    {
+      "boundary": "Pitch versus roll",
+      "rule": "Downward aim changes sightline inclination; roll rotates frame axes about the viewing direction. A diagonal table edge alone cannot establish roll because perspective and object orientation also create diagonals."
+    },
+    {
+      "boundary": "Camera axis versus gaze",
+      "rule": "An actor looking downward or toward the lens says where the eyes point. Neither determines capture-camera direction."
+    },
+    {
+      "boundary": "Overhead versus steep oblique",
+      "rule": "A perpendicular plan and a steep inclined axis are distinct. Side visibility depends jointly on camera position and object geometry; it is supporting evidence, not a unique angle measurement."
+    },
+    {
+      "boundary": "Exact degree and source limitation",
+      "rule": "Three-quarter is a photographic convention with context-dependent use; the sources do not justify an exact universal 45-degree requirement. No exact angle, height, focal length or distance is prescribed."
+    }
+  ],
+  "recommendations": [
+    "Integrate the four distinct authored axis records only after source review; retain existing adequate strict-overhead options.",
+    "Keep original query bytes and common-pool H-F2 weights/ranking unchanged for before/after tests.",
+    "Review all returned top8 full sources for camera ownership; do not count body rotation, eye gaze, aerial capture or overhead as direct moderate-downward tabletop success.",
+    "Conditions use existing object and scene tags as conservative discovery guards. A real existing horizontal surface, and front/side faces for the level product case, must be independently established by the requester core and native guard/owner review before adoption. The records do not create those owners, surfaces, object geometry or camera position.",
+    "Treat every addition as discovery-only. Native semantic qualification and optional adoption remain unperformed; effects are camera direction only."
+  ],
+  "additional_test_intents": [
+    {
+      "role_focus": "Use a very shallow descending sightline across the existing workbench so the object sides dominate and only narrow top surfaces show.",
+      "scene_context": "Stationary tools already rest on a horizontal bench; change the viewing-axis inclination only.",
+      "boundary": "Shallow pitch versus camera height and object rotation."
+    },
+    {
+      "role_focus": "Look steeply down over the existing tabletop diagram while leaving a small amount of depth visible in the raised markers.",
+      "scene_context": "The horizontal diagram and upright markers are already declared; retain their geometry and positions.",
+      "boundary": "Steep oblique versus strict perpendicular overhead."
+    },
+    {
+      "role_focus": "Keep the viewing axis level and see both the fixed package front and its right side around their shared corner.",
+      "scene_context": "A rectangular product package already has declared front and side faces; preserve its orientation.",
+      "boundary": "Horizontal azimuth versus downward tabletop angle and subject rotation."
+    }
+  ],
+  "scope_state": {
+    "candidate_count": 4,
+    "shared_assets_changed": false,
+    "runtime_changed": false,
+    "native_approval_claimed": false,
+    "query_changed": false
+  },
+  "baseline_review": {
+    "query_sha256": "5e0294a3081798be83940ea64975f7d283acf18a661ef846ac2b19b2a5b1aae5",
+    "lane_calls": {
+      "BM25F": 1,
+      "local_cosine": 1
+    },
+    "pool": {
+      "CIDs": 18180,
+      "RIDs": 18182
+    },
+    "top8": [
+      {
+        "rank": 1,
+        "cid": "cand_af26a74a27215723bd75cba8cdd7aa69",
+        "bm25_rank": 1,
+        "dense_rank": 9,
+        "meaning": "editorial still-life capture context",
+        "review": "scene context only",
+        "direct_for_requested_axis": false
+      },
+      {
+        "rank": 2,
+        "cid": "cand_d3450e368f9d59848339d27b724bc3c5",
+        "bm25_rank": 15,
+        "dense_rank": 7,
+        "meaning": "cozy home still-life objects on a tabletop",
+        "review": "subject/theme instead of viewing axis",
+        "direct_for_requested_axis": false
+      },
+      {
+        "rank": 3,
+        "cid": "cand_dae33e5fd4fd518ca85ab87a982c773a",
+        "bm25_rank": 626,
+        "dense_rank": 1,
+        "meaning": "top-down 90-degree overhead view",
+        "review": "perpendicular overhead rather than requested oblique direction",
+        "direct_for_requested_axis": false
+      },
+      {
+        "rank": 4,
+        "cid": "cand_121465065ec25c5a85b588e0d588a4ed",
+        "bm25_rank": 3,
+        "dense_rank": 67,
+        "meaning": "the torso and shoulder plane turn obliquely to the camera",
+        "review": "torso pose rather than camera axis",
+        "direct_for_requested_axis": false
+      },
+      {
+        "rank": 5,
+        "cid": "cand_16320cf4b72756e98fdde3b76128e8a8",
+        "bm25_rank": 2,
+        "dense_rank": 244,
+        "meaning": "both visible eyes aim toward the same point above and beside the capture lens; the eye direction remains readable independently of the head tilt",
+        "review": "eye gaze rather than camera axis",
+        "direct_for_requested_axis": false
+      },
+      {
+        "rank": 6,
+        "cid": "cand_94a02c9ca8aa557b90357687e1f35ebc",
+        "bm25_rank": 262,
+        "dense_rank": 2,
+        "meaning": "overhead table evidence camera height",
+        "review": "height/context rather than optical-axis inclination",
+        "direct_for_requested_axis": false
+      },
+      {
+        "rank": 7,
+        "cid": "cand_fc5501b1254a561db6c32d38f81e5d81",
+        "bm25_rank": 134,
+        "dense_rank": 3,
+        "meaning": "a near table edge separates the camera position from the seated subject; the subject face remains above the near table plane at readable scale; the subject hands rest or act on the",
+        "review": "across-table portrait bundle rather than still-life direction",
+        "direct_for_requested_axis": false
+      },
+      {
+        "rank": 8,
+        "cid": "cand_f9d9b0b209055a0eb1b342f05c420f86",
+        "bm25_rank": 123,
+        "dense_rank": 4,
+        "meaning": "a near table edge separates the camera position from the seated subject",
+        "review": "across-table composition rather than viewing-axis inclination",
+        "direct_for_requested_axis": false
+      }
+    ],
+    "direct_top8_count": 0,
+    "interpretation": "The unchanged-query baseline exposes surrounding scene context, overhead, body rotation, eye gaze and height. These are concrete ownership/axis confusions. Because the intended substantive non-aerial tabletop relation is missing from inspected source, this remains data_gap; poor results alone do not establish a separate exposure-only failure."
+  },
+  "verification": {
+    "json_parse": "pass",
+    "new_id_shape_uniqueness": "pass",
+    "provenance_note_hash_recomputed": "pass",
+    "camera_only_effects_and_matching_owners": "pass",
+    "en_word_count_30_to_90": "pass",
+    "original_query_sha256_unchanged": "pass",
+    "native_source_qualification": "not performed",
+    "after_retrieval": "parent owned and not yet available"
+  }
+}

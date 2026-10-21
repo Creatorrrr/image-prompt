@@ -1,8 +1,8 @@
 """Stage query/workflow code on a sealed H-F2 release; keep its data and CURRENT.
 
-Only the two maintained H-F2 query/workflow modules are replaced. Existing
-generations stay immutable. Validate the staged release before installing it
-with install_photo_h_f2_runtime.py.
+By default only the two maintained H-F2 query/workflow modules are replaced.
+An explicit member allowlist and reviewed overlay can carry a wider code fix
+without publishing unrelated dirty work. Data and old generations stay intact.
 """
 from __future__ import annotations
 
@@ -23,12 +23,22 @@ from photo_installed_h_f2 import (
 MODULES = ('photo_h_f2_queries.py', 'photo_h_f2_workflow.py')
 
 
-def stage(destination, *, source_store=None, generation_id=None, skill_root=SKILL_ROOT):
+def stage(destination, *, source_store=None, generation_id=None, skill_root=SKILL_ROOT,
+          members=None, overlay_root=None):
     destination = Path(destination).resolve()
     source_store = Path(source_store or default_store()).resolve()
     config = read(Path(skill_root) / CONFIG)
     generation_id = generation_id or config['generation_id']
     native, manifest, native_manifest = release(source_store, generation_id, full=True)
+    selected = list(members) if members is not None else ['scripts/' + n for n in MODULES]
+    require(bool(selected) and len(set(selected)) == len(selected), 'nonempty distinct code member allowlist required')
+    source_root = Path(overlay_root or skill_root).resolve()
+    for relative in selected:
+        path = Path(relative)
+        require(not path.is_absolute() and len(path.parts) == 2 and path.parts[0] in ('scripts','precore')
+                and path.suffix == '.py' and relative in native_manifest['source']['code'], 'not an existing sealed code member')
+        source = source_root / relative
+        require(source.is_file() and not source.is_symlink() and source_root in source.resolve().parents, 'unsafe overlay code member')
     python = runtime_python(skill_root, manifest)
     destination.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.code-release-', dir=destination) as temporary:
@@ -38,10 +48,10 @@ def stage(destination, *, source_store=None, generation_id=None, skill_root=SKIL
             target = staged / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(native / relative, target)
-        for name in MODULES:
-            source = Path(skill_root) / 'scripts' / name
+        for relative in selected:
+            source = source_root / relative
             compile(source.read_bytes(), str(source), 'exec')
-            shutil.copyfile(source, staged / 'scripts' / name)
+            shutil.copyfile(source, staged / relative)
         program = """import json,sys;sys.path.insert(0,sys.argv[1])
 import prompt_generator as g
 import photo_runtime_sources as r
@@ -54,7 +64,7 @@ print(json.dumps({'code':r.LOADED_CODE,'environment':r.LOADED_ENVIRONMENT,
                                 env=env, text=True, capture_output=True, check=True)
         implementation = json.loads(result.stdout)
         expected = dict(native_manifest['source']['code'])
-        expected.update({'scripts/' + name: file_sha(staged / 'scripts' / name) for name in MODULES})
+        expected.update({relative: file_sha(staged / relative) for relative in selected})
         require(implementation['code'] == expected, 'unexpected code change in staged release')
         require(implementation['environment'] == native_manifest['source']['environment'], 'runtime environment changed')
         updated = copy.deepcopy(native_manifest)
@@ -94,7 +104,7 @@ print(json.dumps({'code':r.LOADED_CODE,'environment':r.LOADED_ENVIRONMENT,
         release(destination, h_id, full=True)
     return {'status': 'pass', 'store': str(destination), 'generation_id': h_id,
             'native_generation_id': native_id, 'parent_generation_id': generation_id,
-            'candidate_data_changed': False, 'CURRENT_writes': 0}
+            'candidate_data_changed': False, 'CURRENT_writes': 0, 'code_members_replaced': selected}
 
 
 if __name__ == '__main__':
@@ -102,6 +112,9 @@ if __name__ == '__main__':
     parser.add_argument('--destination', type=Path, required=True)
     parser.add_argument('--source-store', type=Path)
     parser.add_argument('--generation-id')
+    parser.add_argument('--member', action='append', help='exact existing scripts/*.py or precore/*.py member; repeatable')
+    parser.add_argument('--overlay-root', type=Path, help='reviewed member files; copied into the sealed release, never a runtime dependency')
     args = parser.parse_args()
     print(json.dumps(stage(args.destination, source_store=args.source_store,
-                           generation_id=args.generation_id), indent=2))
+                           generation_id=args.generation_id, members=args.member,
+                           overlay_root=args.overlay_root), indent=2))

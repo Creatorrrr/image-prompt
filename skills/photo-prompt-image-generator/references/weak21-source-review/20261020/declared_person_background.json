@@ -1,0 +1,250 @@
+{
+  "slot": "declared_person_background",
+  "diagnosis": {
+    "category": "mixed",
+    "reason": "Mixed gap and exposure: the common pool has 25 bare country-origin fragments, but inspected complete source meanings lack upbringing, source attribution and personal-versus-photographic location distinctions. The unchanged baseline top8 contains zero direct declared-biographical-background matches; the South Korea fragment is only rank 87 in top128. Five additions supply distinct missing relations, not fixed-place aliases.",
+    "existing_candidates": [
+      {
+        "cid": "cand_a42309ccbc5954eaa7c694c2915ec284",
+        "meaning": "from South Korea / 한국 출신의",
+        "limitation": "Names one country only. No person-source attribution, upbringing locality, biography-stage relation, or nonvisual declaration scope. Existing human condition and identity dimension do not prove the declaration.",
+        "installed_native_source": {
+          "en": "from South Korea",
+          "ko": "한국 출신의",
+          "tags": [
+            "country",
+            "asia"
+          ]
+        },
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "identity"
+          ],
+          "properties": []
+        }
+      },
+      {
+        "cid": "cand_096163fb0c555fd093d279fb8c1c3dba",
+        "meaning": "from France / 프랑스 출신의",
+        "limitation": "Same thin country-origin fragment; cannot supply a city-level upbringing declaration.",
+        "installed_native_source": {
+          "en": "from France",
+          "ko": "프랑스 출신의",
+          "tags": [
+            "country",
+            "europe"
+          ]
+        },
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "identity"
+          ],
+          "properties": []
+        }
+      },
+      {
+        "cid": "cand_d1cdaa496570582d82ad820a384641aa",
+        "meaning": "Self-reported or explicitly requested familiarity with a particular visual convention; never inferred from nationality, ethnicity, age, language, or appearance.",
+        "limitation": "Has an attribution boundary but concerns visual-convention familiarity, not hometown or personal origin.",
+        "installed_native_source": {
+          "definition": "Self-reported or explicitly requested familiarity with a particular visual convention; never inferred from nationality, ethnicity, age, language, or appearance.",
+          "family_ids": [
+            "adult_cultural_reception"
+          ],
+          "priority_dimension": "observable_action",
+          "role": "visual_atom",
+          "topic_ids": [
+            "mainstream_subculture_familiarity"
+          ]
+        },
+        "conditions": {},
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        }
+      }
+    ]
+  },
+  "source_inspection": {
+    "installed_h_f2_generation": "dc25145b60431e9f75856af4a6200a28874e2e500cd978cb804e3cee4c5005f2",
+    "installed_native_generation": "9d253c2ed263bd6c048b75f2dd593f6fcfc91cb96984622d8917de2e87e5dfd1",
+    "method": "Scan complete common-pool documents for biographical meaning without tag prefilter; inspect exact source with hash-checking installed BodyReader and photo_canonical_source.native(record); compare source content against authored V3 records. Working/installed inspected content agrees, but raw V3/V4 schema is not compared.",
+    "positive_country_origin_fragments": 25,
+    "baseline_status": "Complete unchanged-query baseline inspected; 1 BM25F and 1 local cosine call across 18180 CIDs/18182 RIDs. No new query was executed by this agent.",
+    "checked_body_shards": [
+      "body/a42.json.gz",
+      "body/096.json.gz",
+      "body/d1c.json.gz"
+    ]
+  },
+  "confusion_boundaries": [
+    {
+      "distinction": "Personal background versus spatial background",
+      "criterion": "A biographical place attaches to a person; a visible backdrop attaches to the scene. Neither relation entails the other."
+    },
+    {
+      "distinction": "Upbringing versus birthplace, citizenship, ancestry or residence",
+      "criterion": "Retain only the type of relation actually supplied. A hometown claim does not fill all national or life-history fields."
+    },
+    {
+      "distinction": "Source declaration versus verified fact",
+      "criterion": "A supplied statement remains attributed; the research sources do not certify any individual history."
+    },
+    {
+      "distinction": "Appearance versus declared origin",
+      "criterion": "No facial feature, skin color, hairstyle, clothing, expression, dialect stereotype or personality label verifies a hometown or nationality."
+    },
+    {
+      "distinction": "External context versus visible lettering",
+      "criterion": "Contextual attribution does not authorize a caption inside the image, signage, identification card, flag or regional landmark."
+    }
+  ],
+  "recommendations": [
+    "Integrate the five distinct contextual mechanisms only after source/native review; do not multiply city or country aliases.",
+    "Retain an actual independent declaration witness with the main subject and source scope. The draft frozen_value guard is deliberately fail-closed pending this witness.",
+    "Run the original task-input query unchanged before/after; keep additional intents separate, and assess all top8 meanings rather than CID presence alone.",
+    "Do not add appearance cues or mandatory props to make a nonvisual biographical claim look observable. Rendered pixels can be reviewed for unwanted stereotypes or text, but cannot prove the claim."
+  ],
+  "research_sources": [
+    {
+      "url": "https://www.iptc.org/std/photometadata/documentation/userguide/",
+      "title": "IPTC Photo Metadata User Guide",
+      "supports": "Person metadata is separately represented from image pixels; Location Created and Location Shown describe two photographic location concepts, not the subject's biography."
+    },
+    {
+      "url": "https://www.census.gov/acs/www/about/why-we-ask-each-question/citizenship/",
+      "title": "US Census Bureau: Place of Birth, Citizenship, Year of Entry",
+      "supports": "Place of birth, citizenship and entry history are collected as separate questions. A birthplace does not supply citizenship or a life chronology."
+    },
+    {
+      "url": "https://www.census.gov/topics/population/ancestry/about.html",
+      "title": "US Census Bureau: About Ancestry",
+      "supports": "Ancestry concerns ethnic origin, descent or heritage and is conceptually different from the photographic scene location."
+    },
+    {
+      "url": "https://bioanth.org/about/aaba-statement-on-race-racism/",
+      "title": "AABA Statement on Race and Racism",
+      "supports": "Human biological variation, including facial features, skin and hair, does not map into discrete racial types. This supports rejecting appearance-based background stereotypes; it does not validate any individual biographical claim."
+    }
+  ],
+  "authored_scene_status": "All proposed portrait applications are authored illustrations of source-supported distinctions. They are not quoted source examples, source endorsement, individual biography verification, or native approval.",
+  "additional_test_intents": [
+    {
+      "role_focus": "Keep the stated childhood home and current residence as distinct stages belonging to the same adult, preserving their supplied sequence.",
+      "scene_context": "An adult now living in Lisbon describes an earlier childhood in Recife; the studio has no geographic scenery."
+    },
+    {
+      "role_focus": "Retain a supplied birth city with birthplace scope while citizenship and ancestry remain unspecified.",
+      "scene_context": "An adult portrait brief identifies only the subject's birthplace and uses a plain indoor setting."
+    },
+    {
+      "role_focus": "Attribute the origin statement to the supplied biography while keeping photographic location separate.",
+      "scene_context": "An adult is photographed in a rented Berlin studio; an accompanying biography names a different place of origin."
+    }
+  ],
+  "risks": [
+    "The candidate content is nonvisual contextual identity meaning; no visible appearance can validate it.",
+    "The draft prerequisite property requires source qualification and actual core evidence; this artifact alone cannot grant applicability.",
+    "Exact effect-owner mapping from contextual identity to the actual subject remains a native-review responsibility.",
+    "Before exposure is established by the unchanged baseline. After integration/retrieval performance and native eligibility remain root-owned work."
+  ],
+  "output_count": 5,
+  "baseline_evidence": {
+    "artifact": "/Users/chasoik/Projects/image-prompt/generated/photo-research/weak21-20261020/baseline-current.json",
+    "artifact_sha256": "41189f5d17216b3983f09273534ca29b94349c3d5096a2eb6721f9531443cb60",
+    "query_sha256": "d9ee2f135d82ccebcec6dbe47738320be46e4f2dba72bef1b4ce79b3f72130d8",
+    "query_unchanged": true,
+    "lane_calls": {
+      "BM25F": 1,
+      "local_cosine": 1
+    },
+    "pool": {
+      "CIDs": 18180,
+      "RIDs": 18182
+    },
+    "direct_declared_background_matches_top8": 0,
+    "top8": [
+      {
+        "rank": 1,
+        "cid": "cand_4d04832765435e08b22aec7ba6ae19de",
+        "bm25_rank": 1,
+        "dense_rank": 123,
+        "source_excerpt": "the subject engages with one scene element relevant to the stated story\nthe environment includes a readable contextual cue\nthe framing preserves both the action and that cue\nsubject action and relevant environment contextual relationship the declared photographic subject and frame\nthe subject engages with one scene element relevant to the stated story; the environment includes a readable contextual cue; the framing preserves both the action and that cue\n인물 행동과 환경의 관계\neditorial portrait\nenvironmental portrait\nEditorial Portrait\nPortrait Editorial\nEnvironmental Context",
+        "assessment": "Environmental portrait action/setting cue; spatial setting is not a supplied upbringing relation."
+      },
+      {
+        "rank": 2,
+        "cid": "cand_a279add8c54d549ea011d5558e080c74",
+        "bm25_rank": 217,
+        "dense_rank": 1,
+        "source_excerpt": "the established adult subject and scene elements visible_configuration adult portrait retaining a prominent natural nose\nadult portrait retaining a prominent natural nose\n성인 인물의 원래 코 크기와 윤곽을 유지한다.",
+        "assessment": "Prominent nose appearance; does not encode a source declaration or personal history."
+      },
+      {
+        "rank": 3,
+        "cid": "cand_8e3e4666c0da590c9e4fe9862394c2dc",
+        "bm25_rank": 339,
+        "dense_rank": 2,
+        "source_excerpt": "the established adult subject and scene elements visible_configuration adult portrait retaining natural sideburn-to-cheek transitions\nadult portrait retaining natural sideburn-to-cheek transitions\n성인 얼굴의 구레나룻과 볼 옆 경계를 자연스럽게 담는다.",
+        "assessment": "Sideburn-to-cheek appearance; does not encode declared origin."
+      },
+      {
+        "rank": 4,
+        "cid": "cand_73a814e849d65a9490fecb0ed2e63296",
+        "bm25_rank": 2,
+        "dense_rank": 1124,
+        "source_excerpt": "the upper lip lifts\nthe user's contempt portrayal is preserved as scene context\nmain_subject declared_owner_scope the declared actor's stated local face and eye configuration\nthe upper lip lifts; the user's contempt portrayal is preserved as scene context\n경멸 연기를 위한 윗입술 들림 선택형\na raised upper lip in an explicitly contemptuous portrayal",
+        "assessment": "Contempt portrayal/upper-lip pose; expression is not personal biography."
+      },
+      {
+        "rank": 5,
+        "cid": "cand_3f8e08ccd00d527c95616d1a1d155bae",
+        "bm25_rank": 11,
+        "dense_rank": 18,
+        "source_excerpt": "the adult subject's visible face and selected garment feature occupy the same coherent frame\nfocus light and scale keep both the facial expression and garment feature readable\nsupporting hands hair and foreground leave those two declared regions distinguishable\nsame adult face and requester-selected garment feature visible_owner_and_boundary the same adult subject and declared garment\nthe adult subject's visible face and selected garment feature occupy the same coherent frame; focus light and scale keep both the facial expression and garment feature readable; supporting hands hair and foreground leave those two declared regions distinguishable\n얼굴과 선택한 의복 디테일의 동시 가독성\n인물 중심 패션 사진\nface and garment detail readable\nface-focused fashion portrait",
+        "assessment": "Face and garment visibility; composition does not preserve hometown declaration."
+      },
+      {
+        "rank": 6,
+        "cid": "cand_13a36873216857c8a6df7a4f3025a0c0",
+        "bm25_rank": 3,
+        "dense_rank": 195,
+        "source_excerpt": "the subject engages with one scene element relevant to the stated story; the environment includes a readable contextual cue; the framing preserves both the action and that cue\nthe subject engages with one scene element relevant to the stated story\nthe environment includes a readable contextual cue\nthe framing preserves both the action and that cue\n인물 행동과 환경의 관계\neditorial portrait\nenvironmental portrait\nPortrait Editorial\nEnvironmental Context",
+        "assessment": "Environmental portrait action/setting cue; same semantic mismatch as rank 1."
+      },
+      {
+        "rank": 7,
+        "cid": "cand_4a71a9ec96775d5da72d472077c305a1",
+        "bm25_rank": 58,
+        "dense_rank": 5,
+        "source_excerpt": "an adult woman in a lifestyle portrait\n성인 여성 라이프스타일 인물\nadult woman lifestyle portrait subject, original fictional person, natural realistic photo",
+        "assessment": "Adult lifestyle-portrait subject; no biographical origin relation."
+      },
+      {
+        "rank": 8,
+        "cid": "cand_15803691d70a524d9874b43400143855",
+        "bm25_rank": 4,
+        "dense_rank": 106,
+        "source_excerpt": "the face is presented squarely enough to inspect its current visible features\nsoft frontal daylight keeps facial planes readable\nrestrained surface treatment preserves local skin variation\nadult face and visible hair front-facing capture the declared photographic subject and frame\nthe face is presented squarely enough to inspect its current visible features; soft frontal daylight keeps facial planes readable; restrained surface treatment preserves local skin variation\n정면 캐스팅 기록\nmodel digitals\nfront-facing casting portrait\nCasting Polaroid\nDigitals\nPolaroids",
+        "assessment": "Front-facing casting capture; appearance documentation is not background evidence."
+      }
+    ],
+    "known_country_fragment_top128": [
+      {
+        "rank": 87,
+        "cid": "cand_a42309ccbc5954eaa7c694c2915ec284",
+        "source_excerpt": "from South Korea\n한국 출신의"
+      }
+    ]
+  }
+}

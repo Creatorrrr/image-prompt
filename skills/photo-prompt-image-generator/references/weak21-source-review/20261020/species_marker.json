@@ -1,0 +1,133 @@
+{
+  "slot": "species_marker",
+  "diagnosis": {
+    "category": "mixed",
+    "reason": "Natural-animal anatomical ownership is genuinely thin, while existing useful tail geometry is partly exposed. Costume ownership has much richer component text and dominates retrieval. The red-fox subject record is found at rank 32 but supplies no anatomical parts; this cannot be fixed by aliases or tags alone.",
+    "existing_candidates": [
+      {
+        "cid": "cand_1dc376d121b951bdaa0c62ae6c753186",
+        "meaning": "a red fox",
+        "limitation": "Only a subject declaration, with subject effects and no ear, muzzle, tail-root or owned-part description. RRF rank 32, BM25F 354, cosine 16."
+      },
+      {
+        "cid": "cand_8e116d485a62547eb02ddac62b0d1c6c",
+        "meaning": "A selected nonhuman tail has broad fur volume with projecting fur ends.",
+        "limitation": "Useful tail geometry exposed at rank 7, but not fox ears or same-animal head-to-tail ownership. Its profile permits an already declared creature or machine and explicitly cannot prove biological origin from a hidden root."
+      },
+      {
+        "cid": "cand_a5b5ee69315b55d39f8dab941be1f8d5",
+        "meaning": "An otherwise humanlike adult figure retains one selected fox-anatomy cue connected to that body.",
+        "limitation": "A humanlike adult configuration is a distinct premise from an already declared natural fox. It cannot be reused to transform a human reference or substitute for natural-animal anatomy."
+      },
+      {
+        "cid": "cand_7624fa65ab9b5cdd802c25046969716a",
+        "meaning": "Faux-fur ears mount on a hair band while a separate tail attaches to the same wearer belt.",
+        "limitation": "Rank 1, cosine 1; precise accessory ownership, but its headband and belt are positive confounds for natural anatomy."
+      },
+      {
+        "cid": "cand_61926ebf2ac65a728af656fe774e08c6",
+        "meaning": "Ear-shaped ornaments attach to a visible headband resting over hair.",
+        "limitation": "Rank 2, BM25F 4, cosine 22; human guard and appearance/accessory effect cannot meet an animal species role."
+      },
+      {
+        "cid": "cand_5ce61f6c0b125a48b00324fbfcba3fa0",
+        "meaning": "Long rabbit or hare ears with roots parting hair and inner-ear skin.",
+        "limitation": "Does not name a declared rabbit owner; human/beastkin tags and no intrinsic species guard leave owner and premise underspecified."
+      },
+      {
+        "cid": "cand_2776ca0847345320a1a26b31121f5c5a",
+        "meaning": "Opt-in moth antennae and powdery wing shadow.",
+        "limitation": "Short opt-in morphology neither owns head/wing components on a declared insect nor distinguishes biological parts from accessories."
+      }
+    ]
+  },
+  "evidence_method": "Read exact installed canonical records with the installed photo_canonical_source.native(record) and checked BodyReader.record(cid); compared interpreted native meaning with working V3 content. Global document inspection was unfiltered by slot tags. Baseline ranks are from baseline-current.json, not newly run retrieval.",
+  "baseline": {
+    "query_sha256": "9b56dd012159b358e8275b1229f09b73dac6664c3237bd38fe59f4dc7d1d482c",
+    "natural_red_fox_rrf_rank": 32,
+    "top8_costume_accessory_or_parts_ranks": [
+      1,
+      2,
+      3,
+      5,
+      8
+    ],
+    "before_query_unchanged": true,
+    "after_search_performed_by_this_agent": false
+  },
+  "corpus_inventory": {
+    "fox_text_documents": 6,
+    "rabbit_text_documents": 7,
+    "raven_text_documents": 3,
+    "moth_antenna_record": "cand_2776ca0847345320a1a26b31121f5c5a",
+    "interpretation": "Counts are literal discovery inventory, not semantic-fit or coverage scores. Full selected records establish the actual omissions."
+  },
+  "sources": [
+    {
+      "url": "https://www.nps.gov/gate/red-fox.htm",
+      "title": "Red Fox — Gateway National Recreation Area, National Park Service",
+      "supports": "Red-fox external morphology: pointed ears, slender muzzle and long bushy tail. Supports species-scoped components, not a universal fox shape or a photographed attachment proof."
+    },
+    {
+      "url": "https://nationalzoo.si.edu/animals/fennec-fox",
+      "title": "Fennec fox — Smithsonian National Zoo",
+      "supports": "Fennecs have very large ears relative to their bodies and bushy tails. The anatomical features support an existing fennec owner; hearing ability and heat transfer are not visible proof."
+    },
+    {
+      "url": "https://www.allaboutbirds.org/guide/Common_Raven/id",
+      "title": "Common Raven Identification — Cornell Lab of Ornithology",
+      "supports": "Common-raven head and neck identification uses a heavy bill and shaggy throat plumage. A tail wedge is mainly readable in flight, so it is not imposed on the head-and-neck option."
+    },
+    {
+      "url": "https://www.amnh.org/exhibitions/butterflies/anatomy",
+      "title": "Butterfly Anatomy — American Museum of Natural History",
+      "supports": "Butterfly antennae have thickened tips and the feeding proboscis coils when not feeding. Wing surfaces carry scales; neither color nor smell detection proves a species in a photograph."
+    },
+    {
+      "url": "https://australian.museum/learn/species-identification/ask-an-expert/what-do-butterflies-moths-and-skippers-look-like/",
+      "title": "What do butterflies, moths and skippers look like? — Australian Museum",
+      "supports": "Club-ended antennae occur in butterflies and also some day-flying moths. Two wing pairs and scaled surfaces belong to lepidopteran morphology; a club alone is not an exclusive diagnostic."
+    }
+  ],
+  "important_confusion_boundaries": [
+    "An animal-shaped ear accessory on a band and a tail on a belt are wardrobe objects with separate attachment carriers. Neither establishes the wearer species.",
+    "A furry tail silhouette alone can belong to a costume, machine or creature design. It neither shows a root nor proves biological origin; retain the declared animal and show same-owner continuity where observable.",
+    "Species is a prior declaration, not an inference licensed by one silhouette. Generic fox does not automatically establish red fox or fennec; common raven is more specific than an unspecified raven; adult butterfly is more specific than an undeclared insect.",
+    "The new primary-context guards deliberately require the actual existing animal class/species. They cannot authorize converting a human reference or changing a declared species. Missing recognized primary context leaves the option inapplicable pending native integration.",
+    "A natural-animal option does not create a missing limb, tail, antenna or additional actor. Any established individual anatomy, age, count, identity and reference appearance remain binding.",
+    "Mammal ear or tail shape varies across species; fennec ear proportions are not a default for all foxes. Butterfly clubbed antennae are not exclusive to butterflies.",
+    "No wildlife temperament, sensory perception, heat transfer, geography or sound is proved by an isolated visible structure. A coiled butterfly proboscis is a pose choice and therefore declares pose effects.",
+    "Occlusion makes a connection unobservable. Similarity or no visible costume support does not prove a biological junction."
+  ],
+  "recommendations": [
+    "Integrate these four options only as native-review candidates, retaining their actual primary species prerequisites and all declared effects. Do not add synonyms or role tags as a proxy for meaning.",
+    "Keep costume, humanlike-hybrid and natural-animal meanings separate in evaluation while searching the full global pool. Do not change rankings or the original query.",
+    "Retest the exact supplied query and inspect full sources of before/after top candidates. Retrieval of a red-fox-specific option does not itself authorize adopting it for a generic fox.",
+    "Run the three independent additional intents below to test whether gains extend beyond the known ear/tail probe, including rejection when only a human costume wearer is declared."
+  ],
+  "additional_test_intents": [
+    {
+      "role_focus": "Keep the oversized ears continuous with the head of the already specified desert canid; their bases and inner surfaces should belong to that animal.",
+      "scene_context": "A fennec fox is the existing subject; its species and head contour are fixed.",
+      "expected": "Fennec same-owner pinnae option is suitable material; generic human headbands and long rabbit ears are confounds."
+    },
+    {
+      "role_focus": "Make the bill base and loose throat plumage read together as the anatomy of the single bird.",
+      "scene_context": "A common raven is already declared; no flight pose or companion bird has been requested.",
+      "expected": "Common-raven head/neck ownership may fit; Odin companion counts and costume feathers do not."
+    },
+    {
+      "role_focus": "Show the small insect head with both sensory stalks and its resting feeding tube connected to it.",
+      "scene_context": "An adult butterfly is already declared, with the resting mouthpart pose open.",
+      "expected": "Butterfly head-parts option may fit; hairstyle antennae, moth assumptions and detached decorative butterflies do not."
+    }
+  ],
+  "negative_controls": [
+    "An adult human wearing animal-ear ornaments: all four natural-animal candidates must remain inapplicable.",
+    "An unspecified fox with no red-fox or fennec declaration: do not silently specialize the fox to satisfy the new species-specific guards."
+  ],
+  "authored_scene_status": "All connected-part presentation choices are original authored illustrations; institutions support anatomy, not these candidate texts or native approval.",
+  "deliverable_count": 4,
+  "native_approval": false,
+  "changed_operating_data": false
+}

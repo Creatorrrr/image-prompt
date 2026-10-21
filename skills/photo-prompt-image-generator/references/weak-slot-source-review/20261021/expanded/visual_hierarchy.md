@@ -1,0 +1,39 @@
+# Visual hierarchy: independently frozen source review
+
+The 24 bilingual probes were authored and byte-locked before source inspection. They cover six positive pairs and six contrast pairs, including negation, quoted inscription, social authority, physical depth, shipping priority and a lighting declaration.
+
+## Result
+
+Initial broad-material diagnosis: exposure. Initial additions: 0 (superseded by the stricter complete-family audit below). The complete meaning already exists in the common pool, including a generic primary/support/background option, figure-ground contrast hierarchy, and a complete three-level hierarchy profile. New synonyms or scene-specific copies would duplicate existing meaning. The baseline confirms poor exposure: only 1 of 12 positive-language cases includes useful partial hierarchy staging in the returned top8 (book-frame portrait alternatives); none places suitable hierarchy material first. This is an advisory semantic judgment, not a native eligibility judgment or an image-quality result. Nine of twelve contrast cases retain useful ordinary advisory material; blanket abstention is unwarranted.
+
+## Complete-source discovery
+
+The full inventory was searched across positive fields from every RID, without using slot tags as partitions. Four discovery families yielded 6 hierarchy, 34 dominance, 2 balance and 5 attention matches (overlap retained). The saved discovery file records exact regexes and CIDs. Full positive primary fields, source conditions and effects of selected relevant records were reviewed. Baseline review additionally examined all 153 unique top8 selected sources, including context and owner restrictions.
+
+The generic clear hierarchy source owns primary subject, subordinate props and depth-organized background. The figure-ground option uses stronger edge/contrast on the primary figure, subordinate secondary elements and noncompeting background. The complete hierarchy profile additionally requires readable secondary and background, attention levels beyond blur alone, all four component groups, literal evidence duties and render gates; its equal-focal-point exclusion remains intact. These are useful advisory sources even where full native adoption would require additional decisions.
+
+Face-priority fragments preserve their portrait owner and human condition. Facial resolution at nominated display size is a camera/readability fact, not independently a relative-priority relation; source names must not inflate it. The book-frame alternatives are useful staging material for exposed eyes against a lower/lateral book occlusion, but do not prove eye dominance or waive hand/camera constraints. Product-support hierarchy retains a single primary product’s clean silhouette, support contact and nonoccluding subordinate props; it cannot establish arbitrary physical hierarchy in unrelated scene owners.
+
+Asymmetric counterbalance is unequal but stable visual equilibrium, with an off-center primary, smaller separated counterweight and intervening space. It does not satisfy equal vases. Bilateral symmetry explicitly matches visual weights across two halves and is useful equal-prominence advisory material, while its central anchor remains a full-source restriction. Center-anchor hierarchy adds actual centered first-read dominance, so center position alone must not trigger it.
+
+## Boundaries and recommendation
+
+Viewer attention belongs to the image. A character’s gaze toward a tool, leadership in a committee, shipping priority, quoted words on a sign, near/far placement and a spotlight’s physical receiver do not independently assert image-level reading order. A topic-compatible scene is neutral for this role when it supplies no order or relative prominence. A complete source that changes the event, owner or declared equal-weight relation is incompatible if adopted whole. Neutral does not mean useless to the wider scene.
+
+A generic code improvement, if undertaken, should recognize positive relational salience statements and preserve their explicit owner order, while retaining negative/quoted status, contextual rank and neighboring depth/light facts. Use actual selected-primary meaning and receiver constraints. No CID boost, slot-tag vote, hard profile or word-level priority trigger is justified by this review. No code was changed here.
+
+## Primary research and epistemic limits
+
+[Adobe, emphasis in photography](https://www.adobe.com/creativecloud/photography/discover/emphasis-in-photography.html) explains that emphasis directs attention through visual weight and mechanisms including light, contrast, focus, scale and separation. It supports the conceptual distinction between emphasis and merely naming a subject; it does not validate a retrieval rule or a fixed universal scan path.
+
+[Nikon / Tom Bol, The Composition Triangle](https://www.nikonusa.com/learn-and-explore/c/ideas-and-inspiration/the-composition-triangle) describes layers and vanishing point as means of conveying depth. This supports keeping spatial depth separate from explicit priority. Neither page supplies corpus-native proof, per-CID approval, the authored probe scenes, or a guarantee of rendered attention. All experimental arrangements and grading decisions are authored judgments.
+
+Full selected-RID source snapshots and actual hashes are retained in baseline-source-review-input.json; per-case classifications and limitations are in baseline-review.json. No document/query embeddings, source installation, product files, runtime configuration, commit or push were performed by this slot reviewer.
+
+## Stricter complete-family target audit before enriched search
+
+The initial zero-addition conclusion concerned broad visual-hierarchy material and partial advisory staging. The follow-up target contract requires complete owned order, so this review separates that stricter family. An expanded all-positive-field discovery (`ordered-owner-discovery.json`, 130 lexical matches) also examined actor attention, physical sequence and first-read identity confounds. Existing figure/secondary/background hierarchy has a fixed three-tier figure-ground recipe; the primary-subject hierarchy narrows support to props; face fragments privilege an already-main portrait; asymmetric/central layouts add their own placement restrictions. These existing meanings remain present and useful, but they do not completely represent a requester-declared sequence across arbitrary already-known visible objects, people and interactions while leaving the number of levels and visual mechanism unchanged.
+
+One new source is therefore proposed: declaration-preserving attention order among existing visible owners. It carries only the independently supplied owner order, keeps all nominated owners readable, allows an interaction or object to precede a face, and adds no cast, count, action, causal history, placement, light or camera recipe. It requires an explicit positive order or unequal-prominence relation, and cannot apply to negated order, quoted text, social/operational rank, equal-weight owners, depth alone or an illumination fact. This is a source meaning and application prerequisite; it is not an implemented native owner-binding or eligibility proof. Native adoption remains separately review-required.
+
+Adobe’s emphasis guidance supports relative visual weight as a photographic relation; Nikon’s depth discussion supports distinguishing spatial depth from the requested order. The generalized preservation arrangement is authored from those principles, not quoted or certified by either publisher. Candidate provenance below hashes this actual review note, not either web page. `positive-targets.json` freezes the complete new-family target and exact scene-owner assignment for all unchanged positive probes before enriched search; no draft rank or preview was inspected to write those targets.

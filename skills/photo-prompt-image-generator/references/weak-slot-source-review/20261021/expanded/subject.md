@@ -1,0 +1,36 @@
+# Subject slot source review — 2026-10-21
+
+The 24 bilingual probes were authored and byte-frozen before source inspection. Full inventory discovery used positive primary fields across all CIDs, never slot partitions. Literal and broader discovery patterns/counts/CIDs are saved in discovery.json. Twelve directly relevant base sources were reviewed in full (selected-source-review-input.json); all 116 unique actual baseline-selected base sources were subsequently read with every deduplicated positive primary field plus conditions and effects (baseline-selected-full-sources.json).
+
+## Meaning already present
+
+The four installed object records contain complete owned physical structures: teapot body/spout/handle/lid; sheet-metal watering-can reservoir/handles/spout/sprinkler; wooden violin body/neck/strings/bridge/pegs; sewing machine support/arm/head/bed/needle/presser foot/hand wheel. These are positive subject records, not merely aliases. Their material and part-structure effects remain attached to their named object. The violin source does not create a player; an instrument-performance framing source does explicitly need a performer and cannot replace this still-life object meaning.
+
+The two potter/ceramic-artist records identify the human craft role. They do not assert adulthood, task, garment or demographic appearance. Adult status in the frozen query supplies independent scene context. An environmental-portrait source can be useful advisory material without establishing the occupational identity itself.
+
+Cat-family inspection found 18 CIDs matching cat/feline/Korean variants across the complete positive-primary inventory. Relevant sources include stray cat, glossy black companion cat, long-haired Maine Coon companion cat, a gray-and-white long-haired cat held close to a human face, a declared-cat forelimb route, a represented feline radiograph and human cat-ear/hand-gesture imagery. Those are distinct whole meanings. None supplies an unrestricted domestic-cat entity with owned visible identifying structures while leaving breed, coat, housing status, human companion and held-close relation undeclared. The anatomy source presupposes a cat and owns only one limb; it does not declare the whole main subject. A domestic cat need not be accompanied by a human.
+
+Botanical discovery found zero Olea/olive-tree/올리브나무 positive-primary CIDs, including English, Korean and botanical-name discovery. Broader tree/crown/old-tree discovery found 43 CIDs. The reviewed ancient giant tree source adds giant scale and inferred ancient age; forest/ecological-process compositions do not supply olive identity. Olive-colored materials are not an olive organism. One olive physical-structure candidate is therefore proposed. This is a bounded corpus gap, not a claim that every named species warrants a dedicated record.
+
+Instrument-case discovery found a closed case implying hidden contents, subject to human context. It conflicts with the open empty case contrast. No dedicated paper-label identity source was found by the tested label patterns. These contrasts test hierarchy and textual quotation: they are not a mandate to grow one candidate for every prop mentioned in a test. Existing generic object/still-life/editorial material can still be compatible advice. In quoted/title cases, the visible label or sculpture remains the entity; a printed word or artwork title never creates the literal named object or living tree.
+
+## Research and authored synthesis
+
+- https://www.kew.org/plants/olive — Kew describes Olea europaea as evergreen, with a short twisted trunk and narrow leathery leaves; it independently supports physical plant traits.
+- https://www.rhs.org.uk/plants/11735/olea-europaea-f/details — RHS describes rugged much-branched growth and simple opposite leathery leaves. The proposal uses a declared mature twisted-trunk variant and does not imply mandatory fruit, flowers, Mediterranean location, exact age or measured height.
+- https://animaldiversity.org/accounts/Felis_catus/ — University of Michigan Animal Diversity Web identifies the domestic cat species and describes flexible body form, variable coat type and color, paws and muzzle whiskers. Only these ordinary external traits are used; no disputed numerical dental/bone claims are adopted.
+- https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feline-ear-disorders — Cornell identifies the external pinna as an ear structure. The proposal uses visible external ears, not hidden internal structures or medical claims.
+
+The same-owner assembly, independent declaration requirement and refusal to infer a human companion or counted full-body inventory are authored photographic constraints. These are not quotations or external proof of a retrieval rule. Candidate provenance hashes this exact authored review file, not fetched webpage bytes. Neither proposal is native-approved, installed, or evidence of improved search. It must be integrated, embedded, indexed and evaluated separately by the main worker.
+
+## Contract and exposure boundaries
+
+Advisory judgments below accept material that supports the frozen scene without requiring full native eligibility; genre and framing advice may fit even when it cannot itself identify the principal entity. Every judgment still reads complete source meaning. Missing source guards are not permissions to invent the corresponding context. Human-only gestures are not animal anatomy; depicted images are not the objects outside them; a companion remains a separate owner. Effects on a specific target cannot silently move to the main subject.
+
+The actual baseline shows complete installed object identities can remain outside top8, and that Korean subject identity is often displaced by broad genre/context material. Recommendation: inspect generic declaration, owner and subject-hierarchy evidence handling across the whole pool; preserve score/query evidence and require source-witnessed compatibility. Do not rank by CID, source tag, test phrase, a subject-specific allowlist, or categorical subject-domain preference. This review alone does not justify a runtime change or claim regression.
+
+## Locked full-target criteria before enriched search
+
+positive-targets.json locks the 12 unchanged positive probes to complete identity sources. Target success requires the whole selected-RID identity, owned parts, material, role and declaration requirements to fit. Generic genre, framing, partial anatomy and neighboring-owner suggestions do not count. Exact object-material variants are allowed because those probes leave material open. The potter target is the explicit potter source; the broader ceramic-artist label does not independently guarantee that narrower craft role. Adult status remains independently declared, never inferred from occupation. The proposed olive and domestic-cat records fill the two documented complete-meaning gaps; no additional candidate is needed for this target lock.
+
+Targets were authored from whole-source fit independently of draft/enriched ranks. Each bilingual pair keeps the same source alternatives and independent meaning. Probe bytes and hashes remain unchanged. Target locking does not assert native adoption, enriched retrieval success or pixel fidelity.
