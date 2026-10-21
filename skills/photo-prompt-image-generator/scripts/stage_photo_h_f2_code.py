@@ -36,7 +36,7 @@ def stage(destination, *, source_store=None, generation_id=None, skill_root=SKIL
     for relative in selected:
         path = Path(relative)
         require(not path.is_absolute() and len(path.parts) == 2 and path.parts[0] in ('scripts','precore')
-                and path.suffix == '.py' and relative in native_manifest['source']['code'], 'not an existing sealed code member')
+                and path.suffix == '.py', 'not an explicit Python code member')
         source = source_root / relative
         require(source.is_file() and not source.is_symlink() and source_root in source.resolve().parents, 'unsafe overlay code member')
     python = runtime_python(skill_root, manifest)
@@ -71,7 +71,7 @@ print(json.dumps({'code':r.LOADED_CODE,'environment':r.LOADED_ENVIRONMENT,
         updated['source']['code'] = expected
         updated['source_fingerprint'] = digest(updated['source'])
         updated['algorithm_sha256'] = implementation['algorithm_sha256']
-        for relative in native_manifest['members']:
+        for relative in sorted(set(native_manifest['members']) | set(selected)):
             path = staged / relative
             st = path.stat()
             members[relative] = {'bytes': st.st_size, 'sha256': file_sha(path),
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     parser.add_argument('--destination', type=Path, required=True)
     parser.add_argument('--source-store', type=Path)
     parser.add_argument('--generation-id')
-    parser.add_argument('--member', action='append', help='exact existing scripts/*.py or precore/*.py member; repeatable')
+    parser.add_argument('--member', action='append', help='exact existing or new scripts/*.py or precore/*.py member; repeatable')
     parser.add_argument('--overlay-root', type=Path, help='reviewed member files; copied into the sealed release, never a runtime dependency')
     args = parser.parse_args()
     print(json.dumps(stage(args.destination, source_store=args.source_store,
