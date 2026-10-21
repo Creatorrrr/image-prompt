@@ -1,0 +1,144 @@
+{
+  "slot": "mood",
+  "diagnosis": {
+    "category": "mixed",
+    "reason": "The original unchanged query exposes scene and action tokens more strongly than existing affect labels. Melancholy is present, including lonely-and-melancholic at RRF 115 (dense 54; zero BM25 contribution). Therefore the weak top8 is materially an exposure problem. A narrower data gap remains: inspected affect sources mostly name emotions, while a concrete carrier relation plus an explicit optional affective reading is thin. Add only two distinct complete visual configurations, not more melancholy synonyms.",
+    "existing_candidates": [
+      {
+        "cid": "cand_ee10a5d1e8635abc86712444725d1971",
+        "meaning": "lonely and melancholic",
+        "limitation": "The desired emotional family exists but its complete native meaning is a short affect label, without cue-owner relationships.",
+        "baseline": {
+          "rrf_rank": 115,
+          "bm25_rank": null,
+          "dense_rank": 54
+        }
+      },
+      {
+        "cid": "cand_47c67c611c0c5028bbe11710f7ff38a6",
+        "meaning": "domestic melancholy",
+        "limitation": "Existing interpretation-only limits avoid a compulsory facial shape, tears or rain; the observable_interpretation statement remains generic rather than naming an actual scene relation.",
+        "baseline": {
+          "rrf_rank": 258,
+          "bm25_rank": 1262,
+          "dense_rank": 129
+        }
+      },
+      {
+        "cid": "cand_f58ca67d883b5ff098ec90ef73d01d0e",
+        "meaning": "bittersweet nostalgia",
+        "limitation": "Present affect label; it does not identify a visible carrier or establish an actual memory.",
+        "baseline": {
+          "rrf_rank": 1483,
+          "bm25_rank": null,
+          "dense_rank": 692
+        }
+      },
+      {
+        "cid": "cand_14e5623a09fa5b0ea1843b9f7fa70510",
+        "meaning": "a transit terminal waiting area after the last train",
+        "limitation": "A location and declared temporal context, not a mood. Do not equate public-space emptiness with distress.",
+        "baseline": {
+          "rrf_rank": 27,
+          "bm25_rank": 433,
+          "dense_rank": 12
+        }
+      },
+      {
+        "cid": "cand_66e4d9bfd88955b790f15b8f8e0d48fd",
+        "meaning": "wandering loneliness",
+        "limitation": "Mood already exists; neither a real journey nor private loneliness follows from pixels.",
+        "baseline": {
+          "rrf_rank": 77,
+          "bm25_rank": null,
+          "dense_rank": 35
+        }
+      },
+      {
+        "cid": "cand_f918492031df5877b5b6b3380dee8d39",
+        "meaning": "quiet everyday intimacy",
+        "limitation": "Existing quiet-affect alternative; short and broadly applicable, not a reason to duplicate it with another synonym.",
+        "baseline": {
+          "rrf_rank": 680,
+          "bm25_rank": 841,
+          "dense_rank": 515
+        }
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.getty.edu/art/exhibitions/richard_learoyd/",
+      "title": "Getty: Richard Learoyd: In the Studio",
+      "supports": "Getty discusses contemplative affect and viewer intimacy in photographs of figures, portraits and still lifes; mood is not limited to facial expression. This supports an interpretive role, not any universal visual formula."
+    },
+    {
+      "url": "https://www.getty.edu/news/getty-museum-presents-window-photography/",
+      "title": "Getty: The Window in the History of Photography",
+      "supports": "Getty describes framing and figure-window relations as tools for enigmatic or suspenseful readings, including unresolved anticipation. The same visible motif has formal, social and metaphorical uses."
+    },
+    {
+      "url": "https://www.metmuseum.org/exhibitions/listings/2002/richard-avedon",
+      "title": "The Met: Richard Avedon: Portraits",
+      "supports": "The catalogue distinguishes the melancholy character collaboratively made in a portrait from disclosure of the sitter as a real person. This directly supports separating photographic interpretation from verified private emotion."
+    }
+  ],
+  "baseline": {
+    "query_sha256": "26880799f975b4d427f86e73b015386702c71814b5cb829d99710acd389a5cc9",
+    "unchanged_query": true,
+    "top8_assessment": "Top results emphasize station staff, object absence, travel access barriers, contempt facial motion and pause rather than coherent mood. This is an exposure measurement, not a corpus absence proof.",
+    "full_ranks_file": "../baseline-current-full-ranks/mood.json.gz"
+  },
+  "inspection": {
+    "method": "Read hash-checked BodyReader records across all 18,250 canonical CIDs (including 70 diagnostic records); decode every record through installed photo_canonical_source.native, rather than comparing raw V3/V4. Inspect full native fields, not tags as an eligibility filter. Review 268 atmosphere-effect records plus cross-dimensional affect/narrative matches. Compare complete working V3 content, conditions and effects for four central existing mood/location CIDs; observed meanings match the decoded installed source.",
+    "scanned_cids": 18250,
+    "positive_cids": 18180,
+    "atmosphere_effect_records": 268,
+    "evidence_files": [
+      "corpus-inspection.json",
+      "atmosphere-inventory.json"
+    ],
+    "limitation": "Semantic search terms were used to organize full-source review, not to prefilter retrieval population or certify exhaustive natural-language equivalence. Native approval remains unclaimed."
+  },
+  "confusion_boundaries": [
+    "Scene mood is an optional affective reading, not proof of a sitter’s private emotion, mental health, memory, relationship history or an actual departure.",
+    "Sparse architecture and being unaccompanied can be calm or practical; emptiness alone does not prove loneliness, poverty, abandonment or danger.",
+    "Fog, dust, humidity and colored light may be independent physical or stylistic features; they are not required mood ingredients.",
+    "A station, an action pause or a face expression may carry a reading but does not substitute for the scene-level affect role.",
+    "Nostalgia does not require retro capture, and vintage texture does not establish genuine remembered events.",
+    "Concrete arrangements introduce actual pose/object/composition/lighting changes; candidates declare all affected dimensions and must pass their independent locks."
+  ],
+  "recommendations": [
+    "Retain existing generic affect labels; do not add aliases or rewrite the original query to improve this known test.",
+    "Integrate at most the two authored relational configurations if independent semantic review accepts their effects; they are optional scene choices, not implicit mood defaults.",
+    "Run the identical original query after a full qualified rebuild, preserving before/after ranks of existing melancholy CIDs as well as new candidates. A new candidate entering top8 is insufficient if its full scene violates frozen properties.",
+    "Also test diverse out-of-probe mood intents and inspect returned complete sources. Keep discovery and native qualification separate."
+  ],
+  "additional_test_intents": [
+    {
+      "role_focus": "Offer an intimate contemplative emotional reading through the relation between ordinary objects and the space separating them.",
+      "scene_context": "A still-life photograph of a bowl and folded fabric on a table; no person is present."
+    },
+    {
+      "role_focus": "Suggest unresolved apprehension through a person attending toward a window while the source of attention remains outside the picture.",
+      "scene_context": "A staged interior with one established adult figure, without any declared threat."
+    },
+    {
+      "role_focus": "Create a calm feeling of shared presence through two people continuing their separate quiet activities nearby.",
+      "scene_context": "Two established adults occupy the same lived-in room; no romantic relationship is declared."
+    }
+  ],
+  "authoring_decision": {
+    "candidate_count": 2,
+    "why_fewer_than_four": "Exposure is already demonstrated for existing melancholy. Two complete relational options address the thin meaning without a synonym expansion or a collection of near-duplicate station variations. Other affect families already exist and can be tested before further authoring."
+  },
+  "verification_limits": [
+    "No new retrieval, embedding build, native qualification, integration, installation or image generation was performed by this slot worker.",
+    "Research sources substantiate interpretive boundaries and medium practice; authored illustrative scenes are not source quotations."
+  ],
+  "memory_context": {
+    "used": "Prior audit note prompted checking exposure before duplicate additions; all CID presence and ranks above were reverified now.",
+    "citation": "MEMORY.md:199-204",
+    "rollout_id": "01a15402-64a5-77f1-a288-e2739d2b5301"
+  }
+}

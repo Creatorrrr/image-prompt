@@ -1,0 +1,10 @@
+# Original308 presentation_style supplement
+
+The adult polished actualscene query and neatly groomed adult complementary query already have complete existing grooming/attire/coordination sources. These are exposure/focus-recognition cases, not data gaps. The informal complementary query declares a person but no adult age. All five detailed existing cross-component presentation sources require human+adult; those guards cannot disappear. Generic unpolished/elegant/corporate labels and ordinary-clothing pose sources lack the full visible grooming/attire coordination relation. One separate age-preserving human source is proposed.
+
+V&A primary collection/exhibition interpretation documents varied dress and grooming practices without authorizing identity or personality inference: https://www.vam.ac.uk/articles/about-the-fashioning-masculinities-exhibition
+Nikon's firsthand portrait article demonstrates coordination of visible cosmetic/textile treatments: https://www.nikonusa.com/learn-and-explore/c/tips-and-techniques/face-value-a-different-take-on-the-beauty-portrait
+
+The particular ordinary clothing and deliberately loose but coherent hair arrangement is authored photographic direction. Neither source establishes a universal informal standard or an age-specific recipe. The proposed record preserves whatever age is already declared, creates no age category, hair, wearer, identity, profession, social role or participant, and requires existing hair and worn garments whose arrangement is open. Effects are limited to grooming, attire arrangement and their visible coordination. Existing references, locks and all non-presentation properties survive. No native adoption permission or attractiveness claim is made.
+
+The generic definition query is a boundary statement, not a demand for one particular adult, outfit or scene. It has no mandatory positive target. Existing concrete sources remain useful conditional advisory material. The frozen252 targets, probes and sources are untouched.

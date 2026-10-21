@@ -1,0 +1,165 @@
+{
+  "slot": "companion_animal",
+  "query_provenance": {
+    "slot": "companion_animal",
+    "role_focus": "Show a separately declared dog accompanying the adult walker on the same path.",
+    "scene_context": "One adult and one dog walk together.",
+    "query": "Photographic role: Show a separately declared dog accompanying the adult walker on the same path.\nScene context: One adult and one dog walk together.",
+    "query_sha256": "7f8e53fdb9699d15107768c6bf2a2169a15b4b13f9d331022579a98b3d3ab855",
+    "slot_definition": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event"
+      ],
+      "description": "A separately declared animal participant explicitly accompanying an identified primary subject, with the companion relation, count and ownership grounded.",
+      "description_ko": "명시된 주 대상에 실제로 동반하는 별도 동물 참여자. 주 대상과 동물의 동반 관계·수·소유자를 각각 확인하며 주 대상을 인간으로 한정하지 않는다.",
+      "dimensions": [
+        "subject",
+        "relationship"
+      ],
+      "evidence_terms": [
+        "companion",
+        "pet",
+        "perched",
+        "cat",
+        "dog",
+        "dove"
+      ],
+      "excludes": [
+        "A lone animal, an animal name, another animal in the background or a generic peaceful mood alone does not establish companionship.",
+        "Do not infer pet ownership, species, domestication, affection, physical contact or a new primary subject from the tag.",
+        "An animal-only source with no accompanying relation must use its actual subject/action roles instead."
+      ],
+      "id": "companion_animal",
+      "includes": [
+        "An explicit animal companion relation to the declared primary subject; the primary subject can be human or nonhuman.",
+        "Keep animal identity/count, independent owners and any required contact or placement conditions exactly as supported."
+      ],
+      "neighbors": [
+        "action",
+        "aftermath_trace",
+        "color",
+        "contact_point",
+        "crowd_density",
+        "physical_motion",
+        "proxemics",
+        "reality_anchor",
+        "reflection_logic",
+        "relational_action",
+        "scale_relation",
+        "sensory_cue",
+        "shadow_relation",
+        "subject",
+        "subject_count",
+        "surreal_physics_detail",
+        "transformation_stage",
+        "visible_text"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "participant.animal",
+        "companion.animal"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "diagnosis": {
+    "category": "data_gap",
+    "reason": "Checked canonical dog and companion records lack a complete independently grounded primary–animal accompanying relation. Corpus-wide text inventory found 18 animal-plus-spatial/action documents, mostly animal nouns, wildlife, fantasy, selfie geometry and unrelated examples; no ordinary walker–dog co-travel source was found. Retrieval exposure can affect rank, but exposing the thin dog noun cannot supply its absent relationship meaning. Exact baseline recall is to be attached by the parent; this is not a ranking claim.",
+    "existing_candidates": [
+      {
+        "cid": "cand_cb69e6fe5487556aa8a99e2ec2aae3b3",
+        "meaning": "small white companion dog",
+        "limitation": "No identified counterpart, accompanying placement or typed relationship effects; also adds size/color beyond the neutral dog intent."
+      },
+      {
+        "cid": "cand_aa295e2ca8425f14b6d8fb84fc508eba",
+        "meaning": "golden retriever puppy companion",
+        "limitation": "Breed/juvenile identity noun without an accompanying counterpart or path relationship."
+      },
+      {
+        "cid": "cand_f50a17d00ccb565580aa36e3fb66e87b",
+        "meaning": "sleepy pet resting on the lap",
+        "limitation": "A support/contact hint but unidentified lap owner, sleep claim and no explicit relationship effects."
+      },
+      {
+        "cid": "cand_297deebf6136579283d02e2f87194f7e",
+        "meaning": "white dove perched calmly nearby; source embedding permits near subject or birdcage",
+        "limitation": "Nearby bird or cage vicinity alone does not establish companionship."
+      },
+      {
+        "cid": "cand_f9fe6a29d56f5973ad32d27e7159160a",
+        "meaning": "human lowers beside requested animal with aligned eye height",
+        "limitation": "Existing-actor selfie configuration; actual conditions and relationship/pose/camera effects do not express accompanying travel."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://www.akc.org/expert-advice/training/teach-puppy-walk-leash/",
+      "title": "AKC: How to Teach a Puppy to Walk on a Leash",
+      "supports": "Ordinary loose-leash travel near a person differs from a precise formal heel; the dog may look toward the handler during a check-in. These are observable configurations, not proof of ownership or bond."
+    },
+    {
+      "url": "https://images.akc.org/pdf/cgc/GK9GC9.pdf",
+      "title": "AKC Canine Good Citizen Evaluator Guide, Item 4",
+      "supports": "A dog and handler can walk with turns and stops without competitive obedience precision. A walking relation need not enforce a fixed left side."
+    },
+    {
+      "url": "https://www.nationalacademies.org/read/25787",
+      "title": "National Academies: Human–Animal Interactions in the Research Environment (2020), Box 1",
+      "supports": "The reported AVMA bond concept concerns an ongoing relationship and welfare, broader than a visible pose. A single photograph is insufficient to establish that history or legal ownership."
+    },
+    {
+      "url": "https://www.cats.org.uk/help-and-advice/cat-behaviour/cat-body-language",
+      "title": "Cats Protection: Cat body language",
+      "supports": "Interpret facial and whole-body signals in context. A lap placement or purr alone does not establish emotional state; this source supports keeping an authored resting arrangement separate from affect claims."
+    },
+    {
+      "url": "https://www.rspca.org.uk/adviceandwelfare/pets/birds/company",
+      "title": "RSPCA: Living with other birds",
+      "supports": "The advice describes watching bird interactions and mutual preening or feeding as indications of social acceptance. Authored companion-bird contact may make a relation observable, while merely sharing an aviary or perch vicinity is weaker evidence."
+    }
+  ],
+  "corpus_evidence": "corpus-evidence.json",
+  "working_source_comparison": "All nine working companion_animal provenance records were inventoried. The checked canonical small-white-dog native content equals its working V3 positive meaning; canonical V4 was decoded with installed photo_canonical_source.native, not compared as raw schema.",
+  "important_confusion_boundaries": [
+    "Animal identity and the animal’s relationship to a particular primary participant are separate facts. Animal nouns, tags and bare proximity cannot identify an accompanying counterpart.",
+    "A separately existing animal is not a newly introduced primary subject; explicit primary/companion addresses retain their direction.",
+    "Accompaniment does not establish legal ownership, domestication, affection, an ongoing emotional bond, training history or safety.",
+    "Keep existing count. Two source-local addresses require distinct existing owners but do not authorize declaring any new owner, count, species or anatomy.",
+    "Walking together does not impose a leash, precise heel, left-side position, synchronized gait or physical contact. All existing leash choices are retained.",
+    "A nonhuman primary is permitted. Preening demonstrates a directed interaction; co-perching by itself is insufficient, and reciprocity is not inferred from a one-way moment.",
+    "Age, species, existing action and support ownership prerequisites must come from independent declaration/witnesses. A plausible-looking photograph does not itself create frozen source guards."
+  ],
+  "recommendations": [
+    "Integrate only after checking both actual owner mappings, their grounded disjointness and every individual species/action/support prerequisite. The intrinsic v2 guards are the supported existing schema from photo_semantic_evidence.py, not a proof.",
+    "Retain old records as discovery material where useful; do not repair thin dog meaning by synonyms, tag votes or reinterpretation of subject-only effects.",
+    "Evaluate original frozen query unchanged against the whole pool; inspect complete source and consider exact dog co-travel fit separately from native adoption.",
+    "The added source records carry no _semantic_evidence and no native approval. Guard validation is syntactic; actual native owner admission remains unresolved until separately reviewed."
+  ],
+  "additional_test_intents": [
+    {
+      "role_focus": "Make the existing dog’s sideways check toward its named human travel partner readable while preserving both walking actions.",
+      "scene_context": "The person and dog are already moving together; the dog briefly turns its head."
+    },
+    {
+      "role_focus": "Clarify which seated participant supports the declared small animal on their lap.",
+      "scene_context": "A seated adult and an already declared animal share a resting portrait; the lap is independently identified."
+    },
+    {
+      "role_focus": "Show a declared companion bird directing preening toward the primary bird without adding reciprocal grooming.",
+      "scene_context": "Both birds are already present and identified; their companionship was declared independently."
+    }
+  ],
+  "candidate_count": 4,
+  "validation_limits": [
+    "No native qualification, operating corpus change, index build, retrieval run or native image validation is claimed by this slot authoring.",
+    "The frozen species/action properties in guards require exact independent witness mapping; they deliberately fail closed when unavailable.",
+    "The baseline and unchanged-query after experiment are coordinated by the parent."
+  ]
+}

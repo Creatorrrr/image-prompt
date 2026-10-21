@@ -1,0 +1,11 @@
+# Authored carrier inscription source review, 2026-10-20
+
+These are internally authored request-preservation relations, not external observations or native approvals. The existing pool has a door-glass inscription relation and a fixed greeting, but no same-carrier declaration-preserving fabric-banner or wooden-crate source. A carrier cannot be substituted merely because both surfaces can carry text.
+
+Fabric banner: retain the independently declared complete character sequence, capitalization, punctuation and line arrangement. Existing printed strokes belong to that same textile face and follow its fold/perspective; they are not separate floating glyphs or a paper label. The source selects no word, typeface, banner owner, support or message meaning. All prerequisite declarations and their relation remain mandatory. The visible evidence is the complete readable sequence, textile boundary and shared local deformation.
+
+Wooden crate: retain the independently declared complete character sequence, including digit order, leading zeros and punctuation. Existing painted strokes belong to a declared face of that same wooden crate; grain, board edges and local perspective locate that face. A printed numeral is not an object count, measurement or inferred shipping claim. The source introduces no number, object, panel owner or other carrier. All prerequisite declarations and their relation remain mandatory.
+
+These authored relations deliberately contain no motivating query literals and no synonym stuffing. Full own content and conditional effects remain in the candidate source. Provenance is this actual internal note, identified by its exact UTF-8 SHA-256; no public URL or external research is claimed.
+
+Field review: the complete bilingual physical relation is a definition, not a lookup label. The revised source gives it the explicit positive definition field; en/ko hold concise names. Canonical conversion preserves those field meanings exactly. A diagnostic cached-dense replay found that this field correction restores the previous ranking of the camera control. This is source field ownership, not a query-specific score rule; fresh vectors and the full 212-query runtime check are still required.

@@ -1,10 +1,10 @@
 # Installed H-only+F2 search
 
-The normal managed workflow uses this installed release for new runs. Its
-18,180 positive CIDs and18,182 actual realization documents come from the
-existing complete candidate pool. The70 diagnostic candidates remain source
-records, outside positive material retrieval. Test requests do not restrict the
-candidate population. Slot tags never partition or prefilter this search.
+The maintained weak-slot source contains 18,368 positive candidate records and
+70 diagnostic records. The installed config separately selects the immutable
+release and its exact CID/RID population for new managed runs. Source edits alone
+do not switch the installed release. Slot tags never partition or prefilter the
+whole positive search pool.
 
 After independent core freeze, run `photo_workflow.py prepare-slot-intents
 --run RUN`. Add repeatable `--slot SLOT` only to choose a smaller explicit
@@ -141,3 +141,61 @@ to copy and validate a release, including its local runtime, without changing
 `retrieval-runtime.json`; test it with explicit generation/store options, then
 run the installer without that flag to select it. This path does not publish
 dirty working candidate data or rebuild document vectors.
+
+A phase/context update must stage the complete maintained H-F2 module closure,
+including `photo_h_f2_event_phase.py` and `photo_h_f2_aftermath_scope.py`, and bind
+the new code inventory. The two-module helper above applies to updates confined
+to query/workflow modules; it does not publish edits to that wider closure.
+
+For a reviewed wider code-only fix, the helper also accepts repeated `--member`
+paths naming existing sealed `scripts/*.py` or `precore/*.py` members. An optional
+`--overlay-root` supplies exactly those reviewed files. Use an overlay built by
+applying only the intended patch to the installed source when the working file
+also contains unrelated edits. The stager verifies the complete expected code
+inventory, keeps all source/index/vector bytes, and copies the overlay into the
+immutable generation; runtime has no overlay dependency. Omitted `--member`
+retains the original two-module default. Validate the exact new closure before
+installing it.
+
+The installed query policy includes a [bounded lexical scope correction](h-f2-query-scope.md). It preserves the exact query and embedding, retains original lane evidence, and corrects at most one lexical RID before final RRF10 when explicit source witnesses and conservative agreement checks pass. Saved-score replay verifies the correction without extra searches.
+
+Explicit inscription literals can then use [carried literal ordering](h-f2-literal-text.md). Same-carrier, source-witnessed character preservation or an exact fixed literal precedes unproven contextual similarity; an explicitly different fixed literal follows it. RRF10 scores remain unchanged and ordering within each group is stable. Without a positive same-carrier source contract, the original order remains. This advisory step neither rewrites a source word nor grants native adoption.
+
+Carrier-specific declaration-preserving sources cover entrance-door glass, fabric banners and wooden crates. Their exact text stays supplied by the independent scene. Short names remain labels; complete physical relation prose belongs to the explicit definition field. See the [authored source review](carried-inscription-source-review.md).
+
+Affirmative physical aftermath can use [source-witnessed phase and context
+contracts](h-f2-event-phase.md) after the full-pool score lanes. Version7
+supports bounded English/Korean phase expressions without requiring an explicit
+negative comparison. It verifies complete selected-primary assertions, recognizes
+plain traces left behind, and keeps ongoing transformation distinct from a
+completed initiating event.
+
+Generic requests retain only witnessed physical aftermath without additional
+authored context. Specific scene/owner requests require source-scene evidence.
+Required, optional, negative and quoted context are separate: spell residue,
+vanitas support, former luxury decline, a quiet event setting and a failed recipe
+retain their complete source meaning. Unsupported owners do not borrow unrelated
+or generic timing sources. If no compatible source exists, a supported request
+returns zero with a reason; no extra search or ordinary top8 padding is used.
+Other intents retain ordinary retrieval. All scored sources and scores remain
+in the common pool and saved full order.
+
+Packs/views expose query scene/context, accepted context witnesses, withheld
+context witnesses and the exact returned count. Saved-score audits reconstruct
+all of them from original query text and verified primary sources, including
+withheld records. Native conditions/effects and authoring guards remain separate.
+This is a bounded advisory contract, not universal semantic or native approval.
+See the frozen 212+96 maintenance report for exact quality and evidence limits.
+
+
+Version7 also recognizes existing ordinary extinguished-wick material in Korean
+primary fields and supports the declared dog/floor, bread/cutting-board and
+opened-parcel/table aftermath families. Their complete source review is in
+[aftermath-gap-source-review.md](aftermath-gap-source-review.md). Neutral material
+can be returned without supernatural or symbolic context. Additional authored
+event histories require matching declared owners and support surfaces. Data
+additions are separately embedded and reindexed; the installed release remains
+pinned until its full query and installed-copy qualification passes.
+
+
+The 2026-10-21 weak-slot expansion preserves the prior installed source closure and adds 91 complete discovery candidates. The qualified primary-source compatibility projection is documented in [primary scope](h-f2-primary-scope.md). Existing 308 plus new 504 queries are preserved as 812 actual full-pool searches; exact adoption still requires the independent native source/owner/guard/permission workflow.

@@ -9,6 +9,7 @@ from photo_recall_generation import read,write,file_sha
 from photo_workflow_state import WorkflowError,locked_state,value,encode,commit_stage,atomic_write
 import photo_h_f2_queries as queries
 from photo_h_f2_generation import Generation
+from photo_h_f2_search import present_material
 
 def cached_queries(generation,query_set,cache,skill=None):
  cache=Path(cache);cache.mkdir(parents=True,exist_ok=True);out={};missing=[]
@@ -38,14 +39,15 @@ def search_material(generation,query_set,cache,output,*,skill=None):
   result=index.search(q['text'],encoded[slot]['row'],generation.binding)
   p=output/(rf.sha(slot)+'.npz')
   positions={d['id']:i for i,d in enumerate(generation.metadata)}
-  with p.open('wb') as stream:np.savez_compressed(stream,bm25=np.asarray(result['bm25']),cosine=result['cosine'],order=np.asarray([positions[r['id']] for r in result['order']],dtype='<i4'))
+  with p.open('wb') as stream:np.savez_compressed(stream,bm25=np.asarray(result['bm25']),bm25_raw=np.asarray(result['bm25_raw']),cosine=result['cosine'],order=np.asarray([positions[r['id']] for r in result['order']],dtype='<i4'))
   files[p.name]=file_sha(p);rows=[]
-  for r in result['order'][:8]:
+  presented,projection=present_material(result['order'],result['query_scope']['event_phase'],literal=result['query_scope']['literal_text'],focus=result['query_scope']['primary_focus'])
+  for r in presented:
    source=generation.body.record(r['cid']);m=generation.metadata[positions[r['id']]]
    rf.require(c.digest(source)==m['source_sha256'],'returned source changed')
    sources[r['cid']]=source;rows.append({**r,'source_sha256':m['source_sha256'],'native_approval':False})
-  goals[slot]={'top8':rows,'lane_calls':result['lane_calls'],'considered_RIDs':result['considered_RIDs'],
-   'considered_CIDs':result['considered_CIDs'],'full_order_sha256':c.digest(result['order'])}
+  goals[slot]={'top8':rows,'material_projection':projection,'lane_calls':result['lane_calls'],'considered_RIDs':result['considered_RIDs'],
+   'considered_CIDs':result['considered_CIDs'],'full_order_sha256':c.digest(result['order']),'query_scope':result['query_scope']}
  packet={'schema':'photo-h-f2-material-pack/v1','generation_id':generation.id,'query_set':query_set,'queries':encoded,
   'goals':goals,'sources':sources,'raw_files':files,'native_approval':False,'semantic_approval':False,
   'authority':'creative reference only; whole-source adoption requires the native selection contract'}
@@ -123,5 +125,6 @@ def view(state,candidate_ids=None,page=0):
   goals[slot]=rows
  from compose_pack_view import build_view
  return {'schema':'photo-h-f2-material-view/v1','material_page':page,'total_unique_materials':len(ordered),'displayed_unique_materials':len(displayed),'additional_search_calls':0,'materials':goals,
-  'query_scopes':packet['query_set']['query_scopes'],'native_guard_contract':build_view(value(state,'pack')),
+  'query_scopes':packet['query_set']['query_scopes'],
+  'material_projections':{slot:goal['material_projection'] for slot,goal in packet['goals'].items()},'native_guard_contract':build_view(value(state,'pack')),
   'authority':'inspiration is separate from complete native adoption','native_approval':False}

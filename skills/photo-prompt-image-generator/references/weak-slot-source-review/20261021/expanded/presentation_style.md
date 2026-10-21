@@ -1,0 +1,36 @@
+# presentation_style independent source review
+
+The 24 probes were frozen before source inspection; their exact file hash is in probe-lock.json. This review concerns advisory material meaning, not native qualification.
+
+## Complete-pool discovery
+
+Scanned 18,419 positive CID rows in source-inventory.jsonl. Patterns were applied to all positive primary fields, not slot tags. Whole-presentation prose matched 1 CID, grooming/그루밍 12, polished/put-together/meticulous/단정/정돈 85, casual/uncontrived/unpolished/수수/꾸미지 38, ornate/decorative/장식적 124, and serene-presence expressions 1. These are overlapping discovery counts, not semantic votes. Five records carry presentation.* effects. Twelve selected records were fully retained in reviewed-records.json, with all actual primary RID fields, conditions and effect targets.
+
+The five prior concrete cross-component records are present: tailored aligned edges, finished everyday knit, curl-to-textile rhythm, repeated lip/scarf accent, and loose hair/creased open shirt. Thus a generic polished, relaxed or natural request does not establish a new data gap. Thin corporate and elegant labels also exist; they cannot supply missing garment/grooming details or prove occupation. Makeup-only, face-and-garment framing and unfinished grooming-action profiles are nearby material, with their full original obligations retained. Their utility as inspiration does not make them complete whole-presentation matches.
+
+A second compound discovery search for ornamental terms AND hair/grooming/makeup found mostly single accessories, an applied makeup panel, named subculture preparation, and unrelated complex profiles. No inspected source states a same-wearer repeated ornamental motif across an arranged hairstyle and garment trim as a dense decorative overall presentation. This is a narrow qualified gap, not an assertion that every conceivable decorative candidate is absent.
+
+## Primary research, checked 2026-10-21
+
+- https://www.vam.ac.uk/articles/about-the-fashioning-masculinities-exhibition — The museum discusses diverse dress conventions; Overdressed includes lavish cloth, ribbons, lace, makeup and grooming equipment. Its status and historical interpretations are not imported into the proposed visual option.
+- https://www.nikonusa.com/learn-and-explore/c/tips-and-techniques/face-value-a-different-take-on-the-beauty-portrait — The first-person photographic project relates textile and makeup color and discusses texture. The source supports deliberate coordination across appearance components. The proposed ribbon geometry is an authored arrangement, not a historical quotation or replication of those photographs.
+
+## Diagnosis and limits
+
+Mixed: ordinary cross-component meaning exists and needs measured exposure evaluation; the narrow dense decorative relation is missing from inspected complete sources. Propose one addition, no synonym copies. The addition concerns one existing adult human main subject, with hair arrangement and garment ornament on that same wearer. It must not transfer a mannequin's styling to the person, change preserved grooming for a single jacket request, turn quoted words into visual styling, or turn an editor's job into a polished appearance. Serene expression alone remains a neighboring role.
+
+No CID-based runtime logic is warranted. If baseline confusion is demonstrated, any general correction must distinguish asserted owner-bound physical appearance from negation, quotations, occupational context and neighboring single-component requests using full source meaning. Current review alone does not prove a rank regression or a fix. Conditions, effects, all receiver locks and native approval remain independent.
+
+## Final correction after complete baseline-source review
+
+Reviewed all 192 material occurrences (118 unique CIDs) and every selected RID primary field, conditions and effects. Full selected sources expose Decora hair clips plus layered decorative garments and New Romantic theatrical personal appearance. These are useful advisory styling material even though their practice context/subject effects remain separate adoption restrictions. Therefore the earlier qualified ornament-gap hypothesis does not justify adding another specific variant. Final proposal: zero candidates. Diagnosis remains mixed exposure and contract recognition, with no demonstrated data gap in this batch. All five concrete prior sources are absent from all 24 top8 sets; the relevant detailed meanings are present in the full pool, so that absence is exposure evidence, not absence of source stock.
+
+The 24 authored judgments mark useful partial attire/context/expression material compatible where appropriate, rather than treating native-ineligible advice as blanket failure. top1 fit is 6/24 and top8 has useful fit is 20/24 under this explicit advisory criterion; inspect baseline-review.json for case-specific full-source obligations and limitations. These are baseline measurements only, not an improvement claim.
+
+## Strict whole-source positive targets, frozen before enriched search
+
+The advisory baseline judgments and strict whole-source target judgments answer different questions. Decora clip/garment layering can inspire decoration, but its explicit decora_practice prerequisite is undeclared. New Romantic material adds a club-participant subject. Neither is a whole-source fit for the existing adult in a theater foyer with no performer identity. A broad luxury-beauty-model label does not establish coordinated decorative grooming and attire. Thus the advisory decision to avoid duplicates remains correct for that criterion, while the stricter full-family criterion reveals one qualified gap. Restore exactly one generic existing-adult ornamental hair/garment coordination source, retaining all existing owners and scene; no practice identity, performer role, historical rank or extra participant is supplied.
+
+The 12 positive-target rows were authored from complete inventory source meaning and the unchanged frozen requests, independently of enriched draft ranks. Neat/formal cases target the same-wearer arranged hair, pressed jacket, smooth shirt and collar/cuff alignment source. Casual/natural cases target loose hair, asymmetrical open shirt, rolled sleeves and retained creases on one wearer, with no breakfast, cafe or home location added by the source. Understated cases target the compact textured hair with soft knit/trousers and orderly edges; a restrained low-saturation lip/scarf accent source is also a full optional realization because the query opens coordinated personal presentation and gives no color lock. Neither target changes profession, identity, expression or participant count. Their grooming, garments and complete appearance/color effects remain required, with all independent request locks intact.
+
+This adds no native qualification claim. The new source remains advisory pending separate source/owner review. Primary support and limits are unchanged: V&A documents diverse ornament and grooming in dress; Nikon documents deliberate cross-component coordination. The exact ribbon arrangement is authored. source-review.md bytes, not a webpage digest, supply provenance SHA-256.
