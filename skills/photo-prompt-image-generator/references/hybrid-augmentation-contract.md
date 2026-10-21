@@ -1,6 +1,8 @@
 # Candidate Augmentation Contracts
 
-## Current Creative Augmentation
+New H-F2 runs use one-pass [candidate sampling](installed-h-f2.md#creativity-and-one-pass-sampling). They do not invoke the native sampler described in the next section. Its contracts remain for historical native records. Contextual control and scope validation below still applies.
+
+## Historical native Creative Augmentation
 
 The `photo-candidate-pack/v10` path exposes `photo-creative-augmentation/v1` only after one request-envelope-bound `photo-authorial-core/v3` and `photo-intent-lock/v2` have established the standalone baseline and locked requester meaning. Every transformed candidate declares affected dimensions and may touch only open dimensions.
 

@@ -41,6 +41,11 @@ def pointer(path: tuple[str, ...]) -> str:
 
 
 def build_view(payload, candidate_ids=None, *, version=VERSION):
+    from photo_validation_context import is_context, validate as validate_context
+    if is_context(payload):
+        validate_context(payload)
+        if candidate_ids:raise ValueError('validation context contains no native candidate inventory')
+        return json.loads(json.dumps(payload))
     if version != VERSION:raise ValueError('unsupported native composer view version')
     pack=source_pack(payload)
     import photo_native_pack

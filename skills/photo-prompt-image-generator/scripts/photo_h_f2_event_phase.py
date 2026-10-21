@@ -114,8 +114,8 @@ def order_phase(rows, text, scope, contracts, tokenize):
     return result, trace
 
 
-def present_material(rows, phase):
-    """At most eight sources; never pad a supported phase request with unknowns.
+def present_material(rows, phase, *, maximum=8):
+    """At most the requested maximum; never pad a supported phase request with unknowns.
 
     `rows` remains the complete scored, CID-deduplicated order. Only the material
     presentation is bounded here. A recognized request with zero positive source
@@ -128,7 +128,8 @@ def present_material(rows, phase):
     excluded = phase.get('rejected_completed_sources', {})
     positive = phase.get('positive', {}) if supported else {}
     available = sum(row['id'] in positive for row in rows) if supported else sum(row['id'] not in excluded for row in rows)
-    limit = min(8, available)
+    if type(maximum) is not int or maximum < 1:raise ValueError("positive material maximum required")
+    limit = min(maximum, available)
     selected = rows[:limit]
     if supported and any(row['id'] not in positive for row in selected):
         raise ValueError('phase-witnessed material is not the positive order prefix')
@@ -136,8 +137,8 @@ def present_material(rows, phase):
         raise ValueError('explicitly rejected completed phase entered material')
     projection = {'schema': 'photo-h-f2-material-projection/v1',
                   'mode': 'post_event_source_witnesses' if supported else 'explicit_phase_exclusion' if excluded else 'ordinary_top8',
-                  'maximum': 8, 'available': available, 'returned': len(selected),
-                  'unfilled': 8 - len(selected),
+                  'maximum': maximum, 'available': available, 'returned': len(selected),
+                  'unfilled': maximum - len(selected),
                   'reason': ('source_witnesses_only' if available else 'no_positive_source_contract') if supported else 'completed_sources_explicitly_excluded' if excluded else 'ordinary_query',
                   'returned_ids': [row['id'] for row in selected],
                   'unknown_phase_padding': not supported, 'pre_search_filter': False,
