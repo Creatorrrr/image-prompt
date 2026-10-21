@@ -1,6 +1,8 @@
 """Managed H-F2 material retrieval, alongside unchanged native composition gates."""
 from pathlib import Path
 import uuid
+import secrets
+import photo_h_f2_sampling as sampling
 import numpy as np
 import photo_candidate_corpus as c
 import photo_canonical_source as canonical
@@ -29,11 +31,14 @@ def cached_queries(generation,query_set,cache,skill=None):
    write(path,{'text':q['text'],'binding':generation.binding,'row':row});out[slot]={'row':row,'cache_hit':False}
  return out
 
-def search_material(generation,query_set,cache,output,*,skill=None):
+def search_material(generation,query_set,cache,output,*,skill=None,creativity=1,sampling_seed=None):
  output=Path(output);output.mkdir(parents=True,exist_ok=True)
  journal=output/'transaction.json'
  rf.require(not journal.exists(),'incomplete or completed retrieval exists; reuse issued evidence, never restart it')
- write(journal,{'state':'started','generation_id':generation.id,'query_set_sha256':c.digest(query_set)})
+ seed = secrets.randbits(128) if sampling_seed is None else sampling_seed
+ settings = sampling.policy(creativity)
+ write(journal,{'state':'started','generation_id':generation.id,'query_set_sha256':c.digest(query_set),
+                'sampling_seed':seed,'sampling_policy':settings})
  encoded=cached_queries(generation,query_set,cache,skill);index=generation.index();goals={};sources={};files={}
  for slot,q in query_set['slots'].items():
   result=index.search(q['text'],encoded[slot]['row'],generation.binding)
@@ -41,14 +46,15 @@ def search_material(generation,query_set,cache,output,*,skill=None):
   positions={d['id']:i for i,d in enumerate(generation.metadata)}
   with p.open('wb') as stream:np.savez_compressed(stream,bm25=np.asarray(result['bm25']),bm25_raw=np.asarray(result['bm25_raw']),cosine=result['cosine'],order=np.asarray([positions[r['id']] for r in result['order']],dtype='<i4'))
   files[p.name]=file_sha(p);rows=[]
-  presented,projection=present_material(result['order'],result['query_scope']['event_phase'],literal=result['query_scope']['literal_text'],focus=result['query_scope']['primary_focus'])
+  window,projection=present_material(result['order'],result['query_scope']['event_phase'],literal=result['query_scope']['literal_text'],focus=result['query_scope']['primary_focus'],maximum=settings['rank_window'])
+  presented,sample_evidence=sampling.sample(window,creativity,seed,slot,q['text_sha256'])
   for r in presented:
    source=generation.body.record(r['cid']);m=generation.metadata[positions[r['id']]]
    rf.require(c.digest(source)==m['source_sha256'],'returned source changed')
    sources[r['cid']]=source;rows.append({**r,'source_sha256':m['source_sha256'],'native_approval':False})
-  goals[slot]={'top8':rows,'material_projection':projection,'lane_calls':result['lane_calls'],'considered_RIDs':result['considered_RIDs'],
+  goals[slot]={'candidates':rows,'sampling':sample_evidence,'material_projection':projection,'lane_calls':result['lane_calls'],'considered_RIDs':result['considered_RIDs'],
    'considered_CIDs':result['considered_CIDs'],'full_order_sha256':c.digest(result['order']),'query_scope':result['query_scope']}
- packet={'schema':'photo-h-f2-material-pack/v1','generation_id':generation.id,'query_set':query_set,'queries':encoded,
+ packet={'schema':'photo-h-f2-material-pack/v2','sampling_seed':seed,'sampling_policy':settings,'generation_id':generation.id,'query_set':query_set,'queries':encoded,
   'goals':goals,'sources':sources,'raw_files':files,'native_approval':False,'semantic_approval':False,
   'authority':'creative reference only; whole-source adoption requires the native selection contract'}
  packet['canonical_sha256']=c.digest(packet);write(output/'material.json',packet)
@@ -82,20 +88,18 @@ def retrieve(args):
   rf.require(snapshot.manifest['search_layout']['corpus_sha256']==read(generation.root/'source-manifest.json')['source_sha256'],'native and H-F2 source differ')
   native_catalog=snapshot.data['slot_catalog']
   if expression.specification(native_catalog)!=material['catalog']:raise WorkflowError('h_f2_catalog_generation_mismatch')
-  # A zero-slot native guard pack carries all existing mandatory audit contracts.
-  # It performs no retrieval; H-F2 is the only material search.
-  empty=expression.create(material['core'],material['controls'],native_catalog,{},plan['overall_intent'])
-  native_pack=g.generate_candidate_pack(snapshot.data,material['core'],material['controls'],value(state,'embodiment_review'),requested_slots=[],expression_plan=empty)
-  native_receipt=provider.receipt(snapshot,native_pack)
+  from photo_validation_context import build as build_validation_context
+  validation_context=build_validation_context(snapshot.data,material['core'],material['controls'],value(state,'embodiment_review'))
+  validation_receipt=provider.receipt(snapshot,validation_context)
   queryset=queries.prepare(material['core'],material['controls'],material['catalog'],plan)
   output=Path(args.run).resolve()/'.staging/h-f2'
-  packet=search_material(generation,queryset,args.query_cache or Path(args.runtime_store)/'h-f2-query-cache',output,skill=getattr(args,'local_embedding_skill',None))
+  packet=search_material(generation,queryset,args.query_cache or Path(args.runtime_store)/'h-f2-query-cache',output,skill=getattr(args,'local_embedding_skill',None),creativity=g.creative_controls.runtime_values(material['controls'])['creativity'])
   from photo_h_f2_receipts import issue
-  receipt=issue(generation,packet,output,native_pack,native_receipt)
-  commit_stage(args.run,state,'pack_bound',{'pack':encode(native_pack),'runtime_receipt':encode(native_receipt),
+  receipt=issue(generation,packet,output,validation_context,validation_receipt)
+  commit_stage(args.run,state,'pack_bound',{'pack':encode(validation_context),'runtime_receipt':encode(validation_receipt),
    'h_f2_material':encode(packet),'h_f2_receipt':encode(receipt)},metadata={
-    'source_binding':{'generation_id':native_id,'source_fingerprint':native_receipt['source_fingerprint'],'runtime_store':str(args.runtime_store.resolve()),'slot_expression_plan_sha256':plan['canonical_sha256']},
-    'h_f2_binding':{'generation_id':generation.id,'store':str(args.runtime_store.resolve()),'raw_directory':str(output)},'retrieval_seed':0})
+    'source_binding':{'generation_id':native_id,'source_fingerprint':validation_receipt['source_fingerprint'],'runtime_store':str(args.runtime_store.resolve()),'slot_expression_plan_sha256':plan['canonical_sha256']},
+    'h_f2_binding':{'generation_id':generation.id,'store':str(args.runtime_store.resolve()),'raw_directory':str(output)},'retrieval_seed':packet['sampling_seed']})
   return {'status':'pass','phase':'pack_bound','policy':queries.RECIPE,
    'searched_slots':sum(scope=='slot' for scope in queryset['query_scopes'].values()),
    'searched_whole_scene_queries':sum(scope!='slot' for scope in queryset['query_scopes'].values()),
@@ -106,9 +110,9 @@ def view(state,candidate_ids=None,page=0):
  packet=verify_bound(state);requested=set(candidate_ids or [])
  rf.require(type(page) is int and page>=0,'nonnegative material page required')
  ordered=[]
- for position in range(8):
+ for position in range(max((len(sampling.candidates(g)) for g in packet['goals'].values()),default=0)):
   for slot in sorted(packet['goals']):
-   rows=packet['goals'][slot]['top8']
+   rows=sampling.candidates(packet['goals'][slot])
    if position<len(rows) and rows[position]['cid'] not in ordered:ordered.append(rows[position]['cid'])
  rf.require(len(requested)<=64,'detail view budget is64 unique sources')
  displayed=set(ordered[page*64:(page+1)*64]) if not requested else requested
@@ -116,7 +120,7 @@ def view(state,candidate_ids=None,page=0):
  goals={}
  for slot,result in packet['goals'].items():
   rows=[]
-  for row in sorted(result['top8'],key=lambda r:r['cid']):
+  for row in sorted(sampling.candidates(result),key=lambda r:r['cid']):
    if row['cid'] not in displayed:continue
    source=packet['sources'][row['cid']]
    rows.append({'candidate_id':row['cid'],'realization_id':row['rid'],'native':canonical.native(source),
@@ -126,5 +130,5 @@ def view(state,candidate_ids=None,page=0):
  from compose_pack_view import build_view
  return {'schema':'photo-h-f2-material-view/v1','material_page':page,'total_unique_materials':len(ordered),'displayed_unique_materials':len(displayed),'additional_search_calls':0,'materials':goals,
   'query_scopes':packet['query_set']['query_scopes'],
-  'material_projections':{slot:goal['material_projection'] for slot,goal in packet['goals'].items()},'native_guard_contract':build_view(value(state,'pack')),
+  'material_projections':{slot:goal['material_projection'] for slot,goal in packet['goals'].items()},('validation_context' if value(state,'pack').get('contract_version')=='photo-validation-context/v1' else 'native_guard_contract'):build_view(value(state,'pack')),
   'authority':'inspiration is separate from complete native adoption','native_approval':False}

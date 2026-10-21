@@ -417,6 +417,18 @@ def pack_bindings(pack: dict) -> dict:
 
 
 def verify_pack_bindings(pack: dict, snapshot: RuntimeSnapshot, generator, *, recompute_visual=False, query_context=None) -> None:
+    from photo_validation_context import is_context, validate as validate_context, build as build_context
+    if is_context(pack):
+        validate_context(pack)
+        if (pack['global_retrieval']['corpus_sha256'] != snapshot.manifest['search_layout']['corpus_sha256']
+                or pack['provenance']['tags_hash'] != generator.dictionary_hash(snapshot.data)):
+            raise FreshnessError('source_invalid', 'validation context source changed')
+        if query_context is not None:
+            raise FreshnessError('source_invalid', 'validation context must not carry native slot queries')
+        if recompute_visual and pack != build_context(snapshot.data, pack['authorial_core'], pack['creative_controls'],
+                                                      pack['embodiment_preflight']['baseline_review']):
+            raise FreshnessError('source_invalid', 'validation context differs from pinned core compilation')
+        return
     photo_native_pack.validate(pack)
     import photo_slot_queries,photo_slot_retrieval
     record=pack['global_retrieval'];mode=record['mode'];data=snapshot.data.for_core(pack['authorial_core'])

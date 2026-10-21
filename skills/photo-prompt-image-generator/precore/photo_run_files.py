@@ -134,8 +134,11 @@ def verify_freeze(state):
                                          creative_control_snapshot=controls)
     if core != value(state, "authorial_core_normalized") or envelope != value(state, "request_envelope_normalized"):
         raise WorkflowError("normalized_binding_mismatch")
+    # Replay the sealed snapshot only after checking every immutable file binding.
+    # Fresh authoring still validates against the current canonical catalog.
     features.validate_selection(value(state, "catalog"), bound_path(state, "catalog").read_bytes(), value(state, "feature_selection"),
-                                value(state, "request_envelope_input"), value(state, "authorial_core_input"), value(state, "embodiment_review"))
+                                value(state, "request_envelope_input"), value(state, "authorial_core_input"), value(state, "embodiment_review"),
+                                historical_catalog=True)
     embodiment.build_policy(core, value(state, "embodiment_review"))
     declared = "camera" in set(core["intent_lock"]["open_dimensions"]) | set(core["intent_lock"]["locked_dimensions"])
     camera.camera_authoring_declaration(core, required=declared)

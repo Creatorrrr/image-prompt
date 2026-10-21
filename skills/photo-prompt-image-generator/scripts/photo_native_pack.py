@@ -10,6 +10,8 @@ class CandidatePack(dict):
     def __init__(self,value,query_context):super().__init__(value);self.query_context=query_context
 
 def role_cards(pack):
+    from photo_validation_context import is_context
+    if is_context(pack):return {}
     if isinstance(pack,WorkingPack):return pack.working_roles
     if pack.get('contract_version')!=CONTRACT:raise ValueError('native v10 pack required')
     result={}
@@ -119,6 +121,8 @@ def finalize(pack,data,selected_ids,query_context):
     return CandidatePack(result,query_context)
 
 def validate(pack):
+    from photo_validation_context import is_context, validate as validate_context
+    if is_context(pack):return validate_context(pack)
     if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v10 pack required')
     if len(pack.get('candidate_pool',{}))>64:raise ValueError('global unique candidate budget exceeded')
     for cid,row in pack['candidate_pool'].items():
@@ -158,6 +162,8 @@ class _ReadPack(_Section):
     def __init__(self,value):dict.__init__(self,value);self._pack=self
 
 def read_view(pack):
+    from photo_validation_context import is_context, validate as validate_context
+    if is_context(pack):return validate_context(pack)
     if isinstance(pack,_ReadPack):return pack
     validate(pack)
     return _ReadPack(pack)

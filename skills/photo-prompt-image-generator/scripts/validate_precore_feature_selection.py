@@ -92,6 +92,7 @@ def main(argv: list[str] | None = None) -> int:
             _read_json(args.request_envelope),
             _read_json(args.authorial_core),
             _read_json(args.embodiment_review),
+            historical_catalog=args.historical_catalog,
         )
     except (OSError, UnicodeError, json.JSONDecodeError, SelectionValidationError) as exc:
         print(f"invalid pre-core feature selection: {exc}", file=sys.stderr)
