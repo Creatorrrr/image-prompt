@@ -34,8 +34,8 @@ new artifact is a validation context with no native candidate inventory or
 creative-guide payload. Image records identify this format as `h-f2-v2`.
 
 
-The maintained weak-slot source contains 18,509 positive candidate records and
-91 diagnostic records. The installed config separately selects the immutable
+The maintained source contains 18,642 positive candidate records and
+163 diagnostic records. The installed config separately selects the immutable
 release and its exact CID/RID population for new managed runs. Source edits alone
 do not switch the installed release. Slot tags never partition or prefilter the
 whole positive search pool.
@@ -45,6 +45,12 @@ adds 141 complete visual options and 21 diagnostic/context records, with 162
 semantic cards, 259 keyword routes and 202 optional role bindings. The scoped
 source/index commit leaves the installed-runtime pointer unchanged; see the
 [validation boundary](biopunk-body-horror-validation-20261021.md).
+
+The [liminal, dreamcore and weirdcore data extension](liminal-dreamcore-visual-semantics.md)
+adds 133 complete bilingual visual options, 72 diagnostic/context records and
+250 optional role bindings across 200 researched term cards and five bounded
+alternatives. These are authored sources with `native_approval: false`.
+The scoped source/index publication preserves the installed-runtime pointer.
 
 After independent core freeze, run `photo_workflow.py prepare-slot-intents
 --run RUN`. Add repeatable `--slot SLOT` only to choose a smaller explicit

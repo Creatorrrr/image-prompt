@@ -1,0 +1,1993 @@
+{
+  "schema": "liminal-research-existing-map/v1",
+  "source_cid_count": 18801,
+  "record_kinds": {
+    "visual_option": 12499,
+    "visual_profile": 3834,
+    "relationship_mechanism": 135,
+    "diagnostic": 126,
+    "visual_bundle": 2204,
+    "relationship_concept": 3
+  },
+  "rows": [
+    {
+      "seed_ids": "3,29",
+      "candidate_id": "cand_b00019aec2f15f75aef8776baa08b5a9",
+      "decision": "refine",
+      "proposed_action_ko": "between_use_transition_place의 5요소 특수 실현을 재사용 검토. 모든 liminal 요청의 필수 정의로 일반화하지 말고 넓은 exact_terms의 실제 활성 경로를 회귀 검사한다.",
+      "module": "photo_candidate_candidates_003.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "ede8892ef33a6fc383a49bfe6e61f510a07a862dab538be6d91e888d07710e07",
+      "full_source_record": {
+        "content": {
+          "activation": {
+            "exact_terms": [
+              "liminal space",
+              "liminal interior",
+              "between-use liminal space",
+              "리미널 스페이스",
+              "리미널 공간",
+              "리미널 실내"
+            ],
+            "exclude_if_any_terms": [
+              "ordinary empty room",
+              "abandoned ruin",
+              "monster hallway",
+              "horror creature",
+              "generic backrooms"
+            ],
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          },
+          "authored_components": {
+            "components": [
+              {
+                "id": "transition_or_collective_use_function",
+                "match_terms": [
+                  "corridor concourse waiting room pool passage or service threshold",
+                  "통로 대합실 수영장 통행부 서비스 문턱의 전이 기능"
+                ]
+              },
+              {
+                "id": "familiar_maintained_service_cues",
+                "match_terms": [
+                  "working lights clean surfaces furniture signs or route markers imply normal use",
+                  "작동 조명 깨끗한 표면 가구 안내 경로 표식이 정상 용도를 암시함"
+                ]
+              },
+              {
+                "id": "expected_occupancy_or_use_gap",
+                "match_terms": [
+                  "the people destination activity or service expected from those cues is absent",
+                  "표식이 예상시키는 인구 목적 활동 서비스가 비어 있음"
+                ]
+              },
+              {
+                "id": "temporal_residue_or_deviation",
+                "match_terms": [
+                  "small traces imply just-before just-after or suspended operation",
+                  "사용 직전 직후 또는 유예된 운영을 암시하는 작은 흔적"
+                ]
+              },
+              {
+                "id": "unresolved_route_or_threshold",
+                "match_terms": [
+                  "depth cues continue toward a route or threshold whose endpoint stays unresolved",
+                  "깊이 단서가 도착 기능이 해소되지 않은 경로 또는 문턱으로 이어짐"
+                ]
+              }
+            ],
+            "contract_version": "photo-authored-visual-components/v2",
+            "discovery": {
+              "minimum_component_groups": 5,
+              "required_group_ids": [
+                "transition_or_collective_use_function",
+                "familiar_maintained_service_cues",
+                "expected_occupancy_or_use_gap",
+                "temporal_residue_or_deviation",
+                "unresolved_route_or_threshold"
+              ]
+            },
+            "obligations": [
+              {
+                "component_ids": [
+                  "transition_or_collective_use_function",
+                  "familiar_maintained_service_cues",
+                  "expected_occupancy_or_use_gap",
+                  "temporal_residue_or_deviation",
+                  "unresolved_route_or_threshold"
+                ],
+                "evidence": [
+                  {
+                    "field": "transition_function_phrase",
+                    "requirement": {
+                      "min_content_words": 9,
+                      "must_mention_any": [
+                        "the corridor concourse or waiting area has a clear transition function"
+                      ]
+                    }
+                  },
+                  {
+                    "field": "maintained_cues_phrase",
+                    "requirement": {
+                      "min_content_words": 9,
+                      "must_mention_any": [
+                        "working lights clean surfaces furniture and route markers imply normal service",
+                        "working lights clean surfaces furniture signs or route markers imply normal use"
+                      ]
+                    }
+                  },
+                  {
+                    "field": "expected_use_gap_phrase",
+                    "requirement": {
+                      "min_content_words": 10,
+                      "must_mention_any": [
+                        "the expected occupants destination activity and active service are conspicuously absent"
+                      ]
+                    }
+                  },
+                  {
+                    "field": "temporal_residue_phrase",
+                    "requirement": {
+                      "min_content_words": 9,
+                      "must_mention_any": [
+                        "small material traces imply operation just before or just after this moment"
+                      ]
+                    }
+                  },
+                  {
+                    "field": "unresolved_route_phrase",
+                    "requirement": {
+                      "min_content_words": 9,
+                      "must_mention_any": [
+                        "repeating depth cues continue toward an unresolved route or destination threshold"
+                      ]
+                    }
+                  }
+                ],
+                "instruction": "Use route depth to connect maintained service cues, the missing expected use, one temporal residue, and an unresolved destination within the same familiar transition place rather than relying on darkness or emptiness alone.",
+                "render_gates": [
+                  {
+                    "description": "The place has a clear passage waiting or service-transition function.",
+                    "id": "vo_imaginal_liminal_transition_function",
+                    "review_scale": "thumbnail"
+                  },
+                  {
+                    "description": "Working maintained cues make the expected ordinary use concrete.",
+                    "id": "vo_imaginal_liminal_maintained_cues",
+                    "review_scale": "native"
+                  },
+                  {
+                    "description": "Expected occupancy activity or destination use is visibly missing.",
+                    "id": "vo_imaginal_liminal_use_gap",
+                    "review_scale": "both"
+                  },
+                  {
+                    "description": "Material traces suggest suspended just-before or just-after operation.",
+                    "id": "vo_imaginal_liminal_temporal_residue",
+                    "review_scale": "native"
+                  },
+                  {
+                    "description": "Route depth remains readable while its functional endpoint stays unresolved.",
+                    "id": "vo_imaginal_liminal_unresolved_route",
+                    "review_scale": "both"
+                  }
+                ]
+              }
+            ]
+          },
+          "category": "between_use_transition_place",
+          "composition_instruction": "Use route depth to connect maintained service cues, the missing expected use, one temporal residue, and an unresolved destination within the same familiar transition place rather than relying on darkness or emptiness alone.",
+          "concept_candidate": {
+            "concept_terms": [
+              "between-use transition space",
+              "maintained vacancy",
+              "familiar route cues",
+              "expected occupancy gap",
+              "suspended operating time",
+              "unresolved destination depth",
+              "uncanny structural deviation"
+            ]
+          },
+          "evidence_requirements": {
+            "expected_use_gap_phrase": {
+              "min_content_words": 10,
+              "must_mention_any": [
+                "the expected occupants destination activity and active service are conspicuously absent"
+              ]
+            },
+            "maintained_cues_phrase": {
+              "min_content_words": 9,
+              "must_mention_any": [
+                "working lights clean surfaces furniture and route markers imply normal service",
+                "working lights clean surfaces furniture signs or route markers imply normal use"
+              ]
+            },
+            "temporal_residue_phrase": {
+              "min_content_words": 9,
+              "must_mention_any": [
+                "small material traces imply operation just before or just after this moment"
+              ]
+            },
+            "transition_function_phrase": {
+              "min_content_words": 9,
+              "must_mention_any": [
+                "the corridor concourse or waiting area has a clear transition function"
+              ]
+            },
+            "unresolved_route_phrase": {
+              "min_content_words": 9,
+              "must_mention_any": [
+                "repeating depth cues continue toward an unresolved route or destination threshold"
+              ]
+            }
+          },
+          "reject_substitutes": [
+            "empty_room_only",
+            "abandoned_ruin",
+            "darkness_only",
+            "monster_or_horror_event",
+            "yellow_corridor_style",
+            "busy_active_service_space"
+          ],
+          "render_gates": [
+            {
+              "description": "The place has a clear passage waiting or service-transition function.",
+              "id": "vo_imaginal_liminal_transition_function",
+              "review_scale": "thumbnail"
+            },
+            {
+              "description": "Working maintained cues make the expected ordinary use concrete.",
+              "id": "vo_imaginal_liminal_maintained_cues",
+              "review_scale": "native"
+            },
+            {
+              "description": "Expected occupancy activity or destination use is visibly missing.",
+              "id": "vo_imaginal_liminal_use_gap",
+              "review_scale": "both"
+            },
+            {
+              "description": "Material traces suggest suspended just-before or just-after operation.",
+              "id": "vo_imaginal_liminal_temporal_residue",
+              "review_scale": "native"
+            },
+            {
+              "description": "Route depth remains readable while its functional endpoint stays unresolved.",
+              "id": "vo_imaginal_liminal_unresolved_route",
+              "review_scale": "both"
+            }
+          ],
+          "required_evidence_fields": [
+            "transition_function_phrase",
+            "maintained_cues_phrase",
+            "expected_use_gap_phrase",
+            "temporal_residue_phrase",
+            "unresolved_route_phrase"
+          ],
+          "runtime_expression": {
+            "default_mode": "label_plus_definition",
+            "forbidden_prompt_terms": [],
+            "prompt_label_terms": [
+              "between-use liminal transition space"
+            ],
+            "runtime_forbidden_labels": []
+          },
+          "semantics": {
+            "component_semantics": {
+              "groups": [
+                {
+                  "any_terms": [
+                    "corridor concourse waiting room pool passage or service threshold",
+                    "통로 대합실 수영장 통행부 서비스 문턱의 전이 기능"
+                  ],
+                  "id": "transition_or_collective_use_function"
+                },
+                {
+                  "any_terms": [
+                    "working lights clean surfaces furniture signs or route markers imply normal use",
+                    "작동 조명 깨끗한 표면 가구 안내 경로 표식이 정상 용도를 암시함"
+                  ],
+                  "id": "familiar_maintained_service_cues"
+                },
+                {
+                  "any_terms": [
+                    "the people destination activity or service expected from those cues is absent",
+                    "표식이 예상시키는 인구 목적 활동 서비스가 비어 있음"
+                  ],
+                  "id": "expected_occupancy_or_use_gap"
+                },
+                {
+                  "any_terms": [
+                    "small traces imply just-before just-after or suspended operation",
+                    "사용 직전 직후 또는 유예된 운영을 암시하는 작은 흔적"
+                  ],
+                  "id": "temporal_residue_or_deviation"
+                },
+                {
+                  "any_terms": [
+                    "depth cues continue toward a route or threshold whose endpoint stays unresolved",
+                    "깊이 단서가 도착 기능이 해소되지 않은 경로 또는 문턱으로 이어짐"
+                  ],
+                  "id": "unresolved_route_or_threshold"
+                }
+              ],
+              "minimum_component_groups": 5,
+              "required_group_ids": [
+                "transition_or_collective_use_function",
+                "familiar_maintained_service_cues",
+                "expected_occupancy_or_use_gap",
+                "temporal_residue_or_deviation",
+                "unresolved_route_or_threshold"
+              ]
+            },
+            "contrast_examples": [
+              "an ordinary empty bedroom",
+              "an abandoned collapsed ruin",
+              "a dark hallway with a monster",
+              "a yellow corridor without use cues",
+              "an infinite abstract room",
+              "a busy transit station"
+            ],
+            "definition": "A maintained familiar place suspended between expected passage and destination use: route or service cues remain, yet occupancy, active function, and temporal context are conspicuously missing or slightly displaced. Emptiness, darkness, decay, yellow corridors, or horror imagery alone do not establish liminality.",
+            "paraphrase_examples": [
+              "운영 조명과 대기 의자는 켜져 있지만 도착편과 승객이 없는 환승 대합실",
+              "a maintained pool passage still carries route and changing-area cues after every expected use has paused",
+              "repeating doors and ceiling bays lead toward an unresolved destination in a clean between-use concourse"
+            ]
+          }
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_b00019aec2f15f75aef8776baa08b5a9",
+        "provenance": [
+          {
+            "sha256": "702a0e74c9f055042a085c15bc10f6a7977d0ee40beebd4acad1105358470364",
+            "source": "visual_profile:liminal_transition_use_gap"
+          }
+        ],
+        "record_kind": "visual_profile",
+        "conditions": {}
+      },
+      "full_bindings": []
+    },
+    {
+      "seed_ids": "3,41",
+      "candidate_id": "cand_4c945ed15a335bf291682587a10a4115",
+      "decision": "reuse",
+      "proposed_action_ko": "유지관리된 전이 공간의 기존 location 재료. 접수·대기 흔적은 별도 선택 관계로 더한다.",
+      "module": "photo_candidate_candidates_000.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "24457fb0227c5420dd7445cde3c83dfad5de26b1a268e56ec4996eed89dd7783",
+      "full_source_record": {
+        "content": {
+          "aliases": [
+            "between-use liminal interior",
+            "용도 사이 리미널 실내"
+          ],
+          "embedding_text": "location: a lit clean corridor concourse waiting room pool passage or service threshold retains route and use cues but lacks the expected occupants destination activity and temporal context",
+          "en": "a maintained transit interior suspended between passage and destination use",
+          "keywords": [
+            "corridor",
+            "waiting area",
+            "route cues",
+            "maintained vacancy"
+          ],
+          "ko": "통로 기능은 있으나 도착과 사용이 비어 있는 유지관리된 실내",
+          "tags": [
+            "imaginal",
+            "liminal_space",
+            "location",
+            "transition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_4c945ed15a335bf291682587a10a4115",
+        "provenance": [
+          {
+            "sha256": "53ae5aeb7c0e9d81a19b98c840daf1509f3e50f516c30d7c004e2e6aa2a13986",
+            "source": "slot:location:between_use_transit_interior"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_4c945ed15a335bf291682587a10a4115",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_4c945ed15a335bf291682587a10a4115",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.42,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "41,42",
+      "candidate_id": "cand_7ba4ad80dfa05172922735d056488c01",
+      "decision": "reuse",
+      "proposed_action_ko": "문·조명의 반복과 한 베이의 일탈을 보존. 단순 복도 또는 무한 루프로 축약하지 않는다.",
+      "module": "photo_candidate_candidates_001.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "d8be76ef235cd055e3c043c00a6c267bb4ffe4ea8f29091e5110fe6a21d2eeea",
+      "full_source_record": {
+        "content": {
+          "aliases": [
+            "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline"
+          ],
+          "concept_terms": [
+            "긴 복도",
+            "a long corridor repeats door bays and lights",
+            "one far bay differs visibly from the repeated baseline"
+          ],
+          "concept_units": [
+            "a long corridor repeats door bays and lights",
+            "one far bay differs visibly from the repeated baseline"
+          ],
+          "contextual_usage": {
+            "contexts": [
+              {
+                "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+                "claim_limits": [
+                  "This is a project-authored observable interpretation, not a mandatory genre definition or a universal cultural appearance.",
+                  "A still image does not establish sound, elapsed time, supernatural causation, biography, mental state, consent, chemical identity or cultural authenticity.",
+                  "Approximate discovery is optional. Selecting this realization requires every comparison owner and component, and cannot override frozen requester meaning.",
+                  "Reject visual substitutions: distance alone proves infinite loop; every hotel hallway liminal"
+                ],
+                "definition": "반복되는 문 조명 간격을 유지해 하나의 변화가 보이게 한다.",
+                "id": "hr_corridor_repeating_bay_observable_scope",
+                "observable_interpretation": "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline"
+              }
+            ]
+          },
+          "core_assertion_discovery": true,
+          "embedding_text": "긴 복도의 관찰 가능한 관계 ; 반복되는 문 조명 간격을 유지해 하나의 변화가 보이게 한다. ; a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline",
+          "en": "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline",
+          "keywords": [
+            "긴 복도",
+            "a long corridor repeats door bays and lights",
+            "one far bay differs visibly from the repeated baseline"
+          ],
+          "ko": "긴 복도의 관찰 가능한 관계",
+          "paraphrases": [
+            "반복되는 문 조명 간격을 유지해 하나의 변화가 보이게 한다.",
+            "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline"
+          ],
+          "relations": [
+            {
+              "id": "relation_01",
+              "object": "one far bay differs visibly from the repeated baseline",
+              "subject": "a long corridor repeats door bays and lights",
+              "type": "jointly_visible_in_same_event"
+            }
+          ],
+          "tags": [
+            "observable_relation"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "property": "spatial_structure",
+              "target": "*"
+            },
+            {
+              "dimension": "setting",
+              "property": "objects",
+              "target": "*"
+            }
+          ]
+        },
+        "id": "cand_7ba4ad80dfa05172922735d056488c01",
+        "provenance": [
+          {
+            "sha256": "ba759766c01dce5009be7cfcca3441813d31831845a4005da9e3fa0bbc141e62",
+            "source": "slot:location:hr_corridor_repeating_bay"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_7ba4ad80dfa05172922735d056488c01",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_7ba4ad80dfa05172922735d056488c01",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.35,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "41,42",
+      "candidate_id": "cand_dbe7699c0a375462a797ea4801469d26",
+      "decision": "reuse",
+      "proposed_action_ko": "완전한 복도 비교 명제를 가진 프로파일. 새 프로파일을 복제하기 전 같은 계약의 재사용 가능성을 확인한다.",
+      "module": "photo_candidate_candidates_004.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "cc23d90765ef3f0688464c87a0628b2b83ba17a723758530da7eaa5b24c1e42b",
+      "full_source_record": {
+        "content": {
+          "activation": {
+            "exact_terms": [
+              "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline."
+            ],
+            "hard_activation": {
+              "contract_version": "photo-visual-hard-activation/v1",
+              "required_any_groups": [
+                {
+                  "any_terms": [
+                    "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline."
+                  ],
+                  "id": "complete_owned_proposition"
+                }
+              ]
+            },
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          },
+          "authored_components": {
+            "components": [
+              {
+                "id": "component_01",
+                "match_terms": [
+                  "a long corridor repeats door bays and lights"
+                ]
+              },
+              {
+                "id": "component_02",
+                "match_terms": [
+                  "one far bay differs visibly from the repeated baseline"
+                ]
+              }
+            ],
+            "contract_version": "photo-authored-visual-components/v2",
+            "discovery": {
+              "minimum_component_groups": 2,
+              "required_group_ids": [
+                "component_01",
+                "component_02"
+              ]
+            },
+            "obligations": [
+              {
+                "component_ids": [
+                  "component_01",
+                  "component_02"
+                ],
+                "evidence": [
+                  {
+                    "field": "component_01_phrase",
+                    "requirement": {
+                      "min_content_words": 2,
+                      "must_mention_any": [
+                        "a long corridor repeats door bays and lights"
+                      ]
+                    }
+                  },
+                  {
+                    "field": "component_02_phrase",
+                    "requirement": {
+                      "min_content_words": 2,
+                      "must_mention_any": [
+                        "one far bay differs visibly from the repeated baseline"
+                      ]
+                    }
+                  }
+                ],
+                "instruction": "Retain all selected comparison owners and connected components together in one readable photograph: a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline.",
+                "render_gates": [
+                  {
+                    "description": "Inspect the original image for this component on its stated owner: a long corridor repeats door bays and lights. Hidden owners, incomplete comparison or a substitute fail this gate.",
+                    "id": "vo_hvr_corridor_repeating_bay_01",
+                    "review_scale": "native"
+                  },
+                  {
+                    "description": "Inspect the original image for this component on its stated owner: one far bay differs visibly from the repeated baseline. Hidden owners, incomplete comparison or a substitute fail this gate.",
+                    "id": "vo_hvr_corridor_repeating_bay_02",
+                    "review_scale": "native"
+                  }
+                ]
+              }
+            ]
+          },
+          "category": "observable_horror_relation",
+          "composition_instruction": "Retain all selected comparison owners and connected components together in one readable photograph: a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline.",
+          "concept_candidate": {
+            "affected_dimensions": [
+              "setting"
+            ],
+            "affected_properties": [
+              {
+                "dimension": "setting",
+                "property": "spatial_structure",
+                "target": "*"
+              },
+              {
+                "dimension": "setting",
+                "property": "objects",
+                "target": "*"
+              }
+            ],
+            "concept_terms": [
+              "긴 복도",
+              "a long corridor repeats door bays and lights",
+              "one far bay differs visibly from the repeated baseline"
+            ],
+            "core_assertion_discovery": true
+          },
+          "evidence_requirements": {
+            "component_01_phrase": {
+              "min_content_words": 2,
+              "must_mention_any": [
+                "a long corridor repeats door bays and lights"
+              ]
+            },
+            "component_02_phrase": {
+              "min_content_words": 2,
+              "must_mention_any": [
+                "one far bay differs visibly from the repeated baseline"
+              ]
+            }
+          },
+          "reject_substitutes": [
+            "distance alone proves infinite loop",
+            "every hotel hallway liminal"
+          ],
+          "render_gates": [
+            {
+              "description": "Inspect the original image for this component on its stated owner: a long corridor repeats door bays and lights. Hidden owners, incomplete comparison or a substitute fail this gate.",
+              "id": "vo_hvr_corridor_repeating_bay_01",
+              "review_scale": "native"
+            },
+            {
+              "description": "Inspect the original image for this component on its stated owner: one far bay differs visibly from the repeated baseline. Hidden owners, incomplete comparison or a substitute fail this gate.",
+              "id": "vo_hvr_corridor_repeating_bay_02",
+              "review_scale": "native"
+            }
+          ],
+          "required_evidence_fields": [
+            "component_01_phrase",
+            "component_02_phrase"
+          ],
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "forbidden_prompt_terms": [],
+            "prompt_label_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "semantics": {
+            "claim_limits": [
+              "This is a project-authored observable interpretation, not a mandatory genre definition or a universal cultural appearance.",
+              "A still image does not establish sound, elapsed time, supernatural causation, biography, mental state, consent, chemical identity or cultural authenticity.",
+              "Approximate discovery is optional. Selecting this realization requires every comparison owner and component, and cannot override frozen requester meaning."
+            ],
+            "component_semantics": {
+              "groups": [
+                {
+                  "any_terms": [
+                    "a long corridor repeats door bays and lights"
+                  ],
+                  "id": "component_01"
+                },
+                {
+                  "any_terms": [
+                    "one far bay differs visibly from the repeated baseline"
+                  ],
+                  "id": "component_02"
+                }
+              ],
+              "minimum_component_groups": 2,
+              "required_group_ids": [
+                "component_01",
+                "component_02"
+              ]
+            },
+            "contrast_examples": [
+              "distance alone proves infinite loop",
+              "every hotel hallway liminal"
+            ],
+            "definition": "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline",
+            "interpretation_scope": {
+              "description": "A concrete optional realization of the named research topic; all physical owners must remain readable.",
+              "kind": "project_visual_interpretation"
+            },
+            "paraphrase_examples": [
+              "긴 복도의 관찰 가능한 관계",
+              "반복되는 문 조명 간격을 유지해 하나의 변화가 보이게 한다.",
+              "a long corridor repeats door bays and lights; one far bay differs visibly from the repeated baseline"
+            ],
+            "visual_components": [
+              "a long corridor repeats door bays and lights",
+              "one far bay differs visibly from the repeated baseline"
+            ]
+          }
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_dbe7699c0a375462a797ea4801469d26",
+        "provenance": [
+          {
+            "sha256": "ae2172137637bdf8ef29cd580c2bce6b48b8699f7fbca08f193266f3d6e9fd23",
+            "source": "visual_profile:hvr_profile_corridor_repeating_bay"
+          }
+        ],
+        "record_kind": "visual_profile",
+        "conditions": {}
+      },
+      "full_bindings": []
+    },
+    {
+      "seed_ids": "42",
+      "candidate_id": "cand_33864d528e0356538aa859dc89fe8e79",
+      "decision": "refine",
+      "proposed_action_ko": "고요한 호텔 복도라는 기존 표현을 유지하고 객실 번호 반복은 별도 명시 선택으로 추가한다.",
+      "module": "photo_candidate_candidates_009.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "c5c06b8de51ca8dab80149c28eb9b1317c4ba78ffb5c38a5a4a3a2cbc549ba4b",
+      "full_source_record": {
+        "content": {
+          "aliases": [
+            "hotel",
+            "corridor",
+            "liminal"
+          ],
+          "embedding_text": "in a quiet liminal hotel corridor",
+          "en": "in a quiet liminal hotel corridor",
+          "keywords": [
+            "interior",
+            "hotel",
+            "liminal"
+          ],
+          "ko": "고요하고 리미널한 호텔 복도에서",
+          "tags": [
+            "interior",
+            "hotel",
+            "liminal"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_33864d528e0356538aa859dc89fe8e79",
+        "provenance": [
+          {
+            "sha256": "0e3bc82b83745745766bc8ad88e5df9f2eb47eadeee5b7c6f445529064685a1d",
+            "source": "slot:location:hotel_corridor_liminal"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_33864d528e0356538aa859dc89fe8e79",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_33864d528e0356538aa859dc89fe8e79",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.75,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "50",
+      "candidate_id": "cand_389c93a4cfd65eed8da6e9a34841f698",
+      "decision": "refine",
+      "proposed_action_ko": "empty liminal mall의 장소 라벨은 재사용 가능. 셔터·작동 간판·유지관리 상태의 소유 관계가 부족한지 검토한다.",
+      "module": "photo_candidate_candidates_010.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "7f54294dfa2ffcba63e8bbebc20a9c9764bee053c093cf760f3069095bbd91b0",
+      "full_source_record": {
+        "content": {
+          "embedding_text": "an empty liminal mall",
+          "en": "an empty liminal mall",
+          "ko": "텅 빈 리미널 쇼핑몰",
+          "tags": [
+            "location",
+            "liminal"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_389c93a4cfd65eed8da6e9a34841f698",
+        "provenance": [
+          {
+            "sha256": "97fe28d90311ae905a854d225a698de832e4bbb48118fd70cd39dcff25d9206c",
+            "source": "slot:location:liminal_empty_mall"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_389c93a4cfd65eed8da6e9a34841f698",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_389c93a4cfd65eed8da6e9a34841f698",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.55,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "58",
+      "candidate_id": "cand_3fcbad4793095196924a064c29ed78ad",
+      "decision": "reuse",
+      "proposed_action_ko": "서비스 복도의 public/staff 경계를 보존. 기존 권한 조건을 제거하지 않는다.",
+      "module": "photo_candidate_candidates_011.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "206576b93482e048fb2b6048b7c76a4596ebaff50d8fcc7147a7510fddaa89b9",
+      "full_source_record": {
+        "content": {
+          "en": "a restricted service corridor between public and staff areas",
+          "ko": "출입 제한 서비스 복도의 중간 지대",
+          "phrase_en": "in a restricted service corridor between public and staff areas",
+          "phrase_ko": "출입 제한 서비스 복도의 중간 지대에서",
+          "tags": [
+            "human",
+            "threshold",
+            "work",
+            "liminal"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_3fcbad4793095196924a064c29ed78ad",
+        "provenance": [
+          {
+            "sha256": "4e4430e68c5c0d92c32919dda17ec06e4485ed2bf5f251d289e01db8e7c35ecf",
+            "source": "slot:location:service_corridor_interim"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_3fcbad4793095196924a064c29ed78ad",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_3fcbad4793095196924a064c29ed78ad",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.8,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "46",
+      "candidate_id": "cand_14e5623a09fa5b0ea1843b9f7fa70510",
+      "decision": "context",
+      "proposed_action_ko": "막차 이후라는 시간 한정은 보존. 일반 공항·모든 대기실에 그 시간 설정을 확산하지 않는다.",
+      "module": "photo_candidate_candidates_011.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "7dd8eb75c1008449507098bdfcd0a15ab44879d8b4f71be14b6a9902ce96c010",
+      "full_source_record": {
+        "content": {
+          "en": "a transit terminal waiting area after the last train",
+          "ko": "막차가 지난 환승 터미널 대기석",
+          "phrase_en": "in a transit terminal waiting area after the last train",
+          "phrase_ko": "막차가 지난 환승 터미널 대기석에서",
+          "tags": [
+            "human",
+            "transit",
+            "liminal",
+            "melancholy"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_14e5623a09fa5b0ea1843b9f7fa70510",
+        "provenance": [
+          {
+            "sha256": "11331dcb13c2cf0fe22408aff04c72e00812d838fb8eca6ace8cbaaba71ca959",
+            "source": "slot:location:terminal_waiting_after_last_train"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_14e5623a09fa5b0ea1843b9f7fa70510",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_14e5623a09fa5b0ea1843b9f7fa70510",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.76,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "48",
+      "candidate_id": "cand_bc853e311fcb5dd8950b3f2dacbd421c",
+      "decision": "reuse",
+      "proposed_action_ko": "주차장 장소 원자 재사용. 숫자 모순·루프는 자동 추가하지 않는다.",
+      "module": "photo_candidate_candidates_012.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "bc5e9141ff3ca71310eb85a5947a0256fce811cab28ff9dbf4b818d2af049912",
+      "full_source_record": {
+        "content": {
+          "en": "an underground parking garage",
+          "ko": "지하 주차장",
+          "phrase_en": "inside an underground parking garage",
+          "phrase_ko": "지하 주차장에서",
+          "tags": [
+            "urban",
+            "vehicle",
+            "liminal"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_bc853e311fcb5dd8950b3f2dacbd421c",
+        "provenance": [
+          {
+            "sha256": "2690a14eb9af75fd1a77807b7bd104c74282d53225b332777334cf164a096a7e",
+            "source": "slot:location:underground_parking_lot"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_bc853e311fcb5dd8950b3f2dacbd421c",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_bc853e311fcb5dd8950b3f2dacbd421c",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.7,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "61,70",
+      "candidate_id": "cand_436fb37ab8325a9eb12dab3ab0a5dac5",
+      "decision": "context",
+      "proposed_action_ko": "closed swimming pool은 장소·운영 문맥. 물 빠짐·침수·여러 방 연결과 동일하지 않아 새 관계가 필요하다.",
+      "module": "photo_candidate_candidates_012.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "060d04cb9223b53ab0505dce47c388750890e1fac8d91b35b7ed1a8015d4afe5",
+      "full_source_record": {
+        "content": {
+          "aliases": [
+            "closed swimming pool",
+            "liminal pool"
+          ],
+          "embedding_text": "closed swimming pool liminal interior, tiled echoes, empty waterline, quiet uncanny space",
+          "en": "in a closed swimming pool liminal interior",
+          "keywords": [
+            "closed swimming pool",
+            "empty pool",
+            "liminal architecture"
+          ],
+          "ko": "문 닫은 수영장의 리미널 공간",
+          "tags": [
+            "interior",
+            "liminal",
+            "pool",
+            "empty"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_436fb37ab8325a9eb12dab3ab0a5dac5",
+        "provenance": [
+          {
+            "sha256": "08df42583fc27b3be62731d44afcda5516d363708c1cc85aa19347a6b1345441",
+            "source": "slot:location:closed_swimming_pool_liminal"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_436fb37ab8325a9eb12dab3ab0a5dac5",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_436fb37ab8325a9eb12dab3ab0a5dac5",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.62,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "73,84",
+      "candidate_id": "cand_6562d80069c45d2e8350653c4850f8b1",
+      "decision": "refine",
+      "proposed_action_ko": "꽃밭의 장소 표현 재사용. 사람 대비 크기·뿌리 접지·부유 지형은 별도 대안이다.",
+      "module": "photo_candidate_candidates_002.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "d745eecddcabf753a054bc6da96af81f104740126b0c76411e712169a180a821",
+      "full_source_record": {
+        "content": {
+          "en": "an overgrown dreamcore flower field",
+          "ko": "키 큰 꽃이 가득한 드림코어 꽃밭",
+          "phrase_en": "inside an overgrown dreamcore flower field",
+          "phrase_ko": "키 큰 꽃이 가득한 드림코어 꽃밭에서",
+          "tags": [
+            "flower",
+            "nature",
+            "dreamy",
+            "outdoor"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_6562d80069c45d2e8350653c4850f8b1",
+        "provenance": [
+          {
+            "sha256": "ce1bd9b1df5fb65611233101f6a0993e00105da7c82a3048d03b68c36481fde2",
+            "source": "slot:location:overgrown_flower_field"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_6562d80069c45d2e8350653c4850f8b1",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_6562d80069c45d2e8350653c4850f8b1",
+          "role": "optional",
+          "slot_id": "location",
+          "weight": 0.5,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "18,40",
+      "candidate_id": "cand_e6e583da4ba25b829da31eca22f80002",
+      "decision": "context",
+      "proposed_action_ko": "dreamcore floral mood는 해석 재료로 남기고 꽃밭이나 공포를 하드 의무화하지 않는다.",
+      "module": "photo_candidate_candidates_007.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "97c04a7eea976e02723dd6e45f7012a0775628d2bdc60d220043ccb039f0f9ea",
+      "full_source_record": {
+        "content": {
+          "en": "dreamcore floral mood",
+          "ko": "현실과 꿈 사이의 꽃밭 무드",
+          "tags": [
+            "flower",
+            "dreamy"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "atmosphere"
+          ],
+          "properties": []
+        },
+        "id": "cand_e6e583da4ba25b829da31eca22f80002",
+        "provenance": [
+          {
+            "sha256": "c617e5eacd294df055c4c70cc6bc5dc1ffe22bf6861b67a9cc8495aa9267b332",
+            "source": "slot:mood:dreamcore_floral"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_e6e583da4ba25b829da31eca22f80002",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_e6e583da4ba25b829da31eca22f80002",
+          "role": "optional",
+          "slot_id": "mood",
+          "weight": 0.4,
+          "semantic_role": "contextual"
+        }
+      ]
+    },
+    {
+      "seed_ids": "85,86",
+      "candidate_id": "cand_2e98a153e36f57cca7a9733d296aed72",
+      "decision": "refine",
+      "proposed_action_ko": "non-Euclidean과 folding을 혼용한 발견 텍스트를 수학·허구 맥락으로 분리 검토. 기존 사례를 먼저 회귀한다.",
+      "module": "photo_candidate_candidates_006.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "c888dd1acd268c7c9c6dd22b64dbb992952f912205cd7668410342a1d91ac07d",
+      "full_source_record": {
+        "content": {
+          "embedding_text": "non-Euclidean space folding through a practical object, blueprint, mirror, doorway or room corner with photographic perspective cues",
+          "en": "non-Euclidean space folding through a practical object or doorway",
+          "keywords": [
+            "space folding",
+            "non-Euclidean",
+            "geometry"
+          ],
+          "ko": "공간이 접히는 사건",
+          "tags": [
+            "surreal",
+            "magic",
+            "space",
+            "geometry"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "concept"
+          ],
+          "properties": []
+        },
+        "id": "cand_2e98a153e36f57cca7a9733d296aed72",
+        "provenance": [
+          {
+            "sha256": "126003eacee819fea0ca6304774a5d784416c29da49384258389ce9119f3d075",
+            "source": "slot:surreal_concept:spatial_folding"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_2e98a153e36f57cca7a9733d296aed72",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_2e98a153e36f57cca7a9733d296aed72",
+          "role": "optional",
+          "slot_id": "surreal_concept",
+          "weight": 0.74,
+          "semantic_role": "contextual"
+        }
+      ]
+    },
+    {
+      "seed_ids": "85,88",
+      "candidate_id": "cand_1a7a2cd1b6875505ba73c523bc9142c2",
+      "decision": "reuse",
+      "proposed_action_ko": "네 계단과 네 접속점이 보이는 전역 모순 실현. 가림·긴 계단만으로 대체하지 않는다.",
+      "module": "photo_candidate_cosmic_horror_20261021.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "9cb38c2ab7e5ffa0d6163a8e59eb803a337d72d90ed29f13f272717694eca736",
+      "full_source_record": {
+        "conditions": {},
+        "content": {
+          "aliases": [
+            "four rising stair flights close around one quadrilateral with all connecting landings exposed",
+            "올라가는 계단 네 구간이 연결 참을 모두 보이며 사각형으로 닫힌다"
+          ],
+          "application_contract": "Use only this complete compatible realization when it fits the independently frozen scene. Preserve every stated owner and connection; alternative cards do not become simultaneous requirements. Hidden required endpoints are unobservable, not passed. Confusion boundaries: ordinary spiral staircase; one hidden landing; camera roll. Claim limit: 그림으로 표현한 전역 모순이며 실제 건축 가능성·쌍곡기하와 동일시하지 않음",
+          "definition": "One optional visual realization of Impossible architecture, Endless staircase, Escheresque space has these distinct owners and visible components: flights: four stair flights forming a closed quadrilateral; corners: all four connecting landings exposed; steps: visible risers ascending in one traced direction around the loop. The directed visible relations are corners connects flights; steps continues around flights.",
+          "en": "One optional visual realization of Impossible architecture, Endless staircase, Escheresque space has these distinct owners and visible components: flights: four stair flights forming a closed quadrilateral; corners: all four connecting landings exposed; steps: visible risers ascending in one traced direction around the loop. The directed visible relations are corners connects flights; steps continues around flights.",
+          "ko": "네 접속점이 보이는 계단 루프의 선택형 가시 실현. 불가능한 건축 — Impossible architecture / 무한 계단 ◇ — Endless staircase / 에셔풍 공간 — Escheresque space. 그림으로 표현한 전역 모순이며 실제 건축 가능성·쌍곡기하와 동일시하지 않음",
+          "research_semantics": {
+            "activation": "post_core_optional_material; genre_label_does_not_activate_all_components",
+            "card_id": "C162",
+            "claim_limit": "그림으로 표현한 전역 모순이며 실제 건축 가능성·쌍곡기하와 동일시하지 않음",
+            "components": [
+              {
+                "owner": "flights",
+                "visible_description_en": "four stair flights forming a closed quadrilateral"
+              },
+              {
+                "owner": "corners",
+                "visible_description_en": "all four connecting landings exposed"
+              },
+              {
+                "owner": "steps",
+                "visible_description_en": "visible risers ascending in one traced direction around the loop"
+              }
+            ],
+            "confusion_boundaries": [
+              "ordinary spiral staircase",
+              "one hidden landing",
+              "camera roll"
+            ],
+            "evidence_mode": "still",
+            "relations": [
+              {
+                "id": "r1",
+                "object": "flights",
+                "predicate": "connects",
+                "subject": "corners"
+              },
+              {
+                "id": "r2",
+                "object": "flights",
+                "predicate": "continues_around",
+                "subject": "steps"
+              }
+            ],
+            "render_gates": [
+              {
+                "description": "four stair flights forming a closed quadrilateral",
+                "owner": "flights",
+                "unobservable": "UNOBSERVABLE_NOT_PASS"
+              },
+              {
+                "description": "all four connecting landings exposed",
+                "owner": "corners",
+                "unobservable": "UNOBSERVABLE_NOT_PASS"
+              },
+              {
+                "description": "visible risers ascending in one traced direction around the loop",
+                "owner": "steps",
+                "unobservable": "UNOBSERVABLE_NOT_PASS"
+              }
+            ],
+            "schema": "photo-cosmic-visual-semantics/v1",
+            "seed_terms": [
+              "불가능한 건축 — Impossible architecture",
+              "무한 계단 ◇ — Endless staircase",
+              "에셔풍 공간 — Escheresque space"
+            ],
+            "source_refs": [
+              {
+                "current_review": "focused_body_or_definition_read",
+                "id": "S22",
+                "locator": "course opening on parallel postulate and models",
+                "title": "Euclidean and Non-Euclidean Geometry course",
+                "url": "https://www.math.brown.edu/bhassett/teaching/366spring03/366advert.html"
+              },
+              {
+                "current_review": "partial_body_then_followup_timeout",
+                "id": "S23",
+                "locator": "artist explanation cited by museum",
+                "title": "Escher Relativity Part II",
+                "url": "https://escherinhetpaleis.nl/en/escher-today/relativity-part-ii"
+              },
+              {
+                "current_review": "focused_body_or_definition_read",
+                "id": "S42",
+                "locator": "Perspective paragraphs",
+                "title": "Perspective",
+                "url": "https://www.nationalgallery.org.uk/paintings/glossary/perspective"
+              },
+              {
+                "current_review": "focused_body_or_definition_read",
+                "id": "S45",
+                "locator": "opening paragraphs 65-68",
+                "title": "From science-fiction to Gravity",
+                "url": "https://escherinhetpaleis.nl/en/about-escher/escher-today/gravity"
+              }
+            ],
+            "source_review": "definition/passage and proposed realization reviewed; no native whole-source qualification",
+            "title_ko": "네 접속점이 보이는 계단 루프",
+            "whole_case_policy": "partial_is_fail"
+          }
+        },
+        "effects": {
+          "dimensions": [
+            "setting",
+            "composition"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "property": "setting.cosmic_realization",
+              "target": "flights"
+            },
+            {
+              "dimension": "setting",
+              "property": "setting.cosmic_realization",
+              "target": "corners"
+            },
+            {
+              "dimension": "setting",
+              "property": "setting.cosmic_realization",
+              "target": "steps"
+            },
+            {
+              "dimension": "composition",
+              "property": "composition.cosmic_realization",
+              "target": "flights"
+            },
+            {
+              "dimension": "composition",
+              "property": "composition.cosmic_realization",
+              "target": "corners"
+            },
+            {
+              "dimension": "composition",
+              "property": "composition.cosmic_realization",
+              "target": "steps"
+            }
+          ]
+        },
+        "id": "cand_1a7a2cd1b6875505ba73c523bc9142c2",
+        "provenance": [
+          {
+            "sha256": "e14141b162ce3ce2ca6714041ef25480fd500327fdc7eff78e610365355e99f3",
+            "source": "https://www.math.brown.edu/bhassett/teaching/366spring03/366advert.html"
+          },
+          {
+            "sha256": "e14141b162ce3ce2ca6714041ef25480fd500327fdc7eff78e610365355e99f3",
+            "source": "https://escherinhetpaleis.nl/en/escher-today/relativity-part-ii"
+          },
+          {
+            "sha256": "e14141b162ce3ce2ca6714041ef25480fd500327fdc7eff78e610365355e99f3",
+            "source": "https://www.nationalgallery.org.uk/paintings/glossary/perspective"
+          },
+          {
+            "sha256": "e14141b162ce3ce2ca6714041ef25480fd500327fdc7eff78e610365355e99f3",
+            "source": "https://escherinhetpaleis.nl/en/about-escher/escher-today/gravity"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "full_bindings": [
+        {
+          "id": "bind_b919cdeb451c574ab33c3fbd8710f4e1",
+          "candidate_id": "cand_1a7a2cd1b6875505ba73c523bc9142c2",
+          "slot_id": "surreal_physics_detail",
+          "role": "optional",
+          "semantic_role": "direct",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "weight": 2
+        },
+        {
+          "id": "bind_e6e53c52e4105dc491e888ef50cbf469",
+          "candidate_id": "cand_1a7a2cd1b6875505ba73c523bc9142c2",
+          "slot_id": "space_condition",
+          "role": "optional",
+          "semantic_role": "direct",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "seed_ids": "2",
+      "candidate_id": "cand_ec659685da315541b20e96bf904391b9",
+      "decision": "reuse",
+      "proposed_action_ko": "경계 공간 접속성의 기존 owner 관계를 읽고 새 문틀 관계와 중복 여부를 비교한다.",
+      "module": "photo_candidate_cosmic_horror_20261021.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "5093c1f8b872e1954218a801b58de8bc97b7ac421ad6afae23168b1d55bbefd5",
+      "full_source_record": {
+        "conditions": {},
+        "content": {
+          "application_contract": "Use only this complete compatible realization when it fits the independently frozen scene. Preserve every stated owner and connection; alternative cards do not become simultaneous requirements. Hidden required endpoints are unobservable, not passed. Confusion boundaries: empty room automatically liminal; generic backrooms wallpaper. Claim limit: 인류학적 전이·초자연 경계는 문맥; 출입 접속만 가시적",
+          "definition": "One optional visual realization of Liminal space has these distinct owners and visible components: threshold: a doorway between two readable zones; zone_a: an interior with distinct fixtures; zone_b: another environment beyond threshold. The directed visible relations are threshold connects zone_a; threshold connects zone_b.",
+          "en": "One optional visual realization of Liminal space has these distinct owners and visible components: threshold: a doorway between two readable zones; zone_a: an interior with distinct fixtures; zone_b: another environment beyond threshold. The directed visible relations are threshold connects zone_a; threshold connects zone_b.",
+          "ko": "경계 공간의 접속성의 선택형 가시 실현. 경계 공간 — Liminal space. 인류학적 전이·초자연 경계는 문맥; 출입 접속만 가시적",
+          "research_semantics": {
+            "activation": "post_core_optional_material; genre_label_does_not_activate_all_components",
+            "card_id": "C080",
+            "claim_limit": "인류학적 전이·초자연 경계는 문맥; 출입 접속만 가시적",
+            "components": [
+              {
+                "owner": "threshold",
+                "visible_description_en": "a doorway between two readable zones"
+              },
+              {
+                "owner": "zone_a",
+                "visible_description_en": "an interior with distinct fixtures"
+              },
+              {
+                "owner": "zone_b",
+                "visible_description_en": "another environment beyond threshold"
+              }
+            ],
+            "confusion_boundaries": [
+              "empty room automatically liminal",
+              "generic backrooms wallpaper"
+            ],
+            "evidence_mode": "still",
+            "relations": [
+              {
+                "id": "r1",
+                "object": "zone_a",
+                "predicate": "connects",
+                "subject": "threshold"
+              },
+              {
+                "id": "r2",
+                "object": "zone_b",
+                "predicate": "connects",
+                "subject": "threshold"
+              }
+            ],
+            "render_gates": [
+              {
+                "description": "a doorway between two readable zones",
+                "owner": "threshold",
+                "unobservable": "UNOBSERVABLE_NOT_PASS"
+              },
+              {
+                "description": "an interior with distinct fixtures",
+                "owner": "zone_a",
+                "unobservable": "UNOBSERVABLE_NOT_PASS"
+              },
+              {
+                "description": "another environment beyond threshold",
+                "owner": "zone_b",
+                "unobservable": "UNOBSERVABLE_NOT_PASS"
+              }
+            ],
+            "schema": "photo-cosmic-visual-semantics/v1",
+            "seed_terms": [
+              "경계 공간 — Liminal space"
+            ],
+            "source_refs": [
+              {
+                "current_review": "focused_body_or_definition_read",
+                "id": "S01",
+                "locator": "Introduction paragraphs on atmosphere and laws",
+                "title": "Supernatural Horror in Literature",
+                "url": "https://www.hplovecraft.com/writings/texts/essays/shil.aspx"
+              }
+            ],
+            "source_review": "definition/passage and proposed realization reviewed; no native whole-source qualification",
+            "title_ko": "경계 공간의 접속성",
+            "whole_case_policy": "partial_is_fail"
+          }
+        },
+        "effects": {
+          "dimensions": [
+            "setting",
+            "composition"
+          ],
+          "properties": [
+            {
+              "dimension": "setting",
+              "property": "setting.cosmic_realization",
+              "target": "threshold"
+            },
+            {
+              "dimension": "setting",
+              "property": "setting.cosmic_realization",
+              "target": "zone_a"
+            },
+            {
+              "dimension": "setting",
+              "property": "setting.cosmic_realization",
+              "target": "zone_b"
+            },
+            {
+              "dimension": "composition",
+              "property": "composition.cosmic_realization",
+              "target": "threshold"
+            },
+            {
+              "dimension": "composition",
+              "property": "composition.cosmic_realization",
+              "target": "zone_a"
+            },
+            {
+              "dimension": "composition",
+              "property": "composition.cosmic_realization",
+              "target": "zone_b"
+            }
+          ]
+        },
+        "id": "cand_ec659685da315541b20e96bf904391b9",
+        "provenance": [
+          {
+            "sha256": "1360a5f8608a65e58ecbf5c478a2f5c313b893048aa95a826b9e79bab22ac1bd",
+            "source": "https://www.hplovecraft.com/writings/texts/essays/shil.aspx"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "full_bindings": [
+        {
+          "id": "bind_bbb2531689e259369d7f42719a64d431",
+          "candidate_id": "cand_ec659685da315541b20e96bf904391b9",
+          "slot_id": "location",
+          "role": "optional",
+          "semantic_role": "direct",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "weight": 2
+        },
+        {
+          "id": "bind_a810751be4c8518fbff2918cf64b0593",
+          "candidate_id": "cand_ec659685da315541b20e96bf904391b9",
+          "slot_id": "reality_anchor",
+          "role": "optional",
+          "semantic_role": "direct",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "seed_ids": "3,5",
+      "candidate_id": "cand_1979085102ca5279ad5571d6e47980ba",
+      "decision": "context",
+      "proposed_action_ko": "world 슬롯의 분위기 라벨이다. 구체 형상·가시 증거로 승격하지 않는다.",
+      "module": "photo_candidate_candidates_014.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "0f02ee66fab23f8bf0b193759136cff46d9e453a4bf1eba447bef149039f0a79",
+      "full_source_record": {
+        "content": {
+          "en": "liminal-space uncanniness",
+          "ko": "리미널 스페이스의 낯선 공허함",
+          "tags": [
+            "urban",
+            "interior"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "setting"
+          ],
+          "properties": []
+        },
+        "id": "cand_1979085102ca5279ad5571d6e47980ba",
+        "provenance": [
+          {
+            "sha256": "dccc895b9ea68a388965cc62941d443faa885a03a8c91ff27113b73b933a93c4",
+            "source": "slot:world:liminal_space"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_1979085102ca5279ad5571d6e47980ba",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1979085102ca5279ad5571d6e47980ba",
+          "role": "optional",
+          "slot_id": "world",
+          "weight": 0.8,
+          "semantic_role": "contextual"
+        }
+      ]
+    },
+    {
+      "seed_ids": "3,6",
+      "candidate_id": "cand_62693223f6f355899d0c04a27828d806",
+      "decision": "context",
+      "proposed_action_ko": "liminal fear의 정서 라벨. warm Dreamcore 요청에 강제하지 않는다.",
+      "module": "photo_candidate_candidates_013.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "d0ee242f0bd344557848488d64bb65e05221f0a41999ddbfa6f4130c39aa0158",
+      "full_source_record": {
+        "content": {
+          "aliases": [
+            "liminal",
+            "fear"
+          ],
+          "embedding_text": "liminal fear in empty transitional space, uncanny architectural tension",
+          "en": "liminal fear",
+          "facets": {
+            "mood_family": [
+              "tense"
+            ],
+            "safety_tier": [
+              "general"
+            ]
+          },
+          "keywords": [
+            "horror",
+            "liminal",
+            "empty",
+            "uncanny"
+          ],
+          "ko": "텅 빈 리미널 공간의 불안",
+          "tags": [
+            "horror",
+            "liminal",
+            "uncanny",
+            "tense"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "atmosphere"
+          ],
+          "properties": []
+        },
+        "id": "cand_62693223f6f355899d0c04a27828d806",
+        "provenance": [
+          {
+            "sha256": "f751c623553ee9910be6878c5ce88a8393a238c19a58e0a4b584ee40c5662304",
+            "source": "slot:mood:liminal_fear"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_62693223f6f355899d0c04a27828d806",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_62693223f6f355899d0c04a27828d806",
+          "role": "optional",
+          "slot_id": "mood",
+          "weight": 0.78,
+          "semantic_role": "contextual"
+        }
+      ]
+    },
+    {
+      "seed_ids": "67",
+      "candidate_id": "cand_f21367db10715cdd84b0a3a393b8ca34",
+      "decision": "refine",
+      "proposed_action_ko": "기존 light_shape의 caustic 원자. 수면·광원·수광면 연결을 보강할지 별도 검토한다.",
+      "module": "photo_candidate_candidates_001.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "9afb650d82c4503659131229ad659950433adf92f85018ee6c7232438268d9a7",
+      "full_source_record": {
+        "content": {
+          "aliases": [
+            "pool",
+            "caustic",
+            "reflections"
+          ],
+          "embedding_text": "rippling pool-caustic light shapes",
+          "en": "rippling pool-caustic light shapes",
+          "keywords": [
+            "water",
+            "caustic",
+            "reflection"
+          ],
+          "ko": "물결치는 수영장 코스틱 빛무늬",
+          "tags": [
+            "water",
+            "caustic",
+            "reflection"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_f21367db10715cdd84b0a3a393b8ca34",
+        "provenance": [
+          {
+            "sha256": "877e4b37127a72767ebe33bdb4b17ff905071c03f1b03ae4ed47c0eedfdefb89",
+            "source": "slot:light_shape:pool_caustic_reflections"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_f21367db10715cdd84b0a3a393b8ca34",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_f21367db10715cdd84b0a3a393b8ca34",
+          "role": "optional",
+          "slot_id": "light_shape",
+          "weight": 0.7,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "67",
+      "candidate_id": "cand_c2cd7f2fad9651098e31443656750771",
+      "decision": "context",
+      "proposed_action_ko": "underwater caustic 표현은 수중 위치 조건을 보존. 수면 위 벽에 자동 재사용하지 않는다.",
+      "module": "photo_candidate_candidates_002.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "081c1a1248a9446414d884c052ee1b80e4f771de452c8dc769def25e7ae39207",
+      "full_source_record": {
+        "content": {
+          "en": "shimmering underwater caustic light",
+          "ko": "수면 아래 흔들리는 카우스틱 빛",
+          "tags": [
+            "nature"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "lighting"
+          ],
+          "properties": []
+        },
+        "id": "cand_c2cd7f2fad9651098e31443656750771",
+        "provenance": [
+          {
+            "sha256": "f0c4ab1d2bd920005656748d17bb7ae0de45cc971a378334312aef5c2a66d1c1",
+            "source": "slot:lighting:underwater_caustics"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_c2cd7f2fad9651098e31443656750771",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_c2cd7f2fad9651098e31443656750771",
+          "role": "optional",
+          "slot_id": "lighting",
+          "weight": 0.6,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "154",
+      "candidate_id": "cand_4f124e8239dd502e94a19820834c1cf6",
+      "decision": "reuse",
+      "proposed_action_ko": "fine film grain 원자 재사용. 실제 필름 이력을 추가하지 않는다.",
+      "module": "photo_candidate_candidates_007.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "5582e1da8f11450f3f5072e137817eada08787caecee0888edd413230b76ddd6",
+      "full_source_record": {
+        "content": {
+          "en": "fine film grain",
+          "ko": "미세한 필름 그레인",
+          "tags": [
+            "film"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": [
+            {
+              "dimension": "style",
+              "property": "rendering.grain",
+              "target": "image_plane"
+            }
+          ]
+        },
+        "id": "cand_4f124e8239dd502e94a19820834c1cf6",
+        "provenance": [
+          {
+            "sha256": "37aed17620d5d16b7ae78b2acc78783ec159b1dcd99c8cc08887c74180490094",
+            "source": "slot:texture:fine_grain"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_4f124e8239dd502e94a19820834c1cf6",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_4f124e8239dd502e94a19820834c1cf6",
+          "role": "optional",
+          "slot_id": "grain_profile",
+          "weight": 1.4,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "154",
+      "candidate_id": "cand_53be091b4f7b536c945fc6c37f0d9d50",
+      "decision": "context",
+      "proposed_action_ko": "instant-film이라는 매체와 기존 domain deny를 보존. 일반 grain으로 평탄화하지 않는다.",
+      "module": "photo_candidate_candidates_003.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "e34eb0ac91722885f6c8f5770f1d4bd667c015195c84b46f508b7d52e44d45c5",
+      "full_source_record": {
+        "content": {
+          "embedding_text": "creamy instant-film grain",
+          "en": "creamy instant-film grain",
+          "ko": "즉석필름의 크림빛 입자",
+          "tags": [
+            "photo",
+            "grain",
+            "instant_film",
+            "soft"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "style"
+          ],
+          "properties": []
+        },
+        "id": "cand_53be091b4f7b536c945fc6c37f0d9d50",
+        "provenance": [
+          {
+            "sha256": "5d219ba953a4c4997be378fbe4863307ac5db92aa15f2b20a8d2ec22068fda03",
+            "source": "slot:grain_profile:instant_film_cream_grain"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_53be091b4f7b536c945fc6c37f0d9d50",
+          "conditions": {
+            "subject_applicability": {
+              "deny_domains": [
+                "product",
+                "jewelry",
+                "food"
+              ]
+            }
+          },
+          "id": "bind_53be091b4f7b536c945fc6c37f0d9d50",
+          "role": "optional",
+          "slot_id": "grain_profile",
+          "weight": 0.45,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "153",
+      "candidate_id": "cand_1df197b9a46c54989fdb7ee185ff463e",
+      "decision": "refine",
+      "proposed_action_ko": "천장 구석 CCTV 프레임 재사용 검토. composition과 apparatus_pov의 역할 검토는 따로 필요하다.",
+      "module": "photo_candidate_candidates_001.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "50a7104ee4b969476f23233be7161cf7feaa9a628b0590ba9a17e7e3e71b6c2c",
+      "full_source_record": {
+        "content": {
+          "en": "ceiling-corner CCTV framing",
+          "ko": "천장 구석 CCTV 프레임",
+          "tags": [
+            "surveillance",
+            "fixed"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_1df197b9a46c54989fdb7ee185ff463e",
+        "provenance": [
+          {
+            "sha256": "3376d90040c7c5d6660e1613cddd7db1d0e547d56f007cdc4bb9a93f52ae6bc0",
+            "source": "slot:composition:cctv_corner_frame"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_1df197b9a46c54989fdb7ee185ff463e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_1df197b9a46c54989fdb7ee185ff463e",
+          "role": "optional",
+          "slot_id": "composition",
+          "weight": 0.4,
+          "semantic_role": "direct"
+        }
+      ]
+    },
+    {
+      "seed_ids": "153",
+      "candidate_id": "cand_50f83414da1759119ef338dbfe897f51",
+      "decision": "context",
+      "proposed_action_ko": "낮은 구석 시점이며 높은 CCTV 대안과 합치지 않는다.",
+      "module": "photo_candidate_candidates_002.json",
+      "review_status": "integration_triage_not_native_qualification",
+      "source_sha256": "8f31ab3757a4a3dc707104eb8e2c1d3623b9204e07b9485ff09da705d7b93540",
+      "full_source_record": {
+        "content": {
+          "embedding_text": "low corner CCTV view",
+          "en": "low corner CCTV view",
+          "ko": "낮은 구석 CCTV 시점",
+          "tags": [
+            "portrait",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_50f83414da1759119ef338dbfe897f51",
+        "provenance": [
+          {
+            "sha256": "2a25e9ef8b35fae5d235f23a91d693ddf5db2bfe63dfda298dfe709ed6c649e0",
+            "source": "slot:composition:cctv_low_corner_view"
+          }
+        ],
+        "record_kind": "visual_option",
+        "conditions": {}
+      },
+      "full_bindings": [
+        {
+          "candidate_id": "cand_50f83414da1759119ef338dbfe897f51",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_50f83414da1759119ef338dbfe897f51",
+          "role": "optional",
+          "slot_id": "composition",
+          "weight": 0.62,
+          "semantic_role": "direct"
+        }
+      ]
+    }
+  ]
+}
