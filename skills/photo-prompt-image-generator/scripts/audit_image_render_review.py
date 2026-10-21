@@ -23,6 +23,18 @@ VALID_GATE_STATUSES = {"pass", "fail"}
 VALID_REVIEW_SCALES = {"thumbnail", "native"}
 
 
+def observability_failure(item, check):
+    """Check declared coverage, while preserving historical v1 review records."""
+    if "observability" not in item:
+        return None
+    observed = item["observability"]
+    if not isinstance(observed, str) or observed not in {"visible", "partial", "unobservable"}:
+        return {"check": check + ".observability", "reason": "complete direct observation must be authored as visible, partial, or unobservable"}
+    if item.get("status") == "pass" and observed != "visible":
+        return {"check": check + ".observability", "reason": "partial or unobservable required components cannot pass the complete gate"}
+    return None
+
+
 def load_json_arg(raw: str) -> Any:
     raw = raw.strip()
     if raw.startswith("{") or raw.startswith("["):
@@ -197,7 +209,7 @@ def audit_image_render_review(
         rows = []
     actual_gates: dict[str, dict[str, Any]] = {}
     for index, row in enumerate(rows):
-        if not isinstance(row, dict) or set(row) != {
+        if not isinstance(row, dict) or set(row) - {"observability"} != {
             "gate_id",
             "status",
             "reviewed_scales",
@@ -206,7 +218,7 @@ def audit_image_render_review(
             failures.append(
                 {
                     "check": f"gates[{index}]",
-                    "reason": "each gate must contain exactly gate_id, status, reviewed_scales, and evidence",
+                    "reason": "each gate requires gate_id, status, reviewed_scales, and evidence; only observability is optional",
                 }
             )
             continue
@@ -219,6 +231,9 @@ def audit_image_render_review(
                 }
             )
             continue
+        observation_error = observability_failure(row, f"gates[{index}]")
+        if observation_error:
+            failures.append(observation_error)
         actual_gates[gate_id] = row
         if row.get("status") not in VALID_GATE_STATUSES:
             failures.append(

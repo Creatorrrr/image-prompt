@@ -110,6 +110,10 @@ def validate_native_record(path, expected_sha, entry):
     if any(result[k]["status"] != "pass" or result[k]["failures"] for k in ("composed_audit", "runtime_audit")):
         raise WorkflowError("native_record_audit_failed")
     pack, composed, request = (one(value(state, role)) for role in ("pack", "composed", "render_request"))
+    from record_image_run import candidate_pack_version
+    version = candidate_pack_version(pack)
+    if entry.get("candidate_pack_version") not in (None, version):
+        raise WorkflowError("native_record_pack_version_mismatch")
     expected_payload = {"prompt": request["runtime_prompt_en"], "transparent_background": request.get("transparent_background", False)}
     if request.get("referenced_image_paths"): expected_payload["referenced_image_paths"] = request["referenced_image_paths"]
     if request.get("num_last_images_to_include") or plan["payload"] != expected_payload:
@@ -119,7 +123,7 @@ def validate_native_record(path, expected_sha, entry):
         "chosen_candidate_ids": composed["chosen_candidate_ids"], "chosen_visual_concept_ids": composed["chosen_visual_concept_ids"]}
     if any(entry.get(k) != v for k, v in expected.items()):
         raise WorkflowError("native_record_input_mismatch")
-    return {"native_render_plan_json": str(Path(path).resolve()), "native_render_plan_sha256": expected_sha,
+    return {"candidate_pack_version": version, "native_render_plan_json": str(Path(path).resolve()), "native_render_plan_sha256": expected_sha,
             "runtime_prompt_sha256": digest(plan["payload"]["prompt"].encode("utf-8"))}
 
 

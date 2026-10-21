@@ -109,6 +109,20 @@ def retrieve(args):
     return {"status": "pass", "phase": "pack_bound"}
 
 
+def bind_disabled_appeal_axes(pack, composed):
+    """Stamp omitted disabled metadata, never positive evidence or a decision."""
+    contract = pack.get("adult_appeal") or {}
+    brief = composed.get("adult_appeal_brief")
+    if not contract.get("enabled") or not isinstance(brief, dict):
+        return
+    axes = brief.get("axes")
+    if not isinstance(axes, dict):
+        return
+    for name, source in (contract.get("axes") or {}).items():
+        if isinstance(source, dict) and type(source.get("intensity")) is int and source["intensity"] == 0 and name not in axes:
+            axes[name] = {"intensity": 0}
+
+
 def compose_audit(args):
     with locked_state(args.run) as state:
         ensure(state)
@@ -116,6 +130,7 @@ def compose_audit(args):
             raise WorkflowError("composition_revision_requires_new_run")
         pack = one(value(state, "pack"))
         composed = one(read_json(args.composed))
+        bind_disabled_appeal_axes(pack, composed)
         if 'composed' in state['artifacts']:
             previous=one(value(state,'composed'))
             if previous.get('owner_selections')!=composed.get('owner_selections'):
@@ -385,7 +400,7 @@ def native_started(args):
     return {"status": "pass", "payload": plan["payload"], "operation_id": op["operation_id"]}
 
 
-def native_manifest_flags(args):
+def native_manifest_flags(args, *, pack_version=None):
     """Forward declared arm provenance through the ordinary recorder contract."""
     manifest = getattr(args, "manifest", None)
     fields = ("arm_id", "worktree_id", "skill_sha256", "source_ref")
@@ -398,7 +413,7 @@ def native_manifest_flags(args):
     if not all(supplied) or not independent:
         raise WorkflowError("native_manifest_provenance_required")
     from record_image_run import CURRENT_CANDIDATE_PACK_VERSION
-    flags = ["--manifest", str(manifest), "--candidate-pack-version", CURRENT_CANDIDATE_PACK_VERSION,
+    flags = ["--manifest", str(manifest), "--candidate-pack-version", pack_version or CURRENT_CANDIDATE_PACK_VERSION,
              "--independent-no-cross-arm-inputs"]
     for field, value_ in zip(fields, supplied):
         flags += ["--" + field.replace("_", "-"), str(value_)]
@@ -407,7 +422,9 @@ def native_manifest_flags(args):
 
 def native_result(args):
     state = load_state(args.run); ensure(state)
-    manifest_flags = native_manifest_flags(args)
+    from record_image_run import candidate_pack_version
+    version = candidate_pack_version(one(value(state, "pack")))
+    manifest_flags = native_manifest_flags(args, pack_version=version)
     plan = value(state, "native_plan")
     op = next(op for op in state["operations"] if op["operation_id"] == plan["operation_id"])
     if op["status"] not in {"invocation_started", "execution_unknown", "record_ready", "recorder_failed"}:
@@ -432,7 +449,7 @@ def native_result(args):
         "--chosen-visual-concept-ids-json", json.dumps(composed["chosen_visual_concept_ids"]), "--composer", "agent", "--audit-status", "pass",
         "--ledger", str(args.ledger), "--native-render-plan-json", str(bound_path(state, "native_plan")),
         "--native-render-plan-sha256", state["artifacts"]["native_plan"]["sha256"]]
-    flags += manifest_flags
+    flags += manifest_flags or ["--candidate-pack-version", version]
     for gate_id in getattr(args, "failed_repair_gate_id", []):
         flags += ["--failed-repair-gate-id", gate_id]
     if pack.get("render_repair"):
@@ -544,6 +561,8 @@ def main(argv=None):
             p.add_argument("--manifest", type=Path)
             p.add_argument("--image-call-count", type=int, default=1)
             p.add_argument("--failed-repair-gate-id", action="append", default=[])
+        if command == "review-shape":
+            p.add_argument("--baseline-available", choices=("yes", "no"), required=True)
         if command in {"review-shape", "review-audit"}:
             p.add_argument("--image", type=Path); p.add_argument("--generic-review", type=Path); p.add_argument("--visual-review", type=Path)
         if command == "retry-prepare":

@@ -134,3 +134,20 @@ Report the image tool used and whether a repo-local copy was created.
 ## Managed execution
 
 After core freeze, [photo-workflow.md](photo-workflow.md) describes the managed `--run` path. It reuses the same P0 API adapter and fresh audits. Record already-existing authorization with `authorize`; the record is not independent permission. `render-api --dry-run` needs no authorization or key. Native execution uses an audited plan, a durable start marker, the tool-environment bridge, and the actual observed result. No concrete native file means `preview_only`, without a paid fallback or a fabricated ledger image. An uncertain invocation stops automatic reexecution.
+
+## Recording contract and maintenance check
+
+New native/API records derive `candidate_pack_version` from the exact audited
+serialized pack (`photo-candidate-pack/v10`); a conflicting caller label is
+rejected. Independent ledger and manifest versions must match. Historical v9
+rows remain historical evidence and are not rewritten when a new release is
+installed. Old bound runs keep their sealed implementation; use a new run for
+the corrected writer.
+
+Managed review templates require explicit baseline availability. Pending
+requester judgment uses `pending` and `not_yet_received`, with comparison
+`not_applicable` when no baseline exists. Never use null as a substitute enum
+or infer requester acceptance. Author gate `observability` after direct image
+inspection. `partial` or `unobservable` with `pass` is rejected; record `fail`
+with the missing components in evidence. New managed submissions require this field; standalone auditors still accept
+historical rows without it. This validates declared coverage, not the truth of a pixel observation.

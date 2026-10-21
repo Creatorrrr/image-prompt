@@ -28,6 +28,14 @@ VALID_CANDIDATE_PACK_VERSIONS = {CURRENT_CANDIDATE_PACK_VERSION}
 MODERN_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v2"
 
 
+def candidate_pack_version(pack: dict) -> str:
+    """Derive a new record's version from its actual serialized pack contract."""
+    expected = "photo-candidate-pack/" + CURRENT_CANDIDATE_PACK_VERSION
+    if not isinstance(pack, dict) or pack.get("contract_version") != expected:
+        raise ValueError("recording requires actual " + expected)
+    return CURRENT_CANDIDATE_PACK_VERSION
+
+
 def stable_text_id(text: str | None, length: int = 16) -> str | None:
     if text is None:
         return None
