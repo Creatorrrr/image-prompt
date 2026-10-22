@@ -1,0 +1,24 @@
+{
+  "original_run": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/lovecraftian-retest-archive-20261022-6dddcbfd",
+  "diagnostic": {
+    "status": "presearch_input_false_positive",
+    "actual_image_call_count": 0,
+    "search_transactions": 0,
+    "generation_id": "57e526a860aaaf3fa865e279e93dc873a1288f01cc89bed4dfbecb8ecf2df88f",
+    "exception": "ValueError: typed human subject conflicts with the requester no-people constraint",
+    "stack": [
+      "photo_h_f2_workflow.retrieve -> photo_validation_context.build",
+      "prompt_generator.prepare_candidate_source:8474 -> frozen_core_context:8260"
+    ],
+    "trigger": "establishes no personal identity",
+    "regex_false_positive": "no person matches the prefix of no personal identity because regex lacks a terminal word boundary",
+    "actual_controls_no_people": false,
+    "requester_exclusions": [],
+    "repair": "New run preserves request, baseline, anchors, assertions, controls, source-free concept and the two authored query texts; interpreted_intent wording changes to leaves personal identity unestablished. No candidate was issued or seen.",
+    "superseding_run": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/lovecraftian-retest-archive-20261022-a53714ff"
+  },
+  "original_controls_seed": 2719683830272559135,
+  "baseline_unchanged": true,
+  "source_free_concepts_unchanged": true,
+  "query_texts_unchanged": true
+}

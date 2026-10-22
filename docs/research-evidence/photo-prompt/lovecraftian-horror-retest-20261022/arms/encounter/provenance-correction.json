@@ -1,0 +1,31 @@
+{
+  "schema": "photo-recorder-provenance-correction/v1",
+  "status": "corrected_metadata_only",
+  "original": {
+    "ledger": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/lovecraftian-retest-encounter-20261022-ad803291-v2/ledger.ndjson",
+    "ledger_sha256": "32ccf70a5a64df984f4eee2a1a10648e1bf798efce8f1c431d1ab87c853d3bad",
+    "manifest": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/lovecraftian-retest-encounter-20261022-ad803291-v2/run_manifest.json",
+    "manifest_sha256": "e5d99f760e317a6532ab623d187fbbb908e2b3b77cf8affe553a95f7ad429fe6",
+    "classification": "superseded_for_provenance; invalid skill_sha256 field only",
+    "skill_sha256": "3aef35e3a9196077307753a4630c7f69457dbeed5df278f06f930086708967d5"
+  },
+  "authoritative": {
+    "ledger": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/lovecraftian-retest-encounter-20261022-ad803291-v2/ledger-corrected.ndjson",
+    "ledger_sha256": "8fc6194af1f4cacab3e217e10144ded5110b5c3c2a9cda8a1684ef03c4439a1c",
+    "manifest": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/lovecraftian-retest-encounter-20261022-ad803291-v2/run_manifest.corrected.json",
+    "manifest_sha256": "c7d6cf911ffd40e687887a03081345a494d19ce7fd2b7b79e934b3cbb48caf59",
+    "run_id": "6bf5501fe06255d3",
+    "skill_sha256": "f1b6e6356e76ad22abcdcbdf4ca0aa6543a65f50ed2692f57c45f24b6286a089"
+  },
+  "identity": {
+    "native_operation_attempt": "8d8109bb117a4cf592bc32ab27b79359:1",
+    "same_operation": true,
+    "same_run_id": true,
+    "same_prompt_id": true,
+    "same_image_path": true,
+    "actual_image_tool_invocations": 1,
+    "record_copies": 2,
+    "semantic_rule": "These are two provenance records for the same actual native invocation; do not sum their cumulative image_call_count fields."
+  },
+  "reason": "The initial recorder command supplied an incorrect skill SHA argument. The correction replays only the official recorder for the same saved image and plan with the actual SKILL bytes hash; it invokes no image tool. Original bytes are preserved."
+}

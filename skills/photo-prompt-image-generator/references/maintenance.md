@@ -1,5 +1,13 @@
 # Shared candidate and lazy search maintenance
 
+The [Lovecraftian horror extension](lovecraftian-horror-semantics.md) retains
+57 complete bilingual visual alternatives, 27 diagnostic/context records and
+185 advisory keyword routes. It distinguishes original objects and later
+variants, separate media and comparison endpoints, material/body structures,
+and nonvisual identity, consent, time and sensory claims. Six existing cosmic
+propositions receive bilingual/endpoint clarification; native qualification,
+retrieval exposure and saved-pixel compliance remain separately established.
+
 The [genre-fusion extension](genre-fusion-visual-semantics.md) documents 84
 complete optional visual realizations and 12 nonvisual context records for
 Dying Earth / New Weird / Cozy Fantasy / Cosmic Horror. Its owner graphs and

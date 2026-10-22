@@ -1,0 +1,58 @@
+{
+  "reviewer": "root",
+  "arm": "science",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/lovecraftian-retest-science-20261022-c66e9276/images/render-1.png",
+  "image_sha256": "1f4acf04fbaf77f980294db90f5fde83c7c50552e492fad4c62b3e1d0c5ec525",
+  "image_size": [
+    1269,
+    1240
+  ],
+  "inspection": "Actual full native saved image viewed before agent pixel scores or final prompt. Root knew concept and data design; not blinded.",
+  "first_pixel_impression": "A woman with dark bob leans toward a transparent workbench vessel containing wet porous tissue curling into a dark receding cavity. A foreground steel lattice supports the tissue. The carrier rim is visible at the top, right and bottom, while its left boundary exits the frame. The chamber reads as a substantial tank beside the woman.",
+  "prompt_trace_checks": [
+    {
+      "cid": "cand_4ec4e7ea3cca5a9c8621926dca43fb61",
+      "literal_present_in_final": true,
+      "literal_absent_from_baseline": true,
+      "baseline_quotes_present": true
+    },
+    {
+      "cid": "cand_97990b7bb11e5a04bb81ee6d75fa3983",
+      "literal_present_in_final": true,
+      "literal_absent_from_baseline": true,
+      "baseline_quotes_present": true
+    }
+  ],
+  "pixel_gates": [
+    {
+      "id": "reference_appearance",
+      "status": "pass",
+      "evidence": "Dark chin-length bob, separated fringe, soft oval face and large brown eyes are qualitatively consistent with the supplied portrait; this is not identity verification."
+    },
+    {
+      "id": "S4.receding_structure_and_separate_carrier",
+      "status": "pass",
+      "evidence": "The porous folded tissue recedes into a dark interior inside the transparent carrier; tissue edge and right carrier rim are visually distinct."
+    },
+    {
+      "id": "S4.complete_adopted_boundary_obligation",
+      "status": "partial",
+      "evidence": "The final prompt explicitly requires the whole quartz outer rim in view. The left carrier boundary is cropped, so the complete finite boundary cannot be inspected together."
+    },
+    {
+      "id": "I04.support_and_gap",
+      "status": "pass",
+      "evidence": "The same wet tissue rests across the inner square steel lattice; a clear strip along the right inner wall separates tissue edge from the carrier wall."
+    },
+    {
+      "id": "complete_scene_depth_scale_witness",
+      "status": "partial",
+      "evidence": "Receding folds are strong, but the finite small cell perimeter is not fully visible. The picture permits an ordinary large-tank reading, so an impossible small-container depth contradiction is not fully demonstrated."
+    }
+  ],
+  "new_source_prompt_contribution": "verified_literal_transport",
+  "new_relation_pixel_result": "partial_not_whole_case_pass",
+  "whole_case": "fail_under_partial_is_fail",
+  "user_judgment": "pending",
+  "causal_image_quality_gain": "not_measured"
+}
