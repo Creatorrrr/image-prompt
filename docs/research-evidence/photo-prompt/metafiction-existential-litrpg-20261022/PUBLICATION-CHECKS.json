@@ -1,0 +1,105 @@
+{
+  "schema": "metafiction-scoped-publication-checks/v1",
+  "stage": "scope_validated_before_upstream_pull",
+  "base_commit": "242e73c008885280fdabe28cf8889187d82f51f1",
+  "created_at_utc": "2026-10-22T12:37:39.044368+00:00",
+  "dictionary": {
+    "status": "pass",
+    "native_candidates": 19434,
+    "bindings": 13581,
+    "errors": []
+  },
+  "index": {
+    "layout_id": "a0766433361267f1e59316a2919469027854a0ac52d3e5f5c269dff5e5085bcf",
+    "space": {
+      "dimensions": 768,
+      "inference": {
+        "batch_size": 32,
+        "device": "mps",
+        "dtype": "float32",
+        "engine": "sentence-transformers",
+        "packages": {
+          "numpy": "2.5.4",
+          "pillow": "12.3.0",
+          "safetensors": "0.8.0",
+          "sentence-transformers": "6.1.0",
+          "tokenizers": "0.23.3",
+          "torch": "2.14.1",
+          "torchvision": "0.29.1",
+          "transformers": "5.19.0"
+        },
+        "threads": 4
+      },
+      "model": "google/embeddinggemma-2",
+      "model_package_sha256": "112236750c003fde0e909a01540834cbdf0b75712667329a3c2a1d334c0e20ed",
+      "normalization": "l2",
+      "provider": "embeddinggemma2-local",
+      "recipe": "embeddinggemma2-retrieval/v1",
+      "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b"
+    },
+    "records": 19155,
+    "vector_reuse": 19091,
+    "provider_cache_hits": 64,
+    "provider_calls": 0,
+    "elapsed_seconds": 229.55,
+    "verification": {
+      "verified": true,
+      "candidates": 19434,
+      "positive": 19155,
+      "vector_shards": 4096,
+      "payload_shards": 304,
+      "posting_shards": 414,
+      "nodes": 8191,
+      "metadata_bytes": 26527991,
+      "provider_calls": 0
+    },
+    "publication_build_elapsed_seconds": 242.55516312498366,
+    "maintenance_hash_equivalence_checks": 75,
+    "runtime_code_changed": false
+  },
+  "focused_tests": {
+    "tests": 96,
+    "failures": 0,
+    "errors": 0
+  },
+  "research_preservation": {
+    "status": "pass",
+    "checks": [
+      {
+        "manifest": "SHA256SUMS",
+        "files": 29,
+        "pass": true
+      },
+      {
+        "manifest": "SHA256SUMS-INTEGRATION",
+        "files": 36,
+        "pass": true
+      }
+    ]
+  },
+  "scope": {
+    "base": "242e73c008885280fdabe28cf8889187d82f51f1",
+    "source_allowlist_count": 74,
+    "base_manifest_modules_preserved": true,
+    "new_modules": [
+      {
+        "file": "photo_candidate_metafiction_existential_litrpg_20261022.json",
+        "kind": "candidates"
+      },
+      {
+        "file": "photo_candidate_metafiction_existential_litrpg_bindings_20261022.json",
+        "kind": "slot_bindings"
+      }
+    ],
+    "primary_written": false,
+    "runtime_pointer_in_scope": false,
+    "unrelated_code_in_scope": false
+  },
+  "limits": "This validates the scoped source/index closure. Original installed mixed-source retrieval/image evidence remains historical. Upstream pull/merge and push verification are separate.",
+  "whitespace_check": {
+    "status": "pass_with_historical_artifact_format_preserved",
+    "raw_findings": 167,
+    "rule": "core.whitespace=cr-at-eol,-blank-at-eof",
+    "explanation": "Historical csv-writer TSV files use CRLF; one generated Markdown record has an EOF blank line. Preserve exact historical bytes/checksums; other whitespace errors remain checked."
+  }
+}

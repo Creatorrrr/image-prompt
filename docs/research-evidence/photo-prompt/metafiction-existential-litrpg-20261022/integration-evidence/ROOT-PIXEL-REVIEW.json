@@ -1,0 +1,192 @@
+{
+  "schema": "metafiction-independent-root-pixel-review/v1",
+  "reviewer": "OpenAI Codex /root",
+  "reviewed_at_utc": "2026-10-22T10:58:12.434940+00:00",
+  "status": "complete",
+  "arms": [
+    {
+      "arm": 1,
+      "overall_verdict": "blocked_unscored",
+      "image_path": null,
+      "image_sha256": null,
+      "image_viewed": false,
+      "image_calls": 1,
+      "actual_error_evidence": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/metafiction-20261022-arm1/native-error-evidence.json",
+      "error_evidence_sha256": "b6e43f291e9418c26eb6f11b0a0b4b8405dd39f13c3d44f9907de318f6694cfd",
+      "outcome": {
+        "status": "safety_block",
+        "display_message": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 4ccafaf1-0631-4da4-84a5-65314791184f. safety_violat",
+        "http_status": 400,
+        "error_code": "moderation_blocked",
+        "error_type": "image_generation_user_error",
+        "request_id": "4ccafaf1-0631-4da4-84a5-65314791184f",
+        "request_id_source": "error.message",
+        "moderation_stage": "output",
+        "categories": [
+          "sexual"
+        ],
+        "classification_source": "structured_error_code"
+      },
+      "fixed_testcase": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/metafiction-20261022-arm1/testcase-before-retrieval.json",
+      "testcase_sha256": "c4282d7ac2462f05a44450facd9f17f53583566ed7496956d5f3a5555059c5fd",
+      "criteria": [
+        {
+          "id": "topic_metafiction_boundary",
+          "status": "blocked_unscored",
+          "observability": "unobservable",
+          "reason": "The image tool returned no image bytes or file; no pixel judgment is possible."
+        },
+        {
+          "id": "topic_existential_threat",
+          "status": "blocked_unscored",
+          "observability": "unobservable",
+          "reason": "The image tool returned no image bytes or file; no pixel judgment is possible."
+        },
+        {
+          "id": "topic_litrpg_progression",
+          "status": "blocked_unscored",
+          "observability": "unobservable",
+          "reason": "The image tool returned no image bytes or file; no pixel judgment is possible."
+        },
+        {
+          "id": "reference_appearance",
+          "status": "blocked_unscored",
+          "observability": "unobservable",
+          "reason": "The image tool returned no image bytes or file; no pixel judgment is possible."
+        },
+        {
+          "id": "scene_legibility",
+          "status": "blocked_unscored",
+          "observability": "unobservable",
+          "reason": "The image tool returned no image bytes or file; no pixel judgment is possible."
+        }
+      ],
+      "user_acceptance": "pending",
+      "claim_limit": "The category is a structured tool response, not an independent judgment of the supplied portrait or unseen output."
+    },
+    {
+      "arm": 2,
+      "overall_verdict": "partial",
+      "strict_all_fixed_criteria_pass": false,
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/metafiction-20261022-arm2/images/arm2-disabled-departure.png",
+      "image_sha256": "11b5cc8e1f0cb6c3cd460731faa34a7fa6bbfa93b8c2516c9b12c0aada1cf3a0",
+      "width": 1392,
+      "height": 1130,
+      "file_integrity": "pass",
+      "image_viewed": true,
+      "view_method": "tools.view_image detail=original; actual reference also viewed at original resolution",
+      "fixed_testcase": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/metafiction-20261022-arm2/testcase-before-retrieval.json",
+      "testcase_sha256": "655b8d8bf66f12684ec52fcb47037d5117efc457945166c97e1681f998cafc5f",
+      "criteria": [
+        {
+          "id": "control_boundary",
+          "status": "fail",
+          "observability": "visible",
+          "evidence": "A forearm reaches the glowing border and continues as a flat hand outline in LEAVE; the other hand grips the forearm. The transformed limb traces to the subject’s left shoulder and the gripping hand to the right, reversing the frozen right-forearm/left-hand assignment.",
+          "full_relation_pass": false
+        },
+        {
+          "id": "choice_conflict",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "Gray LEAVE and bright amber WAIT are readable beside the physical wrist boundary. The crossed grip, leaning posture and suspended shoe express a resisted departure.",
+          "full_relation_pass": true
+        },
+        {
+          "id": "self_representation",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "The panel contains a large photographic portrait matching the main bob, face and blue garment, plus a small WAIT avatar with the same appearance.",
+          "full_relation_pass": true
+        },
+        {
+          "id": "connected_horror_reaction",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "The subject leans toward the trapped arm, looks toward that contact, parts the lips and grips the affected forearm. This supports a directed alarm reading without proving private beliefs.",
+          "full_relation_pass": true
+        },
+        {
+          "id": "reference_face_hair",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "The dark short bob, fine separated fringe, large dark eyes, small nose and full lips visibly follow the actual reference. This is qualitative appearance resemblance, not verified identity.",
+          "full_relation_pass": true
+        }
+      ],
+      "other_observations": [
+        "The planted shoe is cut by the lower frame, so floor/sole contact is not fully observable.",
+        "LV.12, HP and 46 / 100 are readable; these show game state, not an observed update over time."
+      ],
+      "image_calls": 1,
+      "user_acceptance": "pending"
+    },
+    {
+      "arm": 3,
+      "overall_verdict": "partial",
+      "strict_all_fixed_criteria_pass": false,
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/metafiction-20261022-arm3/result.png",
+      "image_sha256": "0e52fdadbf41a2e909034fd687473bf0bced01ff9b838727d30d3c282f236a7f",
+      "width": 1237,
+      "height": 1272,
+      "file_integrity": "pass",
+      "image_viewed": true,
+      "view_method": "tools.view_image detail=original; actual reference also viewed at original resolution",
+      "fixed_testcase": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/metafiction-20261022-arm3/testcase-before-retrieval.json",
+      "testcase_sha256": "60ad3e56b7c2288590e07606a65c097ca2c49ec1bed88d09ed1b088c7cd77274",
+      "criteria": [
+        {
+          "id": "reference_relation",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "The main face and intact printed portrait share the reference-like dark bob, fringe and facial features, with the same ivory collar repeated in the record.",
+          "full_relation_pass": true
+        },
+        {
+          "id": "metafiction",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "The large physical sheet contains this woman at this counter holding a sheet; that printed sheet contains a further smaller same-scene sheet. The nested prop relation is readable at original resolution.",
+          "full_relation_pass": true
+        },
+        {
+          "id": "existential_continuity",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "Three portraits repeat the bob and collar: a complete face, a visibly abraded intermediate face and an almost blank final face/hair outline, while the main physical face remains present.",
+          "full_relation_pass": true
+        },
+        {
+          "id": "litrpg",
+          "status": "pass",
+          "observability": "visible",
+          "evidence": "LV 12, MEMORY 1 and RESTORE are legible on the same physical sheet as the self-record and fading portraits.",
+          "full_relation_pass": true
+        },
+        {
+          "id": "embodied_response",
+          "status": "fail",
+          "observability": "partial",
+          "evidence": "Both hands support the sheet and a thumb touches the nearly erased portrait. That thumb belongs to the subject’s left hand at viewer-right, reversing the frozen right-thumb assignment. The gaze is downward to the sheet but its exact fading-portrait target is not fully established.",
+          "full_relation_pass": false
+        }
+      ],
+      "other_observations": [
+        "The thin paper/card edge, texture and slight bend are visible. These generic physical properties correspond to the declared D01 inspiration; pixels alone cannot show that D01 caused them.",
+        "The image depicts record erasure and a restore option; actual loss of memory or continuity of consciousness is unobservable."
+      ],
+      "image_calls": 1,
+      "user_acceptance": "pending"
+    }
+  ],
+  "summary": {
+    "calls": 3,
+    "returned_images": 2,
+    "blocked_unscored": 1,
+    "partial_fixed_cases": 2,
+    "strict_all_criteria_passed_cases": 0,
+    "topic_relations_visible_in_both_returned_images": true,
+    "causal_data_improvement_established": false,
+    "user_acceptance": "pending"
+  }
+}
