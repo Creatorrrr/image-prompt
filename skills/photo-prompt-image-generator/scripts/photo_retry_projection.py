@@ -4,11 +4,10 @@ import copy
 import re
 from photo_precore_bridge import load
 from photo_workflow_state import WorkflowError
+from photo_retry_policy import FAILURE_CLASSES, SAME_INPUT_FAILURES, retry_mode, observed_failure
 
 contracts = load("photo_authoring_contracts")
 wire = load("photo_authoring_wire")
-FAILURE_CLASSES = {"meaning_rebuild", "agent_spatial_inconsistency", "pixel_realization_mismatch", "unobservable_required_scale",
-    "transient_http", "provider_blocked", "persistence_failed", "recorder_failed", "execution_unknown", "invalid_review_record", "artistic_revision"}
 DECISION_FIELDS = {"schema_version", "current_source_span_ids", "source_text", "preserved_dimensions", "allowed_changes",
     "requester_corrected_dimensions", "allowed_properties", "local_axes", "failed_gate_ids", "failure_class",
     "additional_invocation_limit", "obligation_dimensions"}
@@ -139,9 +138,11 @@ def project(parent, current_envelope, decision, source_artifacts):
     limit = decision["additional_invocation_limit"]
     if type(limit) is not int or not 0 <= limit <= 64:
         raise WorkflowError("invalid_retry_budget")
-    if failure_class in {"provider_blocked", "persistence_failed", "recorder_failed", "execution_unknown", "invalid_review_record"}:
-        if local or changed or limit:
-            raise WorkflowError("failure_route_cannot_rerender")
+    mode = retry_mode(failure_class, changed=bool(changed))
+    if mode != "revised_content" and (local or decision["allowed_properties"]):
+        raise WorkflowError("unchanged_route_cannot_change_properties")
+    if mode == "recovery_only" and limit:
+        raise WorkflowError("failure_route_cannot_rerender")
     repair = audit.get("repair")
     if repair:
         limit = min(limit, repair["retry_policy"]["maximum_additional_attempts"])
@@ -217,10 +218,15 @@ def project(parent, current_envelope, decision, source_artifacts):
                 pointer = f"/gates/{index}" if role == "generic_review" else "/hard_gates/" + row["gate_id"].replace("~", "~0").replace("/", "~1")
                 defects.append(record(role, pointer, select(row, {"gate_id", "status", "evidence", "reviewed_scales"})))
     error = attempt.get("error_details") or {}
-    if failure_class == "transient_http" and error.get("http_status") not in {429, 500, 502, 503, 504}:
+    observed = observed_failure(attempt.get("status"), details=error, provider_outcome=parent.get("provider_outcome"))
+    if observed is not None and failure_class != observed:
+        raise WorkflowError("observed_failure_route_mismatch")
+    if failure_class == "transient_http" and observed != failure_class:
         raise WorkflowError("observed_transient_code_required")
     if failure_class == "provider_blocked" and attempt.get("status") != "safety_block":
         raise WorkflowError("observed_provider_block_required")
+    if observed in SAME_INPUT_FAILURES and mode != "same_input":
+        raise WorkflowError("observed_failure_route_mismatch")
     # Never expose arbitrary provider text/codes, which may contain raw input.
     if error:
         defects.append(record("attempt", "/error_details", {"http_status": error.get("http_status"),
@@ -233,8 +239,9 @@ def project(parent, current_envelope, decision, source_artifacts):
         "source_artifacts": [{"role": role, "sha256": row["sha256"]} for role, row in sorted(source_artifacts.items())],
         "preserved_fields": fields, "required_assertions": assertions, "required_relations": relations, "effective_obligations": obligations,
         "reported_defects": defects, "allowed_scope": {"dimensions": sorted(changed), "properties": bounded(properties), "local_axes": sorted(local)},
-        "preserved_dimensions": sorted(preserved), "repair_route": failure_class,
-        "lineage_status": "representable" if preserved and changed else "scope_not_representable_in_lineage_v2",
+        "preserved_dimensions": sorted(preserved), "repair_route": failure_class, "retry_mode": mode,
+        "lineage_status": ("existing_run_same_input" if mode == "same_input" else "recovery_without_invocation" if mode == "recovery_only"
+                           else "representable" if preserved and changed else "scope_not_representable_in_lineage_v2"),
         "decision_binding": {"sha256": source_artifacts["decision"]["sha256"], "current_source_span_ids": sorted(current_ids),
                              "current_envelope_sha256": envelope["canonical_sha256"]},
         "execution_scope": {"additional_invocation_limit": limit, "references": [select(r, {"role", "sha256"}) for r in parent["runtime"]["references"]],
