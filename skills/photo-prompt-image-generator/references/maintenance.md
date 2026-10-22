@@ -117,3 +117,10 @@ physical connections, biological integration, containment direction and static
 versus temporal evidence retain explicit owners and claim limits. Research
 metadata grants no native qualification; installed exposure, authored prompt use
 and generated pixels are checked separately.
+
+The [clockpunk extension](clockpunk-semantics.md) retains 88 research cards and
+213 advisory routes, with 74 complete optional bilingual visual sources,
+17 positive-retrieval-excluded diagnostics and 137 optional bindings. Power,
+transmission, regulation, cam programming and astronomical-instrument owners
+remain distinct. Source registration, sealed retrieval, actual prompt use and
+saved-image relation gates are separately checked; seven cards remain held.
