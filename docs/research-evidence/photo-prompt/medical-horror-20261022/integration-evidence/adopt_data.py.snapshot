@@ -1,0 +1,160 @@
+"""Bounded medical-horror source adoption; preserve other authored work."""
+from pathlib import Path
+import copy,hashlib,json,sys,uuid,subprocess
+O=Path(__file__).resolve().parent;R=O.parents[2];S=R/'skills/photo-prompt-image-generator';A=S/'assets'
+Q=R/'docs/research-evidence/photo-prompt/medical-horror-20261022';E=Q/'integration-evidence'
+sys.path.insert(0,str(S/'scripts'))
+import photo_candidate_corpus as c
+from photo_runtime_sources import source_update
+read=lambda p:json.loads(p.read_bytes())
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def write(p,obj):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
+
+# Reviewed whole-proposition mutation dimensions, not permissions inferred from
+# the research relation graph. Empty property rows conservatively retain broad
+# dimensions and do not claim compatibility with partially locked appearance.
+FOOTPRINTS='''
+A01:setting lighting material appearance composition count relationship
+A02:setting material appearance composition count relationship
+A03:setting material appearance composition count relationship
+A04:setting appearance text composition relationship
+A05:setting appearance text composition relationship
+A06:setting material appearance composition count relationship
+A07:setting material appearance composition count relationship
+A08:setting material appearance composition count relationship
+A09:camera framing composition setting material appearance relationship
+A10:setting composition material appearance count relationship
+A11:setting lighting appearance composition count relationship
+A12:setting appearance material color relationship
+D01:subject age body_geometry pose appearance composition relationship
+D02:material appearance body_geometry relationship count
+D03:material appearance body_geometry relationship setting
+D04:subject age body_geometry appearance material relationship setting
+D05:subject age body_geometry appearance material relationship setting
+D06:subject age body_geometry appearance material relationship setting
+D07:subject age body_geometry appearance material relationship setting
+D08:subject age body_geometry appearance material relationship
+D09:subject age pose appearance material framing relationship
+D10:subject age appearance body_geometry material text relationship
+D11:subject age appearance text composition relationship
+D12:material appearance color body_geometry relationship setting
+D13:material appearance color body_geometry relationship
+D14:setting material lighting appearance relationship
+D15:subject age appearance body_geometry material relationship
+D17:subject age pose action appearance material setting relationship
+D18:subject age appearance body_geometry material relationship setting
+W01:body_geometry appearance material relationship
+W02:subject body_geometry appearance material relationship
+W03:style body_geometry appearance material relationship
+W05:style body_geometry appearance material relationship
+W06:subject appearance material color
+W07:subject body_geometry appearance material
+W08:style body_geometry appearance material color relationship
+W09:subject body_geometry appearance material color relationship
+W10:subject age appearance body_geometry relationship
+W11:subject age appearance body_geometry material relationship setting
+W12:subject age appearance body_geometry material relationship
+L01:material appearance body_geometry text count relationship setting
+L02:material appearance text composition relationship
+L03:material appearance text composition count relationship
+L04:material appearance body_geometry relationship
+L05:pose action appearance material relationship setting
+L06:subject count composition body_geometry appearance relationship
+L07:material appearance body_geometry count relationship
+L08:style body_geometry appearance material text relationship
+L09:material appearance text count relationship
+E01:subject age pose body_geometry material appearance setting relationship
+E02:subject age pose appearance body_geometry material relationship
+E03:subject age pose action appearance material text relationship
+E04:subject age composition framing appearance material relationship
+E05:subject age appearance body_geometry material count relationship
+E06:subject age count pose action composition appearance material setting relationship
+E07:subject age appearance material setting composition relationship
+E08:subject age count pose action appearance material setting relationship
+E09:subject age pose appearance material text setting relationship
+E10:subject age pose appearance body_geometry material relationship
+E11:subject age appearance body_geometry pose composition relationship
+E12:subject age body_geometry framing composition setting relationship
+E13:setting material text appearance relationship
+'''
+EFF={k:set(v.split()) for k,v in (x.split(':') for x in FOOTPRINTS.strip().splitlines())}
+CONTEXT_EN=[
+ 'Medical horror and its neighboring genre labels provide context; no label alone requires darkness, gore, nudity, sexual meaning or a fixed collection of medical props.',
+ 'The medical gaze, bodily autonomy, abjection, biopower and related critical concepts retain their theoretical contexts; visible appearance is not proof of a person’s moral value, pathology or monstrous nature.',
+ 'Diagnostic uncertainty, diagnostic error, false test results, idiopathic conditions, iatrogenic harm and medical gaslighting are distinct contextual claims; a chart or worried face alone cannot establish them.',
+ 'Consciousness, pain, movement and remembered experience are separate axes. Being awake during local or regional anesthesia is not by itself anesthesia failure; immobility alone proves neither unconsciousness nor lack of pain.',
+ 'Coma, locked-in syndrome and brain death are distinct states. A bedside appearance, open eyes or a breathing machine cannot establish their diagnosis or clinical criteria.',
+ 'Medical phobias, hallucination, depersonalization, Capgras or Cotard delusions and delirium require their clinical and experiential contexts. A staged image is not a diagnosis of its subject.',
+ 'Phantom limb pain and nocebo involve subjective pain or expectation-related causation. An absent body part, pill bottle or expression does not prove the experience or its cause.',
+ 'Ischemia concerns blood supply, hypoxia concerns oxygen supply and atrophy has its own temporal and clinical meaning. Skin color or a narrow limb is insufficient diagnostic evidence.',
+ 'Contamination, colonization, infection, biofilm and healthcare association remain separate claims. Visible film, stained equipment or a clinical room does not establish microorganisms, infection or transmission.',
+ 'Parasitism, zoonotic transmission, prion disease and sepsis are different relations or mechanisms. An attached shape or dark liquid is not evidence of those diagnoses.',
+ 'Transplantation, rejection, immunosuppression, foreign-body reaction and xenotransplantation remain distinct. A seam or implant alone does not establish an immune process, donor source or animal transformation.',
+ 'Chimerism, mosaicism, cloning and genetic engineering have distinct cell origins and mechanisms. Similar appearances or sample labels do not establish genetic identity, memory or personhood.',
+ 'Organoids, tissue engineering, cell-line persistence and artificial-womb research do not by themselves establish a miniature person, consciousness, complete ectogenesis, donor-memory transfer or remote control of an implant.',
+ 'Informed consent, decision-making capacity, coercion, undue influence, therapeutic misconception and paternalism require their actual scope and circumstances. A signature, smile or compliant pose is insufficient evidence.',
+ 'Institutional betrayal, dual loyalty, exploitation, involuntary admission, restraint, tissue use and trafficking retain their legal and historical contexts. A closed door, medicine or donation container alone does not establish abuse.',
+ 'Pregnancy, termination, sterilization, obstetric violence, sex-characteristic changes and genital injury retain their distinct bodily and consent contexts. Appearance alone cannot establish reproductive capacity, prior intervention or coercion.',
+ 'Clinical exposure, sexual interest, consensual adult roleplay, voyeurism, sexual boundary violation, forced exposure, surgical eroticism and necrophilia are distinct meanings. Medical clothing alone proves none of them.',
+ 'Human experimentation, vivisection, autopsy, self-surgery, historical lobotomy and modern electroconvulsive therapy retain distinct purposes, life states and consent contexts. Tools or electrodes alone do not prove torture or a particular procedure.',
+ 'Historical body snatching, corpse medicine and fictional reanimation are different claims. A covered stretcher or interest in anatomy does not establish a corpse, trade, resurrection or sexual interest.',
+ 'Escalating treatment, a false cure, denial of discharge, concealed records, reproductive commodification and identity replacement require sequence or narrative context. A single still frame cannot establish their history or causation.',
+ 'Mechanical breathing cycles, fluorescent hum and bodily sounds are temporal or auditory phenomena. A still photograph of tubing, a lamp or a wet surface cannot establish the sound.',
+ 'Historical cases retain their evidence: the Tuskegee study involved lack of informed consent and withheld treatment rather than deliberate infection; HeLa cell persistence is not personal consciousness; eugenic rankings are not scientific facts.'
+]
+
+def main():
+ current=c.load(A);config=read(S/'retrieval-runtime.json');store=Path.home()/'.cache/image-prompt/photo-shared-runtime/h-f2-installed'
+ protected=[S/'SKILL.md',S/'retrieval-runtime.json',A/'photo_candidate_search.json']+[A/m['file'] for m in read(A/c.MANIFEST_NAME)['modules']]
+ protected += list((S/'precore').glob('*.*'))+list((S/'scripts').glob('*.py'))
+ before=dict(head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),config=config,store=str(store),native=str(store/'generations'/config['native_generation_id']),runtime_python=str(S/'.runtime/embedding-python/bin/python'),corpus_sha256=c.digest(current),candidate_count=len(current['candidates']),binding_count=len(current['slot_bindings']),protected_hashes={str(p.relative_to(R)):sha(p) for p in protected if p.is_file()},git_status=subprocess.check_output(['git','status','--short'],text=True))
+ write(O/'before.json',before)
+ cards=read(Q/'semantic-cards.json');sources={s['id']:s for s in read(Q/'sources.json')};records={};bindings={};registry=[];decisions=[]
+ reuse={'D16':'cand_6ae44ec9028b5eb39009f3e3bd91a8ba','L01':'cand_3a07312de26c59f2890147fc6dab3ad1'}
+ app='One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.'
+ for card in cards:
+  key=card['id'];visual=not key.startswith('X') and key!='W04'
+  if key in reuse:
+   cid=reuse[key];assert cid in current['candidates'];original=current['candidates'][cid]
+   meta={**copy.deepcopy(card),'candidate_id':cid,'registration_status':'existing_complete_source_reused','positive_en':original['content']['en'],'positive_ko':original['content']['ko'],'reused_proposal_delta':'Research-only narrower details are not added to the existing source or claimed as adopted.','native_approval':False}
+   registry.append(meta);decisions.append(dict(card_id=key,candidate_id=cid,decision='reuse',reason='Existing complete source covers the generic seam or vessel-scale relation; narrower closed-seam/millimeter details remain authorial or require separate future review.'));continue
+  cid='cand_'+uuid.uuid5(uuid.NAMESPACE_URL,'image-prompt/medical-horror/20261022/'+key).hex
+  assert cid not in current['candidates']
+  if visual:en=card['phrase_en'];ko=card['phrase_ko'];dims=sorted(EFF[key])
+  elif key=='W04':en='Prolapse retains its body-region-specific clinical definition. This research proposal needs further anatomical source review and is not a positive visual prescription or a synonym for wound evisceration.';ko='탈출·하수는 신체 부위별 임상 정의를 유지한다. 해당 연구 모형은 해부학적 출처 추가 검토가 필요하여 긍정 시각 처방으로 등록하지 않으며 창상 내장탈출과 동일시하지 않는다.';dims=[]
+  else:en=CONTEXT_EN[int(key[1:])-1];ko=card['claim_limit_ko'];dims=[]
+  meta={**copy.deepcopy(card),'schema':'photo-medical-horror-visual-semantics/v1','candidate_id':cid,'runtime_registration':True,'registration_status':'authored_visual_source' if visual else 'diagnostic_context_only','native_approval':False,'native_qualification':'not_qualified','activation':'optional_post_core; genre labels never activate all source obligations','source_refs':[sources[s] for s in card['source_refs']],'graph_scope':'research metadata only; not native facts or guard evidence','provenance_digest_scope':'research specification bytes, not downloaded source page bytes'}
+  aliases=list(dict.fromkeys(card['seed_terms']+[card['title_ko']]))
+  if visual:
+   aliases+=list(dict.fromkeys(r['ko'] for r in read(Q/'keyword-routes.json') if r['en'] in card['seed_terms']))
+   aliases=list(dict.fromkeys(aliases))
+  rec=dict(id=cid,record_kind='visual_option' if visual else 'diagnostic',content=dict(en=en,ko=ko,definition=('Optional medical-horror visual realization: '+card['title_ko']) if visual else 'Context-only medical-horror distinction; excluded from positive material retrieval.',aliases=aliases,application_contract=app if visual else 'Diagnostic/context-only boundary; do not promote an invisible claim or a deferred clinical form into positive image facts.',research_semantics=meta),conditions={'requires_adult_context':True} if visual and re_adult(en) else {},effects=dict(dimensions=dims,properties=[]),provenance=[dict(source=sources[s]['url'],sha256=sha(Q/'semantic-cards.json')) for s in card['source_refs']])
+  records[cid]=rec;registry.append(meta)
+  if visual:
+   for slot in card['proposed_slots']:
+    catalog=current['slot_catalog'][slot];bid='bind_'+uuid.uuid5(uuid.NAMESPACE_URL,cid+'/'+slot).hex
+    bindings[bid]=dict(id=bid,candidate_id=cid,slot_id=slot,role='optional',semantic_role=catalog['semantic_role'],conditions={'subject_applicability':{}},weight=2)
+  decisions.append(dict(card_id=key,candidate_id=cid,decision='new' if visual else 'defer' if key=='W04' else 'context',reason='Bounded complete bilingual optional variant; lexical zero is not proof of exhaustive novelty.' if visual else 'Invisible/deferred claim retained outside positive appearance retrieval.'))
+ proposed=copy.deepcopy(current);proposed['candidates'].update(records);proposed['slot_bindings'].update(bindings);c.validate(proposed)
+ nm='photo_candidate_medical_horror_20261022.json';bm='photo_candidate_medical_horror_bindings_20261022.json';manifest=read(A/c.MANIFEST_NAME)
+ assert not any(x['file'] in [nm,bm] for x in manifest['modules'])
+ manifest['modules'] += [dict(file=nm,kind='candidates'),dict(file=bm,kind='slot_bindings')]
+ with source_update(S):
+  assert c.digest(c.load(A))==before['corpus_sha256'],'Concurrent source change before adoption'
+  write(A/nm,dict(schema=c.MODULE_SCHEMAS['candidates'],candidates=records));write(A/bm,dict(schema=c.MODULE_SCHEMAS['slot_bindings'],slot_bindings=bindings));write(A/c.MANIFEST_NAME,manifest)
+  now=c.load(A)
+  assert all(now['candidates'][k]==v for k,v in current['candidates'].items())
+  assert all(now['slot_bindings'][k]==v for k,v in current['slot_bindings'].items())
+  assert all(now[k]==current[k] for k in ('slot_catalog','policies'))
+ lookup={x['id']:x['candidate_id'] for x in registry}
+ routes=[{**r,'candidate_ids':[lookup[i] for i in r['visual_card_ids']+r['boundary_card_ids']],'activation':'contextual discovery only, not native permission or automatic hard profile'} for r in read(Q/'keyword-routes.json')]
+ counts=dict(cards=len(cards),visual_sources_new=sum(r['record_kind']=='visual_option' for r in records.values()),reused=2,diagnostics_new=sum(r['record_kind']=='diagnostic' for r in records.values()),bindings_new=len(bindings),keyword_routes=len(routes),before_candidates=len(current['candidates']),after_candidates=len(now['candidates']))
+ result=dict(schema='photo-medical-horror-semantic-registry/v1',cards=registry,keyword_routes=routes,decisions=decisions,counts=counts,native_approval=False,research_spec_sha256=sha(Q/'semantic-cards.json'))
+ write(A/'photo_medical_horror_semantics_20261022.json',result);write(O/'data-integration.json',result);write(O/'new-native-records.json',records);write(O/'changed-native-records.json',{})
+ write(O/'source-preservation.json',dict(status='pass',old_candidates_preserved=len(current['candidates']),old_bindings_preserved=len(current['slot_bindings']),catalog_and_policies_unchanged=True,before_corpus_sha256=before['corpus_sha256'],after_corpus_sha256=c.digest(now),counts=counts))
+ print(json.dumps(counts))
+
+def re_adult(text):
+ import re
+ return bool(re.search(r'\badult(?:s|’s|\x27s)?\b',text,re.I))
+if __name__=='__main__':main()

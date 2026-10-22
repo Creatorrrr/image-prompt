@@ -1,0 +1,23 @@
+"""Adopt the already verified current-source layout only under writer ownership."""
+from pathlib import Path
+import json,sys,hashlib,os
+O=Path(__file__).resolve().parent;R=O.parents[2];S=R/'skills/photo-prompt-image-generator';A=S/'assets';WA=O/'working-skill-rebased-v3/assets'
+sys.path.insert(0,str(S/'scripts'))
+import photo_candidate_corpus as c
+from photo_runtime_sources import source_update,FreshnessError,default_store,namespace
+read=lambda p:json.loads(p.read_bytes())
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+original=c.load(WA);current=c.load(A);assert current==original,'source changed; preserve newer source and rebaseline'
+new=read(WA/'photo_candidate_search.json');assert new['corpus_sha256']==c.digest(original)
+for row in new['shards']+[new['metadata']]:
+ assert sha(A/row['path'])==sha(WA/row['path'])==row['sha256']
+try:
+ with source_update(S):
+  assert c.load(A)==original
+  p=A/'photo_candidate_search.json';tmp=p.with_suffix('.medical-partial');tmp.write_bytes((WA/p.name).read_bytes());os.replace(tmp,p)
+except FreshnessError as exc:
+ d=default_store()/'local'/namespace(S,'local_current');rev=read(d/'SOURCE.json')
+ out={'status':'not_adopted_writer_pending','error':str(exc),'validated_layout_id':new['layout_id'],'source_sha256':c.digest(original),'candidate_count':len(original['candidates']),'revision_path':str(d/'SOURCE.json'),'revision_epoch':rev.get('epoch'),'editing_token_sha256':hashlib.sha256(str(rev.get('editing')).encode()).hexdigest(),'cleared_other_writer':False,'CURRENT_writes':0}
+ (O/'working-index-adoption-pending.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps(out));raise SystemExit(3)
+out={'status':'pass','layout_id':new['layout_id'],'corpus_sha256':c.digest(original),'candidate_count':len(original['candidates']),'original_sources_unchanged':True,'index_closure_members':len(new['shards'])+1,'provider_calls':0,'CURRENT_writes':0}
+(O/'working-integration.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps(out))

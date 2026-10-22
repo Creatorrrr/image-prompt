@@ -1,0 +1,111 @@
+{
+  "schema": "medical-horror-arm-pixel-testcase-review/v1",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/pixel-testcase.pre-render.json",
+  "testcase_sha256": "44f657f136d75187e2892daf536830f79a390c156e96e1cfaed433259ef05caa",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/cryobank-thaw-anomaly.png",
+  "image_sha256": "a12f026f0e52f71c85188ba0e56cac884f74805def9a965e1cc4ee7a212e7c46",
+  "reviewer": "Codex C",
+  "review_basis": "Full original 1237x1272 saved file and unresampled original-pixel crops inspected directly with view_image.",
+  "UNOBSERVABLE_NOT_PASS": true,
+  "partial_is_fail": true,
+  "gates": [
+    {
+      "gate_id": "C_REFERENCE",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The original-pixel face crop retains the short jaw-length dark bob, wispy separated fringe, dark eyes and similar soft facial proportions from the source. Head direction and gaze differ in the new fictional scene; visual continuity is supported, actual identity is not authenticated.",
+      "scales_reviewed": [
+        "full_frame",
+        "face_original_pixels"
+      ],
+      "crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/crop-face.png"
+      ]
+    },
+    {
+      "gate_id": "C_SPECIMEN_CONTAINER",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The central glass vial has a visibly closed metal cap. A separate pale folded tissue-like mass is inside amber liquid within the same bounded glass vessel. This proves the depicted arrangement, not real tissue culture or sterility.",
+      "scales_reviewed": [
+        "full_frame",
+        "specimen_original_pixels"
+      ],
+      "crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/crop-specimen.png"
+      ]
+    },
+    {
+      "gate_id": "C_LIQUID_SURFACE",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "A horizontal amber meniscus is visible near y=927, below the cap and headspace. The pale folded mass is below that liquid level and inside the surrounding amber host. Glass reflections remain separable from the liquid boundary.",
+      "scales_reviewed": [
+        "specimen_original_pixels"
+      ],
+      "crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/crop-specimen.png"
+      ]
+    },
+    {
+      "gate_id": "C_SINGLE_ANOMALY",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "One clear amber vial in the front row is flanked by several matte heavily frosted neighboring vial bodies and caps. The contrast is readable in the same frame. The -80°C display is generated scene text, not an actual measurement or proof of thaw history.",
+      "scales_reviewed": [
+        "full_frame",
+        "rack_original_pixels"
+      ],
+      "crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/crop-hands_and_rack.png"
+      ]
+    },
+    {
+      "gate_id": "C_BOUNDED_MOISTURE",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Distinct rounded droplets appear on the clear glass shoulder above the amber level, with a bounded wet-looking area at the vial base on steel. They have identifiable glass/steel carriers; the droplet shapes are not just a uniform gloss. Their chemical identity and leak mechanism remain unproved.",
+      "scales_reviewed": [
+        "specimen_original_pixels",
+        "rack_original_pixels"
+      ],
+      "crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/crop-specimen.png"
+      ]
+    },
+    {
+      "gate_id": "C_HUMAN_SAMPLE_RELATION",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "The gaze, connected arms, hovering finger-to-cap air gap and supported rack are visible. However, the actor-right hand on screen-left braces the rack and the actor-left hand on screen-right hovers, reversing the authored right-hover/left-brace choreography. Because that side assignment is in the frozen criterion, the complete gate fails despite coherent anatomy and the intended general relationship surviving.",
+      "scales_reviewed": [
+        "full_frame",
+        "hands_original_pixels"
+      ],
+      "crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/crop-hands_and_rack.png"
+      ]
+    },
+    {
+      "gate_id": "C_CLINICAL_UNEASE",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The open frosted freezer, specimen rack, central clear anomaly and paused sample-directed inspection form one readable clinical scene. This supports restrained procedural unease; it does not prove private fear, infection or an intense horror response in the viewer.",
+      "scales_reviewed": [
+        "full_frame"
+      ],
+      "crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/cryobank-thaw-anomaly.png"
+      ]
+    }
+  ],
+  "counts": {
+    "pass": 6,
+    "fail": 1
+  },
+  "strict_all_gate_result": "FAIL",
+  "overall_outcome": "PARTIAL",
+  "reason": "The medical specimen scene and reference appearance are materially realized, while the authored side-specific hand choreography is reversed. No regeneration was attempted.",
+  "user_acceptance": "pending",
+  "image_call_count": 1
+}

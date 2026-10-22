@@ -1,0 +1,132 @@
+{
+  "schema": "photo-arm-pixel-testcase/v1",
+  "arm": "B",
+  "phase_authored": "post_core_before_retrieval",
+  "core_canonical_sha256": "7c6e4cdc47fa414d666a9645d050100025333e517a300edd8f929eb9b8fe859f",
+  "baseline_prompt_sha256": "19677d616b15961215049c06ae735e7d161d4f3b817fea5e52e0ecdae1a7e41f",
+  "reference_image": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "scope": "Author-owned test criteria for the selected random apparatus relationship, separate from managed mandatory gates and actual user acceptance. No extra requester locks are created.",
+  "observation_policy": {
+    "original_pixels_required": true,
+    "whole_image_first": true,
+    "local_crop_requires_context": true,
+    "allowed_observability": [
+      "visible",
+      "partial",
+      "unobservable"
+    ],
+    "pass_requires": "Every material component and connection visible together at its declared review scale.",
+    "unobservable_rule": "UNOBSERVABLE_NOT_PASS",
+    "partial_rule": "partial_is_fail",
+    "label_or_metadata_is_not_pixel_proof": true,
+    "actual_biography_or_internal_state_inference": false
+  },
+  "gates": [
+    {
+      "id": "B01_reference_appearance",
+      "required_for_test": true,
+      "review_scales": [
+        "whole_image",
+        "face_detail_at_native_pixels"
+      ],
+      "components": [
+        "A readable face with broadly similar facial proportions to the reference",
+        "Short dark bob and separated fringe visibly guide the new fictional appearance"
+      ],
+      "pass_condition": "Face and hair are sufficiently visible to compare the requested appearance guidance. This is resemblance guidance, not identity verification.",
+      "fail_examples": [
+        "Face too small, hidden or in deep shadow to compare",
+        "Long or differently structured hair replaces the short bob"
+      ],
+      "initial_observability": "unreviewed"
+    },
+    {
+      "id": "B02_device_structure",
+      "required_for_test": true,
+      "review_scales": [
+        "whole_image",
+        "device_detail_at_native_pixels"
+      ],
+      "components": [
+        "Recognizable circular diagnostic gantry with an open aperture",
+        "Projecting patient platform physically belongs to the same apparatus",
+        "Stable ordinary object geometry with room around the person"
+      ],
+      "pass_condition": "All listed structure and the platform-to-ring relationship are visible and credible together; a round light alone fails.",
+      "initial_observability": "unreviewed"
+    },
+    {
+      "id": "B03_visible_route_obstruction",
+      "required_for_test": true,
+      "review_scales": [
+        "whole_image"
+      ],
+      "components": [
+        "Visible doorway or threshold beyond the scanner",
+        "Scanner lies across that visible route",
+        "Platform points toward the woman rather than an unrelated part of the room"
+      ],
+      "pass_condition": "The same view makes the apparatus impede the visible doorway route. The image cannot establish that this is the only possible exit outside the frame; do not claim that larger fact.",
+      "initial_observability": "unreviewed"
+    },
+    {
+      "id": "B04_owned_contact",
+      "required_for_test": true,
+      "review_scales": [
+        "whole_image",
+        "hand_contact_at_native_pixels"
+      ],
+      "components": [
+        "Palm actually meets the near outer scanner rim",
+        "Hand traces through wrist and forearm to the same woman",
+        "Bent elbow and standing body occupy compatible space beside the platform"
+      ],
+      "pass_condition": "Every owner and endpoint is visible together. Hovering, merged fingers, a hidden contact or a hand from another owner cannot pass.",
+      "initial_observability": "unreviewed"
+    },
+    {
+      "id": "B05_response_relation",
+      "required_for_test": true,
+      "review_scales": [
+        "whole_image",
+        "face_detail_at_native_pixels"
+      ],
+      "components": [
+        "Head or eyes direct attention toward or through the apparatus aperture",
+        "Paused posture and small facial tension are readable",
+        "The visible device and blocked route supply a plausible target for the response"
+      ],
+      "pass_condition": "The picture connects response and spatial circumstances. Expression alone does not prove an actual inner life, motive or medical condition.",
+      "initial_observability": "unreviewed"
+    },
+    {
+      "id": "B06_clinical_unease",
+      "required_for_test": true,
+      "review_scales": [
+        "whole_image"
+      ],
+      "components": [
+        "Clinical function is recognizable from apparatus and room",
+        "Device dominates available space in relation to the person",
+        "Lighting, distance or room state makes the encounter unsettling beyond a routine clinical portrait"
+      ],
+      "pass_condition": "Reviewer first describes the image without reading genre or intensity labels, then finds image-grounded clinical unease. A clinical device beside a neutral portrait alone fails this intended theme.",
+      "initial_observability": "unreviewed"
+    }
+  ],
+  "supplemental_observations": [
+    "Mobility or wheels may be assessed only if actually visible; an inaccessible base cannot prove a wheeled machine.",
+    "Compare intended supporting human attraction with the unlabeled first impression; metadata sensual=1 alone is not proof.",
+    "Record native medical-horror source exposure, authored use or non-use, exact final prompt carriage and rendered effect separately.",
+    "No generated comparison baseline exists at authoring time. Source/prompt audits do not establish user preference or acceptance."
+  ],
+  "source_evaluation_fields": [
+    "returned_new_topic_source_occurrences",
+    "complete_source_compatibility",
+    "adopted_or_skipped_reason",
+    "literal_final_prompt_carriage",
+    "pixel_observation",
+    "user_acceptance_pending"
+  ]
+}

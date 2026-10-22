@@ -1,0 +1,69 @@
+{
+  "schema": "medical-horror-arm-scene-preflight/v1",
+  "phase": "postcore_before_retrieval",
+  "core_sha256": "9b575cddb494d5b110807521a32c3402d008913782dcea6d04a260d5f89752a9",
+  "intent_lock_sha256": "5e8d2e67574c4c200b72742d8a917a0ddd415f6df162742d45b3e20a2049bf8d",
+  "slot_plan_sha256": "fb1d75a25a660bda7592f898763dc8f760262f6cfd8d1f0329d2d5e5705d81c3",
+  "no_candidates_or_other_arms_read": true,
+  "image_call_count": 0,
+  "geometry_review": {
+    "camera": {
+      "baseline": "Patient side, eye level, horizontal frame.",
+      "independent_optional_refinement": "Place the camera diagonally along the public counter at a modest three-quarter view of the woman. Keep her face nearest the lens, hands below it, clear staff-side record window beside her, and the exit immediately behind rather than at the remote corridor end.",
+      "why": "A lateral barrier view can show the woman's visible face and the chart beyond the glass without forcing the camera onto the staff side.",
+      "ownership": "Agent-owned; camera remains open. No new requester-axis requirement."
+    },
+    "glass_boundary": {
+      "state": "Closed hatch at the shutter; clear lower glass separates the chart from the woman.",
+      "endpoint_trace": [
+        "Woman and both hands stay on the public side.",
+        "Sleeve opening rests on the public counter.",
+        "Right fingertips rest on the projecting public-side hatch lip.",
+        "Staff-side chart has no contact route to either hand."
+      ],
+      "risk": "Reflection or a counter edge alone may be mistaken for the closed barrier. The hatch and glazing boundary must have visible framing."
+    },
+    "hands": {
+      "left": "Holds only the light empty sleeve; fingers pinch its open top while its lower edge can rest on the counter.",
+      "right": "Fingertips rest on the adjacent hatch ledge, with the wrist and forearm visibly reaching from the same torso.",
+      "simultaneous_feasibility": "Both forearms reach forward a short distance to neighboring regions at waist level. Neither hand operates the door bolt. No hand passes through glass or carries the retained chart.",
+      "risk": "Loose plastic may visually merge with the closed hatch or be filled with papers by the generator. Treat indistinct sleeve emptiness as partial/fail."
+    },
+    "chart": {
+      "state": "A separate retained record exists beyond the glass.",
+      "independent_optional_refinement": "Stand or lean the staff-side chart so its outer folder and clipped portrait face the public window. This is a prospective visibility refinement within open prop placement and composition.",
+      "risk": "A flat chart photographed from eye level may conceal its face or appear to be on the woman's counter. The small duplicate portrait is authorial, not a hard identity proof."
+    },
+    "exit": {
+      "state": "Door is closed; a real bolt crosses the door seam.",
+      "independent_optional_refinement": "Keep the doorway adjacent to the counter in the near background and give the bolt enough edge contrast to separate it from a generic door handle.",
+      "risk": "A red lamp, handle, rectangular panel, or bar that does not span the seam cannot establish the intended locked state. Perspective must leave both bolt endpoints legible."
+    },
+    "projection": {
+      "priority_order": [
+        "Face and paused human presence",
+        "Empty sleeve plus owned hands",
+        "Closed boundary and distinct retained chart",
+        "Nearby bolted exit",
+        "Subordinate empty clinical corridor"
+      ],
+      "depth_strategy": "Compact counter-to-door space; do not put the diagnostic bolt at the vanishing point. Keep enough depth of field for the handover boundary and door mechanism rather than turning all context into blur.",
+      "scale_boundary": "Full original saved image is mandatory for assessment. A blurred or tiny component remains unobservable after enlargement."
+    }
+  },
+  "anticipated_claim_limits": [
+    "Exact record ownership cannot be established from an unresolved clipped portrait; report that limit.",
+    "A bolt proves an obstructed door only when its endpoints and seam are visible; it does not prove the institution's unseen motive.",
+    "A face expression alone cannot prove coercion, diagnosis, consent, or real inner life.",
+    "Institutional dread is a qualitative whole-scene observation distinct from physical relation gates.",
+    "No preflight text is a rendered-pixel PASS."
+  ],
+  "pending_actions": [
+    "Wait for data-install completion before retrieve.",
+    "Review every returned complete source and every query occurrence after retrieval.",
+    "Compare baseline with compatible local alternatives without forcing adoption.",
+    "Only then prepare composed prompt and rerun embodiment/runtime audits.",
+    "Use built-in image_gen once with the exact audited local reference attached.",
+    "Save the tool-returned actual file, inspect original pixels, and submit truthful partial/unobservable failures."
+  ]
+}

@@ -1,0 +1,3198 @@
+[
+  {
+    "candidate_id": "cand_f65700d4e78253b3a47c544016c44c6f",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "setting"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "hospital",
+        "waiting",
+        "room"
+      ],
+      "embedding_text": "inside a hospital waiting room",
+      "en": "inside a hospital waiting room",
+      "keywords": [
+        "interior",
+        "medical",
+        "documentary"
+      ],
+      "ko": "병원 대기실 안",
+      "tags": [
+        "interior",
+        "medical",
+        "documentary"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "e68f651371778535c727f6d45f1dbfffdbcf5002236ea56d3191ddef3c6c994a",
+        "source": "slot:location:hospital_waiting_room"
+      }
+    ],
+    "source_record_sha256": "38d1ec884c4f7528985f75bacb44308ee0e9365f2e5ae4e082fbe18a3502857d",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_cfbc6419be6453bba3fa3f71302fdc11",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "activation": {
+        "exact_terms": [
+          "an adult's concrete essential trip is blocked at a transit boundary by a visible fare-resource gap while the usable vehicle departs",
+          "a fare or access-cost barrier prevents the same adult from making an essential trip as the viable route closes",
+          "필수 이동 목적을 가진 성인이 운임 자원 부족으로 교통 경계를 통과하지 못하고 차량이 떠나는 장면",
+          "출근·진료 같은 구체적 이동이 운임 또는 접근 비용 장벽에서 막혀 동일 성인이 출발편을 놓치는 장면"
+        ],
+        "exclude_if_any_terms": [
+          "ordinary waiting",
+          "missed train candid",
+          "forgotten wallet",
+          "tourist confusion",
+          "service cancellation",
+          "liminal transit mood"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "authored_components": {
+        "components": [
+          {
+            "evidence_field": "concrete_essential_trip_anchor_phrase",
+            "evidence_terms": [
+              "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler"
+            ],
+            "id": "concrete_essential_trip_anchor",
+            "instruction": "Keep a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler clearly legible as part of the same photographic event.",
+            "match_terms": [
+              "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler"
+            ],
+            "min_content_words": 6,
+            "render_gate": {
+              "description": "The saved image clearly shows that a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler.",
+              "id": "vo_pov_transport_barrier_1",
+              "review_scale": "thumbnail"
+            }
+          },
+          {
+            "evidence_field": "transport_boundary_and_viable_route_phrase",
+            "evidence_terms": [
+              "an operational transit boundary and a viable departing route remain visible in one continuous space"
+            ],
+            "id": "transport_boundary_and_viable_route",
+            "instruction": "Keep an operational transit boundary and a viable departing route remain visible in one continuous space clearly legible as part of the same photographic event.",
+            "match_terms": [
+              "an operational transit boundary and a viable departing route remain visible in one continuous space"
+            ],
+            "min_content_words": 6,
+            "render_gate": {
+              "description": "The saved image clearly shows that an operational transit boundary and a viable departing route remain visible in one continuous space.",
+              "id": "vo_pov_transport_barrier_2",
+              "review_scale": "both"
+            }
+          },
+          {
+            "evidence_field": "visible_fare_or_access_resource_gap_phrase",
+            "evidence_terms": [
+              "the traveler has a visible fare or access-resource gap at that exact boundary"
+            ],
+            "id": "visible_fare_or_access_resource_gap",
+            "instruction": "Keep the traveler has a visible fare or access-resource gap at that exact boundary clearly legible as part of the same photographic event.",
+            "match_terms": [
+              "the traveler has a visible fare or access-resource gap at that exact boundary"
+            ],
+            "min_content_words": 6,
+            "render_gate": {
+              "description": "The saved image clearly shows that the traveler has a visible fare or access-resource gap at that exact boundary.",
+              "id": "vo_pov_transport_barrier_3",
+              "review_scale": "native"
+            }
+          },
+          {
+            "evidence_field": "same_adult_failed_entry_action_phrase",
+            "evidence_terms": [
+              "the same adult's attempted entry visibly stops at the fare-controlled threshold"
+            ],
+            "id": "same_adult_failed_entry_action",
+            "instruction": "Keep the same adult's attempted entry visibly stops at the fare-controlled threshold clearly legible as part of the same photographic event.",
+            "match_terms": [
+              "the same adult's attempted entry visibly stops at the fare-controlled threshold"
+            ],
+            "min_content_words": 6,
+            "render_gate": {
+              "description": "The saved image clearly shows that the same adult's attempted entry visibly stops at the fare-controlled threshold.",
+              "id": "vo_pov_transport_barrier_4",
+              "review_scale": "both"
+            }
+          },
+          {
+            "evidence_field": "departure_or_closure_consequence_phrase",
+            "evidence_terms": [
+              "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+            ],
+            "id": "departure_or_closure_consequence",
+            "instruction": "Keep the usable vehicle departs or the gate closes while the unmade trip remains immediately legible clearly legible as part of the same photographic event.",
+            "match_terms": [
+              "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+            ],
+            "min_content_words": 6,
+            "render_gate": {
+              "description": "The saved image clearly shows that the usable vehicle departs or the gate closes while the unmade trip remains immediately legible.",
+              "id": "vo_pov_transport_barrier_5",
+              "review_scale": "native"
+            }
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v1"
+      },
+      "category": "poverty_access_transport_cost_access_event",
+      "composition_instruction": "Keep a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler clearly legible as part of the same photographic event. Keep an operational transit boundary and a viable departing route remain visible in one continuous space clearly legible as part of the same photographic event. Keep the traveler has a visible fare or access-resource gap at that exact boundary clearly legible as part of the same photographic event. Keep the same adult's attempted entry visibly stops at the fare-controlled threshold clearly legible as part of the same photographic event. Keep the usable vehicle departs or the gate closes while the unmade trip remains immediately legible clearly legible as part of the same photographic event.",
+      "concept_candidate": {
+        "concept_terms": [
+          "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler",
+          "an operational transit boundary and a viable departing route remain visible in one continuous space",
+          "the traveler has a visible fare or access-resource gap at that exact boundary",
+          "the same adult's attempted entry visibly stops at the fare-controlled threshold",
+          "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+        ]
+      },
+      "evidence_requirements": {
+        "concrete_essential_trip_anchor_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler"
+          ]
+        },
+        "departure_or_closure_consequence_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+          ]
+        },
+        "same_adult_failed_entry_action_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the same adult's attempted entry visibly stops at the fare-controlled threshold"
+          ]
+        },
+        "transport_boundary_and_viable_route_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "an operational transit boundary and a viable departing route remain visible in one continuous space"
+          ]
+        },
+        "visible_fare_or_access_resource_gap_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the traveler has a visible fare or access-resource gap at that exact boundary"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "ordinary_waiting",
+        "missed_train_candid",
+        "forgotten_wallet",
+        "tourist_confusion",
+        "service_cancellation",
+        "liminal_transit_mood"
+      ],
+      "render_gates": [
+        {
+          "description": "The saved image clearly shows that a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler.",
+          "id": "vo_pov_transport_barrier_1",
+          "review_scale": "thumbnail"
+        },
+        {
+          "description": "The saved image clearly shows that an operational transit boundary and a viable departing route remain visible in one continuous space.",
+          "id": "vo_pov_transport_barrier_2",
+          "review_scale": "both"
+        },
+        {
+          "description": "The saved image clearly shows that the traveler has a visible fare or access-resource gap at that exact boundary.",
+          "id": "vo_pov_transport_barrier_3",
+          "review_scale": "native"
+        },
+        {
+          "description": "The saved image clearly shows that the same adult's attempted entry visibly stops at the fare-controlled threshold.",
+          "id": "vo_pov_transport_barrier_4",
+          "review_scale": "both"
+        },
+        {
+          "description": "The saved image clearly shows that the usable vehicle departs or the gate closes while the unmade trip remains immediately legible.",
+          "id": "vo_pov_transport_barrier_5",
+          "review_scale": "native"
+        }
+      ],
+      "required_evidence_fields": [
+        "concrete_essential_trip_anchor_phrase",
+        "transport_boundary_and_viable_route_phrase",
+        "visible_fare_or_access_resource_gap_phrase",
+        "same_adult_failed_entry_action_phrase",
+        "departure_or_closure_consequence_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "prompt_label_terms": [],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "semantics": {
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ],
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler"
+              ],
+              "id": "concrete_essential_trip_anchor"
+            },
+            {
+              "any_terms": [
+                "an operational transit boundary and a viable departing route remain visible in one continuous space"
+              ],
+              "id": "transport_boundary_and_viable_route"
+            },
+            {
+              "any_terms": [
+                "the traveler has a visible fare or access-resource gap at that exact boundary"
+              ],
+              "id": "visible_fare_or_access_resource_gap"
+            },
+            {
+              "any_terms": [
+                "the same adult's attempted entry visibly stops at the fare-controlled threshold"
+              ],
+              "id": "same_adult_failed_entry_action"
+            },
+            {
+              "any_terms": [
+                "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+              ],
+              "id": "departure_or_closure_consequence"
+            }
+          ],
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "concrete_essential_trip_anchor",
+            "transport_boundary_and_viable_route",
+            "visible_fare_or_access_resource_gap",
+            "same_adult_failed_entry_action",
+            "departure_or_closure_consequence"
+          ]
+        },
+        "contrast_examples": [
+          "ordinary waiting",
+          "missed train candid",
+          "forgotten wallet",
+          "tourist confusion",
+          "service cancellation",
+          "liminal transit mood"
+        ],
+        "definition": "An adult's concrete essential trip is blocked at a transport boundary by a visible fare or access-resource gap while the usable route departs or closes. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler, an operational transit boundary and a viable departing route remain visible in one continuous space, the traveler has a visible fare or access-resource gap at that exact boundary, the same adult's attempted entry visibly stops at the fare-controlled threshold, and the usable vehicle departs or the gate closes while the unmade trip remains immediately legible.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ]
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "871db635883f444ca03a86be16048b459bc9da7d5f383463a9661479593b4a0d",
+        "source": "visual_profile:transport_affordability_access_barrier_event"
+      }
+    ],
+    "source_record_sha256": "9eb1d0e373869e0cdb6ec6d224e1eac8ce0665188e307ab5a8eb5e60e2bd151f",
+    "record_kind": "visual_profile"
+  },
+  {
+    "candidate_id": "cand_da97514b5a605ad69f59193096d5ec86",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "setting",
+        "relationship"
+      ],
+      "properties": [
+        {
+          "dimension": "setting",
+          "property": "setting.biopunk_realization",
+          "target": "controlled_exit"
+        },
+        {
+          "dimension": "setting",
+          "property": "setting.biopunk_realization",
+          "target": "medical_apparatus"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.biopunk_realization",
+          "target": "controlled_exit"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.biopunk_realization",
+          "target": "medical_apparatus"
+        }
+      ]
+    },
+    "native_full": {
+      "aliases": [
+        "Medical horror",
+        "Bodily autonomy",
+        "a medical apparatus beside a controlled exit",
+        "의료 권위와 출입 장치"
+      ],
+      "application_contract": "One complete optional fictional realization. Adopt only when every stated owner, endpoint and relation fits the independently frozen scene and all affected properties remain open. Preserve the whole EN/KO meaning. Required endpoints hidden by framing or occlusion are unobservable, not passed; partial realization fails the whole case. A source term is no proof of biological function, material chemistry, elapsed change, consent, social causation or viewer response. Claim limit: 가시적 장치와 접근·교환 관계만 제안한다. 소유·계급·동의·생물학적 원인·정치적 해석은 서사 근거로 분리한다. Confusion boundaries: 치료실만으로 강제 실험·비동의 판정.",
+      "definition": "a medical apparatus beside a controlled exit",
+      "en": "A recognizable medical apparatus occupies a room with an identifiable exit. The exit has a visible control mechanism spatially connected to the same treatment area.",
+      "ko": "알아볼 수 있는 의료 장치가 출구를 식별할 수 있는 방 안에 자리한다. 출구에는 눈에 보이는 제어 장치가 있으며, 공간적으로 동일한 처치 구역과 연결되어 있다.",
+      "research_semantics": {
+        "activation": "optional_post_core; no genre label activates a bundle",
+        "basis": "project_authored_visual_inference",
+        "candidate_id": "cand_da97514b5a605ad69f59193096d5ec86",
+        "claim_limit_ko": "가시적 장치와 접근·교환 관계만 제안한다. 소유·계급·동의·생물학적 원인·정치적 해석은 서사 근거로 분리한다.",
+        "confusion_boundaries": [
+          "치료실만으로 강제 실험·비동의 판정"
+        ],
+        "context_description": [],
+        "entity_roots": [
+          "controlled_exit",
+          "medical_apparatus"
+        ],
+        "evidence_mode": "still",
+        "family": "world",
+        "graph_scope": "semantic_registry_only; no engine fact or authority inferred",
+        "id": "W02",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A recognizable medical apparatus occupies a room with an identifiable exit.",
+          "The exit has a visible control mechanism spatially connected to the same treatment area."
+        ],
+        "owned_effect_policy": "conservative union of the actual described owners; no new existing-owner permission",
+        "owner_roots": [
+          "controlled_exit",
+          "medical_apparatus"
+        ],
+        "positive_ko": "알아볼 수 있는 의료 장치가 출구를 식별할 수 있는 방 안에 자리한다. 출구에는 눈에 보이는 제어 장치가 있으며, 공간적으로 동일한 처치 구역과 연결되어 있다.",
+        "proposed_slots": [
+          "world",
+          "situation_context",
+          "narrative_clue"
+        ],
+        "registration_status": "authored_source_module",
+        "relation": {
+          "object": "controlled_exit",
+          "predicate": "shares_space_with",
+          "subject": "medical_apparatus"
+        },
+        "relations": [
+          {
+            "object": "controlled_exit",
+            "predicate": "shares_space_with",
+            "subject": "medical_apparatus"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A recognizable medical apparatus occupies a room with an identifiable exit.",
+            "kind": "component"
+          },
+          {
+            "description": "The exit has a visible control mechanism spatially connected to the same treatment area.",
+            "kind": "component"
+          },
+          {
+            "description": "medical_apparatus shares_space_with controlled_exit",
+            "kind": "relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-biopunk-visual-semantics/v1",
+        "seed_terms": [
+          "Medical horror",
+          "Bodily autonomy"
+        ],
+        "source_refs": [
+          {
+            "claim_limit_ko": "모든 작품에 고어를 필수로 만들지 않는다.",
+            "current_access": "search_body_read",
+            "current_locator": "definition and political/autonomy discussion; not film-by-film pixel analysis",
+            "id": "S01",
+            "prior_access_status": "search_content_read",
+            "quotations_used": false,
+            "reviewed_date_kst": "2026-10-21",
+            "source_type": "institutional_film_criticism",
+            "supported_claim_ko": "신체 변형과 통제 상실, 온전성·자율성의 장르 논의",
+            "title": "BFI: 10 great body horror films",
+            "url": "https://www.bfi.org.uk/lists/10-great-body-horror-films"
+          },
+          {
+            "claim_limit_ko": "미소·의료복·서명처럼 보이는 물체만으로 동의 여부를 판정하지 않는다.",
+            "current_access": "focused_body_read",
+            "current_locator": "dynamic informed consent and genomic privacy",
+            "id": "S41",
+            "prior_access_status": "page_read",
+            "quotations_used": false,
+            "reviewed_date_kst": "2026-10-21",
+            "source_type": "official_research_ethics_background",
+            "supported_claim_ko": "유전체 연구에서 자율성·개인정보·동의의 중요성",
+            "title": "NHGRI: Informed Consent",
+            "url": "https://www.genome.gov/about-genomics/policy-issues/Informed-Consent"
+          }
+        ],
+        "source_support_scope": "definition_and_limit_only; concrete geometry is an authored proposal",
+        "title_en": "a medical apparatus beside a controlled exit",
+        "title_ko": "의료 권위와 출입 장치",
+        "translation_review": "complete EN/KO counterpart; no diagnostic or causal inference",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "6bfc7ead407c5fe69fe0f782dce0352e9a31174bad1bb1ab92aea4c07dd1eae8",
+        "source": "https://www.bfi.org.uk/lists/10-great-body-horror-films"
+      },
+      {
+        "sha256": "6bfc7ead407c5fe69fe0f782dce0352e9a31174bad1bb1ab92aea4c07dd1eae8",
+        "source": "https://www.genome.gov/about-genomics/policy-issues/Informed-Consent"
+      }
+    ],
+    "source_record_sha256": "6c8286256ae6ba7609eb79721834b7b7b5ddfe7747d522b9d8279444134d4bc8",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_39d574e5b3ac596aa672debc9a058499",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "style"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "en": "medical documentary photography",
+      "ko": "의료 기록 사진",
+      "tags": [
+        "medical",
+        "science"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "1e4584c921d6a23b3f6616c28a022219f6960428913800fcda3afcb46ee398bf",
+        "source": "slot:genre:medical"
+      }
+    ],
+    "source_record_sha256": "76e5daf6516c505832ddec24ef2674b4b51c387aa847c7129fb7ead430010c5d",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_3d084985844f595c93b147a1705f07b8",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "en": "a sealed medical chart sleeve with an unreadable seal",
+      "ko": "봉인된 의료 차트 슬리브",
+      "tags": [
+        "human",
+        "clinical",
+        "sealed",
+        "textless",
+        "procedural"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "5ebd61906cb3692a446c25c89e0e84c14fc1c6ba92818d83c25deb20063ff8dc",
+        "source": "slot:prop:sealed_medical_chart_sleeve"
+      }
+    ],
+    "source_record_sha256": "0dcb026cfe78754615a246f2b2355dbea5be36cd2f7266f34ccc1c12953070be",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_7e9f219687ec525093cc64dbba0e3385",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "setting"
+      ],
+      "properties": [
+        {
+          "dimension": "setting",
+          "property": "spatial_structure",
+          "target": "*"
+        }
+      ]
+    },
+    "native_full": {
+      "aliases": [
+        "walls and low ceiling closely bound an adult body; one narrow exit remains visible; body clearance is legible at the bottleneck"
+      ],
+      "concept_terms": [
+        "폐쇄감",
+        "walls and low ceiling closely bound an adult body",
+        "one narrow exit remains visible",
+        "body clearance is legible at the bottleneck"
+      ],
+      "concept_units": [
+        "walls and low ceiling closely bound an adult body",
+        "one narrow exit remains visible",
+        "body clearance is legible at the bottleneck"
+      ],
+      "contextual_usage": {
+        "contexts": [
+          {
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+            "claim_limits": [
+              "This is a project-authored observable interpretation, not a mandatory genre definition or a universal cultural appearance.",
+              "A still image does not establish sound, elapsed time, supernatural causation, biography, mental state, consent, chemical identity or cultural authenticity.",
+              "Approximate discovery is optional. Selecting this realization requires every comparison owner and component, and cannot override frozen requester meaning.",
+              "Reject visual substitutions: tight face crop only; impossibly compressed anatomy"
+            ],
+            "definition": "폐쇄감은 실제 몸과 출구의 여유 공간을 비교한다.",
+            "id": "hr_claustrophobic_body_clearance_observable_scope",
+            "observable_interpretation": "walls and low ceiling closely bound an adult body; one narrow exit remains visible; body clearance is legible at the bottleneck"
+          }
+        ]
+      },
+      "core_assertion_discovery": true,
+      "embedding_text": "폐쇄감의 관찰 가능한 관계 ; 폐쇄감은 실제 몸과 출구의 여유 공간을 비교한다. ; walls and low ceiling closely bound an adult body; one narrow exit remains visible; body clearance is legible at the bottleneck",
+      "en": "walls and low ceiling closely bound an adult body; one narrow exit remains visible; body clearance is legible at the bottleneck",
+      "keywords": [
+        "폐쇄감",
+        "walls and low ceiling closely bound an adult body",
+        "one narrow exit remains visible",
+        "body clearance is legible at the bottleneck"
+      ],
+      "ko": "폐쇄감의 관찰 가능한 관계",
+      "paraphrases": [
+        "폐쇄감은 실제 몸과 출구의 여유 공간을 비교한다.",
+        "walls and low ceiling closely bound an adult body; one narrow exit remains visible; body clearance is legible at the bottleneck"
+      ],
+      "relations": [
+        {
+          "id": "relation_01",
+          "object": "one narrow exit remains visible and body clearance is legible at the bottleneck",
+          "subject": "walls and low ceiling closely bound an adult body",
+          "type": "jointly_visible_in_same_event"
+        }
+      ],
+      "tags": [
+        "observable_relation"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "414b77fdb9cfe4bdbbb768db7b30481c425bf81aef5fc9af41ff7ad2c8035dc8",
+        "source": "slot:space_condition:hr_claustrophobic_body_clearance"
+      }
+    ],
+    "source_record_sha256": "fc9b414a3cf33747d3180005d0bf54bbbbc0f3c10fade42f2cad8e4dae6008a8",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_ffbdfa3dbb1d5d06b3fa6d88332474e9",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "activation": {
+        "exact_terms": [
+          "an open train door separates the carriage from the platform; the passenger crosses the doorway toward the platform; the passenger's step has a plausible floor and threshold support; the exit path remains navigable for the passenger"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "authored_components": {
+        "components": [
+          {
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "an open train door separates the carriage from the platform"
+            ],
+            "id": "component_1",
+            "instruction": "Show this relation on its named owner: an open train door separates the carriage from the platform",
+            "match_terms": [
+              "an open train door separates the carriage from the platform"
+            ],
+            "min_content_words": 3,
+            "render_gate": {
+              "description": "an open train door separates the carriage from the platform. Missing, substituted or partly realized evidence fails.",
+              "id": "vo_ed_subway_exit_1",
+              "review_scale": "both"
+            }
+          },
+          {
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the passenger crosses the doorway toward the platform"
+            ],
+            "id": "component_2",
+            "instruction": "Show this relation on its named owner: the passenger crosses the doorway toward the platform",
+            "match_terms": [
+              "the passenger crosses the doorway toward the platform"
+            ],
+            "min_content_words": 3,
+            "render_gate": {
+              "description": "the passenger crosses the doorway toward the platform. Missing, substituted or partly realized evidence fails.",
+              "id": "vo_ed_subway_exit_2",
+              "review_scale": "both"
+            }
+          },
+          {
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the passenger's step has a plausible floor and threshold support"
+            ],
+            "id": "component_3",
+            "instruction": "Show this relation on its named owner: the passenger's step has a plausible floor and threshold support",
+            "match_terms": [
+              "the passenger's step has a plausible floor and threshold support"
+            ],
+            "min_content_words": 3,
+            "render_gate": {
+              "description": "the passenger's step has a plausible floor and threshold support. Missing, substituted or partly realized evidence fails.",
+              "id": "vo_ed_subway_exit_3",
+              "review_scale": "both"
+            }
+          },
+          {
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the exit path remains navigable for the passenger"
+            ],
+            "id": "component_4",
+            "instruction": "Show this relation on its named owner: the exit path remains navigable for the passenger",
+            "match_terms": [
+              "the exit path remains navigable for the passenger"
+            ],
+            "min_content_words": 3,
+            "render_gate": {
+              "description": "the exit path remains navigable for the passenger. Missing, substituted or partly realized evidence fails.",
+              "id": "vo_ed_subway_exit_4",
+              "review_scale": "both"
+            }
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v1"
+      },
+      "category": "everyday_event_relation",
+      "composition_instruction": "Show this relation on its named owner: an open train door separates the carriage from the platform Show this relation on its named owner: the passenger crosses the doorway toward the platform Show this relation on its named owner: the passenger's step has a plausible floor and threshold support Show this relation on its named owner: the exit path remains navigable for the passenger",
+      "concept_candidate": {
+        "concept_terms": [
+          "열차 문턱에서 하차",
+          "stepping out through an open train door",
+          "an open train door separates the carriage from the platform",
+          "the passenger crosses the doorway toward the platform",
+          "the passenger's step has a plausible floor and threshold support",
+          "the exit path remains navigable for the passenger"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "an open train door separates the carriage from the platform"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the passenger crosses the doorway toward the platform"
+          ]
+        },
+        "component_3_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the passenger's step has a plausible floor and threshold support"
+          ]
+        },
+        "component_4_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the exit path remains navigable for the passenger"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "person merely standing on platform",
+        "closed train door",
+        "commuter flow through a wall"
+      ],
+      "render_gates": [
+        {
+          "description": "an open train door separates the carriage from the platform. Missing, substituted or partly realized evidence fails.",
+          "id": "vo_ed_subway_exit_1",
+          "review_scale": "both"
+        },
+        {
+          "description": "the passenger crosses the doorway toward the platform. Missing, substituted or partly realized evidence fails.",
+          "id": "vo_ed_subway_exit_2",
+          "review_scale": "both"
+        },
+        {
+          "description": "the passenger's step has a plausible floor and threshold support. Missing, substituted or partly realized evidence fails.",
+          "id": "vo_ed_subway_exit_3",
+          "review_scale": "both"
+        },
+        {
+          "description": "the exit path remains navigable for the passenger. Missing, substituted or partly realized evidence fails.",
+          "id": "vo_ed_subway_exit_4",
+          "review_scale": "both"
+        }
+      ],
+      "required_evidence_fields": [
+        "component_1_phrase",
+        "component_2_phrase",
+        "component_3_phrase",
+        "component_4_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "forbidden_prompt_terms": [],
+        "prompt_label_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "semantics": {
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ],
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "an open train door separates the carriage from the platform"
+              ],
+              "id": "component_1"
+            },
+            {
+              "any_terms": [
+                "the passenger crosses the doorway toward the platform"
+              ],
+              "id": "component_2"
+            },
+            {
+              "any_terms": [
+                "the passenger's step has a plausible floor and threshold support"
+              ],
+              "id": "component_3"
+            },
+            {
+              "any_terms": [
+                "the exit path remains navigable for the passenger"
+              ],
+              "id": "component_4"
+            }
+          ],
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "component_1",
+            "component_2",
+            "component_3",
+            "component_4"
+          ]
+        },
+        "contrast_examples": [
+          "person merely standing on platform",
+          "closed train door",
+          "commuter flow through a wall"
+        ],
+        "definition": "an open train door separates the carriage from the platform; the passenger crosses the doorway toward the platform; the passenger's step has a plausible floor and threshold support; the exit path remains navigable for the passenger",
+        "paraphrase_examples": [
+          "열차 문턱에서 하차",
+          "stepping out through an open train door",
+          "A passenger steps across an open train doorway onto the platform while waiting riders leave a clear path."
+        ],
+        "visual_components": [
+          "열차 문턱에서 하차",
+          "stepping out through an open train door",
+          "an open train door separates the carriage from the platform",
+          "the passenger crosses the doorway toward the platform",
+          "the passenger's step has a plausible floor and threshold support",
+          "the exit path remains navigable for the passenger"
+        ]
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "ca98cd42b4e4233af8994d26ec371ce6e409f5b531275b96d8ce1c5cc08bfe64",
+        "source": "visual_profile:ed_subway_exit"
+      }
+    ],
+    "source_record_sha256": "88a60596f8debfc209ad1a35faf0e38e78f6835034900d8bf2719d9636e0b1f7",
+    "record_kind": "visual_profile"
+  },
+  {
+    "candidate_id": "cand_fcb2ee2d9bcb5343b95a969a28d306a2",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "setting"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "en": "a clinic corridor for handover",
+      "ko": "진료 인계 복도",
+      "tags": [
+        "interior",
+        "clinical"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "d001cf0017255883dc1fbc10c196555795117d749100d29dfa3ba7b6bdc148a2",
+        "source": "slot:location:clinic_corridor_handover"
+      }
+    ],
+    "source_record_sha256": "87920b4a3846fe851ecb5dac2905925026e4ce3288ad9ad8f876c9ecd902e2f0",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_207983894627583e9a85e443c526e032",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "composition"
+      ],
+      "properties": [
+        {
+          "dimension": "composition",
+          "property": "layout",
+          "target": "image_plane"
+        }
+      ]
+    },
+    "native_full": {
+      "aliases": [
+        "도표 표식과 범례 대응",
+        "chart marks and legend correspondence on a displayed infographic"
+      ],
+      "concept_units": [
+        "the displayed chart has distinct visible marks and a separate legend",
+        "legend symbols or colors visibly correspond to the chart marks",
+        "axis or category labels remain readable independently of decorative motifs"
+      ],
+      "core_assertion_discovery": true,
+      "embedding_text": "chart marks and legend correspondence on a displayed infographic; 도표 표식과 범례 대응; the displayed chart has distinct visible marks and a separate legend; legend symbols or colors visibly correspond to the chart marks; axis or category labels remain readable independently of decorative motifs; The diagram legend uses the same symbols as the plotted marks and clear category labels.; 도표의 표식과 범례가 같은 기호로 대응하고 분류 라벨을 따로 읽을 수 있다.",
+      "en": "chart marks and legend correspondence on a displayed infographic",
+      "keywords": [
+        "chart marks and legend correspondence on a displayed infographic"
+      ],
+      "ko": "도표 표식과 범례 대응",
+      "paraphrases": [
+        "The diagram legend uses the same symbols as the plotted marks and clear category labels.",
+        "도표의 표식과 범례가 같은 기호로 대응하고 분류 라벨을 따로 읽을 수 있다.",
+        "도표 표식과 범례 대응",
+        "The specified artwork shows the displayed chart has distinct visible marks and a separate legend; legend symbols or colors visibly correspond to the chart marks; axis or category labels remain readable independently of decorative motifs.",
+        "In the photographed scene, the diagram legend uses the same symbols as the plotted marks and clear category labels.",
+        "사진 속 작품에서 도표의 표식과 범례가 같은 기호로 대응하고 분류 라벨을 따로 읽을 수 있다."
+      ],
+      "relations": [
+        {
+          "id": "declared_visual_owner",
+          "object": "displayed artwork",
+          "subject": "chart marks and legend correspondence on a displayed infographic",
+          "type": "applies_to"
+        }
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "98a41f5add725a93d643b9d2214def3e242ea5b51c2aaf0f7878784d0bb357a4",
+        "source": "slot:composition:mg_infographic_layout"
+      }
+    ],
+    "source_record_sha256": "b52a9ea258dd02ea8b565cc5f1a9f288ac53fc9083fbb67ebbdfab0f24686450",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_bb437728681c553b9621979f22a74dbb",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "royal medical chart prop"
+      ],
+      "embedding_text": "royal medical chart connecting care and lineage",
+      "en": "a medical chart stamped with a royal crest",
+      "keywords": [
+        "royal",
+        "princess",
+        "prop"
+      ],
+      "ko": "왕실 문장이 찍힌 의료 차트 소품",
+      "tags": [
+        "human",
+        "prop",
+        "royal",
+        "princess"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "81ed93dda9d95a4616015a3901cb90b4e1bc599448041dfd15004509c16efacd",
+        "source": "slot:prop:royal_medical_chart_prop"
+      }
+    ],
+    "source_record_sha256": "a6e5a0bf9f188812c89cfb5806e5e0748aace40305c12c47137a489c452eaf3c",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_6c3a57082dc85eceab8a713768274406",
+    "conditions": {
+      "for_any": [
+        "human",
+        "clinical"
+      ],
+      "requires_primary_any_tags": [
+        "clinical"
+      ]
+    },
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "nursing identifier chart monitor set",
+        "간호 환자표식 기록 모니터 세트"
+      ],
+      "embedding_text": "one generic de-identified patient marker one open clinical chart and one vital-sign monitor are spatially linked to the same bedside check while all names numbers and brands remain blank or unreadable",
+      "en": "a de-identified patient marker clinical chart and vital-sign monitor linked to the same patient",
+      "keywords": [
+        "patient marker",
+        "clinical chart",
+        "vital monitor",
+        "same-patient relation"
+      ],
+      "ko": "비식별 환자 표식·간호 기록·활력 모니터가 같은 환자 관계로 묶인 세트",
+      "tags": [
+        "prop",
+        "clinical",
+        "nurse",
+        "patient_linked",
+        "documentation",
+        "no_text"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "2aa8ffaa4850e39973c4d37a185cfc3587caf2c4d365c832f488b5f2b811e8ff",
+        "source": "slot:prop:clinical_identifier_chart_monitor_set"
+      }
+    ],
+    "source_record_sha256": "a3eac978838f675f6d87e5a1bef3369fedec7ec1d238795d9a92c94dd61279b4",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_eb97753857885584af0e17f2d30be527",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "activation": {
+        "exact_terms": [
+          "chart marks and legend correspondence on a displayed infographic",
+          "도표 표식과 범례 대응 관계"
+        ],
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "any_terms": [
+                "chart marks and legend correspondence on a displayed infographic",
+                "도표 표식과 범례 대응 관계"
+              ],
+              "id": "qualified_visual_relation"
+            }
+          ]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "authored_components": {
+        "components": [
+          {
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the displayed chart has distinct visible marks and a separate legend"
+            ],
+            "id": "component_1",
+            "instruction": "On the declared visible owner, realize this full component: the displayed chart has distinct visible marks and a separate legend",
+            "match_terms": [
+              "the displayed chart has distinct visible marks and a separate legend"
+            ],
+            "min_content_words": 3,
+            "render_gate": {
+              "description": "the displayed chart has distinct visible marks and a separate legend. Inspect the declared owner in native pixels; partial or unobservable evidence fails.",
+              "id": "vo_mg_infographic_layout_1",
+              "review_scale": "native"
+            }
+          },
+          {
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "legend symbols or colors visibly correspond to the chart marks"
+            ],
+            "id": "component_2",
+            "instruction": "On the declared visible owner, realize this full component: legend symbols or colors visibly correspond to the chart marks",
+            "match_terms": [
+              "legend symbols or colors visibly correspond to the chart marks"
+            ],
+            "min_content_words": 3,
+            "render_gate": {
+              "description": "legend symbols or colors visibly correspond to the chart marks. Inspect the declared owner in native pixels; partial or unobservable evidence fails.",
+              "id": "vo_mg_infographic_layout_2",
+              "review_scale": "native"
+            }
+          },
+          {
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "axis or category labels remain readable independently of decorative motifs"
+            ],
+            "id": "component_3",
+            "instruction": "On the declared visible owner, realize this full component: axis or category labels remain readable independently of decorative motifs",
+            "match_terms": [
+              "axis or category labels remain readable independently of decorative motifs"
+            ],
+            "min_content_words": 3,
+            "render_gate": {
+              "description": "axis or category labels remain readable independently of decorative motifs. Inspect the declared owner in native pixels; partial or unobservable evidence fails.",
+              "id": "vo_mg_infographic_layout_3",
+              "review_scale": "native"
+            }
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v1"
+      },
+      "category": "scoped_static_graphic_relation",
+      "composition_instruction": "On the declared visible owner, realize this full component: the displayed chart has distinct visible marks and a separate legend On the declared visible owner, realize this full component: legend symbols or colors visibly correspond to the chart marks On the declared visible owner, realize this full component: axis or category labels remain readable independently of decorative motifs",
+      "concept_candidate": {
+        "affected_dimensions": [
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "composition",
+            "property": "layout",
+            "target": "image_plane"
+          }
+        ],
+        "concept_terms": [
+          "chart marks and legend correspondence on a displayed infographic",
+          "도표 표식과 범례 대응",
+          "The diagram legend uses the same symbols as the plotted marks and clear category labels.",
+          "도표의 표식과 범례가 같은 기호로 대응하고 분류 라벨을 따로 읽을 수 있다.",
+          "the displayed chart has distinct visible marks and a separate legend",
+          "legend symbols or colors visibly correspond to the chart marks",
+          "axis or category labels remain readable independently of decorative motifs"
+        ],
+        "core_assertion_discovery": true
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the displayed chart has distinct visible marks and a separate legend"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "legend symbols or colors visibly correspond to the chart marks"
+          ]
+        },
+        "component_3_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "axis or category labels remain readable independently of decorative motifs"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "그럴듯한 차트나 장식 수치가 실제 데이터의 정확성을 증명하지 않는다",
+        "입력 없는 수치·추세·과학·금융 결론을 자동 생성하지 않는다",
+        "A broad label, a different owner, a temporal claim or only part of the components cannot substitute for this relation."
+      ],
+      "render_gates": [
+        {
+          "description": "the displayed chart has distinct visible marks and a separate legend. Inspect the declared owner in native pixels; partial or unobservable evidence fails.",
+          "id": "vo_mg_infographic_layout_1",
+          "review_scale": "native"
+        },
+        {
+          "description": "legend symbols or colors visibly correspond to the chart marks. Inspect the declared owner in native pixels; partial or unobservable evidence fails.",
+          "id": "vo_mg_infographic_layout_2",
+          "review_scale": "native"
+        },
+        {
+          "description": "axis or category labels remain readable independently of decorative motifs. Inspect the declared owner in native pixels; partial or unobservable evidence fails.",
+          "id": "vo_mg_infographic_layout_3",
+          "review_scale": "native"
+        }
+      ],
+      "required_evidence_fields": [
+        "component_1_phrase",
+        "component_2_phrase",
+        "component_3_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "forbidden_prompt_terms": [],
+        "prompt_label_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "semantics": {
+        "claim_limits": [
+          "This defines visible static structure only; animation, software, source layers and processing history remain unproven.",
+          "Every declared component and its owner must pass independently; partial or unobservable evidence fails.",
+          "A depicted graphic remains confined to its declared artifact or picture region; the surrounding photographic subject keeps its own form."
+        ],
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "the displayed chart has distinct visible marks and a separate legend"
+              ],
+              "id": "component_1"
+            },
+            {
+              "any_terms": [
+                "legend symbols or colors visibly correspond to the chart marks"
+              ],
+              "id": "component_2"
+            },
+            {
+              "any_terms": [
+                "axis or category labels remain readable independently of decorative motifs"
+              ],
+              "id": "component_3"
+            }
+          ],
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "component_1",
+            "component_2",
+            "component_3"
+          ]
+        },
+        "contrast_examples": [
+          "그럴듯한 차트나 장식 수치가 실제 데이터의 정확성을 증명하지 않는다",
+          "입력 없는 수치·추세·과학·금융 결론을 자동 생성하지 않는다"
+        ],
+        "definition": "the displayed chart has distinct visible marks and a separate legend; legend symbols or colors visibly correspond to the chart marks; axis or category labels remain readable independently of decorative motifs",
+        "paraphrase_examples": [
+          "The diagram legend uses the same symbols as the plotted marks and clear category labels.",
+          "도표의 표식과 범례가 같은 기호로 대응하고 분류 라벨을 따로 읽을 수 있다.",
+          "도표 표식과 범례 대응",
+          "The specified artwork shows the displayed chart has distinct visible marks and a separate legend; legend symbols or colors visibly correspond to the chart marks; axis or category labels remain readable independently of decorative motifs.",
+          "In the photographed scene, the diagram legend uses the same symbols as the plotted marks and clear category labels.",
+          "사진 속 작품에서 도표의 표식과 범례가 같은 기호로 대응하고 분류 라벨을 따로 읽을 수 있다."
+        ],
+        "visual_components": [
+          "the displayed chart has distinct visible marks and a separate legend",
+          "legend symbols or colors visibly correspond to the chart marks",
+          "axis or category labels remain readable independently of decorative motifs"
+        ]
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "c0745b30b5bb2158528e02cef7a1847de156a9efa296d097a80daf74f8422dc3",
+        "source": "visual_profile:mg_infographic_layout_relation"
+      }
+    ],
+    "source_record_sha256": "2d819058633a86a3d2092c00a53d2006d384987d6b37802be9c49e5922f3bf9f",
+    "record_kind": "visual_profile"
+  },
+  {
+    "candidate_id": "cand_91e2026395a75a8192c5af36edb1d9f0",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "care record board",
+        "records board",
+        "chart board",
+        "기록 보드"
+      ],
+      "embedding_text": "care-record board as visible chart and records evidence without readable private text",
+      "en": "a small care-record board with visible tabs and checkmarks",
+      "keywords": [
+        "human",
+        "prop",
+        "records board",
+        "care record",
+        "chart evidence",
+        "surveillance evidence"
+      ],
+      "ko": "환자 기록이 정리된 작은 케어 보드",
+      "tags": [
+        "human",
+        "prop",
+        "clinical",
+        "records",
+        "evidence",
+        "board"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "9d497ab89509a504b63e3f3b7c238f8dbe5661b942fc9cdaf16d44021a97ea5c",
+        "source": "slot:prop:care_record_board_prop"
+      }
+    ],
+    "source_record_sha256": "2f6a7adb99bdb67cd6cc05e2c3778b22b0a2369b255933187e2b46490606fb7f",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_9572e2fb278a54849c31dbb5a6108a16",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "en": "a small clinic handover chart",
+      "ko": "작은 진료 인계 차트",
+      "tags": [
+        "human",
+        "prop",
+        "clinical",
+        "handover"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "6d03a245ffc20a2c4bc44f7027137b23f30b0d93ddfb2b835128c60783972490",
+        "source": "slot:prop:clinic_handover_chart_prop"
+      }
+    ],
+    "source_record_sha256": "130d2cfbcf1f3464c2d8b9a198f4d1b512436810c794bb47f08dee0199c7b694",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_3ee34842c5ff5dec81ed8c74cc3256ea",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "lighting",
+        "material",
+        "relationship",
+        "setting"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "Dental Horror",
+        "치과 의자와 분리된 진료 기구",
+        "치과 호러"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 치과 의자와 분리된 진료 기구",
+      "en": "A reclined dental chair sits beneath a focused examination lamp; a handpiece and a small mirror lie on a separate tray beside the chair.",
+      "ko": "뒤로 기울어진 치과 의자 위에 집중형 진료등이 있고, 핸드피스와 작은 거울이 의자 옆 별도 트레이에 놓여 있다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_3ee34842c5ff5dec81ed8c74cc3256ea",
+        "claim_limit_ko": "기구·공간의 실현이다. 실제 드릴 작동·통증·폭력·공포증 진단을 확정하지 않는다.",
+        "confusion_boundaries": [
+          "수술실",
+          "드릴 소리를 가시 판정",
+          "치과를 고문으로 등치"
+        ],
+        "evidence_mode": "still",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "D14",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A reclined dental chair sits beneath a focused examination lamp; a handpiece and a small mirror lie on a separate tray beside the chair."
+        ],
+        "phrase_en": "A reclined dental chair sits beneath a focused examination lamp; a handpiece and a small mirror lie on a separate tray beside the chair.",
+        "phrase_ko": "뒤로 기울어진 치과 의자 위에 집중형 진료등이 있고, 핸드피스와 작은 거울이 의자 옆 별도 트레이에 놓여 있다.",
+        "positive_ko": "뒤로 기울어진 치과 의자 위에 집중형 진료등이 있고, 핸드피스와 작은 거울이 의자 옆 별도 트레이에 놓여 있다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "location",
+          "prop",
+          "prop_placement"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "chair",
+            "predicate": "above",
+            "subject": "lamp"
+          },
+          {
+            "object": "tray",
+            "predicate": "on",
+            "subject": "handpiece"
+          },
+          {
+            "object": "tray",
+            "predicate": "on",
+            "subject": "mirror"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A reclined dental chair sits beneath a focused examination lamp; a handpiece and a small mirror lie on a separate tray beside the chair.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "lamp above chair",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "handpiece on tray",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "mirror on tray",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Dental Horror"
+        ],
+        "source_refs": [
+          {
+            "access_status": "publisher_search_abstract; open_timeout",
+            "claim_limit_ko": "논문 본문과 개별 프레임 미확인",
+            "id": "S03",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "치과적 폭력·치아 소실·부식의 영화 연구 용례",
+            "title": "Tracing dental horror in contemporary American cinema",
+            "url": "https://intellectdiscover.com/content/journals/10.1386/host_00077_1"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "치과 의자와 분리된 진료 기구",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://intellectdiscover.com/content/journals/10.1386/host_00077_1"
+      }
+    ],
+    "source_record_sha256": "bab1f07ae6dbbc4dd724e3534ad32ccb8d3a67d66f82221528c9efe79fc2985a",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_b02903be03575c7bab86382c46a2b667",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "composition",
+        "count",
+        "material",
+        "relationship",
+        "setting"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "Isolation Ward",
+        "Hospital Horror",
+        "격리 경계의 문·유리·전실",
+        "병원 호러",
+        "격리병동"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 격리 경계의 문·유리·전실",
+      "en": "A glazed door separates a single hospital room from a small anteroom; a second door separates that anteroom from the corridor.",
+      "ko": "유리창이 있는 문이 1인 병실과 작은 전실을 나누고, 두 번째 문이 전실과 복도를 나눈다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_b02903be03575c7bab86382c46a2b667",
+        "claim_limit_ko": "격리 목적·압력 방향·감금·감염을 건축 외형만으로 확정하지 않는다.",
+        "confusion_boundaries": [
+          "감옥 철창",
+          "단순 복도 문"
+        ],
+        "evidence_mode": "still",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "A03",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A glazed door separates a single hospital room from a small anteroom; a second door separates that anteroom from the corridor."
+        ],
+        "phrase_en": "A glazed door separates a single hospital room from a small anteroom; a second door separates that anteroom from the corridor.",
+        "phrase_ko": "유리창이 있는 문이 1인 병실과 작은 전실을 나누고, 두 번째 문이 전실과 복도를 나눈다.",
+        "positive_ko": "유리창이 있는 문이 1인 병실과 작은 전실을 나누고, 두 번째 문이 전실과 복도를 나눈다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "location",
+          "object_structure",
+          "spatial_depth"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "room_and_anteroom",
+            "predicate": "separates",
+            "subject": "door_a"
+          },
+          {
+            "object": "anteroom_and_corridor",
+            "predicate": "separates",
+            "subject": "door_b"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A glazed door separates a single hospital room from a small anteroom; a second door separates that anteroom from the corridor.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "door_a separates room_and_anteroom",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "door_b separates anteroom_and_corridor",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Isolation Ward",
+          "Hospital Horror"
+        ],
+        "source_refs": [
+          {
+            "access_status": "page_and_pressurization_search_body",
+            "claim_limit_ko": "실내 사진만으로 압력·필터·감염안전 인증 불가; 건축 처방 아님",
+            "id": "S05",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "음압 격리와 양압 보호환경의 공기 흐름 목적은 반대",
+            "title": "CDC Environmental Infection Control: Air",
+            "url": "https://www.cdc.gov/infection-control/hcp/environmental-control/air.html"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "격리 경계의 문·유리·전실",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://www.cdc.gov/infection-control/hcp/environmental-control/air.html"
+      }
+    ],
+    "source_record_sha256": "52248962986c89733eb9904cfd06e336527bab71bf8169ffd29ad87c99ed3d7e",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_e9c0396437555d69987a590c1272cb24",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "body_geometry",
+        "relationship"
+      ],
+      "properties": [
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.biopunk_realization",
+          "target": "body"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.biopunk_realization",
+          "target": "body"
+        }
+      ]
+    },
+    "native_full": {
+      "aliases": [
+        "Unreliable body",
+        "Bodily betrayal",
+        "Autonomous organ",
+        "organ direction mismatch",
+        "다른 방향을 향한 기관의 같은 몸"
+      ],
+      "application_contract": "One complete optional fictional realization. Adopt only when every stated owner, endpoint and relation fits the independently frozen scene and all affected properties remain open. Preserve the whole EN/KO meaning. Required endpoints hidden by framing or occlusion are unobservable, not passed; partial realization fails the whole case. A source term is no proof of biological function, material chemistry, elapsed change, consent, social causation or viewer response. Claim limit: 자율 의식·의도·기억 불일치는 가시 방향과 별개 Confusion boundaries: 가려진 시선; 별도 의식 단정.",
+      "definition": "organ direction mismatch",
+      "en": "An attached sensory organ points toward a target different from the face's target. The organ's tissue base and both targets remain readable together.",
+      "ko": "붙어 있는 감각 기관이 얼굴이 향하는 대상과 다른 대상을 향한다. 그 기관의 조직 밑부분과 두 대상을 함께 알아볼 수 있다.",
+      "research_semantics": {
+        "activation": "optional_post_core; no genre label activates a bundle",
+        "basis": "project_authored_visual_inference",
+        "candidate_id": "cand_e9c0396437555d69987a590c1272cb24",
+        "claim_limit_ko": "자율 의식·의도·기억 불일치는 가시 방향과 별개",
+        "confusion_boundaries": [
+          "가려진 시선",
+          "별도 의식 단정"
+        ],
+        "context_description": [],
+        "entity_roots": [
+          "body"
+        ],
+        "evidence_mode": "still",
+        "family": "narrative",
+        "graph_scope": "semantic_registry_only; no engine fact or authority inferred",
+        "id": "N03",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "An attached sensory organ points toward a target different from the face's target.",
+          "The organ's tissue base and both targets remain readable together."
+        ],
+        "owned_effect_policy": "conservative union of the actual described owners; no new existing-owner permission",
+        "owner_roots": [
+          "body"
+        ],
+        "positive_ko": "붙어 있는 감각 기관이 얼굴이 향하는 대상과 다른 대상을 향한다. 그 기관의 조직 밑부분과 두 대상을 함께 알아볼 수 있다.",
+        "proposed_slots": [
+          "narrative_core",
+          "relational_action"
+        ],
+        "registration_status": "authored_source_module",
+        "relation": {
+          "object": "body.main_attention",
+          "predicate": "faces_away_from",
+          "subject": "body.organ"
+        },
+        "relations": [
+          {
+            "object": "body.main_attention",
+            "predicate": "faces_away_from",
+            "subject": "body.organ"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "An attached sensory organ points toward a target different from the face's target.",
+            "kind": "component"
+          },
+          {
+            "description": "The organ's tissue base and both targets remain readable together.",
+            "kind": "component"
+          },
+          {
+            "description": "body.organ faces_away_from body.main_attention",
+            "kind": "relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-biopunk-visual-semantics/v1",
+        "seed_terms": [
+          "Unreliable body",
+          "Bodily betrayal",
+          "Autonomous organ"
+        ],
+        "source_refs": [
+          {
+            "claim_limit_ko": "모든 작품에 고어를 필수로 만들지 않는다.",
+            "current_access": "search_body_read",
+            "current_locator": "definition and political/autonomy discussion; not film-by-film pixel analysis",
+            "id": "S01",
+            "prior_access_status": "search_content_read",
+            "quotations_used": false,
+            "reviewed_date_kst": "2026-10-21",
+            "source_type": "institutional_film_criticism",
+            "supported_claim_ko": "신체 변형과 통제 상실, 온전성·자율성의 장르 논의",
+            "title": "BFI: 10 great body horror films",
+            "url": "https://www.bfi.org.uk/lists/10-great-body-horror-films"
+          }
+        ],
+        "source_support_scope": "definition_and_limit_only; concrete geometry is an authored proposal",
+        "title_en": "organ direction mismatch",
+        "title_ko": "다른 방향을 향한 기관의 같은 몸",
+        "translation_review": "complete EN/KO counterpart; no diagnostic or causal inference",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "8eb70c234977fc727a928514df1f2c6b8b8d87ff3323d0debeab48a330bbfc09",
+        "source": "https://www.bfi.org.uk/lists/10-great-body-horror-films"
+      }
+    ],
+    "source_record_sha256": "25752aeb4fa40718d74662e2a2940631a855461464167b53d0293c7116c9ffd0",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_73975c240937523cbc3936f5b92266f6",
+    "conditions": {
+      "requires_primary_any_tags": [
+        "joseon_naemyeongbu_household_context"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "action"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "조선 궁중 생활 절차",
+        "Joseon court household process"
+      ],
+      "embedding_text": "adult workers connect records seals textiles and ceremonial preparation through observable handoffs in a Joseon residential court without claiming private rank identity or romantic competition",
+      "en": "adults connect document checking seal comparison textile ordering and ceremony preparation into one visible process",
+      "keywords": [
+        "document check",
+        "seal comparison",
+        "textile ordering",
+        "ceremony preparation"
+      ],
+      "ko": "성인들이 문서 확인·인장 대조·직물 정리·의례 준비를 서로 연결된 과정으로 수행하는 행동",
+      "tags": [
+        "harem_visual_semantics",
+        "joseon_naemyeongbu_household_context",
+        "adult",
+        "action"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "71c1e99cce0f30c37904e5e10ee8e7c777ff1316aad830f248950b6871943a99",
+        "source": "slot:action:har_joseon_household_process_action"
+      }
+    ],
+    "source_record_sha256": "653475520cbce600022a985e8ff9d5c8118344c10f3d68bfee983a509c09562f",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_ba2688186cae541b904f5980196d99d0",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "activation": {
+        "exact_terms": [
+          "an adult calmly labels a clearly fictional monstrous prop; the threat object dominates the same workstation."
+        ],
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "any_terms": [
+                "an adult calmly labels a clearly fictional monstrous prop; the threat object dominates the same workstation."
+              ],
+              "id": "complete_owned_proposition"
+            }
+          ]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "authored_components": {
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "an adult calmly labels a clearly fictional monstrous prop"
+            ]
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "the threat object dominates the same workstation"
+            ]
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v2",
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_01",
+            "component_02"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "component_01",
+              "component_02"
+            ],
+            "evidence": [
+              {
+                "field": "component_01_phrase",
+                "requirement": {
+                  "min_content_words": 2,
+                  "must_mention_any": [
+                    "an adult calmly labels a clearly fictional monstrous prop"
+                  ]
+                }
+              },
+              {
+                "field": "component_02_phrase",
+                "requirement": {
+                  "min_content_words": 2,
+                  "must_mention_any": [
+                    "the threat object dominates the same workstation"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Retain all selected comparison owners and connected components together in one readable photograph: an adult calmly labels a clearly fictional monstrous prop; the threat object dominates the same workstation.",
+            "render_gates": [
+              {
+                "description": "Inspect the original image for this component on its stated owner: an adult calmly labels a clearly fictional monstrous prop. Hidden owners, incomplete comparison or a substitute fail this gate.",
+                "id": "vo_hvr_horror_comedy_task_contrast_01",
+                "review_scale": "native"
+              },
+              {
+                "description": "Inspect the original image for this component on its stated owner: the threat object dominates the same workstation. Hidden owners, incomplete comparison or a substitute fail this gate.",
+                "id": "vo_hvr_horror_comedy_task_contrast_02",
+                "review_scale": "native"
+              }
+            ]
+          }
+        ]
+      },
+      "category": "observable_horror_relation",
+      "composition_instruction": "Retain all selected comparison owners and connected components together in one readable photograph: an adult calmly labels a clearly fictional monstrous prop; the threat object dominates the same workstation.",
+      "concept_candidate": {
+        "affected_dimensions": [
+          "setting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "setting",
+            "property": "occupancy",
+            "target": "*"
+          },
+          {
+            "dimension": "setting",
+            "property": "objects",
+            "target": "*"
+          }
+        ],
+        "concept_terms": [
+          "호러 코미디",
+          "an adult calmly labels a clearly fictional monstrous prop",
+          "the threat object dominates the same workstation"
+        ],
+        "core_assertion_discovery": true
+      },
+      "evidence_requirements": {
+        "component_01_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "an adult calmly labels a clearly fictional monstrous prop"
+          ]
+        },
+        "component_02_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "the threat object dominates the same workstation"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "smiling person alone",
+        "comedy effect objectively proved"
+      ],
+      "render_gates": [
+        {
+          "description": "Inspect the original image for this component on its stated owner: an adult calmly labels a clearly fictional monstrous prop. Hidden owners, incomplete comparison or a substitute fail this gate.",
+          "id": "vo_hvr_horror_comedy_task_contrast_01",
+          "review_scale": "native"
+        },
+        {
+          "description": "Inspect the original image for this component on its stated owner: the threat object dominates the same workstation. Hidden owners, incomplete comparison or a substitute fail this gate.",
+          "id": "vo_hvr_horror_comedy_task_contrast_02",
+          "review_scale": "native"
+        }
+      ],
+      "required_evidence_fields": [
+        "component_01_phrase",
+        "component_02_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "forbidden_prompt_terms": [],
+        "prompt_label_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "semantics": {
+        "claim_limits": [
+          "This is a project-authored observable interpretation, not a mandatory genre definition or a universal cultural appearance.",
+          "A still image does not establish sound, elapsed time, supernatural causation, biography, mental state, consent, chemical identity or cultural authenticity.",
+          "Approximate discovery is optional. Selecting this realization requires every comparison owner and component, and cannot override frozen requester meaning."
+        ],
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "an adult calmly labels a clearly fictional monstrous prop"
+              ],
+              "id": "component_01"
+            },
+            {
+              "any_terms": [
+                "the threat object dominates the same workstation"
+              ],
+              "id": "component_02"
+            }
+          ],
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_01",
+            "component_02"
+          ]
+        },
+        "contrast_examples": [
+          "smiling person alone",
+          "comedy effect objectively proved"
+        ],
+        "definition": "an adult calmly labels a clearly fictional monstrous prop; the threat object dominates the same workstation",
+        "interpretation_scope": {
+          "description": "A concrete optional realization of the named research topic; all physical owners must remain readable.",
+          "kind": "project_visual_interpretation"
+        },
+        "paraphrase_examples": [
+          "호러 코미디의 관찰 가능한 관계",
+          "위협과 평범한 업무 대응의 병치를 선택할 수 있다.",
+          "an adult calmly labels a clearly fictional monstrous prop; the threat object dominates the same workstation"
+        ],
+        "visual_components": [
+          "an adult calmly labels a clearly fictional monstrous prop",
+          "the threat object dominates the same workstation"
+        ]
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "f97f7477821d80cc8630a2c437f071bbb0664f58a85e67b79068fe8052163c93",
+        "source": "visual_profile:hvr_profile_horror_comedy_task_contrast"
+      }
+    ],
+    "source_record_sha256": "ddf18464d8be45b1e32b2d92e3c78933cf2f648fb8bb58b44dc3f7a693757883",
+    "record_kind": "visual_profile"
+  },
+  {
+    "candidate_id": "cand_c0dde54a6cbf589785dbcafbd284fcac",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "composition",
+        "count",
+        "material",
+        "relationship",
+        "setting"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "Pathology Laboratory",
+        "Histopathology",
+        "현미경 작업대와 슬라이드 트레이",
+        "병리검사실",
+        "조직병리학·조직병리검사"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 현미경 작업대와 슬라이드 트레이",
+      "en": "A microscope stands on a laboratory bench beside a rack of labeled glass slides and a separate specimen container.",
+      "ko": "실험대 위 현미경 옆에 라벨이 붙은 유리 슬라이드 랙과 별도의 표본 용기가 놓여 있다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_c0dde54a6cbf589785dbcafbd284fcac",
+        "claim_limit_ko": "병리 진단·시료의 인체 기원·세포 상태를 작업대 외형으로 확정하지 않는다.",
+        "confusion_boundaries": [
+          "육안 표본을 현미경 조직으로 취급"
+        ],
+        "evidence_mode": "still",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "A08",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A microscope stands on a laboratory bench beside a rack of labeled glass slides and a separate specimen container."
+        ],
+        "phrase_en": "A microscope stands on a laboratory bench beside a rack of labeled glass slides and a separate specimen container.",
+        "phrase_ko": "실험대 위 현미경 옆에 라벨이 붙은 유리 슬라이드 랙과 별도의 표본 용기가 놓여 있다.",
+        "positive_ko": "실험대 위 현미경 옆에 라벨이 붙은 유리 슬라이드 랙과 별도의 표본 용기가 놓여 있다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "location",
+          "prop",
+          "prop_placement"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "rack",
+            "predicate": "held_by",
+            "subject": "slides"
+          },
+          {
+            "object": "rack",
+            "predicate": "beside",
+            "subject": "microscope"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A microscope stands on a laboratory bench beside a rack of labeled glass slides and a separate specimen container.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "slides held_by rack",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "microscope beside rack",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Pathology Laboratory",
+          "Histopathology"
+        ],
+        "source_refs": [
+          {
+            "access_status": "definition_read",
+            "claim_limit_ko": "표본 외형만으로 진단·채취 동의·생체 상태 확정 불가",
+            "id": "S10",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "검사를 위한 세포·조직 채취",
+            "title": "NCI Biopsy",
+            "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/biopsy"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "현미경 작업대와 슬라이드 트레이",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/biopsy"
+      }
+    ],
+    "source_record_sha256": "5ce691ab9f7ce70b679e9dedde0d295482aeff7a8c0656510ab1dc545c10cf08",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_845f970f594f5fa793a0261bbcabe6e5",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "composition",
+        "material",
+        "relationship",
+        "text"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "Immortal Cell Line",
+        "Biobanking / Nonconsensual Tissue Use",
+        "배양 플라스크·라벨·관찰 배율의 분리",
+        "불멸화 세포주",
+        "인체유래물은행·비동의 조직 사용"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 배양 플라스크·라벨·관찰 배율의 분리",
+      "en": "A translucent culture flask with a small external identifier stands beside a microscope image on a separate screen; the screen image stays inside its bezel.",
+      "ko": "작은 외부 식별자가 붙은 반투명 배양 플라스크가 별도 화면의 현미경 영상 옆에 있고, 영상은 화면 테두리 안에만 머문다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_845f970f594f5fa793a0261bbcabe6e5",
+        "claim_limit_ko": "증식 지속성·개인·계약·동의는 비가시 문맥이다. HeLa의 비동의 채취는 NIH 검색 본문에서 재확인했으나 용기 외형으로 시료 신원을 확인할 수 없다.",
+        "confusion_boundaries": [
+          "플라스크만으로 불멸성·HeLa·동의 침해 확정"
+        ],
+        "evidence_mode": "proxy",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "L02",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A translucent culture flask with a small external identifier stands beside a microscope image on a separate screen; the screen image stays inside its bezel."
+        ],
+        "phrase_en": "A translucent culture flask with a small external identifier stands beside a microscope image on a separate screen; the screen image stays inside its bezel.",
+        "phrase_ko": "작은 외부 식별자가 붙은 반투명 배양 플라스크가 별도 화면의 현미경 영상 옆에 있고, 영상은 화면 테두리 안에만 머문다.",
+        "positive_ko": "작은 외부 식별자가 붙은 반투명 배양 플라스크가 별도 화면의 현미경 영상 옆에 있고, 영상은 화면 테두리 안에만 머문다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "prop",
+          "visible_text",
+          "scale_relation"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "flask",
+            "predicate": "on",
+            "subject": "identifier"
+          },
+          {
+            "object": "screen.bezel",
+            "predicate": "inside",
+            "subject": "micrograph"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A translucent culture flask with a small external identifier stands beside a microscope image on a separate screen; the screen image stays inside its bezel.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "identifier on flask",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "micrograph inside screen.bezel",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Immortal Cell Line",
+          "Biobanking / Nonconsensual Tissue Use"
+        ],
+        "source_refs": [
+          {
+            "access_status": "definition_read",
+            "claim_limit_ko": "완전한 소형 인간·의식체·육안으로 보이는 장기와 등치 금지",
+            "id": "S21",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "배양으로 조직·기관의 일부 구조와 기능을 모사",
+            "title": "NCI Organoid",
+            "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/organoid"
+          },
+          {
+            "access_status": "initial_www_403; official_search_body_reverified",
+            "claim_limit_ko": "검색 본문으로 재확인; 개인 의식·기억 지속성 또는 모든 세포 사용의 포괄 동의가 아님",
+            "id": "S32",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "1951년 동의 없이 얻은 조직에서 HeLa가 유래; 2013년 가족과의 유전체 접근 합의",
+            "title": "NIH-Lacks Family Agreement",
+            "url": "https://grants.nih.gov/policy-and-compliance/policy-topics/sharing-policies/dms/privacy/nih-lacks-family-agreement"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "배양 플라스크·라벨·관찰 배율의 분리",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/organoid"
+      },
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://grants.nih.gov/policy-and-compliance/policy-topics/sharing-policies/dms/privacy/nih-lacks-family-agreement"
+      }
+    ],
+    "source_record_sha256": "145f7ac2f264870195eb0686225570c8c1d73ba832413e61bee56129dbf4cf36",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_8fb856bb67a754a68f81921c6d0ebde8",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "format"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "en": "layout space suitable for short-form split screen",
+      "ko": "숏폼 분할화면에 어울리는 여백",
+      "tags": [
+        "social",
+        "tiktok"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "2448c8ac8417a2151b2568258b24ab41e1fe54b475a1011e286919b3b33cbe29",
+        "source": "slot:format:split_screen_social"
+      }
+    ],
+    "source_record_sha256": "1cbb3bc02fbdecc98a3b516897c93e327f759dce97c40ee4592efa31ecf7c3cc",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_d4fe880ab8ae5f1c8890b74ffec87720",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "expression"
+      ],
+      "properties": [
+        {
+          "dimension": "expression",
+          "property": "face.expression",
+          "target": "main_subject"
+        }
+      ]
+    },
+    "native_full": {
+      "aliases": [
+        "입술을 안쪽으로 말아 넣은 상태",
+        "visible lip surfaces roll inward behind the mouth seam"
+      ],
+      "concept_units": [
+        "visible lip surfaces are tucked inward",
+        "the mouth seam remains closed"
+      ],
+      "contextual_usage": {
+        "contexts": [
+          {
+            "application_conditions": [
+              "Equivalent meaning only; retain the original owner, prerequisites, all effects and guards."
+            ],
+            "id": "cute_equivalent_ae_lip_roll",
+            "limits": [
+              "No emotion, age, universal cuteness or extra actor inferred from this local form."
+            ]
+          }
+        ]
+      },
+      "core_assertion_discovery": true,
+      "embedding_text": "입술을 안쪽으로 말아 넣은 상태; visible lip surfaces are tucked inward; the mouth seam remains closed; 입술을 안쪽으로 말아 넣은 상태; visible lip surfaces roll inward behind the mouth seam",
+      "en": "visible lip surfaces are tucked inward; the mouth seam remains closed",
+      "keywords": [
+        "입술을 안쪽으로 말아 넣은 상태",
+        "visible lip surfaces roll inward behind the mouth seam"
+      ],
+      "ko": "입술을 안쪽으로 말아 넣은 상태",
+      "paraphrases": [
+        "입 선이 닫힌 채 입술 가장자리를 안으로 말아 붉은 입술 면을 줄인다",
+        "The lip margins roll inward while the mouth seam stays closed, reducing the exposed lip surface."
+      ],
+      "relations": [
+        {
+          "id": "actor_owner",
+          "object": "the declared actor's stated local face and eye configuration",
+          "subject": "main_subject",
+          "type": "declared_owner_scope"
+        }
+      ],
+      "tags": [
+        "human",
+        "acting_expression",
+        "expression"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "4336b3e4ad0346bf3ffdbeba6bcf3e85498c612718b0d28922195ea315edf714",
+        "source": "slot:expression:ae_lip_roll"
+      }
+    ],
+    "source_record_sha256": "da3c6a4e2f320b704cabe086f92517aafdefe050cb946448afecac21f6f62d09",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_e91405630a0656a1b2b3c5b31882eed0",
+    "conditions": {
+      "requires_adult_context": true
+    },
+    "effects": {
+      "dimensions": [
+        "age",
+        "body_geometry",
+        "composition",
+        "framing",
+        "relationship",
+        "setting",
+        "subject"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "Anatomical Fragmentation",
+        "Medical Gaze",
+        "하나의 신체 일부로 제한된 프레이밍",
+        "의학적 시선",
+        "해부학적 파편화"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 하나의 신체 일부로 제한된 프레이밍",
+      "en": "A tight photograph frames one adult forearm on a clinical support, excluding the face and the rest of the body while keeping the forearm continuous within the frame.",
+      "ko": "조밀한 사진 구도가 진료 받침대 위 성인의 팔뚝 하나를 담고, 얼굴과 나머지 신체는 화면 밖에 두되 팔뚝은 화면 안에서 연속적으로 보인다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_e91405630a0656a1b2b3c5b31882eed0",
+        "claim_limit_ko": "프레이밍과 신체 절단은 다른 의미다. 얼굴 부재는 비인간화·신원 상실의 증거가 아니다.",
+        "confusion_boundaries": [
+          "실제 절단",
+          "신체 파편을 자동 생성"
+        ],
+        "evidence_mode": "still",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "E12",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A tight photograph frames one adult forearm on a clinical support, excluding the face and the rest of the body while keeping the forearm continuous within the frame."
+        ],
+        "phrase_en": "A tight photograph frames one adult forearm on a clinical support, excluding the face and the rest of the body while keeping the forearm continuous within the frame.",
+        "phrase_ko": "조밀한 사진 구도가 진료 받침대 위 성인의 팔뚝 하나를 담고, 얼굴과 나머지 신체는 화면 밖에 두되 팔뚝은 화면 안에서 연속적으로 보인다.",
+        "positive_ko": "조밀한 사진 구도가 진료 받침대 위 성인의 팔뚝 하나를 담고, 얼굴과 나머지 신체는 화면 밖에 두되 팔뚝은 화면 안에서 연속적으로 보인다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "subject_framing",
+          "body_region",
+          "composition"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "adult.forearm",
+            "predicate": "includes",
+            "subject": "frame"
+          },
+          {
+            "object": "adult.face",
+            "predicate": "excludes",
+            "subject": "frame"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A tight photograph frames one adult forearm on a clinical support, excluding the face and the rest of the body while keeping the forearm continuous within the frame.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "frame includes adult.forearm",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "frame excludes adult.face",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Anatomical Fragmentation",
+          "Medical Gaze"
+        ],
+        "source_refs": [
+          {
+            "access_status": "publisher_search_abstract; open_failed",
+            "claim_limit_ko": "장 전체 또는 작품의 개별 장면을 읽은 증거 아님",
+            "id": "S01",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "의료 음모·실험, 정신의료기관, 전염이라는 연구 연결점",
+            "title": "Medical Humanities and the Twentieth-Century Gothic",
+            "url": "https://academic.oup.com/edinburgh-scholarship-online/book/56658/chapter-abstract/453346976"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "하나의 신체 일부로 제한된 프레이밍",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://academic.oup.com/edinburgh-scholarship-online/book/56658/chapter-abstract/453346976"
+      }
+    ],
+    "source_record_sha256": "91b3a81bd57647d358c1de568bc8dd937594bddd6f3593e7e09031c2bed4740a",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_b6217834063b569eb5a2b6beff32d428",
+    "conditions": {
+      "requires_adult_context": true
+    },
+    "effects": {
+      "dimensions": [
+        "age",
+        "appearance",
+        "composition",
+        "framing",
+        "material",
+        "relationship",
+        "subject"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "Medical Gaze",
+        "Dehumanization / Objectification",
+        "Anatomical Fragmentation",
+        "검사 화면 앞에서 가려지는 얼굴",
+        "의학적 시선",
+        "비인간화·대상화",
+        "해부학적 파편화"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 검사 화면 앞에서 가려지는 얼굴",
+      "en": "A large medical-image display occupies the foreground while an adult patient remains partly hidden behind it; the display and the person remain separate objects.",
+      "ko": "큰 의료 영상 화면이 전경을 차지하고 성인 환자는 그 뒤에 일부 가려져 있으며, 화면과 인물은 별개 물체로 남아 있다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_b6217834063b569eb5a2b6beff32d428",
+        "claim_limit_ko": "구도는 대상화의 창작 대리형이다. 실제 비인간화·직업적 태도·진단은 사진에서 확정하지 않는다.",
+        "confusion_boundaries": [
+          "인체와 영상의 융합",
+          "의사 악의 확정"
+        ],
+        "evidence_mode": "proxy",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "E04",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A large medical-image display occupies the foreground while an adult patient remains partly hidden behind it; the display and the person remain separate objects."
+        ],
+        "phrase_en": "A large medical-image display occupies the foreground while an adult patient remains partly hidden behind it; the display and the person remain separate objects.",
+        "phrase_ko": "큰 의료 영상 화면이 전경을 차지하고 성인 환자는 그 뒤에 일부 가려져 있으며, 화면과 인물은 별개 물체로 남아 있다.",
+        "positive_ko": "큰 의료 영상 화면이 전경을 차지하고 성인 환자는 그 뒤에 일부 가려져 있으며, 화면과 인물은 별개 물체로 남아 있다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "composition",
+          "visual_hierarchy",
+          "subject_framing"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "patient.part",
+            "predicate": "occludes",
+            "subject": "display"
+          },
+          {
+            "object": "patient",
+            "predicate": "foreground_to",
+            "subject": "display"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A large medical-image display occupies the foreground while an adult patient remains partly hidden behind it; the display and the person remain separate objects.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "display occludes patient.part",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "display foreground_to patient",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Medical Gaze",
+          "Dehumanization / Objectification",
+          "Anatomical Fragmentation"
+        ],
+        "source_refs": [
+          {
+            "access_status": "publisher_search_abstract; open_failed",
+            "claim_limit_ko": "장 전체 또는 작품의 개별 장면을 읽은 증거 아님",
+            "id": "S01",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "의료 음모·실험, 정신의료기관, 전염이라는 연구 연결점",
+            "title": "Medical Humanities and the Twentieth-Century Gothic",
+            "url": "https://academic.oup.com/edinburgh-scholarship-online/book/56658/chapter-abstract/453346976"
+          },
+          {
+            "access_status": "primer_body_read",
+            "claim_limit_ko": "검사 수치·차트 불일치만으로 오진·과실·악의 확정 불가",
+            "id": "S45",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "진단 지연·누락, 인지 편향과 시스템 문제",
+            "title": "AHRQ PSNet Diagnostic Errors",
+            "url": "https://psnet.ahrq.gov/primer/diagnostic-errors"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "검사 화면 앞에서 가려지는 얼굴",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://academic.oup.com/edinburgh-scholarship-online/book/56658/chapter-abstract/453346976"
+      },
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://psnet.ahrq.gov/primer/diagnostic-errors"
+      }
+    ],
+    "source_record_sha256": "aa22f4d4f3338d9ba22922428c3f129e35d4d0c439f9a2c4d01d446c24ddd967",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_2023f0db6e9a55fe86cb809f0b764f54",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "setting"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "사용 목적에 맞는 생활 흔적",
+        "use trace affordance relation"
+      ],
+      "concept_units": [
+        "사용 목적에 맞는 생활 흔적",
+        "used cup",
+        "working surface",
+        "clear passage",
+        "a recently used object rests on a stable working surface",
+        "the object is placed within the user's reach",
+        "the adjacent walking route remains clear"
+      ],
+      "embedding_text": "사용 목적에 맞는 생활 흔적; A recently used mug rests within reach beside a folded cloth, with the walking route left clear.; a recently used object rests on a stable working surface; the object is placed within the user's reach; the adjacent walking route remains clear",
+      "en": "A recently used mug rests within reach beside a folded cloth, with the walking route left clear.",
+      "keywords": [
+        "lived-in environment",
+        "documentary photography",
+        "incidental background details"
+      ],
+      "ko": "사용 목적에 맞는 생활 흔적",
+      "relations": [
+        {
+          "id": "rb_use_trace_affordance_owner_relation",
+          "object": "the selected connected environment and its visible receiving surfaces",
+          "subject": "선택한 작업면과 사용하는 소품",
+          "type": "scene_bound_owner_relation"
+        }
+      ],
+      "tags": [
+        "photographic_environment",
+        "realistic_background",
+        "space_condition"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "cecb8e5cead9646c778cb8416383e94b07a5bb17959cdcc879401e1876afc49e",
+        "source": "slot:space_condition:rb_use_trace_affordance_candidate"
+      }
+    ],
+    "source_record_sha256": "50be2345bda35c8c6425f86743107386f0a302b36e1714eab89e7c8633fe36e3",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_21f2144e85f05e7ca516163f86081030",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_full": {
+      "activation": {
+        "exact_terms": [
+          "decision uncertainty display",
+          "visible choice uncertainty",
+          "선택지 사이 혼란",
+          "결정 전 혼란 반응"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "authored_components": {
+        "components": [
+          {
+            "id": "two_visible_alternatives",
+            "match_terms": [
+              "two distinct physical options remain visible",
+              "two swatches samples routes or controls can be compared",
+              "서로 다른 두 선택 대상이 동시에 보임"
+            ]
+          },
+          {
+            "id": "comparison_gaze",
+            "match_terms": [
+              "irises land on one option while head or tool geometry remains between both",
+              "gaze lands on one visible alternative during a shift from the other",
+              "시선은 한 선택지에 닿고 머리나 도구는 두 선택지 사이의 비교축을 유지함"
+            ]
+          },
+          {
+            "id": "restrained_face_tension",
+            "match_terms": [
+              "slight brow asymmetry or knit with mild lip tension",
+              "one brow lifts while the mouth remains lightly pressed",
+              "한쪽 눈썹 변화와 약한 입술 긴장이 함께 보임"
+            ]
+          },
+          {
+            "id": "paused_choice_action",
+            "match_terms": [
+              "hand tool or pen pauses midway between options",
+              "reach stops before touching either alternative",
+              "손이나 도구가 선택 전 중간에서 멈춤"
+            ]
+          },
+          {
+            "id": "unresolved_decision_state",
+            "match_terms": [
+              "neither option has yet been selected",
+              "both alternatives remain available and unchanged",
+              "어느 선택도 아직 실행되지 않음"
+            ]
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v2",
+        "discovery": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "two_visible_alternatives",
+            "comparison_gaze",
+            "restrained_face_tension",
+            "paused_choice_action",
+            "unresolved_decision_state"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "two_visible_alternatives",
+              "comparison_gaze",
+              "restrained_face_tension",
+              "paused_choice_action",
+              "unresolved_decision_state"
+            ],
+            "evidence": [
+              {
+                "field": "visible_alternatives_phrase",
+                "requirement": {
+                  "min_content_words": 4,
+                  "must_mention_any": [
+                    "two distinct physical options remain visible",
+                    "two swatches remain visible",
+                    "two samples remain visible",
+                    "two controls remain visible"
+                  ]
+                }
+              },
+              {
+                "field": "comparison_gaze_phrase",
+                "requirement": {
+                  "min_content_words": 5,
+                  "must_mention_any": [
+                    "irises land on one option while the tool remains between both",
+                    "gaze lands on one visible alternative during a shift from the other",
+                    "head angle and suspended tool preserve both options in comparison"
+                  ]
+                }
+              },
+              {
+                "field": "facial_tension_phrase",
+                "requirement": {
+                  "min_content_words": 4,
+                  "must_mention_any": [
+                    "slight brow asymmetry with mild lip tension",
+                    "one brow lifts while the mouth remains lightly pressed",
+                    "slight brow knit and lightly pressed lips"
+                  ]
+                }
+              },
+              {
+                "field": "paused_action_phrase",
+                "requirement": {
+                  "min_content_words": 4,
+                  "must_mention_any": [
+                    "hand pauses midway between options",
+                    "tool pauses midway between options",
+                    "reach stops before touching either alternative"
+                  ]
+                }
+              },
+              {
+                "field": "unresolved_choice_phrase",
+                "requirement": {
+                  "min_content_words": 4,
+                  "must_mention_any": [
+                    "neither option has yet been selected",
+                    "both alternatives remain available and unchanged"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Keep two genuinely different options, slight brow or mouth tension, and a hand, pen, or tool paused before selection in one readable frame. A still image cannot show eyes looking in two directions at once: aim the irises at one visible option while the head angle or suspended tool remains geometrically between both, so the comparison axis survives without a split-gaze artifact. Neither option may already be chosen, and a generic puzzled face or ordinary inspection of one item is insufficient.",
+            "render_gates": [
+              {
+                "description": "Two distinct and comparable physical alternatives are simultaneously visible and remain clearly separate.",
+                "id": "vo_decision_uncertainty_two_options",
+                "review_scale": "both"
+              },
+              {
+                "description": "The irises visibly land on one alternative while head angle or paused-tool geometry keeps both alternatives in active comparison; impossible simultaneous split gaze and unrelated fixation both fail.",
+                "id": "vo_decision_uncertainty_comparison_gaze",
+                "review_scale": "native"
+              },
+              {
+                "description": "Restrained brow asymmetry or knitting and mild mouth tension support comparison without becoming an exaggerated cartoon face.",
+                "id": "vo_decision_uncertainty_face_action",
+                "review_scale": "native"
+              },
+              {
+                "description": "A hand, pen, or tool is visibly paused before either alternative is selected.",
+                "id": "vo_decision_uncertainty_paused_action",
+                "review_scale": "both"
+              },
+              {
+                "description": "The whole frame reads as an unresolved comparison rather than completed selection, inspection, skepticism, or failure.",
+                "id": "vo_decision_uncertainty_unresolved",
+                "review_scale": "thumbnail"
+              }
+            ]
+          }
+        ]
+      },
+      "category": "context_bound_affect_display",
+      "composition_instruction": "Keep two genuinely different options, slight brow or mouth tension, and a hand, pen, or tool paused before selection in one readable frame. A still image cannot show eyes looking in two directions at once: aim the irises at one visible option while the head angle or suspended tool remains geometrically between both, so the comparison axis survives without a split-gaze artifact. Neither option may already be chosen, and a generic puzzled face or ordinary inspection of one item is insufficient.",
+      "concept_candidate": {
+        "concept_terms": [
+          "two visible alternatives",
+          "still-frame comparison eyeline",
+          "head or tool axis spanning both options",
+          "slight brow asymmetry",
+          "mild lip tension",
+          "paused hand between options",
+          "unresolved choice",
+          "not face-only confusion"
+        ]
+      },
+      "evidence_requirements": {
+        "comparison_gaze_phrase": {
+          "min_content_words": 5,
+          "must_mention_any": [
+            "irises land on one option while the tool remains between both",
+            "gaze lands on one visible alternative during a shift from the other",
+            "head angle and suspended tool preserve both options in comparison"
+          ]
+        },
+        "facial_tension_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "slight brow asymmetry with mild lip tension",
+            "one brow lifts while the mouth remains lightly pressed",
+            "slight brow knit and lightly pressed lips"
+          ]
+        },
+        "paused_action_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "hand pauses midway between options",
+            "tool pauses midway between options",
+            "reach stops before touching either alternative"
+          ]
+        },
+        "unresolved_choice_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "neither option has yet been selected",
+            "both alternatives remain available and unchanged"
+          ]
+        },
+        "visible_alternatives_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "two distinct physical options remain visible",
+            "two swatches remain visible",
+            "two samples remain visible",
+            "two controls remain visible"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "single_target_concentration",
+        "ordinary_single_item_inspection",
+        "impossible_simultaneous_split_gaze",
+        "skeptical_person_directed_side_eye",
+        "post_failure_frustration",
+        "puzzled_face_without_options",
+        "completed_choice"
+      ],
+      "render_gates": [
+        {
+          "description": "Two distinct and comparable physical alternatives are simultaneously visible and remain clearly separate.",
+          "id": "vo_decision_uncertainty_two_options",
+          "review_scale": "both"
+        },
+        {
+          "description": "The irises visibly land on one alternative while head angle or paused-tool geometry keeps both alternatives in active comparison; impossible simultaneous split gaze and unrelated fixation both fail.",
+          "id": "vo_decision_uncertainty_comparison_gaze",
+          "review_scale": "native"
+        },
+        {
+          "description": "Restrained brow asymmetry or knitting and mild mouth tension support comparison without becoming an exaggerated cartoon face.",
+          "id": "vo_decision_uncertainty_face_action",
+          "review_scale": "native"
+        },
+        {
+          "description": "A hand, pen, or tool is visibly paused before either alternative is selected.",
+          "id": "vo_decision_uncertainty_paused_action",
+          "review_scale": "both"
+        },
+        {
+          "description": "The whole frame reads as an unresolved comparison rather than completed selection, inspection, skepticism, or failure.",
+          "id": "vo_decision_uncertainty_unresolved",
+          "review_scale": "thumbnail"
+        }
+      ],
+      "required_evidence_fields": [
+        "visible_alternatives_phrase",
+        "comparison_gaze_phrase",
+        "facial_tension_phrase",
+        "paused_action_phrase",
+        "unresolved_choice_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "forbidden_prompt_terms": [
+          "mind is confused",
+          "indecisive personality"
+        ],
+        "prompt_label_terms": [
+          "decision-uncertainty display"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "semantics": {
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "two distinct physical options remain visible",
+                "two swatches samples routes or controls can be compared",
+                "서로 다른 두 선택 대상이 동시에 보임"
+              ],
+              "id": "two_visible_alternatives"
+            },
+            {
+              "any_terms": [
+                "irises land on one option while head or tool geometry remains between both",
+                "gaze lands on one visible alternative during a shift from the other",
+                "시선은 한 선택지에 닿고 머리나 도구는 두 선택지 사이의 비교축을 유지함"
+              ],
+              "id": "comparison_gaze"
+            },
+            {
+              "any_terms": [
+                "slight brow asymmetry or knit with mild lip tension",
+                "one brow lifts while the mouth remains lightly pressed",
+                "한쪽 눈썹 변화와 약한 입술 긴장이 함께 보임"
+              ],
+              "id": "restrained_face_tension"
+            },
+            {
+              "any_terms": [
+                "hand tool or pen pauses midway between options",
+                "reach stops before touching either alternative",
+                "손이나 도구가 선택 전 중간에서 멈춤"
+              ],
+              "id": "paused_choice_action"
+            },
+            {
+              "any_terms": [
+                "neither option has yet been selected",
+                "both alternatives remain available and unchanged",
+                "어느 선택도 아직 실행되지 않음"
+              ],
+              "id": "unresolved_decision_state"
+            }
+          ],
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "two_visible_alternatives",
+            "comparison_gaze",
+            "restrained_face_tension",
+            "paused_choice_action",
+            "unresolved_decision_state"
+          ]
+        },
+        "contrast_examples": [
+          "focused inspection of one object",
+          "skeptical side-eye toward a person",
+          "frustration after a failed choice",
+          "a confused face with no visible alternatives or paused action"
+        ],
+        "definition": "A visible pre-decision display in which an adult compares at least two readable alternatives, the still-frame eyeline lands on one alternative while head or tool geometry keeps both in active comparison, slight brow or mouth tension accompanies a paused hand or tool, and the choice remains unresolved; no single face action is treated as proof of confusion.",
+        "paraphrase_examples": [
+          "두 개의 실제 선택지를 번갈아 보던 중 한 선택지에 시선이 닿고 손은 둘 사이에서 멈춘 성인의 비교 장면",
+          "irises landing on one labeled alternative while head angle and a paused reach preserve both options in the comparison",
+          "an unresolved choice shown by targets, still-frame comparison geometry, restrained facial tension, and interrupted action"
+        ]
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "542c7d147a0c8965e8552c3873f265d135b3145e53f66b62f0689cc8a1f702e1",
+        "source": "visual_profile:decision_uncertainty_display"
+      }
+    ],
+    "source_record_sha256": "09497eddd3e982572423e36895efb20e18f0436a7e35be1f3979ada390c3b6f3",
+    "record_kind": "visual_profile"
+  },
+  {
+    "candidate_id": "cand_652d61d36a315952b7d0183774537377",
+    "conditions": {
+      "requires_adult_context": true
+    },
+    "effects": {
+      "dimensions": [
+        "age",
+        "appearance",
+        "body_geometry",
+        "material",
+        "pose",
+        "relationship",
+        "setting",
+        "subject"
+      ],
+      "properties": []
+    },
+    "native_full": {
+      "aliases": [
+        "Institutional Horror",
+        "Caregiver–Captor",
+        "침상 난간과 닿지 않는 호출기",
+        "제도적 호러",
+        "돌봄 제공자이자 감금자"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 침상 난간과 닿지 않는 호출기",
+      "en": "An adult lies behind a raised bed rail while the call handset rests on a wall hook beyond the adult’s outstretched hand.",
+      "ko": "성인이 올린 침상 난간 안에 누워 있고, 호출기는 성인이 뻗은 손이 닿지 않는 벽 고리에 걸려 있다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_652d61d36a315952b7d0183774537377",
+        "claim_limit_ko": "거리와 장애물만 가시 사실이다. 감금 의도·돌봄 방치·환자의 능력은 서사 문맥이다.",
+        "confusion_boundaries": [
+          "침상 안전장치를 고문으로 확정",
+          "거리 때문에 동의 상실 확정"
+        ],
+        "evidence_mode": "proxy",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "E01",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "An adult lies behind a raised bed rail while the call handset rests on a wall hook beyond the adult’s outstretched hand."
+        ],
+        "phrase_en": "An adult lies behind a raised bed rail while the call handset rests on a wall hook beyond the adult’s outstretched hand.",
+        "phrase_ko": "성인이 올린 침상 난간 안에 누워 있고, 호출기는 성인이 뻗은 손이 닿지 않는 벽 고리에 걸려 있다.",
+        "positive_ko": "성인이 올린 침상 난간 안에 누워 있고, 호출기는 성인이 뻗은 손이 닿지 않는 벽 고리에 걸려 있다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "proxemics",
+          "prop_placement",
+          "body_pose"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "patient_and_handset",
+            "predicate": "between",
+            "subject": "rail"
+          },
+          {
+            "object": "patient.hand",
+            "predicate": "beyond",
+            "subject": "handset"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "An adult lies behind a raised bed rail while the call handset rests on a wall hook beyond the adult’s outstretched hand.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "rail between patient_and_handset",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "handset beyond patient.hand",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Institutional Horror",
+          "Caregiver–Captor"
+        ],
+        "source_refs": [
+          {
+            "access_status": "publisher_search_abstract; open_failed",
+            "claim_limit_ko": "장 전체 또는 작품의 개별 장면을 읽은 증거 아님",
+            "id": "S01",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "의료 음모·실험, 정신의료기관, 전염이라는 연구 연결점",
+            "title": "Medical Humanities and the Twentieth-Century Gothic",
+            "url": "https://academic.oup.com/edinburgh-scholarship-online/book/56658/chapter-abstract/453346976"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "침상 난간과 닿지 않는 호출기",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://academic.oup.com/edinburgh-scholarship-online/book/56658/chapter-abstract/453346976"
+      }
+    ],
+    "source_record_sha256": "a47f7a158f90587b1cad01a331051e0d526d0e59fb83be6004a0b8a4eea30a34",
+    "record_kind": "visual_option"
+  },
+  {
+    "candidate_id": "cand_34c2c168f17e52639fa07be8f0841af1",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "expression"
+      ],
+      "properties": [
+        {
+          "dimension": "expression",
+          "property": "face.expression",
+          "target": "main_subject"
+        }
+      ]
+    },
+    "native_full": {
+      "aliases": [
+        "입 중립형 눈웃음"
+      ],
+      "concept_units": [
+        "cheek and outer eye regions rise gently",
+        "both eyes stay open through softened apertures",
+        "lips remain neutral or only minimally curved in this proposed eye smile variant"
+      ],
+      "core_assertion_discovery": true,
+      "embedding_text": "입 중립형 눈웃음; neutral mouth eye smile; cheek and outer eye regions rise gently; both eyes stay open through softened apertures; lips remain neutral or only minimally curved in this proposed eye smile variant; 볼과 눈꼬리 주변이 가볍게 올라간다; 양 눈이 부드럽게 좁아진 채 열려 있다; 입술은 중립이거나 아주 조금만 굽어진다",
+      "en": "cheek and outer eye regions rise gently; both eyes stay open through softened apertures; lips remain neutral or only minimally curved in this proposed eye smile variant",
+      "keywords": [
+        "입 중립형 눈웃음",
+        "neutral mouth eye smile"
+      ],
+      "ko": "입 중립형 눈웃음",
+      "relations": [
+        {
+          "id": "visible_geometry",
+          "object": "main_subject.face.cheek_rise",
+          "subject": "main_subject.face.eye_apertures",
+          "type": "narrow_with"
+        },
+        {
+          "id": "owner_1",
+          "object": "main_subject",
+          "subject": "main_subject.face",
+          "type": "belongs_to"
+        }
+      ],
+      "tags": [
+        "human",
+        "selfie_visual_form",
+        "expression"
+      ]
+    },
+    "graphs": {},
+    "graph_provenance": {},
+    "provenance": [
+      {
+        "sha256": "1daac774d2630d39afd44c83f8e35903dee42bca317324072e19d497a0d02f44",
+        "source": "slot:expression:sf_004_base"
+      }
+    ],
+    "source_record_sha256": "6990df42b165f977fbcef3865a98659025102aa54ff1a04a40478fbeff84e2c6",
+    "record_kind": "visual_option"
+  }
+]

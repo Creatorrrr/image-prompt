@@ -1,0 +1,146 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "3f25c8fa05be207ce67eeaabddd187519484c6f624d065b6f287aeffb017cdac",
+  "interpreted_intent": "Requester asks for independently chosen random medical-horror concepts using the supplied image and actual image-generation tests. The linked prior requesting-user topic resolves the current topic to medical horror. C independently sampled a cryobank interruption: a lone thawed specimen surrounded by frozen neighbors. The particular laboratory role, thermal anomaly, tissue culture, clothing, paused gesture, face position, camera, and lighting are agent-owned choices and are not requester-owned event mechanics. The reference is used only for facial proportions and the short dark bob; it establishes no actual identity, age, health, biography, emotion, or consent. The scene aims for quiet biomedical dread: comparative frost states explain why her inspection stops, while the reachable but untouched ampoule makes her next act uncertain. Sensual 1 contributes only the subtle intimate presence of her face and ordinary clothing; fetish 0 and surreal 0 add neither eroticized apparatus nor impossible effects. Creativity 1 supports restrained local variation after retrieval.",
+  "subject": "A fictional person visually guided by the supplied portrait, cast as a cryobank researcher",
+  "setting": "A small cryobank room with an open frosted freezer and stainless-steel inspection counter",
+  "event": "A still moment of biomedical unease while a fictional researcher notices one thawed specimen among frozen ampoules",
+  "visual_priorities": [
+    "The reference-guided face and short dark bob remain recognizable while her attention rests on the sample",
+    "One transparent thawed ampoule and its wet base stand between visibly frosted neighboring ampoules",
+    "A paused hovering hand makes the distance before specimen contact visible",
+    "The open freezer and supported rack connect the anomaly to a controlled cryobank environment"
+  ],
+  "baseline_prompt_en": "A medical-horror photograph built around a moment of biomedical unease. Portray a fictional person using the supplied reference image, preserving facial proportions and the short dark bob with wispy fringe. She appears as a laboratory researcher at a stainless-steel counter in a small cryobank room after midnight. An open freezer behind her reveals orderly racks coated in white frost. She has slid one metal vial rack onto the counter and stopped. Every neighboring ampoule is clouded with ice, but a single transparent ampoule in the front row contains thawed amber liquid and a pale folded tissue culture; clear droplets gather beneath its sealed cap and a fresh wet circle spreads around its base. The dry frosted neighbors make this one warm-looking specimen immediately conspicuous. Her left gloved hand braces the rack's near edge while her right gloved hand hovers just above the anomalous ampoule, fingertips paused before contact. The tray rests fully on the counter; her wrists and forearms lead clearly back to her seated body. Her attention stays on the specimen, brows subtly tightened, lips gently parted as she weighs the unexplained change. An unbuttoned white laboratory coat falls over a charcoal tank, its ordinary softness and the quiet light on her cheek lending a subtle intimate human presence against the cold apparatus. Frame from her waist to above her head with the specimen rack prominent in the lower foreground, her three-quarter face on the left and the open freezer receding on the right. A cool task lamp grazes the vial glass and damp steel, while a dim warm corridor light catches her cheek and the edge of her hair. Moderate depth of field keeps her face, hovering fingers and thawed vial readable together. Real photographic skin, fine flyaway hair, matte frost and condensed water; restrained clinical color, a still, unresolved inspection.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제와 랜덤한 컨셉",
+      "source_text": "서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "The prior requesting-user topic identifies medical horror. The request leaves the particular test concept to an independent random authorial selection. A cryobank sample anomaly is one agent-owned realization; its precise mechanics are not a requester prescription.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지 활용",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as visual appearance guidance for a fictional person. The author elects the face and short dark bob as the reference scope, without inferring biography, illness, inner life, clothing, exposure, age or consent from appearance.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "A medical-horror photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional person using the supplied reference image"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "a moment of biomedical unease"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "preserving facial proportions and the short dark bob with wispy fringe"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional person using the supplied reference image"
+      }
+    },
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic photographic medical horror",
+    "family": "quiet clinical realism",
+    "evidence": [
+      "matte frost and condensed water",
+      "a still, unresolved inspection"
+    ]
+  },
+  "variation_key": "independent-c-cryobank-thaw-anomaly"
+}

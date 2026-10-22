@@ -1,0 +1,78 @@
+{
+  "schema": "photo-arm-retrieval-exposure-qualification/v1",
+  "generation_id": "3ed7d4cd1bacbf4bea873116a5ff51b113e6f9ed5b983889d85f84933fd533b5",
+  "query_results": [
+    {
+      "query_id": "concept_tension",
+      "lane_calls": {
+        "BM25F": 1,
+        "local_cosine": 1
+      },
+      "returned_candidates": 0,
+      "projection_mode": "nonpositive_scope_without_requested_change",
+      "projection_reason": "no_independently_requested_positive_change",
+      "query_scope_limitation": {
+        "unmodeled_restricted_change": {
+          "asserts": false,
+          "exclusion_only": true,
+          "intent_mode": "unmodeled_restricted_change",
+          "native_approval": false,
+          "witnesses": [
+            {
+              "end": 468,
+              "pointer": "/request",
+              "quote": "no added impossible physics under surreal 0",
+              "start": 425
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_id": "prop_state",
+      "lane_calls": {
+        "BM25F": 1,
+        "local_cosine": 1
+      },
+      "returned_candidates": 8,
+      "projection_mode": "ordinary_top8",
+      "projection_reason": "ordinary_query",
+      "query_scope_limitation": null
+    },
+    {
+      "query_id": "surface_moisture",
+      "lane_calls": {
+        "BM25F": 1,
+        "local_cosine": 1
+      },
+      "returned_candidates": 8,
+      "projection_mode": "ordinary_top8",
+      "projection_reason": "ordinary_query",
+      "query_scope_limitation": null
+    },
+    {
+      "query_id": "__request_topic__",
+      "lane_calls": {
+        "BM25F": 1,
+        "local_cosine": 1
+      },
+      "returned_candidates": 8,
+      "projection_mode": "ordinary_top8",
+      "projection_reason": "ordinary_query",
+      "query_scope_limitation": null
+    },
+    {
+      "query_id": "__baseline_prompt__",
+      "lane_calls": {
+        "BM25F": 1,
+        "local_cosine": 1
+      },
+      "returned_candidates": 8,
+      "projection_mode": "ordinary_top8",
+      "projection_reason": "ordinary_query",
+      "query_scope_limitation": null
+    }
+  ],
+  "finding": "All five authored/whole-scene queries executed one BM25F and one local_cosine lane. concept_tension returned zero because the positive scope projection read the agent-authored scene-context phrase \"no added impossible physics under surreal 0\" as an exclusion-only unmodeled_restricted_change. This is an exposure limitation of this frozen slot plan, not absence of concept data. The plan was not altered or searched again. The remaining four queries returned eight sources each, 32 occurrences and 30 unique sources.",
+  "boundary": "No subsequent search or semantic change was used to rescue this slot. Source discovery, new data exposure, authored use, final text and actual pixels remain separate."
+}

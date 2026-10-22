@@ -1,0 +1,42 @@
+{
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "b5cdb9516a6cd60f",
+    "contract_version": "photo-embodiment-preflight/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "required_hard_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_support_and_balance",
+        "status": "fail",
+        "evidence": "The woman's forward lean is plausibly supported by her forearm/counter and ordinary off-frame standing support, but the final prompt specifically places the sleeve lower edge on the public counter. Native pixels show that lower edge suspended above it, so that planned support relation is absent. This is a state mismatch, not a diagnosis of bodily instability."
+      },
+      {
+        "gate": "embodiment_contact_and_space",
+        "status": "fail",
+        "evidence": "The sleeve grip and resting fingertips have coherent separate boundaries on the patient side, and the chart stays beyond glass. However the required final sleeve-bottom/counter contact is visibly missing. Because one material contact component is absent, the complete current gate fails rather than passing the remaining endpoints."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "not_applicable",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user judgment has been received."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}
