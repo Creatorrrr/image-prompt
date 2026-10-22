@@ -1,0 +1,5 @@
+Independent comparison before project-local retrieval. All options preserve LitRPG personal status influencing an ordinary outdoor task and use the supplied image for facial/hair appearance guidance only. Saved creativity=1 permits restrained variation.
+
+A standing worker checks a floating HUD with tool on shoulder: clear status but physically vague pause, limited task consequence. A kneeling worker rests beside half-exposed root: low stamina, grounded tool, and unfinished task form one legible causal triangle, with quiet personal presence. A worker on a park bench facing the distant task: appealing breathing room but owner/task connection becomes small. Select kneeling pause; keep the invented role, location, exact readouts, age, pose and clothing replaceable authorial staging. These are not user locks.
+
+Blind reading of the baseline: a gardener has visibly suspended a strenuous root job while her personal resource meter is nearly empty and a relevant skill counts down. The patient gaze and unloaded tool carry the pause; the exact prior effort and subsequent success remain authored context, not visible certainty.

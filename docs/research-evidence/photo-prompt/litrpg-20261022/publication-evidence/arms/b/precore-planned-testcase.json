@@ -1,0 +1,55 @@
+{
+  "schema": "independent-scene-testcase/v1",
+  "phase": "precore",
+  "gates": [
+    {
+      "gate_id": "B1_genre_system_item_relation",
+      "required": [
+        "fantasy workshop with craft-specific tools",
+        "one identifiable lantern vial",
+        "readable item appraisal stats/rarity/effect",
+        "visible connection between appraisal and that same vial"
+      ],
+      "pass_rule": "All four coexist in one image; decorative floating rectangles alone fail."
+    },
+    {
+      "gate_id": "B2_craft_progress_owner",
+      "required": [
+        "identifiable maker",
+        "crafting/job progression information",
+        "visible relation assigning progression to maker or her completed work"
+      ],
+      "pass_rule": "Numeric text must be legible and owner relationship visible; a panel near an unrelated person is partial."
+    },
+    {
+      "gate_id": "B3_trade_causality",
+      "required": [
+        "identifiable maker and customer",
+        "same appraised item physically available between them",
+        "customer payment action",
+        "customer attention tied to item/appraisal"
+      ],
+      "pass_rule": "All four coexist and form a plausible purchase moment; coins alone fail."
+    },
+    {
+      "gate_id": "B4_reference_scope",
+      "required": [
+        "main fictional woman has reference-guided dark short bob and fine fringe",
+        "reference-guided face visible at review scale"
+      ],
+      "pass_rule": "Appearance guidance only; no identity/age/personality claim. Partial resemblance is not exact identity proof."
+    },
+    {
+      "gate_id": "B5_physical_coherence",
+      "required": [
+        "each acting hand traceable to its owner",
+        "coherent finger/item/table contact",
+        "plausible reach and support",
+        "card and object endpoints unoccluded"
+      ],
+      "pass_rule": "All consequential body/contact relations visible together."
+    }
+  ],
+  "review_policy": "partial_is_fail; unobservable_is_fail; audits are not pixel proof",
+  "causal_improvement": "No A/B render exists; cannot infer causal improvement from one image."
+}
