@@ -1,0 +1,42 @@
+{
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "ae5bd8fab2b35a5d",
+    "contract_version": "photo-embodiment-preflight/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "required_hard_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_support_and_balance",
+        "status": "fail",
+        "evidence": "The torso can plausibly stand below the crop and the targets have visible overhead supports, but the authored hand-on-control-rail support is not realized: the hand is over the console and red control, while the rail lies below the forearm. This fails that specific support relation, not human balance or an inferred unseen defect."
+      },
+      {
+        "gate": "embodiment_contact_and_space",
+        "status": "fail",
+        "evidence": "Fingertips visibly touch the top/edge of a raised red control or safety cover. The reviewed baseline required fingertips stopped short of a recessed interrupt switch with a visible gap and hand supported on the rail. The intended no-contact state and recessed control boundary are replaced by contact with a raised control."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "not_applicable",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user judgment has been received."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}

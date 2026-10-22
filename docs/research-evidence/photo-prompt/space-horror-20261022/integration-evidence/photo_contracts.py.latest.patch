@@ -1,0 +1,46 @@
+diff --git a/scripts/photo_contracts.py b/scripts/photo_contracts.py
+index 85c2cc5b1..fc8f8bbac 100644
+--- a/scripts/photo_contracts.py
++++ b/scripts/photo_contracts.py
+@@ -158,37 +158,10 @@ NEGATIVE_INTENT_GUARD_CONTRACT_VERSION = "photo-negative-intent-guard/v1"
+ 
+ 
+ 
+-# Automatic negatives describe photographic defects. Requester exclusions and
+-# identity-preservation controls are admitted through separate consumer checks.
+-AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS = {
+-    "3d render look",
+-    "awkward animal anatomy",
+-    "body distortion",
+-    "broken facial features",
+-    "broken window geometry",
+-    "cartoon style",
+-    "cgi look",
+-    "digital illustration",
+-    "distorted fingers",
+-    "excessive hdr",
+-    "fake-looking background",
+-    "flat collage look",
+-    "illustration look",
+-    "impossible perspective",
+-    "inaccurate reflections",
+-    "inconsistent shadows",
+-    "low resolution",
+-    "obvious cutout edges",
+-    "over-processed retouching",
+-    "overly smooth fur",
+-    "plastic-looking food texture",
+-    "plastic-looking skin",
+-    "unmatched lighting",
+-    "unrealistic hands",
+-    "unrealistic steam",
+-    "warped product geometry",
+-    "warped walls",
+-}
++# Even a supposed photographic defect can be an intended effect. Emit no
++# unrequested blanket negatives. Explicit requester exclusions and enabled
++# identity-preservation controls retain their separately checked lanes.
++AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS = frozenset()
+ 
+ # These controls require explicit identity-reference preservation; they are not
+ # generic safety or taste defaults.

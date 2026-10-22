@@ -1,0 +1,100 @@
+diff --git a/precore/photo_authoring_wire.py b/precore/photo_authoring_wire.py
+index 22004b6d5..4acf43882 100644
+--- a/precore/photo_authoring_wire.py
++++ b/precore/photo_authoring_wire.py
+@@ -154,6 +154,7 @@ def normalize_request_envelope(payload: Any) -> JsonDict:
+         "request_sha256",
+         "active_spans",
+         "input_inventory",
++        "topic_context",
+     }
+     unknown_fields = sorted(set(payload) - allowed_fields)
+     if unknown_fields:
+@@ -236,10 +237,78 @@ def normalize_request_envelope(payload: Any) -> JsonDict:
+     }
+     if "input_inventory" in payload:
+         normalized["input_inventory"] = _native_witnesses.validate_input_inventory(payload["input_inventory"],request_sha256)
++    if "topic_context" in payload:
++        normalized["topic_context"] = normalize_topic_context(payload["topic_context"], request_text, spans)
+     normalized["canonical_sha256"] = canonical_json_sha256(normalized)
+     normalized["envelope_id"] = normalized["canonical_sha256"][:16]
+     return normalized
+ 
++def normalize_topic_context(payload: Any, request_text: str, active_spans: List[JsonDict]) -> JsonDict:
++    """Bind quoted conversation antecedents for discovery, never intent authority.
++
++    The caller must supply actual requesting-user messages and review the link.
++    Hashes prove exact quotation and scope, not the truth of that interpretation.
++    Context does not enter active spans, anchors, definitions, or exclusions.
++    """
++    required = {"contract_version", "links"}
++    if not isinstance(payload, dict) or set(payload) - (required | {"canonical_sha256"}) or not required <= set(payload):
++        raise ValueError("topic_context requires only contract_version and links")
++    if payload["contract_version"] != "photo-request-topic-context/v1":
++        raise ValueError("unsupported topic_context contract")
++    links = payload["links"]
++    if not isinstance(links, list) or not 1 <= len(links) <= 8:
++        raise ValueError("topic_context needs one to eight reviewed links")
++    spans = {row["span_id"]: row for row in active_spans}
++    normalized = []; seen = set(); source_bytes = 0
++
++    def quote(row, text, label):
++        if not isinstance(row, dict) or set(row) != {"start", "end", "text"}:
++            raise ValueError(label + " must be an exact offset quote")
++        start, end = row["start"], row["end"]
++        if type(start) is not int or type(end) is not int or not 0 <= start < end <= len(text):
++            raise ValueError(label + " has invalid offsets")
++        if not isinstance(row["text"], str) or text[start:end] != row["text"] or not row["text"].strip() or len(row["text"]) > 512:
++            raise ValueError(label + " does not match exact source bytes or exceeds quote limit")
++        return dict(row)
++
++    for row in links:
++        if not isinstance(row, dict) or set(row) != {"context_id", "active_span_id", "request_quote", "source_message", "topic_quote", "review"}:
++            raise ValueError("topic_context link fields are incomplete or unsupported")
++        cid = row["context_id"]
++        if not isinstance(cid, str) or re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", cid) is None or cid in seen:
++            raise ValueError("topic_context needs distinct context IDs")
++        seen.add(cid)
++        span = spans.get(row["active_span_id"])
++        if span is None:
++            raise ValueError("topic_context link addresses an inactive request span")
++        antecedent = quote(row["request_quote"], request_text, "topic_context request_quote")
++        if antecedent["start"] < span["start"] or antecedent["end"] > span["end"]:
++            raise ValueError("topic_context request_quote is outside its active span")
++        source = row["source_message"]
++        if not isinstance(source, dict) or set(source) != {"provenance", "locator", "text", "sha256"} or source["provenance"] != "requesting_user":
++            raise ValueError("topic_context needs a requesting-user source message")
++        text = source["text"]
++        if not isinstance(text, str) or not text.strip() or len(text.encode("utf-8")) > 32768:
++            raise ValueError("topic_context source message is empty or too large")
++        source_bytes += len(text.encode("utf-8"))
++        if source_bytes > 65536 or hashlib.sha256(text.encode("utf-8")).hexdigest() != source["sha256"]:
++            raise ValueError("topic_context source message hash or total size mismatch")
++        if not isinstance(source["locator"], str) or not source["locator"].strip() or len(source["locator"]) > 512:
++            raise ValueError("topic_context source needs a bounded conversation locator")
++        topic = quote(row["topic_quote"], text, "topic_context topic_quote")
++        if find_blanket_negative_directives(topic["text"]):
++            raise ValueError("topic_context quote must be a reviewed positive topic, not a negative directive")
++        review = row["review"]
++        if not isinstance(review, dict) or set(review) != {"polarity", "rationale"} or review["polarity"] != "positive_topic" or not isinstance(review["rationale"], str) or not review["rationale"].strip():
++            raise ValueError("topic_context needs an authored positive-topic link review")
++        normalized.append({"context_id": cid, "active_span_id": row["active_span_id"], "request_quote": antecedent,
++                           "source_message": dict(source), "topic_quote": topic, "review": dict(review)})
++    result = {"contract_version": payload["contract_version"], "links": normalized}
++    result["canonical_sha256"] = canonical_json_sha256(result)
++    if "canonical_sha256" in payload and payload["canonical_sha256"] != result["canonical_sha256"]:
++        raise ValueError("topic_context canonical hash mismatch")
++    return result
++
+ def request_envelope_active_texts(envelope: JsonDict) -> List[str]:
+     return [
+         str(item.get("text") or "")
+@@ -1128,6 +1197,8 @@ def normalize_authorial_core(
+     }
+     if "input_inventory" in request_envelope:
+         normalized["request_binding"]["input_inventory"] = copy.deepcopy(request_envelope["input_inventory"])
++    if "topic_context" in request_envelope:
++        normalized["request_binding"]["topic_context"] = copy.deepcopy(request_envelope["topic_context"])
+     runtime_forbidden_labels = [
+         str(item).strip()
+         for item in normalize_list(payload.get("runtime_forbidden_labels"))

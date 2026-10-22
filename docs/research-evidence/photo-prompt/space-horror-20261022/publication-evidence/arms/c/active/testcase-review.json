@@ -1,0 +1,93 @@
+{
+  "schema": "agent-owned-pixel-testcase-review/v1",
+  "arm": "C",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/space-horror-20261022-d2fb17a8-c/active/testcase.json",
+  "testcase_sha256": "aedf4e27ad6f511c976bb77e93c7849cacabaca9865ef1a448155bbb1bc1cf34",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/space-horror-20261022-d2fb17a8-c/active/images/missing-calibration-observer-native.png",
+  "image_sha256": "de8dc8a2cce379e05c85e9cddf6991edaea326dd451448ccbc33183534199569",
+  "source_reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "reviewer": "Codex arm C",
+  "review_basis": "Direct saved full-image inspection at native scale; separate apparatus-seat crop; supplied reference inspected before call. No prompt/audit PASS used as pixel evidence.",
+  "gates": [
+    {
+      "id": "space_isolation",
+      "expected": "Pressure window and planetary limb or recognizably outer-space exterior visible with the engineer and internal equipment.",
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "whole_image"
+      ],
+      "evidence": "A large bolted circular pressure window shows a hard blue-white planetary limb and black starfield behind the same interior engineer and gantry.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "vacant_seat",
+      "expected": "Pale chair cushion, open straps and space above cushion are visibly empty beneath the suspended target.",
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "whole_image"
+      ],
+      "evidence": "The pale seat and back cushions are empty. Both lap-strap ends and separate unjoined buckle halves lie exposed on the cushion; the empty region around the seat remains readable beneath the mounted oval.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "machine_surrogate",
+      "expected": "Matte-black oval and two shoulder-width paddles suggest a seated human outline while visible rods identify their mechanical support.",
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "whole_image"
+      ],
+      "evidence": "A matte-black oval occupies head height and two slim dark rectangular paddles sit below and to its sides at shoulder width. Thin vertical rods and the overhead gantry visibly support them, forming a mechanical head-and-shoulder suggestion over the empty chair.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "autonomous_addressing",
+      "expected": "Two articulated sensor heads point their optical apertures toward the suspended apparent head rather than the actual engineer; gantry support is visible.",
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "whole_image"
+      ],
+      "evidence": "Two jointed sensing assemblies descend from the top gantry with their green-lit optical apertures directed inward toward the oval region rather than the engineer. Both endpoints and their joints are visible. This passes the specified visible orientation only; autonomous control or machine intention is not proved.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "human_response",
+      "expected": "Engineer looks at the apparatus while a rail-supported hand stops short of the recessed red interrupt control; face, hand and target relationship is readable.",
+      "status": "fail",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "whole_image"
+      ],
+      "evidence": "The eyes turn toward the apparatus, but the near fingers visibly contact a raised red control/cover on the console. The hand is not resting on the rail and a fingertip-to-recessed-switch gap is not present, so the complete response relation fails despite the directed gaze.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "reference_appearance",
+      "expected": "Visible short dark bob, fine fringe and broad facial appearance are consistent with the portrait at usable face scale. This is appearance similarity, not identity proof.",
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "whole_image"
+      ],
+      "evidence": "The short dark bob, fine separated fringe, dark rounded eyes and soft oval facial proportions are consistent with the viewed portrait at a large usable face scale. The changed gaze and lighting are scene choices; this is broad appearance fidelity rather than identity proof.",
+      "partial_is_fail": true
+    }
+  ],
+  "pass_count": 5,
+  "fail_count": 1,
+  "overall": "fail",
+  "user_acceptance": "pending",
+  "user_judgment_source": "not_yet_received",
+  "image_calls": 1,
+  "additional_calls": 0,
+  "claim_limit": "The testcase is agent-owned and was frozen before retrieval. It tests output realization, not additional requester requirements or source-candidate qualification. Source exposure and actual use remain separately recorded."
+}

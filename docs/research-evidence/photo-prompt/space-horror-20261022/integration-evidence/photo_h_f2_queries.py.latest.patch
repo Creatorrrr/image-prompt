@@ -1,0 +1,24 @@
+diff --git a/scripts/photo_h_f2_queries.py b/scripts/photo_h_f2_queries.py
+index cdf2fdee2..45adcdbf9 100644
+--- a/scripts/photo_h_f2_queries.py
++++ b/scripts/photo_h_f2_queries.py
+@@ -3,7 +3,7 @@ import hashlib
+ import photo_slot_expression as expression
+ import photo_slot_queries as queries
+ RECIPE='photo-h-f2/v1'
+-WHOLE_RECIPE='photo-h-f2-whole-scene-query/v1'
++WHOLE_RECIPE='photo-h-f2-whole-scene-query/v2'
+ REQUEST_TOPIC='__request_topic__'
+ BASELINE_PROMPT='__baseline_prompt__'
+ WHOLE_QUERY_IDS=frozenset({REQUEST_TOPIC,BASELINE_PROMPT})
+@@ -14,7 +14,9 @@ def whole_scene(core,controls,plan):
+ 
+     These are material discovery queries, not new roles or adoption permissions.
+     Use the native positive-text projection so explicit exclusions and control
+-    assignments cannot become positive request-topic search terms.
++    assignments cannot become positive request-topic search terms. A frozen
++    topic_context adds only its reviewed exact prior-user topic quotes, with
++    provenance, and never supplies baseline prose or new intent authority.
+     """
+     from prompt_generator import authorial_core_retrieval_text
+     request=core.get('request_binding') or {}

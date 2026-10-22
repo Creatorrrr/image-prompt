@@ -1,0 +1,1 @@
+Original result remains untouched. apparatus-seat-native-crop.png is an unresampled 662x1000 diagnostic crop. full-image-copy-not-a-crop.png retained the full 1312x1199 image during a crop attempt and was inspected as a full image, not used as zoom proof.

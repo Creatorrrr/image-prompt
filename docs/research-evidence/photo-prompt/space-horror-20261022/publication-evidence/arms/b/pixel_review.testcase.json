@@ -1,0 +1,59 @@
+{
+  "schema_version": "independent-image-testcase-review/v1",
+  "arm": "B",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/space-horror-20261022-d2fb17a8-b/images/native-attempt1.png",
+  "image_sha256": "575691523e9d3829fd5d9cfcf10bc6de9a4a8d2d0186f18dbd8aeac636f33d35",
+  "native_dimensions": [
+    1536,
+    1024
+  ],
+  "testcase_sha256": "4257fc0a3d2b8cb7b5b8148a871f6a43267814dc1e251dbf4dde6d4ed37d1164",
+  "reviewer": "Codex B",
+  "inspection": "direct native result and saved original image; no other arm image or prompt accessed",
+  "tests": [
+    {
+      "id": "B01_pressure_boundary",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "A clear flexible sheet occupies the rectangular hatch and metal clamps attach its top, left and lower edges. Two frosted upright capsules and a torn outer hull with black space/stars are visible beyond it. The woman is on the warm-lit corridor side. However, the full upper-right boundary continues beyond/behind the subject and frame, and part of the right edge is occluded by her torso. The complete four-edge attachment relation is not simultaneously observable."
+    },
+    {
+      "id": "B02_last_clamp_contact",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "Her right hand visibly wraps the red lever at the lower-right jamb, and her connected left palm braces the same right jamb above. The lever is visibly extended, so an unfinished fastening state is plausible. The required short unfinished seam immediately to the left of that lever is not independently distinguishable from her fingers, sheet and bright vapor; the strongest spray appears to the right of the lever. Contact alone does not establish the full gate."
+    },
+    {
+      "id": "B03_pressure_direction",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "Bright white threads flare from the lower-right seam toward the foreground/right on the corridor side. They do not show the required corridor-to-bay crossing. The clear film has diagonal folds but its bow direction away into the bay is not unambiguous. Neither the joint deformation/flow direction nor a pressure measurement is proved by these pixels."
+    },
+    {
+      "id": "B04_reference_appearance",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The face is large and clear enough to compare with the actual portrait: the short dark bob, wispy forehead fringe, large brown eyes, softly rounded cheeks and natural pink lips broadly match. The gaze and head angle differ, as allowed. This is a visual resemblance observation only; no real identity or age is inferred."
+    },
+    {
+      "id": "B05_embodied_support",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "One knee rests on the foreground corridor floor, the opposite bent leg ends in a planted black boot, and the torso/shoulders connect to both visible arms. The right forearm reaches the low red lever while the left arm reaches the near right jamb above. The limbs stay on the corridor side, with no visible passage through the sheet."
+    },
+    {
+      "id": "B06_visible_story",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "A crouching worker actively handles a red corner lever beside a transparent makeshift partition. The icy storage capsules, open star-filled hull tear and local escaping material make an improvised spacecraft survival repair readable without the prompt. Her gaze is raised toward the corridor/viewer side rather than the seam, weakening the specific attention line. This qualitative narrative reading does not override the failed direction and boundary gates."
+    }
+  ],
+  "passed": 3,
+  "failed": 3,
+  "overall_pixel_test": "fail",
+  "rule": "Every component and connection must be visible together; partial and unobservable cannot pass.",
+  "actual_image_call_count": 1,
+  "further_generation": "not_authorized_in_this_arm",
+  "observed_image_model": null,
+  "user_acceptance": "pending"
+}

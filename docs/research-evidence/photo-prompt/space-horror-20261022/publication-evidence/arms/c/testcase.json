@@ -1,0 +1,64 @@
+{
+  "schema": "agent-owned-pixel-testcase/v1",
+  "arm": "c",
+  "title": "The Missing Calibration Observer",
+  "concept": "Autonomous observatory calibration constructs a humanlike target over an empty crew chair.",
+  "ownership": "Every named apparatus, object, shape and action in this testcase is agent-owned staging; none is a requester-required fact, anchor or lock. Testcase is frozen independently before retrieval to test output realization.",
+  "broad_domain": "uncrewed automation and uncanny perception",
+  "random_selection": {
+    "schema": "independent-concept-lottery/v1",
+    "author": "space_arm_c",
+    "entropy_hex": "d0dcc4049b981ef53ae281e21c46eb7e",
+    "method": "16 random bytes modulo four independently authored broad scene families",
+    "choices": [
+      "autonomous specimen triage",
+      "autonomous pressure-suit servicing",
+      "autonomous observatory calibration",
+      "autonomous galley service"
+    ],
+    "selected_index": 2,
+    "selected": "autonomous observatory calibration",
+    "ownership": "All scene-family choices are agent-owned; none are requester requirements."
+  },
+  "baseline_prompt_sha256": "96bad524811e6ad3e26b1138135dc55a5d08feaeead87ab68f36dbd3d7428505",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "scope": "visible facial and hair appearance only; no actual identity, age, personality or history inference"
+  },
+  "expected_visible_relations": [
+    {
+      "id": "space_isolation",
+      "expected": "Pressure window and planetary limb or recognizably outer-space exterior visible with the engineer and internal equipment.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "vacant_seat",
+      "expected": "Pale chair cushion, open straps and space above cushion are visibly empty beneath the suspended target.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "machine_surrogate",
+      "expected": "Matte-black oval and two shoulder-width paddles suggest a seated human outline while visible rods identify their mechanical support.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "autonomous_addressing",
+      "expected": "Two articulated sensor heads point their optical apertures toward the suspended apparent head rather than the actual engineer; gantry support is visible.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "human_response",
+      "expected": "Engineer looks at the apparatus while a rail-supported hand stops short of the recessed red interrupt control; face, hand and target relationship is readable.",
+      "partial_is_fail": true
+    },
+    {
+      "id": "reference_appearance",
+      "expected": "Visible short dark bob, fine fringe and broad facial appearance are consistent with the portrait at usable face scale. This is appearance similarity, not identity proof.",
+      "partial_is_fail": true
+    }
+  ],
+  "review_rule": "Review actual saved pixels; author observability as visible, partial or unobservable. A multi-component relation only passes when all components and their relation are visible together. Prompt/audit metadata is not pixel evidence.",
+  "technical_binding_distinct_from_perceptual_result": true,
+  "user_acceptance": "pending"
+}

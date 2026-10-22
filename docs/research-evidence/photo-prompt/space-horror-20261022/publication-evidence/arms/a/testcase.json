@@ -1,0 +1,80 @@
+{
+  "schema": "agent-independent-pixel-testcase/v1",
+  "provenance": "agent_authored_precore",
+  "title": "The Listening Nursery",
+  "baseline_prompt_sha256": "cdaa6160e58af239ce0203915a28ed78123c65ff7488c4eac6ba2aa167c0b507",
+  "request_sha256": "44f7c5e406f37e7b6479032eacc51ada4a66cc7cea63c8aa17040ae99bc7bc80",
+  "reference_image": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "scope": "facial and hair appearance guidance only; identity, age and history unknown"
+  },
+  "ownership": "The following gates are this independent testcase's agent-owned expected visible relations. They are not requester locks, semantic assertions or required native facts, and do not broaden the request envelope.",
+  "decision_rule": "Pass only from the actual saved generated image. A gate with multiple components passes only when all components and their connection are visible together. Partial and unobservable do not pass. Biological sensing, exact species and prior noise cannot be established from one image.",
+  "gates": [
+    {
+      "id": "A1_reference_appearance",
+      "expected": "A clearly visible human face and short dark bob/fringe retain the reference appearance qualitatively.",
+      "required_visible_components": [
+        "recognizable face shape and large brown eyes",
+        "short dark bob and wispy fringe"
+      ],
+      "scope": "request-derived reference guidance; qualitative similarity, not identity proof"
+    },
+    {
+      "id": "A2_organic_spacecraft",
+      "expected": "The habitat reads as living structural hull inside a spacecraft.",
+      "required_visible_components": [
+        "large load-bearing rib or cartilage arches",
+        "continuous vascular membranes joining the architecture",
+        "manufactured porthole integrated into the living hull",
+        "space exterior through the porthole"
+      ],
+      "scope": "agent-owned domain realization"
+    },
+    {
+      "id": "A3_unfamiliar_ecology",
+      "expected": "Separate rooted sail organisms form a colony within the ship, distinguishable from its hull.",
+      "required_visible_components": [
+        "translucent ribbed fan",
+        "connected thin stalk",
+        "visible holdfast on the pool bed",
+        "more than one organism"
+      ],
+      "scope": "agent-owned organism testcase"
+    },
+    {
+      "id": "A4_response_relation",
+      "expected": "Near fans curve toward the raised boot while farther fans remain upright, with boot and organism chains visible together.",
+      "required_visible_components": [
+        "hovering boot near the landing edge",
+        "near fan orientation toward that boot",
+        "connected near stalks and bases",
+        "far upright fans"
+      ],
+      "scope": "agent-owned response geometry; acoustic sensing remains an inference"
+    },
+    {
+      "id": "A5_embodied_moment",
+      "expected": "The human halted step is physically readable.",
+      "required_visible_components": [
+        "one boot planted",
+        "other boot lifted a small distance",
+        "hand gripping adjacent rail",
+        "head and gaze oriented toward the near colony"
+      ],
+      "scope": "agent-owned bodily staging"
+    },
+    {
+      "id": "A6_horror_presence",
+      "expected": "The warm vulnerable human, cold living chamber and near organism orientation create a quiet sense of threat or unease.",
+      "required_visible_components": [
+        "readable human presence",
+        "visibly alien inhabited chamber",
+        "attention or orientation connecting them"
+      ],
+      "scope": "agent-owned artistic judgment, recorded separately from technical fidelity"
+    }
+  ],
+  "status": "frozen_pre_generation_no_pixel_evidence"
+}

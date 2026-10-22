@@ -1,0 +1,243 @@
+# 문맥·과학·비가시 구분
+
+이 20개 기록은 양성 이미지 레시피가 아니다. 정의의 전 범위를 검증한 원전 독해와 현재의 제한된 출처 조사를 구분한다.
+
+## D01
+
+원문 번호: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14.
+
+Space Horror의 장소 조건·Cosmic Horror의 인식 붕괴·SF Horror의 넓은 과학기술 설정을 분리한다.
+
+가시 지원: 우주 환경·위협 관계·제약을 각각 선택한다.
+
+주장 한계: 장르만으로 촉수·고어·성적 의미·고딕 성당을 자동 의무화하지 않는다.
+
+출처: [S11](https://sf-encyclopedia.com/entry/horror_in_sf), [S12](https://sf-encyclopedia.com/entry/gothic_sf), [S22](https://www.bfi.org.uk/lists/10-great-lovecraftian-horror-films).
+
+## D02
+
+원문 번호: 15, 16, 17, 18, 19, 20, 23, 24, 27, 28, 33, 34, 35, 36, 37.
+
+진공·압력 상실·저산소·고탄산·ebullism·감압병·압력손상은 다른 변수/결과다. 무음은 청각 속성이고 산소 생성·CO2 제거·물 회수·전이실·격벽은 다른 계통과 구조다.
+
+가시 지원: 장비·압력 경계·계기 표현·대피 행동은 정황으로 사용한다.
+
+주장 한계: 사진은 질병·입자 노출량·진공의 소리·즉시 결빙이나 폭발·압력 전이 성공·완전 재생률을 입증하지 않는다.
+
+출처: [S01](https://www.nasa.gov/hrp/hazards/), [S02](https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/), [S03](https://www.nasa.gov/reference/11-0-spacesuits-vol-2/).
+
+## D03
+
+원문 번호: 21, 22, 31, 32, 39, 176.
+
+미세중력은 중력 소멸과 같지 않고 유동·표면장력·지지 단서의 문제다. EVA의 연결된 안전줄과 미연결 자유 끝은 반대 상태다.
+
+가시 지원: 공통 하향축 부재·부유 물체·레일 접촉·액체 분포·우주복과 줄 양 끝을 별개로 읽는다.
+
+주장 한계: 점프·수중·구형 방울만으로 궤도나 정확한 유체 역학을 단정하지 않고 가려진 줄 끝으로 연결/이탈을 승인하지 않는다.
+
+출처: [S07](https://www.nasa.gov/image-article/candle-flame-1g-vs-microgravity/), [S31](https://ntrs.nasa.gov/api/citations/19930004376/downloads/19930004376.pdf), [S34](https://www.nasa.gov/centers-and-facilities/glenn/what-is-microgravity/), [S03](https://www.nasa.gov/reference/11-0-spacesuits-vol-2/).
+
+## D04
+
+원문 번호: 25, 26, 38, 40, 41, 42, 43, 44, 45, 46.
+
+단일 손상·연쇄 고장·궤도 충돌 연쇄·열 제거·기동 자원·출발 창·탈출 포드의 가시 수용공간을 분리한다.
+
+가시 지원: 고장 잔해·의존 배선·패널/단열재·현재 좌석/계기만 보인다.
+
+주장 한계: 케슬러 전개·전이 가능·정확한 delta-v·연쇄 인과·열 성능·실제 총정원은 시간·항법·도면·계측 증거가 필요하다.
+
+출처: [S04](https://www.esa.int/Space_Safety/Space_Debris/Space_Debris_FAQ_Frequently_asked_questions), [S02](https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/), [S05](https://www.esa.int/Enabling_Support/Space_Engineering_Technology/Thermal_Control).
+
+## D05
+
+원문 번호: 47, 48, 49.
+
+Derelict는 방치/불능, Ghost Ship은 인원 부재와 작동의 수수께끼, Haunted는 초자연적 개입의 설정이다.
+
+가시 지원: 노후·빈 작업 공간·선택한 불일치 표현을 각각 검토한다.
+
+주장 한계: 세 용어를 반투명 수상 선박 하나로 합치거나 유령을 자동 생성하지 않는다.
+
+출처: [S21](https://www.bfi.org.uk/features/alien-40-ridley-scott-sigourney-weaver), [S22](https://www.bfi.org.uk/lists/10-great-lovecraftian-horror-films).
+
+## D06
+
+원문 번호: 50, 51, 52, 53, 54, 55, 56, 57, 58.
+
+세대우주선·동면선·채굴시설·거대구조물·생체선·외계 바다는 기능과 형태가 다른 축이다.
+
+가시 지원: 공간 용도·척도·소재의 구체적인 연결을 정한다.
+
+주장 한계: 캡슐은 세대 계승, 거대함은 무지성, 붉은 바다는 혈액을 증명하지 않는다.
+
+출처: [S13](https://sf-encyclopedia.com/entry/generation_starships), [S14](https://sf-encyclopedia.com/entry/big_dumb_objects), [S25](https://store.steampowered.com/app/1846170/Iron_Lung/).
+
+## D07
+
+원문 번호: 59, 60, 61, 62, 63, 64, 65, 66, 70, 71.
+
+우주생물학은 분야, 극한생물은 조건별 적응, 판스페르미아는 전달 가설이며 외형·접촉·의식은 별개다.
+
+가시 지원: 허구 생물의 형태·인터페이스·접촉 배열만 설계한다.
+
+주장 한계: 낯선 외형으로 비의식적 지성·외계 생화학·최초 접촉·전 환경 생존을 단정하지 않는다.
+
+출처: [S24](https://www.rifters.com/blindsight/BS_main.htm), [S16](https://entomology.mgcafe.uky.edu/ef018).
+
+## D08
+
+원문 번호: 67, 68, 69, 72.
+
+Hive mind는 공유 의식 설정, swarm intelligence는 상호작용의 집단 결과, superorganism은 기능적 조직 관점이다.
+
+가시 지원: 복수 몸·연결·배치·공통 대상을 구분해 기록한다.
+
+주장 한계: 정렬·실·집단 동작만으로 공유 의식·행동 조종·하나의 주체를 입증하지 않는다.
+
+출처: [S24](https://www.rifters.com/blindsight/BS_main.htm), [S15](https://learn.genetics.utah.edu/content/symbiosis/examples/).
+
+## D09
+
+원문 번호: 73, 74, 75, 76, 77, 78, 79.
+
+기생·포식기생·넓은 공생·만연·감염·오염 방향·격리 절차를 구분한다.
+
+가시 지원: 숙주/부착체/접점·경계·이동 방향을 별도 소유자로 둔다.
+
+주장 한계: 포식기생의 최종 숙주 사망, 상리 편익, 숙주 적합성, 미생물 검출은 추가 근거가 필요하다.
+
+출처: [S15](https://learn.genetics.utah.edu/content/symbiosis/examples/), [S16](https://entomology.mgcafe.uky.edu/ef018), [S08](https://planetaryprotection.jpl.nasa.gov/mission-implementation).
+
+## D10
+
+원문 번호: 80, 81, 82, 83, 84, 85, 86.
+
+동화·유전 변화·형태 변태·조직 융합·아브젝시옹·사체 재활성화·생체 해부는 다른 관계/사건이다.
+
+가시 지원: 현재 조직 경계·층위·몸 수·도구 배치를 적는다.
+
+주장 한계: 체액은 아브젝시옹 전체, 외형 변화는 돌연변이, 움직임은 이전 사망의 증거가 아니다.
+
+출처: [S20](https://www.ea.com/able/news/inside-dead-space-2-new-necromorph-nightmare), [S29](https://www.routledge.com/link/link/p/book/9780367209452).
+
+## D11
+
+원문 번호: 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100.
+
+생식 공포를 기관 형태·발생·통제·혈연·동의·성적 해석·비평으로 분해한다.
+
+가시 지원: 발생체와 숙주/용기, 문턱, 행위의 대상과 경계만 가시적으로 기술한다.
+
+주장 한계: 임신 외형은 강제성·혈연·동의를 증명하지 않는다. 산란기관은 자동 성폭력 도상이 아니며 여성성 자체를 괴물화하지 않는다.
+
+출처: [S23](https://www.bfi.org.uk/sight-and-sound/reviews/high-life-review-claire-denis-probes-outer-reaches-human-taboos), [S17](https://www.nature.com/articles/ncomms15112), [S29](https://www.routledge.com/link/link/p/book/9780367209452), [S16](https://entomology.mgcafe.uky.edu/ef018).
+
+## D12
+
+원문 번호: 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112.
+
+고립·수면 리듬·단조로움·감각박탈·의심·기억·죄책감·정체성·의식은 서로 다른 층위다.
+
+가시 지원: 현재 공간 제약·시선·기록의 불일치·눈뜸을 관찰한다.
+
+주장 한계: Space Madness는 공식 진단이 아니며 얼굴·공간 배치로 임상 상태·과거 기억·의식 지속을 확정하지 않는다.
+
+출처: [S09](https://www.nasa.gov/hrp/hazard-isolation-and-confinement/), [S19](https://spectrum.ieee.org/the-uncanny-valley).
+
+## D13
+
+원문 번호: 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124.
+
+AI의 자율성·목표 불일치·선별 정책·합성 몸·정신 업로드·의식 연속성·시뮬레이션·빙의·나노 증식은 별개다.
+
+가시 지원: 열린 패널·작동 부품·차단 관계·저장/실행 장치의 단서를 각각 선택한다.
+
+주장 한계: 빨간 렌즈는 악의, 닮은 얼굴은 동일 의식, 모니터는 영생, 균질 덩어리는 자기복제를 증명하지 않는다.
+
+출처: [S19](https://spectrum.ieee.org/the-uncanny-valley), [S24](https://www.rifters.com/blindsight/BS_main.htm), [S18](https://nickbostrom.com/information-hazards.pdf).
+
+## D14
+
+원문 번호: 29, 30, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134.
+
+통신 지연/두절·조난/유인/기술 흔적/번역 함정과 현실 정보 위험/허구 인지재해/밈 감염을 구분한다.
+
+가시 지원: 송수신기·다른 시각 표시·반복 표지·독자와 매개체의 시선 관계는 선택할 수 있다.
+
+주장 한계: 악의·가짜 구조 요청·인지 효과·전염·실제 통신 시간은 기호 자체에 고정된 시각 사실이 아니다. Basilisk는 이 문맥에서 도마뱀이 아니다.
+
+출처: [S18](https://nickbostrom.com/information-hazards.pdf), [S06](https://www.nasa.gov/missions/tech-demonstration/space-communications-7-things-you-need-to-know/), [S28](https://www.seti.org/research/seti-101/fermi-paradox/).
+
+## D15
+
+원문 번호: 135, 136, 137, 138, 139, 140, 141, 142.
+
+지평선·그림자·특이점·조석력·시간 지연·떠돌이 행성·웜홀·FTL·misjump는 다른 물리/가설/SF 축이다.
+
+가시 지원: 선택한 렌즈상·장비·환경 외형은 표현할 수 있다.
+
+주장 한계: 특이점·실제 통과 가능한 웜홀·FTL의 관측·항성에 묶이지 않은 궤도는 정지 영상으로 증명되지 않는다.
+
+출처: [S10](https://science.nasa.gov/universe/black-holes/anatomy/).
+
+## D16
+
+원문 번호: 143, 144, 145, 146.
+
+시간 반복·인과 고리·비유클리드 수학·불가능한 투영·차원 침범을 분리한다.
+
+가시 지원: 연결부가 보이는 의도적 허구 기하나 명시적인 다중 패널을 사용한다.
+
+주장 한계: 복도 반복·시계·인물 복제는 시간 루프의 증거가 아니다. 정상 곡률 공간은 그 자체로 불가능하지 않다.
+
+출처: [S12](https://sf-encyclopedia.com/entry/gothic_sf), [S10](https://science.nasa.gov/universe/black-holes/anatomy/).
+
+## D17
+
+원문 번호: 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158.
+
+관측 부재·필터·은폐·동물원·절멸 기계·자기복제·심시간·열적 죽음·거짓 진공은 문제/가설/서사 축이다.
+
+가시 지원: 유적층·탐사기·소실 자원의 설정상 단서를 선택한다.
+
+주장 한계: 빈 별하늘·붉은 파동·동일 탐사기만으로 가설의 진실·우주 종말·정확한 연대를 증명하지 않는다.
+
+출처: [S28](https://www.seti.org/research/seti-101/fermi-paradox/).
+
+## D18
+
+원문 번호: 159, 160, 161, 162, 163, 164, 165, 166, 167, 168.
+
+기업/식민주의/수탈/생명유지 독점/비동의/무기화/제의/식인/시신 자원화는 다른 권력·대상 관계다.
+
+가시 지원: 접근 제어·소유자·피해 대상·물질 이동·명시 서사 근거를 분리한다.
+
+주장 한계: 산업 설비·해부대·제단·음식·인체 형태만으로 각 가해 행위가 성립하지 않는다.
+
+출처: [S21](https://www.bfi.org.uk/features/alien-40-ridley-scott-sigourney-weaver), [S23](https://www.bfi.org.uk/sight-and-sound/reviews/high-life-review-claire-denis-probes-outer-reaches-human-taboos).
+
+## D19
+
+원문 번호: 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180.
+
+숭고·언캐니·weird/eerie·liminal·과거 미래 양식·쇠락·생체기계·유혈·화면 밖·여백·환경 서사·발견 형식을 분리한다.
+
+가시 지원: 현재 척도·익숙한 것의 어긋남·빈 전이 공간·물리 조작계·접점과 흔적을 선택한다.
+
+주장 한계: 감정 효과·실제 위해·기록 진위·과거 사건·음향을 형태만으로 확정하지 않는다.
+
+출처: [S26](https://www.nationalgalleries.org/art-and-artists/glossary-terms/sublime), [S27](https://repeaterbooks.com/product/the-weird-and-the-eerie/), [S30](https://thequietus.com/culture/books/mark-fisher-weird-eerie-kubrick-tarkovsky-nolan-review/), [S21](https://www.bfi.org.uk/features/alien-40-ridley-scott-sigourney-weaver), [S20](https://www.ea.com/able/news/inside-dead-space-2-new-necromorph-nightmare).
+
+## D20
+
+원문 번호: 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200.
+
+보조 어휘는 표면/형태/환경/해석을 먼저 분해하고 다의어를 요청 문맥으로 좁힌다.
+
+가시 지원: chitinous의 분절 외피, amorphous의 불규칙 윤곽, bioluminescent의 조직 발광은 각각 선택 표현이다.
+
+주장 한계: sterile의 무균/불모/비생산성, visceral의 내장/감정, cyclopean의 거석/외눈박이, starless의 노출/우주 사건을 혼동하지 않는다.
+
+출처: [S11](https://sf-encyclopedia.com/entry/horror_in_sf), [S20](https://www.ea.com/able/news/inside-dead-space-2-new-necromorph-nightmare), [S26](https://www.nationalgalleries.org/art-and-artists/glossary-terms/sublime).
