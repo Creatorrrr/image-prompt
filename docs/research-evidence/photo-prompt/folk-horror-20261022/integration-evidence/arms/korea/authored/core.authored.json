@@ -1,0 +1,294 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "e6742614166e12afb4138c7b4c55325d07286e66832789ea46e296032a23c21b",
+  "interpreted_intent": "The current request asks for independent random concepts fitting the newly integrated topic and use of the attachment. The reviewed prior user quote resolves that topic as folk horror; it is discovery context, not new hard authority. Independent local random selection chose a communal well at dawn. Invented circumstance: a fictional adult archivist arrives to document a closed well, then sees wet footprints and shared avoidance. The notebook gives her an ordinary purpose while the connected gazes and thresholds create social dread. Compare portrait and low wide alternatives: select an eye-level environmental scene that keeps face/hair and well-to-trail relationship readable together. Saved creativity 1 permits restrained local development. Saved sensual 1 appears only as subtle person-centered appeal in a softly framed face and concentrated presence; fetish 0, surreal 0 and trend off add no treatment. Roles, timing, well, footprints, people count, clothing and viewpoint are replaceable authorial staging.",
+  "subject": "A fictional adult woman archivist, guided by the supplied face/hair reference.",
+  "setting": "An inhabited Korean hillside village with a covered communal stone well.",
+  "event": "A visitor notices physical traces while residents keep their distance from a shared forbidden place.",
+  "visual_priorities": [
+    "Reference-guided face and hair remain readable in the environmental scene.",
+    "The well lid, outward wet footprints and archivist attention share one visible spatial chain.",
+    "Residents remain at separate thresholds and look at the same trail, turning ordinary village space into an implied taboo."
+  ],
+  "baseline_prompt_en": "An environmental photograph of an ominous rural encounter, an encounter with a shared village taboo. The principal subject is a woman guided by the supplied face and hair appearance; portray her as a fictional adult archivist. Use the supplied image as the face and hair appearance reference. Her face has softly rounded contours and dark eyes; her hair is a short dark bob with a light separated fringe. In a Korean hillside village at pale early dawn, she has stopped beside a communal stone well. Its low circular rim and entire heavy wooden lid are visible, the lid closed and dry. A fresh trail of wet bare footprints starts on the dry earth immediately beside the well lid and leads outward toward her boots, dark individual soles becoming faint farther along the lane. Her face is in readable three-quarter view, chin slightly lowered, eyes directed along that trail. She stands with both boots planted apart, torso turned toward the well, both hands supporting a small closed field notebook at her waist. The unfinished purpose of her visit is readable in the notebook and her arrested attention. Two adult residents remain within separate open house doorways behind the well, their bodies held back by the thresholds, faces and eyes turned toward the same wet trail. One has a hand resting on the door frame. Their reluctance leaves a clear empty band of ground around the well. Worn tiled roofs, rough plaster and a narrow packed-earth lane give the scene a lived-in scale. A simple charcoal work jacket and softly rumpled pale shirt frame the archivist's face; her quiet, concentrated presence is compelling within the uneasy distance between people. Frame her full length near the right edge, keeping the entire well lid and the complete visible route from its first footprint to her boots in the lower center. Eye-level naturalistic 35 mm photography with enough depth of field to read the residents, cool dawn light, tactile damp earth and restrained muted color.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random concept fitting the referenced topic",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "Choose independently among agent-authored situations fitting the folk-horror topic established by the exact prior requesting-user quote; scene particulars remain authorial.",
+      "sources": []
+    },
+    {
+      "term": "reference appearance",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied visible face and hair appearance in a fictional adult role; the image does not establish actual identity, age or biography.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "an ominous rural encounter"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a woman guided by the supplied face and hair appearance"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "an encounter with a shared village taboo"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied image as the face and hair appearance reference"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "archivist",
+        "property": "appearance.face",
+        "prompt_evidence": "Her face has softly rounded contours and dark eyes"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "archivist",
+        "property": "appearance.hair",
+        "prompt_evidence": "her hair is a short dark bob with a light separated fringe"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "age",
+      "role",
+      "count",
+      "setting",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "relationship",
+      "material",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a woman guided by the supplied face and hair appearance"
+      }
+    },
+    {
+      "assertion_id": "archivist_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "archivist",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "owner_phrase": "a woman guided by the supplied face and hair appearance"
+      }
+    },
+    {
+      "assertion_id": "main_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "archivist"
+      },
+      "evidence": {
+        "owner_phrase": "The principal subject is a woman"
+      }
+    },
+    {
+      "assertion_id": "face_appearance",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "archivist",
+        "property": "appearance.face",
+        "value_type": "appearance.reference/v1",
+        "value": "softly rounded contours and dark eyes",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "appearance_reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "Her face has softly rounded contours and dark eyes"
+      }
+    },
+    {
+      "assertion_id": "hair_appearance",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "archivist",
+        "property": "appearance.hair",
+        "value_type": "appearance.reference/v1",
+        "value": "short dark bob with a light separated fringe",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "appearance_reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "her hair is a short dark bob with a light separated fringe"
+      }
+    },
+    {
+      "assertion_id": "reference_appearance_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "archivist",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"f3992a95defa3e251d2edf267578144aa495f3ea57d8d2ba8624ad7ca7528496\",\"request_envelope_sha256\":\"502966b39c6c7c8d6d5d3d38067cea8f180a9870c68e792b4b62a6b88d9966a8\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"face_appearance\",\"dimension\":\"appearance\",\"property\":\"appearance.face\",\"target\":\"archivist\",\"value\":{\"type\":\"appearance.reference/v1\",\"value\":\"softly rounded contours and dark eyes\"}},{\"assertion_id\":\"hair_appearance\",\"dimension\":\"appearance\",\"property\":\"appearance.hair\",\"target\":\"archivist\",\"value\":{\"type\":\"appearance.reference/v1\",\"value\":\"short dark bob with a light separated fringe\"}}],\"reviewed_input_ids\":[\"request\",\"appearance_reference\",\"prior_topic_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "inventory_phrase": "a woman guided by the supplied face and hair appearance"
+      }
+    },
+    {
+      "assertion_id": "requester_identity_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "archivist",
+        "scope_kind": "requester_identity",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"f3992a95defa3e251d2edf267578144aa495f3ea57d8d2ba8624ad7ca7528496\",\"request_envelope_sha256\":\"502966b39c6c7c8d6d5d3d38067cea8f180a9870c68e792b4b62a6b88d9966a8\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[],\"reviewed_input_ids\":[\"request\",\"appearance_reference\",\"prior_topic_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"unknown\"}"
+      },
+      "evidence": {
+        "inventory_phrase": "a woman guided by the supplied face and hair appearance"
+      }
+    },
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental photography",
+    "family": "naturalistic rural psychological horror",
+    "evidence": [
+      "cool pale dawn on worn village surfaces",
+      "connected attention across a quiet empty ground"
+    ]
+  },
+  "variation_key": "folk-korea-20261022-6e9460"
+}

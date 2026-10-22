@@ -1,0 +1,249 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "3af20bfe463618a7b9d4efbce168c28e25f2381d81bbbdc27a265e451df7b189",
+  "interpreted_intent": "The current user asks for an independently randomized photographic concept using the attached reference and testing the recently discussed folk-horror topic. The random draw chose Seed levy. Agent-owned staging: bright harvest sociability makes an ordinary seed contribution coercive, and the woman is suspended before committing. I compared a closed circle around a communal seed bowl with this linear table: the table gives the empty dish, offered hands and collective attention one readable route while preserving the face. The visible scene must tell its pressure through a complete contrast of filled dishes, her empty dish and patient watching faces, rather than explanation alone. The reference supplies visible face and hair only, without actual identity or age inference. Sensual 1 is a supporting warmth of face and relaxed cotton, fetish 0 and surreal 0 add no treatment; creativity 1 keeps later changes local.",
+  "subject": "A fictional adult woman with the supplied face and hair appearance; villagers are invented supporting figures.",
+  "setting": "A sunlit rural harvest gathering around a seed-levy table.",
+  "event": "The woman pauses over an empty contribution dish while the villagers wait.",
+  "visual_priorities": [
+    "Recognizable face and bob; a courteous almost-smile under strain.",
+    "Cupped seeds and the sole empty dish remain connected and visible at useful scale.",
+    "Full repeated dishes and the inward attention of the convivial group make the pause consequential.",
+    "Unthreatening bright harvest light sustains the uneasy public ceremony."
+  ],
+  "baseline_prompt_en": "A photographic folk-horror scene at a sunlit rural harvest gathering: a fictional adult woman has reached the seed-levy table, where the villagers wait for her contribution. Use the supplied image as the visible face and hair reference: her soft oval face, large brown eyes, small softly rounded nose and full pink lips remain recognizable, together with her dark chin-length bob and fine separated bangs. Her individual presence is quiet and magnetic, her mouth caught at the beginning of a courteous smile while tension gathers between her brows. A cream cotton dress, loosened at the collar by the afternoon heat, sits naturally on her shoulders. At the near end of a weathered wooden table she holds a little mound of dark seeds in both cupped hands above an empty shallow earthen dish. Her forearms extend from her own shoulders, bent elbows close to her waist; both wrists and the seed-filled palms are visible together. Her feet stand on level dry ground and her body has drawn back slightly while her hands remain offered over the table. Across from her, several adult villagers in pale everyday festival clothes stand close together, smiling patiently and directing their faces toward her hands. Their own identical dishes are already full, arranged at even intervals along the table; her empty dish interrupts the sequence. The pause has made an ordinary contribution feel like a decision she cannot take back. Cut wheat and stubble stretch behind the group, with a modest garland of dried stalks marking the gathering place. Clear high summer daylight, pale gold and chalk white against muted green, grain dust caught on the rough tabletop. Frame her from just below the knees upward with her face, both hands, empty dish and the watching villagers sharing one readable plane. A natural 50mm photographic perspective, crisp foreground relationships and gently legible background faces, restrained film grain, tactile skin and cloth, the bright hospitality held a fraction too still.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "The current request points to the earlier folk-horror research; I independently choose a rural harvest ritual scene as its randomized photographic test, with collective unease understood through general knowledge. Specific seed-levy staging is an agent choice.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the visible facial features and short dark bob from the attached image as appearance reference for an invented adult character; this does not establish actual identity, biography, age or clothing.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "A photographic folk-horror scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "a sunlit rural harvest gathering"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "protagonist",
+        "property": "appearance.face",
+        "prompt_evidence": "her soft oval face, large brown eyes, small softly rounded nose and full pink lips remain recognizable"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "protagonist",
+        "property": "appearance.hair",
+        "prompt_evidence": "her dark chin-length bob and fine separated bangs"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "setting",
+      "relationship",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "subject_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "protagonist",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "owner_phrase": "a fictional adult woman"
+      }
+    },
+    {
+      "assertion_id": "main_subject_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "protagonist"
+      },
+      "evidence": {
+        "owner_phrase": "a fictional adult woman"
+      }
+    },
+    {
+      "assertion_id": "reference_face_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "appearance.face",
+        "value_type": "appearance.reference_features/v1",
+        "value": "soft oval face, large brown eyes, small softly rounded nose and full pink lips",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_image"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "her soft oval face, large brown eyes, small softly rounded nose and full pink lips remain recognizable"
+      }
+    },
+    {
+      "assertion_id": "reference_hair_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "appearance.hair",
+        "value_type": "appearance.reference_features/v1",
+        "value": "dark chin-length bob and fine separated bangs",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_image"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "her dark chin-length bob and fine separated bangs"
+      }
+    },
+    {
+      "assertion_id": "appearance_scope",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "protagonist",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"36d772dea83ddbdd954f61c2ad7a94628935e3b411aad68a12d9dd135e6d0610\",\"request_envelope_sha256\":\"60d03835e51e6544df8c77e7605b3d3dc0f488f32d2132e02397154cab07ecce\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"reference_face_fact\",\"dimension\":\"appearance\",\"property\":\"appearance.face\",\"target\":\"protagonist\",\"value\":{\"type\":\"appearance.reference_features/v1\",\"value\":\"soft oval face, large brown eyes, small softly rounded nose and full pink lips\"}},{\"assertion_id\":\"reference_hair_fact\",\"dimension\":\"appearance\",\"property\":\"appearance.hair\",\"target\":\"protagonist\",\"value\":{\"type\":\"appearance.reference_features/v1\",\"value\":\"dark chin-length bob and fine separated bangs\"}}],\"reviewed_input_ids\":[\"request_text\",\"reference_image\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "scope_phrase": "Use the supplied image as the visible face and hair reference"
+      }
+    },
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic photographic fiction",
+    "family": "sunlit rural social unease",
+    "evidence": [
+      "clear high summer daylight",
+      "repeated earthen dishes and close collective attention"
+    ]
+  },
+  "variation_key": "folk-harvest-20261022-4847b2"
+}

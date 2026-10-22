@@ -1,0 +1,105 @@
+"""Snapshot completed run evidence and verify boundaries without running models."""
+from pathlib import Path
+import datetime, hashlib, json, shutil, subprocess
+
+ROOT = Path(__file__).resolve().parents[3]
+OUT = Path(__file__).resolve().parent
+REPORT = ROOT / 'docs/research-evidence/photo-prompt/folk-horror-20261022'
+EVIDENCE = REPORT / 'integration-evidence'
+RUNS = {
+    'korea': 'folk-korea-20261022-6e9460-s3',
+    'harvest': 'folk-harvest-20261022-4847b2',
+    'winter': 'folk-winter-20261022-6c4b653c',
+}
+IMAGES = {'korea': 'korea-closed-well.png', 'harvest': 'harvest-seed-levy.png', 'winter': 'winter-threshold.png'}
+read = lambda path: json.loads(path.read_text())
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    before = read(OUT / 'before.json')
+    installed = read(ROOT / 'skills/photo-prompt-image-generator/retrieval-runtime.json')
+    release = read(OUT / 'successor.json')
+    assert installed['generation_id'] == release['generation_id']
+    assert installed['native_generation_id'] == release['native_generation_id']
+    assert installed['code_sha256'] == '96b67dedcfea019115cd46c6542287d7102e46cd12a486f1e817d79f3c634d0e'
+    protected = {p: sha(ROOT / p) == h for p, h in before['protected_hashes'].items()}
+    assert all(protected.values()), [p for p, same in protected.items() if not same]
+    current = read(OUT / 'CURRENT-preservation-baseline.json')
+    assert sha(Path(current['path'])) == current['sha256']
+    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    subprocess.run(['git', 'merge-base', '--is-ancestor', before['head'], head], cwd=ROOT, check=True)
+    intervening = subprocess.check_output(['git', 'log', '--format=%H %cI %s', before['head'] + '..' + head], cwd=ROOT, text=True).splitlines()
+    arms = []
+    for arm, dirname in RUNS.items():
+        run = ROOT / 'generated/photo-runs' / dirname
+        workflow = read(run / 'workflow.json')
+        manifest = read(run / 'run_manifest.json')
+        assert workflow['phase'] == 'review_record_validated'
+        assert workflow['source_binding']['generation_id'] == installed['native_generation_id']
+        assert workflow['h_f2_binding']['generation_id'] == installed['generation_id']
+        assert workflow['source_binding']['source_fingerprint'] == '23c16288d9d7c1bd7f3aaebb28c45e757e079220c5c711851244b2f17d744415'
+        assert manifest['image_call_count'] == 1
+        assert manifest['cross_arm_inputs_used'] is False
+        assert manifest['skill_sha256'] == before['skill_sha256']
+        assert manifest['reference_sha256'] == [before['reference_sha256']]
+        assert manifest['source_ref'] in {installed['generation_id'], 'h-f2:' + installed['generation_id']}
+        assert len(manifest['image_hashes']) == 1
+        image = manifest['image_hashes'][0]
+        assert sha(Path(image['path'])) == image['sha256']
+        assert sha(REPORT / 'images' / IMAGES[arm]) == image['sha256']
+        target = EVIDENCE / 'arms' / arm
+        bound = target / 'bound'
+        authored = target / 'authored'
+        bound.mkdir(parents=True, exist_ok=True)
+        authored.mkdir(parents=True, exist_ok=True)
+        checked = []
+        for key, artifact in workflow['artifacts'].items():
+            source = Path(artifact['path'])
+            assert sha(source) == artifact['sha256'], (arm, key)
+            destination = bound / (key + source.suffix)
+            shutil.copy2(source, destination)
+            checked.append({'key': key, 'original': str(source), 'snapshot': str(destination.relative_to(REPORT)), 'sha256': artifact['sha256']})
+        for source in run.iterdir():
+            if source.is_file() and source.suffix in {'.json', '.txt', '.md', '.ndjson', '.log'}:
+                shutil.copy2(source, authored / source.name)
+        sibling = run.parent / (dirname + '-authoring')
+        if sibling.is_dir():
+            extra = target / 'authoring-sibling'
+            extra.mkdir(exist_ok=True)
+            for source in sibling.iterdir():
+                if source.is_file() and source.suffix in {'.json', '.txt', '.md', '.py'}:
+                    name = source.name + ('.snapshot' if source.suffix == '.py' else '')
+                    shutil.copy2(source, extra / name)
+        shutil.copy2(run / 'workflow.json', target / 'workflow.json')
+        shutil.copy2(run / 'run_manifest.json', target / 'run_manifest.json')
+        composed = read(Path(workflow['artifacts']['composed']['path']))
+        plan = read(Path(workflow['artifacts']['native_plan']['path']))
+        assert plan['payload']['referenced_image_paths'] == [str(ROOT.parent.parent / 'Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg')]
+        assert sha(Path(plan['payload']['referenced_image_paths'][0])) == before['reference_sha256']
+        actual_prompt = plan['payload']['prompt']
+        assert hashlib.sha256(actual_prompt.encode()).hexdigest() == manifest['runtime_prompt_sha256']
+        (target / 'actual-tool-prompt.txt').write_text(actual_prompt, encoding='utf-8')
+        (target / 'actual-tool-payload.json').write_text(json.dumps(plan['payload'], ensure_ascii=False, indent=2) + '\n')
+        assert composed['chosen_candidate_ids'] == []
+        arms.append({'arm': arm, 'run': str(run), 'manifest': str((target / 'run_manifest.json').relative_to(REPORT)), 'source_ref': manifest['source_ref'], 'skill_sha256': manifest['skill_sha256'], 'authorial_core_sha256': manifest['authorial_core_sha256'], 'reference_sha256': manifest['reference_sha256'], 'image_call_count': manifest['image_call_count'], 'cross_arm_inputs_used': manifest['cross_arm_inputs_used'], 'image_sha256': image['sha256'], 'prompt_sha256': manifest['runtime_prompt_sha256'], 'bound_artifacts': checked})
+    assert len({x['authorial_core_sha256'] for x in arms}) == 3
+    initial = []
+    for line in (REPORT / 'SHA256SUMS').read_text().splitlines():
+        expected, name = line.split(None, 1)
+        name = name.strip().lstrip('*')
+        candidate = REPORT / name
+        if name == 'README.md':
+            candidate = EVIDENCE / 'README.research-only.md.snapshot'
+        initial.append({'path': name, 'research_snapshot_preserved': sha(candidate) == expected})
+    assert all(x['research_snapshot_preserved'] for x in initial)
+    result = {'schema': 'folk-horror-final-integrity/v1', 'status': 'PASS', 'captured_at': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'git_state': {'baseline_head': before['head'], 'observed_head': head, 'head_advanced_by_other_activity': head != before['head'], 'intervening_commits': intervening, 'task_performed_commit_or_push': False, 'interpretation': 'Do not rewrite concurrent commits. Existing protected working files remain byte-identical to task baseline.'}, 'commit_push_performed': False, 'protected_file_count': len(protected), 'protected_files': protected, 'local_native_CURRENT_sha256': current['sha256'], 'installed_config': installed, 'original_research_snapshot': initial, 'arms': arms, 'actual_image_calls': sum(x['image_call_count'] for x in arms), 'limits': 'Identity and hash checks establish concrete artifact binding, not pixel success, native semantic qualification, causal quality improvement or requester acceptance. Root original-pixel reviews are separate.'}
+    (EVIDENCE / 'FINAL-INTEGRITY.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+    shutil.copy2(Path(__file__), EVIDENCE / 'finalize_evidence.py.snapshot')
+    files = sorted(p for p in REPORT.rglob('*') if p.is_file() and p.name != 'APPLY-SHA256SUMS')
+    (REPORT / 'APPLY-SHA256SUMS').write_text(''.join(f'{sha(p)}  {p.relative_to(REPORT)}\n' for p in files))
+    print(json.dumps({'status': 'PASS', 'protected_files': len(protected), 'arms': len(arms), 'image_calls': result['actual_image_calls'], 'checksummed_files': len(files)}))
+
+
+if __name__ == '__main__':
+    main()

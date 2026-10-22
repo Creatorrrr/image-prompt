@@ -1,0 +1,164 @@
+"""Adopt reviewed optional folk-horror propositions, preserving existing sources."""
+from pathlib import Path
+import copy,hashlib,json,sys,uuid
+O=Path(__file__).resolve().parent;R=O.parents[2];S=R/'skills/photo-prompt-image-generator';A=S/'assets'
+Q=R/'docs/research-evidence/photo-prompt/folk-horror-20261022'
+sys.path.insert(0,str(S/'scripts'))
+import photo_candidate_corpus as c
+from photo_runtime_sources import source_update
+read=lambda p:json.loads(p.read_bytes())
+def write(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+
+# Directly reviewed whole-proposition mutation footprints, not inferred from
+# the research graph. No typed fact, owner permission or native approval added.
+FOOTPRINTS='''
+L01:setting material appearance composition
+L02:subject count pose setting composition relationship
+L03:setting material lighting appearance composition count
+L04:setting material appearance composition relationship count
+L05:subject age pose count setting material appearance relationship
+L06:setting material appearance composition count
+L07:setting material appearance composition
+L08:setting material appearance composition count relationship
+L09:setting material appearance composition
+L10:setting appearance material composition
+L11:setting appearance composition
+L12:setting appearance color composition relationship
+L13:setting material appearance composition relationship
+L14:setting material appearance composition relationship
+O01:material appearance setting composition relationship count
+O02:subject age count pose action setting appearance material relationship
+O03:setting material appearance count relationship
+O04:setting material appearance lighting count relationship
+O05:subject age count pose setting appearance material relationship
+O06:subject count pose material appearance body_geometry relationship setting
+O07:setting material appearance body_geometry count composition
+O08:material appearance color body_geometry count relationship
+O09:setting material appearance count composition relationship
+O10:setting material appearance count composition relationship
+O11:setting material appearance body_geometry count
+O12:material appearance body_geometry count relationship
+O13:material appearance text count composition
+O14:subject age count pose action setting appearance relationship
+O15:material appearance body_geometry count relationship
+O16:subject age appearance material body_geometry relationship count
+O17:subject age count pose action material appearance relationship
+O18:material appearance body_geometry count relationship
+R01:subject age count pose setting relationship composition
+R02:subject age count pose action setting relationship appearance
+R03:subject age count pose action relationship composition
+R04:subject age count pose action appearance relationship
+R05:subject age count pose action relationship setting composition
+R06:subject age count pose setting appearance relationship composition
+R07:subject age count pose setting lighting appearance relationship composition
+R08:setting appearance count composition relationship
+R09:subject age count pose action setting material relationship
+R10:setting material appearance text count composition relationship
+V01:subject appearance material body_geometry setting relationship
+V02:subject pose body_geometry setting material count relationship
+V03:material appearance body_geometry count relationship
+V04:subject age count pose setting material appearance color relationship
+V05:subject age appearance material body_geometry setting relationship
+V06:subject age count pose action body_geometry appearance relationship
+V07:subject age pose body_geometry appearance setting relationship
+K01:setting material appearance body_geometry count relationship
+K02:setting material appearance count relationship composition
+K03:setting material appearance body_geometry count
+K04:setting material appearance body_geometry count relationship
+K05:setting material appearance body_geometry count relationship
+K06:subject age count pose action setting material appearance relationship
+K07:subject age pose action material appearance body_geometry relationship
+K08:material appearance body_geometry setting count relationship
+K09:material appearance setting body_geometry relationship
+J01:setting material appearance color body_geometry relationship
+J02:setting material appearance count relationship
+J03:subject age count pose action appearance material setting relationship
+E01:subject appearance body_geometry setting material relationship
+E02:subject age count pose action setting material appearance relationship
+E03:subject count pose setting material appearance relationship
+E04:subject age count pose action appearance setting relationship
+E05:subject age count pose body_geometry appearance relationship
+F01:subject age count pose action setting lighting material appearance relationship
+F02:material appearance body_geometry relationship
+F03:material appearance text count composition relationship
+F04:subject age count pose action material appearance relationship
+'''.strip()
+EFFECTS={k:set(v.split()) for k,v in (line.split(':') for line in FOOTPRINTS.splitlines())}
+CONTEXT_EN=[
+'Folk horror concerns relations among place, tradition, community and taboo. A genre label does not require a forest, blood, nudity, a monster or a fixed ritual design.',
+'Folkloresque inventions and reconstructed traditions retain their authorship and historical scope; fictional imagery is not evidence of an ancient attested custom.',
+'The uncanny, weird, eerie, hauntological and numinous describe interpretations or experiences; an object or empty room does not prove the viewer response or its cause.',
+'Calendar customs, seasons, ritual stages and cyclical narratives retain distinct regional and temporal meanings. Flowers, fire, harvest and masks are not one universal festival.',
+'Underground space, roots and layered land can be visible; the land having agency, demanding a sacrifice or hosting a spirit remains a narrative claim.',
+'Blocking, pointing, drawing lots and exchange can be visible, while membership, guilt, customary law, complicity, inherited debt, curses and sacred contracts require their declared context.',
+'Animism, totemism, ancestor veneration, historical or modern paganism and syncretism are distinct beliefs or practices, not interchangeable violent-cult appearances.',
+'Similarity, prior contact, divination, omens, protection and harmful magic have different relationships. Doll, hair, pin and bottle arrangements do not establish efficacy, intention or personal identity.',
+'Witch-sabbath, devil-mark and sexual allegations retain the source accuser and historical status. Persecution imagery does not establish actual rituals or supernatural events.',
+'Revenants, fairies, changelings, banshees, black dogs, wild hunts, wandering lights, Baba Yaga, rusalki and yamauba retain particular local versions; names alone do not establish one appearance or action.',
+'Human or animal sacrifice, scapegoating, injury, death, corpse treatment, immurement, ordeals, cannibalism and anti-revenant burial retain separate owners, actions, life states and purposes. An unusual grave or red liquid is not proof of these events.',
+'Adult nudity, sexual acts, fertility rites, sacred marriage, pregnancy, reproductive coercion, sexual initiation, endogamy, incest and supernatural-spouse narratives retain distinct meanings. Clothing or expression does not establish consent or kinship.',
+'Sacred prostitution and droit du seigneur retain the scope of contested historical claims and the particular scholar or source. A popular story is not proof of a universal institution.',
+'Korean ritual specialists, initiation, spirit speech, impurity, taboo-related misfortune, wandering spirits and disease-associated guest deities require their own regional meanings. Costume or expression does not prove possession, diagnosis or spiritual efficacy.',
+'Marebito, yorishiro, katashiro, kegare, harae, onryo, tatari and tsukimono retain different visitor, medium, substitute, impurity, purification and spirit functions. Similar wood or paper forms do not make their functions identical.',
+'A visible singer, recorder or group arrangement cannot prove actual lyrics, sound, call-and-response order or a counting rhyme in one still image.',
+'A visit, field notebook, recording or photograph may be visible; ostension, belief, legendary motive and archival authenticity require their own contextual evidence.',
+'Windigo narratives and modern non-Indigenous deer-headed or antlered designs retain distinct source traditions. The name alone never activates deer antlers or a deer skull as a universal traditional form.',
+'Kelpie, selkie, brownie, Green Man, La Llorona and aswang or manananggal interpretations retain the selected version. One authored staging does not define every appearance or establish supernatural identity.'
+]
+
+def main():
+ before=read(O/'before.json');current=c.load(A);current_digest=c.digest(current);old=copy.deepcopy(current)
+ for module,key in [('photo_candidate_folk_horror_20261022.json','candidates'),('photo_candidate_folk_horror_bindings_20261022.json','slot_bindings')]:
+  if (A/module).exists():
+   for cid in read(A/module)[key]:old[key].pop(cid)
+ assert c.digest(old)==before['corpus_sha256'],'Source drift before adoption'
+ cards=read(Q/'semantic-cards.json')['cards'];drafts={d['card_ref']:d for d in read(Q/'candidate-drafts.json')['drafts']}
+ seeds={x['number']:x for x in read(Q/'seed-keywords.json')['terms']};sources={x['id']:x for x in read(Q/'sources.json')['sources']}
+ assert set(EFFECTS)==set(drafts)
+ existing='cand_1f1816e8fc67563886f54dfcac2b1a75';assert existing in old['candidates']
+ assert old['candidates'][existing]['content']['en']=='A lone adult visitor stands outside a rough circle of adults where a narrow field path ends.'
+ old_en={r.get('content',{}).get('en'):cid for cid,r in old['candidates'].items()}
+ records={};bindings={};registry=[];decisions=[];contextn=0
+ app='One complete optional authored visual realization, not a genre-triggered obligation or an attested universal cultural form. Preserve every positive English and Korean clause, material, count, part, owner, attachment, endpoint, state and scope. Use only when compatible with independently frozen requester meaning and all affected dimensions and properties. Every distinguishing component and relation must be legible together in the actual selected image; hidden, cropped or partial required evidence does not pass. Research graphs, aliases and citations add no typed native facts, guard evidence, owner permissions or whole-source qualification. Visible form does not establish consent, kinship, guilt, historical age, supernatural identity, magical efficacy, causation, chemical identity, sound or temporal sequence. An opaque sealed container and an opened contents display are separate complete alternatives.'
+ for card in cards:
+  key=card['id'];visual=card['evidence_mode']=='observable_realization'
+  if key=='R01':
+   meta={**copy.deepcopy(card),'candidate_id':existing,'registration_status':'existing_complete_source_reused','native_approval':False}
+   registry.append(meta);decisions.append({'card_id':key,'candidate_id':existing,'decision':'reuse_existing_complete_source','native_approval':False,'reason':'Existing independent adult visitor/circle/path relation already covers the research proposal. Its entire source remains unchanged; no shortened replacement.'});continue
+  cid='cand_'+uuid.uuid5(uuid.NAMESPACE_URL,'image-prompt/folk-horror/20261022/'+key).hex
+  assert cid not in old['candidates']
+  en=card['phrase_en'] if visual else CONTEXT_EN[contextn];ko=card['phrase_ko'] if visual else card['claim_limit'];contextn+=not visual
+  assert not visual or en not in old_en,'Exact duplicate requires a reuse decision'
+  aliases=[card['title_ko']]
+  for number in card['seed_numbers']:
+   title=seeds[number]['title'];parts=title.split(' — ',1)
+   if len(parts)==2:aliases.extend(x.strip() for x in parts[1].split('/'))
+  aliases=list(dict.fromkeys(aliases))
+  meta={**copy.deepcopy(card),'schema':'photo-folk-horror-visual-semantics/v1','candidate_id':cid,'registration_status':'authored_source_module' if visual else 'authored_diagnostic_module','source_refs':[sources[x] for x in card['source_refs']],'native_qualification':'not_qualified','graph_scope':'Reviewed research relations only; not typed native facts, source guard support or owner permissions.','provenance_digest_scope':'research specification bytes, not downloaded web page bytes'}
+  rec={'id':cid,'record_kind':'visual_option' if visual else 'diagnostic','content':{'en':en,'ko':ko,'definition':('Optional complete authored visual realization: '+en) if visual else 'Context-only distinction; no positive still-image appearance recipe.','aliases':aliases,'application_contract':app if visual else 'Diagnostic/context-only interpretation excluded from positive material retrieval. Preserve declared requester meaning without converting invisible history, identity, intentions, temporal events or effects into an appearance requirement or native permission.','research_semantics':meta},'conditions':({'requires_adult_context':True} if visual and 'adult' in en.lower() else {}),'effects':{'dimensions':sorted(EFFECTS[key]) if visual else [],'properties':[]},'provenance':[{'source':sources[x]['url'],'sha256':sha(Q/'semantic-cards.json')} for x in card['source_refs']]}
+  records[cid]=rec;registry.append(meta)
+  if visual:
+   for slot in drafts[key]['proposed_roles']:
+    assert slot in old['slot_catalog'];bid='bind_'+uuid.uuid5(uuid.NAMESPACE_URL,cid+'/'+slot).hex
+    bindings[bid]={'id':bid,'candidate_id':cid,'slot_id':slot,'role':'optional','semantic_role':old['slot_catalog'][slot]['semantic_role'],'conditions':{'subject_applicability':{}},'weight':2}
+  decisions.append({'card_id':key,'candidate_id':cid,'decision':'new_bounded_optional_variant' if visual else 'context_diagnostic','native_approval':False,'reason':'Complete visible proposition retained with reviewed broad mutation footprint and separate contextual limits; nearest-source comparison does not claim exhaustive semantic novelty.' if visual else 'Distinct invisible or historical meaning retained outside positive appearance retrieval.'})
+ assert len(records)==88 and contextn==19 and len(registry)==89
+ nm='photo_candidate_folk_horror_20261022.json';bm='photo_candidate_folk_horror_bindings_20261022.json'
+ manifest=read(A/c.MANIFEST_NAME)
+ for file,kind in [(nm,'candidates'),(bm,'slot_bindings')]:
+  if not any(x['file']==file for x in manifest['modules']):manifest['modules'].append({'file':file,'kind':kind})
+ proposed=copy.deepcopy(old);proposed['candidates'].update(records);proposed['slot_bindings'].update(bindings);c.validate(proposed)
+ with source_update(S):
+  assert c.digest(c.load(A))==current_digest
+  write(A/nm,{'schema':c.MODULE_SCHEMAS['candidates'],'candidates':records});write(A/bm,{'schema':c.MODULE_SCHEMAS['slot_bindings'],'slot_bindings':bindings});write(A/c.MANIFEST_NAME,manifest)
+  now=c.load(A);assert all(now['candidates'][k]==v for k,v in old['candidates'].items());assert all(now['slot_bindings'][k]==v for k,v in old['slot_bindings'].items());assert all(now[k]==old[k] for k in ('slot_catalog','policies'))
+ routes=[];lookup={x['id']:x['candidate_id'] for x in registry}
+ for row in read(Q/'keyword-routes.json')['routes']:
+  routes.append({**copy.deepcopy(row),'candidate_ids':[lookup[x] for x in row['card_refs']],'activation':'advisory only, no label-triggered hard appearance or whole-source native approval'})
+ result={'schema':'photo-folk-horror-semantic-registry/v1','cards':registry,'keyword_routes':routes,'decisions':decisions,'native_approval':False,'counts':{'research_cards':89,'visual_options_new':69,'visual_options_reused':1,'diagnostics_new':19,'bindings_new':len(bindings),'keyword_routes':150},'research_spec_sha256':sha(Q/'semantic-cards.json')}
+ write(A/'photo_folk_horror_semantics_20261022.json',result);write(O/'new-native-records.json',records);write(O/'changed-native-records.json',{});write(O/'data-integration.json',result)
+ write(O/'source-preservation.json',{'status':'pass','before_corpus_sha256':before['corpus_sha256'],'after_corpus_sha256':c.digest(now),'old_candidates_preserved':len(old['candidates']),'old_bindings_preserved':len(old['slot_bindings']),'slot_catalog_and_policies_unchanged':True,'new_counts':result['counts']})
+ print(json.dumps(result['counts']))
+
+if __name__=='__main__':main()

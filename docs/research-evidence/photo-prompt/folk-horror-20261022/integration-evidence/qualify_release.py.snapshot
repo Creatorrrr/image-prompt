@@ -1,0 +1,48 @@
+"""Bilingual before/after whole-pool probes; no source or pixel approval."""
+from pathlib import Path
+import collections,csv,hashlib,json,sys
+O=Path(__file__).resolve().parent;R=O.parents[2]
+read=lambda p:json.loads(p.read_bytes())
+def write(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+
+def main():
+ B=read(O/'before.json');S=read(O/'successor.json');sys.path.insert(0,str(Path(B['native'])/'scripts'))
+ from photo_h_f2_generation import Generation
+ from photo_h_f2_encoder import LocalEncoder
+ from photo_runtime_sources import RuntimeSnapshotProvider
+ import photo_canonical_source as canonical,photo_recall_first as rf
+ qfile=R/'docs/research-evidence/photo-prompt/folk-horror-20261022/EVALUATION-CASES.tsv'
+ registry=read(O/'data-integration.json');lookup={x['id']:x['candidate_id'] for x in registry['cards']};fresh=read(O/'new-native-records.json');new_visual={cid for cid,r in fresh.items() if r['record_kind']=='visual_option'}
+ cases=[]
+ for row in csv.DictReader(qfile.open(),delimiter='\t'):
+  for lang in ('ko','en'):
+   cases.append({'id':row['id']+'-'+lang,'cohort':row['set'],'language':lang,'query':row['query_'+lang],'expected_cards':row['card_refs'].split(','),'expected_judgment':row['expected_judgment']})
+ assert len(cases)==104
+ before=Generation(B['store'],B['config']['generation_id'],full=True);after=Generation(S['store'],S['generation_id'],full=True)
+ source=RuntimeSnapshotProvider(store=S['store']).load_generation(S['native_generation_id'])
+ assert all(canonical.native_snapshot(source.data['candidates'][cid])==v for cid,v in fresh.items())
+ path=O/'qualification-query-evidence.json'
+ if path.exists():encoded=read(path)
+ else:
+  encoded={'binding':after.binding,'query_source_sha256':hashlib.sha256(qfile.read_bytes()).hexdigest(),'rows':[]}
+  with LocalEncoder(R/'skills/photo-prompt-image-generator') as enc:
+   assert enc.binding==before.binding==after.binding
+   for start in range(0,len(cases),12):
+    batch=cases[start:start+12];rows=enc.encode([x['query'] for x in batch],'query')
+    for row,e in zip(batch,rows,strict=True):rf.check_embedding(e,enc.binding,row['query'],'query');encoded['rows'].append({'id':row['id'],'query':row['query'],'embedding':e})
+    print('encoded',len(encoded['rows']),flush=True)
+  write(path,encoded)
+ assert [(x['id'],x['query']) for x in encoded['rows']]==[(x['id'],x['query']) for x in cases]
+ indexes=[before.index(),after.index()];results=[]
+ for row,ev in zip(cases,encoded['rows'],strict=True):
+  expected={lookup[x] for x in row['expected_cards']};out={**row,'route':'whole_pool_probe_not_managed_sampling_or_slot_approval'}
+  for name,g,index in zip(('before','after'),(before,after),indexes,strict=True):
+   result=index.search(row['query'],ev['embedding'],encoded['binding']);assert result['lane_calls']=={'BM25F':1,'local_cosine':1};order=result['order']
+   out[name]={'generation_id':g.id,'population':result['considered_CIDs'],'top10':order[:10],'target_rank':next((i+1 for i,x in enumerate(order) if x['cid'] in expected),None),'new_at10':[x['cid'] for x in order[:10] if x['cid'] in new_visual]}
+  results.append(out)
+  if len(results)%12==0:print('searched',len(results),flush=True)
+ positive=[r for r in results if r['cohort']=='development'];controls=[r for r in results if r['cohort']!='development']
+ summary={'status':'bilingual_whole_pool_probes_complete','queries':len(results),'before_after_executions':len(results)*2,'development_queries':len(positive),'control_queries':len(controls),'after_target_at10':sum(r['after']['target_rank'] is not None and r['after']['target_rank']<=10 for r in positive),'after_target_at32':sum(r['after']['target_rank'] is not None and r['after']['target_rank']<=32 for r in positive),'controls_with_new_at10':sum(bool(r['after']['new_at10']) for r in controls),'before_positive_CIDs':before.manifest['CID_count'],'after_positive_CIDs':after.manifest['CID_count'],'new_native_snapshots_exact':True,'kernel_and_space_preserved':True,'limits':'Source-derived development probes; no independent holdout, auto eligibility, native semantic qualification, managed sampling, causal image improvement or user acceptance. Controls require source-specific semantic review; exposure is not automatically an error.'}
+ write(O/'retrieval-qualification.json',{'summary':summary,'cases':results});print(json.dumps(summary),flush=True)
+
+if __name__=='__main__':main()
