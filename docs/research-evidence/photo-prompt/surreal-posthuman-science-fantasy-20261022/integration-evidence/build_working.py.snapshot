@@ -1,0 +1,29 @@
+"""Build editable V3 source index separately, then atomically adopt its closure."""
+from pathlib import Path
+import json,sys,shutil,hashlib,os
+O=Path(__file__).resolve().parent;R=O.parents[2];S=R/'skills/photo-prompt-image-generator';A=S/'assets';W=O/'working-skill';WA=W/'assets'
+read=lambda p:json.loads(p.read_bytes())
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+sys.path.insert(0,str(S/'scripts'))
+import photo_candidate_corpus as c,build_shared_candidate_index as builder
+from photo_runtime_sources import source_update
+original=c.load(A);manifest=read(A/c.MANIFEST_NAME);idx=read(A/'photo_candidate_search.json')
+files=[c.MANIFEST_NAME,'photo_candidate_search.json']+[m['file'] for m in manifest['modules']]+[m['path'] for m in idx['shards']+[idx['metadata']]]
+for rel in files:
+ src=A/rel;dst=WA/rel;dst.parent.mkdir(parents=True,exist_ok=True)
+ if not dst.exists():shutil.copyfile(src,dst)
+ assert sha(src)==sha(dst)
+report=builder.build(WA,O/'working-index-cache',space=read(S/'embedding-runtime.lock.json')['space'])
+(O/'working-index-build.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+assert c.load(WA)==c.load(A)==original,'Concurrent source change; do not activate stale index'
+new=read(WA/'photo_candidate_search.json');assert new['corpus_sha256']==c.digest(original)
+for row in new['shards']+[new['metadata']]:
+ rel=row['path'];assert not Path(rel).is_absolute() and '..' not in Path(rel).parts
+ src=WA/rel;dst=A/rel;assert sha(src)==row['sha256']
+ if not dst.exists():dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dst)
+ assert sha(dst)==row['sha256']
+with source_update(S):
+ assert c.load(A)==original
+ p=A/'photo_candidate_search.json';tmp=p.with_suffix('.surreal-partial');tmp.write_bytes((WA/p.name).read_bytes());os.replace(tmp,p)
+(O/'working-integration.json').write_text(json.dumps({'status':'pass','layout_id':new['layout_id'],'corpus_sha256':c.digest(original),'original_sources_unchanged':True,'index_closure_members':len(new['shards'])+1},indent=2)+'\n')
+print(json.dumps(report),flush=True)

@@ -1,0 +1,76 @@
+from pathlib import Path
+import collections, hashlib, json, shutil, subprocess, sys
+
+R=Path('/Users/chasoik/Projects/image-prompt')
+W=Path('/Users/chasoik/.codex/worktrees/surreal-posthuman-publication/image-prompt')
+O=Path(__file__).resolve().parent
+S=Path('skills/photo-prompt-image-generator')
+D=Path('docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022')
+def git(*args,cwd=R): return subprocess.check_output(['git',*args],cwd=cwd).decode().strip()
+def sha(p):
+    h=hashlib.sha256()
+    with p.open('rb') as f:
+        for b in iter(lambda:f.read(1024*1024),b''): h.update(b)
+    return h.hexdigest()
+def write(p,v): p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+assert git('rev-parse','HEAD')=='17c0dd349304a18abac290beae114f199114e379'
+assert git('branch','--show-current')=='main'
+assert git('diff','--cached','--name-only')==''
+assert not (O/'before.json').exists()
+paths=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=R).decode().split('\0')
+before={'HEAD':git('rev-parse','HEAD'),'index_tree':git('write-tree'),
+        'files':{p:sha(R/p) for p in sorted(set(paths)) if p and (R/p).is_file()},
+        'status':git('status','--short','--branch'),
+        'reference_sha256':sha(Path('/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg'))}
+before['current_files']={str(q):sha(q) for q in (R/'generated/maintenance/surreal-posthuman-science-fantasy-20261022/before.json').exists() and [Path(x) for x in json.loads((R/'generated/maintenance/surreal-posthuman-science-fantasy-20261022/before.json').read_bytes())['current_files']] or []}
+write(O/'before.json',before)
+subprocess.run(['git','switch','-c','feature/surreal-posthuman-data-20261022'],cwd=W,check=True)
+sys.path.insert(0,str(W/S/'scripts'))
+import photo_candidate_corpus as c
+base=c.load(W/S/'assets')
+base_module_paths=json.loads((W/S/'assets'/c.MANIFEST_NAME).read_text())['modules']
+base_module_hashes={m['file']:sha(W/S/'assets'/m['file']) for m in base_module_paths}
+names=['photo_candidate_surreal_posthuman_science_fantasy_20261022.json',
+       'photo_candidate_surreal_posthuman_science_fantasy_bindings_20261022.json',
+       'photo_surreal_posthuman_science_fantasy_semantics_20261022.json']
+for name in names: shutil.copy2(R/S/'assets'/name,W/S/'assets'/name)
+m=json.loads((W/S/'assets'/c.MANIFEST_NAME).read_text())
+m['modules'] += [{'file':names[0],'kind':'candidates'},{'file':names[1],'kind':'slot_bindings'}]
+write(W/S/'assets'/c.MANIFEST_NAME,m)
+shutil.copy2(R/S/'references/surreal-posthuman-science-fantasy-semantics.md',W/S/'references/surreal-posthuman-science-fantasy-semantics.md')
+ref=R/S/'references/maintenance.md'
+marker='The [surreal/posthuman/science-fantasy extension]'
+append=ref.read_text()[ref.read_text().index(marker):]
+target=W/S/'references/maintenance.md'
+target.write_text(target.read_text().rstrip()+'\n\n'+append)
+shutil.copytree(R/D,W/D,ignore=shutil.ignore_patterns('__pycache__'))
+source=c.load(W/S/'assets')
+new=json.loads((W/S/'assets'/names[0]).read_text())['candidates']
+bind=json.loads((W/S/'assets'/names[1]).read_text())['slot_bindings']
+for key in ('candidates','slot_bindings'):
+    assert all(source[key][k]==v for k,v in base[key].items())
+assert source['slot_catalog']==base['slot_catalog'] and source['policies']==base['policies']
+assert set(source['candidates'])-set(base['candidates'])==set(new)
+assert set(source['slot_bindings'])-set(base['slot_bindings'])==set(bind)
+assert all(sha(W/S/'assets'/n)==h for n,h in base_module_hashes.items())
+kinds=collections.Counter(r['record_kind'] for r in source['candidates'].values())
+state={'primary':str(R),'worktree':str(W),'base_HEAD':before['HEAD'],
+       'base_candidates':len(base['candidates']),'base_bindings':len(base['slot_bindings']),
+       'new_candidates':len(new),'new_bindings':len(bind),
+       'release_candidates':len(source['candidates']),'release_positive':len(source['candidates'])-kinds['diagnostic'],
+       'release_diagnostic':kinds['diagnostic'],'release_bindings':len(source['slot_bindings']),
+       'release_source_sha256':c.digest(source),'release_record_kinds':dict(kinds),
+       'all_base_records_bindings_catalog_policy_preserved':True,'base_module_sha256':base_module_hashes,
+       'runtime_config_preserves_base_HEAD':True}
+write(O/'scope.json',state)
+lock=json.loads((W/S/'embedding-runtime.lock.json').read_text())
+for name,row in lock['files'].items():
+    src=R/S/lock['package']/name;dst=W/S/lock['package']/name
+    assert src.stat().st_size==row['bytes'] and sha(src)==row['sha256']
+    dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dst)
+    assert sha(dst)==row['sha256']
+(W/S/'.runtime/embedding-python').symlink_to(R/S/'.runtime/embedding-python',target_is_directory=True)
+write(O/'worktree-runtime-materialization.json',{'status':'pass','model_files_independently_copied':len(lock['files']),
+    'model_package_sha256':lock['space']['model_package_sha256'],'python_link_to_existing_bound_runtime':str(W/S/'.runtime/embedding-python'),
+    'primary_model_preserved':True,'ignored_worktree_model_is_redundant_copy':True})
+print(json.dumps({k:v for k,v in state.items() if k!='base_module_sha256'},indent=2))

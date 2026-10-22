@@ -1,0 +1,74 @@
+{
+  "schema": "research-runtime-observation/v1",
+  "declarations": {
+    "skills/photo-prompt-image-generator/retrieval-runtime.json": {
+      "sha256": "e927ac8f4baa85dd00e7f97c6489b7371190ceda428c3269d06f433f50b28861",
+      "data": {
+        "schema": "photo-installed-h-f2/v1",
+        "policy": "photo-h-f2/v1",
+        "store_subdirectory": "h-f2-installed",
+        "generation_id": "428446b6ed22975dedacde13ce29fe2d0d4b2de8991442e84eda59553410e184",
+        "native_generation_id": "96233daebb54195a59878d6df5ece6af64cdde3cf6b43f074a06c2953094b3e4",
+        "code_sha256": "96b67dedcfea019115cd46c6542287d7102e46cd12a486f1e817d79f3c634d0e"
+      }
+    },
+    "skills/photo-prompt-image-generator/assets/photo_candidate_search.json": {
+      "sha256": "0d3adf185bf2acd003f988e8853d23bc22c3d0806b5f58cb51ddac5e304a09cc",
+      "data": {
+        "corpus_sha256": "6ef4343d09c31cdb9c071f28fc92e420e36fcddae6b034c1e3ede6a436b88714",
+        "index_source_sha256": "a211b1a522bb22dc3fa2d984e491ee8146eaef47554782f0b5b60c0b010cafa8",
+        "layout_id": "887e77774602b7890a609e23443d73cde000e9191cef9c83a338a80232a5592c",
+        "lexical_recipe": "photo-bm25f-index/v1",
+        "routing_recipe": "photo-scalar-error-bounds/v2",
+        "schema": "photo-candidate-search-layout/v1",
+        "space": {
+          "dimensions": 768,
+          "inference": {
+            "batch_size": 32,
+            "device": "mps",
+            "dtype": "float32",
+            "engine": "sentence-transformers",
+            "packages": {
+              "numpy": "2.5.4",
+              "pillow": "12.3.0",
+              "safetensors": "0.8.0",
+              "sentence-transformers": "6.1.0",
+              "tokenizers": "0.23.3",
+              "torch": "2.14.1",
+              "torchvision": "0.29.1",
+              "transformers": "5.19.0"
+            },
+            "threads": 4
+          },
+          "model": "google/embeddinggemma-2",
+          "model_package_sha256": "112236750c003fde0e909a01540834cbdf0b75712667329a3c2a1d334c0e20ed",
+          "normalization": "l2",
+          "provider": "embeddinggemma2-local",
+          "recipe": "embeddinggemma2-retrieval/v1",
+          "revision": "914f7f89142e33e77833254d9c9b90c3cef7303b"
+        }
+      },
+      "scope_note": "Metadata extracted from identical hash-verified historical bytes. Payload/shard bodies not copied."
+    }
+  },
+  "check_exit_code": 0,
+  "installed_check": {
+    "status": "pass",
+    "generation_id": "428446b6ed22975dedacde13ce29fe2d0d4b2de8991442e84eda59553410e184",
+    "native_generation_id": "96233daebb54195a59878d6df5ece6af64cdde3cf6b43f074a06c2953094b3e4",
+    "runtime_python": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/.runtime/embedding-python/bin/python",
+    "check": "dependencies_and_installed_recorder",
+    "python": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/.runtime/embedding-python/bin/python",
+    "numpy": "2.5.4",
+    "recorder_file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations/96233daebb54195a59878d6df5ece6af64cdde3cf6b43f074a06c2953094b3e4/scripts/record_image_run.py",
+    "new_record_versions": [
+      "h-f2-v2",
+      "v10"
+    ],
+    "bound_pack_version_derivation": true,
+    "reason": null,
+    "image_calls": 0,
+    "source_writes": 0
+  },
+  "evidence_limit": "Dependencies and recorder compatibility only. No source adoption, retrieval or image qualification."
+}
