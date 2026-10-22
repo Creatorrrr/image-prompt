@@ -34,8 +34,8 @@ new artifact is a validation context with no native candidate inventory or
 creative-guide payload. Image records identify this format as `h-f2-v2`.
 
 
-The maintained source contains 18,642 positive candidate records and
-163 diagnostic records. The installed config separately selects the immutable
+The maintained source contains 18,710 positive candidate records and
+167 diagnostic records. The installed config separately selects the immutable
 release and its exact CID/RID population for new managed runs. Source edits alone
 do not switch the installed release. Slot tags never partition or prefilter the
 whole positive search pool.
@@ -245,3 +245,10 @@ pinned until its full query and installed-copy qualification passes.
 
 
 The 2026-10-21 weak-slot expansion preserves the prior installed source closure and adds 91 complete discovery candidates. The qualified primary-source compatibility projection is documented in [primary scope](h-f2-primary-scope.md). Existing 308 plus new 504 queries are preserved as 812 actual full-pool searches; exact adoption still requires the independent native source/owner/guard/permission workflow.
+
+The 2026-10-22 dark-fantasy/grimdark addition registers 68 complete optional
+visual realizations, four diagnostic/context records, 136 optional bindings
+and 247 keyword routes while preserving the previous source records. See
+[dark-fantasy visual semantics](dark-fantasy-grimdark-semantics.md) for complete
+meaning, post-core use and pixel-evidence limits. Registration grants no native
+approval.
