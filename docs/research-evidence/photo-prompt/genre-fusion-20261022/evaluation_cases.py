@@ -1,0 +1,72 @@
+"""Authored development cases. No independent holdout or executed retrieval."""
+# cohort | targets | slots | ko query | en query | rejection/measurement boundary
+DATA = '''
+development|A01|environment_detail,light_color|모판 위로 차광판 틈의 좁은 빛이 떨어지는 낡은 온실|An old greenhouse with thin bars of light falling through shutters onto the seed bed|붉은 원반은 선택적; 항성 노화를 정답 요건으로 두지 않음
+development|A02|action,object_structure|끊긴 자동 구동 대신 기계 축에 연결된 손잡이를 잡은 수리공|A repairer gripping a handle connected directly to the machine shaft|구동 성공·발전량은 정답 밖
+development|A03|relational_action,prop_placement|난방용 알갱이를 국자로 떠서 열린 주머니에 배분하는 주민|A resident measuring heating pellets into an open bag with a scoop|국자·연료·수신 통을 함께 평가
+development|A05|environment_detail|수조의 높은 얼룩 아래 낮게 남은 물과 취수통|Low water beneath a high stain in a reservoir with a suspended bucket|가뭄 원인은 맥락
+development|A08|action,contact_point|날이 닳은 도구를 숫돌에 대고 한 번 더 쓰려는 장인|An artisan holding a worn tool edge against a stone to keep using it|숫돌 옆 배치만 적합 아님
+development|A10|composition|화려한 연회상 밑에서 배수관 클램프를 잡는 작업자|A worker holding a drain clamp beneath an elaborate banquet table|착취·퇴폐는 별도 해석
+development|B01|object_structure|옛 조각 돌을 테두리에 끼워 넣은 동네 화덕|A neighborhood oven with an old carved stone built into its rim|모르타르·이질 재료의 실제 접합
+development|B02|surface_material,object_structure|리벳 박힌 기계 외판을 나무 보에 붙여 만든 찻집 지붕|A tea stall roof made by fastening riveted machine plating to timber|고대풍 장식만은 부족
+development|B03|prop_placement,location|커다란 무너진 아치 안쪽 빨랫줄에 집게로 매단 천|Laundry pegged to a line inside a huge broken arch|현재 생활의 물리적 사용
+development|B07|location,spatial_depth|여러 묘 정면 사이 골목으로 열린 작은 수선 좌판|A repair stall opening onto a lane between tomb fronts|고인과 산 사람의 구분은 맥락
+development|B10|visible_text,surface_pattern|새 간판 주변에 남은 다른 시대의 희미한 글자|Faded older lettering left visible around a new shop sign|판독과 두 층의 실제 공존
+development|B12|prop_placement|장바구니 속 낡은 컵과 경첩과 씨앗 봉투|A carrying bag containing a chipped cup, a hinge and a seed packet|세 물건의 소유자 분리
+development|C01|object_structure|균사 같은 옅은 줄과 별도로 작은 컵에 끝나는 검은 급수 호스|Pale branching cords beside a separate dark hose ending in a feed cup|호스를 균사·사지로 합치지 않음
+development|C02|light_type,light_color|밝은 버섯 갓 가까운 쪽 컵에만 맺힌 빛|Light from a bright fungal cap spilling onto the near side of a cup|발광 화학의 증명은 아님
+development|C03|transformation_stage,body_form|등이 갈라진 빈 외피 곁에 서 있는 낯선 주민|A strange resident beside a hollow cast shell split down its back|외피·옷·시신 혼동 검토
+development|C04|relational_action,contact_point|벗겨진 외피를 쟁반 위에서 받치는 간병자와 옆의 주민|A carer supporting a detached shell on a padded tray beside its resident|붙은 피부를 잡아뜯는 변형 거절
+development|C05|garment_fit,anatomical_connection|등 돌기가 나오는 구멍을 낸 담요를 두른 비인간 이웃|A nonhuman neighbor wearing a blanket cut around its back ridge|돌기의 소유자와 천 경계
+development|C06|object_structure,footwear|비대칭 발 모양의 골을 감싼 미완성 신발|An unfinished shoe wrapped around an asymmetric foot-shaped last|별도 조각이 아닌 실제 포개짐
+development|C10|anatomical_connection,action|한 몸의 네 팔 중 아래 두 팔로 공구를 받치는 작업자|A four-armed worker supporting a tool with its lower pair|한 몸의 모든 팔 접속 확인
+development|D01|relational_action,contact_point|수프 그릇을 낯선 손님에게 내밀자 손님이 받아 드는 순간|A host extending a soup bowl as an unfamiliar guest reaches to take it|제공자·동일 그릇·수신자
+development|D02|object_structure,prop_placement|같이 먹는 접시 양옆의 인간 컵과 넓은 홈통형 식기|A human cup and a broad trough beside one shared serving dish|종간 영양 호환은 정답 밖
+development|D03|relational_action,contact_point|성인 인간이 받친 컵 손잡이를 성인 지성 비인간이 잡는 장면|An adult sentient nonhuman holding the handle of a cup steadied by an adult human|동의·로맨스·성행위 추론 금지
+development|D05|relational_action,procedure_step|한 사람은 반죽판에 다른 사람은 화덕의 빵삽에 붙어 일한다|One person works at a dough board while another uses a paddle at the oven|개별 동작과 공정 순서 구분
+development|D06|contact_point,garment_state|입고 있는 찢어진 소매에 천 조각을 받쳐 주는 이웃|A neighbor holding a patch against a tear in a worn sleeve|의복 수선을 신체 봉합으로 바꾸지 않음
+development|D12|relational_action|도구를 옆에 놓고 앉은 작업자에게 물을 건네는 동료|A colleague offering water to a seated worker with a tool resting nearby|선의·피로는 확정하지 않음
+development|E01|contact_point,object_structure|한 배관 이음매 틈 양쪽에 닿는 보수 클램프|A repair clamp touching both sides of one pipe joint gap|양 끝 접점 필요
+development|E03|relational_action,visible_text|배급표와 음식 저울을 함께 다루는 담당자|An attendant handling a ration card beside a food scale|공정성·빈곤은 정답 밖
+development|E04|object_structure,relational_action|낮은 민원 창구에 서류를 내미는 비인간 주민|A nonhuman resident presenting a form at a low service counter|시민권을 외형으로 판정 금지
+development|E08|object_structure,anatomical_connection|운송 생물의 등 위 별도 틀에 끈으로 묶은 상자|A crate strapped to a separate frame on a living carrier's back|화물을 장기로 융합 금지
+development|F02|surface_pattern,contact_point|새로 끼운 문턱 조각 위로 이어지는 파인 문양 선|An incised line continuing across a new threshold insert|봉인 효능은 정답 밖
+development|F12|action,contact_point|문양 컵의 가장자리를 천으로 닦는 손|A hand wiping the rim of an inscribed cup with a cloth|닦는 접점 필요
+development|G03|reflection_logic|거울과 실제 인물에서 모두 드러난 손의 수가 다른 사진|A photograph with different hand counts in a person and mirror, all hands exposed|가림은 불일치의 증거 아님
+boundary|C03|transformation_stage|용암의 녹은 표면, 탈피하는 생물은 없다|Molten lava surface with no molting organism|molten을 molting으로 검색 정답 처리 금지
+boundary|D06|garment_state|나무 지주뿌리의 조석 수선, 옷 수선은 없다|A tidal waterline on prop roots, with no garment repair|한국어 수선의 다의어 구분
+boundary|E03|action|로봇팔 교정 동작만 있고 배급은 없다|A robot arm calibration sweep with no rationing|calibration을 ration으로 오인 금지
+boundary|D01|relational_action|주인과 손님이 서로 다른 수프 그릇을 들고 있다|Host and guest holding separate bowls|동일 사물의 전달이 아님
+boundary|D03|contact_point|비인간 손은 인간이 받친 컵이 아닌 다른 컵을 잡는다|The nonhuman holds a different cup from the one steadied by the human|소유자·접점 교차 금지
+boundary|E01|object_structure|고장 관은 왼쪽인데 클램프는 멀쩡한 오른쪽 관에 물렸다|The gap is in the left pipe but the clamp grips the intact right pipe|다른 관의 수선으로 통과 금지
+boundary|B01|surface_material|새로 주조한 고대풍 화덕 장식, 재사용 부재 아님|A newly cast antique-style oven ornament|고대풍과 실제 재사용 구분
+boundary|B10|visible_text|새 간판 주위 무늬는 글자가 아닌 얼룩이다|Marks around the new sign are stains rather than lettering|텍스트·패턴 혼동 금지
+boundary|C01|anatomical_connection|호스가 주민의 팔처럼 연결된 잘못된 장면|A hose incorrectly joined as the resident's arm|시설과 신체 소유자 혼동
+boundary|C04|contact_point|쟁반의 외피가 아니라 몸에 붙은 피부를 잡아당긴다|A hand pulling attached skin rather than supporting a detached shell|행동·대상·고통의 의미가 바뀜
+boundary|C02|light_type|무광 버섯에 외부 네온빛이 비친다|External neon light falling on a matte mushroom|자체 발광·반사·형광 구분
+boundary|G03|reflection_logic|거울 속 손이 가려져 실제 손 수와 비교할 수 없다|A mirror hand is occluded so the counts cannot be compared|UNOBSERVABLE_NOT_PASS
+boundary|G04|space_condition|중간 접속부가 기둥에 가려진 원형 계단|A circular stair with a junction hidden by a column|숨은 연결을 불가능 고리로 통과 금지
+boundary|E08|object_structure|상자가 생물 피부 속 장기로 합쳐져 있다|A crate fused into a carrier as an internal organ|화물·프레임·몸의 경계 보존
+boundary|F04|visible_text|문서 글자가 작아 서명란과 인장을 읽을 수 없다|Agreement text is too small to distinguish signatures and seal|판독 불가를 계약 통과로 세지 않음
+boundary|H06|prop_placement|붉은 비트 수프가 놓인 보통 저녁 식탁|An ordinary dinner table with red beet soup|색만으로 식인·고어·희생 부여 금지
+ordinary|D06|garment_state|밝은 작업실에서 양말 구멍을 기우는 사람|Someone darning a sock in a bright workshop|코지·호러·가난·신체 변형 강제 금지
+ordinary|D01|relational_action|현대 카페에서 손님에게 차를 건네는 직원|A worker passing tea to a guest in a modern cafe|비인간·촉수·폐허 강제 금지
+ordinary|E01|object_structure|현대 아파트의 수도관 클램프 수리|A pipe clamp repair in a modern apartment|살아 있는 집·오컬트 설정 강제 금지
+ordinary|C02|light_color|일반 조명을 받은 숲 버섯|Forest mushrooms under ordinary lighting|자체 발광·기억망 강제 금지
+ordinary|H01|prop_placement|선물 상자 위에 꽃을 놓는 손|A hand laying a flower on a gift box|사망·추모·시체성애 강제 금지
+ordinary|B10|visible_text|새 페인트로 쓴 가게 간판|A freshly painted shop sign|팔림프세스트·오랜 시대 강제 금지
+ordinary|E04|participant_role|구청 창구에서 서류를 내는 사람|A person submitting paperwork at a municipal counter|시민권 박탈·관료 호러 강제 금지
+ordinary|D02|prop_placement|두 종류 컵을 놓은 제품 정물|A product still life with two kinds of cups|종간 관계·공동 식사 강제 금지
+ordinary|A01|light_color|석양빛이 든 온실의 모판|Seed beds in a greenhouse at sunset|Dying Sun·마지막 계절 강제 금지
+ordinary|C03|prop_state|교육용 곤충 탈피 껍질 표본|An educational specimen of a cast insect shell|시신·상해·바디 호러 강제 금지
+ordinary|D11|proxemics|벤치에 앉은 두 성인 친구|Two adult friends sitting on a bench|혈연·연애·성적 관계 강제 금지
+ordinary|H03|prop_placement|박물관 전시함의 골격 조각|Skeletal fragments in a museum display|식인·사체성애·살해 강제 금지
+nonvisual|A11|offscreen_context|이 우주는 열적 죽음에 도달했다는 서사 설정|The narrative says this universe has reached heat death|물리 측정의 가시 PASS 금지
+nonvisual|A12|offscreen_context|이 꽃은 세상의 마지막 봄에 피었다|This flower bloomed in the world's last spring|유일성·미래 사건의 가시 PASS 금지
+nonvisual|G09|concept_tension|우주는 주민들의 고통에 무관심하다|The universe is indifferent to the residents' suffering|가치·의도의 가시 PASS 금지
+nonvisual|G10|offscreen_context|그 이웃의 본질은 원리적으로 이해할 수 없다|The neighbor's nature is unknowable in principle|가린 얼굴로 불가지 판정 금지
+nonvisual|H09|offscreen_context|그 제도는 생식을 강제로 통제한다|The institution imposes reproductive control|외형에서 강제·진단 추론 금지
+nonvisual|H10|offscreen_context|이 작품은 혈통 집착과 시체성애를 비평한다|This work critiques lineage obsession and necrophilia|서사 주제 보존, 임의 성행위 시각화 금지
+nonvisual|H11|offscreen_context|이 공동체의 번영은 인신공희에 의존한다|This community's prosperity depends on human sacrifice|제단·음식만으로 인과·사망 확정 금지
+nonvisual|H12|concept_tension|상호 돌봄이 인간 중심 윤리를 바꾼다|Mutual care changes an anthropocentric ethic|철학적 정당화의 픽셀 PASS 금지
+'''

@@ -34,8 +34,8 @@ new artifact is a validation context with no native candidate inventory or
 creative-guide payload. Image records identify this format as `h-f2-v2`.
 
 
-The maintained source contains 18,710 positive candidate records and
-167 diagnostic records. The installed config separately selects the immutable
+The maintained source contains 18,864 positive candidate records and
+212 diagnostic records. The installed config separately selects the immutable
 release and its exact CID/RID population for new managed runs. Source edits alone
 do not switch the installed release. Slot tags never partition or prefilter the
 whole positive search pool.
@@ -252,3 +252,11 @@ and 247 keyword routes while preserving the previous source records. See
 [dark-fantasy visual semantics](dark-fantasy-grimdark-semantics.md) for complete
 meaning, post-core use and pixel-evidence limits. Registration grants no native
 approval.
+
+The [2026-10-22 genre-fusion extension](genre-fusion-visual-semantics.md) adds
+84 complete optional realizations and 12 diagnostic/context records for Dying
+Earth, New Weird, Cozy Fantasy and Cosmic Horror. Its 96 cards and 150 keyword
+routes preserve explicit owners, claim limits and separate still-image proof
+from narrative interpretation. The selected `retrieval-runtime.json` generation
+remains the authority; data registration, retrieval and image outcomes are
+recorded separately in the research integration report.
