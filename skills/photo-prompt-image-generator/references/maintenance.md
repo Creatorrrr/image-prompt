@@ -75,3 +75,12 @@ Missing positive axes and conflicting values still fail the existing audit.
 The [surreal/posthuman/science-fantasy extension](surreal-posthuman-science-fantasy-semantics.md) retains 72 complete optional visual realizations, 16 diagnostic distinctions and 182 source-scoped keyword routes. Material transfer, double images, body/device interfaces, organic architecture, ritual machinery and posthuman everyday relations preserve whole bilingual source meaning and all owner/endpoint constraints. Registered material remains separate from native source qualification, managed selection, exact prompt transport, saved pixels and requester acceptance.
 
 The [folk-horror extension](folk-horror-visual-semantics.md) retains 69 new complete optional visual realizations, one reused existing source, 19 diagnostic distinctions and 150 original keyword routes. Physical material, attachment, threshold and group relations remain separate from hidden causation, historical authenticity and native source qualification. Whole-source conditions and effects remain binding; discovery and authored inspiration do not confer native approval.
+
+The [metafiction/existential-horror/LitRPG extension](metafiction-existential-litrpg-semantics.md)
+retains 64 complete optional visual realizations, 10 contextual distinctions and
+130 keyword routes. It separates single-frame relations, narrative proxies and
+the explicit three-panel sequence. Owner graphs and 549 research gates remain
+review metadata; matching displays, faces or gestures do not prove consciousness,
+identity, consent, causal control or a temporal reset. Source registration,
+retrieval exposure, managed prompt transport and saved pixels retain separate
+evidence boundaries.

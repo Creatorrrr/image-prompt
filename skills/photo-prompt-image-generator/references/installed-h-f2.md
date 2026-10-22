@@ -34,11 +34,11 @@ new artifact is a validation context with no native candidate inventory or
 creative-guide payload. Image records identify this format as `h-f2-v2`.
 
 
-The maintained source contains 18,864 positive candidate records and
-212 diagnostic records. The installed config separately selects the immutable
-release and its exact CID/RID population for new managed runs. Source edits alone
-do not switch the installed release. Slot tags never partition or prefilter the
-whole positive search pool.
+The normal managed workflow uses the sealed release selected by
+`retrieval-runtime.json` for new runs. Its manifest declares the current positive
+CID and realization-document counts; diagnostics remain source records outside
+positive material retrieval. Test requests do not restrict the candidate
+population. Slot tags never partition or prefilter this search.
 
 The [biopunk and body-horror data extension](biopunk-body-horror-semantics.md)
 adds 141 complete visual options and 21 diagnostic/context records, with 162
@@ -51,6 +51,12 @@ adds 133 complete bilingual visual options, 72 diagnostic/context records and
 250 optional role bindings across 200 researched term cards and five bounded
 alternatives. These are authored sources with `native_approval: false`.
 The scoped source/index publication preserves the installed-runtime pointer.
+
+The [metafiction, existential-horror and LitRPG extension](metafiction-existential-litrpg-semantics.md)
+adds 64 optional visual sources, 10 contextual diagnostics and 130 keyword
+routes. It separates visible relations, narrative proxies and an explicit
+three-panel sequence. Its source graphs and 549 review gates are metadata,
+without native qualification or automatic genre activation.
 
 After independent core freeze, run `photo_workflow.py prepare-slot-intents
 --run RUN`. Add repeatable `--slot SLOT` only to choose a smaller explicit
