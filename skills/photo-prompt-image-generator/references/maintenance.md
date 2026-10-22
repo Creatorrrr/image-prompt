@@ -117,3 +117,12 @@ physical connections, biological integration, containment direction and static
 versus temporal evidence retain explicit owners and claim limits. Research
 metadata grants no native qualification; installed exposure, authored prompt use
 and generated pixels are checked separately.
+
+
+The [atompunk extension](atompunk-semantics.md) retains 101 semantic cards and
+191 advisory keyword routes, with 88 complete optional bilingual visual sources,
+13 positive-retrieval-excluded diagnostics and 176 optional bindings. Device,
+display, canopy, sign and represented-image owners remain distinct; historical
+context and invisible function do not become pixel claims. Source registration,
+sealed retrieval, audited prompt use and saved-image evidence are checked
+separately. Research graphs and citations confer no native qualification.
