@@ -1,0 +1,81 @@
+{
+  "schema": "independent-scene-testcase/v1",
+  "phase": "registered_before_image_call",
+  "gates": [
+    {
+      "gate_id": "B1_genre_system_item_relation",
+      "required": [
+        "fantasy workshop with craft-specific tools",
+        "one identifiable lantern vial",
+        "readable item appraisal stats/rarity/effect",
+        "visible connection between appraisal and that same vial"
+      ],
+      "pass_rule": "All four coexist in one image; decorative floating rectangles alone fail."
+    },
+    {
+      "gate_id": "B2_craft_progress_owner",
+      "required": [
+        "identifiable maker",
+        "crafting/job progression information",
+        "visible relation assigning progression to maker or her completed work"
+      ],
+      "pass_rule": "Numeric text must be legible and owner relationship visible; a panel near an unrelated person is partial."
+    },
+    {
+      "gate_id": "B3_trade_causality",
+      "required": [
+        "identifiable maker and customer",
+        "same appraised item physically available between them",
+        "customer payment action",
+        "customer attention tied to item/appraisal"
+      ],
+      "pass_rule": "All four coexist and form a plausible purchase moment; coins alone fail."
+    },
+    {
+      "gate_id": "B4_reference_scope",
+      "required": [
+        "main fictional woman has reference-guided dark short bob and fine fringe",
+        "reference-guided face visible at review scale"
+      ],
+      "pass_rule": "Appearance guidance only; no identity/age/personality claim. Partial resemblance is not exact identity proof."
+    },
+    {
+      "gate_id": "B5_physical_coherence",
+      "required": [
+        "each acting hand traceable to its owner",
+        "coherent finger/item/table contact",
+        "plausible reach and support",
+        "card and object endpoints unoccluded"
+      ],
+      "pass_rule": "All consequential body/contact relations visible together."
+    },
+    {
+      "gate_id": "B6_I01_complete_information_structure",
+      "source_candidate_id": "cand_821f6992d66a5e5bbc1fc22ad7ac9191",
+      "source_sha256": "96c704a1ea2adee36b11316f0da0bd0687c8599d3c9062be25d1d6c3650b8e82",
+      "required": [
+        "One recognizable status sheet",
+        "Readable item identity header above attribute rows",
+        "Readable labeled attribute/value rows",
+        "Separately recognizable resource block with readable current AND maximum charge",
+        "All header/row/resource relation endpoints in that same card"
+      ],
+      "pass_rule": "Complete same-frame card at native scale; partial current/max labels or inferred blocks fail. Displayed values are claims, not verified item efficacy."
+    }
+  ],
+  "review_policy": "partial_is_fail; unobservable_is_fail; audits are not pixel proof",
+  "causal_improvement": "No A/B render exists; cannot infer causal improvement from one image.",
+  "registered_at": "2026-10-22T14:07:49.233868+00:00",
+  "baseline_sha256": "3353937713c739d2f91a8f6fd7e33d2135f2c1caba0a9cdea7d1b7f448993534",
+  "release_generation_id": "ef02180fc06f390a079ecb7727ece11c2dd30e54394f9e1ae8b9112217bd29ac",
+  "mandatory_full_pass_rule": "Full B-arm scene PASS requires every B1-B6 component in the same actual saved image, plus every managed derived gate. Report B1-B5 original whole-scene result and B6 new information-structure result separately, then aggregate with logical AND. Partial/unobservable fails; infer no hidden endpoint or current/max value. Metadata, registration, prompt audits and displayed labels alone are not pixel proof.",
+  "final_prompt_sha256": "7351e1e748d33dd97c8172b76ac649702f22639d02d195752f3af334f383b6e9",
+  "updated_before_call_at": "2026-10-22T14:14:10.489623+00:00",
+  "aggregation": {
+    "original_scene": "AND(B1,B2,B3,B4,B5)",
+    "new_information_structure": "B6",
+    "full_arm": "AND(B1,B2,B3,B4,B5,B6,all_managed_gates)",
+    "frozen_before_call": true
+  },
+  "criteria_clarified_before_call_at": "2026-10-22T14:16:33.808902+00:00"
+}

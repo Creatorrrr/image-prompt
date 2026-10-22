@@ -61,3 +61,27 @@ and trailing-space lines in the frozen historical research/comparison evidence.
 Their original bytes and hashes are preserved rather than normalized; the
 file list is in whitespace-check.json. This is an explicit check limitation,
 not a claim that the full raw-evidence diff has no whitespace findings.
+
+## Latest upstream merge
+
+After the feature commit, origin/main advanced to LitRPG commit
+7119ab133ed0f9f9cdf25bce717d5dd9bc4e6be6. Pulling it produced conflicts in the
+shared module manifest and derived index. Modules were unioned by filename and
+kind; every candidate and binding from both parents was compared by canonical
+record hash. Both maintenance descriptions are retained. No parent record was
+dropped or weakened. The index was regenerated from the union rather than
+selecting one parent's index.
+
+The final merged source contains 19,698 records, 19,351 positives and 14,103
+bindings. All 19,620 feature records and 19,596 incoming-main records, and all
+13,975 feature / 13,892 incoming bindings, are preserved. The final index reuses
+19,291 vectors and locally embeds the 60 incoming positive documents. The
+dictionary/index checks and 94 focused tests passed again on this union. The
+code-only H-F2 release and HOLD on operating new-data activation are unchanged.
+
+The primary checkout advanced in parallel and some unrelated intermediate
+archives were cleaned during publication. Its latest state is resnapshotted
+before the main fast-forward; deleted cache files are not restored and the
+latest broader local runtime config is retained. Initial-snapshot equality is
+not claimed for those concurrent changes. The final preservation and push
+receipt is retained in the primary publication-maintenance directory.
