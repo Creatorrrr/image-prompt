@@ -100,6 +100,15 @@ perceiver, displayed claim and temporal evidence remain distinct. Research
 graphs and source citations add no native facts or adoption authority; source
 registration, installed search exposure and saved pixels are separately checked.
 
+
+The [analog-horror extension](analog-horror-semantics.md) retains 78 semantic
+cards and 200 routes, with 71 complete optional bilingual visual sources,
+13 positive-retrieval-excluded diagnostics and 126 optional bindings. Physical
+carrier, displayed raster, surrounding room and document owners remain distinct.
+Research metadata grants no native qualification; source exposure, authored
+prompt use and saved pixels are separately checked. Six detail-dependent cards
+remain held.
+
 The [space-horror extension](space-horror-semantics.md) adds 53 complete optional
 bilingual visual sources, 26 diagnostic/context records and 146 optional
 bindings, retaining 64 visual cards, 20 contextual distinctions and 200 keyword

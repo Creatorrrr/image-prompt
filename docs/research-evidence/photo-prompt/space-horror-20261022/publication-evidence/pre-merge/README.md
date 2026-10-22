@@ -1,0 +1,1 @@
+Historical pre-merge publication snapshot at c072429a731e51273859e8f67a28168e645fbdbe. Its checksums describe that Git tree. Preserve these records rather than reinterpret them against the later merged tree.

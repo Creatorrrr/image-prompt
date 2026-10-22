@@ -1,0 +1,21 @@
+diff --git a/skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py b/skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py
+index 330c1c88f..3670771b9 100644
+--- a/skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py
++++ b/skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py
+@@ -29,6 +29,16 @@ def allowed_dimensions(lock: dict) -> set[str]:
+     return (DIMENSIONS | (EXPLICIT_OPEN_DIMENSIONS & set(lock.get("open_dimensions", [])))) - set(lock.get("locked_dimensions", []))
+ 
+ 
++def agency_phrase_required(controls: dict) -> bool:
++    """A declared nonhuman subject does not create a depicted human's agency.
++
++    Explicit control overrides may remain active for nonhuman subjects. Missing
++    or unspecified subject context retains the existing agency requirement;
++    individual adopted sources still enforce their own human prerequisites.
++    """
++    return (controls.get("context") or {}).get("subject_category") != "nonhuman"
++
++
+ def queries(core: dict, definitions: dict, intensities: dict, retrieval_text) -> dict[str, dict[str, str]]:
+     """Keep agent wardrobe choices out of the alternatives lane.
+ 

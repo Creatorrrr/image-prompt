@@ -1,0 +1,20 @@
+diff --git a/skills/photo-prompt-image-generator/scripts/photo_h_f2_query_scope.py b/skills/photo-prompt-image-generator/scripts/photo_h_f2_query_scope.py
+index 90f9781b6..1cc3c7e08 100644
+--- a/skills/photo-prompt-image-generator/scripts/photo_h_f2_query_scope.py
++++ b/skills/photo-prompt-image-generator/scripts/photo_h_f2_query_scope.py
+@@ -591,8 +591,15 @@ def _unmodeled_restriction(text,focus):
+     if not concrete:return None
+     patterns=[r'\b(?:without|do not|must not|should not|no(?!\s+longer)|not(?!\s+only)|never|neither|unknown|unspecified|unprovided|undeclared|unstated)\b',r'(?:하지|되지|부여하지|추론하지|바꾸지|요청하지|지정하지)\s*(?:않|말)|없이|미상|미지정|알\s*수\s*없']
+     witnesses=[]
++    capability_clauses=[(m.start(),m.end()) for m in re.finditer(
++        r'\bsenses?\s+(?:(?:that|which)\s+)?(?:a\s+human\s+(?:observer|operator)|humans?)\s+(?:do|does|did)\s+not\s+(?:possess|have)\b',text,re.I)]
+     for pattern in patterns:
+         for m in re.finditer(pattern,text,re.I):
++            # A relative clause about nonvisual human sensory capability is
++            # descriptive context, not an instruction forbidding a prop change.
++            # Keep commands, absent body parts and unspecified properties strict.
++            if any(a <= m.start() and m.end() <= b for a,b in capability_clauses):
++                continue
+             end=re.search(r'[.!?;\n]',text[m.end():]);stop=m.end()+end.start() if end else len(text)
+             witnesses.append({'pointer':'/request','start':m.start(),'end':stop,'quote':text[m.start():stop]})
+     for a,b in _quoted(focus):

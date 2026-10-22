@@ -5,7 +5,7 @@
 - 추가 기록 79개: 선택형 시각 후보 53개, 진단·문맥 26개.
 - 기존 source 5개를 수정 없이 참조하고 바인딩 146개 추가.
 - 분리한 원본 main 후보 19,698개와 기존 조건·효과·catalog·정책·바인딩 보존.
-- 최종 source 후보 19,777개, 바인딩 14,249개.
+- 초기 분리 커밋의 source 후보 19,777개, 바인딩 14,249개.
 
 Git main의 global-document v1 색인과 이미지 실험에 사용한 설치본의 grounded-document v2 색인은 문서 recipe가 다르다. 실험 벡터를 다른 recipe로 재명명하지 않는다. 기존 main의 벡터는 정확히 재사용하고, 새 양성 후보 53개만 검증된 로컬 EmbeddingGemma 모델로 계산한다. 이미지 재생성이나 원격 모델 호출은 없다. 기존 벡터 19,351개를 정확히 재사용했으며 새 layout은 `cfac524dd01561017d80a03d06e28c405bcb3039c07fc7a4f426aa0c26bf3d31`이다. 전체 source/문서/벡터/통계/샤드 closure 799개 member 검증 결과는 [index-build.json](publication-evidence/index-build.json)에 기록한다.
 
@@ -26,3 +26,15 @@ source context 47개, primary proof boundary 15개, sampling 6개, 총 68개 회
 커밋은 명시적 파일 allowlist와 staged blob hash를 대조한다. 커밋 후 `git pull --no-rebase origin main`으로 원격 main을 통합하며, 원격과 변경이 겹치면 양쪽 source·조건·바인딩·문서를 보존하고 파생 색인을 다시 검증한다. 실제 원격 반영까지 확인한 뒤 작업 전용 워크트리만 제거한다. 최종 Git SHA와 기본 작업 폴더 보존 증거는 `generated/maintenance/space-horror-main-publication-20261023/`에 별도 보관한다.
 
 원본 TSV의 CRLF, diff 문맥의 빈 줄 접두사, 과거 코드 snapshot EOF로 발생한 whitespace 지적은 원본과 동일한 11개 역사 자료에 한정된다. 해당 파일의 발행 전·원본·발행본 SHA256 일치를 확인하고 기존 hash를 보존했다. 다른 모든 경로는 엄격한 whitespace 검사를 통과한다([세부 기록](publication-evidence/whitespace-exceptions.json)).
+
+## origin/main과의 실제 통합
+
+첫 커밋 `c072429a731e51273859e8f67a28168e645fbdbe` 뒤 `git pull --no-rebase origin main`은 처음에 최신 상태였으나, 곧 원격 main에 analog-horror 커밋 `9b654b631653719774c276148daeadc308c0b50b`가 추가됐다. 로컬 main 갱신 전 비교 가드가 이를 발견해 기본 작업 파일을 쓰기 전에 멈췄다. 그때의 `git push origin main`은 이미 반영된 main에 대한 no-op이었다. 이후 원격 main을 다시 pull하고 실제 충돌 세 곳을 통합했다.
+
+- source manifest: incoming main 등록 75개를 모두 유지하고 스페이스 호러 2개를 더해 77개 등록으로 합쳤다.
+- maintenance 문서: incoming 본문과 analog-horror 설명을 유지하고 스페이스 호러 설명을 추가했다.
+- 파생 검색 색인: 한쪽 파일을 선택하지 않고 합쳐진 전체 source로 재구성했다.
+
+최종 source는 19,862개(양성 19,476, 진단 386), 바인딩 14,377개다. incoming main의 후보 19,783개와 바인딩 14,231개가 보존됐고 이번 79개/146개만 더해졌다. 기존 벡터 19,423개를 정확히 재사용하고 스페이스 호러 53개는 앞서 계산한 같은 recipe·text·model의 로컬 캐시로 재사용했다. 추가 문서 inference는 0회다. 새 layout은 `43dd677206365b6ed899887fb1da1b0ee5ba12a8ddddc29c22e40d0c7e6f789a`이며 802개 member 전체가 검증됐다.
+
+관련 회귀 68개를 합친 소스에서 다시 실행했고 dictionary의 source/index 검사도 오류 0개다. incoming의 비공유 파일 1,187개는 incoming commit blob과 바이트가 동일하다. 최초 분리 커밋의 색인·검증·문서·checksum은 [pre-merge](publication-evidence/pre-merge/README.md)에 별도 보존했다. 다른 주제의 역사적 publication checksum은 해당 당시 commit의 기록으로 유지하며 이번 합친 tree는 새 PUBLICATION-SHA256SUMS로 별도 검증한다.
