@@ -123,6 +123,10 @@ payloads. Any mismatched artifact is stale, even if a stored audit says pass.
 an object with exactly `lanes` (`api` and/or `native`), `invocation_limit` (positive
 integer), and `authorization_source` (the actual session instruction). This
 record cannot create permission. Reuse existing authorization; do not ask again.
+After all outcomes are recorded, genuinely new human authorization may extend
+only the invocation limit with the same lanes and a new authorization source;
+the previous scope remains in `render_scope_history`. Pending, unknown or
+unreconciled operations cannot be cleared by increasing the limit.
 Prompt-only runs reject actual rendering. Prepare and audit before requesting
 any missing authorization for a concrete execution.
 
@@ -148,8 +152,9 @@ rerenders an uncertain invocation or treats a dead PID as proof no call happened
 Use actual returned bytes or provider/native observations for reconciliation.
 No external exactly-once guarantee is claimed.
 
-Policy block, unknown provider outcome, local save failure, and recorder failure
-remain distinct and stop automatic rerendering. A returned image is saved as
+Explicit policy blocks and observed transient HTTP failures may consume an
+already authorized same-input repeat. Unknown provider outcome, local save
+failure, and recorder failure stop generation and require recovery. A returned image is saved as
 recovery bytes before ordinary image persistence. Frozen bytes and past failed
 reviews are not rewritten into successful results.
 
@@ -202,13 +207,48 @@ already authorized additional invocation limit. `obligation_dimensions` declares
 the governing preserved dimensions of every actually effective visual obligation;
 code validates closure but cannot independently understand that declaration.
 Mechanical error routes require corresponding observed provider evidence.
+The projection derives `retry_mode` from the failure class and declared changes;
+it cannot relabel an observed block as a visual defect. Empty `allowed_changes`
+is valid for `same_input` and `recovery_only`, with empty properties/local axes.
+Recovery routes require `additional_invocation_limit: 0`.
 
 ```bash
 python skills/photo-prompt-image-generator/scripts/prepare_retry_context.py prepare \
   --run PARENT_RUN --attempt exact-ledger-row.json --ledger generated/photo-runs/image_runs.ndjson \
   --current-envelope child-envelope.json --decision repair-decision.json --output RETRY_DIR
+```
+
+Read the closed context. For `same_input`, keep the original run and all four
+audited input bindings, transport, references and controls. Use the proof with
+the existing authorization (the native bridge still performs exactly one call):
+
+```bash
+python skills/photo-prompt-image-generator/scripts/photo_workflow.py native-plan \
+  --run PARENT_RUN --retry-proof RETRY_DIR/retry_proof.json
+# Or, for the original API lane:
+python skills/photo-prompt-image-generator/scripts/photo_workflow.py render-api \
+  --run PARENT_RUN --ledger generated/photo-runs/image_runs.ndjson \
+  --attempts 1 --retry-proof RETRY_DIR/retry_proof.json
+```
+
+The proof must name the latest recorded attempt of that original run. Preserve
+its prompt ID, increment its attempt number and record `retry_of`. Reservations
+share the parent's additional-call budget with content-revision children. A
+pending operation, changed input, transport switch or exhausted budget fails
+before a provider call. Reusing a proof cannot bypass these checks.
+
+For `revised_content`, prepare a new current child request and attach before its
+freeze; preserved and changed dimensions must both be nonempty and disjoint:
+
+```bash
 python skills/photo-prompt-image-generator/scripts/photo_workflow.py attach-retry \
   --run CHILD_RUN --proof RETRY_DIR/retry_proof.json
 ```
+
+Only revised-content contexts attach to children. For `recovery_only`, use
+`resume` for saved records/bytes or fix the review and rerun its audit; no new
+core or provider invocation is implied. A malformed review may need correction
+before the coordinator can verify its parent. A separate requester correction
+is a new authorized request, not a mechanical retry of a provider rejection.
 
 Retries require a current `photo-workflow-run/v2` parent, its core validation context or native V10 pack and issued runtime receipt V3. Archived runs retain their evidence; create and audit a fresh current run before retrying. No parent-manifest import or historical worker is supported.

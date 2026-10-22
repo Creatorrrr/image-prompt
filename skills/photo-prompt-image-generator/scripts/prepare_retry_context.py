@@ -114,12 +114,16 @@ def parent_inputs(parent_state, attempt_path, ledger_path):
             raise WorkflowError("required_parent_review_missing")
     else:
         from image_attempt_evidence import validate_evidence
-        validate_evidence(Path(attempt["attempt_evidence_path"]), expected_sha256=attempt["attempt_evidence_sha256"],
+        evidence_path = Path(attempt["attempt_evidence_path"])
+        validate_evidence(evidence_path, expected_sha256=attempt["attempt_evidence_sha256"],
             attempt=attempt["attempt"], tool=attempt["tool"], generation_environment=attempt["generation_environment"],
             prompt_en=attempt["prompt_en"], negative_en=attempt.get("negative_en"), status=attempt["status"],
             runtime_prompt_en=runtime["runtime_prompt_en"] if attempt.get("native_render_plan_json") else None)
+        provider_outcome = read_json(evidence_path).get("provider_outcome")
+    if attempt["status"] == "success":
+        provider_outcome = "returned"
     return {"core": core, "controls": controls, "pack": pack, "receipt": receipt, "composed": composed, "runtime": runtime,
-            "attempt": attempt, "reviews": reviews, "audit": audit, "failed_gate_ids": list(dict.fromkeys(failed)), "image_sha256": image_sha}
+            "attempt": attempt, "provider_outcome": provider_outcome, "reviews": reviews, "audit": audit, "failed_gate_ids": list(dict.fromkeys(failed)), "image_sha256": image_sha}
 
 
 def recompute(proof):
@@ -193,6 +197,8 @@ def prepare(args):
 def attach_child(args):
     proof = read_json(args.proof)
     context, _ = recompute(proof)
+    if context["retry_mode"] != "revised_content":
+        raise WorkflowError("child_requires_content_revision")
     if context != read_json(args.proof.parent / "retry_context.json"):
         raise WorkflowError("retry_projection_mismatch")
     with locked_state(args.run) as child:
