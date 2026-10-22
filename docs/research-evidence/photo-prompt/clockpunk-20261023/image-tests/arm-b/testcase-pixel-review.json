@@ -1,0 +1,87 @@
+{
+  "schema": "clockpunk-independent-testcase-pixel-review/v1",
+  "arm": "b",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/clockpunk-20261023/image-tests/arm-b/testcase.frozen.json",
+  "testcase_sha256": "a34330492990beec3824c7989014bb397085b72305f4d2cb0321f5a795fe5b9a",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/images/clockpunk-20261023-independent-b/original.png",
+  "image_sha256": "6dee71f150004429b57c11496daab7caca87e38e678485f8edc5858249b78d94",
+  "image_size": [
+    1536,
+    1024
+  ],
+  "inspection": [
+    "view_image of original at original detail",
+    "view_image of native-size mechanism crop (x=500,y=500,width=1000,height=500)",
+    "view_image of native-size face crop (x=100,y=0,width=470,height=440)"
+  ],
+  "policy": "All endpoints and defining states in one saved image; partial/unobservable cannot pass. Crops are verification aids, not separate attempts or replacement images.",
+  "relation_results": [
+    {
+      "id": "B-R1",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "A thick continuous rope wraps the exposed drum and descends through a ring/chain to the identifiable pear-shaped iron weight. The lower edge of that weight is cut by the bottom image boundary, so its complete free-hanging outline and clearance beneath it are not observable together. The visible power-source association is strong, but the whole frozen relation does not pass.",
+      "missing": [
+        "uncropped lower weight boundary and observable free clearance beneath it"
+      ]
+    },
+    {
+      "id": "B-R2",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "The drum and large gear visibly share a horizontal shaft, followed by a smaller wheel on that same shaft and a separate right wheel. The toothed circumferences do not contact one another. Coaxial wheels and a shaft do not depict the requested meshing wheel-to-wheel train.",
+      "missing": [
+        "actual contacting teeth between consecutive transmission wheels"
+      ]
+    },
+    {
+      "id": "B-R3",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "A horizontal toothed rail and brass boat marker occupy the board above the oak front beam. The small transmission pinion sits far below on the lower shaft, with a clear vertical gap and timber between it and the rail. No visible pinion-to-rack engagement or continuous carriage drive is depicted.",
+      "missing": [
+        "terminal-pinion teeth engaging the marker carriage rack"
+      ]
+    },
+    {
+      "id": "B-R4",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The right toothed wheel and two short lever-like members are visible, and a long brass rod with a pear-shaped bob hangs farther right. A complete pallet contact and continuous lever-to-pendulum link cannot be followed across these parts in this saved image. Their proximity is not proof of the full escapement relation.",
+      "missing": [
+        "complete wheel/pallet/lever/pendulum continuity in one view"
+      ]
+    },
+    {
+      "id": "B-R5",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The same subject has one lowered hand holding a recognizable winding key beside her skirt and the opposite palm/fingers resting on the near oak frame. Both arms connect coherently to her shoulders and remain on the subject side, with neither hand entering the transmission.",
+      "missing": []
+    },
+    {
+      "id": "B-R6",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The inclined route board, small brass boat marker and attendant occupy the pavilion foreground. A distinct full-size passenger boat sits at the canal landing through the stone columns behind them. The small marker and real boat remain separate owners at different depths. This supports the spatial departure context, not observed travel through time.",
+      "missing": []
+    }
+  ],
+  "appearance_reference_result": {
+    "id": "B-A1",
+    "status": "pass",
+    "observability": "visible",
+    "evidence": "The saved face crop shows a softly tapered face, dark eyes and natural lip form with a short dark bob and fine separated fringe, visibly guided by the supplied portrait. Her three-quarter downward glance and warm highlights differ from the source pose/light. This is appearance guidance at a moderate likeness level, not an identity, exact-age or biographical assertion.",
+    "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+  },
+  "relation_counts": {
+    "pass": 2,
+    "fail": 4
+  },
+  "overall": "fail",
+  "claim_limit": "The image visibly evokes a practical clockwork travel setting but does not pass the independently frozen mechanism relations. No still-image claim of true mechanical performance or motion is made.",
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}
