@@ -1,5 +1,11 @@
 # Shared candidate and lazy search maintenance
 
+The [genre-fusion extension](genre-fusion-visual-semantics.md) documents 84
+complete optional visual realizations and 12 nonvisual context records for
+Dying Earth / New Weird / Cozy Fantasy / Cosmic Horror. Its owner graphs and
+150 keyword routes are review metadata, not native qualification or hard
+activation. Search and saved-pixel evidence remain separately qualified.
+
 Local EmbeddingGemma installation, separate rebuilds, qualification and Gemini rollback are documented in [local embeddings](local-embeddings.md). The active manifest declares its model space; local document/query evidence is validated separately from Gemini HTTP evidence.
 
 The authored source is `assets/photo_candidate_corpus_manifest.json`. Each `cand_<uuid>` has exactly one payload owner. Managed slots are presentation tags. A candidate may have zero or many persistent `bind_<uuid>` relations. New request-local role proposals can present compatible untagged or differently tagged records without modifying source tags. Preserve intrinsic effects, provenance, binding conditions, owner/carrier relations, conditional obligations and bundle requirements.
