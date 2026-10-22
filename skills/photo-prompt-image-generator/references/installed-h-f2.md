@@ -260,3 +260,12 @@ routes preserve explicit owners, claim limits and separate still-image proof
 from narrative interpretation. The selected `retrieval-runtime.json` generation
 remains the authority; data registration, retrieval and image outcomes are
 recorded separately in the research integration report.
+
+The [2026-10-22 decadent domestic and splatter extension](decadent-domestic-splatter-semantics.md)
+adds 86 complete bilingual visual options and 22 context-only diagnostics,
+with 172 optional bindings, 189 keyword routes and 252 directed-relation review
+gates. Material appearance, access relationships, anatomical results, models
+and narrative claims retain separate meanings. New sources have no native
+approval; discovery exposure, complete-source compatibility and saved pixels
+are evaluated separately. The active installed generation remains selected by
+`retrieval-runtime.json`.
