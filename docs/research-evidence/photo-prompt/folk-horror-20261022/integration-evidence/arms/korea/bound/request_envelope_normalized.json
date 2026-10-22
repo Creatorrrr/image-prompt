@@ -1,0 +1,74 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "folk-korea-20261022-6e9460",
+  "request_text": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+  "active_spans": [
+    {
+      "span_id": "topic",
+      "start": 76,
+      "end": 135,
+      "text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여"
+    },
+    {
+      "span_id": "reference",
+      "start": 149,
+      "end": 162,
+      "text": "첨부한 이미지를 활용하여"
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c"
+      },
+      {
+        "id": "appearance_reference",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      },
+      {
+        "id": "prior_topic_request",
+        "kind": "text",
+        "sha256": "ced82b8a5f1070672b539c925c63ec7444d7f163859779f9f68574466d0e1d51"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "prior_folk_horror",
+        "active_span_id": "topic",
+        "request_quote": {
+          "start": 76,
+          "end": 86,
+          "text": "이번에 반영한 주제"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "current-thread:earlier-user-request:folk-horror-research",
+          "text": "[포크 호러 용어 조사](chatgpt-conversation://6ad9b8ff-0f90-83ee-8569-db8cbb39c657) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘.",
+          "sha256": "ced82b8a5f1070672b539c925c63ec7444d7f163859779f9f68574466d0e1d51"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 6,
+          "text": "포크 호러"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "The current request refers to the immediately preceding user-requested folk-horror research and its data integration, whose positive topic is quoted exactly."
+        }
+      }
+    ],
+    "canonical_sha256": "02bdd8616094f79178259422f9f65df32f8bcbd9ac9600f03dd53e2bfdb6ca38"
+  },
+  "canonical_sha256": "502966b39c6c7c8d6d5d3d38067cea8f180a9870c68e792b4b62a6b88d9966a8",
+  "envelope_id": "502966b39c6c7c8d"
+}

@@ -1,0 +1,110 @@
+{
+  "schema": "source-specific-original-pixel-review/v1",
+  "reviewed_at": "2026-10-22T08:58:50.179066+00:00",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/folk-winter-20261022-6c4b653c/result.png",
+  "image_sha256": "31e9c4e6c72de37041a5bcce4b9af9c897f0db338e4fab44068606b88f2a830d",
+  "image_dimensions": [
+    1237,
+    1272
+  ],
+  "direct_original_viewed": true,
+  "precall_test_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/folk-winter-20261022-6c4b653c-authoring/source-specific-precall-tests.json",
+  "precall_test_sha256": "f4b103e4db314caa8eb6b5a735284f49189993f879a90fb1ec18ee526d3d9c3a",
+  "source": {
+    "query": "narrative_clue",
+    "candidate_id": "cand_dfc1906f2832572d9f6678c5024d7536",
+    "realization_id": "base",
+    "source_sha256": "a4ff4fb1b4d5004b2b778b8f2d3f1712613e7f38f4494c8911cde2502e6d7e43",
+    "card_id": "L03",
+    "native_approval": false,
+    "new_native_gates_created": false
+  },
+  "source_prompt_evidence": "A raised wooden sill separates a lit interior from the dark exterior; a bowl rests outside the sill.",
+  "source_gate_results": [
+    {
+      "id": "L03_full_wood_sill",
+      "criterion_unchanged": "A raised wooden sill is visible from one door jamb to the other, with raised wooden material legible; a cropped/hidden span fails.",
+      "status": "FAIL",
+      "observability": "partial",
+      "evidence": "A raised wooden beam and both jamb junctions are identifiable, but the forearms and bowl hide portions of its span. The pre-call criterion explicitly required the full visible span and treated a hidden span as failure. It remains UNOBSERVABLE_NOT_PASS.",
+      "reviewed_scales": [
+        "whole_image",
+        "original_pixels"
+      ]
+    },
+    {
+      "id": "L03_both_sides",
+      "criterion_unchanged": "The same raised sill visibly separates a lit interior from a dark exterior in the same saved frame.",
+      "status": "PASS",
+      "observability": "visible",
+      "evidence": "The same raised wooden beam separates a candle/hearth-lit warm cottage at left from the blue, darker wet orchard outside at right; both sides coexist in this saved frame.",
+      "reviewed_scales": [
+        "whole_image",
+        "original_pixels"
+      ]
+    },
+    {
+      "id": "L03_bowl_wholly_outside",
+      "criterion_unchanged": "The one bowl rests wholly beyond the sill outer edge on the exterior side, with bowl base contact and exterior stone supporting surface visible. An inside bowl or ambiguous side fails.",
+      "status": "PASS",
+      "observability": "visible",
+      "evidence": "The single wooden bowl lies beyond the front outer face of the wooden sill on the wet exterior stone, with its lower base meeting that stone and visible stone spacing from the beam. Both hand contacts coexist.",
+      "reviewed_scales": [
+        "whole_image",
+        "original_pixels"
+      ]
+    },
+    {
+      "id": "L03_full_positive_meaning",
+      "criterion_unchanged": "Every English and Korean source clause coexists: raised wooden sill, lit interior, dark exterior and bowl resting outside. Partial evidence of any component/endpoint fails.",
+      "status": "FAIL",
+      "observability": "partial",
+      "evidence": "The principal source relation is legible, including wooden raised sill and outside-resting bowl, but the stricter pre-call whole-scope test requires every specified span and endpoint together. The hidden sill portions prevent a complete all-component PASS. UNOBSERVABLE_NOT_PASS.",
+      "reviewed_scales": [
+        "whole_image",
+        "original_pixels"
+      ]
+    }
+  ],
+  "whole_source_result": "FAIL",
+  "missing_evidence": "UNOBSERVABLE_NOT_PASS",
+  "generic_final_results": [
+    {
+      "id": "two_hand_bowl_contact",
+      "status": "PASS",
+      "observability": "visible",
+      "evidence": "Both hands and forearms belong to the same foreground woman and meet opposite sides of the same open wooden bowl."
+    },
+    {
+      "id": "winter_custom",
+      "status": "PASS",
+      "observability": "visible",
+      "evidence": "Red ribbons are visibly wound/knotted directly around a bare branch in the right near orchard plane; two separate torch-bearing figures wait between the rows behind."
+    },
+    {
+      "id": "reference_appearance",
+      "status": "PASS",
+      "observability": "visible",
+      "evidence": "Chin-length dark bob, separated fringe, softly rounded facial outline, dark eyes, small straight nose and soft pink lips plausibly retain the supplied appearance. This is appearance guidance, not proof of actual identity or age."
+    }
+  ],
+  "independent_baseline_tests": {
+    "baseline_carry_state": "NOT_PRESERVED_BY_PRECALL_AUTHORIAL_DECISION",
+    "explanation": "The standing waist carry was intentionally replaced before the call by a crouched outside set-down. It is not counted as a successful rendered baseline-carry test."
+  },
+  "separate_boundaries": {
+    "source_registration": "observed natural returned source L03",
+    "search": "24 actual returned occurrences across 3 queries; complete decisions recorded",
+    "prompt": "exact L03 positive clause retained with complete source manual test",
+    "native_approval": false,
+    "native_chosen_candidate_ids": [],
+    "composition_and_runtime_audits": "PASS, authored-evidence coverage warnings retained",
+    "source_pixels": "2 source gates PASS, 2 FAIL/partial; whole source FAIL",
+    "body_support": "full support unobservable; no anatomical defect inferred",
+    "requester_acceptance": "PENDING; not received"
+  },
+  "no_postrender_criterion_weakening": true,
+  "native_calls": 1,
+  "api_calls": 0,
+  "additional_generation": false
+}

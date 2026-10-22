@@ -1,0 +1,45 @@
+"""Rebuild only the merged source, reusing verified exact-text parent vectors."""
+from pathlib import Path
+import json, sys, time
+
+O = Path(__file__).resolve().parent
+v = json.loads((O / 'scope.json').read_bytes())
+W, R = Path(v['worktree']), Path(v['primary'])
+S = Path('skills/photo-prompt-image-generator')
+A = W / S / 'assets'
+sys.path.insert(0, str(W / S / 'scripts'))
+import photo_candidate_corpus as c
+import build_shared_candidate_index as builder
+import photo_global_index as documents
+import photo_search_layout as layout
+from photo_search_reader import SearchReader
+from photo_embedding_provider import atomic
+
+started = time.monotonic()
+source = c.load(A)
+assert c.digest(source) == v['release_source_sha256']
+entries, parents = {}, []
+space = json.loads((W / S / 'embedding-runtime.lock.json').read_bytes())['space']
+for parent in (A, R / S / 'assets'):
+    reader = SearchReader(parent)
+    try:
+        assert reader.manifest['space'] == space
+        matched = builder.offline_vector_map(reader, source)['entries']
+        added = {cid: row for cid, row in matched.items() if cid not in entries}
+        entries.update(added)
+        parents.append({'assets': str(parent), 'layout_id': reader.manifest['layout_id'], 'corpus_sha256': reader.manifest['corpus_sha256'], 'exact_text_matches': len(matched), 'reused': len(added), 'scope': 'Same CID, full text hash, recipe, provider/model/space; actual vector shard hashes verified on read.'})
+    finally:
+        reader.close()
+positive = {cid for cid, row in source['candidates'].items() if row['record_kind'] in documents.POSITIVE_KINDS}
+assert set(entries) == positive, sorted(positive - set(entries))
+vectors = {'schema': documents.SCHEMA, 'space': space, 'corpus_sha256': c.digest(source), 'entries': entries}
+documents.validate(vectors, source)
+assert c.digest(c.load(A)) == v['release_source_sha256']
+staged = layout.build(A, source, vectors)
+verification = layout.verify(A, source, staged, vectors)
+assert verification['verified']
+assert c.digest(c.load(A)) == v['release_source_sha256']
+atomic(A / layout.MANIFEST, staged)
+result = {'status': 'pass', 'layout_id': staged['layout_id'], 'records': len(entries), 'corpus_sha256': c.digest(source), 'parents': parents, 'vector_reuse': len(entries), 'provider_calls': 0, 'provider_cache_hits': 0, 'external_embedding_calls': 0, 'space': space, 'verification': verification, 'elapsed_seconds': time.monotonic() - started}
+(O / 'index-build.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps(result), flush=True)

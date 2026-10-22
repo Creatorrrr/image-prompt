@@ -1,0 +1,111 @@
+from pathlib import Path
+import hashlib, json, re, shutil, subprocess, sys
+
+O = Path(__file__).resolve().parent
+v = json.loads((O / 'scope.json').read_bytes())
+R, W = Path(v['primary']), Path(v['worktree'])
+S = W / 'skills/photo-prompt-image-generator'
+D = W / 'docs/research-evidence/photo-prompt/folk-horror-20261022'
+E = D / 'publication-evidence'
+E.mkdir(exist_ok=True)
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+write = lambda p, x: p.write_text(json.dumps(x, ensure_ascii=False, indent=2) + '\n')
+git = lambda *a: subprocess.check_output(['git', *a], cwd=W, text=True)
+sys.path.insert(0, str(S / 'scripts'))
+import photo_candidate_corpus as c
+
+build = json.loads((O / 'index-build.json').read_bytes())
+dictionary = json.loads((O / 'dictionary-validation.json').read_bytes())
+assert build['verification']['verified'] and build['records'] == v['release_positive']
+assert dictionary == {'native_candidates': v['release_candidates'], 'bindings': v['release_bindings'], 'errors': []}
+tests = (O / 'focused-tests.log').read_text()
+match = re.search(r'Ran (\d+) tests', tests)
+assert match and tests.rstrip().endswith('OK')
+test_count = int(match.group(1))
+source = c.load(S / 'assets')
+assert c.digest(source) == v['release_source_sha256']
+assert all(sha(S / 'assets' / name) == h for name, h in v['base_module_sha256'].items())
+assert sha(S / 'retrieval-runtime.json') == v['base_runtime_config_sha256']
+registry = json.loads((S / 'assets/photo_folk_horror_semantics_20261022.json').read_bytes())
+assert len(registry['cards']) == 89 and len(registry['keyword_routes']) == 150
+assert all(row['candidate_id'] in source['candidates'] for row in registry['cards'])
+for line in (D / 'APPLY-SHA256SUMS').read_text().splitlines():
+    h, name = line.split(maxsplit=1)
+    assert sha(D / name.lstrip('*')) == h, name
+for line in (D / 'SHA256SUMS').read_text().splitlines():
+    h, name = line.split(maxsplit=1)
+    p = D / name.lstrip('*')
+    if name == 'README.md':
+        p = D / 'integration-evidence/README.research-only.md.snapshot'
+    assert sha(p) == h
+images = []
+for arm, name in [('korea', 'korea-closed-well.png'), ('harvest', 'harvest-seed-levy.png'), ('winter', 'winter-threshold.png')]:
+    original = R / D.relative_to(W) / 'images' / name
+    published = D / 'images' / name
+    assert sha(original) == sha(published)
+    images.append({'arm': arm, 'image': 'images/' + name, 'sha256': sha(published), 'original_bytes_preserved': True, 'strict_technical_result': 'FAIL, preserved without additional generation'})
+v['release_layout_id'] = build['layout_id']
+v['regression_tests'] = test_count
+write(O / 'scope.json', v)
+write(E / 'image-preservation.json', images)
+for name in ['scope.json', 'index-build.json', 'dictionary-validation.json', 'focused-tests.log', 'worktree-runtime-materialization.json']:
+    shutil.copy2(O / name, E / name)
+for name in ['prepare_scope.py', 'build_scoped.py', 'finalize_scope.py']:
+    shutil.copy2(O / name, E / (name + '.snapshot'))
+(D / 'SOURCE-PUBLICATION.md').write_text(f'''# 포크 호러 자료의 main 게시 범위
+
+2026-10-22. 기준 main `{v['base_HEAD']}`의 기존 source·binding·catalog·policy를 모두 유지하고 포크 호러의 후보 88개(가시 69·진단 19), optional 연결 133개, 의미 카드 89개와 원 대화 키워드 경로 150개를 추가했다. 기존 R01 후보 1개는 원문을 바꾸지 않고 재사용하며 선행 로컬 실험의 동일 source임을 확인했다.
+
+| 항목 | 게시용 main | 선행 로컬 실험 |
+|---|---:|---:|
+| 전체 후보 | {v['release_candidates']:,} | 19,559 |
+| 양성 검색 CID | {v['release_positive']:,} | 19,256 |
+| 진단 | {v['release_diagnostic']:,} | 303 |
+| binding | {v['release_bindings']:,} | 13,777 |
+
+수량 차이는 다른 미커밋 자료·기존 source 수정의 포함 여부다. 이번 게시에는 포크 호러의 동일 신규 CID/원문/effects만 추가하며, 다른 미커밋 코드·source·설치 선택은 포함하지 않는다. 기존 main 후보 {v['base_candidates']:,}개와 binding {v['base_bindings']:,}개를 모두 보존했다.
+
+- source SHA256: `{v['release_source_sha256']}`
+- 검색 layout: `{build['layout_id']}`
+- source/index 전체 closure 검증 PASS, dictionary 오류 0개, 관련 회귀 {test_count}개 PASS.
+- 검증된 부모 layout 두 개에서 CID·전체 text hash·recipe·model/space가 일치하는 벡터 {build['vector_reuse']:,}개를 재사용했다. 새 임베딩/외부 API/이미지 호출 0회다.
+- 연구·통합·이미지 실험의 원본 파일과 기존 SHA256SUMS/APPLY-SHA256SUMS는 보존했다. 현재 게시 범위는 PUBLICATION-SHA256SUMS로 확인한다.
+
+## 설치와 이미지 증거의 범위
+
+게시용 `retrieval-runtime.json`은 main의 기존 H-F2 `{v['published_runtime_config']['generation_id']}`를 유지한다. 앞선 이미지 실험은 최신 작업 SKILL `7fe5b6cfc2da6e65dd9b9dc999e46d70a1fac7dce8c47157e53c1cba43b00f35`와 로컬 설치 H-F2 `0ad30ffe246d77f7c711ea49244b407b71ff747cbc33b380f6f12aaacd657cf2`에서 수행했다. 기본 체크아웃의 그 실행 선택과 다른 저자의 미커밋 작업, native CURRENT는 바꾸지 않는다. source/index 게시와 설치 세대 활성화는 별개다.
+
+세 생성 원본·프롬프트·독립 manifest·사전 테스트·원본 판정을 함께 게시한다. 참조 외형은 세 장에서 유지됐으나 엄격한 technical qualification은 0/3이며 실패를 그대로 보존한다. Korea는 우물 크롭/발자국 경로, Harvest는 강압감 부족과 지지 미관측, Winter는 문턱 전체 폭 가림이 남았다. 신규 L03의 문턱 바깥 그릇 관계는 Winter에서 부분 확인했으며 다른 두 arm은 신규 source 전달을 검증한 것으로 세지 않는다. native approval·사용자 수락·생성 품질의 인과 개선을 주장하지 않는다.
+
+| 컨셉 | 실제 프롬프트 | 원본 |
+|---|---|---|
+| 닫힌 공동 우물 | [프롬프트](integration-evidence/arms/korea/actual-tool-prompt.txt) | [PNG](images/korea-closed-well.png) |
+| 씨앗 공납 | [프롬프트](integration-evidence/arms/harvest/actual-tool-prompt.txt) | [PNG](images/harvest-seed-levy.png) |
+| 겨울 과수원 문턱 | [프롬프트](integration-evidence/arms/winter/actual-tool-prompt.txt) | [PNG](images/winter-threshold.png) |
+
+상세 결과는 [이미지 테스트](IMAGE-TEST-RESULTS.md), [초기 통합](INTEGRATION-RESULTS.md), [게시 검증](publication-evidence/)에서 구분한다. 일부 절대 경로는 당시 실행 위치의 기록이며 향후 워크트리 제거로 바뀔 수 있다. 원본 PNG와 실제 tool prompt는 이 폴더에 독립 복사본으로 보존되어 있다.
+
+이 검증 다음 commit·origin/main pull·양쪽 source를 유지하는 main 병합·push·실제 remote SHA 대조를 수행한다. 그 Git 실행 결과와 정리 증거는 기본 체크아웃 `generated/maintenance/folk-horror-20261022/publication-main/`에 보존한다. 제거 대상 워크트리의 ignored 모델 12개는 기본 체크아웃과 동일 hash의 중복 복사본이며 Python 링크도 기존 runtime을 가리킨다.
+''')
+files = sorted(p for p in D.rglob('*') if p.is_file() and p.name != 'PUBLICATION-SHA256SUMS' and '__pycache__' not in p.parts)
+(D / 'PUBLICATION-SHA256SUMS').write_text(''.join(f'{sha(p)}  {p.relative_to(D)}\n' for p in files))
+index = json.loads((S / 'assets/photo_candidate_search.json').read_bytes())
+members = index['shards'] + [index['metadata']]
+for row in members:
+    assert sha(S / 'assets' / row['path']) == row['sha256']
+names = ['photo_candidate_corpus_manifest.json', 'photo_candidate_search.json', 'photo_candidate_folk_horror_20261022.json', 'photo_candidate_folk_horror_bindings_20261022.json', 'photo_folk_horror_semantics_20261022.json']
+paths = [str(p.relative_to(W)) for p in D.rglob('*') if p.is_file() and '__pycache__' not in p.parts]
+paths += ['skills/photo-prompt-image-generator/assets/' + name for name in names + [row['path'] for row in members]]
+paths += ['skills/photo-prompt-image-generator/references/' + name for name in ['maintenance.md', 'folk-horror-visual-semantics.md']]
+paths = sorted(set(paths))
+assert all((W / p).is_file() and (W / p).stat().st_size < 100 * 1024 * 1024 for p in paths)
+tracked = set(git('ls-files', '-z').split('\0'))
+changed = set(git('diff', 'HEAD', '--name-only').splitlines())
+assert changed <= set(paths), changed - set(paths)
+allow = [p for p in paths if p in changed or p not in tracked]
+write(O / 'commit-allowlist.json', {'paths': allow, 'closure_members': len(members)})
+for offset in range(0, len(allow), 100):
+    subprocess.run(['git', 'add', '--', *allow[offset:offset + 100]], cwd=W, check=True)
+assert set(git('diff', '--cached', '--name-only', '-z').split('\0')) - {''} == set(allow)
+write(O / 'staged-verification.json', {'status': 'pass', 'staged_paths': len(allow), 'staged_tree': git('write-tree').strip(), 'layout_id': build['layout_id'], 'base_modules_preserved': len(v['base_module_sha256']), 'tests': test_count, 'images_preserved': 3, 'historical_checksums_preserved': True, 'runtime_config_preserved': True})
+print(json.dumps({'status': 'scoped_release_staged', 'paths': len(allow), 'tests': test_count, 'layout_id': build['layout_id']}))

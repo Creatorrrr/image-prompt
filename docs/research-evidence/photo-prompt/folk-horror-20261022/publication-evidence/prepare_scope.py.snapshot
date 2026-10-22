@@ -1,0 +1,70 @@
+from pathlib import Path
+import collections, hashlib, json, shutil, subprocess, sys
+
+R = Path('/Users/chasoik/Projects/image-prompt')
+W = Path('/Users/chasoik/.codex/worktrees/folk-horror-main-publication/image-prompt')
+O = Path(__file__).resolve().parent
+S = Path('skills/photo-prompt-image-generator')
+D = Path('docs/research-evidence/photo-prompt/folk-horror-20261022')
+
+def sha(p):
+    h = hashlib.sha256()
+    with p.open('rb') as f:
+        for b in iter(lambda: f.read(1024 * 1024), b''):
+            h.update(b)
+    return h.hexdigest()
+
+def write(p, value):
+    p.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=W, text=True).strip()
+
+assert not git('status', '--porcelain')
+base_head = git('rev-parse', 'HEAD')
+subprocess.run(['git', 'switch', '-c', 'feature/folk-horror-data-20261022'], cwd=W, check=True)
+sys.path.insert(0, str(W / S / 'scripts'))
+import photo_candidate_corpus as c
+base = c.load(W / S / 'assets')
+manifest = json.loads((W / S / 'assets' / c.MANIFEST_NAME).read_bytes())
+old_modules = {m['file']: sha(W / S / 'assets' / m['file']) for m in manifest['modules']}
+names = ['photo_candidate_folk_horror_20261022.json', 'photo_candidate_folk_horror_bindings_20261022.json', 'photo_folk_horror_semantics_20261022.json']
+for name in names:
+    shutil.copy2(R / S / 'assets' / name, W / S / 'assets' / name)
+manifest['modules'] += [{'file': names[0], 'kind': 'candidates'}, {'file': names[1], 'kind': 'slot_bindings'}]
+(W / S / 'assets' / c.MANIFEST_NAME).write_bytes(c.canonical_bytes(manifest) + b'\n')
+shutil.copy2(R / S / 'references/folk-horror-visual-semantics.md', W / S / 'references/folk-horror-visual-semantics.md')
+maintenance = W / S / 'references/maintenance.md'
+maintenance.write_text(maintenance.read_text().rstrip() + '\n\nThe [folk-horror extension](folk-horror-visual-semantics.md) retains 69 new complete optional visual realizations, one reused existing source, 19 diagnostic distinctions and 150 original keyword routes. Physical material, attachment, threshold and group relations remain separate from hidden causation, historical authenticity and native source qualification. Whole-source conditions and effects remain binding; discovery and authored inspiration do not confer native approval.\n')
+shutil.copytree(R / D, W / D, ignore=shutil.ignore_patterns('__pycache__'))
+source = c.load(W / S / 'assets')
+new = json.loads((W / S / 'assets' / names[0]).read_bytes())['candidates']
+bindings = json.loads((W / S / 'assets' / names[1]).read_bytes())['slot_bindings']
+for key in ('candidates', 'slot_bindings'):
+    assert all(source[key][key_id] == value for key_id, value in base[key].items())
+assert source['slot_catalog'] == base['slot_catalog'] and source['policies'] == base['policies']
+assert set(source['candidates']) - set(base['candidates']) == set(new)
+assert set(source['slot_bindings']) - set(base['slot_bindings']) == set(bindings)
+assert all(sha(W / S / 'assets' / name) == value for name, value in old_modules.items())
+reused = 'cand_1f1816e8fc67563886f54dfcac2b1a75'
+live = c.load(R / S / 'assets')
+assert source['candidates'][reused] == base['candidates'][reused]
+# Preserve the source, with an explicit comparison if the prior mixed experiment
+# used a different existing record. Never import unrelated edits implicitly.
+reused_same = source['candidates'][reused] == live['candidates'][reused]
+kinds = collections.Counter(row['record_kind'] for row in source['candidates'].values())
+cfg = W / S / 'retrieval-runtime.json'
+state = {'primary': str(R), 'worktree': str(W), 'base_HEAD': base_head, 'branch': git('branch', '--show-current'), 'base_candidates': len(base['candidates']), 'base_bindings': len(base['slot_bindings']), 'new_candidates': len(new), 'new_visual_candidates': 69, 'new_diagnostics': 19, 'new_bindings': len(bindings), 'release_candidates': len(source['candidates']), 'release_positive': len(source['candidates']) - kinds['diagnostic'], 'release_diagnostic': kinds['diagnostic'], 'release_bindings': len(source['slot_bindings']), 'release_source_sha256': c.digest(source), 'base_module_sha256': old_modules, 'all_base_records_bindings_catalog_policy_preserved': True, 'reused_source_matches_local_experiment': reused_same, 'base_runtime_config_sha256': sha(cfg), 'published_runtime_config': json.loads(cfg.read_bytes())}
+write(O / 'scope.json', state)
+assert reused_same, 'Existing R01 differs from local experiment: explicitly review before publication.'
+lock = json.loads((W / S / 'embedding-runtime.lock.json').read_bytes())
+for name, row in lock['files'].items():
+    src = R / S / lock['package'] / name
+    dst = W / S / lock['package'] / name
+    assert src.stat().st_size == row['bytes'] and sha(src) == row['sha256']
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(src, dst)
+    assert sha(dst) == row['sha256']
+(W / S / '.runtime/embedding-python').symlink_to(R / S / '.runtime/embedding-python', target_is_directory=True)
+write(O / 'worktree-runtime-materialization.json', {'status': 'pass', 'copied_model_files': len(lock['files']), 'redundant_ignored_model_bytes': sum(x['bytes'] for x in lock['files'].values()), 'copied_hashes_match_lock': True, 'existing_python_link': str(R / S / '.runtime/embedding-python'), 'primary_model_unchanged': True, 'model_calls': 0})
+print(json.dumps({k: v for k, v in state.items() if k != 'base_module_sha256'}), flush=True)

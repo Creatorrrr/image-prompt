@@ -1,0 +1,57 @@
+"""Authored full-source review of every new top-10 control occurrence."""
+from pathlib import Path
+import collections,json
+O=Path(__file__).resolve().parent
+read=lambda n:json.loads((O/n).read_text())
+data=read('retrieval-qualification.json');reg=read('data-integration.json');lookup={x['candidate_id']:x['id'] for x in reg['cards']}
+# Judgments apply only to these exact source/query pairs. They are not a new
+# ranking rule, run-local owner permission or whole-source native approval.
+J={
+('FH025-ko','O11'):('visual_reference_only','The incised architectural hexafoil is the building-side distinction; it does not represent or prove a skin devil-mark allegation.'),
+('FH026-ko','K01'):('conditional_optional_fit','Korean straw rope/pine/charcoal are a compatible selected variant, provided the independently frozen scene permits the gateposts and attachments.'),
+('FH026-en','J01'):('explicit_conflict_skip','The complete J01 requires shide, which this exact query excludes.'),
+('FH027-ko','O07'):('conditional_optional_fit','The human-shaped wicker framework explicitly has a visible empty interior, preserving the query exclusion.'),
+('FH027-en','O07'):('conditional_optional_fit','The empty wicker structure is compatible; no occupant or sacrifice may be added from the label.'),
+('FH027-en','V05'):('unrelated_whole_source_skip','The wall cavity and wrapped body-shaped bundle are not the requested empty wicker structure; its material, location and object relation differ.'),
+('FH028-en','O10'):('explicit_conflict_skip','Opening the bottle and displaying contents changes the explicitly opaque sealed state. Use O09 as exterior-only when otherwise compatible; never claim contents are visible.'),
+('FH029-ko','E02'):('conditional_optional_fit','Separate sealskin and two adults provide one authored possession variant with no mermaid tail; the extra owners, pose and reach require independent open-scope review.'),
+('FH029-en','E02'):('conditional_optional_fit','The skin relation preserves the non-mermaid meaning; it does not prove transformation, marriage or coercion.'),
+('FH030-ko','O14'):('conditional_optional_fit','The actual positive source is a cat/book/adult looking relation and explicitly does not establish a magical pact. It need not be supernatural.'),
+('FH030-en','O14'):('conditional_optional_fit','An ordinary cat is compatible with this complete visible relation when the adult, book and gaze fit the independent scene; title/familiar alias adds no pact.'),
+('FH031-ko','L08'):('scope_excess_skip','This exact request limits the depiction to the well form. L08 also requires votive objects on a ledge, so the complete source should not be adopted merely for a stone-lined well.'),
+('FH032-ko','V04'):('conditional_optional_fit','Dark red liquid is a visible color and the source does not identify blood. Additional participants/support and arrangement still require scope review.'),
+('FH032-en','V04'):('conditional_optional_fit','Unknown chemistry remains unknown; the whole bowl/support/adult arrangement is optional, not implied by the color-only query.'),
+('FH033-en','V01'):('visual_reference_only','The exposed preserved hand/forearm can depict a bounded bog-body view; nothing in its visible contract proves kingship or sacrifice.'),
+('FH034-en','R03'):('conditional_optional_fit','Pointing and separation are the actual scene; guilt is explicitly unproven. The complete group/target/gap still needs compatible scope.'),
+('FH036-en','V07'):('context_inquiry_skip','The query asks for a conceptual distinction; it does not request the complete nude-adult/basin/robe scene. Presence of adult-nudity words alone is not adoption permission.'),
+('FH038-ko','J03'):('conditional_optional_fit','Masked adult visitors and a host meal are a compatible authored visitation variant. The selected straw costume is not universal Raiho-shin appearance.'),
+('FH038-ko','O05'):('conditional_optional_fit','Human mask/costume/household-entry structure may be compatible; the full source is a waiting-at-door scene rather than proof of the ritual purpose.'),
+('FH038-ko','O16'):('scope_review_required','This source specifically adds horns/straps on a performer. Frightening masks in general do not require horns; select only if the independent authored variant supports it.'),
+('FH038-en','J03'):('conditional_optional_fit','The host/visitors/meal relation is compatible without converting them to attacking demons. Verify actual regional costume before historical reconstruction.'),
+('FH038-en','O05'):('conditional_optional_fit','The entry/costume relation is an optional visual version; it cannot establish deity identity or the complete visit sequence.'),
+('FH038-en','O16'):('scope_review_required','Horns and a strapped mask are extra specific visible choices, not implied by the general ritual name.'),
+('FH039-ko','O15'):('visual_reference_only','Stone mouth/vines/cheeks depict the foliate head. The source explicitly does not establish a secret pagan community or continuous religion.'),
+('FH039-en','O15'):('visual_reference_only','The architectural carving is compatible as visible form, with the queried historical inference excluded.'),
+('FH041-en','L01'):('explicit_conflict_skip','A sunken path below high banks contradicts the explicitly broad level path.'),
+('FH042-ko','O02'):('conditional_optional_fit','The ribbons/pole-top/dancers-hands relation can be an ordinary happy maypole scene; it carries no sacrifice or confinement requirement.'),
+('FH042-en','O02'):('conditional_optional_fit','Ordinary joyful dance is compatible with this complete physical ribbon relation, subject to count/pose permissions.'),
+('FH042-en','R03'):('unrelated_whole_source_skip','A group pointing at one isolated adult is unrelated to the requested happy ribbon dance. Generic group words do not justify substitution.'),
+('FH043-ko','L12'):('explicit_conflict_skip','Blackened drooping damaged stalks conflict with explicitly healthy green crops.'),
+('FH045-en','R09'):('unrelated_whole_source_skip','A cloth-hung initiation-like entry and raised foot add a different event and arrangement; ordinary commuting does not justify this substitution.'),
+('FH046-en','E02'):('unrelated_whole_source_skip','Two adults and a held sealskin cannot replace real birds in a wildlife image.'),
+('FH047-en','O09'):('explicit_conflict_skip','Hearth-slab concealment is different from the explicitly kitchen-shelf product placement. The material match alone is insufficient.'),
+('FH048-ko','O13'):('conditional_optional_fit','The actual source only requires an open worn bound book and hand-drawn diagrams. Botanical diagrams can fit; grimoire alias does not establish magic.'),
+('FH048-en','O13'):('conditional_optional_fit','An ordinary book can share the complete physical form. Preserve botanical detail and do not add harmful magic or supernatural events.'),
+('FH049-en','R05'):('context_inquiry_skip','Shared head directions cannot prove exact sound or call-and-response sequence. The conceptual inquiry authorizes no table/door/group scene.'),
+('FH051-en','O10'):('unrelated_whole_source_skip','Bottle/tray/separate pins and hair do not realize hair attached to a doll; the owners and required attachment differ. Magical efficacy remains unproven.')
+}
+rows=[]
+for case in data['cases']:
+ if case['cohort']=='development':continue
+ for cid in case['after']['new_at10']:
+  card=lookup[cid];judgment,reason=J.pop((case['id'],card))
+  rows.append({'case_id':case['id'],'query':case['query'],'candidate_id':cid,'card_id':card,'judgment':judgment,'reason':reason,'native_approval':False})
+assert not J and len(rows)==37
+out={'status':'all_new_control_occurrences_reviewed','queries_with_new_top10':31,'occurrences':len(rows),'counts':dict(collections.Counter(x['judgment'] for x in rows)),'rows':rows,'limits':'Before/after probes contain raw authored positive and negative query text; they are not managed frozen-core slot sampling, exclusion projection, final source admission or native approval. A compatible source is still optional. An explicit conflict must be skipped; ranking exposure alone is not final output contamination.'}
+(O/'control-semantic-review.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({k:v for k,v in out.items() if k!='rows'}))

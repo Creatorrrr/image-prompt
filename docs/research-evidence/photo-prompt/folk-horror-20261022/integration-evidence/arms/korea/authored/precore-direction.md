@@ -1,0 +1,9 @@
+# Independent direction before retrieval
+
+The local random draw selected **well-at-dawn** from six independently authored Korean-village situations. The photograph concerns a shared place becoming socially forbidden while its physical evidence still looks ordinary. A fictional adult archivist, carrying the supplied face and hair appearance, has arrived for routine documentation. A well has been covered and kept dry. Wet bare footprints appear to start beside its sealed lid and lead through the archivist's space. Residents stay within separate house thresholds, all watching the same footprints rather than the camera. The uncertainty is who has crossed the village's rule and why nobody will approach.
+
+Two coherent realizations were compared before drafting. A close portrait with the well behind would strengthen facial presence but turn the footprints into illegible decoration. A low wide view might foreground the trail but shrink both the reference face and the social reaction. Select an eye-level environmental view close enough to read the face in three-quarter view, with the entire lid and the near section of the outward trail in the lower middle of the frame and residents visible at a second depth. The connected looks establish the same target.
+
+Controls will be resolved from the current candidate-free saved defaults once the coordinator request envelope arrives; no overrides have been selected. The appearance reference supplies visible face and hair only; the invented adult role, clothes, setting and emotional situation are authorial.
+
+No candidate, source card, earlier experiment, prior generated prompt or other arm has been opened. The selected subject and story do not assert an authentic traditional rite; this is a fictional folk-horror photograph grounded in rural spatial and social relationships.
