@@ -1,0 +1,89 @@
+{
+  "schema": "space-opera-independent-image-testcase/v1",
+  "arm": "a2",
+  "prospective": true,
+  "frozen_core_sha256": "9c7c06f4df5ede702e774eafa46966212905e782de9cbf7c2b50dabcc0df152a",
+  "concept": "Final repaired relief freighter control-cassette handover at orbital shipyard",
+  "agent_owned_test_expectations": true,
+  "requester_hard_duties": "Reference-guided original space-opera image; this testcase tests chosen realization without retroactively converting staging into requester locks.",
+  "gates": [
+    {
+      "id": "A2_ORBITAL_YARD",
+      "required_visible": [
+        "curved planetary limb outside the facility",
+        "construction/servicing dock structure around the spacecraft"
+      ],
+      "pass_rule": "Both components are visibly external and spatially connected; a decorative starfield or spaceship interior alone fails.",
+      "confusion_boundary": "ordinary aircraft hangar, abstract corridor, generic spaceship bridge"
+    },
+    {
+      "id": "A2_WORKING_ATTACHMENT",
+      "required_visible": [
+        "large freighter hull",
+        "at least one visibly connected docking rib or servicing bridge"
+      ],
+      "pass_rule": "The support/bridge must visibly meet the same ship hull, not merely float nearby.",
+      "confusion_boundary": "unattached rings or architectural ribs mistaken for shipyard"
+    },
+    {
+      "id": "A2_SCALE_HIERARCHY",
+      "required_visible": [
+        "foreground people",
+        "midground freighter hull",
+        "smaller work craft or service structures"
+      ],
+      "pass_rule": "At least three readable scales establish a vast working civilization.",
+      "confusion_boundary": "one large ship silhouette plus unrelated foreground portrait"
+    },
+    {
+      "id": "A2_HANDOVER",
+      "required_visible": [
+        "engineer receiving/giving hand",
+        "captain receiving/giving hand",
+        "one complete shared cassette",
+        "both hands in simultaneous contact with different sides of that same cassette"
+      ],
+      "pass_rule": "All owners, object and contacts read together. Partial grip, hidden edge or duplicated object is fail.",
+      "confusion_boundary": "two people simply holding separate objects or shaking hands"
+    },
+    {
+      "id": "A2_REFERENCE_SCOPE",
+      "required_visible": [
+        "main figure face proportions compatible with supplied portrait",
+        "short dark bob with wispy fringe"
+      ],
+      "pass_rule": "Face/hair can be compared from saved pixels; if face too small or occluded, partial or unobservable is fail. Identity is not scored.",
+      "confusion_boundary": "generic attractive face or matching hair alone"
+    },
+    {
+      "id": "A2_CAUSAL_MOMENT",
+      "required_visible": [
+        "shared transfer",
+        "visible green completion lamp",
+        "engineer attention or expression directed to captain"
+      ],
+      "pass_rule": "The scene supports completion and transfer as one moment, while unseen repair backstory remains unscored.",
+      "confusion_boundary": "unmotivated pose with background green light"
+    },
+    {
+      "id": "A2_PHOTOGRAPHIC_COHERENCE",
+      "required_visible": [
+        "plausible hand/body ownership",
+        "consistent working surfaces and light",
+        "clear hierarchy from main face/contact to yard"
+      ],
+      "pass_rule": "The central action is physically coherent and visually readable at saved image scale.",
+      "confusion_boundary": "correct labels with fused anatomy or decorative clutter"
+    }
+  ],
+  "status_values": [
+    "visible",
+    "partial",
+    "unobservable"
+  ],
+  "partial_is_fail": true,
+  "unobservable_not_pass": true,
+  "provider_block_rule": "moderation_blocked yields no image and all pixel gates UNSCORED, no unchanged retry",
+  "user_acceptance": "pending",
+  "causality_limit": "An image can show genre realization and retrieval bindings, but one generation cannot prove that the data alone caused an artistic improvement."
+}
