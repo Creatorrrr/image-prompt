@@ -71,3 +71,5 @@ The composer may copy an omitted disabled (`intensity: 0`) appeal-axis metadata
 entry from the frozen pack. It never fills positive-intensity evidence, changes
 a supplied value, writes prompt text, or supplies a reviewer/requester judgment.
 Missing positive axes and conflicting values still fail the existing audit.
+
+The [surreal/posthuman/science-fantasy extension](surreal-posthuman-science-fantasy-semantics.md) retains 72 complete optional visual realizations, 16 diagnostic distinctions and 182 source-scoped keyword routes. Material transfer, double images, body/device interfaces, organic architecture, ritual machinery and posthuman everyday relations preserve whole bilingual source meaning and all owner/endpoint constraints. Registered material remains separate from native source qualification, managed selection, exact prompt transport, saved pixels and requester acceptance.
