@@ -99,3 +99,12 @@ bindings, with 297 advisory reference routes. Carrier, information owner,
 perceiver, displayed claim and temporal evidence remain distinct. Research
 graphs and source citations add no native facts or adoption authority; source
 registration, installed search exposure and saved pixels are separately checked.
+
+The [space-horror extension](space-horror-semantics.md) adds 53 complete optional
+bilingual visual sources, 26 diagnostic/context records and 146 optional
+bindings, retaining 64 visual cards, 20 contextual distinctions and 200 keyword
+routes. Five existing sources are reused without mutation. Pressure boundaries,
+physical connections, biological integration, containment direction and static
+versus temporal evidence retain explicit owners and claim limits. Research
+metadata grants no native qualification; installed exposure, authored prompt use
+and generated pixels are checked separately.
