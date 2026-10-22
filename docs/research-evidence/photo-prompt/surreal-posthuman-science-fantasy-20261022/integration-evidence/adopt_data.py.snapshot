@@ -1,0 +1,156 @@
+"""Register bounded optional research realizations, preserving all old sources."""
+from pathlib import Path
+import copy,gzip,hashlib,json,sys,uuid
+O=Path(__file__).resolve().parent;R=O.parents[2];S=R/'skills/photo-prompt-image-generator';A=S/'assets'
+Q=R/'docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022'
+sys.path.insert(0,str(S/'scripts'))
+import photo_candidate_corpus as c
+from photo_runtime_sources import source_update
+read=lambda p:json.loads(p.read_bytes())
+def write(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+
+# Directly reviewed broad mutation footprint of every whole authored proposition.
+# No owner/property approval or semantic fact is inferred from the research graph.
+EFFECTS={
+'A01':'setting material appearance count relationship','A02':'material appearance body_geometry count relationship',
+'A03':'material appearance setting relationship','A04':'setting material body_geometry relationship',
+'A05':'appearance material body_geometry setting relationship','A06':'appearance material lighting relationship',
+'B01':'setting appearance body_geometry count composition','B02':'subject pose body_geometry relationship appearance',
+'B03':'subject pose lighting appearance relationship','B04':'setting appearance camera composition count',
+'B05':'subject age body_geometry relationship setting','B06':'setting material appearance relationship',
+'C01':'subject age body_geometry appearance relationship setting','C02':'subject body_geometry material appearance relationship',
+'C03':'subject appearance body_geometry relationship setting','C04':'subject age pose action body_geometry relationship',
+'C05':'subject body_geometry appearance material count relationship','C06':'subject appearance body_geometry pose count relationship',
+'D01':'subject appearance body_geometry relationship setting','D02':'appearance count body_geometry relationship',
+'D03':'subject count body_geometry appearance text relationship','D04':'subject age pose action relationship appearance',
+'D05':'subject count appearance body_geometry relationship setting','D06':'setting count appearance relationship',
+'E01':'setting appearance body_geometry count relationship','E02':'setting material appearance relationship',
+'E03':'setting material appearance relationship','E04':'subject age appearance material body_geometry relationship',
+'E05':'subject age pose action setting material relationship','E06':'setting appearance body_geometry relationship',
+'F01':'subject age pose action relationship setting','F02':'subject age pose action appearance relationship',
+'F03':'appearance material text body_geometry count relationship','F04':'appearance body_geometry relationship setting',
+'F05':'appearance count pose relationship','F06':'appearance material relationship',
+'G01':'setting appearance material body_geometry relationship','G02':'setting appearance body_geometry relationship',
+'G03':'subject age pose setting body_geometry relationship','G04':'setting count composition body_geometry relationship',
+'G05':'appearance body_geometry material relationship','G06':'lighting setting body_geometry relationship',
+'H01':'setting appearance body_geometry composition relationship','H02':'subject appearance text pose relationship',
+'H03':'count appearance color material relationship','H04':'setting count appearance body_geometry composition',
+'H05':'setting count appearance lighting composition relationship','H06':'setting appearance text material relationship',
+'I01':'subject body_geometry material appearance relationship','I02':'subject body_geometry material appearance count relationship',
+'I03':'subject appearance body_geometry material color relationship','I04':'subject count body_geometry relationship',
+'I05':'appearance body_geometry material setting relationship','I06':'appearance body_geometry material count relationship',
+'J01':'subject age body_geometry appearance relationship','J02':'subject pose body_geometry count relationship',
+'J03':'material appearance relationship setting','J04':'subject appearance body_geometry count pose relationship',
+'J05':'subject appearance body_geometry pose relationship','J06':'subject age pose action appearance material relationship',
+'K01':'subject age count pose body_geometry material relationship','K02':'subject age count pose action appearance relationship',
+'K03':'subject age count pose action material appearance relationship','K04':'subject age pose count body_geometry appearance relationship',
+'K05':'subject age count pose action appearance relationship','K06':'subject age count pose action relationship body_geometry',
+'L01':'subject age pose action appearance relationship','L02':'subject count appearance body_geometry relationship setting',
+'L03':'subject age pose action body_geometry relationship setting','L04':'subject age pose action relationship setting',
+'L05':'subject age count pose action relationship','L06':'subject age pose action body_geometry relationship'}
+
+ALIASES={
+'A01':['porcelain curtain','material metamorphosis'],'A02':['branching key','metamorphosis'],
+'A03':['water chain transition','material metamorphosis'],'A04':['folded wave doorway','dream logic'],
+'A05':['terrain inside drawer handle','miniature landscape'],'A06':['paper and shadow bird','double image'],
+'B01':['architectural double image','columns forming a face'],'B02':['mismatched mirror hand','reflection discrepancy'],
+'B03':['bird-shaped human shadow','shadow correspondence'],'B04':['aligned anamorphic marks','oblique viewpoint alignment'],
+'B05':['hand and enormous handle','scale relation'],'B06':['offset tile line through panel','transparent panel discrepancy'],
+'C01':['forearm socket cable to archive','cyborg interface'],'C02':['skin metal wrist seam','biomechanical junction'],
+'C03':['back tube through coat hole','wearer-owned interface'],'C04':['artificial fingertips in lock grooves','mechanical contact'],
+'C05':['external bone-shaped support pouch','external body apparatus'],'C06':['detached artificial arm on supports','prosthetic component'],
+'D01':['head device to wall archive','external cognition apparatus'],'D02':['two terminals one Y cable','shared physical interface'],
+'D03':['two artificial bodies matching portrait cards','identity representation'],'D04':['notebook diagram and matching dial','external cognitive aid'],
+'D05':['artificial shells on cradles','body exchange apparatus'],'D06':['circular seats connected to disk','distributed interface'],
+'E01':['roots connected to column base','organic architecture junction'],'E02':['metal valve in organic folded wall','biomechanical architecture'],
+'E03':['membrane fixed in ventilation duct','organic mechanical interface'],'E04':['fibrous mass from sleeve onto hand','textile organic transition'],
+'E05':['patch maintenance on organic wall','living architecture care'],'E06':['greenhouse beds pipe water tank','ecological infrastructure'],
+'F01':['kneeling worker grips crank','ritualized machine interface'],'F02':['token half inserted in machine groove','offering-like interface'],
+'F03':['wire following character grooves','technomagic interface'],'F04':['bell clapper cable wall device','ritual machinery'],
+'F05':['open box pulley counterweight','reliquary-like balance apparatus'],'F06':['copper coil around glass vessel','alchemical apparatus'],
+'G01':['miniature city inside mineral','contained world imagery'],'G02':['habitation platforms inside machine casing','megastructure'],
+'G03':['worker and column shared floor','human scale megastructure'],'G04':['nested control room windows','nested spaces'],
+'G05':['land-patterned sphere with roots','living world imagery'],'G06':['vast circular device illuminates workbench','numinous scale imagery'],
+'H01':['room model repeating room arrangement','mise en abyme'],'H02':['held portrait blank face matching clothes','missing identity imagery'],
+'H03':['identical devices different wear','temporal juxtaposition'],'H04':['matching room layouts through doorway','recursive space imagery'],
+'H05':['facing mirrors repeated lamp','recursive reflection'],'H06':['older lettering beneath peeled paint','palimpsest'],
+'I01':['scaled and smooth shell torso junction','fictional hybrid form'],'I02':['three-material assembled mannequin','assemblage'],
+'I03':['green film inside transparent creature shell','host-associated layer imagery'],'I04':['two creature shells one shared membrane','body fusion'],
+'I05':['seed-shaped device tube soil box','organic technology'],'I06':['closed fluid pouch external circulation','fictional culture apparatus'],
+'J01':['scar-like marks around closed arm seam','bodily boundary trace'],'J02':['body between open metal mold halves','body manufacturing apparatus'],
+'J03':['viscous strand vessel to floor','viscous material trace'],'J04':['separated anatomical display model parts','model medium distinction'],
+'J05':['hollow creature shell split seam','vacated body shell'],'J06':['sleeve caught on metal spike','cloth contact boundary'],
+'K01':['metal and skin palms touching','nonhuman intimacy imagery'],'K02':['pointing at another wearer shell seam','shared body-interface attention'],
+'K03':['fingertip presses glossy glove','glove surface contact'],'K04':['adult between alternative artificial shells','morphological choice imagery'],
+'K05':['two adults gripping one interface disk','shared interface contact'],'K06':['adult supports nonhuman shell patch','multispecies care imagery'],
+'L01':['queued adult token and terminal dish','ration interface imagery'],'L02':['artificial hand components on display','body component catalog'],
+'L03':['artificial-bodied worker holds sewing cloth','posthuman everyday work'],'L04':['palm contacting access panel recess','access interface'],
+'L05':['two adults sharing archive case contact','memory economy imagery'],'L06':['tool tip contacts artificial knee screw','body maintenance']}
+
+CONTEXT_EN=[
+'Copying a personality, running it, transferring it and preserving the original self are separate fictional or philosophical claims; visible cables do not establish survival.',
+'Shared wires, synchronized poses and matching displays do not establish one consciousness or actual collective cognitive processing.',
+'The philosophical body without organs, assemblage and rhizome are not literal prescriptions for organ removal or vine decoration; term-specific primary review remains pending.',
+'Cloning, chimerism, parthenogenesis and extra-uterine gestation retain different biological or fictional meanings; bodily appearance does not establish reproductive rights or mechanisms.',
+'Letter-like marks, circuits, prayer-like postures and light do not establish actual magic, divine response or demonstrated psionic engineering.',
+'Sound without a visible source, odor, touch and synesthetic experience cannot themselves be verified in one still image.',
+'Rust, ruins, layered markings and portraits do not establish age, a precursor civilization, time travel or chronological sequence.',
+'Dream-work, condensation, displacement, the uncanny and the numinous are historical theories, interpretations or experiences; appearance does not diagnose a mind.',
+'Eroticism, fetish meanings, jouissance and death-drive interpretations require their own declared critical or desire context; material gloss and exposure alone add none.',
+'Adult consensual BDSM, sadism or masochism and fictional distributed consent retain separate agreement, role and subject conditions; a pose or restraint is not consent evidence.',
+'Incest taboo and necrophilia remain research concepts about kinship, norms, death and desire; resemblance, pallor, sleep or artificial bodies do not establish those meanings.',
+'Reproductive coercion, sexual violence and the monstrous-feminine concern autonomy, power or cultural construction; gender, pregnancy or anatomy is not a generic horror trait.',
+'Dismemberment, flaying, evisceration, vivisection, cannibalism and autocannibalism retain distinct action, ownership, life-state and medium conditions; a model is not an actual injury substitute.',
+'Visible allocation, maintenance, display and work differ from political claims about biopower, necropolitics, ownership, coercion or species discrimination.',
+'Nested pictures, portals and reading gestures do not alone establish metalepsis, simulation or an information hazard; narrative levels and causal claims need context.',
+'Care and cohabitation can be visually suggested without proving kinship, personhood, symbiotic benefit, freedom of form or voluntary participation.']
+
+def main():
+ before=read(O/'before.json');old=c.load(A);assert c.digest(old)==before['corpus_sha256'],'Concurrent source drift requires a new baseline'
+ cards=read(Q/'semantic-cards.json')['cards'];contexts=read(Q/'context-records.json')['records'];keywords=read(Q/'keyword-register.json')['keywords']
+ sources={x['source_id']:x for x in read(Q/'sources.json')['sources']};assert set(EFFECTS)==set(ALIASES)=={x['card_id'] for x in cards}
+ records={};bindings={};registry=[];decisions=[];oldtexts={x.get('content',{}).get('en',''):cid for cid,x in old['candidates'].items()}
+ for card in cards:
+  key=card['card_id'];en=card['proposal_en'];ko=card['proposal_ko'];assert en not in oldtexts,'Exact duplicate requires full-source reuse decision'
+  cid='cand_'+uuid.uuid5(uuid.NAMESPACE_URL,'image-prompt/surreal-posthuman-science-fantasy/20261022/'+key).hex;assert cid not in old['candidates']
+  meta={**copy.deepcopy(card),'schema':'photo-surreal-posthuman-visual-semantics/v1','candidate_id':cid,'registration_status':'authored_source_module','source_refs':[sources[i] for i in card['source_ids']],'native_qualification':'not_qualified','graph_scope':'Research review only; not typed facts, native guards, owner authority or qualifications.','provenance_digest_scope':'research specification bytes, not web page bytes'}
+  app='One complete optional fictional visual realization, never a genre-triggered obligation. Preserve the complete English and Korean positive meaning, every material, count, part, owner, same/different relation, current pose, contact, endpoint and continuity or separation. Use only when the independent requester meaning and every affected dimension/property permit the complete case. All required endpoints and qualifiers must remain visible together; cropped, hidden or partial evidence fails the full case. Research graphs, aliases and citations supply no native facts, guard evidence, existing-owner permissions or whole-source qualification. Visible arrangements alone do not establish identity survival, consciousness, genetics, life or death, kinship, desire, consent, coercion, rights, political institutions, historical age, sequence, sound or supernatural efficacy. An artificial component, anatomical model, fictional shell and actual human injury retain different meanings.'
+  rec={'id':cid,'record_kind':'visual_option','content':{'en':en,'ko':ko,'definition':'Optional complete fictional visual realization: '+en,'aliases':[card['title_ko']]+ALIASES[key],'application_contract':app,'research_semantics':meta},'conditions':{'requires_adult_context':True} if 'adult' in en.lower() else {},'effects':{'dimensions':sorted(EFFECTS[key].split()),'properties':[]},'provenance':[{'source':sources[i]['url'],'sha256':sha(Q/'semantic-cards.json')} for i in card['source_ids']]}
+  records[cid]=rec;registry.append(meta)
+  for slot in card['proposed_slots']:
+   assert slot in old['slot_catalog'];bid='bind_'+uuid.uuid5(uuid.NAMESPACE_URL,cid+'/'+slot).hex
+   bindings[bid]={'id':bid,'candidate_id':cid,'slot_id':slot,'role':'optional','semantic_role':old['slot_catalog'][slot]['semantic_role'],'conditions':{'subject_applicability':{}},'weight':2}
+  decisions.append({'card_id':key,'candidate_id':cid,'decision':'new_bounded_optional_variant','reason':'The whole scene adds a specific material/owner/endpoint/state relation; exact sentence duplicate absent. Nearby originals preserved rather than shortened. Full-corpus semantic novelty is not claimed.','native_approval':False})
+ for card,en in zip(contexts,CONTEXT_EN,strict=True):
+  key=card['context_id'];cid='cand_'+uuid.uuid5(uuid.NAMESPACE_URL,'image-prompt/surreal-posthuman-science-fantasy/20261022/'+key).hex
+  meta={**copy.deepcopy(card),'card_id':key,'candidate_id':cid,'registration_status':'authored_diagnostic_module','native_qualification':'not_qualified'}
+  records[cid]={'id':cid,'record_kind':'diagnostic','content':{'en':en,'ko':card['meaning_limit_ko'],'definition':'Context-only distinction; no positive still-image recipe.','aliases':[card['title_ko']],'application_contract':'Context-only research distinction, excluded from positive visual material retrieval. Preserve declared meaning without converting it to a fixed appearance rule, an owner permission or native qualification. No actual event is replaced by a model or unrelated ordinary prop.','research_semantics':meta},'conditions':{},'effects':{'dimensions':[],'properties':[]},'provenance':[{'source':sources[i]['url'],'sha256':sha(Q/'context-records.json')} for i in card['source_ids']]}
+  registry.append(meta);decisions.append({'card_id':key,'candidate_id':cid,'decision':'context_diagnostic','native_approval':False})
+ assert len(records)==88 and len(bindings)==144
+ nm='photo_candidate_surreal_posthuman_science_fantasy_20261022.json';bm='photo_candidate_surreal_posthuman_science_fantasy_bindings_20261022.json'
+ assert not (A/nm).exists() and not (A/bm).exists()
+ manifest=read(A/c.MANIFEST_NAME);manifest['modules'] += [{'file':nm,'kind':'candidates'},{'file':bm,'kind':'slot_bindings'}]
+ with source_update(S):
+  assert c.digest(c.load(A))==before['corpus_sha256']
+  write(A/nm,{'schema':c.MODULE_SCHEMAS['candidates'],'candidates':records});write(A/bm,{'schema':c.MODULE_SCHEMAS['slot_bindings'],'slot_bindings':bindings});write(A/c.MANIFEST_NAME,manifest)
+  now=c.load(A);assert all(now['candidates'][k]==v for k,v in old['candidates'].items());assert all(now['slot_bindings'][k]==v for k,v in old['slot_bindings'].items());assert all(now[k]==old[k] for k in ['slot_catalog','policies'])
+ context_routes={
+  '중심축':['X01','X02','X05','X08','X14','X16'],'꿈과 연상':['X08'],
+  '형태와 오브제':['X08','X15'],'초현실 공포':['X08','X13'],
+  '인간 중심주의':['X03','X14','X16'],'몸과 인지':['X01','X02','X03'],
+  '정신과 인격':['X01','X02','X07'],'종과 생식':['X04','X16'],
+  '기술과 마법':['X05'],'신과 우주':['X05','X07'],'공간과 감각':['X06','X07'],
+  '신체 공포와 폭력':['X13'],'욕망과 매혹':['X09','X10','X11'],
+  '성 생식 동의':['X04','X10','X11','X12'],'서사 기법':['X07','X15'],
+  '권력과 일상':['X14','X16']}
+ context_ids={x['card_id']:x['candidate_id'] for x in registry if x['card_id'].startswith('X')}
+ routes=[]
+ for k in keywords:
+  routes.append({**copy.deepcopy(k),'optional_visual_candidate_ids':[x['candidate_id'] for x in registry if x['card_id'][0] in k['candidate_family_routes']],'route_limit':'Advisory illustrative neighborhoods only; no full-term fulfillment, auto activation, role approval or permission.','context_candidate_ids':[context_ids[x] for x in context_routes[k['group']]]})
+ result={'schema':'photo-surreal-posthuman-semantic-registry/v1','cards':registry,'keyword_routes':routes,'decisions':decisions,'native_approval':False,'counts':{'visual_options':72,'diagnostics':16,'bindings':len(bindings),'keyword_routes':182},'research_spec_sha256':sha(Q/'semantic-cards.json')}
+ write(A/'photo_surreal_posthuman_science_fantasy_semantics_20261022.json',result)
+ write(O/'new-native-records.json',records);write(O/'changed-native-records.json',{});write(O/'data-integration.json',result)
+ write(O/'source-preservation.json',{'status':'pass','all_prior_candidate_records_byte_semantics_unchanged':len(old['candidates']),'all_prior_bindings_unchanged':len(old['slot_bindings']),'catalog_and_policies_unchanged':True,'new_candidates':len(records),'new_positive':72,'new_diagnostic':16,'new_bindings':len(bindings),'current_writes':0})
+ print(json.dumps(result['counts']),flush=True)
+if __name__=='__main__':main()

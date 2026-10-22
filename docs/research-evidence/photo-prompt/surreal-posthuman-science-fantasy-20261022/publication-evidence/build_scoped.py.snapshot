@@ -1,0 +1,15 @@
+from pathlib import Path
+import json,sys
+O=Path(__file__).resolve().parent
+v=json.loads((O/'scope.json').read_text())
+W=Path(v['worktree']);S=W/'skills/photo-prompt-image-generator';A=S/'assets'
+sys.path.insert(0,str(S/'scripts'))
+import photo_candidate_corpus as c, build_shared_candidate_index as builder
+source=c.load(A)
+assert c.digest(source)==v['release_source_sha256']
+space=json.loads((S/'embedding-runtime.lock.json').read_text())['space']
+assert space['provider']=='embeddinggemma2-local'
+report=builder.build(A,O/'embedding-cache',space=space)
+assert c.load(A)==source
+(O/'index-build.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps(report),flush=True)

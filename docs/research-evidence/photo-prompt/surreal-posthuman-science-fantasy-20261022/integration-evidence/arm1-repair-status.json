@@ -1,0 +1,41 @@
+{
+  "schema": "photo-arm-repair-preflight-outcomes/v1",
+  "actual_additional_image_calls": 0,
+  "first_image_call_count": 1,
+  "outcomes": [
+    {
+      "stage": "retry_prepare_initial_enum",
+      "exit_code": 2,
+      "code": "invalid_failure_class",
+      "changed_wire_value_from": "visible_fidelity_failure",
+      "changed_wire_value_to": "pixel_realization_mismatch"
+    },
+    {
+      "stage": "retry_projection_with_new_request_id",
+      "status": "pass",
+      "lineage_status": "representable",
+      "projection_sha256": "8bd1ff0b16f2cea7432dd7d744972bf091310a84f63a3c85d184e5d994103e05"
+    },
+    {
+      "stage": "retry1_child_freeze_project_python",
+      "exit_code": 2,
+      "code": "retry_input_invalid",
+      "preserved_directory": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/surreal-posthuman-20261022-arm1/retry1"
+    },
+    {
+      "stage": "retry1_child_freeze_bound_numpy_python",
+      "exit_code": 2,
+      "code": "retry_input_invalid",
+      "preserved_directory": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/surreal-posthuman-20261022-arm1/retry1-runtime"
+    },
+    {
+      "stage": "same_request_final_official_projection",
+      "exit_code": 2,
+      "code": "invalid_workflow_input",
+      "current_envelope_sha256": "947c212e8e1ce78392c21d8f812747e0df8c761dbebfb39f7cffd01f187554aa"
+    }
+  ],
+  "public_wire_conflict": "Automatic same-request repair retains the original request envelope, while normalize_request_lineage requires parent_request_id to differ from current_request_id. The new-id path was rejected at child verification and the byte-identical same-request path was rejected by the final official coordinator. No bypass was used.",
+  "boundary": "The precise internal cause of sanitized retry_input_invalid is not proved; the observed official errors and public ID constraint are recorded separately.",
+  "status": "blocked_no_extra_image_call"
+}

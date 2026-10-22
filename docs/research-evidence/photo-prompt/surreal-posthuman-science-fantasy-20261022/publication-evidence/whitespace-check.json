@@ -1,0 +1,34 @@
+{
+  "status": "pass_preserving_historical_bytes",
+  "command": [
+    "git",
+    "-c",
+    "core.whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "default_findings": [
+    {
+      "path": "docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022/CANDIDATE-ATLAS.md",
+      "kind": "new blank line at EOF.",
+      "count": 1
+    },
+    {
+      "path": "docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022/EVALUATION-CASES.tsv",
+      "kind": "trailing whitespace.",
+      "count": 113
+    },
+    {
+      "path": "docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022/KEYWORD-MAP.md",
+      "kind": "new blank line at EOF.",
+      "count": 1
+    },
+    {
+      "path": "docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022/seed-keywords.tsv",
+      "kind": "trailing whitespace.",
+      "count": 183
+    }
+  ],
+  "reason": "Original TSV CRLF line endings and generated historical Markdown EOF blank lines are hash-bound evidence. No byte normalization or global Git config change. Other trailing whitespace and space-before-tab checks remain enabled."
+}

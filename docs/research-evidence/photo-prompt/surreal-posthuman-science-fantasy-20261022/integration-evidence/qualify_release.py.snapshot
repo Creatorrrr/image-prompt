@@ -1,0 +1,47 @@
+"""Bounded bilingual before/after whole-pool probes; no native/pixel approval."""
+from pathlib import Path
+import csv,hashlib,json,sys
+O=Path(__file__).resolve().parent;R=O.parents[2]
+read=lambda p:json.loads(p.read_bytes())
+def write(p,v):p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+def main():
+ B=read(O/'before.json');S=read(O/'successor.json');sys.path.insert(0,str(Path(B['native'])/'scripts'))
+ from photo_h_f2_generation import Generation
+ from photo_h_f2_encoder import LocalEncoder
+ from photo_runtime_sources import RuntimeSnapshotProvider
+ import photo_canonical_source as canonical,photo_recall_first as rf
+ qfile=R/'docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022/EVALUATION-CASES.tsv'
+ chosen={'DEV-A03','DEV-B02','DEV-C03','DEV-D02','DEV-E05','DEV-F03','DEV-G03','DEV-H01','DEV-I04','DEV-J06','DEV-K05','DEV-L05','C01','C03','C05','C17','C23','C30'}
+ cases=[]
+ for row in csv.DictReader(qfile.open(),delimiter='\t'):
+  if row['case_id'] not in chosen:continue
+  for lang in ['ko','en']:cases.append({'id':row['case_id']+'-'+lang,'cohort':row['cohort'],'language':lang,'query':row['query_'+lang],'expected_cards':[row['case_id'][4:]] if row['case_id'].startswith('DEV-') else [],'expected':row['expected']})
+ assert len(cases)==36
+ registry=read(O/'data-integration.json');lookup={x['card_id']:x['candidate_id'] for x in registry['cards']};new=read(O/'new-native-records.json')
+ before=Generation(B['store'],B['config']['generation_id'],full=True);after=Generation(B['store'],S['generation_id'],full=True)
+ source=RuntimeSnapshotProvider(store=B['store']).load_generation(S['native_generation_id'])
+ assert all(canonical.native_snapshot(source.data['candidates'][cid])==v for cid,v in new.items())
+ path=O/'qualification-query-evidence.json'
+ if path.exists():encoded=read(path)
+ else:
+  encoded={'binding':after.binding,'query_source_sha256':hashlib.sha256(qfile.read_bytes()).hexdigest(),'rows':[]}
+  with LocalEncoder(R/'skills/photo-prompt-image-generator') as enc:
+   assert enc.binding==before.binding==after.binding
+   for start in range(0,len(cases),12):
+    batch=cases[start:start+12];es=enc.encode([x['query'] for x in batch],'query')
+    for row,e in zip(batch,es,strict=True):rf.check_embedding(e,enc.binding,row['query'],'query');encoded['rows'].append({'id':row['id'],'query':row['query'],'embedding':e})
+    print('encoded',len(encoded['rows']),flush=True)
+  write(path,encoded)
+ assert [(r['id'],r['query']) for r in cases]==[(r['id'],r['query']) for r in encoded['rows']]
+ indexes=[before.index(),after.index()];results=[]
+ for row,ev in zip(cases,encoded['rows'],strict=True):
+  out={**row,'execution':'before_and_after','route':'whole_pool_probe_not_managed_frozen_core_slot_projection'};expected={lookup[x] for x in row['expected_cards']}
+  for label,g,index in zip(['before','after'],[before,after],indexes,strict=True):
+   result=index.search(row['query'],ev['embedding'],encoded['binding']);assert result['lane_calls']=={'BM25F':1,'local_cosine':1};order=result['order']
+   out[label]={'generation_id':g.id,'population':result['considered_CIDs'],'top8':order[:8],'target_rank':next((i+1 for i,r in enumerate(order) if r['cid'] in expected),None),'new_at8':[r['cid'] for r in order[:8] if r['cid'] in new]}
+  results.append(out)
+  if len(results)%6==0:print('searched',len(results),flush=True)
+ positive=[r for r in results if r['cohort']=='development'];controls=[r for r in results if r['cohort']!='development']
+ summary={'status':'bounded_whole_pool_probes_complete','queries':len(results),'before_after_executions':len(results)*2,'development_queries':len(positive),'control_queries':len(controls),'after_target_at8':sum(r['after']['target_rank'] is not None and r['after']['target_rank']<=8 for r in positive),'after_target_at32':sum(r['after']['target_rank'] is not None and r['after']['target_rank']<=32 for r in positive),'controls_with_new_at8':sum(bool(r['after']['new_at8']) for r in controls),'before_positive_CIDs':before.manifest['CID_count'],'after_positive_CIDs':after.manifest['CID_count'],'new_native_snapshots_exact':True,'kernel_and_space_preserved':True,'not_run':'The other 94 of 112 planned bilingual cases and an independent holdout are not run in this bounded qualification.','limits':'Source-derived development probes, not semantic novelty, automatic source permission, managed sampled exposure, causal improvement, pixels or user acceptance. New target IDs are absent before. Controls require separate semantic review.'}
+ write(O/'retrieval-qualification.json',{'summary':summary,'cases':results});print(json.dumps(summary),flush=True)
+if __name__=='__main__':main()
