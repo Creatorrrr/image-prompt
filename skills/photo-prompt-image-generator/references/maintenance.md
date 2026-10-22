@@ -92,3 +92,10 @@ review metadata; matching displays, faces or gestures do not prove consciousness
 identity, consent, causal control or a temporal reset. Source registration,
 retrieval exposure, managed prompt transport and saved pixels retain separate
 evidence boundaries.
+
+The [LitRPG system extension](litrpg-system-semantics.md) adds 60 complete optional
+bilingual visual realizations, 18 context/sequence diagnostics and 128 optional
+bindings, with 297 advisory reference routes. Carrier, information owner,
+perceiver, displayed claim and temporal evidence remain distinct. Research
+graphs and source citations add no native facts or adoption authority; source
+registration, installed search exposure and saved pixels are separately checked.
