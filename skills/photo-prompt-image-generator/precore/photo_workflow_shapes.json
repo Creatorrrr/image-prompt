@@ -35,12 +35,12 @@
     "current_source_span_ids": "nonempty unique current span IDs",
     "source_text": "exact current requester text",
     "preserved_dimensions": "explicit unique dimensions",
-    "allowed_changes": "explicit unique disjoint dimensions",
+    "allowed_changes": "explicit unique disjoint dimensions; empty for same_input or recovery_only, nonempty for revised_content",
     "requester_corrected_dimensions": "explicit current corrections, subset of allowed_changes",
-    "allowed_properties": "array of dimension/target/property objects",
-    "local_axes": "explicit generic local repair axes",
+    "allowed_properties": "array of dimension/target/property objects; empty for same_input or recovery_only",
+    "local_axes": "explicit generic local repair axes; empty for same_input or recovery_only",
     "failed_gate_ids": "actual relevant failed gate IDs",
-    "failure_class": "agent decision from supported routes; observed runtime classes need observed evidence",
+    "failure_class": "supported failure class; captured runtime evidence cannot be relabeled; coordinator derives same_input, revised_content or recovery_only",
     "additional_invocation_limit": "integer 0 to 64 within existing authorization and contract",
     "obligation_dimensions": "each effective hard obligation ID maps to explicit preserved governing dimensions"
   }

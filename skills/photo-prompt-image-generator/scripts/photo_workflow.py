@@ -227,13 +227,35 @@ def authorize(args):
         if not isinstance(scope["authorization_source"], str) or not scope["authorization_source"].strip():
             raise WorkflowError("authorization_source_required")
         if state["render_scope"] is not None and state["render_scope"] != scope:
-            raise WorkflowError("authorization_revision_requires_new_run")
+            previous = state["render_scope"]
+            if (scope["lanes"] != previous["lanes"] or scope["invocation_limit"] <= previous["invocation_limit"]
+                    or scope["authorization_source"] == previous["authorization_source"]
+                    or any(op["status"] not in {"complete", "provider_blocked", "preflight_failed"} for op in state["operations"])):
+                raise WorkflowError("authorization_extension_requires_recorded_outcome_and_new_source")
+            state.setdefault("render_scope_history", []).append(previous)
         state["render_scope"] = scope
         save_state(args.run, state)
     return {"status": "pass", "scope_recorded": True}
 
 
-def reserve(run, lane, requested):
+def same_input_retry(state, run, proof, lane):
+    """Reverify an exact parent attempt without authoring a synthetic child core."""
+    from prepare_retry_context import recompute
+    context, parent = recompute(proof)
+    if context.get("retry_mode") != "same_input" or context["projection_sha256"] != proof.get("projection_sha256"):
+        raise WorkflowError("same_input_retry_proof_required")
+    if Path(proof["parent_run"]).resolve() != Path(run).resolve():
+        raise WorkflowError("same_input_retry_requires_original_run")
+    attempted = [op for op in state["operations"] if op["attempts"]]
+    if not attempted or attempted[-1]["attempts"][-1]["run_id"] != parent["attempt"]["run_id"]:
+        raise WorkflowError("same_input_retry_requires_latest_attempt")
+    original = attempted[-1]
+    if lane != original["lane"] or any(state["artifacts"][k]["sha256"] != sha for k, sha in original["input_bindings"].items()):
+        raise WorkflowError("same_input_retry_inputs_changed")
+    return context, parent
+
+
+def reserve(run, lane, requested, *, retry_proof=None):
     with locked_state(run) as state:
         ensure(state)
         if status(state)["stale_roles"]:
@@ -241,13 +263,22 @@ def reserve(run, lane, requested):
         scope = state.get("render_scope")
         if state["mode"] != "image" or not scope or lane not in scope["lanes"]:
             raise WorkflowError("missing_existing_authorization")
-        if any(op["status"] in {"reserved", "invocation_started", "execution_unknown", "record_ready", "recorder_failed", "result_received", "persistence_failed", "provider_blocked"} for op in state["operations"]):
+        if type(requested) is not int or requested < 1:
+            raise WorkflowError("invalid_invocation_limit")
+        if any(op["status"] in {"reserved", "invocation_started", "execution_unknown", "record_ready", "recorder_failed", "result_received", "persistence_failed", "preview_only"} for op in state["operations"]):
             raise WorkflowError("pending_operation_reconcile_without_invocation")
+        retry_context = parent = proof = None
+        if retry_proof is not None:
+            proof = read_json(retry_proof)
+            retry_context, parent = same_input_retry(state, run, proof, lane)
+        elif any(op["attempts"] for op in state["operations"]):
+            raise WorkflowError("same_input_retry_proof_required")
         used = sum(len(op["attempts"]) for op in state["operations"])
         maximum = scope["invocation_limit"]
         pack = one(value(state, "pack"))
         if pack.get("render_repair"):
-            maximum = min(maximum, pack["render_repair"]["retry_policy"]["maximum_additional_attempts"])
+            initial = 0 if "retry_proof" in state["artifacts"] else 1
+            maximum = min(maximum, initial + pack["render_repair"]["retry_policy"]["maximum_additional_attempts"])
         if "retry_proof" in state["artifacts"]:
             context = value(state, "retry_context")
             maximum = min(maximum, context["execution_scope"]["additional_invocation_limit"])
@@ -257,17 +288,20 @@ def reserve(run, lane, requested):
         op = {"operation_id": uuid.uuid4().hex, "lane": lane, "status": "reserved", "budget": budget,
               "timestamp": datetime.now(timezone.utc).isoformat(timespec="microseconds"), "attempts": [],
               "input_bindings": {role: state["artifacts"][role]["sha256"] for role in ("pack", "runtime_receipt", "composed", "render_request")}}
-        if "retry_proof" in state["artifacts"]:
-            proof = value(state, "retry_proof")
+        if retry_context is not None:
+            op.update(same_input_proof=proof, retry_of=parent["attempt"]["run_id"], initial_attempt=parent["attempt"]["attempt"] + 1)
+        elif "retry_proof" in state["artifacts"]:
+            proof, retry_context = value(state, "retry_proof"), value(state, "retry_context")
+        if proof is not None:
             parent_run = Path(proof["parent_run"]).resolve()
-            if parent_run == Path(run).resolve():
+            if parent_run == Path(run).resolve() and "same_input_proof" not in op:
                 raise WorkflowError("retry_parent_cycle")
             # Cross-child reservations protect the shared parent's additional
             # budget. Unobserved/unused reservations are conservatively retained.
             path = Path(proof["ledger"]).with_name(Path(proof["ledger"]).name + ".retry-reservations.json")
             with file_lock(path.with_name(path.name + ".LOCK")):
                 reservations = read_json(path) if path.exists() else []
-                parent_id = value(state, "retry_context")["parent_binding"]["ledger_run_id"]
+                parent_id = retry_context["parent_binding"]["ledger_run_id"]
                 matching = [row for row in reservations if row["parent_run_id"] == parent_id]
                 rows = [json.loads(line) for line in Path(proof["ledger"]).read_bytes().splitlines() if line.strip()]
                 descendants = {parent_id}
@@ -277,7 +311,7 @@ def reserve(run, lane, requested):
                     descendants |= added
                 recorded_unreserved = {row["run_id"] for row in rows if row["run_id"] in descendants - {parent_id}
                     and str(row.get("workflow_operation_id", "")).split(":")[0] not in {r["operation_id"] for r in matching}}
-                remaining = value(state, "retry_context")["execution_scope"]["additional_invocation_limit"] - sum(r["reserved_invocations"] for r in matching) - len(recorded_unreserved)
+                remaining = retry_context["execution_scope"]["additional_invocation_limit"] - sum(r["reserved_invocations"] for r in matching) - len(recorded_unreserved)
                 op["budget"] = min(op["budget"], remaining)
                 if op["budget"] < 1: raise WorkflowError("parent_retry_budget_exhausted")
                 reservations.append({"parent_run_id": parent_id, "operation_id": op["operation_id"], "child_run": str(Path(run).resolve()), "reserved_invocations": op["budget"]})
@@ -296,11 +330,13 @@ def update_operation(run, identifier, event):
             op["attempts"].append({k: event[k] for k in ("attempt", "timestamp", "run_id")})
         if event.get("ledger_args"):
             op["record_args"] = event["ledger_args"]
+            if event["stage"] == "record_ready":
+                op["record_event"] = event
         if event.get("image_path"):
             path = Path(event["image_path"]).resolve()
             op["result_binding"] = {"path": str(path), "sha256": digest(path.read_bytes())}
-        if event["stage"] == "preflight_failed" and event.get("known_no_invocations") and not op["attempts"] and "retry_proof" in state["artifacts"]:
-            proof = value(state, "retry_proof")
+        if event["stage"] == "preflight_failed" and event.get("known_no_invocations") and not op["attempts"] and ("same_input_proof" in op or "retry_proof" in state["artifacts"]):
+            proof = op.get("same_input_proof") or value(state, "retry_proof")
             budget_path = Path(proof["ledger"]).with_name(Path(proof["ledger"]).name + ".retry-reservations.json")
             with file_lock(budget_path.with_name(budget_path.name + ".LOCK")):
                 reservations = read_json(budget_path)
@@ -336,11 +372,12 @@ def render_api(args):
     from photo_api_render import prepare_api_render
     prepare_api_render(bound_path(state, "pack"), kwargs["receipt_file"], kwargs["composed_file"], kwargs["request_file"],
         model=transport["model"], size=transport["size"], runtime_store=kwargs["runtime_store"])
-    op = reserve(args.run, "api", args.attempts)
+    op = reserve(args.run, "api", args.attempts, retry_proof=getattr(args, "retry_proof", None))
     summary = Path(args.run).resolve() / "operations" / (op["operation_id"] + ".json")
     try:
         okay = generate_for_request(bound_path(state, "pack"), **kwargs, attempts=op["budget"],
-            initial_retry_of=value(state, "retry_context")["parent_binding"]["ledger_run_id"] if "retry_context" in state["artifacts"] else None,
+            initial_retry_of=op.get("retry_of") or (value(state, "retry_context")["parent_binding"]["ledger_run_id"] if "retry_context" in state["artifacts"] else None),
+            initial_attempt=op.get("initial_attempt", 1),
             workflow_operation_id=op["operation_id"], execution_summary=summary,
             attempt_event=lambda event: update_operation(args.run, op["operation_id"], event))
     except BaseException:
@@ -368,9 +405,10 @@ def native_plan(args):
     if request.get("referenced_image_paths"):
         payload["referenced_image_paths"] = request["referenced_image_paths"]
     from photo_native_bridge import BRIDGE_JAVASCRIPT
-    op = reserve(args.run, "native", 1)
+    op = reserve(args.run, "native", 1, retry_proof=getattr(args, "retry_proof", None))
     with locked_state(args.run) as state:
         plan = {"schema_version": "photo-native-plan/v1", "operation_id": op["operation_id"], "payload": payload,
+                "attempt": op.get("initial_attempt", 1),
                 "input_bindings": op["input_bindings"], "references": [{"role": r["role"], "sha256": r["sha256"]} for r in request["references"]],
                 "capture_helper": str(Path(__file__).with_name("image_attempt_evidence.py")), "timestamp": op["timestamp"],
                 "bridge_sha256": digest(BRIDGE_JAVASCRIPT.encode("utf-8")),
@@ -384,6 +422,8 @@ def native_started(args):
     state = load_state(args.run); ensure(state)
     plan = value(state, "native_plan")
     op = next(op for op in state["operations"] if op["operation_id"] == plan["operation_id"])
+    if "same_input_proof" in op:
+        same_input_retry(state, args.run, op["same_input_proof"], "native")
     if op["status"] != "reserved" or any(state["artifacts"][k]["sha256"] != sha for k, sha in plan["input_bindings"].items()):
         raise WorkflowError("native_operation_not_ready")
     from photo_native_bridge import BRIDGE_JAVASCRIPT
@@ -395,8 +435,9 @@ def native_started(args):
         raise WorkflowError("native_preflight_failed")
     composed = value(state, "composed")
     from record_image_run import stable_text_id
-    run_id = stable_text_id(f"{op['timestamp']}|{stable_text_id(composed['prompt_en'])}|1")
-    update_operation(args.run, op["operation_id"], {"stage": "invocation_started", "attempt": 1, "timestamp": op["timestamp"], "run_id": run_id})
+    attempt = plan.get("attempt", 1)
+    run_id = stable_text_id(f"{op['timestamp']}|{stable_text_id(composed['prompt_en'])}|{attempt}")
+    update_operation(args.run, op["operation_id"], {"stage": "invocation_started", "attempt": attempt, "timestamp": op["timestamp"], "run_id": run_id})
     return {"status": "pass", "payload": plan["payload"], "operation_id": op["operation_id"]}
 
 
@@ -441,10 +482,12 @@ def native_result(args):
         update_operation(args.run, op["operation_id"], {"stage": "preview_only" if outcome == "preview_only" else "execution_unknown"})
         return {"status": outcome, "image_call_count": 1}
     composed = value(state, "composed"); pack = one(value(state, "pack"))
-    flags = ["--ts", op["timestamp"], "--prompt-en", composed["prompt_en"], "--attempt", "1",
-        "--workflow-operation-id", op["operation_id"] + ":1", "--tool", "image_gen", "--generation-environment", "native_imagegen",
+    attempt = plan.get("attempt", 1)
+    flags = ["--ts", op["timestamp"], "--prompt-en", composed["prompt_en"], "--attempt", str(attempt),
+        "--workflow-operation-id", op["operation_id"] + f":{attempt}", "--tool", "image_gen", "--generation-environment", "native_imagegen",
         "--pack-id", pack["pack_id"], "--authorial-core-sha256", pack["authorial_core"]["canonical_sha256"],
-        "--intent-lock-sha256", pack["authorial_core"]["intent_lock"]["canonical_sha256"], "--image-call-count", str(getattr(args, "image_call_count", 1)),
+        "--intent-lock-sha256", pack["authorial_core"]["intent_lock"]["canonical_sha256"],
+        "--image-call-count", str(max(getattr(args, "image_call_count", None) or 0, sum(len(row["attempts"]) for row in state["operations"]))),
         "--chosen-candidate-ids-json", json.dumps(composed["chosen_candidate_ids"]),
         "--chosen-visual-concept-ids-json", json.dumps(composed["chosen_visual_concept_ids"]), "--composer", "agent", "--audit-status", "pass",
         "--ledger", str(args.ledger), "--native-render-plan-json", str(bound_path(state, "native_plan")),
@@ -472,9 +515,14 @@ def native_result(args):
         if digest(Path(observed["evidence_path"]).read_bytes()) != observed["evidence_sha256"]:
             raise WorkflowError("stale_native_error_evidence")
         flags += ["--status", evidence["outcome"]["status"], "--attempt-evidence-json", observed["evidence_path"], "--attempt-evidence-sha256", observed["evidence_sha256"]]
-    if "retry_context" in state["artifacts"]:
+    if op.get("retry_of"):
+        flags += ["--retry-of", op["retry_of"]]
+    elif "retry_context" in state["artifacts"]:
         flags += ["--retry-of", value(state, "retry_context")["parent_binding"]["ledger_run_id"]]
-    update_operation(args.run, op["operation_id"], {"stage": "record_ready", "ledger_args": flags, "image_path": str(path) if outcome == "returned" else None})
+    recorded_outcome = "success" if outcome == "returned" else evidence["outcome"]["status"]
+    provider_outcome = "returned" if outcome == "returned" else ("rejected" if recorded_outcome == "safety_block" else evidence.get("provider_outcome", "unknown"))
+    update_operation(args.run, op["operation_id"], {"stage": "record_ready", "ledger_args": flags, "attempt": attempt,
+        "outcome": recorded_outcome, "provider_outcome": provider_outcome, "image_path": str(path) if outcome == "returned" else None})
     from generate_images_via_api import record
     try:
         recorded = record(flags)
@@ -482,8 +530,7 @@ def native_result(args):
         update_operation(args.run, op["operation_id"], {"stage": "recorder_failed", "ledger_args": flags})
         raise
     update_operation(args.run, op["operation_id"], {"stage": "attempt_recorded", "ledger_run_id": recorded["run_id"], "terminal": True,
-        "outcome": "safety_block" if outcome == "rejected" and evidence["outcome"]["status"] == "safety_block" else outcome,
-        "provider_outcome": "unknown" if outcome == "rejected" and evidence.get("provider_outcome") == "unknown" else "returned"})
+        "outcome": recorded_outcome, "provider_outcome": provider_outcome})
     return {"status": "attempt_recorded", "ledger_run_id": recorded["run_id"]}
 
 
@@ -495,7 +542,7 @@ def resume(args):
         summary_path = Path(args.run) / "operations" / (op["operation_id"] + ".json")
         summary = read_json(summary_path) if summary_path.exists() else None
         recorded = next((event for event in reversed(summary["attempts"]) if event["stage"] == "attempt_recorded"), None) if summary else None
-        ready = next((event for event in reversed(summary["attempts"]) if event["stage"] == "record_ready"), None) if summary else None
+        ready = (next((event for event in reversed(summary["attempts"]) if event["stage"] == "record_ready"), None) if summary else None) or op.get("record_event")
         if op["status"] in {"invocation_started", "result_received", "execution_unknown", "record_ready", "recorder_failed"} and ready:
             # Recompute and idempotently reconnect a saved row, even if the state
             # write after ledger append was interrupted. Never invoke a provider.
@@ -552,6 +599,8 @@ def main(argv=None):
         if command == "authorize": p.add_argument("--scope", type=Path, required=True)
         if command == "render-api":
             p.add_argument("--attempts", type=int, default=2); p.add_argument("--concept"); p.add_argument("--dry-run", action="store_true")
+        if command in {"render-api", "native-plan"}:
+            p.add_argument("--retry-proof", type=Path, help="verified same-input retry on this original run")
         if command in {"render-api", "native-result", "retry-prepare"}: p.add_argument("--ledger", type=Path, required=True)
         if command == "native-result":
             p.add_argument("--result", type=Path, required=True)
@@ -559,7 +608,7 @@ def main(argv=None):
                 p.add_argument("--" + name)
             p.add_argument("--independent-no-cross-arm-inputs", action="store_true")
             p.add_argument("--manifest", type=Path)
-            p.add_argument("--image-call-count", type=int, default=1)
+            p.add_argument("--image-call-count", type=int)
             p.add_argument("--failed-repair-gate-id", action="append", default=[])
         if command == "review-shape":
             p.add_argument("--baseline-available", choices=("yes", "no"), required=True)
