@@ -1,0 +1,70 @@
+diff --git a/skills/photo-prompt-image-generator/scripts/prompt_generator.py b/skills/photo-prompt-image-generator/scripts/prompt_generator.py
+index 55e0c9145..6069248f5 100644
+--- a/skills/photo-prompt-image-generator/scripts/prompt_generator.py
++++ b/skills/photo-prompt-image-generator/scripts/prompt_generator.py
+@@ -2290,7 +2290,7 @@ def candidate_pack_adult_appeal_metadata(
+         "composition_requirements": {
+             "explicit_adult_original_subject": adult_subject_phrase_required,
+             "adult_subject_phrase_required": adult_subject_phrase_required,
+-            "agency_phrase_required": True,
++            "agency_phrase_required": photo_contextual_appeal.agency_phrase_required(snapshot),
+             "intensity_is_ordinal_not_exposure_or_detail_count": True,
+             "baseline_expression_may_be_retained": True,
+             "shared_styling_between_axes_allowed": True,
+@@ -2389,7 +2389,9 @@ def candidate_pack_contextual_adult_appeal(
+     for axis, axis_row in contract["axes"].items():
+         allowed = set(scope["axis_allowed_dimensions"][axis])
+         axis_row["intensity"] = intensities[axis] if allowed else 0
+-        axis_row["active"] = bool(axis_row["intensity"] and constraints["adult_allowed"])
++        # The frozen controls and writable scope already determine this axis.
++        # Human/adult source prerequisites constrain candidates, not whether an
++        # explicitly requested expression exists when the inventory is empty.
+         axis_row["intensity_meaning"] = snapshot["definitions"]["controls"][axis]["levels"][
+             str(axis_row["intensity"])
+         ]
+@@ -2404,11 +2406,11 @@ def candidate_pack_contextual_adult_appeal(
+                 if slot in excluded_identity_slots:
+                     continue
+                 source_key = entry["id"]
+-                dimensions = sorted(
+-                    set(entry.get("affected_dimensions") or [])
+-                    | set((policy.get("entry_dimensions") or {}).get(source_key) or [])
+-                )
+-                dimensions = dimensions or list(data['slot_catalog'][slot]['dimensions'])
++                # Native source effects own the complete footprint. A role or
++                # an old policy hint cannot replace an unknown footprint or
++                # append dimensions to a known one. Unknown effects remain in
++                # global discovery, but cannot enter this writable-scope view.
++                dimensions = copy.deepcopy(entry.get("affected_dimensions") or [])
+                 if (
+                     not dimensions
+                     or not set(dimensions).issubset(allowed)
+@@ -2650,6 +2652,10 @@ def authorial_core_retrieval_text(
+     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
+         for item in active_spans:
+             add("source_request_scope", creative_controls.strip_assignments(str(item.get("text") or "")))
++        if "topic_context" in request_binding:
++            context = _authoring_wire.normalize_topic_context(request_binding["topic_context"], str(core.get("source_request") or ""), active_spans)
++            for link in context["links"]:
++                add("request_topic_context", creative_controls.strip_assignments(link["topic_quote"]["text"]))
+     else:
+         add("source_request", core.get("source_request"))
+     add("interpreted_intent", core.get("interpreted_intent"))
+@@ -2720,6 +2726,8 @@ def authorial_core_retrieval_text(
+                 ),
+             }
+         )
++        if "topic_context" in request_binding:
++            provenance["topic_context_sha256"] = context["canonical_sha256"]
+     return query, provenance
+ 
+ 
+@@ -7826,7 +7834,7 @@ def prepare_candidate_source(data: JsonDict, core: JsonDict, controls: JsonDict,
+         raise ValueError("candidate retrieval requires a current v3 authorial core")
+     values = creative_controls.runtime_values(controls)
+     contract, _ = frozen_core_context(data, core, controls)
+-    negative = ", ".join(sorted(AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS))
++    negative = ", ".join(sorted(AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS)) or None
+     return {
+         "prompt_en": core["baseline_prompt_en"],
+         "negative_en": negative,

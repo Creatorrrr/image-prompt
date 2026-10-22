@@ -1,0 +1,84 @@
+{
+  "schema": "agent-authored-theme-pixel-review/v1",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/analog-horror-20261022-arm3/generated_image.png",
+  "image_sha256": "58c42b6eb767e99cb5e084114843a6f78b17e05d0ee7cb1dec7dc4fc65cd307e",
+  "image_dimensions": [
+    1448,
+    1086
+  ],
+  "reviewer": "Codex independent arm3",
+  "review_scale": "native with unresampled mouth and hands crops; whole-frame image inspected",
+  "predeclared_gate_file": "theme_pixel_gates.json",
+  "rules": {
+    "partial_is_fail": true,
+    "UNOBSERVABLE_NOT_PASS": true
+  },
+  "gates": [
+    {
+      "id": "analog_carrier",
+      "expected": "A physical box CRT and visibly analog image characteristics such as interlacing, composite smear or a tracking discontinuity are jointly readable.",
+      "pass_rule": "CRT carrier and at least one analog image characteristic visibly coexist; vague grain alone is insufficient.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "A large physical curved-screen CRT occupies the right side. Dense horizontal scanlines/composite-colored noise and two bright horizontal tracking tears belong to its displayed face, while the physical face and booth remain ordinarily detailed."
+    },
+    {
+      "id": "signal_discrepancy",
+      "expected": "The physical reference-guided woman and the same-looking television counterpart have conflicting mouth states, closed physically and deeply open on screen.",
+      "pass_rule": "Both faces, shared appearance and incompatible mouth states must be visible together; an obscured mouth or unrelated screen face is partial or fail.",
+      "observability": "visible",
+      "status": "fail",
+      "evidence": "Both the physical face and same-looking displayed counterpart are large and visible together. The CRT mouth is a deep open oval, but the physical mouth is also slightly parted rather than fully closed. The unresampled physical-mouth crop exposes a small dark opening between the lips, so the complete closed-versus-open intended state fails despite the strong size contrast."
+    },
+    {
+      "id": "public_signoff_context",
+      "expected": "A television continuity workplace is established by production booth equipment and continuing broadcast/sign-off cues.",
+      "pass_rule": "Desk broadcast microphone or booth equipment plus ON AIR or GOOD NIGHT sign-off cue are visible together.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "A tabletop broadcast microphone, script, acoustic wall panels and equipment rack establish a production booth. The red ON AIR lamp and legible GOOD NIGHT caption coexist with the woman and television in one frame."
+    },
+    {
+      "id": "reference_appearance",
+      "expected": "The physical woman visibly follows the supplied portrait facial appearance and short black bob with wispy bangs.",
+      "pass_rule": "Compare actual image with portrait; broad hair color alone does not prove facial appearance preservation.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Direct visual comparison supports the supplied short black bob, wispy bangs and facial appearance guidance in the physical woman: dark eye shape, small nose, rounded soft facial proportions and glossy lip shape remain similar across the changed viewpoint. This is an appearance-guidance judgment, not identity verification."
+    },
+    {
+      "id": "genre_readability",
+      "expected": "The combined believable production space and corrupted familiar broadcast produce discernible analog horror rather than only a retro portrait.",
+      "pass_rule": "Judge actual pixels without relying on the prompt label; require visible carrier-specific unsettling content.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Without relying on the prompt label, a credible warmly lit broadcast booth is paired with an unusually open-mouthed copy of the woman inside a noisy old television feed. The carrier-specific distortion and familiar face comparison read as an unsettling analog broadcast, rather than just a retro equipment portrait."
+    }
+  ],
+  "whole_case": {
+    "status": "fail",
+    "failed_gate_ids": [
+      "signal_discrepancy"
+    ],
+    "reason": "The closed physical mouth component was not realized. A visible open-versus-smaller-open difference cannot pass the predeclared closed-versus-open complete condition.",
+    "user_acceptance": "pending"
+  },
+  "native_contract_review_status": {
+    "record_valid": true,
+    "technical_qualification": "pass",
+    "gate_count": 5,
+    "all_observability": "visible",
+    "user_judgment": "pending",
+    "audit_result": "review_audit_result.json"
+  },
+  "new_source_exposure": {
+    "new_visual_source_count": 0,
+    "reused_A064_count": 0
+  },
+  "claim_limits": [
+    "A still photograph does not prove continuing speech, time sequence or supernatural causation.",
+    "Newly registered sources were not exposed; the image does not demonstrate improvement caused by the new data.",
+    "Visual appearance guidance is supported, not real identity verification.",
+    "Requester acceptance remains pending."
+  ]
+}

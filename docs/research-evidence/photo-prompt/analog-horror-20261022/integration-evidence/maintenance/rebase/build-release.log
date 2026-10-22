@@ -1,0 +1,23 @@
+canonical source verified 84 new candidates
+Loading weights:   0%|          | 0/413 [00:00<?, ?it/s]Loading weights: 100%|██████████| 413/413 [00:00<00:00, 19344.13it/s]
+{"complete": 19530, "records": 19569, "elapsed_seconds": 9.81}
+{"complete": 19562, "records": 19569, "elapsed_seconds": 11.49}
+{"complete": 19569, "records": 19569, "elapsed_seconds": 11.87}
+native index complete
+Python(4969) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/analog-horror-20261022/integration-evidence/maintenance/rebase/build_release.py", line 135, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/analog-horror-20261022/integration-evidence/maintenance/rebase/build_release.py", line 87, in main
+    publication=SnapshotPublisher(STAGE,STORE).stage();write(O/'native-staged.json',publication)
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/analog-horror-20261022/integration-evidence/maintenance/rebase/successor-skill/scripts/photo_runtime_sources.py", line 217, in stage
+    return self.publish(observation=observation,before_publish=before_publish,activate=False)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/analog-horror-20261022/integration-evidence/maintenance/rebase/successor-skill/scripts/photo_runtime_sources.py", line 234, in publish
+    target=staging/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw);target.chmod(0o444)
+                                                                            ~~~~~~~~~~~~~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 797, in write_bytes
+    return f.write(view)
+           ~~~~~~~^^^^^^
+OSError: [Errno 28] No space left on device

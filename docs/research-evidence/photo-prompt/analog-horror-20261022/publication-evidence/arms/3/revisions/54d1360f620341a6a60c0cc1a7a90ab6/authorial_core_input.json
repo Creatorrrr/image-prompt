@@ -1,0 +1,293 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "1757753f8de1ebae7763478249f9071dcfe5f37d12c503213dfcd7e8a502985b",
+  "interpreted_intent": "The current human topic reference resolves through the supplied exact prior-human quote to analog horror. The requested independent random concept uses the portrait for face and hair appearance only. The local draw selected a late-night public-TV continuity announcer whose CRT counterpart continues the sign-off after she falls silent. This setting, two-face discrepancy, caption, apparel, gesture and framing are authored staging, not requester definitions. I compared a close face-and-screen booth view with a wide empty-studio view: the close booth makes facial identity and the mouth-state contradiction legible together and retains a private, mundane tension. Saved creativity=1 keeps restrained scene variation; sensual=1 supports her natural personal presence through soft face light and gently draped fabric; fetish=0 adds no focus; surreal=0 adds nothing beyond the signal anomaly needed by the requested genre. Viewer experience should progress from credible workroom to a troubling disagreement between the person and her recorded image. The physical and screen faces share a large comparison plane; ordinary room detail separates the carrier of the disturbance from the physical room.",
+  "subject": "A woman whose face and short black bob follow the supplied portrait; an agent-cast continuity announcer.",
+  "setting": "An agent-chosen small public television sign-off booth at night.",
+  "event": "An ordinary sign-off becomes unsettling through a discrepant recorded counterpart; specific mouth states are replaceable authored staging.",
+  "visual_priorities": [
+    "Readable facial likeness and independent physical presence of the reference-guided woman.",
+    "Simultaneous comparison of her closed mouth and the open mouth of the familiar CRT counterpart.",
+    "The abnormality visibly belongs to a worn analog broadcast image inside a credible working booth.",
+    "An arrested glance links the woman to the signal discrepancy while the continuing ON AIR lamp gives the moment consequence."
+  ],
+  "baseline_prompt_en": "A photographic analog-horror scene centered on a disturbing anomaly within a familiar recorded television signal: the recording turns an ordinary human presence into an unsettling contradiction. The woman from the supplied portrait is a late-night continuity announcer, seated at the narrow desk of a modest public television sign-off booth. Her facial features follow the supplied portrait, and her short black bob with wispy bangs remains recognizable. She wears a softly draped muted ivory blouse with an open collar, carrying a quiet, natural personal presence in the workaday room. She has just stopped reading. Her lips are closed, and her head has turned slightly toward the CRT television beside her; her eyes fix on it with a small, arrested uncertainty. Both forearms rest on the desk, with her relaxed hands lying on the single sign-off script. A tabletop broadcast microphone, acoustic wall panels and a red ON AIR lamp establish the small production space. The lamp remains lit after the sign-off. Place the box-shaped CRT immediately beside her at face height, its glass angled toward the viewer, so her real face and its television counterpart are large enough to compare in one view. The television shows this same woman in the same blouse and booth, staring straight into its recording lens. Her screen counterpart's mouth is stretched into a deep, open oval as if still pronouncing a held syllable, while the physical woman's mouth remains gently closed. The screen's familiar sign-off caption reads GOOD NIGHT. Fine interlaced lines, smeared composite-video color and one rolling horizontal tracking break run across the television face. The disruption belongs visibly to the broadcast image; the desk and physical face retain ordinary photographic detail. Frame a restrained waist-up three-quarter photograph from just across the desk, with the woman's face on the left and the CRT filling much of the right third. Keep both faces and the microphone readable together. A small warm desk light preserves the softness of her cheeks and a faint natural sheen on her closed lips, against the cold television spill and a largely dim booth. Worn beige equipment and shallow pools of light make the situation mundane enough for the contradiction to feel private and wrong. The emotional center is her dawning recognition that the broadcast has continued on its own.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+      "basis": "request_context",
+      "resolution": "The coordinator-supplied exact prior-human topic quote identifies analog horror; interpret it as unsettling horror communicated through familiar obsolete recorded media and broadcast presentation, while leaving the particular invented scene open.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as visible face and hair appearance guidance for the main woman, without a claim of real identity, biography, personality or a duty to retain its outfit and composition.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a disturbing anomaly within a familiar recorded television signal"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "woman from the supplied portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "the recording turns an ordinary human presence into an unsettling contradiction"
+      },
+      {
+        "anchor_id": "reference_facial_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "woman",
+        "property": "appearance.facial_features",
+        "prompt_evidence": "Her facial features follow the supplied portrait"
+      },
+      {
+        "anchor_id": "reference_hair_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "woman",
+        "property": "appearance.hair",
+        "prompt_evidence": "her short black bob with wispy bangs remains recognizable"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "role",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "woman from the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "woman_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "woman",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "baseline_phrase": "woman from the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "main_subject_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "woman"
+      },
+      "evidence": {
+        "baseline_phrase": "woman from the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "portrait_face",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "woman",
+        "property": "appearance.facial_features",
+        "value_type": "appearance.reference_guidance/v1",
+        "value": "reference_portrait_facial_features",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "request",
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "baseline_phrase": "Her facial features follow the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "portrait_hair",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "woman",
+        "property": "appearance.hair",
+        "value_type": "appearance.hair_style/v1",
+        "value": "short black bob with wispy bangs",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "request",
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "baseline_phrase": "her short black bob with wispy bangs remains recognizable"
+      }
+    },
+    {
+      "assertion_id": "reference_appearance_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "woman",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"277d47a01b53aa0e954d42ac89cd2307d6abece5d0f947f0427aa8f146f2703d\",\"request_envelope_sha256\":\"c29ea5d08f327bbdb510f75fefa89cbe2d940b28ee9e5ebbec183685cc364384\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"portrait_face\",\"dimension\":\"appearance\",\"property\":\"appearance.facial_features\",\"target\":\"woman\",\"value\":{\"type\":\"appearance.reference_guidance/v1\",\"value\":\"reference_portrait_facial_features\"}},{\"assertion_id\":\"portrait_hair\",\"dimension\":\"appearance\",\"property\":\"appearance.hair\",\"target\":\"woman\",\"value\":{\"type\":\"appearance.hair_style/v1\",\"value\":\"short black bob with wispy bangs\"}}],\"reviewed_input_ids\":[\"request\",\"reference_portrait\",\"prior_user_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "baseline_phrase": "woman from the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "requester_identity_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "woman",
+        "scope_kind": "requester_identity",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"277d47a01b53aa0e954d42ac89cd2307d6abece5d0f947f0427aa8f146f2703d\",\"request_envelope_sha256\":\"c29ea5d08f327bbdb510f75fefa89cbe2d940b28ee9e5ebbec183685cc364384\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[],\"reviewed_input_ids\":[\"request\",\"reference_portrait\",\"prior_user_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_absent\"}"
+      },
+      "evidence": {
+        "baseline_phrase": "woman from the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "capture_axes_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic_random"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic",
+    "family": "Restrained documentary view of an analog broadcast turning uncanny",
+    "evidence": [
+      "credible acoustic-lined booth and working broadcast equipment",
+      "coarse interlaced CRT image beside detailed physical skin"
+    ]
+  },
+  "variation_key": "arm3-continuity-one-random-draw"
+}

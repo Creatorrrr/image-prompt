@@ -1,0 +1,21 @@
+diff --git a/skills/photo-prompt-image-generator/precore/prepare_photo_run.py b/skills/photo-prompt-image-generator/precore/prepare_photo_run.py
+index 31ea3bc37..38029f6cb 100644
+--- a/skills/photo-prompt-image-generator/precore/prepare_photo_run.py
++++ b/skills/photo-prompt-image-generator/precore/prepare_photo_run.py
+@@ -54,6 +54,8 @@ def init(args):
+                 "request_sha256": digest(raw), "active_spans": spans}
+     if getattr(args,"input_inventory",None) is not None:
+         envelope["input_inventory"] = read_json(args.input_inventory)
++    if getattr(args,"topic_context",None) is not None:
++        envelope["topic_context"] = read_json(args.topic_context)
+     wire.normalize_request_envelope(envelope)
+     with locked_state(args.run) as state:
+         if state is not None:
+@@ -156,6 +158,7 @@ def main(argv=None):
+     p = sub.add_parser("init"); p.add_argument("--run", type=Path, required=True)
+     p.add_argument("--request", type=Path, required=True); p.add_argument("--request-id")
+     p.add_argument("--input-inventory", type=Path, help="explicit complete/partial caller input inventory; never inferred")
++    p.add_argument("--topic-context", type=Path, help="reviewed exact prior-user quotes linked to active current spans; discovery only")
+     group = p.add_mutually_exclusive_group(required=True)
+     group.add_argument("--whole-request", action="store_true"); group.add_argument("--spans", type=Path)
+     p.add_argument("--mode", choices=("prompt_only", "image"), required=True)

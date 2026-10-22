@@ -1,0 +1,507 @@
+{
+  "adult_appeal": {
+    "enabled": true,
+    "requested_enabled": true,
+    "contract_version": "photo-adult-appeal/v2",
+    "activation_source": "precore_controls",
+    "eligibility": {
+      "status": "eligible",
+      "reason": "resolved_precore_context",
+      "axis_reasons": {
+        "sensual": "eligible",
+        "fetish": "eligible"
+      },
+      "subject_category": "human"
+    },
+    "defaults": {
+      "sensual_intensity": 1,
+      "fetish_intensity": 0,
+      "emphasis": "sensual_led"
+    },
+    "axes": {
+      "sensual": {
+        "intensity": 1,
+        "active": true,
+        "carrier_ids": [],
+        "candidate_inventory": [],
+        "requested_intensity": 1,
+        "intensity_meaning": "This expression is a subtle supporting quality.",
+        "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+        "configured_intensity": 1,
+        "configuration_source": "saved_setting"
+      },
+      "fetish": {
+        "intensity": 0,
+        "active": false,
+        "carrier_ids": [],
+        "candidate_inventory": [],
+        "requested_intensity": 0,
+        "intensity_meaning": "No added fetish treatment; preserve explicitly requested content.",
+        "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+        "configured_intensity": 0,
+        "configuration_source": "saved_setting"
+      }
+    },
+    "blend": {
+      "emphasis": "sensual_led",
+      "simultaneous_activation_allowed": true,
+      "requested_emphasis": "sensual_led"
+    },
+    "composition_requirements": {
+      "explicit_adult_original_subject": false,
+      "adult_subject_phrase_required": false,
+      "agency_phrase_required": true,
+      "intensity_is_ordinal_not_exposure_or_detail_count": true,
+      "baseline_expression_may_be_retained": true,
+      "shared_styling_between_axes_allowed": true,
+      "appearance_or_popularity_inference_forbidden": true,
+      "affected_dimensions_per_active_axis": true
+    },
+    "combination_policy": {
+      "risk_groups": {
+        "body_emphasis": {
+          "entry_ids": [
+            "cand_afc1b676748257749140e1e56a9778be",
+            "cand_9aaba53f547453348a88d74142b2d954",
+            "cand_a45495ae697c571daf4ac8d0cce3fc26",
+            "cand_9e5351b7e07a5547be840f657192128f",
+            "cand_db74c9745bb45b50bde16eb15df65e8c"
+          ],
+          "prompt_terms": [
+            "bodyline emphasis",
+            "hip-line emphasis",
+            "legs and heels emphasized",
+            "collarbone and lips emphasized"
+          ]
+        },
+        "extreme_low_angle": {
+          "entry_ids": [
+            "cand_1c2e5bf7206055159b4083840bd6004e",
+            "cand_cd087f4113b856a88b03a6bd28a09d17"
+          ],
+          "prompt_terms": [
+            "extreme low angle",
+            "ground-level low angle"
+          ]
+        },
+        "low_angle": {
+          "entry_ids": [
+            "cand_1c2e5bf7206055159b4083840bd6004e",
+            "cand_cd087f4113b856a88b03a6bd28a09d17",
+            "cand_c1d2449faaac58e997f9ff0d44d63b20"
+          ],
+          "prompt_terms": [
+            "extreme low angle",
+            "ground-level low angle",
+            "low-angle framing"
+          ]
+        },
+        "sheer_or_lingerie": {
+          "entry_ids": [
+            "cand_4f24ccb6751d54fba2ff9ff749fbfbf6",
+            "cand_f495092f5a3d55baab80ed2b024d7c71",
+            "cand_a7333e5afbc45ee3b48eb043bb059186"
+          ],
+          "prompt_terms": [
+            "sheer layering",
+            "sheer layers",
+            "lingerie-inspired"
+          ]
+        }
+      },
+      "hard_combinations": [
+        {
+          "all_of": [
+            "sheer_or_lingerie",
+            "extreme_low_angle"
+          ],
+          "id": "sheer_extreme_low_angle",
+          "reason": "Sheer or lingerie-coded styling combined with an extreme low angle can overwhelm the intended editorial concept; modify the camera or styling before generation."
+        }
+      ],
+      "warning_combinations": [
+        {
+          "all_of": [
+            "body_emphasis",
+            "low_angle"
+          ],
+          "id": "stacked_body_emphasis",
+          "reason": "Body-emphasis framing and a low angle are stacked; confirm that this is intentional and subordinate to the concept core."
+        }
+      ]
+    },
+    "evaluation_boundary": "configuration_scope_and_literal_binding_are_preflight;_perceived_intensity_requires_image_review;_appeal_requires_user_judgment",
+    "dimension_scope": {
+      "contract_version": "photo-adult-appeal-dimension-scope/v4",
+      "policy": "preserve_locked_dimensions",
+      "source_intent_lock_sha256": "1112c1d6074c0b95fd18f4200f5f5674ada9ba5b9c8d0f83f1b22ec98f395889",
+      "locked_dimensions": [
+        "concept",
+        "event",
+        "subject"
+      ],
+      "axis_allowed_dimensions": {
+        "sensual": [
+          "action",
+          "appearance",
+          "atmosphere",
+          "body_geometry",
+          "camera",
+          "color",
+          "composition",
+          "expression",
+          "framing",
+          "lighting",
+          "material",
+          "pose",
+          "relationship",
+          "role",
+          "setting",
+          "sexual_tone",
+          "style",
+          "timing"
+        ],
+        "fetish": [
+          "action",
+          "appearance",
+          "atmosphere",
+          "body_geometry",
+          "camera",
+          "color",
+          "composition",
+          "expression",
+          "framing",
+          "lighting",
+          "material",
+          "pose",
+          "relationship",
+          "role",
+          "setting",
+          "sexual_tone",
+          "style",
+          "timing"
+        ]
+      },
+      "protected_properties": [
+        {
+          "anchor_id": "reference_facial_appearance",
+          "source_text": "첨부한 이미지를 활용하여",
+          "dimension": "appearance",
+          "prompt_evidence": "Her facial features follow the supplied portrait",
+          "target": "woman",
+          "property": "appearance.facial_features"
+        },
+        {
+          "anchor_id": "reference_hair_appearance",
+          "source_text": "첨부한 이미지를 활용하여",
+          "dimension": "appearance",
+          "prompt_evidence": "her short black bob with wispy bangs remains recognizable",
+          "target": "woman",
+          "property": "appearance.hair"
+        }
+      ]
+    },
+    "contextual_retrieval": {
+      "contract_version": "photo-contextual-appeal/v2",
+      "axes": {
+        "sensual": {
+          "lanes": {
+            "coherence": "lexical_presentation_of_global_hybrid",
+            "alternatives": "lexical_presentation_of_global_hybrid",
+            "relation_event": "lexical_presentation_of_global_hybrid",
+            "relation_concept": "lexical_presentation_of_global_hybrid"
+          },
+          "semantic_candidate_coverage": {
+            "coherence": 0,
+            "alternatives": 0,
+            "relation_event": 0,
+            "relation_concept": 0
+          },
+          "eligible_corpus_count": 0,
+          "retrieved_count": 0,
+          "returned_count": 0,
+          "ranking": "reciprocal_rank_fusion_with_soft_visual_diversity",
+          "classification": "not_performed",
+          "membership_tags_required": false,
+          "intensity_admission_thresholds": false,
+          "scene_reranking": "bounded_request_overlap_preference;_not_applicability_proof"
+        }
+      },
+      "review_candidate_ids": [],
+      "candidate_adoption_required": false,
+      "review_location": "adult_appeal_brief.contextual_review",
+      "comparison_location": "adult_appeal_brief.contextual_comparison",
+      "query_sha256": "ef0f85599c5b7b7fc06ed2960790b7a700c1f89600d6b0f3994b6faeeada2cc5",
+      "interpretation_owner": "composer_in_current_scene",
+      "comparison_policy": "baseline_and_coherent_alternatives_at_same_requested_strengths",
+      "adoption_context_contract_version": "photo-candidate-context/v1"
+    }
+  },
+  "semantic_clarification": {
+    "enabled": true,
+    "contract_version": "photo-semantic-clarification/v2",
+    "source_authorial_core_sha256": "f5577d19c41a6a97f3fa650844ae83d1a5f46abf7cc14576e402feb97429c7bd",
+    "selection": "deterministic_contextual_meaning_resolution",
+    "affected_by_creativity": false,
+    "affected_by_seed": false,
+    "user_definition_precedence": true,
+    "candidates": [
+      {
+        "id": "clarification:authorial-core:interpreted-intent",
+        "source": "requester_meaning_bound_by_authorial_core",
+        "interpreted_meaning": "Preserve the requester-owned meaning expressed by the frozen anchors and required assertions.",
+        "meaning_components": [
+          "a disturbing anomaly within a familiar recorded television signal",
+          "woman from the supplied portrait",
+          "the recording turns an ordinary human presence into an unsettling contradiction",
+          "Her facial features follow the supplied portrait",
+          "her short black bob with wispy bangs remains recognizable"
+        ],
+        "applicability": {
+          "status": "required",
+          "reason": "requester_owned_meaning_is_fixed_while_unbound_authorial_choices_remain_editable"
+        },
+        "required_in_final_prompt": true,
+        "revisable": false,
+        "creative_sampling": false
+      }
+    ],
+    "authorial_direction": {
+      "source": "agent_prepack",
+      "interpreted_intent": "The current human topic reference resolves through the supplied exact prior-human quote to analog horror. The requested independent random concept uses the portrait for face and hair appearance only. The local draw selected a late-night public-TV continuity announcer whose CRT counterpart continues the sign-off after she falls silent. This setting, two-face discrepancy, caption, apparel, gesture and framing are authored staging, not requester definitions. I compared a close face-and-screen booth view with a wide empty-studio view: the close booth makes facial identity and the mouth-state contradiction legible together and retains a private, mundane tension. Saved creativity=1 keeps restrained scene variation; sensual=1 supports her natural personal presence through soft face light and gently draped fabric; fetish=0 adds no focus; surreal=0 adds nothing beyond the signal anomaly needed by the requested genre. Viewer experience should progress from credible workroom to a troubling disagreement between the person and her recorded image. The physical and screen faces share a large comparison plane; ordinary room detail separates the carrier of the disturbance from the physical room.",
+      "visual_priorities": [
+        "Readable facial likeness and independent physical presence of the reference-guided woman.",
+        "Simultaneous comparison of her closed mouth and the open mouth of the familiar CRT counterpart.",
+        "The abnormality visibly belongs to a worn analog broadcast image inside a credible working booth.",
+        "An arrested glance links the woman to the signal discrepancy while the continuing ON AIR lamp gives the moment consequence."
+      ],
+      "creates_additional_locks": false,
+      "revision_policy": "recompose_agent_choices_within_requester_locks"
+    },
+    "composition_contract": {
+      "composed_field": "semantic_clarification_decisions",
+      "every_candidate_requires_a_typed_decision": true,
+      "required_candidates_cannot_be_rejected": true,
+      "governing_meaning_change_requires_new_core": true,
+      "applied_evidence_must_be_literal": true,
+      "forbidden_runtime_labels_must_remain_absent": true
+    }
+  },
+  "semantic_assertion_obligations": {
+    "contract_version": "photo-semantic-assertion-obligations/v1",
+    "enabled": true,
+    "source": "authorial_core_semantic_assertions",
+    "source_authorial_core_sha256": "f5577d19c41a6a97f3fa650844ae83d1a5f46abf7cc14576e402feb97429c7bd",
+    "source_intent_lock_sha256": "1112c1d6074c0b95fd18f4200f5f5674ada9ba5b9c8d0f83f1b22ec98f395889",
+    "composed_field": "semantic_assertion_evidence",
+    "obligations": [
+      {
+        "assertion_id": "primary_subject_category",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "subject_category": "human"
+        },
+        "frozen_evidence": {
+          "subject_phrase": "woman from the supplied portrait"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "subject_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      },
+      {
+        "assertion_id": "woman_owner",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "native_schema": "photo-frozen-semantics/v1",
+          "kind": "owner",
+          "owner": "woman",
+          "owner_kind": "human"
+        },
+        "frozen_evidence": {
+          "baseline_phrase": "woman from the supplied portrait"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "baseline_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      },
+      {
+        "assertion_id": "main_subject_role",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "native_schema": "photo-frozen-semantics/v1",
+          "kind": "role",
+          "role": "main_subject",
+          "owner": "woman"
+        },
+        "frozen_evidence": {
+          "baseline_phrase": "woman from the supplied portrait"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "baseline_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      },
+      {
+        "assertion_id": "portrait_face",
+        "dimension": "appearance",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "native_schema": "photo-frozen-semantics/v1",
+          "kind": "fact",
+          "owner": "woman",
+          "property": "appearance.facial_features",
+          "value_type": "appearance.reference_guidance/v1",
+          "value": "reference_portrait_facial_features",
+          "scope_kinds": [
+            "reference_appearance"
+          ],
+          "source_input_ids": [
+            "request",
+            "reference_portrait"
+          ]
+        },
+        "frozen_evidence": {
+          "baseline_phrase": "Her facial features follow the supplied portrait"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "baseline_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      },
+      {
+        "assertion_id": "portrait_hair",
+        "dimension": "appearance",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "native_schema": "photo-frozen-semantics/v1",
+          "kind": "fact",
+          "owner": "woman",
+          "property": "appearance.hair",
+          "value_type": "appearance.hair_style/v1",
+          "value": "short black bob with wispy bangs",
+          "scope_kinds": [
+            "reference_appearance"
+          ],
+          "source_input_ids": [
+            "request",
+            "reference_portrait"
+          ]
+        },
+        "frozen_evidence": {
+          "baseline_phrase": "her short black bob with wispy bangs remains recognizable"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "baseline_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      },
+      {
+        "assertion_id": "reference_appearance_inventory",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "native_schema": "photo-frozen-semantics/v1",
+          "kind": "scope_inventory",
+          "owner": "woman",
+          "scope_kind": "reference_appearance",
+          "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"277d47a01b53aa0e954d42ac89cd2307d6abece5d0f947f0427aa8f146f2703d\",\"request_envelope_sha256\":\"c29ea5d08f327bbdb510f75fefa89cbe2d940b28ee9e5ebbec183685cc364384\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"portrait_face\",\"dimension\":\"appearance\",\"property\":\"appearance.facial_features\",\"target\":\"woman\",\"value\":{\"type\":\"appearance.reference_guidance/v1\",\"value\":\"reference_portrait_facial_features\"}},{\"assertion_id\":\"portrait_hair\",\"dimension\":\"appearance\",\"property\":\"appearance.hair\",\"target\":\"woman\",\"value\":{\"type\":\"appearance.hair_style/v1\",\"value\":\"short black bob with wispy bangs\"}}],\"reviewed_input_ids\":[\"request\",\"reference_portrait\",\"prior_user_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+        },
+        "frozen_evidence": {
+          "baseline_phrase": "woman from the supplied portrait"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "baseline_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      },
+      {
+        "assertion_id": "requester_identity_inventory",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "native_schema": "photo-frozen-semantics/v1",
+          "kind": "scope_inventory",
+          "owner": "woman",
+          "scope_kind": "requester_identity",
+          "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"277d47a01b53aa0e954d42ac89cd2307d6abece5d0f947f0427aa8f146f2703d\",\"request_envelope_sha256\":\"c29ea5d08f327bbdb510f75fefa89cbe2d940b28ee9e5ebbec183685cc364384\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[],\"reviewed_input_ids\":[\"request\",\"reference_portrait\",\"prior_user_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_absent\"}"
+        },
+        "frozen_evidence": {
+          "baseline_phrase": "woman from the supplied portrait"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "baseline_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      }
+    ],
+    "canonical_sha256": "c1f12ff434932e226c58221c2a868a296cc20e907de8140df334dc5bb550f83f"
+  }
+}
