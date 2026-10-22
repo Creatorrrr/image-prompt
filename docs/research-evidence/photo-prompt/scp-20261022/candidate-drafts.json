@@ -1,0 +1,3404 @@
+{
+  "schema": "scp-research-candidate-drafts/v1",
+  "draft_count": 70,
+  "runtime_import_allowed": false,
+  "count_note": "Drafts are a subset of semantic cards, not additional independent research units.",
+  "drafts": [
+    {
+      "draft_id": "DR-I01",
+      "card_id": "I01",
+      "proposal_ko": "연구원이 투명 관찰창 밖에 서 있고, 창의 사각 프레임 안쪽 격리실에는 받침대 위 사물이 놓여 있다. 창 하단 벽체가 두 공간을 가른다.",
+      "proposal_en": "A researcher stands outside a framed observation window; an object rests on a pedestal inside the chamber, with the wall below the glass separating their spaces.",
+      "owners": {
+        "researcher": "outside observer",
+        "window": "framed transparent barrier",
+        "room": "inner chamber",
+        "object": "contained object",
+        "pedestal": "inner support",
+        "wall": "partition below glass"
+      },
+      "directed_relations": [
+        {
+          "from": "window",
+          "relation": "separates",
+          "to": "researcher"
+        },
+        {
+          "from": "window",
+          "relation": "bounds_view_of",
+          "to": "room"
+        },
+        {
+          "from": "object",
+          "relation": "rests_on",
+          "to": "pedestal"
+        },
+        {
+          "from": "wall",
+          "relation": "separates",
+          "to": "room"
+        }
+      ],
+      "proposed_slots": [
+        "location",
+        "prop_placement",
+        "space_condition"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "pose",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S061",
+        "S002"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I02",
+      "card_id": "I02",
+      "proposal_ko": "짧은 전실 양끝에 두꺼운 문이 하나씩 있고 두 문 모두 닫혀 있다. 가까운 문 테두리와 먼 문 테두리가 따로 읽힌다.",
+      "proposal_en": "A short vestibule has a thick closed door at each end; both door frames remain separately legible across the intervening space.",
+      "owners": {
+        "vestibule": "intermediate space",
+        "near_door": "near closure",
+        "far_door": "far closure"
+      },
+      "directed_relations": [
+        {
+          "from": "near_door",
+          "relation": "bounds_near_end_of",
+          "to": "vestibule"
+        },
+        {
+          "from": "far_door",
+          "relation": "bounds_far_end_of",
+          "to": "vestibule"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "space_condition"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S061"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I03",
+      "card_id": "I03",
+      "proposal_ko": "밀폐 상자의 정면 원형 포트 두 곳에 긴 장갑이 부착되어 있고, 장갑 끝은 상자 안의 작은 시료 양옆에 있다.",
+      "proposal_en": "Two long gloves are attached to circular ports in the front of an enclosure; their ends flank a small specimen inside the box.",
+      "owners": {
+        "box": "transparent enclosure",
+        "port_left": "left opening",
+        "port_right": "right opening",
+        "glove_left": "left attached glove",
+        "glove_right": "right attached glove",
+        "specimen": "inner sample"
+      },
+      "directed_relations": [
+        {
+          "from": "glove_left",
+          "relation": "attached_to",
+          "to": "port_left"
+        },
+        {
+          "from": "glove_right",
+          "relation": "attached_to",
+          "to": "port_right"
+        },
+        {
+          "from": "specimen",
+          "relation": "inside",
+          "to": "box"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "prop_placement"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S002"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I04",
+      "card_id": "I04",
+      "proposal_ko": "작은 불규칙 사물이 투명 용기 안의 받침 위에 놓이며, 용기 벽과 표본 사이에 빈 간격이 보인다.",
+      "proposal_en": "A small irregular object rests on an inner support inside a transparent vessel, with a visible gap between specimen and vessel wall.",
+      "owners": {
+        "sample": "independent specimen",
+        "vessel": "transparent container",
+        "support": "inner pedestal"
+      },
+      "directed_relations": [
+        {
+          "from": "sample",
+          "relation": "inside",
+          "to": "vessel"
+        },
+        {
+          "from": "sample",
+          "relation": "rests_on",
+          "to": "support"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S002"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I05",
+      "card_id": "I05",
+      "proposal_ko": "바리케이드가 현장 진입로를 가로막고, 작업자가 그 안쪽의 닫힌 운송 상자를 운반한다.",
+      "proposal_en": "A barricade crosses an access road while workers carry a closed transport case on the restricted side of the boundary.",
+      "owners": {
+        "barricade": "road boundary",
+        "road": "access route",
+        "workers": "case carriers",
+        "case": "closed transport object"
+      },
+      "directed_relations": [
+        {
+          "from": "barricade",
+          "relation": "crosses",
+          "to": "road"
+        },
+        {
+          "from": "workers",
+          "relation": "carry",
+          "to": "case"
+        }
+      ],
+      "proposed_slots": [
+        "relational_action",
+        "prop_placement",
+        "situation_context"
+      ],
+      "dimensions_to_review": [
+        "action",
+        "composition",
+        "event",
+        "pose",
+        "relationship",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S002"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I06",
+      "card_id": "I06",
+      "proposal_ko": "두꺼운 문 한쪽이 프레임에서 벌어져 있고, 바닥의 연속적인 검은 끌림 흔적이 문턱을 가로지른다.",
+      "proposal_en": "One side of a thick door is bent away from its frame; a continuous dark drag mark crosses the threshold on the floor.",
+      "owners": {
+        "door": "damaged door leaf",
+        "frame": "surrounding frame",
+        "trace": "continuous floor mark",
+        "threshold": "door boundary"
+      },
+      "directed_relations": [
+        {
+          "from": "door",
+          "relation": "separated_from",
+          "to": "frame"
+        },
+        {
+          "from": "trace",
+          "relation": "crosses",
+          "to": "threshold"
+        }
+      ],
+      "proposed_slots": [
+        "aftermath_trace",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "material",
+        "timing"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S002"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I07",
+      "card_id": "I07",
+      "proposal_ko": "벽에 부착된 붉은 경광등이 가까운 벽면에 국소적인 붉은 빛을 만들고, 흰 복도 조명은 따로 남아 있다.",
+      "proposal_en": "A wall-mounted red beacon casts a localized red patch on the adjacent wall while separate white corridor lights remain visible.",
+      "owners": {
+        "beacon": "red light source",
+        "wall": "local receiver",
+        "corridor_lights": "white illumination sources"
+      },
+      "directed_relations": [
+        {
+          "from": "beacon",
+          "relation": "casts_local_light_on",
+          "to": "wall"
+        }
+      ],
+      "proposed_slots": [
+        "light_color",
+        "prop",
+        "light_direction"
+      ],
+      "dimensions_to_review": [
+        "color",
+        "lighting",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S002"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I08",
+      "card_id": "I08",
+      "proposal_ko": "보고서의 여러 인쇄 줄 중 일부 구간만 검은 직사각형 막대가 덮고, 같은 줄의 앞뒤 글자는 남아 있다.",
+      "proposal_en": "Opaque black rectangles cover selected spans of printed report lines, leaving text visible before and after each covered span.",
+      "owners": {
+        "page": "report page",
+        "lines": "printed text",
+        "bars": "opaque occluders"
+      },
+      "directed_relations": [
+        {
+          "from": "lines",
+          "relation": "printed_on",
+          "to": "page"
+        },
+        {
+          "from": "bars",
+          "relation": "occlude_parts_of",
+          "to": "lines"
+        }
+      ],
+      "proposed_slots": [
+        "visible_text",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S027"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I09",
+      "card_id": "I09",
+      "proposal_ko": "클립으로 묶인 보고서 뒤에 날짜가 다른 얇은 추가장이 겹쳐 있으며, 하나의 실험 사진과 표가 추가장에 놓인다.",
+      "proposal_en": "A dated supplemental sheet lies behind a clipped report; one experiment photograph and a small table belong to that additional sheet.",
+      "owners": {
+        "report": "base document",
+        "supplement": "additional sheet",
+        "photo": "printed image",
+        "table": "printed measurement table"
+      },
+      "directed_relations": [
+        {
+          "from": "supplement",
+          "relation": "behind",
+          "to": "report"
+        },
+        {
+          "from": "photo",
+          "relation": "printed_on",
+          "to": "supplement"
+        },
+        {
+          "from": "table",
+          "relation": "printed_on",
+          "to": "supplement"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "visible_text"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "pose",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S027"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-I11",
+      "card_id": "I11",
+      "proposal_ko": "성인 한 명의 단색 작업복 가슴에 짧은 식별 번호가 붙어 있다. 번호는 의복에 있고 피부 문신과 분리된다.",
+      "proposal_en": "A short identifier is attached to the chest of one adult worker’s plain coverall; the identifier belongs to the garment rather than the skin.",
+      "owners": {
+        "person": "adult wearer",
+        "coverall": "plain work clothing",
+        "identifier": "garment identifier"
+      },
+      "directed_relations": [
+        {
+          "from": "person",
+          "relation": "wears",
+          "to": "coverall"
+        },
+        {
+          "from": "identifier",
+          "relation": "attached_to",
+          "to": "coverall"
+        }
+      ],
+      "proposed_slots": [
+        "wardrobe_style",
+        "visible_text"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S062"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-M01",
+      "card_id": "M01",
+      "proposal_ko": "성인 현장 작업자의 후드·투명 면창·몸통 덮개와 장갑 커프가 연속으로 연결되어 있다.",
+      "proposal_en": "An adult field worker wears a hood, transparent face shield, body covering and glove cuffs with their connecting boundaries visible.",
+      "owners": {
+        "worker": "adult wearer",
+        "hood": "head covering",
+        "visor": "clear face shield",
+        "suit": "body covering",
+        "gloves": "hand coverings"
+      },
+      "directed_relations": [
+        {
+          "from": "worker",
+          "relation": "wears",
+          "to": "suit"
+        },
+        {
+          "from": "hood",
+          "relation": "joins",
+          "to": "suit"
+        },
+        {
+          "from": "visor",
+          "relation": "mounted_in",
+          "to": "hood"
+        },
+        {
+          "from": "gloves",
+          "relation": "overlap_cuffs_of",
+          "to": "suit"
+        }
+      ],
+      "proposed_slots": [
+        "wardrobe_layering",
+        "garment_detail"
+      ],
+      "dimensions_to_review": [
+        "appearance"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S066"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-M02",
+      "card_id": "M02",
+      "proposal_ko": "작업자의 불투명 눈가리개가 두 눈을 덮고, 손에 든 센서의 전면이 같은 방 안의 사물을 향한다.",
+      "proposal_en": "An opaque blindfold covers an operator’s eyes; the front of a handheld sensor is directed at an object in the same room.",
+      "owners": {
+        "operator": "adult operator",
+        "blindfold": "opaque eye cover",
+        "sensor": "handheld device",
+        "target": "observed object"
+      },
+      "directed_relations": [
+        {
+          "from": "blindfold",
+          "relation": "covers_eyes_of",
+          "to": "operator"
+        },
+        {
+          "from": "operator",
+          "relation": "holds",
+          "to": "sensor"
+        },
+        {
+          "from": "sensor",
+          "relation": "oriented_toward",
+          "to": "target"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "hand_pose",
+        "gaze_target"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "expression",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S066"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-M03",
+      "card_id": "M03",
+      "proposal_ko": "인물이 귀를 덮는 보호 장비를 쓰고, 작업대의 모니터에는 축이 있는 파형 하나가 보인다.",
+      "proposal_en": "A worker wears ear-covering protection while a desk monitor shows a single waveform with visible axes.",
+      "owners": {
+        "worker": "adult worker",
+        "ear_protection": "ear-covering gear",
+        "monitor": "screen",
+        "waveform": "screen graphic"
+      },
+      "directed_relations": [
+        {
+          "from": "worker",
+          "relation": "wears",
+          "to": "ear_protection"
+        },
+        {
+          "from": "waveform",
+          "relation": "displayed_on",
+          "to": "monitor"
+        }
+      ],
+      "proposed_slots": [
+        "wearable_accessory",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S066"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-M04",
+      "card_id": "M04",
+      "proposal_ko": "휴대 단말기에서 나온 케이블 한 가닥이 격리된 서버 전면 포트에 연결되고 양끝 접점이 보인다.",
+      "proposal_en": "One cable runs from a portable terminal to a front port of an isolated server; both endpoint connections are visible.",
+      "owners": {
+        "terminal": "portable computing device",
+        "cable": "connecting cable",
+        "server": "server unit"
+      },
+      "directed_relations": [
+        {
+          "from": "cable",
+          "relation": "connected_to",
+          "to": "terminal"
+        },
+        {
+          "from": "cable",
+          "relation": "connected_to",
+          "to": "server"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "prop_placement"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S066"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-C01",
+      "card_id": "C01",
+      "proposal_ko": "짧은 흑백 선 패턴이 직립 패널 중앙에 인쇄되어 있고, 패널 옆에는 손잡이가 달린 불투명 차폐판이 있다.",
+      "proposal_en": "A compact black-and-white line pattern is printed at the center of an upright panel, beside a separate opaque shield with a handle.",
+      "owners": {
+        "pattern": "printed graphic",
+        "panel": "physical carrier",
+        "shield": "separate opaque barrier"
+      },
+      "directed_relations": [
+        {
+          "from": "pattern",
+          "relation": "printed_on",
+          "to": "panel"
+        },
+        {
+          "from": "shield",
+          "relation": "beside",
+          "to": "panel"
+        }
+      ],
+      "proposed_slots": [
+        "surface_pattern",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S020",
+        "S068"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-C02",
+      "card_id": "C02",
+      "proposal_ko": "관찰자는 패널을 향해 고개를 돌리지만, 패널의 그림 면은 세워진 불투명 판 뒤에 완전히 가려져 있다.",
+      "proposal_en": "An observer turns toward a panel while a raised opaque board fully occludes the panel’s printed face.",
+      "owners": {
+        "observer": "viewer",
+        "panel": "pattern carrier",
+        "board": "occluding board",
+        "face": "printed panel face"
+      },
+      "directed_relations": [
+        {
+          "from": "observer",
+          "relation": "oriented_toward",
+          "to": "panel"
+        },
+        {
+          "from": "board",
+          "relation": "occludes",
+          "to": "face"
+        },
+        {
+          "from": "face",
+          "relation": "part_of",
+          "to": "panel"
+        }
+      ],
+      "proposed_slots": [
+        "gaze_target",
+        "prop_placement"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "expression",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S020"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-C03",
+      "card_id": "C03",
+      "proposal_ko": "종이 한 장과 그 옆 태블릿 화면에 같은 짧은 기호열이 있다. 화면의 프레임과 종이 가장자리는 별개다.",
+      "proposal_en": "A sheet of paper and an adjacent tablet display carry the same short symbol sequence; the screen frame and paper edges remain distinct.",
+      "owners": {
+        "paper": "paper carrier",
+        "tablet": "electronic carrier",
+        "symbols_a": "printed sequence",
+        "symbols_b": "screen sequence"
+      },
+      "directed_relations": [
+        {
+          "from": "symbols_a",
+          "relation": "printed_on",
+          "to": "paper"
+        },
+        {
+          "from": "symbols_b",
+          "relation": "displayed_on",
+          "to": "tablet"
+        },
+        {
+          "from": "symbols_a",
+          "relation": "matches_pattern_of",
+          "to": "symbols_b"
+        }
+      ],
+      "proposed_slots": [
+        "visible_text",
+        "prop_placement"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "pose",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S020",
+        "S068"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-C05",
+      "card_id": "C05",
+      "proposal_ko": "투명 앰풀의 액체 수면과 봉합된 목 부분이 보이고, 옆에 보호 캡이 씌워진 주사기가 놓여 있다.",
+      "proposal_en": "A transparent ampoule shows a liquid meniscus beneath its sealed neck; a capped syringe lies beside it.",
+      "owners": {
+        "ampoule": "sealed glass vessel",
+        "liquid": "inner liquid",
+        "syringe": "capped syringe",
+        "cap": "needle cover"
+      },
+      "directed_relations": [
+        {
+          "from": "liquid",
+          "relation": "inside",
+          "to": "ampoule"
+        },
+        {
+          "from": "cap",
+          "relation": "covers_tip_of",
+          "to": "syringe"
+        },
+        {
+          "from": "syringe",
+          "relation": "beside",
+          "to": "ampoule"
+        }
+      ],
+      "proposed_slots": [
+        "liquid_inclusion",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "material",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S069",
+        "S007"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-R01",
+      "card_id": "R01",
+      "proposal_ko": "바닥에 고정된 원통형 장치에서 케이블이 별도 제어함으로 연결된다. 장치 옆 물체의 직선 윤곽은 또렷하다.",
+      "proposal_en": "A floor-mounted cylindrical apparatus connects by cable to a separate control cabinet; an adjacent object has clearly straight edges.",
+      "owners": {
+        "apparatus": "original industrial cylinder",
+        "cable": "control cable",
+        "cabinet": "control cabinet",
+        "object": "adjacent rigid object"
+      },
+      "directed_relations": [
+        {
+          "from": "cable",
+          "relation": "connected_to",
+          "to": "apparatus"
+        },
+        {
+          "from": "cable",
+          "relation": "connected_to",
+          "to": "cabinet"
+        },
+        {
+          "from": "apparatus",
+          "relation": "beside",
+          "to": "object"
+        }
+      ],
+      "proposed_slots": [
+        "prop",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S004",
+        "S003"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-R02",
+      "card_id": "R02",
+      "proposal_ko": "손에 든 계측기의 화면에는 읽을 수 있는 짧은 단위와 숫자가 있고, 센서 머리는 별도 사물을 향한다.",
+      "proposal_en": "A handheld meter displays a short readable unit and number while its sensor head points toward a separate object.",
+      "owners": {
+        "meter": "handheld apparatus",
+        "display": "screen",
+        "reading": "visible value",
+        "sensor": "sensor head",
+        "target": "target object"
+      },
+      "directed_relations": [
+        {
+          "from": "display",
+          "relation": "part_of",
+          "to": "meter"
+        },
+        {
+          "from": "reading",
+          "relation": "displayed_on",
+          "to": "display"
+        },
+        {
+          "from": "sensor",
+          "relation": "oriented_toward",
+          "to": "target"
+        }
+      ],
+      "proposed_slots": [
+        "visible_text",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "role",
+        "subject",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S004",
+        "S020"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-R03",
+      "card_id": "R03",
+      "proposal_ko": "실내 출입구의 네 테두리가 모두 보이고, 그 안쪽에는 눈 덮인 야외 지면이 문턱에 연속해 이어진다.",
+      "proposal_en": "All four edges of an interior doorway are visible; a snow-covered outdoor surface continues to the threshold inside its opening.",
+      "owners": {
+        "doorway": "bounded opening",
+        "interior": "near room",
+        "snowfield": "far outdoor ground",
+        "threshold": "shared threshold"
+      },
+      "directed_relations": [
+        {
+          "from": "doorway",
+          "relation": "bounds_view_of",
+          "to": "snowfield"
+        },
+        {
+          "from": "snowfield",
+          "relation": "meets",
+          "to": "threshold"
+        },
+        {
+          "from": "threshold",
+          "relation": "adjoins",
+          "to": "interior"
+        }
+      ],
+      "proposed_slots": [
+        "space_condition",
+        "spatial_depth",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S020",
+        "S063"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-R04",
+      "card_id": "R04",
+      "proposal_ko": "하나의 난간이 계단을 따라 끊김 없이 돌아 출발 계단의 반대쪽으로 이어지며, 모서리 접점이 모두 드러난다.",
+      "proposal_en": "One railing follows an unbroken stair circuit and returns to the opposite side of its starting stair, with every corner connection exposed.",
+      "owners": {
+        "stairs": "connected stair circuit",
+        "railing": "continuous boundary",
+        "start": "starting stair segment"
+      },
+      "directed_relations": [
+        {
+          "from": "railing",
+          "relation": "follows",
+          "to": "stairs"
+        },
+        {
+          "from": "stairs",
+          "relation": "returns_to",
+          "to": "start"
+        }
+      ],
+      "proposed_slots": [
+        "space_condition",
+        "surreal_physics_detail"
+      ],
+      "dimensions_to_review": [
+        "concept",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S020"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-R05",
+      "card_id": "R05",
+      "proposal_ko": "노쇠한 인간형 존재의 팔 한쪽이 불투명 벽의 평면 경계와 겹치며, 벽 양쪽에서 같은 팔의 연속 윤곽이 드러난다.",
+      "proposal_en": "One arm of an aged humanoid intersects an opaque wall plane, with continuous parts of that same arm visible on both sides of the boundary.",
+      "owners": {
+        "humanoid": "one entity",
+        "arm": "its arm",
+        "wall": "opaque plane"
+      },
+      "directed_relations": [
+        {
+          "from": "arm",
+          "relation": "part_of",
+          "to": "humanoid"
+        },
+        {
+          "from": "arm",
+          "relation": "intersects_plane_of",
+          "to": "wall"
+        }
+      ],
+      "proposed_slots": [
+        "anatomical_connection",
+        "contact_point"
+      ],
+      "dimensions_to_review": [
+        "body_geometry",
+        "relationship"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S040"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-R06",
+      "card_id": "R06",
+      "proposal_ko": "금속 판의 한 부분은 거칠게 패였고 검은 젖은 막이 그 가장자리와 바로 아래 바닥에 이어진다.",
+      "proposal_en": "Part of a metal plate is deeply pitted; a wet dark film continues along its edge and onto the floor directly below.",
+      "owners": {
+        "plate": "metal carrier",
+        "pitting": "surface loss",
+        "film": "wet dark material",
+        "floor": "lower surface"
+      },
+      "directed_relations": [
+        {
+          "from": "pitting",
+          "relation": "on",
+          "to": "plate"
+        },
+        {
+          "from": "film",
+          "relation": "on",
+          "to": "plate"
+        },
+        {
+          "from": "film",
+          "relation": "continues_onto",
+          "to": "floor"
+        }
+      ],
+      "proposed_slots": [
+        "surface_material",
+        "surface_moisture",
+        "aftermath_trace"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "material",
+        "timing"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S040"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-R07",
+      "card_id": "R07",
+      "proposal_ko": "작은 금속 물체가 탁자 위에 간격을 두고 떠 있으며, 인물의 손과 물체 사이에도 빈 공간이 보인다.",
+      "proposal_en": "A small metal object is suspended above a table with a visible gap, and empty space separates the person’s hand from the object.",
+      "owners": {
+        "object": "suspended solid",
+        "table": "lower support surface",
+        "hand": "person hand"
+      },
+      "directed_relations": [
+        {
+          "from": "object",
+          "relation": "above_with_gap",
+          "to": "table"
+        },
+        {
+          "from": "hand",
+          "relation": "separated_from",
+          "to": "object"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "surreal_physics_detail"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "concept",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S023"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-T01",
+      "card_id": "T01",
+      "proposal_ko": "바닥의 원형 선 안쪽에 작은 물체가 놓이고, 인물 한 명의 뻗은 손이 그 물체를 향한다. 선은 바닥에 붙어 있다.",
+      "proposal_en": "A small object lies inside a circle marked on the floor while one person extends a hand toward it; the line belongs to the floor surface.",
+      "owners": {
+        "floor": "ground carrier",
+        "circle": "surface marking",
+        "object": "central target",
+        "person": "adult practitioner",
+        "hand": "its hand"
+      },
+      "directed_relations": [
+        {
+          "from": "circle",
+          "relation": "marked_on",
+          "to": "floor"
+        },
+        {
+          "from": "object",
+          "relation": "inside_boundary_of",
+          "to": "circle"
+        },
+        {
+          "from": "hand",
+          "relation": "part_of",
+          "to": "person"
+        },
+        {
+          "from": "hand",
+          "relation": "directed_toward",
+          "to": "object"
+        }
+      ],
+      "proposed_slots": [
+        "surface_pattern",
+        "relational_action"
+      ],
+      "dimensions_to_review": [
+        "action",
+        "appearance",
+        "relationship"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S024"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-T02",
+      "card_id": "T02",
+      "proposal_ko": "작은 인형과 멀리 있는 성인 인물이 같은 팔 벌린 자세를 취하고, 둘의 몸과 크기 경계는 별도로 보인다.",
+      "proposal_en": "A small effigy and a distant adult figure share an outstretched-arm posture, with their separate bodies and different scales clearly visible.",
+      "owners": {
+        "effigy": "small model",
+        "person": "separate adult figure"
+      },
+      "directed_relations": [
+        {
+          "from": "effigy",
+          "relation": "shares_pose_with",
+          "to": "person"
+        }
+      ],
+      "proposed_slots": [
+        "scale_relation",
+        "body_pose"
+      ],
+      "dimensions_to_review": [
+        "body_geometry",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S024"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-T03",
+      "card_id": "T03",
+      "proposal_ko": "머리카락 한 가닥을 든 작은 투명 봉투가 별도 인물 사진 옆에 놓이고, 봉투의 라벨 면은 관객 쪽을 향한다.",
+      "proposal_en": "A small transparent envelope holding one strand of hair lies beside a separate portrait photograph, with the envelope label facing the viewer.",
+      "owners": {
+        "hair": "loose strand",
+        "envelope": "sample carrier",
+        "portrait": "printed portrait",
+        "label": "envelope label"
+      },
+      "directed_relations": [
+        {
+          "from": "hair",
+          "relation": "inside",
+          "to": "envelope"
+        },
+        {
+          "from": "envelope",
+          "relation": "beside",
+          "to": "portrait"
+        },
+        {
+          "from": "label",
+          "relation": "attached_to",
+          "to": "envelope"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "visible_text"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "pose",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S024"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-T04",
+      "card_id": "T04",
+      "proposal_ko": "머리에 고정한 관측 헤드셋이 별도 전원부·영상 처리함과 케이블로 연결된다. 별도 화면의 의사색 영상은 화면 안에만 있다.",
+      "proposal_en": "A head-mounted observer unit connects by cables to a separate power supply and image processor; a false-color image remains confined to an auxiliary display.",
+      "owners": {
+        "headset": "head unit",
+        "power": "power supply",
+        "processor": "image processor",
+        "screen": "auxiliary display",
+        "image": "false-color screen graphic"
+      },
+      "directed_relations": [
+        {
+          "from": "headset",
+          "relation": "connected_to",
+          "to": "power"
+        },
+        {
+          "from": "headset",
+          "relation": "connected_to",
+          "to": "processor"
+        },
+        {
+          "from": "image",
+          "relation": "displayed_on",
+          "to": "screen"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S022"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-T05",
+      "card_id": "T05",
+      "proposal_ko": "단순한 금속 성물 하나가 받침에 놓이고, 그 위의 작은 등에서 내려온 빛이 금속 모서리에 반사된다.",
+      "proposal_en": "A simple metal religious object rests on a pedestal; a small lamp above it creates a localized reflection along its metal edge.",
+      "owners": {
+        "relic": "religious object",
+        "pedestal": "support",
+        "lamp": "visible light source",
+        "edge": "metal edge"
+      },
+      "directed_relations": [
+        {
+          "from": "relic",
+          "relation": "rests_on",
+          "to": "pedestal"
+        },
+        {
+          "from": "lamp",
+          "relation": "illuminates",
+          "to": "relic"
+        },
+        {
+          "from": "edge",
+          "relation": "part_of",
+          "to": "relic"
+        }
+      ],
+      "proposed_slots": [
+        "light_direction",
+        "surface_material"
+      ],
+      "dimensions_to_review": [
+        "lighting",
+        "material"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S065"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G02",
+      "card_id": "G02",
+      "proposal_ko": "높은 책장 사이 통로 끝의 문틀 너머로 다른 재질의 계단이 이어지고, 책과 문은 같은 공간에서 겹치지 않는다.",
+      "proposal_en": "Between tall bookshelves, a doorway opens onto stairs of a different material, with the shelves, opening and far stairs remaining spatially distinct.",
+      "owners": {
+        "shelves": "library shelves",
+        "doorway": "bounded passage",
+        "stairs": "far spatial continuation"
+      },
+      "directed_relations": [
+        {
+          "from": "doorway",
+          "relation": "between",
+          "to": "shelves"
+        },
+        {
+          "from": "stairs",
+          "relation": "visible_through",
+          "to": "doorway"
+        }
+      ],
+      "proposed_slots": [
+        "location",
+        "spatial_depth"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S063",
+        "S031"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G03",
+      "card_id": "G03",
+      "proposal_ko": "전시장 받침 위 조각과 벽의 작품 설명판이 따로 있고, 관객 한 명의 시선이 조각을 향한다.",
+      "proposal_en": "A sculpture stands on a gallery pedestal with a separate wall label; one visitor looks toward the sculpture.",
+      "owners": {
+        "sculpture": "exhibited object",
+        "pedestal": "support",
+        "label": "wall label",
+        "visitor": "adult viewer"
+      },
+      "directed_relations": [
+        {
+          "from": "sculpture",
+          "relation": "rests_on",
+          "to": "pedestal"
+        },
+        {
+          "from": "visitor",
+          "relation": "looks_toward",
+          "to": "sculpture"
+        },
+        {
+          "from": "label",
+          "relation": "beside",
+          "to": "sculpture"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "gaze_target"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "expression",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S008"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G04",
+      "card_id": "G04",
+      "proposal_ko": "작은 물체가 유리 덮개 아래에 놓이고, 덮개 밖 경매 번호판과 객석의 성인들이 같은 물체를 향한다.",
+      "proposal_en": "A small object sits under a glass cover; an auction number plaque remains outside the cover while seated adults face the displayed object.",
+      "owners": {
+        "object": "auction object",
+        "cover": "glass cover",
+        "plaque": "external number plaque",
+        "audience": "seated adults"
+      },
+      "directed_relations": [
+        {
+          "from": "object",
+          "relation": "inside",
+          "to": "cover"
+        },
+        {
+          "from": "plaque",
+          "relation": "outside",
+          "to": "cover"
+        },
+        {
+          "from": "audience",
+          "relation": "oriented_toward",
+          "to": "object"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "social_cue"
+      ],
+      "dimensions_to_review": [
+        "character_response",
+        "composition",
+        "pose",
+        "relationship"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S025"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G05",
+      "card_id": "G05",
+      "proposal_ko": "작은 장난감의 열린 등판 안에 톱니바퀴가 들어 있고, 옆의 태엽 열쇠가 등판 축에 끼워져 있다.",
+      "proposal_en": "A small toy has an open back revealing gears, and a winding key is fitted to its rear axle.",
+      "owners": {
+        "toy": "toy body",
+        "gears": "internal mechanism",
+        "key": "winding key",
+        "axle": "rear axle"
+      },
+      "directed_relations": [
+        {
+          "from": "gears",
+          "relation": "inside",
+          "to": "toy"
+        },
+        {
+          "from": "key",
+          "relation": "fitted_to",
+          "to": "axle"
+        },
+        {
+          "from": "axle",
+          "relation": "part_of",
+          "to": "toy"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S025"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G06",
+      "card_id": "G06",
+      "proposal_ko": "컨베이어 위의 같은 형태 부품들이 기계 덮개 안으로 들어가고, 덮개 반대편에는 다른 형태의 부품이 모인다.",
+      "proposal_en": "Matching parts on a conveyor lead into a machine enclosure, while differently shaped parts collect on its far side.",
+      "owners": {
+        "input_parts": "near conveyor parts",
+        "enclosure": "machine housing",
+        "output_parts": "far parts",
+        "conveyor": "transport surface"
+      },
+      "directed_relations": [
+        {
+          "from": "input_parts",
+          "relation": "on",
+          "to": "conveyor"
+        },
+        {
+          "from": "conveyor",
+          "relation": "enters",
+          "to": "enclosure"
+        },
+        {
+          "from": "output_parts",
+          "relation": "beside_far_side_of",
+          "to": "enclosure"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "prop_placement"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S025"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G07",
+      "card_id": "G07",
+      "proposal_ko": "성인형 로봇의 팔꿈치에는 금속 회전축이 있고, 위아래 외피가 그 축을 사이에 두고 연결된다.",
+      "proposal_en": "A humanoid robot’s elbow exposes a metal pivot joining the upper and lower arm shells.",
+      "owners": {
+        "robot": "humanoid machine",
+        "upper": "upper arm shell",
+        "lower": "lower arm shell",
+        "pivot": "mechanical elbow joint"
+      },
+      "directed_relations": [
+        {
+          "from": "upper",
+          "relation": "connected_to",
+          "to": "pivot"
+        },
+        {
+          "from": "lower",
+          "relation": "connected_to",
+          "to": "pivot"
+        },
+        {
+          "from": "pivot",
+          "relation": "part_of",
+          "to": "robot"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S005"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G08",
+      "card_id": "G08",
+      "proposal_ko": "완성된 작은 기기와 분해된 같은 계열 부품이 작업대 양쪽에 놓이고, 사이의 기록지는 양쪽과 분리되어 있다.",
+      "proposal_en": "A finished device and disassembled related components occupy opposite sides of a workbench, with a separate record sheet between them.",
+      "owners": {
+        "device": "finished prototype",
+        "components": "separate parts",
+        "record": "record sheet",
+        "bench": "work surface"
+      },
+      "directed_relations": [
+        {
+          "from": "device",
+          "relation": "on",
+          "to": "bench"
+        },
+        {
+          "from": "components",
+          "relation": "on",
+          "to": "bench"
+        },
+        {
+          "from": "record",
+          "relation": "between",
+          "to": "components"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "situation_context"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "event",
+        "pose",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S034"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G09",
+      "card_id": "G09",
+      "proposal_ko": "성인 작업자 두 명이 접힌 담요가 든 열린 상자를 사이에 두고 한 담요의 양끝을 각자 잡는다.",
+      "proposal_en": "Two adults stand across an open box of folded blankets and each holds one end of the same blanket.",
+      "owners": {
+        "giver": "first adult",
+        "receiver": "second adult",
+        "blanket": "shared handled object",
+        "box": "open supply box"
+      },
+      "directed_relations": [
+        {
+          "from": "giver",
+          "relation": "holds_end_of",
+          "to": "blanket"
+        },
+        {
+          "from": "receiver",
+          "relation": "holds_other_end_of",
+          "to": "blanket"
+        },
+        {
+          "from": "blanket",
+          "relation": "above",
+          "to": "box"
+        }
+      ],
+      "proposed_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "dimensions_to_review": [
+        "action",
+        "relationship"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S025"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G10",
+      "card_id": "G10",
+      "proposal_ko": "성인 작업자가 상자 문을 받치고, 그 안의 작은 동물은 작업자의 장갑과 분리된 바닥에 서 있다.",
+      "proposal_en": "An adult worker supports a transport-crate door while a small animal stands on the inner floor, separate from the worker’s gloved hand.",
+      "owners": {
+        "worker": "adult handler",
+        "crate": "transport container",
+        "door": "crate door",
+        "animal": "small animal"
+      },
+      "directed_relations": [
+        {
+          "from": "worker",
+          "relation": "supports",
+          "to": "door"
+        },
+        {
+          "from": "door",
+          "relation": "part_of",
+          "to": "crate"
+        },
+        {
+          "from": "animal",
+          "relation": "inside",
+          "to": "crate"
+        }
+      ],
+      "proposed_slots": [
+        "companion_animal",
+        "relational_action"
+      ],
+      "dimensions_to_review": [
+        "action",
+        "relationship",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S025"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-G11",
+      "card_id": "G11",
+      "proposal_ko": "가게 앞에 인간형과 독립적인 비인간형 주민이 같은 보행로를 사용하며, 서로 다른 몸의 실루엣이 겹치지 않는다.",
+      "proposal_en": "Human and separately designed nonhuman residents share a shopfront walkway, with their individual silhouettes remaining distinct.",
+      "owners": {
+        "human": "human resident",
+        "nonhuman": "independently specified nonhuman",
+        "walkway": "shared public surface",
+        "shop": "adjacent shopfront"
+      },
+      "directed_relations": [
+        {
+          "from": "human",
+          "relation": "on",
+          "to": "walkway"
+        },
+        {
+          "from": "nonhuman",
+          "relation": "on",
+          "to": "walkway"
+        },
+        {
+          "from": "shop",
+          "relation": "adjoins",
+          "to": "walkway"
+        }
+      ],
+      "proposed_slots": [
+        "location",
+        "subject",
+        "world"
+      ],
+      "dimensions_to_review": [
+        "concept",
+        "setting",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S031"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-F01",
+      "card_id": "F01",
+      "proposal_ko": "서로 맞물리는 파편 세 개가 제단 위에 놓이고, 두 파편은 접합되었지만 세 번째는 틈을 두고 떨어져 있다.",
+      "proposal_en": "Three matching relic fragments lie on an altar; two are joined while a third remains separated by a visible gap.",
+      "owners": {
+        "fragment_a": "first fragment",
+        "fragment_b": "second fragment",
+        "fragment_c": "separate fragment",
+        "altar": "support"
+      },
+      "directed_relations": [
+        {
+          "from": "fragment_a",
+          "relation": "joined_to",
+          "to": "fragment_b"
+        },
+        {
+          "from": "fragment_c",
+          "relation": "separated_from",
+          "to": "fragment_b"
+        },
+        {
+          "from": "fragment_a",
+          "relation": "on",
+          "to": "altar"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "prop_placement"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S013"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-F02",
+      "card_id": "F02",
+      "proposal_ko": "성인 착용자의 팔뚝 보철은 금속 커프를 통해 같은 팔의 피부 경계에 이어지고, 겉면의 맞물린 톱니가 따로 보인다.",
+      "proposal_en": "An adult wearer’s forearm prosthesis meets that same arm through a metal cuff, with intermeshing external gears separately visible.",
+      "owners": {
+        "wearer": "adult wearer",
+        "skin": "arm skin",
+        "prosthesis": "forearm replacement",
+        "cuff": "connecting cuff",
+        "gears": "visible gear pair"
+      },
+      "directed_relations": [
+        {
+          "from": "skin",
+          "relation": "part_of",
+          "to": "wearer"
+        },
+        {
+          "from": "cuff",
+          "relation": "connects_to",
+          "to": "skin"
+        },
+        {
+          "from": "cuff",
+          "relation": "connects_to",
+          "to": "prosthesis"
+        },
+        {
+          "from": "gears",
+          "relation": "mounted_on",
+          "to": "prosthesis"
+        }
+      ],
+      "proposed_slots": [
+        "anatomical_connection",
+        "wearable_accessory"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "body_geometry"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S013"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-F03",
+      "card_id": "F03",
+      "proposal_ko": "각각 다른 성인 두 명의 귀 뒤 장치에서 나온 케이블이 중앙의 작은 허브에 연결되고, 네 접점이 드러난다.",
+      "proposal_en": "Devices behind two different adults’ ears connect by separate cables to a central hub, with all four endpoint connections visible.",
+      "owners": {
+        "person_a": "first adult",
+        "person_b": "second adult",
+        "device_a": "first worn unit",
+        "device_b": "second worn unit",
+        "cable_a": "first cable",
+        "cable_b": "second cable",
+        "hub": "central unit"
+      },
+      "directed_relations": [
+        {
+          "from": "person_a",
+          "relation": "wears",
+          "to": "device_a"
+        },
+        {
+          "from": "person_b",
+          "relation": "wears",
+          "to": "device_b"
+        },
+        {
+          "from": "cable_a",
+          "relation": "connects",
+          "to": "device_a"
+        },
+        {
+          "from": "cable_a",
+          "relation": "connects",
+          "to": "hub"
+        },
+        {
+          "from": "cable_b",
+          "relation": "connects",
+          "to": "device_b"
+        },
+        {
+          "from": "cable_b",
+          "relation": "connects",
+          "to": "hub"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "wearable_accessory"
+      ],
+      "dimensions_to_review": [
+        "appearance"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S013"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-F04",
+      "card_id": "F04",
+      "proposal_ko": "성인형 존재의 전완에서 돋은 능선 조직이 팔 표면과 끊김 없이 이어지고, 반대쪽 끝은 별도 사물에 닿지 않는다.",
+      "proposal_en": "Ridged organic tissue rises from one humanoid forearm with continuous attachment to that arm, while its free end touches no separate object.",
+      "owners": {
+        "body": "one humanoid",
+        "arm": "its forearm",
+        "growth": "attached ridged tissue"
+      },
+      "directed_relations": [
+        {
+          "from": "arm",
+          "relation": "part_of",
+          "to": "body"
+        },
+        {
+          "from": "growth",
+          "relation": "continuous_with",
+          "to": "arm"
+        }
+      ],
+      "proposed_slots": [
+        "body_form",
+        "anatomical_connection"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "body_geometry"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S036",
+        "S020"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-F06",
+      "card_id": "F06",
+      "proposal_ko": "벽에 붙은 다섯 개의 오각 장식이 간격을 두고 배열되고, 각 장식과 벽면의 접점이 보인다.",
+      "proposal_en": "Five separate five-pointed ornaments are spaced across a wall, with each ornament’s contact with the wall visible.",
+      "owners": {
+        "ornaments": "five independent objects",
+        "wall": "carrier surface"
+      },
+      "directed_relations": [
+        {
+          "from": "ornaments",
+          "relation": "attached_to",
+          "to": "wall"
+        }
+      ],
+      "proposed_slots": [
+        "surface_pattern",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S019",
+        "S025"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-F08",
+      "card_id": "F08",
+      "proposal_ko": "가면을 쓴 인간형들의 의복에 단단한 갑각 같은 표면이 있고, 건물 위 노란 하늘에는 별 모양 검은 점들이 있다.",
+      "proposal_en": "Masked humanoids wear garments with a hard chitin-like surface beneath a yellow sky containing black star-shaped marks above the buildings.",
+      "owners": {
+        "people": "masked humanoids",
+        "masks": "face coverings",
+        "garments": "clothing",
+        "sky": "yellow sky",
+        "stars": "black star-shaped marks"
+      },
+      "directed_relations": [
+        {
+          "from": "people",
+          "relation": "wear",
+          "to": "masks"
+        },
+        {
+          "from": "people",
+          "relation": "wear",
+          "to": "garments"
+        },
+        {
+          "from": "stars",
+          "relation": "against",
+          "to": "sky"
+        }
+      ],
+      "proposed_slots": [
+        "wardrobe_style",
+        "surface_material",
+        "location"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "material",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S045"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-F09",
+      "card_id": "F09",
+      "proposal_ko": "열린 책의 인쇄 구역 옆에 젖은 잉크 얼룩이 있고, 책 바깥의 작은 잉크병은 책과 분리되어 있다.",
+      "proposal_en": "A wet ink blot lies beside the printed area of an open book; a small ink bottle remains physically separate outside the book.",
+      "owners": {
+        "book": "open printed volume",
+        "ink": "wet mark",
+        "bottle": "external ink vessel"
+      },
+      "directed_relations": [
+        {
+          "from": "ink",
+          "relation": "on",
+          "to": "book"
+        },
+        {
+          "from": "bottle",
+          "relation": "outside",
+          "to": "book"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "surface_moisture"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "material",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S041"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-K02",
+      "card_id": "K02",
+      "proposal_ko": "성인 현장 인력 두 명이 경계선 양쪽에서 닫힌 운송 상자의 서로 다른 손잡이를 잡는다. 상자 안은 보이지 않는다.",
+      "proposal_en": "Two adult field workers on opposite sides of a boundary hold different handles of one closed transport case; its contents remain unseen.",
+      "owners": {
+        "worker_a": "first field worker",
+        "worker_b": "second field worker",
+        "case": "one transport case",
+        "handle_a": "first handle",
+        "handle_b": "other handle"
+      },
+      "directed_relations": [
+        {
+          "from": "worker_a",
+          "relation": "holds",
+          "to": "handle_a"
+        },
+        {
+          "from": "worker_b",
+          "relation": "holds",
+          "to": "handle_b"
+        },
+        {
+          "from": "handle_a",
+          "relation": "part_of",
+          "to": "case"
+        },
+        {
+          "from": "handle_b",
+          "relation": "part_of",
+          "to": "case"
+        }
+      ],
+      "proposed_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "dimensions_to_review": [
+        "action",
+        "relationship"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S071"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-K03",
+      "card_id": "K03",
+      "proposal_ko": "노트북 화면 안에 별명·답글·접힌 게시글이 분리된 포럼 인터페이스가 있고, 화면 밖에는 물리적인 골목 풍경을 덧붙이지 않는다.",
+      "proposal_en": "A laptop screen contains a forum interface with separate aliases, replies and collapsed posts; the interface remains inside the screen.",
+      "owners": {
+        "laptop": "physical computer",
+        "screen": "display carrier",
+        "forum": "forum layout"
+      },
+      "directed_relations": [
+        {
+          "from": "screen",
+          "relation": "part_of",
+          "to": "laptop"
+        },
+        {
+          "from": "forum",
+          "relation": "displayed_on",
+          "to": "screen"
+        }
+      ],
+      "proposed_slots": [
+        "visible_text",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "role",
+        "subject",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S071"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-K04",
+      "card_id": "K04",
+      "proposal_ko": "성인 운동자가 케이블 운동 기구의 손잡이를 쥐고, 케이블은 도르래를 지나 같은 추판 더미에 연결된다.",
+      "proposal_en": "An adult trainee grips a cable-machine handle; the cable runs over a pulley to the same visible stack of weights.",
+      "owners": {
+        "trainee": "adult exerciser",
+        "handle": "gripped handle",
+        "cable": "load cable",
+        "pulley": "turning support",
+        "weights": "weight stack"
+      },
+      "directed_relations": [
+        {
+          "from": "trainee",
+          "relation": "grips",
+          "to": "handle"
+        },
+        {
+          "from": "cable",
+          "relation": "connected_to",
+          "to": "handle"
+        },
+        {
+          "from": "cable",
+          "relation": "passes_over",
+          "to": "pulley"
+        },
+        {
+          "from": "cable",
+          "relation": "connected_to",
+          "to": "weights"
+        }
+      ],
+      "proposed_slots": [
+        "relational_action",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "action",
+        "appearance",
+        "relationship"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S071"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-K07",
+      "card_id": "K07",
+      "proposal_ko": "성인형 인물 하나의 외곽 일부를 통해 뒤쪽 의자 선이 이어져 보이되, 인물과 의자는 각각 독립 윤곽을 유지한다.",
+      "proposal_en": "Part of one adult-shaped figure is translucent enough to reveal the chair behind it, while figure and chair retain separate outlines.",
+      "owners": {
+        "figure": "adult-shaped subject",
+        "chair": "background chair",
+        "outline": "figure boundary"
+      },
+      "directed_relations": [
+        {
+          "from": "chair",
+          "relation": "visible_through",
+          "to": "figure"
+        },
+        {
+          "from": "outline",
+          "relation": "bounds",
+          "to": "figure"
+        }
+      ],
+      "proposed_slots": [
+        "surface_material"
+      ],
+      "dimensions_to_review": [
+        "material"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S071"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-K08",
+      "card_id": "K08",
+      "proposal_ko": "게임 화면의 단순 블록 배열과 책상 위의 작은 블록 배열이 대응하되, 화면 프레임과 실제 책상 경계가 분명하다.",
+      "proposal_en": "A simple block arrangement on a game screen corresponds to small physical blocks on the desk, with the screen frame and desk boundary clearly distinct.",
+      "owners": {
+        "screen": "game display",
+        "virtual_blocks": "screen arrangement",
+        "real_blocks": "desk objects",
+        "desk": "physical surface"
+      },
+      "directed_relations": [
+        {
+          "from": "virtual_blocks",
+          "relation": "displayed_on",
+          "to": "screen"
+        },
+        {
+          "from": "real_blocks",
+          "relation": "on",
+          "to": "desk"
+        },
+        {
+          "from": "virtual_blocks",
+          "relation": "matches_arrangement_of",
+          "to": "real_blocks"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "prop_placement"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S071"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-K09",
+      "card_id": "K09",
+      "proposal_ko": "가까운 도시 건물의 모서리는 선명하고, 먼 도로와 건물은 낮게 깔린 안개에 가려져 대비가 줄어든다.",
+      "proposal_en": "Near urban building edges remain clear while a low fog layer reduces contrast in the distant road and buildings.",
+      "owners": {
+        "near_building": "near urban structure",
+        "far_buildings": "distant structures",
+        "fog": "atmospheric layer",
+        "road": "distant road"
+      },
+      "directed_relations": [
+        {
+          "from": "fog",
+          "relation": "partly_occludes",
+          "to": "far_buildings"
+        },
+        {
+          "from": "fog",
+          "relation": "partly_occludes",
+          "to": "road"
+        }
+      ],
+      "proposed_slots": [
+        "atmospheric_medium",
+        "spatial_depth"
+      ],
+      "dimensions_to_review": [
+        "atmosphere",
+        "composition"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S031"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-A02",
+      "card_id": "A02",
+      "proposal_ko": "같은 형태의 작은 물체가 방의 바닥과 선반을 빽빽하게 채우고, 선반 하중에 의해 판이 아래로 휘어 있다.",
+      "proposal_en": "Many similarly shaped small objects crowd the floor and shelves, with a shelf board visibly bowed beneath them.",
+      "owners": {
+        "objects": "multiple similar objects",
+        "floor": "lower surface",
+        "shelf": "loaded shelf"
+      },
+      "directed_relations": [
+        {
+          "from": "objects",
+          "relation": "on",
+          "to": "floor"
+        },
+        {
+          "from": "objects",
+          "relation": "on",
+          "to": "shelf"
+        },
+        {
+          "from": "shelf",
+          "relation": "bends_under",
+          "to": "objects"
+        }
+      ],
+      "proposed_slots": [
+        "visual_density",
+        "material_mechanics"
+      ],
+      "dimensions_to_review": [
+        "composition",
+        "material"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S043",
+        "S058"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-A03",
+      "card_id": "A03",
+      "proposal_ko": "비어 있는 도로 옆 정지한 버스와 손상된 가로등이 있고, 인도 위 임시 배급 줄은 도로와 분리된다.",
+      "proposal_en": "A stationary bus and damaged streetlight stand beside an empty road, while a temporary supply queue occupies the sidewalk.",
+      "owners": {
+        "bus": "stationary vehicle",
+        "streetlight": "damaged fixture",
+        "road": "traffic surface",
+        "queue": "people on sidewalk",
+        "sidewalk": "pedestrian surface"
+      },
+      "directed_relations": [
+        {
+          "from": "bus",
+          "relation": "on",
+          "to": "road"
+        },
+        {
+          "from": "queue",
+          "relation": "on",
+          "to": "sidewalk"
+        },
+        {
+          "from": "streetlight",
+          "relation": "beside",
+          "to": "road"
+        }
+      ],
+      "proposed_slots": [
+        "aftermath_trace",
+        "location"
+      ],
+      "dimensions_to_review": [
+        "material",
+        "setting",
+        "timing"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S043"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-A04",
+      "card_id": "A04",
+      "proposal_ko": "기자회견 무대에서 발표자와 별도 비인간형 참석자가 함께 서고, 객석 카메라들이 무대를 향한다.",
+      "proposal_en": "A speaker and a separately specified nonhuman participant share a press-conference platform while audience cameras face them.",
+      "owners": {
+        "speaker": "adult speaker",
+        "participant": "separate nonhuman",
+        "platform": "stage",
+        "cameras": "audience equipment"
+      },
+      "directed_relations": [
+        {
+          "from": "speaker",
+          "relation": "on",
+          "to": "platform"
+        },
+        {
+          "from": "participant",
+          "relation": "on",
+          "to": "platform"
+        },
+        {
+          "from": "cameras",
+          "relation": "directed_toward",
+          "to": "platform"
+        }
+      ],
+      "proposed_slots": [
+        "situation_context",
+        "relational_action"
+      ],
+      "dimensions_to_review": [
+        "action",
+        "event",
+        "relationship",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S010"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-N02",
+      "card_id": "N02",
+      "proposal_ko": "책상 위 모니터 화면에는 같은 책상과 모니터의 작은 영상이 보이며, 안쪽 영상의 가장자리가 실제 화면 테두리 안에 남는다.",
+      "proposal_en": "A desk monitor displays a smaller image of that desk and monitor, with the nested image confined inside the physical screen frame.",
+      "owners": {
+        "monitor": "physical display",
+        "desk": "physical surface",
+        "image": "nested screen image"
+      },
+      "directed_relations": [
+        {
+          "from": "monitor",
+          "relation": "on",
+          "to": "desk"
+        },
+        {
+          "from": "image",
+          "relation": "displayed_on",
+          "to": "monitor"
+        }
+      ],
+      "proposed_slots": [
+        "prop",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S029",
+        "S020"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-N04",
+      "card_id": "N04",
+      "proposal_ko": "종이 보고서의 본문과 손글씨 주석이 서로 다른 표면 흔적으로 겹치되, 주석이 인쇄된 사진 속 공간으로 들어가지는 않는다.",
+      "proposal_en": "Printed report text and handwritten marginal notes form distinct marks on one page, without placing the notes inside a photograph printed on that page.",
+      "owners": {
+        "page": "physical report",
+        "print": "printed text",
+        "notes": "handwritten marks",
+        "photo": "printed photograph"
+      },
+      "directed_relations": [
+        {
+          "from": "print",
+          "relation": "printed_on",
+          "to": "page"
+        },
+        {
+          "from": "notes",
+          "relation": "written_on",
+          "to": "page"
+        },
+        {
+          "from": "photo",
+          "relation": "printed_on",
+          "to": "page"
+        }
+      ],
+      "proposed_slots": [
+        "visible_text",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "role",
+        "subject",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S027"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-B01",
+      "card_id": "B01",
+      "proposal_ko": "표면이 능선진 유기체 두 개가 하나의 좁은 조직 다리로 이어지며, 다리의 양끝이 각각 다른 몸에 연속 접합된다.",
+      "proposal_en": "Two ridged organic bodies are joined by one narrow tissue bridge, with each end continuously attached to a different body.",
+      "owners": {
+        "body_a": "first organic body",
+        "body_b": "second organic body",
+        "bridge": "continuous tissue connection"
+      },
+      "directed_relations": [
+        {
+          "from": "bridge",
+          "relation": "continuous_with",
+          "to": "body_a"
+        },
+        {
+          "from": "bridge",
+          "relation": "continuous_with",
+          "to": "body_b"
+        }
+      ],
+      "proposed_slots": [
+        "anatomical_connection",
+        "body_form"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "body_geometry"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S056",
+        "S064"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-B02",
+      "card_id": "B02",
+      "proposal_ko": "작은 생물의 갈고리 모양 부속지가 더 큰 비인간 숙주의 바깥 표면에 닿고, 두 생물의 몸 윤곽은 별개다.",
+      "proposal_en": "A small creature’s hook-shaped appendage contacts the outer surface of a larger nonhuman host, with both bodies remaining separately outlined.",
+      "owners": {
+        "parasite": "small independent creature",
+        "appendage": "its hook-shaped limb",
+        "host": "larger nonhuman carrier"
+      },
+      "directed_relations": [
+        {
+          "from": "appendage",
+          "relation": "part_of",
+          "to": "parasite"
+        },
+        {
+          "from": "appendage",
+          "relation": "contacts_surface_of",
+          "to": "host"
+        }
+      ],
+      "proposed_slots": [
+        "anatomical_connection",
+        "contact_point"
+      ],
+      "dimensions_to_review": [
+        "body_geometry",
+        "relationship"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S056",
+        "S001"
+      ],
+      "observability": "still",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-B03",
+      "card_id": "B03",
+      "proposal_ko": "성인 팔의 아문 선형 흉터를 피부 표면의 얇은 융기로 표현하고, 신체 단면 그림이 있는 별도 자료판과 섞지 않는다.",
+      "proposal_en": "A healed linear scar forms a narrow raised mark on an adult arm, separate from an anatomical illustration on an adjacent reference board.",
+      "owners": {
+        "arm": "adult arm",
+        "scar": "healed skin mark",
+        "board": "reference carrier",
+        "diagram": "anatomical illustration"
+      },
+      "directed_relations": [
+        {
+          "from": "scar",
+          "relation": "on",
+          "to": "arm"
+        },
+        {
+          "from": "diagram",
+          "relation": "printed_on",
+          "to": "board"
+        }
+      ],
+      "proposed_slots": [
+        "skin_condition",
+        "prop"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "role",
+        "subject"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S056",
+        "S052"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-B04",
+      "card_id": "B04",
+      "proposal_ko": "작은 용기 안의 점성 액체가 안쪽 벽을 따라 흐르는 한 줄을 만들며, 용기 밖 탁자는 마른 상태다.",
+      "proposal_en": "Viscous liquid inside a small vessel forms one run down its inner wall, while the tabletop outside the vessel remains dry.",
+      "owners": {
+        "liquid": "viscous contained material",
+        "vessel": "container",
+        "inner_wall": "inner surface",
+        "table": "external support"
+      },
+      "directed_relations": [
+        {
+          "from": "liquid",
+          "relation": "inside",
+          "to": "vessel"
+        },
+        {
+          "from": "liquid",
+          "relation": "on",
+          "to": "inner_wall"
+        },
+        {
+          "from": "vessel",
+          "relation": "on",
+          "to": "table"
+        }
+      ],
+      "proposed_slots": [
+        "liquid_inclusion",
+        "surface_moisture"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "material"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S001"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-B08",
+      "card_id": "B08",
+      "proposal_ko": "성인 한 명이 닫힌 문 앞에 서고, 문 반대편 관찰창에는 다른 성인이 보인다. 출입 손잡이와 창은 별개 위치다.",
+      "proposal_en": "One adult stands before a closed door while a different adult appears through an observation window on the other side; handle and window occupy separate positions.",
+      "owners": {
+        "person_a": "near adult",
+        "person_b": "far adult",
+        "door": "closed partition",
+        "window": "separate viewing opening",
+        "handle": "door fitting"
+      },
+      "directed_relations": [
+        {
+          "from": "person_a",
+          "relation": "before",
+          "to": "door"
+        },
+        {
+          "from": "person_b",
+          "relation": "visible_through",
+          "to": "window"
+        },
+        {
+          "from": "handle",
+          "relation": "part_of",
+          "to": "door"
+        }
+      ],
+      "proposed_slots": [
+        "proxemics",
+        "space_condition"
+      ],
+      "dimensions_to_review": [
+        "relationship",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S062",
+        "S053"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-E02",
+      "card_id": "E02",
+      "proposal_ko": "독자적으로 설계한 콘크리트 조형물의 작은 깨진 모서리에 철근이 보이고, 표면에는 일부 분사 도료 흔적이 있다.",
+      "proposal_en": "An independently designed concrete sculpture exposes a little rebar at one chipped edge and carries patches of sprayed pigment.",
+      "owners": {
+        "sculpture": "original concrete design",
+        "rebar": "internal reinforcement",
+        "chip": "small edge defect",
+        "paint": "surface pigment"
+      },
+      "directed_relations": [
+        {
+          "from": "rebar",
+          "relation": "visible_at",
+          "to": "chip"
+        },
+        {
+          "from": "chip",
+          "relation": "part_of",
+          "to": "sculpture"
+        },
+        {
+          "from": "paint",
+          "relation": "on",
+          "to": "sculpture"
+        }
+      ],
+      "proposed_slots": [
+        "surface_material",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "material"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S042",
+        "S030"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-E03",
+      "card_id": "E03",
+      "proposal_ko": "비정상적으로 긴 팔을 가진 창백한 인간형이 두 손으로 자신의 얼굴을 덮는다. 양손은 같은 존재의 두 팔에 이어져 있다.",
+      "proposal_en": "A pale humanoid with unusually long arms covers its own face with both hands, each continuously connected to that same entity’s arm.",
+      "owners": {
+        "entity": "one pale humanoid",
+        "hands": "its two hands",
+        "face": "its face"
+      },
+      "directed_relations": [
+        {
+          "from": "hands",
+          "relation": "belong_to",
+          "to": "entity"
+        },
+        {
+          "from": "hands",
+          "relation": "occlude",
+          "to": "face"
+        },
+        {
+          "from": "face",
+          "relation": "part_of",
+          "to": "entity"
+        }
+      ],
+      "proposed_slots": [
+        "body_form",
+        "hand_pose"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "body_geometry",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S039"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-E04",
+      "card_id": "E04",
+      "proposal_ko": "큰 파충류형 몸의 비늘과 넓은 몸통 윤곽이 보이고, 몸과 바닥은 독립된 경계를 유지한다.",
+      "proposal_en": "A large reptilian body shows scales and a broad torso, with a distinct boundary between body and floor.",
+      "owners": {
+        "entity": "large reptile-like organism",
+        "scales": "surface covering",
+        "floor": "support surface"
+      },
+      "directed_relations": [
+        {
+          "from": "scales",
+          "relation": "on",
+          "to": "entity"
+        },
+        {
+          "from": "entity",
+          "relation": "above",
+          "to": "floor"
+        }
+      ],
+      "proposed_slots": [
+        "body_form",
+        "surface_material"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "body_geometry",
+        "material"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S057"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-E06",
+      "card_id": "E06",
+      "proposal_ko": "입력·출력으로 표기된 두 큰 부스가 구리 관으로 중앙 기계에 연결되고, 두 부스 사이 제어판에는 포인터가 달린 회전 손잡이가 있다.",
+      "proposal_en": "Two large booths labeled Intake and Output connect by copper pipes to a central machine; a control plate between them carries a rotary knob with a pointer.",
+      "owners": {
+        "intake": "input booth",
+        "output": "output booth",
+        "machine": "central mechanism",
+        "pipe_a": "input copper pipe",
+        "pipe_b": "output copper pipe",
+        "panel": "control plate",
+        "knob": "pointer knob"
+      },
+      "directed_relations": [
+        {
+          "from": "pipe_a",
+          "relation": "connects",
+          "to": "intake"
+        },
+        {
+          "from": "pipe_a",
+          "relation": "connects",
+          "to": "machine"
+        },
+        {
+          "from": "pipe_b",
+          "relation": "connects",
+          "to": "output"
+        },
+        {
+          "from": "pipe_b",
+          "relation": "connects",
+          "to": "machine"
+        },
+        {
+          "from": "knob",
+          "relation": "mounted_on",
+          "to": "panel"
+        }
+      ],
+      "proposed_slots": [
+        "object_structure",
+        "visible_text"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "text"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S059"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-E07",
+      "card_id": "E07",
+      "proposal_ko": "여러 케이크가 각기 다른 접시 위에 있고, 한 접시에는 잘린 단면이 있는 케이크 조각이 남는다.",
+      "proposal_en": "Several cakes sit on separate plates; one plate holds a remaining slice with a visible cut face.",
+      "owners": {
+        "cakes": "several cakes",
+        "plates": "separate supports",
+        "slice": "remaining slice",
+        "plate_one": "its plate"
+      },
+      "directed_relations": [
+        {
+          "from": "cakes",
+          "relation": "on",
+          "to": "plates"
+        },
+        {
+          "from": "slice",
+          "relation": "on",
+          "to": "plate_one"
+        }
+      ],
+      "proposed_slots": [
+        "prop_placement",
+        "object_structure"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "composition",
+        "pose"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S058"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-E08",
+      "card_id": "E08",
+      "proposal_ko": "가구 매장의 반복 진열대가 먼 곳으로 이어지고, 얼굴 특징 없는 인간형 하나가 노란 상의와 파란 바지를 입고 진열대 사이에 서 있다.",
+      "proposal_en": "Repeated furniture displays recede into the distance; a faceless humanoid wearing a yellow shirt and blue trousers stands between them.",
+      "owners": {
+        "displays": "furniture fixtures",
+        "entity": "faceless humanoid",
+        "shirt": "yellow upper garment",
+        "trousers": "blue lower garment"
+      },
+      "directed_relations": [
+        {
+          "from": "entity",
+          "relation": "between",
+          "to": "displays"
+        },
+        {
+          "from": "entity",
+          "relation": "wears",
+          "to": "shirt"
+        },
+        {
+          "from": "entity",
+          "relation": "wears",
+          "to": "trousers"
+        }
+      ],
+      "proposed_slots": [
+        "location",
+        "body_form",
+        "wardrobe_style"
+      ],
+      "dimensions_to_review": [
+        "appearance",
+        "body_geometry",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S049"
+      ],
+      "observability": "versioned",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    },
+    {
+      "draft_id": "DR-E09",
+      "card_id": "E09",
+      "proposal_ko": "지하 설비실에서 같은 크기 장치들이 배관에 연결되고, 인물 한 명이 통로에서 장치의 높이 기준을 제공한다.",
+      "proposal_en": "In an underground equipment hall, similarly sized units connect to piping while one person in the aisle establishes their relative scale.",
+      "owners": {
+        "units": "equipment units",
+        "pipes": "pipe network",
+        "person": "adult scale reference",
+        "aisle": "walking passage"
+      },
+      "directed_relations": [
+        {
+          "from": "units",
+          "relation": "connected_to",
+          "to": "pipes"
+        },
+        {
+          "from": "person",
+          "relation": "in",
+          "to": "aisle"
+        }
+      ],
+      "proposed_slots": [
+        "location",
+        "scale_relation"
+      ],
+      "dimensions_to_review": [
+        "body_geometry",
+        "setting"
+      ],
+      "conditions_to_author": "Actual requester-grounded owners, prerequisites, scope and applicable selected branch must be authored before native admission.",
+      "effects_status": "UNKNOWN_PENDING_FULL_SOURCE_REVIEW",
+      "obligation_status": "Complete positive-source-unit and owner/endpoint obligations must be reviewed; card gates are not native proof.",
+      "source_ids": [
+        "S044"
+      ],
+      "observability": "proxy",
+      "semantic_label_is_not_embedding_fact": true,
+      "native_approval": false,
+      "runtime_schema_compatible": false,
+      "registration_status": "not_in_operating_manifest",
+      "evaluation_status": "NOT_RUN"
+    }
+  ]
+}
