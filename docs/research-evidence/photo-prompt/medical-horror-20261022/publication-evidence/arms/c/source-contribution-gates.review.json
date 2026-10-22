@@ -1,0 +1,50 @@
+{
+  "schema": "medical-horror-retained-source-pixel-contract/v1",
+  "candidate_id": "cand_c0dde54a6cbf589785dbcafbd284fcac",
+  "realization_id": "base",
+  "source_sha256": "53cc0ec7485a7081b3bf8abce0c93aa65bf6bbb4cced05f9d893c0b7fcc5c498",
+  "native_approval": false,
+  "use": "inspiration_only",
+  "existing_frozen_testcase_unchanged": true,
+  "source_complete_proposition": "A microscope stands on a laboratory bench beside a rack of labeled glass slides and a separate specimen container.",
+  "literal_final_phrase": "On the right side of the same laboratory bench, a compact microscope stands beside a rack of glass slides with small paper end labels; the sealed specimen ampoule is a separate container in front of them.",
+  "supplemental_gate": {
+    "id": "C_NEW_A08_COMPLETE_RELATION",
+    "review_scale": [
+      "full_frame",
+      "bench_original_pixels"
+    ],
+    "pass_requires": [
+      "Recognizable microscope supported on laboratory bench",
+      "A separate rack visibly holding glass slides, with end labels distinguishable as labels",
+      "Microscope and slide rack visibly beside one another",
+      "The foreground specimen ampoule remains a separate container from microscope and slides",
+      "All owners and relations are readable together in this saved image"
+    ],
+    "UNOBSERVABLE_NOT_PASS": true,
+    "partial_is_fail": true,
+    "claim_limits": "This visual context cannot prove biopsy, histopathology, human origin of tissue, diagnosis or viable biological material."
+  },
+  "result": {
+    "status": "fail",
+    "observability": "partial",
+    "overall_carriage": "PARTIAL",
+    "evidence": "Microscope eyepieces, objectives and stage are identifiable at the right, and a separate plastic rack holds upright glass slides with distinct paper end labels. The central amber vial remains a separate container on the same visible bench. However the microscope base/foot and its bench support are cropped or occluded behind the slide rack at the right image edge. The complete source proposition includes microscope-on-bench support, so this endpoint is not fully observable and the whole retained-source gate cannot pass.",
+    "visible_components": [
+      "microscope recognizability",
+      "labeled glass slides held by a rack",
+      "rack near microscope",
+      "separate central specimen vial"
+    ],
+    "unobservable_or_partial_components": [
+      "microscope foot/base support on the bench"
+    ],
+    "crop_paths": [
+      "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/crop-microscope_slides.png",
+      "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/cryobank-thaw-anomaly.png"
+    ],
+    "claim_boundary": "Visible purple slide patches do not retrospectively select the declined D13 coverslip/tissue-section source or prove histopathology."
+  },
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-image-v2/rendered/cryobank-thaw-anomaly.png",
+  "image_sha256": "a12f026f0e52f71c85188ba0e56cac884f74805def9a965e1cc4ee7a212e7c46"
+}

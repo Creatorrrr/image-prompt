@@ -1,0 +1,13 @@
+# Independent C direction
+
+Only the current user conversation, the supplied portrait, full current SKILL.md and its exact permitted neutral precore material have been read. No project candidate, profile, research document, script, fixture, earlier output, or other arm was consulted.
+
+Three independently written laboratory situations were sampled uniformly with secrets.randbelow. The chosen direction is a cryobank interruption: one thawed specimen among frosted neighbors. A generic specimen-jar discovery, a thaw anomaly, and an incubator-gasket inspection were compared. The thaw anomaly wins because a clear comparative state can carry the threat without an impossible organism or damage to the referenced person.
+
+Creative snapshot read before baseline: sensual 1 (subtle supporting human attraction and desire), fetish 0, surreal 0, creativity 1 (restrained variation), auto resolving sensual_led; reference_edit_mode off does not discard the supplied reference. Neither clothing, exposure nor age was prescribed by the requester. The laboratory coat, charcoal tank, fictional researcher role, hands, framing and all specimen mechanics are agent-owned staging. The reference is used for the face and short dark bob only. A fictional scene establishes no real person's health, inner life, biography or consent.
+
+WHO: a fictional laboratory researcher portrayed with the reference face and hair is comparing a lone thawed vial with frozen neighbors. WHERE: the cold counter outside an open cryobank freezer gives the thermal difference immediate meaning. HOW: an observer close to the counter can see her three-quarter face and the vial rack in one view. WHY NOW: she has drawn the rack halfway out, notices the anomaly, and stops before touching the sample.
+
+Before drafting, selected neutral observation axes: feature.subject, feature.situation, feature.location, feature.action, feature.props, feature.gaze, feature.narrative_clues, feature.lighting_source. Subject and reference evidence will preserve only the narrow requester meaning; all particular staging remains optional.
+
+Visibility plan: keep the tray on a stable counter in the same focus plane as her hovering hand. Place the clear, thawed vial in the front row between two frosted vials so its uniced glass, liquid meniscus and wet circular footprint can be seen together. Her face remains large enough for the reference cues; the open freezer and adjacent frozen stock provide context. Physical geometry: both forearms have room over the counter, left hand braces the tray edge, right hand hovers above the clear vial with an uninterrupted elbow-wrist-finger chain. No contradictory simultaneous grip or loaded unsupported object.

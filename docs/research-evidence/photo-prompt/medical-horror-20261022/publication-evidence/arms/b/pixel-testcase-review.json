@@ -1,0 +1,69 @@
+{
+  "schema": "photo-arm-pixel-testcase-review/v1",
+  "arm": "B",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-b-image-v2/image.png",
+  "image_sha256": "5fe1469a7a4ff9ede9d3fb98bbeaa6319f1974a995c87719a2c9454b4500e0e6",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-b-image-v2/pixel-testcase.pre-retrieval.json",
+  "testcase_sha256": "0f9e886b9463d992a8bd541905c5f1a0d2e9f8fd4231db6c1ee865940c608a3e",
+  "testcase_unchanged": true,
+  "reviewer": "Codex independent B author",
+  "inspection": [
+    "original saved image at 1237x1272",
+    "unresampled upper-body crop",
+    "unresampled face crop",
+    "unresampled hand-contact crop",
+    "unresampled scanner-route crop"
+  ],
+  "gates": [
+    {
+      "id": "B01_reference_appearance",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The source portrait and native face crop both show a short dark chin-length bob, separated fringe, large brown eyes and similar soft face proportions. The generated three-quarter face remains readable. This supports appearance guidance, not identity verification."
+    },
+    {
+      "id": "B02_device_structure",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The white annular diagnostic gantry has a continuous open bore and thick exterior housing. A separate patient platform with metal side rails runs continuously into its lower opening. The woman remains beside that platform with stable separation. Function or actual clinical operation is not inferred."
+    },
+    {
+      "id": "B03_visible_route_obstruction",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "The metal doorway and dark corridor are visible beyond the scanner; the bulky ring occupies the doorway and the table impedes the floor-level route. However, the patient platform projects toward the camera beside the woman rather than clearly toward the woman or her own next step. All objects are visible, but this required direction is not fully realized; the full multi-component gate fails."
+    },
+    {
+      "id": "B04_owned_contact",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The left palm and fingers meet the scanner exterior with a contact shadow. The same wrist, forearm, gently bent elbow and shoulder trace continuously to the woman. Her body stands beside the table, and the other arm hangs at her side. The upper-body and hand crops preserve those boundaries without resampling."
+    },
+    {
+      "id": "B05_response_relation",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Her head and eyes turn toward the apparatus side; her brows draw together and her lips part slightly. The stopped stance and palm on the housing make the nearby scanner a plausible visible response target. The exact imagined thought or actual mental state is not claimed."
+    },
+    {
+      "id": "B06_clinical_unease",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Clinical wall rails, tunic, diagnostic ring and patient platform establish the clinical place. The ring dominates the right half and frames a nearly black empty corridor; the small tense face and stopped touch oppose its scale. This reads as unsettling clinical stillness rather than a routine smiling examination portrait. Horror strength is restrained, not extreme."
+    }
+  ],
+  "pass_count": 5,
+  "gate_count": 6,
+  "strict_whole_case": "fail",
+  "overall_result": "PARTIAL",
+  "unobservable_rule": "UNOBSERVABLE_NOT_PASS",
+  "partial_rule": "partial_is_fail",
+  "failure_scope": "B03 platform direction, not loss of the visible scanner or contact",
+  "image_calls": 1,
+  "regeneration_performed": false,
+  "source_carriage": "Ten new medical sources were exposed and all skipped; no selected source-specific pixel claim is made.",
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

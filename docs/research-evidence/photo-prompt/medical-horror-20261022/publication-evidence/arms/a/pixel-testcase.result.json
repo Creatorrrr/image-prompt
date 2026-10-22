@@ -1,0 +1,96 @@
+{
+  "schema": "medical-horror-arm-pixel-test-result/v1",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-a-image-v2/generated-image.png",
+  "image_sha256": "e1b9524e088e2d4e944f0ae0c5a3eb32cde4644d3f00e38f1d8af8b5f94d59f6",
+  "frozen_testcase_sha256": "c6a45a3151db481626c9c115909993d4ee117a25217b7c0f1236e2c9fb4933f5",
+  "frozen_testcase_unchanged": true,
+  "policy": {
+    "partial_is_fail": true,
+    "unobservable_verdict": "UNOBSERVABLE_NOT_PASS"
+  },
+  "results": {
+    "reference_face_hair": {
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The generated face is assessable at full frame and face crop: similar large dark eyes, softly shaped lips, short dark bob and separated fringe remain. The turn and dishevelled strands vary from the source; this supports appearance guidance, not actual identity.",
+      "regions": [
+        "review-crops/face.png"
+      ]
+    },
+    "clinical_care_context": {
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The same scene visibly contains the Discharge / Medical Records glass counter, hospital ID wristband, hospital form folder and numbered clinical corridor. The medical setting is explicit in objects and spatial context.",
+      "regions": [
+        "generated-image.png",
+        "review-crops/chart_boundary.png"
+      ]
+    },
+    "withheld_record_relation": {
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The woman holds a visibly empty transparent sleeve on the public side. A separate thick folder with a portrait and hospital fields stands beyond the glazed boundary on the staff side. The lower metal/glass assembly is closed in the depicted view, with no hand reaching through it. This shows visible separation; it does not prove unseen record ownership, intention or consent.",
+      "regions": [
+        "review-crops/hands_sleeve_hatch.png",
+        "review-crops/chart_boundary.png"
+      ]
+    },
+    "discharge_without_exit": {
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The near-background EXIT door is closed. A horizontal steel bolt clearly spans its vertical seam through visible fixed keepers on both sides. The counter and this door occupy one connected space.",
+      "regions": [
+        "generated-image.png",
+        "review-crops/door_bolt.png"
+      ]
+    },
+    "interrupted_hand_contact": {
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Both arms trace to the same torso. One hand pinches the transparent sleeve, while the other hand's fingertips rest at the counter/closed-hatch metal lip with short coherent reach and separate contact endpoints. This predeclared test did not prescribe actor-relative handedness.",
+      "regions": [
+        "review-crops/hands_sleeve_hatch.png"
+      ]
+    },
+    "clinical_dread_readability": {
+      "status": "fail",
+      "assessment": "partial",
+      "observability": "partial",
+      "evidence": "The empty medical-record sleeve, security glass, unstaffed counter and visibly barred EXIT establish clinical administrative suspense and a plausible constraint on agency. Bright ordinary hospital illumination and the portrait-led hierarchy make overt horror less dominant. A claim of strong medical-horror impact would overstate these pixels.",
+      "regions": [
+        "generated-image.png"
+      ]
+    },
+    "new_material_pixel_carriage": {
+      "status": "not_adopted",
+      "observability": "unobservable",
+      "evidence": "Seven new medical-horror sources were exposed but all were skipped after complete-source review. No new-source final literal or pixel region exists, so data-caused carriage is NOT_ADOPTED rather than PASS.",
+      "regions": []
+    }
+  },
+  "overall": "PARTIAL",
+  "hard_managed_review": {
+    "record_valid": true,
+    "technical_qualification": "fail",
+    "hard_gates_pass": 3,
+    "hard_gates_fail": 2,
+    "audit_path": "review-audit.stdout.json"
+  },
+  "additional_prompt_fidelity_findings": [
+    {
+      "finding": "The empty sleeve lower edge is suspended above the public counter instead of resting on it.",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "In the unresampled hand crop, the entire sleeve bottom edge is separated from the counter by a visible gap. The raised hand carries it. The requested lower-edge/counter support relation is absent, although the physical hand-held state is plausible."
+    },
+    {
+      "finding": "Actor-relative handedness appears reversed.",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "The raised sleeve-holding hand appears to be the woman's right hand on screen-left; her left hand rests toward screen-right. The final prompt assigns these acts to left and right respectively. This is a prompt-fidelity mismatch, not an inference of anatomical damage."
+    }
+  ],
+  "user_acceptance": "pending",
+  "image_calls": 1,
+  "regenerated": false
+}

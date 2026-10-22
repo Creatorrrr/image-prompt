@@ -1,0 +1,57 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "b5cdb9516a6cd60f",
+  "contract_version": "photo-embodiment-preflight/v1",
+  "reviewer": "Codex arm A author",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-a-image-v2/generated-image.png",
+  "result_sha256": "e1b9524e088e2d4e944f0ae0c5a3eb32cde4644d3f00e38f1d8af8b5f94d59f6",
+  "hard_gates": {
+    "embodiment_body_ownership": {
+      "status": "pass",
+      "evidence": "In the overall image and unresampled hand crop, both shoulders, arms and hands belong continuously to the same woman. No extra actor or detached anatomical owner is used. Actor-relative handedness appears reversed from the final prompt, which is recorded separately as an instruction-fidelity mismatch.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "pass",
+      "evidence": "The sleeve hand reaches upward by an ordinary elbow bend; the other forearm reaches forward a short distance to the metal counter/hatch lip. Both joint chains remain continuous and the contact targets are within plausible reach.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_support_and_balance": {
+      "status": "fail",
+      "evidence": "The woman's forward lean is plausibly supported by her forearm/counter and ordinary off-frame standing support, but the final prompt specifically places the sleeve lower edge on the public counter. Native pixels show that lower edge suspended above it, so that planned support relation is absent. This is a state mismatch, not a diagnosis of bodily instability.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_contact_and_space": {
+      "status": "fail",
+      "evidence": "The sleeve grip and resting fingertips have coherent separate boundaries on the patient side, and the chart stays beyond glass. However the required final sleeve-bottom/counter contact is visibly missing. Because one material contact component is absent, the complete current gate fails rather than passing the remaining endpoints.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "pass",
+      "evidence": "The whole frame and native crops make the face, sleeve grip, hovering sleeve bottom, other fingertips, glazed barrier, retained chart and seam-spanning door bolt assessable together. The absent sleeve support is visibly diagnosable as a missing contact rather than hidden by crop or blur.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

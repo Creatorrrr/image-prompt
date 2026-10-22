@@ -1,0 +1,147 @@
+{
+  "schema": "medical-horror-arm-pixel-testcase/v1",
+  "arm": "C",
+  "run": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-horror-20261022-arm-c-v1",
+  "core_canonical_sha256": "556ece7af758c8c849ea276a1662ac56cf904c1661ff3fcb32ab42d47df66636",
+  "baseline_sha256": "7fb57e861e82f008e9ca88b2ee2836db6252da06364fb06bda3993e726e5fb2b",
+  "testcase": "One thawed specimen among frosted cryobank neighbors",
+  "ownership": "These are prospective diagnostic criteria for the agent-chosen test scene. They neither add requester locks nor prove a source has been adopted. Revise only optional staging criteria transparently if the audited final composition changes it.",
+  "review_policy": {
+    "image_requirement": "Inspect the actual saved output at original pixel resolution and inspect useful crops without treating enlargement as new detail.",
+    "UNOBSERVABLE_NOT_PASS": true,
+    "partial_is_fail": true,
+    "multi_component_rule": "Every named component and connecting relation must be visible together for PASS. Partial, inferred, tiny, cropped, or obscured evidence cannot pass the whole gate.",
+    "acceptance": "Actual requester acceptance stays pending; a technical audit is not a pixel judgment."
+  },
+  "stages": [
+    {
+      "id": "registration",
+      "question": "Was the new medical-horror semantic/candidate data registered and installed?",
+      "evidence": "Coordinator integration and immutable runtime manifests; not a pixel claim."
+    },
+    {
+      "id": "exposure",
+      "question": "Did any issued query return the new medical-horror source?",
+      "evidence": "Exact query scope, CID/RID and source hash from the issued material receipt; no assumption from rank or topic words."
+    },
+    {
+      "id": "selection",
+      "question": "Was that returned source chosen as inspiration or skipped after full reading?",
+      "evidence": "Every query/CID/RID decision and complete-source comparison. Adoption remains optional."
+    },
+    {
+      "id": "prompt_carriage",
+      "question": "Did a selected source effect survive into final prose?",
+      "evidence": "Literal final prompt phrase with source decision and owner mapping; no extrapolation from a source title."
+    },
+    {
+      "id": "pixel_carriage",
+      "question": "Is the same final effect visible in saved pixels?",
+      "evidence": "Actual output SHA, full-frame observation and original-pixel crop, with the gates below."
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "C_REFERENCE",
+      "criterion": "The same face appearance and short dark bob with wispy fringe can be compared with the supplied portrait; facial proportions remain plausible at this view.",
+      "scales": [
+        "full_frame",
+        "face_original_pixels"
+      ],
+      "pass_requires": [
+        "Face visible without major occlusion",
+        "Short dark bob and wispy fringe visible",
+        "Reference comparison supports appearance continuity without asserting actual identity"
+      ],
+      "failure_boundary": "Different hairstyle, generic unreadable face, severe occlusion, or insufficient pixel detail cannot pass; biography and true identity are untestable."
+    },
+    {
+      "gate_id": "C_SPECIMEN_CONTAINER",
+      "criterion": "A pale folded tissue-like specimen is visibly inside the same transparent sealed ampoule that contains amber liquid.",
+      "scales": [
+        "full_frame",
+        "specimen_original_pixels"
+      ],
+      "pass_requires": [
+        "One bounded vessel and its closure visible",
+        "A separate pale tissue-like mass inside the vessel",
+        "Surrounding amber liquid visible, distinct from glass highlights"
+      ],
+      "failure_boundary": "A pale reflection, label, hand or external object is insufficient; a sealed appearance does not prove sterility, viability or medical provenance."
+    },
+    {
+      "gate_id": "C_LIQUID_SURFACE",
+      "criterion": "The liquid host, its level or meniscus, and the tissue-to-liquid relation read together inside the vessel.",
+      "scales": [
+        "specimen_original_pixels"
+      ],
+      "pass_requires": [
+        "A distinguishable liquid body inside the ampoule",
+        "Readable liquid boundary or meniscus",
+        "The tissue mass is spatially inside that liquid host"
+      ],
+      "failure_boundary": "Amber tint alone is insufficient; unobservable level or hidden host yields fail for this diagnostic even if a liquid label exists in prose."
+    },
+    {
+      "gate_id": "C_SINGLE_ANOMALY",
+      "criterion": "One clear thawed-looking ampoule is visibly contrasted with at least two neighboring frosted ampoules in the same rack.",
+      "scales": [
+        "full_frame",
+        "rack_original_pixels"
+      ],
+      "pass_requires": [
+        "The anomalous vial is clear enough to see liquid and specimen",
+        "At least two neighboring vial bodies show matte white frost",
+        "The clear and frosted carriers remain distinguishable in one view"
+      ],
+      "failure_boundary": "General cold lighting does not prove a thermal state. The pixels can support an apparent state contrast, not a measured temperature or an actual thaw history."
+    },
+    {
+      "gate_id": "C_BOUNDED_MOISTURE",
+      "criterion": "Distinct surface droplets or a bounded wet footprint are owned by the anomalous vial or steel at its base, separate from inside liquid.",
+      "scales": [
+        "specimen_original_pixels",
+        "rack_original_pixels"
+      ],
+      "pass_requires": [
+        "At least one bounded moisture cue has an identifiable surface owner",
+        "Moisture boundary is distinguishable from ordinary specular shine",
+        "Its relationship to the anomalous vial base or cap is visible"
+      ],
+      "failure_boundary": "Generic gloss or haze is insufficient; moisture does not prove a leak, contamination or warming mechanism."
+    },
+    {
+      "gate_id": "C_HUMAN_SAMPLE_RELATION",
+      "criterion": "The researcher visibly attends to the same anomalous specimen; her right hand pauses above it while the rack is supported on the counter and her arms remain connected.",
+      "scales": [
+        "full_frame",
+        "hands_original_pixels"
+      ],
+      "pass_requires": [
+        "Gaze or head attention targets the anomaly area",
+        "A connected hand-arm chain with a visible gap before vial contact",
+        "Rack visibly rests on the counter"
+      ],
+      "failure_boundary": "Attention alone is not the full relation; cropped support, an ambiguous target or an extra/disconnected limb cannot pass the complete gate."
+    },
+    {
+      "gate_id": "C_CLINICAL_UNEASE",
+      "criterion": "Visible laboratory order, the isolated specimen anomaly and the person’s stopped inspection form a readable biomedical tension in one frame.",
+      "scales": [
+        "full_frame"
+      ],
+      "pass_requires": [
+        "Cryobank or specimen-inspection environment reads from equipment",
+        "The isolated anomaly is visually prominent",
+        "The paused inspection is connected to it rather than a detached portrait pose"
+      ],
+      "failure_boundary": "A clean laboratory portrait alone fails this proposed genre test. The image can suggest unease; it cannot prove fear, a pathogen, a diagnosis, consciousness, secret action or actual past events."
+    }
+  ],
+  "result": {
+    "status": "PENDING_RENDER",
+    "image_path": null,
+    "image_sha256": null,
+    "user_acceptance": "pending"
+  }
+}

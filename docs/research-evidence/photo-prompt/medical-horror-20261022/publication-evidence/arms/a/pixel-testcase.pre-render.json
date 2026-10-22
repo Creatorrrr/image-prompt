@@ -1,0 +1,139 @@
+{
+  "schema": "medical-horror-arm-pixel-testcase/v1",
+  "arm": "a",
+  "core_sha256": "9b575cddb494d5b110807521a32c3402d008913782dcea6d04a260d5f89752a9",
+  "baseline_sha256": "26473d998d9944427dd98ac24a4903d01cd8c5d712021a5bed753a6306ca89f2",
+  "concept": "discharge_without_exit",
+  "reference_path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "evidence_policy": {
+    "original_pixels_required": true,
+    "preview_is_not_original": true,
+    "partial_is_fail": true,
+    "unobservable_verdict": "UNOBSERVABLE_NOT_PASS",
+    "claim_scope": "Authorial testcase observations supplement the managed hard-gate review; they create no requester-owned locks or acceptance.",
+    "requester_acceptance": "pending"
+  },
+  "stages_to_report_separately": [
+    "independent baseline direction",
+    "actual new-source exposure by query/CID/RID/source hash",
+    "source compatibility and optional selection",
+    "literal final-prompt carriage",
+    "saved-pixel carriage",
+    "requester preference"
+  ],
+  "gates": [
+    {
+      "gate_id": "reference_face_hair",
+      "kind": "reference_fidelity_test",
+      "scale": [
+        "overall",
+        "native_face_crop"
+      ],
+      "pass_condition": "The generated woman visibly follows the supplied facial appearance and short dark bob with light separated fringe. Compare the actual face and hair silhouette; resemblance is appearance guidance, not proof of real identity.",
+      "fail_if": "Face too small or turned away to assess, materially changed face, or long/incompatible hair.",
+      "required_components": [
+        "assessable facial appearance",
+        "short bob silhouette",
+        "fringe appearance"
+      ],
+      "result": "pending"
+    },
+    {
+      "gate_id": "clinical_care_context",
+      "kind": "genre_test",
+      "scale": [
+        "overall",
+        "native_counter_region"
+      ],
+      "pass_condition": "The person, medical records interface and clinical circulation are visibly part of the same hospital setting. A generic office counter alone does not pass.",
+      "required_components": [
+        "human waiting at institutional counter",
+        "medical record cue",
+        "clinical place cue"
+      ],
+      "result": "pending"
+    },
+    {
+      "gate_id": "withheld_record_relation",
+      "kind": "authorial_relation_test",
+      "scale": [
+        "overall",
+        "native_counter_region"
+      ],
+      "pass_condition": "The woman and empty transparent sleeve are on one side of a closed glass/transfer boundary; the separate chart is visible on the other side, inaccessible to her in that view. All components and their separation must be visible together.",
+      "required_components": [
+        "woman on patient side",
+        "empty sleeve in her hand",
+        "closed transfer boundary",
+        "separate chart on staff side"
+      ],
+      "result": "pending"
+    },
+    {
+      "gate_id": "discharge_without_exit",
+      "kind": "authorial_relation_test",
+      "scale": [
+        "overall",
+        "native_door_region"
+      ],
+      "pass_condition": "An adjacent hospital exit has a visible closed seam and a steel bolt that actually spans that seam, while remaining spatially connected to the woman's waiting position. A red light or door-shaped rectangle alone cannot prove a locked exit.",
+      "required_components": [
+        "adjacent exit door",
+        "closed door seam",
+        "bolt spans seam",
+        "visible connection to waiting position"
+      ],
+      "result": "pending"
+    },
+    {
+      "gate_id": "interrupted_hand_contact",
+      "kind": "embodiment_test",
+      "scale": [
+        "overall",
+        "native_hand_crop"
+      ],
+      "pass_condition": "Both relevant hands visibly belong to the woman; the sleeve-holding hand and hatch-resting fingertips have coherent reach and separate endpoints on the patient side.",
+      "required_components": [
+        "owned hands",
+        "sleeve grip",
+        "hatch lip contact",
+        "coherent reach",
+        "available space"
+      ],
+      "result": "pending"
+    },
+    {
+      "gate_id": "clinical_dread_readability",
+      "kind": "whole_image_perception",
+      "scale": [
+        "overall"
+      ],
+      "pass_condition": "Before reading intensity labels or prompt explanation, describe the visible scene. A credible threat to agency should arise from medical care/record control, human response and barriers, rather than from a generic gloomy color grade alone.",
+      "assessment_values": [
+        "clear",
+        "partial",
+        "not_readable"
+      ],
+      "result": "pending"
+    },
+    {
+      "gate_id": "new_material_pixel_carriage",
+      "kind": "conditional_data_transport_test",
+      "scale": [
+        "overall",
+        "native_relevant_region"
+      ],
+      "pass_condition": "Only if a new integrated source contributes to the final: preserve its actual CID/RID/hash, complete source review, exact final phrase and visibly corresponding pixel region. Each selected relation requires all components; source exposure or a literal phrase alone is insufficient.",
+      "when_no_source_selected": "Report NOT_ADOPTED with candidate-specific reason; do not claim data-caused pixel success.",
+      "result": "pending"
+    }
+  ],
+  "claim_limits": [
+    "This is a fictional scene; appearance does not prove the reference person's real health, biography, mental state or consent.",
+    "A saved-pixel PASS does not establish requester preference.",
+    "A source not returned by the actual query cannot be reported as exposed.",
+    "Technical prompt/runtime audit PASS is distinct from pixels.",
+    "The chart portrait repetition and exact record identity may be unobservable at final scale; do not infer them from proximity alone."
+  ]
+}

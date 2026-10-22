@@ -1,0 +1,164 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "73984ac640e0dbc75da973b1d06745dd96cbd95df77172d41802a0bef336ec37",
+  "interpreted_intent": "The current requester asks for independent random concepts testing the just-integrated topic and use of the supplied image. The actual previous-user topic quote resolves that topic as medical horror, not a prescription of an apparatus, gore, wardrobe, age or framing. Independently authored random draw 10023592473867259547 selected the mobile-scanner relationship from four independently invented options. I compared its physical obstruction with an empty-mask breathing scene: the scanner makes the clinical device determine the person's available route in one photograph and suits a restrained, realistic medical-horror direction. Fictional circumstances: an examination room appears unattended, a scanner occupies the doorway, and she pauses to read the blocked path; this is invented staging, not the reference person's history, inner life, illness or consent. Reference scope is facial proportions and short black hair only; clothing, body shape, age, clinical role and scene are open authorial choices, not requester-owned locks. The viewer should first feel the vulnerable human presence beside a clinically purposeful object, then notice that its geometry controls escape. Sensual 1 supports that human presence through close facial immediacy, a natural neck line and warm skin against cold plastic; fetish 0 adds no erotic apparatus focus; surreal 0 retains ordinary physical space; creativity 1 keeps variations restrained. An eye-exam setup was less spatially legible; a scanner is the selected realization, not a required user prop. WHO: a fictional woman trying to understand a blocked route. WHERE: a disused diagnostic room whose doorway is occupied by equipment. HOW: a nearby observer sees face, hand contact and the blocked threshold together. WHY NOW: her stopped hand and gaze register the obstruction before any next movement. Clinical unease comes from equipment controlling space; invented mechanism details remain replaceable.",
+  "subject": "A fictional woman using the visible facial proportions and short black bob of the supplied portrait as appearance guidance.",
+  "setting": "A disused diagnostic room with a wheeled ring scanner occupying its doorway.",
+  "event": "A threatening clinical encounter, realized as a woman pausing beside an apparatus that occupies the exit.",
+  "visual_priorities": [
+    "Her recognizable face and short bob provide the human center of attention beside the machine.",
+    "The ring aperture, doorway and projecting patient platform read together as an obstructed route.",
+    "Her visible palm-to-rim contact and gaze through the aperture connect her reaction to the spatial problem.",
+    "The powered inner ring lights her cheek and the cold plastic while the corridor remains dark."
+  ],
+  "baseline_prompt_en": "A staged medical-horror photograph of a fictional woman guided by the supplied portrait. Keep its visible facial proportions and short black bob with fine separated fringe as appearance guidance. A clinical encounter has become threatening. She stands in a disused diagnostic room where a wheeled ring-shaped scanner has stopped across the only open doorway. Its white circular aperture frames the unlit corridor, while its narrow patient platform projects toward her, turning a route out into a route into the machine. Her left palm rests flat on the near outer rim at shoulder height; the elbow remains gently bent, and her shoulders turn toward the aperture while her hips and feet remain beside the platform. Her right arm hangs beside her body. She looks through the opening rather than at the camera, brows drawn slightly together and lower lip parted as if she has just understood the obstruction. A pale blue short-sleeved clinical tunic is loosely creased at her waist; the collar leaves a natural line of neck visible. The scanner's indicator strip remains illuminated in the otherwise dim room. The pale inner ring lights one cheek and catches individual strands of her bob; a weak fluorescent fixture fades across scuffed vinyl and an empty wall rail. Show her from head to below the knees from a three-quarter side view, near enough for her face and hand-to-rim contact to read while the ring, projecting platform and doorway remain in the same plane of attention. The ring dominates the right half, her warm skin and dark hair hold the left, and the corridor becomes a dense rectangle inside the machine. Taut quiet, restrained color, realistic clinical plastic, and a cinematic photograph whose alarm comes from the equipment controlling the available space.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The actual preceding requesting-user topic quote in the coordinator-frozen topic context is 메디컬 호러 용어 정리; the current request asks for a suitable random concept testing that topic. Medical horror is interpreted as clinical circumstances that carry fear or threatening unease; the scanner and obstructed exit are independent agent staging.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as appearance guidance in a new fictional image. I use visible facial proportions and short hair; the reference supplies no actual biography, illness, inner life or consent, and the requester has not separately prescribed clothes, exposure or age.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "medical-horror photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional woman guided by the supplied portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "event",
+        "prompt_evidence": "A clinical encounter has become threatening."
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "guided by the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "medical_horror_focus",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "genre": "medical_horror",
+        "perceptual_focus": "clinical_threat"
+      },
+      "evidence": {
+        "genre_phrase": "A clinical encounter has become threatening."
+      }
+    },
+    {
+      "assertion_id": "subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional woman guided by the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "staged cinematic photography",
+    "family": "restrained clinical unease",
+    "evidence": [
+      "cold luminous scanner ring against human skin",
+      "scuffed vinyl and unlit corridor"
+    ]
+  },
+  "variation_key": "arm-b-random-10023592473867259547"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": "photo-workflow-authoring-shapes/v1",
+  "request_spans": {
+    "type": "array",
+    "items": {
+      "span_id": "string",
+      "start": "integer Unicode string index",
+      "end": "integer exclusive Unicode string index"
+    }
+  },
+  "core": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "source_request": "derived from current raw request",
+    "creative_controls_sha256": "derived from bound controls",
+    "baseline_prompt_en": "agent-authored canonical string, 48 to 1280 words",
+    "semantic_assertions": "agent-authored array",
+    "intent_lock": "agent-authored object",
+    "other_fields": "existing v3 wire contract"
+  },
+  "feature_selection": {
+    "selected": "agent-authored array of 5 to 10 categories; no defaults",
+    "bindings": "derived after validation; supplied mismatches are rejected"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "agent decision: body_action or not_applicable",
+    "summary": "agent-authored explanation",
+    "checks": "agent-authored five generic checks when applicable",
+    "prompt_sha256": "derived from exact reviewed baseline"
+  },
+  "repair_decision": {
+    "schema_version": "photo-repair-decision/v1",
+    "current_source_span_ids": "nonempty unique current span IDs",
+    "source_text": "exact current requester text",
+    "preserved_dimensions": "explicit unique dimensions",
+    "allowed_changes": "explicit unique disjoint dimensions",
+    "requester_corrected_dimensions": "explicit current corrections, subset of allowed_changes",
+    "allowed_properties": "array of dimension/target/property objects",
+    "local_axes": "explicit generic local repair axes",
+    "failed_gate_ids": "actual relevant failed gate IDs",
+    "failure_class": "agent decision from supported routes; observed runtime classes need observed evidence",
+    "additional_invocation_limit": "integer 0 to 64 within existing authorization and contract",
+    "obligation_dimensions": "each effective hard obligation ID maps to explicit preserved governing dimensions"
+  }
+}
