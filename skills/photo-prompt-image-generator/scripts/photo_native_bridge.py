@@ -64,7 +64,7 @@ def main(argv=None):
             composed = value(state, "composed")
             operation = next(op for op in state["operations"] if op["operation_id"] == plan["operation_id"])
             evidence = capture_native_error(raw, {"tool": "image_gen", "generation_environment": "native_imagegen",
-                "attempt": 1, "started_at": operation["timestamp"], "ended_at": datetime.now(timezone.utc).isoformat(),
+                "attempt": plan.get("attempt", 1), "started_at": operation["timestamp"], "ended_at": datetime.now(timezone.utc).isoformat(),
                 "invocation_outcome": "rejected", "provider_outcome": "unknown",
                 "request": {"prompt_en": composed["prompt_en"], "negative_en": composed.get("negative_en"), "runtime_prompt_en": plan["payload"]["prompt"]}})
             path = args.run.resolve() / "operations" / (plan["operation_id"] + ".error.json")
@@ -100,7 +100,8 @@ def validate_native_record(path, expected_sha, entry):
     if digest(raw) != expected_sha:
         raise WorkflowError("stale_native_plan")
     plan = json.loads(raw)
-    if plan.get("schema_version") != "photo-native-plan/v1" or entry.get("workflow_operation_id") != plan["operation_id"] + ":1" or entry["ts"] != plan["timestamp"]:
+    attempt = plan.get("attempt", 1)
+    if type(attempt) is not int or attempt < 1 or plan.get("schema_version") != "photo-native-plan/v1" or entry.get("workflow_operation_id") != plan["operation_id"] + f":{attempt}" or entry["ts"] != plan["timestamp"]:
         raise WorkflowError("native_record_operation_mismatch")
     from photo_workflow_worker import audit_bound
     from photo_workflow import one

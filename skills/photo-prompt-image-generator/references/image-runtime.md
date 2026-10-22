@@ -51,7 +51,7 @@ Every actual attempt binds the same sidecar file/hash, runtime text hash, pack, 
 
 Failed API attempts also save a `photo-image-attempt-evidence/v1` file beside the output. It retains the complete HTTP response bytes as base64, the observed request ID header, and separately parsed error fields. `failure_reason` is only a short display message. Invalid UTF-8 affects that display, not the retained bytes; a failed body read is explicitly `unavailable`. Only explicit `moderation_blocked` or `content_policy_violation` codes classify a safety block. A generic `safety` word, HTTP 400, or a malformed response stays `error`. Evidence or recorder failures stop the run before another API call.
 
-Returned bytes are first saved in a unique recovery file before the image writer runs. If the API returns image bytes but their local save fails, record the failure with `invocation_outcome: returned` and stop. A local persistence failure does not trigger another image generation. Explicit moderation blocks stop unchanged retries. Only observed transient HTTP errors (429 or 500/502/503/504) may retry within the authorized bound; an unobserved provider result is marked unknown in error evidence and stops automatic retries.
+Returned bytes are first saved in a unique recovery file before the image writer runs. If the API returns image bytes but their local save fails, record the failure with `invocation_outcome: returned` and stop. A local persistence failure does not trigger another image generation. Explicit moderation blocks and observed transient HTTP errors (429 or 500/502/503/504) may repeat the identical input within the already authorized bound. An unobserved provider result is marked unknown in error evidence and stops generation until reconciled. See the failure routes below.
 
 ## Native Error Capture
 
@@ -108,6 +108,26 @@ The evidence writer uses lossless JSON escapes, including lone UTF-16 surrogates
 After saving, pass the actual file to `record_image_run.py` with `--attempt-evidence-json <file>` and the writer's `--attempt-evidence-sha256 <digest>`. Use the evidence's `outcome.status` and display message, the same tool name, attempt, exact prompt and negative. The recorder verifies the file hash when supplied and always binds its computed SHA-256, checks those fields and the complete runtime prompt, then copies environment, capture fidelity and structured error details to the ledger and independent manifest. Missing/mismatched evidence fails before any ledger append. Evidence files must be unique per actual attempt; the shared writer refuses replacement. Neither the helper nor a logger failure authorizes another image call.
 
 ## Retries and Ledger
+
+### Failure routes
+
+The shared implementation is `scripts/photo_retry_policy.py`. A classification is based on captured evidence, never the word “safety” in an arbitrary error message. These routes apply only to policy-permitted requests and do not disable or bypass provider safeguards. Exhausted authorization always stops generation; a retry decision cannot grant more calls.
+
+| Failure class | Route | Next action |
+| --- | --- | --- |
+| `provider_blocked` | `same_input` | Preserve the explicit block and exact input; a bounded authorized repeat may call the same provider with the same safeguards. No content rewrite as a block repair. |
+| `transient_http` | `same_input` | Repeat only after observed 429/500/502/503/504, within the call limit. |
+| `pixel_realization_mismatch`, `unobservable_required_scale` | `same_input` or `revised_content` | Require actual failed gates. No allowed changes means exact input; declared authorized changes mean a new audited child. |
+| `agent_spatial_inconsistency` | `revised_content` | Correct only allowed staging dimensions; re-audit before any image call. |
+| `meaning_rebuild` | `revised_content` | Use the current requester correction for changed locked meaning, with a new envelope/core/pack. |
+| `artistic_revision` | `revised_content` | Requires an authorized revision; never invent a failed gate to obtain a call. |
+| `persistence_failed` | `recovery_only` | Save the returned bytes or original evidence; do not regenerate. |
+| `recorder_failed` | `recovery_only` | Replay the exact saved recorder arguments; do not regenerate. |
+| `execution_unknown` | `recovery_only` | Reconcile the actual provider/native result before deciding anything further. |
+| `invalid_review_record` | `recovery_only` | Correct the review record and rerun its audit on the same image. |
+| `provider_error` | `recovery_only` | Diagnose a known non-transient provider/configuration error; no automatic rerender. |
+
+The API adapter may perform same-input repeats inside its reserved operation. A native bridge makes one call per operation; a repeat requires a freshly verified same-input proof on the original run. Every actual call consumes budget and gets its own evidence/ledger row. `resume` performs no generation. Content revision is a new attempt with new audited content, not an identical-input retry. An independent requester change is a new authorized request, never a relabeling of a blocked result as a pixel defect.
 
 For unchanged retries, preserve `prompt_en`, `negative_en`, authorial-core hash, intent-lock hash, semantic-anchor IDs/evidence, and request-envelope binding byte-for-byte, and keep the same prompt ID. Increment `attempt`; link retries with `retry_of` when available.
 
