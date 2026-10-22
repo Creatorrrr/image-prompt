@@ -1,0 +1,75 @@
+{
+  "schema": "photo-image-topic-testcase/v1",
+  "arm": "B",
+  "created_before_candidate_access": true,
+  "run": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/dds-arm-b-20261022-1c937745",
+  "source_request_sha256": "e01d0ad2bb1da5978db473bef7ce3e0212453e8f35839532c8ba05a27dbc7fff",
+  "core_sha256": "e488c903cd1d418405df5ad1b81ae50511d14518a5f254f5c4aa2344cbaa47d9",
+  "baseline_sha256": "00e7adadbe1983f4d33d3d47b076bcef2906b618803ef65506ec884e63738c7b",
+  "concept": "The dead intercom collection",
+  "seed": 6051135731783303364,
+  "experimenter_scope_is_not_requester_lock": true,
+  "judgment_rule": "Every listed component and its connecting relation must be visible together for PASS. Partial/unobservable evidence cannot pass a full gate. Technical discovery, prompt coverage, rendered fidelity and user acceptance are separate statuses.",
+  "pre_generation_gates": [
+    {
+      "id": "B1_decadence",
+      "origin": "current combined topic via exact prior-user antecedent",
+      "pass_if": "At least two rich materials or opulent display cues and at least one visibly worn/decayed cue share the same inhabited domestic collection scene.",
+      "fail_if": "Only generic dark decor or polished wealth appears; deterioration is absent or unobservable."
+    },
+    {
+      "id": "B2_domestic_threat",
+      "origin": "combined topic; the intercom mechanism is agent staging",
+      "pass_if": "A lived-in home and private collection are readable; the central figure holds a disconnected receiver and redirects attention toward a separate active-looking household intercom in the connected hallway. All relevant endpoints must be discernible.",
+      "fail_if": "It reads as museum/shop, generic portrait or simple telephone call; disconnection, second device, attention direction or spatial connection is absent/unobservable.",
+      "scope_note": "Failure can be a staging-legibility failure even when generic domestic suspense is visible."
+    },
+    {
+      "id": "B3_splatter",
+      "origin": "combined topic",
+      "pass_if": "A conspicuous irregular dark-red impact fan with multiple droplets or gravity trails reads as blood spatter on the display surfaces, rather than ordinary red decoration.",
+      "fail_if": "The red trace is absent, tiny, fully occluded, smooth decorative coloring or indeterminate."
+    },
+    {
+      "id": "B4_combination",
+      "origin": "combined topic",
+      "pass_if": "Decadent display, intimate domestic threat and violent spatter visibly interact in one coherent photographic moment with a clear hierarchy.",
+      "fail_if": "Any theme is absent, or cues appear as unrelated montage/props with no perceptible relationship."
+    },
+    {
+      "id": "B5_reference",
+      "origin": "current request use of attached image; no identity or age claim",
+      "pass_if": "The actual provided reference is passed to the native tool and the generated central figure plausibly retains the observed short dark bob/fine bangs and facial proportions. Report resemblance qualitatively, never as confirmed identity.",
+      "fail_if": "Reference not passed, or hair/face guidance visibly diverges; ambiguous resemblance stays partial."
+    },
+    {
+      "id": "B6_embodiment",
+      "origin": "agent-owned staging integrity",
+      "pass_if": "The receiver contact, acting hand/arm ownership, same-side cheek placement, freely hanging cut cord and separate supporting palm form one physically plausible, visibly connected state.",
+      "fail_if": "Contact/owner is inconsistent, cable is nonsensical, duplicated body parts appear, or consequential connections are unobservable."
+    },
+    {
+      "id": "B7_controls",
+      "origin": "saved settings, not requester exclusions",
+      "pass_if": "Description-first review supports subtle everyday appeal, ordinary physical causality and restrained scene refinement; added fetish or clearly impossible effects are absent from the chosen realization.",
+      "fail_if": "A stronger erotic focus or overt impossible relationship leads the image, or the narrative is replaced beyond creativity=1 scope."
+    }
+  ],
+  "separate_evidence_checks": [
+    {
+      "id": "B8_discovery",
+      "criterion": "Save actual retrieved query/CID/RID/source-hash occurrences and every candidate-specific decision; new-topic result exposure alone does not prove image influence."
+    },
+    {
+      "id": "B9_runtime",
+      "criterion": "Record exact composed prompt, successful audits, native request with actual reference path/hash, one invocation, image SHA and current ledger entry."
+    },
+    {
+      "id": "B10_pixel_review",
+      "criterion": "View the actual saved full image, author observability for every gate and report scene-readable strengths/limitations independently of metadata PASS."
+    }
+  ],
+  "generation_limit": 1,
+  "acceptance_status": "not_requested_or_observed",
+  "current_state": "core_frozen_waiting_for_install_signal"
+}

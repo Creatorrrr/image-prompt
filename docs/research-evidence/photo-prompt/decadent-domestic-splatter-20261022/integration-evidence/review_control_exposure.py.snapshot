@@ -1,0 +1,57 @@
+"""Preserve actual control hits with directly authored scope reviews."""
+from pathlib import Path
+import json
+O=Path(__file__).resolve().parent;Q=O.parents[2]/'docs/research-evidence/photo-prompt/decadent-domestic-splatter-20261022'
+read=lambda p:json.loads(p.read_bytes())
+REVIEWS={
+ 'B02':'D01은 같은 천의 새틴형 반사만 제안하며 실크 섬유를 증명하지 않는다. D05는 성인 손목과 브로케이드 소매를 추가하므로 폴리에스터 새틴의 대체로 쓰지 않는다.',
+ 'B03':'A01의 금박층 손실과 바탕 경계는 요청과 양립할 수 있다. 원문은 액자를 지정하므로 대상 물건이 다른 경우 전체 채택하지 않는다. 순금의 녹이라는 주장은 추가하지 않는다.',
+ 'B04':'G02의 모발·힌지·체인은 비애도 대조와 양립할 수 있다. G01에는 같은 물건의 기명 추모 문구가 필요하므로 살아 있는 연인의 선물만으로 그 의미를 채택하지 않는다.',
+ 'B05':'G06은 밀랍 모형·케이스·분리 패널의 완전한 별도 실현안이다. G07의 청동상과 F10의 실제 연기자 피부에 붙인 분장은 밀랍 교육 모형을 대체하지 않는다.',
+ 'B06':'G07의 조형된 근육·청동 표면은 조각 매체에 맞는다. 분리 받침까지 포함한 전체 의미와 요청의 소유자·재료를 검토하며 실제 박피로 바꾸지 않는다.',
+ 'B08':'G09는 연속된 석재·조각된 수의·기단을 가진 조형물이다. 실제 시체의 외관이나 생사를 이 source로 추가할 수 없다.',
+ 'B09':'G10은 보석·모래시계·해골 형태가 서로 구분되는 삼자 정물이다. 해골 장식 하나만 유지하라는 요청에는 나머지 둘을 추가하는 전체 채택이 부적합하다.',
+ 'B11':'E03은 찢긴 천 냅킨과 별도의 붉은 액체 웅덩이다. 그릇에 담긴 일상 토마토 수프를 혈액이나 사건 흔적으로 재해석하지 않는다.',
+ 'B12':'D06은 천의 해진 가장자리와 아래 연속된 피부를 구분하므로 관련 있다. 이 source의 찢김은 피부층 손상이 아니며 원인을 폭행으로 추정하지 않는다.',
+ 'B13':'F04는 명시된 허구 신체·한정 구멍·바깥 기관·연속 조직 연결을 함께 요구한다. 연결된 외부화와 부합할 수 있으나 일반 구조물에 생물 조직을 자동 부여하지 않는다.',
+ 'B15':'C06은 다른 이름표의 개인 물건 두 개이고 B10은 같은 문의 양쪽 손잡이를 잡는 서로 다른 손이다. 둘 다 가족 포옹이나 해부학적 분리를 직접 실현하지 않는다.',
+ 'B16':'F05의 국소 외관 경계는 외형 유사성일 뿐이다. 검은 바디페인트라는 실제 매체를 괴사로 바꾸거나 의학적 진단을 추가할 수 없다.',
+ 'B20':'B03의 표면 빗장과 문틀 수납부는 일상 잠금장치와 양립할 수 있다. 원문에는 가족 범죄·반복 통제·감금 의도가 없으며 그것들을 추가할 근거가 되지 않는다.',
+ 'B21':'A12는 평평한 패널의 비대칭 조개형 장식, A13은 접합부가 있는 줄기형 난간이다. 서로 다른 물건·구조를 유지해야 하며 장르 이름 유사성으로 한 매체에 합치지 않는다.',
+ 'B23':'F10은 실제 피부에 부착된 분장으로, 요청이 제외한 매체다. F01은 허구 신체와 분리 부분의 양 끝점·간격을 함께 요구한다. I06의 식탁 옆 결과라는 구도만으로 실제 분리 결과를 충족하지 않는다.',
+ 'B24':'B13은 식품 보관실의 닫힌 병·선반·부착 라벨이다. 보관 기능에는 양립할 수 있지만 매장·종교·유골을 제안하지 않으며 실제 요청이 지정한 용기를 보존해야 한다.',
+ 'O02':'C07의 쟁반을 든 성인과 문틈을 향한 시선은 서비스 장면이다. 친구에게 문을 여는 실제 행동과 역할을 그 source로 교체하지 않는다.',
+ 'O03':'G02는 모발이 든 로켓이다. 생일 선물이라는 이유만으로 모발 내용물이나 애도·사망 이력을 추가하지 않는다. 구체 내용물이 열린 경우에만 별도 선택을 검토할 수 있다.',
+ 'O04':'E01의 자리 배치와 E02의 접시 양쪽 손은 호환 가능한 선택일 수 있다. E03의 찢긴 냅킨·붉은 웅덩이, E06의 허구 상해 흔적, E07의 의례상 구획은 평범한 가족 식사에 자동 추가하지 않는다.',
+ 'O06':'A13의 줄기형 구조와 실제 접합은 식물 무늬 난간에 관련 있다. 낮이라는 조명 조건과 난간 소유자를 유지하며 특정 시대·종교·가문을 추정하지 않는다.',
+ 'O07':'G07은 청동 해부 조각이라는 매체에 맞는다. G06은 케이스 안 밀랍 모형과 앞 패널이므로 청동 모형을 대신하지 않는다. 학교라는 설정도 수집 저택으로 바꾸지 않는다.',
+ 'O08':'B13의 부착 라벨·닫힌 저장 용기는 차·잼 선반과 양립할 수 있다. 실제 용기 상태와 라벨 내용을 보존하며 다른 장르 서사를 만들지 않는다.',
+ 'O09':'G12는 현재 인물과 벽의 초상화가 서로 떨어진 장면이다. 수리를 기다리는 액자 하나라는 요청에 인물·초상 정체를 추가하는 것은 별개의 변경이다.',
+ 'O12':'G04는 한 캐비닛의 별도 칸에 조개·제작물·과학기구가 있는 완전한 선택이다. 조개 전시라는 단어만으로 나머지 수량을 요구하거나 방문 아동에게 성인·폭력 문맥을 부여하지 않는다.',
+ 'N02':'C10은 기록에 닿는 연필이다. 반복·현실 판단 훼손·상대의 기억 조작을 관찰 가능하게 증명하지 못하므로 가스라이팅의 의미 충족으로 세지 않는다.',
+ 'N04':'C08의 지워진 계보 선, G12의 초상 거리, C05의 찢긴 사진은 단서가 될 수 있다. 어느 것도 혈연·성적 관계·근친 금기를 직접 증명하지 않는다.',
+ 'N08':'E04는 덮개가 내용물을 가리는 식탁이고 F03은 분리된 내부 구조와 공동이다. 먹는 행위·물질의 종·자기 관계·성적 의미가 없으므로 식인 두 범주의 구분을 충족하지 않는다.',
+ 'N10':'G08의 책과 별도 출처 카드는 출처 주장의 진열이다. 실제 인피 재질에는 검사 증거가 필요하며 카드가 그 검사를 대신하지 않는다.',
+ 'N11':'E07의 의례 용기 구획과 C08의 계보 선은 살해·혈연·의례 목적의 증거가 아니다. 가족 살해와 의례 희생의 사건 주장을 분리해서 보존한다.',
+ 'N12':'D08의 노즐 분무는 입자 방향만 보여준다. 향·냄새의 기억·관객의 내장적 감각 반응은 그 외관으로 통과시키지 않는다.',
+ 'B25':'I01의 둥근 물체 양면 사이 연속 명암 이행은 형태 모델링에 관련 있다. 배경 전체를 검게 만드는 의무는 없으며 I02의 지배적 어둠과 같은 의미로 바꾸지 않는다.',
+ 'B26':'G15는 뒤쪽 문이 열린 용기의 빈 내부를 요구한다. 남아 있는 성유물·진품성·신성한 효력을 추가하지 않으며 양 끝점이 가려지면 빈 구획 전체를 통과시키지 않는다.',
+ 'N13':'I03은 성인 집단과 별도 재현 이미지의 대응 배치다. 용의자 집단의 제한, 불가능 범행, 잠긴 방의 실제 사건을 그 배치로 증명할 수 없다.'
+}
+
+def main():
+ q=read(O/'retrieval-qualification.json');source=read(O/'new-native-records.json');cards={c['candidate_id']:c['card_id'] for c in read(O/'data-integration.json')['cards']};rows=[]
+ for case in q['cases']:
+  if case['cohort']=='development' or not case['after']['new_at8']:continue
+  key=case['id'].rsplit('-',1)[0]
+  for cid in case['after']['new_at8']:
+   rows.append({'case_id':case['id'],'cohort':case['cohort'],'query':case['query'],'candidate_id':cid,'card_id':cards[cid],
+    'complete_positive_source':source[cid],'review_ko':REVIEWS[key],
+    'decision_scope':'control exposure and meaning boundary only; not a downstream composed adoption or native qualification',
+    'native_approval':False,'pixel_execution':'NOT_RUN'})
+ assert len(rows)==79
+ report={'control_queries':104,'queries_with_new_at8':58,'query_candidate_pairs':len(rows),'unique_control_cases':len({x['case_id'].rsplit('-',1)[0] for x in rows}),
+  'review_method':'Actual complete en/ko source, medium, owners, cardinality, current request and forbidden inference reviewed. Related options and mismatches distinguished; no source auto-adopted.', 'rows':rows}
+ (Q/'integration-evidence/control-exposure-review.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+ print(json.dumps({k:v for k,v in report.items() if k!='rows'}))
+if __name__=='__main__':main()

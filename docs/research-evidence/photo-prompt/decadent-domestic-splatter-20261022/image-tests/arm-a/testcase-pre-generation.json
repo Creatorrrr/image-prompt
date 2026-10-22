@@ -1,0 +1,48 @@
+{
+  "schema": "independent-image-testcase/v1",
+  "arm": "a",
+  "concept_id": "A3",
+  "ownership": "experimenter_selected_not_requester_hard_lock",
+  "pre_generation_authored_utc": "2026-10-22T06:06:54.510010+00:00",
+  "baseline_prompt_sha256": "5dfc1787a059ee3cadc4f3da553e167bcdb58712058fa0daa79c3c2b0068de69",
+  "tests": [
+    {
+      "id": "reference_use",
+      "pass": "The actual reference file is passed to image_gen; the rendered main subject retains recognizable short dark bob/fine bangs and facial cue guidance at a readable scale. This is appearance guidance, not proof of identity.",
+      "fail_or_partial": "Missing reference transport fails technical use. Obscured or generic appearance is partial or unobservable; do not infer identity or age."
+    },
+    {
+      "id": "decadent_component",
+      "pass": "Luxurious domestic ornament and visible deterioration coexist clearly on the entry/adjacent interior surfaces.",
+      "fail_or_partial": "Plain setting, luxury without deterioration, or deterioration without luxury fails the combined cue."
+    },
+    {
+      "id": "domestic_thriller_component",
+      "pass": "The private home boundary, stopped routine, chain restraint and interrupted dish exchange read as a connected suspenseful situation.",
+      "fail_or_partial": "An ornamental portrait with unclear exchange, a disconnected gloved hand, or invisible chain is partial rather than full pass."
+    },
+    {
+      "id": "splatter_component",
+      "pass": "Blood-like red impact droplets/fine spray with varied scale or directional scatter read materially on household surfaces in the same frame.",
+      "fail_or_partial": "Only a solid red patch, red decor, absent spray, or ambiguous tiny marks is partial or fail. This non-graphic residue test does not establish the full graphic range of Splatter Horror."
+    },
+    {
+      "id": "co_presence",
+      "pass": "All three topic components are simultaneously visible and compositionally connected, with the main subject and interrupted exchange retaining hierarchy.",
+      "fail_or_partial": "A label or prompt phrase alone never passes. Any partially observed component makes the full combination partial."
+    },
+    {
+      "id": "physical_exchange",
+      "pass": "Resident receiving palm, separately owned visitor glove/wrist, offered dish, open door edge and connected chain are coherent and assessable together.",
+      "fail_or_partial": "A dish larger than the gap, disconnected hand, impossible chain or hidden material contact is fail or partial depending on visibility."
+    }
+  ],
+  "status_vocabulary": [
+    "pass",
+    "fail",
+    "partial",
+    "unobservable"
+  ],
+  "result_rule": "Do not promote preflight/audit success or newly exposed retrieval material into pixel success; report each separately. Full arm PASS requires every testcase pass from actual pixels. User acceptance remains pending.",
+  "policy_and_scope_note": "Non-graphic residue and nonsexual staging are agent execution choices. user_exclusions remains empty because the requesting user did not impose these exclusions. The supplied reference establishes visible appearance only."
+}

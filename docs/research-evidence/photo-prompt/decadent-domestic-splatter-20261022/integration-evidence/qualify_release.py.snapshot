@@ -1,0 +1,47 @@
+"""Actual bilingual full-pool probes. Research development set, not native approval."""
+import collections,csv,hashlib,json,pathlib,sys
+O=pathlib.Path(__file__).resolve().parent;R=O.parents[2]
+read=lambda p:json.loads(p.read_bytes())
+def write(p,v):p.write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+def main():
+ B=read(O/'before.json');S=read(O/'successor.json');sys.path.insert(0,str(pathlib.Path(B['native'])/'scripts'))
+ from photo_h_f2_generation import Generation
+ from photo_h_f2_encoder import LocalEncoder
+ from photo_runtime_sources import RuntimeSnapshotProvider
+ import photo_canonical_source as canonical,photo_recall_first as rf
+ qfile=R/'docs/research-evidence/photo-prompt/decadent-domestic-splatter-20261022/EVALUATION-CASES.tsv';cases=[]
+ for row in csv.DictReader(qfile.open(),delimiter='\t'):
+  for lang in ['ko','en']:cases.append({'id':row['case_id']+'-'+lang,'cohort':row['cohort'],'language':lang,'query':row['query_'+lang],'expected_cards':row['target_cards'].split(',') if row['target_cards'] else [],'expected':row['required_evidence']+'; do not infer: '+row['forbidden_inference']})
+ registry=read(O/'data-integration.json');lookup={x['card_id']:x['candidate_id'] for x in registry['cards']};new=read(O/'new-native-records.json')
+ before=Generation(B['store'],B['config']['generation_id'],full=True);after=Generation(B['store'],S['generation_id'],full=True)
+ source=RuntimeSnapshotProvider(store=B['store']).load_generation(S['native_generation_id'])
+ assert all(canonical.native_snapshot(source.data['candidates'][cid])==v for cid,v in new.items())
+ path=O/'qualification-query-evidence.json'
+ if path.exists():encoded=read(path)
+ else:
+  encoded={'binding':after.binding,'query_source_sha256':hashlib.sha256(qfile.read_bytes()).hexdigest(),'rows':[]}
+  with LocalEncoder(R/'skills/photo-prompt-image-generator') as enc:
+   assert enc.binding==before.binding==after.binding
+   for start in range(0,len(cases),16):
+    batch=cases[start:start+16];es=enc.encode([x['query'] for x in batch],'query')
+    for row,e in zip(batch,es,strict=True):rf.check_embedding(e,enc.binding,row['query'],'query');encoded['rows'].append({'id':row['id'],'query':row['query'],'embedding':e})
+    print('encoded',len(encoded['rows']),flush=True)
+  write(path,encoded)
+ assert [(r['id'],r['query']) for r in cases]==[(r['id'],r['query']) for r in encoded['rows']]
+ indexes=[before.index(),after.index()];results=[]
+ for row,ev in zip(cases,encoded['rows'],strict=True):
+  out={**row,'execution':'executed_before_and_after','route':'whole_pool_probe_not_frozen_core_slot_projection'};expected={lookup[x] for x in row['expected_cards']}
+  for label,g,index in zip(['before','after'],[before,after],indexes,strict=True):
+   res=index.search(row['query'],ev['embedding'],encoded['binding']);assert res['lane_calls']=={'BM25F':1,'local_cosine':1};order=res['order']
+   out[label]={'generation_id':g.id,'population':res['considered_CIDs'],'top8':order[:8],'target_rank':next((i+1 for i,r in enumerate(order) if r['cid'] in expected),None),'new_at8':[r['cid'] for r in order[:8] if r['cid'] in new]}
+  results.append(out)
+  if len(results)%16==0:print('searched',len(results),flush=True)
+ positives=[r for r in results if r['cohort']=='development'];controls=[r for r in results if r['cohort']!='development']
+ summary={'status':'whole_pool_execution_complete','queries':len(results),'before_after_executions':len(results)*2,'development_queries':len(positives),'control_queries':len(controls),
+ 'after_target_at8':sum(r['after']['target_rank'] is not None and r['after']['target_rank']<=8 for r in positives),
+ 'after_target_at32':sum(r['after']['target_rank'] is not None and r['after']['target_rank']<=32 for r in positives),
+ 'by_language':{l:{'queries':sum(r['language']==l for r in positives),'target_at8':sum(r['language']==l and r['after']['target_rank'] is not None and r['after']['target_rank']<=8 for r in positives)} for l in ['ko','en']},
+ 'controls_with_new_at8':sum(bool(r['after']['new_at8']) for r in controls),'before_positive_CIDs':before.manifest['CID_count'],'after_positive_CIDs':after.manifest['CID_count'],
+ 'new_native_snapshots_exact':True,'kernel_and_embedding_space_preserved':True,'limits':'Authored development and engineering controls. Not independent holdout, complete source/role native qualification, sampled exposure, generated-pixel success, or causal improvement. Expected targets are new IDs absent before.'}
+ write(O/'retrieval-qualification.json',{'summary':summary,'cases':results});print(json.dumps(summary),flush=True)
+if __name__=='__main__':main()

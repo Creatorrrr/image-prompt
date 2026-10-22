@@ -1,0 +1,138 @@
+"""Register reviewed complete options and contextual distinctions; no native approval."""
+from pathlib import Path
+import copy, csv, hashlib, json, sys, uuid
+O=Path(__file__).resolve().parent; R=O.parents[2]
+S=R/'skills/photo-prompt-image-generator'; A=S/'assets'
+Q=R/'docs/research-evidence/photo-prompt/decadent-domestic-splatter-20261022'
+sys.path.insert(0,str(S/'scripts'))
+import photo_candidate_corpus as corpus
+from photo_runtime_sources import source_update
+def read(p): return json.loads(p.read_bytes())
+def write(p,x): p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+
+# Authored after direct review of each bilingual proposition. Broad effect
+# declarations intentionally provide no partial-property compatibility proof.
+# These are not inferred from a research graph, gates, aliases or source URLs.
+EFFECTS={
+ 'A01':'material appearance','A02':'material color appearance','A03':'material appearance setting',
+ 'A04':'setting composition framing','A05':'material appearance lighting','A06':'subject age pose action setting',
+ 'A07':'material appearance count composition','A08':'subject age appearance setting composition',
+ 'A09':'setting lighting color','A10':'subject age count setting composition','A11':'setting material composition lighting',
+ 'A12':'material appearance composition','A13':'material appearance setting',
+ 'B01':'subject age count pose action relationship','B02':'subject age count pose action setting relationship',
+ 'B03':'setting material appearance relationship','B04':'subject age count pose action relationship',
+ 'B05':'subject age count setting action relationship','B06':'subject age count pose action relationship',
+ 'B07':'setting material relationship','B08':'setting composition relationship','B09':'subject age setting relationship',
+ 'B10':'subject age count pose action setting relationship','B11':'setting composition relationship',
+ 'B12':'setting appearance composition relationship','B13':'setting count text appearance','B14':'setting composition',
+ 'C01':'subject age count pose action expression setting composition relationship',
+ 'C02':'camera framing composition setting','C03':'setting appearance composition relationship',
+ 'C04':'subject age pose action appearance setting composition framing','C05':'appearance material composition',
+ 'C06':'count text appearance composition','C07':'subject age pose action setting relationship',
+ 'C08':'text appearance composition','C09':'subject age action pose setting appearance','C10':'subject age action pose text',
+ 'D01':'material appearance lighting','D02':'material appearance lighting','D03':'material appearance',
+ 'D04':'subject appearance material','D05':'subject age appearance material','D06':'subject appearance material',
+ 'D07':'subject age pose action material count','D08':'subject age pose action material appearance',
+ 'D09':'subject body_geometry material appearance setting','D10':'setting material color appearance',
+ 'E01':'setting count composition','E02':'subject age count pose action relationship',
+ 'E03':'setting material color appearance','E04':'setting appearance text composition',
+ 'E05':'subject material appearance','E06':'subject body_geometry appearance setting framing',
+ 'E07':'setting composition relationship','E08':'subject age count appearance setting',
+ 'F01':'subject count body_geometry appearance relationship','F02':'subject body_geometry appearance relationship',
+ 'F03':'subject count body_geometry appearance relationship','F04':'subject body_geometry appearance relationship',
+ 'F05':'subject body_geometry appearance color','F06':'subject body_geometry appearance material color',
+ 'F07':'subject count body_geometry appearance relationship','F08':'subject count body_geometry appearance relationship',
+ 'F09':'subject body_geometry appearance relationship','F10':'subject age appearance material relationship',
+ 'G01':'subject material appearance text','G02':'subject material appearance','G03':'subject material appearance',
+ 'G04':'subject count material appearance setting composition','G05':'subject count text setting composition',
+ 'G06':'subject body_geometry material appearance setting','G07':'subject body_geometry material appearance setting',
+ 'G08':'subject material text setting composition','G09':'subject body_geometry material appearance setting',
+ 'G10':'subject count material appearance composition','G11':'subject count text setting composition',
+ 'G12':'subject age count setting composition','G13':'subject age setting composition relationship',
+ 'G14':'subject age count pose action relationship','G15':'subject material appearance setting',
+ 'I01':'subject appearance lighting','I02':'subject age appearance lighting setting',
+ 'I03':'subject age count pose setting composition','I04':'subject age setting framing composition',
+ 'I05':'subject age pose action text setting','I06':'subject age body_geometry appearance setting composition'
+}
+
+def main():
+ before=read(O/'before.json');old=corpus.load(A)
+ assert corpus.digest(old)==before['corpus_sha256'],'Concurrent source drift: rebaseline before adopting'
+ cards=read(Q/'semantic-cards.json')['cards'];routes=read(Q/'keyword-routes.json')['routes']
+ sources={x['source_id']:x for x in read(Q/'sources.json')['sources']}
+ seeds={x['seed_id']:x for x in read(Q/'reference-seeds.json')['seeds']}
+ neighbors=read(Q/'existing-source-mapping.json');old_texts={x['content'].get('en',''):cid for cid,x in old['candidates'].items()}
+ assert set(EFFECTS)=={c['card_id'] for c in cards if c['observability']!='context'}
+ records={};bindings={};registry=[];decisions=[];current_neighbors=[]
+ for n in neighbors:
+  cid=n['candidate_id'];assert cid in old['candidates']
+  current_neighbors.append({**copy.deepcopy(n),'implementation_source_sha256':corpus.digest(old['candidates'][cid]),
+   'current_complete_record':old['candidates'][cid],'source_changed_since_research':old['candidates'][cid]!=n['record'],
+   'native_qualification_granted':False})
+ for card in cards:
+  key=card['card_id'];visual=card['observability']!='context';en=card['proposal_en'];ko=card['proposal_ko']
+  assert not visual or en not in old_texts,('Exact positive duplicate requires reuse review',key)
+  cid='cand_'+uuid.uuid5(uuid.NAMESPACE_URL,'image-prompt/decadent-domestic-splatter/20261022/'+key).hex
+  assert cid not in old['candidates']
+  terms=[seeds[i]['term'] for i in card['reference_seed_ids']]
+  meta={**copy.deepcopy(card),'schema':'photo-decadent-domestic-splatter-visual-semantics/v1',
+   'candidate_id':cid,'registration_status':'authored_source_module','seed_terms':terms,
+   'source_refs':[sources[i] for i in card['source_ids']],
+   'positive_en':en if visual else None,'positive_ko':ko if visual else None,
+   'native_approval':False,'native_qualification':'not_qualified',
+   'graph_scope':'review metadata only; no typed native facts, guards, owner permission or source qualification',
+   'pixel_status':'not_rendered','requester_acceptance':'pending',
+   'provenance_digest_scope':'research specification bytes, not source webpage bytes',
+   'translation_review':'bilingual complete source retained; independent translator review pending'}
+  application=(
+   'A complete optional fictional visual realization, never an automatic genre requirement. Preserve the entire positive English and Korean meaning: actual medium, every owner and part, cardinality, material, contact, endpoints, separation or continuity and current state. Use only where the independent frozen meaning and every affected dimension permit that complete realization. Cropped, hidden, partial or merely suggestive relations do not pass the full case. Material appearance does not certify composition, weave, historical age, provenance, intent, consent, coercion, kinship, diagnosis, life or death, elapsed time, sequence, sound or smell. A wax model, bronze sculpture, stage prosthetic, cloth tear, red liquid and declared fictional body injury retain different meanings; none substitutes automatically for another. Research metadata and citations confer no native facts, owner-selection permission or native qualification.'
+   if visual else
+   'Context-only diagnostic record excluded from the positive still-image pool. Preserve the declared narrative, critical, sexual, violent, material-testing or temporal distinction without inventing a mandatory visual recipe. Do not replace an explicitly requested event with an unrelated prop, performance or ordinary scene. Context meaning is retained without creating appearance requirements, owner permissions or native qualification.')
+  rec={'id':cid,'record_kind':'visual_option' if visual else 'diagnostic',
+   'content':{'en':en,'ko':ko,'definition':('Optional complete fictional realization: '+en if visual else 'Context-only distinction: '+en),
+    'aliases':list(dict.fromkeys(terms+[card['title_ko']])),'application_contract':application,'research_semantics':meta},
+   'conditions':{},'effects':{'dimensions':sorted(EFFECTS[key].split()) if visual else [],'properties':[]},
+   'provenance':[{'source':sources[i]['url'],'sha256':sha(Q/'semantic-cards.json')} for i in card['source_ids']]}
+  records[cid]=rec;registry.append(meta)
+  if visual:
+   for slot in card['proposed_slots']:
+    assert slot in old['slot_catalog']
+    bid='bind_'+uuid.uuid5(uuid.NAMESPACE_URL,cid+'/'+slot).hex
+    bindings[bid]={'id':bid,'candidate_id':cid,'slot_id':slot,'role':'optional',
+     'semantic_role':old['slot_catalog'][slot]['semantic_role'],'conditions':{'subject_applicability':{}},'weight':2}
+  linked=[n['candidate_id'] for n in neighbors if key in n['related_cards']]
+  decisions.append({'card_id':key,'candidate_id':cid,'decision':'new_bounded_optional_variant' if visual else 'context_diagnostic',
+   'reason':'Complete bounded realization adds explicit medium, owner, endpoint/state or claim boundary; existing sources and their intrinsic guards/effects remain unchanged. No exact positive sentence duplicate found.' if visual else 'Meaning requires context or additional evidence; excluded from positive image retrieval.',
+   'exact_positive_duplicate':False,'related_existing_cids':linked,'full_corpus_semantic_equivalence_claim':False,
+   'native_approval':False,'source_review':'each bilingual proposition and broad effect dimensions directly reviewed; no automatic graph-to-fact conversion'})
+ assert len(records)==108 and sum(x['record_kind']=='visual_option' for x in records.values())==86
+ nm='photo_candidate_decadent_domestic_splatter_20261022.json';bm='photo_candidate_decadent_domestic_splatter_bindings_20261022.json'
+ assert not (A/nm).exists() and not (A/bm).exists()
+ manifest=read(A/corpus.MANIFEST_NAME);manifest['modules'] += [{'file':nm,'kind':'candidates'},{'file':bm,'kind':'slot_bindings'}]
+ with source_update(S):
+  assert corpus.digest(corpus.load(A))==before['corpus_sha256']
+  write(A/nm,{'schema':corpus.MODULE_SCHEMAS['candidates'],'candidates':records})
+  write(A/bm,{'schema':corpus.MODULE_SCHEMAS['slot_bindings'],'slot_bindings':bindings})
+  write(A/corpus.MANIFEST_NAME,manifest);now=corpus.load(A)
+  assert all(now['candidates'][k]==v for k,v in old['candidates'].items())
+  assert all(now['slot_bindings'][k]==v for k,v in old['slot_bindings'].items())
+  assert all(now[k]==old[k] for k in ['slot_catalog','policies'])
+ lookup={c['card_id']:c['candidate_id'] for c in registry};enriched=[]
+ for route in routes:
+  row=copy.deepcopy(route);row['candidate_ids']=[lookup[k] for k in row['optional_visual_card_ids']+row['context_card_ids']]
+  row['native_approval']=False;row['label_activation']='none; advisory post-core discovery only';enriched.append(row)
+ result={'schema':'photo-decadent-domestic-splatter-semantic-registry/v1','cards':registry,'keyword_routes':enriched,
+  'decisions':decisions,'existing_source_mapping':current_neighbors,'native_approval':False,
+  'research_spec_sha256':sha(Q/'semantic-cards.json'),
+  'counts':{'cards':108,'visual_options':86,'diagnostics':22,'bindings':len(bindings),'keyword_routes':len(enriched),
+   'directed_relation_gates':sum(len(c['gates']) for c in cards)}}
+ write(A/'photo_decadent_domestic_splatter_semantics_20261022.json',result)
+ write(O/'new-native-records.json',records);write(O/'changed-native-records.json',{});write(O/'data-integration.json',result)
+ write(O/'source-preservation.json',{'status':'pass','old_candidates':len(old['candidates']),'new_candidates':108,
+  'old_bindings':len(old['slot_bindings']),'new_bindings':len(bindings),
+  'all_old_candidates_bindings_catalog_policies_identical':True,'old_corpus_sha256':corpus.digest(old),'new_corpus_sha256':corpus.digest(now)})
+ with (Q/'DATA-ADOPTION.tsv').open('w') as f:
+  w=csv.DictWriter(f,fieldnames=['card_id','candidate_id','decision','reason'],delimiter='\t');w.writeheader();w.writerows({k:d[k] for k in w.fieldnames} for d in decisions)
+ print(json.dumps(result['counts']))
+if __name__=='__main__':main()

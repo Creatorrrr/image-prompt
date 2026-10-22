@@ -1,0 +1,79 @@
+"""Verify actual independent attempts and copy review evidence; never invoke images."""
+from pathlib import Path
+import hashlib,json,struct,shutil
+O=Path(__file__).resolve().parent;R=O.parents[2]
+D=R/'docs/research-evidence/photo-prompt/decadent-domestic-splatter-20261022';E=D/'integration-evidence'
+def read(p):return json.loads(p.read_bytes())
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def write(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+
+def main():
+ reference=Path('/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg')
+ skill=R/'skills/photo-prompt-image-generator/SKILL.md';retrieval=read(D/'image-tests/managed-retrieval-summary.json');cases=[];checked={}
+ specs=[
+  ('A','dds-arm-a-20261022-bcef4064','final-prompt.txt','image_runs.ndjson','run_manifest.json',None,None,
+   D/'image-tests/arm-a/blocked-status.json',D/'image-tests/arm-a/pixel-review-blocked.json'),
+  ('B','dds-arm-b-20261022-1c937745','authored/final-prompt.txt','image_runs.corrected.ndjson','run_manifest.corrected.json',
+   'output/arm-b-intercom-collection.png','authored/native-output-provenance.json',D/'image-tests/arm-b/final-evidence-manifest.json',
+   R/'generated/photo-runs/dds-arm-b-20261022-1c937745/authored/topic-pixel-review.json'),
+  ('C','dds-arm-c-20261022-7ba06d79','final-prompt.txt','image_runs.ndjson','run_manifest.json',
+   'arm-c-final.png','native-tool-result.json',D/'image-tests/arm-c/delivery-report.json',D/'image-tests/arm-c/pixel-review.json')]
+ def verify_report_nodes(x):
+  if isinstance(x,dict):
+   if isinstance(x.get('path'),str) and isinstance(x.get('sha256'),str):
+    p=Path(x['path']);p=p if p.is_absolute() else R/p
+    assert p.is_file(),p
+    assert sha(p)==x['sha256'],('report hash drift',p)
+    checked[str(p)]=sha(p)
+   for v in x.values():verify_report_nodes(v)
+  elif isinstance(x,list):
+   for v in x:verify_report_nodes(v)
+ for arm,name,prompt,ledger,manifest,image,origin,report,pixel in specs:
+  run=R/'generated/photo-runs'/name;w=read(run/'workflow.json');assert w['phase']=='prompt_delivered'
+  lines=(run/ledger).read_text().splitlines();assert len(lines)==1;row=json.loads(lines[0]);core=read(Path(w['artifacts']['authorial_core_normalized']['path']))
+  assert row['image_call_count']==1 and row['tool']=='image_gen' and row['generation_environment']=='native_imagegen'
+  assert row['candidate_pack_version']=='h-f2-v2' and row['cross_arm_inputs_used'] is False
+  assert row['skill_sha256']==sha(skill)
+  assert row['authorial_core_sha256']==core['canonical_sha256'] and row['intent_lock_sha256']==core['intent_lock']['canonical_sha256']
+  assert row['reference_sha256']==[sha(reference)]
+  assert (run/prompt).read_text().strip()==row['prompt_en']
+  plan_path=Path(row['native_render_plan_json']);assert sha(plan_path)==row['native_render_plan_sha256'];plan=read(plan_path)
+  assert plan['payload']['referenced_image_paths']==[str(reference)]
+  assert hashlib.sha256(plan['payload']['prompt'].encode()).hexdigest()==row['runtime_prompt_sha256']
+  for binding in plan['inputs'].values():assert sha(Path(binding['path']))==binding['sha256']
+  root=read(E/f'root-pixel-review-{arm.lower()}.json');image_path=run/image if image else None;original=None;dimensions=None
+  if image:
+   assert row['status']=='success' and root['viewed_original'] is True
+   assert sha(image_path)==root['image_sha256']==row['image_hashes'][0]['sha256']
+   provenance=read(run/origin);original=Path(provenance['actual_tool_returned_path'] if arm=='B' else provenance['original_path_returned_by_tool'])
+   assert sha(original)==sha(image_path);data=image_path.read_bytes();assert data[:8]==b'\x89PNG\r\n\x1a\n';dimensions=list(struct.unpack('>II',data[16:24]))
+  else:
+   assert row['status']=='safety_block' and row['image_paths']==[] and root['outcome']=='BLOCKED_NO_PIXELS'
+   original_evidence=read(run/'native-attempt-error.json');projection=read(run/'native-protocol-projection.json')
+   assert [k for k in original_evidence if original_evidence[k]!=projection[k]]==['tool','generation_environment']
+   assert original_evidence['raw_error']==projection['raw_error'] and original_evidence['outcome']==projection['outcome']
+  verify_report_nodes(read(report))
+  q=next(x for x in retrieval['arms'] if x['arm']==arm)
+  case={'arm':arm,'run':str(run),'phase':w['phase'],'image_path':str(image_path) if image_path else None,'image_sha256':sha(image_path) if image_path else None,
+   'native_original_path':str(original) if original else None,'native_and_workspace_bytes_identical':True if image else None,'dimensions':dimensions,
+   'prompt_path':str(run/prompt),'prompt_file_sha256':sha(run/prompt),'runtime_prompt_sha256':row['runtime_prompt_sha256'],
+   'ledger_path':str(run/ledger),'ledger_sha256':sha(run/ledger),'ledger_run_id':row['run_id'],'independent_manifest_path':str(run/manifest),'manifest_sha256':sha(run/manifest),
+   'actual_image_calls':1,'image_status':row['status'],'additional_image_calls':0,'fallback_calls':0,'new_candidate_ids_exposed':q['new_CIDs'],'new_candidates_used':[],
+   'pixel_outcome':root['outcome'],'original_gate_passes':root['pass_count'],'original_gate_count':root['gate_count'],'complete_case_pass':root['complete_case_pass'],
+   'agent_report':str(report),'agent_report_sha256':sha(report),'agent_pixel_review':str(pixel),'agent_pixel_review_sha256':sha(pixel),'root_pixel_review':str(E/f'root-pixel-review-{arm.lower()}.json'),
+   'user_judgment':'pending'}
+  cases.append(case)
+  for dest,src in {'ledger.ndjson':run/ledger,'run-manifest.json':run/manifest,'native-plan.json':plan_path,'prompt.txt':run/prompt,'agent-pixel-review.json':pixel}.items():shutil.copyfile(src,D/'image-tests'/f'arm-{arm.lower()}-{dest}')
+ b_original=read(R/'generated/photo-runs/dds-arm-b-20261022-1c937745/image_runs.ndjson')
+ b_correct=read(R/'generated/photo-runs/dds-arm-b-20261022-1c937745/image_runs.corrected.ndjson')
+ assert [k for k in b_original if b_original[k]!=b_correct[k]]==['skill_sha256']
+ output={'schema':'decadent-domestic-splatter-independent-test-results/v1','status':'three_attempts_two_images_one_block','actual_image_calls':3,'images_returned':2,
+  'pixel_complete_passes':1,'pixel_partial_cases':1,'blocked_no_pixel_cases':1,'evaluable_images':2,'latest_skill_sha256':sha(skill),'reference_sha256':sha(reference),
+  'generation_id':read(O/'successor.json')['generation_id'],'new_unique_CIDs_exposed':len(retrieval['new_CIDs_across_arms']),'new_CIDs_used':0,
+  'source_file_hashes_verified':len(checked),'source_files':checked,'cases':cases,
+  'provenance_recoveries':{'A':'Original JS capture and recorder failure preserved. Explicit two-label family/environment protocol projection records the same blocked call; raw error, outcome, request and actual timestamps unchanged. No source-code changes or new image call.',
+   'B':'Erroneous original skill-hash ledger/manifest preserved. Corrected authoritative ledger for the same run_id/op differs only in skill_sha256; no new attempt.',
+   'C':'Agent model-capacity interruption resumed at the same frozen core, query receipts and sample; no new model selection or generation attempt.'},
+  'limits':['Preregistered bounded non-graphic residue tests, not exhaustive genre/gore or 108-card qualification.','New source discovery was observed, but all arms declined new candidates; these pixels do not prove causal improvement from the new data.','Native whole-source qualification and user acceptance remain separate.','A has no pixels; its provider block is not an observed visual failure.']}
+ write(D/'IMAGE-TEST-RESULTS.json',output);print(json.dumps({k:v for k,v in output.items() if k not in ['cases','source_files','provenance_recoveries','limits']}))
+if __name__=='__main__':main()
