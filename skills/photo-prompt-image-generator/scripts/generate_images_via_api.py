@@ -28,6 +28,7 @@ RECORD = SCRIPT_DIR / "record_image_run.py"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 from image_attempt_evidence import capture_api_error, write_evidence
+from photo_retry_policy import can_repeat_captured
 from photo_api_render import prepare_api_render, save_preflight
 
 
@@ -109,7 +110,8 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
     model: str, size: str, attempts: int, concept: str | None, slug: str | None, out_base: Path,
     timestamp: str, runtime_store: Path | None = None, dry_run: bool = False,
     ledger: Path | None = None, key: str | None = None, initial_retry_of: str | None = None,
-    workflow_operation_id: str | None = None, attempt_event=None, execution_summary: Path | None = None) -> bool:
+    workflow_operation_id: str | None = None, attempt_event=None, execution_summary: Path | None = None,
+    initial_attempt: int = 1) -> bool:
     summary = {"schema_version": "photo-api-execution/v1", "operation_id": workflow_operation_id,
                "image_call_count": 0, "attempts": [], "status": "preparing"}
     def event(stage, **fields):
@@ -126,7 +128,7 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
     resolved_slug = slug_for(pack_file, slug)
     if workflow_operation_id is not None and not re.fullmatch(r"[0-9a-f]{32}", workflow_operation_id):
         raise ValueError("invalid workflow operation ID")
-    if attempts < 1:
+    if type(initial_attempt) is not int or initial_attempt < 1 or attempts < 1:
         print("attempts must be positive", file=sys.stderr)
         return False
     out_dir = out_base / (workflow_operation_id if workflow_operation_id else f"{resolved_slug}-{timestamp}-{uuid.uuid4().hex}")
@@ -165,7 +167,7 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
         return False
 
     previous_run_id: str | None = initial_retry_of
-    for attempt in range(1, attempts + 1):
+    for attempt in range(initial_attempt, initial_attempt + attempts):
         status, failure, dest, evidence = None, None, None, None
         started_at = datetime.datetime.now().astimezone().isoformat(timespec="microseconds")
         call_returned = False
@@ -195,7 +197,6 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
             status = "success"
             print(f"[{resolved_slug}] attempt {attempt} OK → {repo_ledger_path(dest)}")
         except Exception as error:  # noqa: BLE001 - 네트워크/디코딩 등 모든 실패를 레저에 기록
-            retry_allowed = isinstance(error, urllib.error.HTTPError) and error.code in {429, 500, 502, 503, 504}
             evidence = capture_api_error(error, {
                 "tool": "openai_images_api", "generation_environment": "openai_images_api", "attempt": attempt,
                 "started_at": started_at, "ended_at": datetime.datetime.now().astimezone().isoformat(timespec="microseconds"),
@@ -203,6 +204,7 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
                 "provider_outcome": "returned" if call_returned else ("rejected" if isinstance(error, urllib.error.HTTPError) else "unknown"),
                 "request": {"prompt_en": prompt_en, "negative_en": negative_en, "runtime_prompt_en": full_prompt, "requested_model": model, "size": size},
             })
+            retry_allowed = can_repeat_captured(evidence)
 
         evidence_path, evidence_sha256 = None, None
         if evidence is not None:
@@ -290,10 +292,10 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
         previous_run_id = ledger_result["run_id"]
         event("attempt_recorded", attempt=attempt, ledger_run_id=previous_run_id, outcome=status,
               provider_outcome=evidence.get("provider_outcome") if evidence else "returned",
-              terminal=(status == "success" or status == "safety_block" or not retry_allowed or call_returned or attempt == attempts))
+              terminal=(status == "success" or not retry_allowed or call_returned or attempt == initial_attempt + attempts - 1))
         if status == "success":
             return True
-        if status == "safety_block" or (not call_returned and not retry_allowed):
+        if not call_returned and not retry_allowed:
             return False
         if call_returned:
             # The provider returned an image; retrying a local save failure would
