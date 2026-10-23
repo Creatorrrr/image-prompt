@@ -1,3 +1,5 @@
+Historical integration-test snapshot; subsequent Git publication is recorded in [PUBLISHING.md](../PUBLISHING.md).
+
 # Completed military integration status
 
 The user-authorized data integration and three independent latest-skill reference-guided image tests are complete. No task work remains active. No commit or push was performed.
