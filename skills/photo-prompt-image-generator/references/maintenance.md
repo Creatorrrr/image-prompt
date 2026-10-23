@@ -133,3 +133,13 @@ display, canopy, sign and represented-image owners remain distinct; historical
 context and invisible function do not become pixel claims. Source registration,
 sealed retrieval, audited prompt use and saved-image evidence are checked
 separately. Research graphs and citations confer no native qualification.
+
+The [space-opera extension](space-opera-visual-semantics.md) retains 72 semantic
+cards, 26 contextual distinctions and 291 keyword routes, with 62 complete
+optional bilingual visual sources, 33 positive-retrieval-excluded diagnostics
+and 120 optional bindings. Three existing pressure/thermal/life-support sources
+are reused without mutation; four source-dependent cards remain held. Space
+scale, structure, function, political rights, distributed identity, consent,
+kinship, event history and physical performance retain separate evidence
+boundaries. Source registration, installed exposure, exact prompt use and saved
+pixels are verified separately; research graphs confer no native approval.

@@ -1,0 +1,92 @@
+{
+  "schema": "photo-arm-testcase/v1",
+  "arm_id": "c",
+  "run_path": "generated/photo-runs/space-opera-20261023-c",
+  "request_sha256": "7193809a0bf46b3de34d9a68c56cdea3c2ff2c019d8cdad6025fbb33fd5fca02",
+  "core_sha256": "8a5c854bad4c171e4d3202d10139f30b006887e37345879177d68a398d619270",
+  "topic": "space opera",
+  "agent_owned_pillar": "multi-species crew working together",
+  "random_concept_file": "concept-randomization.json",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "role": "face_and_hair_appearance_guidance",
+    "identity_claim": false
+  },
+  "prospective_pixel_gates": [
+    {
+      "id": "space_opera_cosmic_scale",
+      "scope": "topic",
+      "required_together": [
+        "interior of a spacegoing vessel",
+        "window into outer space",
+        "multiple distinct convoy vessels",
+        "one much larger vessel establishing relative fleet scale"
+      ],
+      "review_scale": [
+        "thumbnail",
+        "native"
+      ],
+      "pass_rule": "All components visible in the same original image; spaceship controls or a starfield alone are insufficient."
+    },
+    {
+      "id": "space_opera_inhabited_society",
+      "scope": "topic",
+      "required_together": [
+        "human professional",
+        "two visibly distinct nonhuman shipmates",
+        "shared work environment"
+      ],
+      "review_scale": [
+        "thumbnail",
+        "native"
+      ],
+      "pass_rule": "Distinct species cues belong to distinct crew; color variation alone is insufficient."
+    },
+    {
+      "id": "cooperative_calibration",
+      "scope": "agent_selected_testcase",
+      "required_together": [
+        "navigator hand connected to own forearm at inner ring",
+        "amphibious colleague contact with same outer cradle",
+        "plated colleague hand at side dial",
+        "shared lens instrument"
+      ],
+      "review_scale": [
+        "native"
+      ],
+      "pass_rule": "All three owners and assigned contacts must be connected and visible together; one visible touch or inferred off-frame hand cannot pass."
+    },
+    {
+      "id": "optical_result_route",
+      "scope": "agent_selected_testcase",
+      "required_together": [
+        "single amber ray",
+        "passage through lens",
+        "visible endpoint star mark on table"
+      ],
+      "review_scale": [
+        "native"
+      ],
+      "pass_rule": "Both route endpoints and intervening lens crossing must be visible together. Nearby glow, generic holo-map or partial beam is fail."
+    },
+    {
+      "id": "reference_face_hair_guidance",
+      "scope": "reference_use",
+      "required_together": [
+        "human soft oval facial form",
+        "large dark eyes",
+        "dark chin-length straight bob",
+        "airy fringe"
+      ],
+      "review_scale": [
+        "native"
+      ],
+      "pass_rule": "Compare the actual portrait and original image for appearance cues; record guidance fidelity only, never identity."
+    }
+  ],
+  "qualification": "UNOBSERVABLE_NOT_PASS; partial_is_fail; no image means UNSCORED",
+  "user_judgment": "pending",
+  "image_call_budget": 1,
+  "runtime": "built-in image_gen initial reference-guided generation; no CLI/API fallback authorized"
+}
