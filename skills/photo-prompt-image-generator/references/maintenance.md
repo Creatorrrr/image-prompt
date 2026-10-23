@@ -124,3 +124,12 @@ The [clockpunk extension](clockpunk-semantics.md) retains 88 research cards and
 transmission, regulation, cam programming and astronomical-instrument owners
 remain distinct. Source registration, sealed retrieval, actual prompt use and
 saved-image relation gates are separately checked; seven cards remain held.
+
+
+The [atompunk extension](atompunk-semantics.md) retains 101 semantic cards and
+191 advisory keyword routes, with 88 complete optional bilingual visual sources,
+13 positive-retrieval-excluded diagnostics and 176 optional bindings. Device,
+display, canopy, sign and represented-image owners remain distinct; historical
+context and invisible function do not become pixel claims. Source registration,
+sealed retrieval, audited prompt use and saved-image evidence are checked
+separately. Research graphs and citations confer no native qualification.
