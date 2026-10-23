@@ -210,3 +210,11 @@ figures retain separate owners and endpoints. Time, sound, success, skill,
 identity, consent, real romance and health are not inferred from still-image
 proxies. Nine topics retain additional-source holds. Registration, installed
 exposure, actual prompt use and saved-image quality remain separate results.
+
+The [medical-drama extension](medical-drama-semantics.md) retains 172 research cards and
+346 advisory keyword routes. It registers 99 complete optional bilingual visual
+sources, 51 positive-retrieval-excluded context/held diagnostics and 198 optional
+bindings, reusing 22 existing complete sources without mutation. Garment layers,
+bodily supports, hand contacts, instrument endpoints and depicted-media owners
+remain explicit. Research metadata, installed exposure, audited prompt use and
+saved-image relations are separate evidence layers.
