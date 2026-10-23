@@ -143,3 +143,13 @@ scale, structure, function, political rights, distributed identity, consent,
 kinship, event history and physical performance retain separate evidence
 boundaries. Source registration, installed exposure, exact prompt use and saved
 pixels are verified separately; research graphs confer no native approval.
+
+
+The [Gaslamp Fantasy extension](gaslamp-fantasy-semantics.md) retains 113 semantic
+cards, 217 reference routes, 72 new complete bilingual visual sources, 35 excluded
+diagnostics and 144 optional presentation bindings. Six existing sources remain
+unchanged. Its 445 observable checks separate complete owners, boundaries and
+endpoints from identity, consent, provenance, chronology and supernatural cause.
+Three reference-guided native images show the genre but all fail their frozen
+whole-scene relations; source registration and visible local components do not
+confer native qualification or requester acceptance.
