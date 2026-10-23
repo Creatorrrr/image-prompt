@@ -1,5 +1,7 @@
 # 아이돌물 리서치 패키지
 
+게시 범위·main 통합 검증·영구 증거 위치·정리 정책은 [PUBLICATION.md](PUBLICATION.md)를 확인한다.
+
 > 후속 실행: 실제 등록·설치·검색 결과는 [반영 결과](INTEGRATION-RESULTS.md), 세 독립 이미지 실험은 [이미지 테스트 결과](IMAGE-TEST-RESULTS.md)를 확인한다. 아래 수량과 미실행 표시는 최초 연구 스냅샷 당시의 상태다.
 
 2026-10-23 KST. 참조 대화 [아이돌물 용어 조사](https://chatgpt.com/c/6adb5ac9-6bb0-83ee-b5e0-cfccf3213ca6)를 로그인된 Chrome에서 끝까지 읽고 진행한 연구다.

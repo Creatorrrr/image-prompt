@@ -21,4 +21,8 @@ Raw JSON/receipt/ledger와 child report는 해시·실행 바인딩을 보존하
 
 먼저 이번 source와 증거를 커밋한 뒤 `git pull --no-rebase --no-edit origin main`으로 원격 변경을 통합한다. 충돌은 기존 main의 모든 항목과 이번 source를 보존하고, 파생 검색 index는 합쳐진 전체 source에서 다시 만든다. dictionary/index 및 관련 기존 테스트를 통과한 최종 상태만 main에 정상 fast-forward push한다.
 
-원격 main SHA와 최종 커밋을 확인한 뒤, 영구 증거 복사본의 해시를 검증하고 이번 전용 생성·빌드·캐시 폴더 및 publication worktree를 정리한다. 현재 설치된 공유 runtime과 다른 작업의 파일·worktree·캐시, 사용자의 원본 참조 사진은 유지한다. 정리 이력은 기본 작업 폴더의 `publication-evidence/cleanup-receipt.json`으로 남긴다.
+원격 main SHA와 최종 커밋을 확인한 뒤, 영구 증거 복사본의 해시를 검증하고 이번 전용 생성·빌드·캐시 폴더 및 publication worktree를 정리한다. 현재 설치된 공유 runtime과 다른 작업의 파일·worktree·캐시, 사용자의 원본 참조 사진은 유지한다. 정리 대상의 정확한 파일·해시는 `publication-evidence/cleanup-plan.json` 및 압축 inventory로 커밋하고, 실행 후 영구 감사 영수증은 `/Users/chasoik/.codex/cleanup-receipts/idol-fiction-publication-20261024.json`에 남긴다.
+
+## 통합 검증 결과
+
+최초 source 커밋 `ef037a66981c` 후 origin/main을 pull했으며 `03be907adda9a3e9c3ef94a3bbfacaeb6dba7968`과 충돌 없이 통합됐다. 기존 후보20,791개·binding15,636개의 source 바이트를 보존했다. 최종 후보20,956개·binding15,855개, positive20,264개에 대해 dictionary 오류0과 전체 index 재검증 PASS를 확인했다. 기존 의미 경계21개·원문 처리24개 테스트도 통과했다. 이 결과는 데이터/검색 무결성 검증이며 이전 이미지의 미통과 판정을 바꾸지 않는다.
