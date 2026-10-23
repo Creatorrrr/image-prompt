@@ -37,3 +37,13 @@ The final layout is `46528a47b95c4e5cbcf0d5644738da99720da0b01f55778eb93151757c6
 removed only when absent from the final declared closure. Publication proof:
 `publication-evidence/index-build.final.json`, `index-closure.final.json`,
 `both-parent-blob-verification.json`, and `dictionary-validation.final.json`.
+
+## Final concurrent harem merge
+
+A normal push was rejected when harem publication advanced origin/main. The
+faf00ed374930029ff28ba0922437320e6cb5975 upstream source was merged without force, retaining every source module
+byte-exact and all 150 medical records. This supersedes the earlier index
+validation snapshot above: final CIDs 21691, bindings 16388, positive 20592.
+The final layout is `9c278bfcbe987934280267b154dce34f929d6ced733d523b7a63cc770f547b76`. Vector reuse 20493, qualified cache hits 99, provider calls 0.
+Both inherited index closures were treated as derived data and replaced by the
+exact merged-source closure. The original three image results are unchanged.
