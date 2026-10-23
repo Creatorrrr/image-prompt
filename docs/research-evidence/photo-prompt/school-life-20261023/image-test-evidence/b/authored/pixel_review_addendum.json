@@ -1,0 +1,75 @@
+{
+  "schema": "school-life-arm-pixel-review-addendum/v1",
+  "arm": "b",
+  "provenance": "own direct pixel reinspection prompted by parent independent full-frame review",
+  "original_report": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/authored/pixel_report.json",
+    "sha256": "92725e666cd5892a1f79587cbe3865a8447c9857e877b853341c941a86303c2a",
+    "original_summary_preserved": {
+      "passed": 12,
+      "required_total": 14,
+      "complete_testcase": "FAIL"
+    }
+  },
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/results/arm-b-native-01.png",
+    "sha256": "e291389b52107bcbb390460e6d42e8f346a2b6a2ac04aaae7049d1ca982f7bc2"
+  },
+  "test_plan_sha256": "7ac54b0254cae6f07ac60d3245685285bfdf7ceeedc8e4b4324b1cf4ae5f1bda",
+  "gate_criteria_changed": false,
+  "regeneration_performed": false,
+  "correction": {
+    "gate_id": "B12_frame_hierarchy",
+    "original_status": "pass",
+    "corrected_status": "fail",
+    "observability": "partial",
+    "verdict": "UNOBSERVABLE_NOT_PASS",
+    "reason": "The initial PASS mistook the printed graphic corner and visible white margin for a complete outer sheet boundary. Reinspection of the unresampled lower strip shows white paper continuing to the frame bottom around native x620–665, y1023, and the camera-near/left outer paper corner cannot be completely traced within the image. The frozen entire-sheet criterion is not proven.",
+    "evidence_crops": [
+      {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/analysis-crops/paper-front-boundary.png",
+        "source_box_xyxy": [
+          0,
+          800,
+          1536,
+          1024
+        ],
+        "resampled": false
+      },
+      {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/analysis-crops/paper-front-left.png",
+        "source_box_xyxy": [
+          350,
+          900,
+          850,
+          1024
+        ],
+        "resampled": false
+      }
+    ]
+  },
+  "corrected_summary": {
+    "passed": 11,
+    "required_total": 14,
+    "unobservable_not_pass": [
+      "B08_print_visible_result",
+      "B09_peer_pointing_support",
+      "B12_frame_hierarchy"
+    ],
+    "complete_testcase": "FAIL",
+    "school_life_topic_visible": true,
+    "reference_features_visually_consistent": true,
+    "causal_improvement_claim": false,
+    "user_acceptance": "pending"
+  },
+  "interpretation_boundary_notes": [
+    {
+      "gate_id": "B02_art_club_festival",
+      "frozen_wording": "earlier prints hang from clips beneath the classroom windows / 교실 창문 아래 집게로 매단 이전 인쇄물",
+      "observed_pixels": "The clipped wave-and-sun prints hang in front of the window glazing, from a line below the upper window frame; they do not appear entirely below the complete window/lower sill. They belong visibly to the same classroom art-club/festival activity.",
+      "ambiguity": "The frozen phrase can be read as below the window as a whole or as the window-side lower hanging area. It did not independently freeze a sill boundary, whole-window bounding box or exact height reference.",
+      "decision": "No new spatial restriction is introduced after image inspection. Preserve the original B02 school-club/festival-context observation and PASS record, while not claiming that these pixels prove an exact below-the-entire-window position. This positional correspondence remains an interpretation boundary, not an added success claim or a relaxed/replaced gate.",
+      "context_observation": "The school-festival and art-club context itself is clearly visible."
+    }
+  ]
+}

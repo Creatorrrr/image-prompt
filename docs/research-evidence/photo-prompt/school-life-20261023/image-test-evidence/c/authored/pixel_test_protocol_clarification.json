@@ -1,0 +1,21 @@
+{
+  "schema_version": "photo-pixel-test-protocol-clarification/v1",
+  "source_plan_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/authored/test_plan.json",
+  "source_plan_sha256": "c0a1fd6b9513bff357cc1f9f2b2511ba1f1eadd11cc20138e026206c532dd180",
+  "scope": "Terminology and full-test aggregation only; every original required component, relation, visibility scale and pass criterion remains unchanged.",
+  "original_plan_preserved": true,
+  "source": "Coordinator clarified evaluation protocol after the plan freeze.",
+  "rules": {
+    "image_returned_gate_hidden_or_insufficient": "UNOBSERVABLE_NOT_PASS",
+    "image_returned_partial_required_relation": "PARTIAL_NOT_PASS",
+    "image_returned_visible_contradiction": "FAIL",
+    "complete_testcase_if_any_required_gate_not_passed": "FAIL",
+    "no_actual_image_due_to_generation_block_or_no_pixel_outcome": "BLOCKED_UNSCORED",
+    "pass": "Every original required gate is visibly supported together with all of its required relations."
+  },
+  "replaces_wording_only": [
+    "Original plan decision_rules.unobservable and whole_test_blocked must not assign BLOCKED_UNSCORED to an actual returned image.",
+    "The same qualification wording correction applies inside original per-gate unobservable descriptions."
+  ],
+  "no_research_or_candidate_input": true
+}

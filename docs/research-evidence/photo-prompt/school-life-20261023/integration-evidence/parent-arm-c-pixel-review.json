@@ -1,0 +1,63 @@
+{
+  "schema": "photo-school-life-parent-arm-review/v1",
+  "arm": "c",
+  "image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/images/native-1.png",
+  "image_sha256": "a59d4c8f8181a78ad872ea2abb3ea4fab2c68869299b3f0643550abfd049a987",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "test_plan_sha256": "c0a1fd6b9513bff357cc1f9f2b2511ba1f1eadd11cc20138e026206c532dd180",
+  "review_context": "parent-review-context.json",
+  "image_first_description": "미술 교실의 단발 학생이 사람 형태가 그려진 문간 그림을 양손으로 붙들고 오른쪽의 빈 실제 문간을 바라본다. 그림과 실제 문 양쪽에 3칸 상부창이 보여 대비가 읽힌다.",
+  "gates": [
+    {
+      "gate_id": "C01",
+      "status": "VISIBLE_FAIL",
+      "evidence": "그림 책상 열·녹색 수업 보드·회색 조끼와 흰 셔츠의 학생은 보이지만 frozen baseline의 navy trousers가 눈에 보이는 남색 주름치마로 바뀌었다. 학교 장소/활동 인상은 존재해도 이 의복 gate는 FAIL이다."
+    },
+    {
+      "gate_id": "C02",
+      "status": "PASS",
+      "evidence": "삼사분면 얼굴 비례와 눈·코·입 배치가 원 참조와 이어지고, 문간을 살피는 집중·질문하는 기색이 보인다. 신원·내면 상태를 증명하지 않는다."
+    },
+    {
+      "gate_id": "C03",
+      "status": "PASS",
+      "evidence": "진한 턱 길이 단발과 갈라진 가는 앞머리가 같은 얼굴에 보인다."
+    },
+    {
+      "gate_id": "C04",
+      "status": "PASS",
+      "evidence": "그림의 문간에는 3칸 상부창과 사람 형태가 있고, 실제 문간에도 3칸 상부창이 있으나 보이는 실제 개구부는 비어 있다. 같은 프레임에서 차이를 비교할 수 있다."
+    },
+    {
+      "gate_id": "C05",
+      "status": "PASS",
+      "evidence": "그림판을 지지한 학생의 머리·눈이 오른쪽 실제 문간을 향하고 조용히 묻는 표정이 보인다."
+    },
+    {
+      "gate_id": "C06",
+      "status": "PASS",
+      "evidence": "양손이 서로 다른 그림판 양옆을 잡고 하단은 탁자에 맞닿는다. 먼쪽 팔 일부는 보드 뒤로 가려지나 한 인물의 그럴듯한 도달/접촉 관계로 읽히며 핵심 두 손·보드·탁자 끝점은 보인다. 가려진 팔 전체의 형상은 입증하지 않는다."
+    },
+    {
+      "gate_id": "C07",
+      "status": "PASS",
+      "evidence": "가로 사진에서 왼쪽 인물과 완전한 그림, 오른쪽 실제 문, 얼굴과 양손이 비교 가능한 크기로 함께 보인다."
+    },
+    {
+      "gate_id": "C08",
+      "status": "PASS",
+      "evidence": "창빛·절제된 색·사진 표면·밝게 남은 빈 문간이 조용한 미술 교실의 단서 비교라는 중심을 지지한다."
+    }
+  ],
+  "passed": 7,
+  "required": 8,
+  "complete_case": "FAIL",
+  "topic_visible": true,
+  "reference_appearance_consistent": true,
+  "extra_observations": [
+    "기준의 가로형 그림판은 세로형으로 생성됐다. 이 편차는 별도 관찰이며 미리 정한 C07의 가로 사진 구도와 혼동하지 않는다.",
+    "지정 바지→치마 변화는 C01 frozen evidence와 visible-fail rule에 해당한다."
+  ],
+  "new_candidate_causal_improvement": false,
+  "user_acceptance": "pending"
+}

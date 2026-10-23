@@ -1,0 +1,156 @@
+{
+  "schema": "photo-slot-expression-plan/v1",
+  "core_sha256": "b3bddee50135e8f13845e35de0a525d6595147d0998d56490b36dee61371646e",
+  "controls_sha256": "0d6f41bc460fb59eb0d126a1daf6c832fd8de5c5f2ed276a6bee6c7614b063e8",
+  "catalog_spec_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "overall_intent": "A school-life appearance and pose photograph in which a finished baking task explains the wearer loosening the front waist of her practical apron over a uniform. Keep face/hair reference cues, connected hand-to-knot action, completed bread and classroom in a quiet readable hierarchy; consider only restrained, source-compatible local alternatives at creativity one.",
+  "slots": {
+    "garment_state": {
+      "status": "search",
+      "reason": "The current fastening state makes the end of practical class readable through clothing rather than a detached outfit display.",
+      "expressive_goal": "Let a worn apron show the release of a completed manual task while the uniform remains distinguishable beneath it.",
+      "observable_targets": [
+        "Apron bib worn over the uniform",
+        "Front waist fastening visibly slackening",
+        "Flour-marked cotton and folded blouse sleeves"
+      ],
+      "owner_relations": [
+        "The apron is worn by the same student whose hands loosen its waist tie",
+        "The apron remains supported by its neck strap while its waist fastening loosens"
+      ],
+      "required_constraints": [
+        "Retain the school-life student and visible school-life moment",
+        "Preserve supplied face/hair reference scope without inferring real biography"
+      ],
+      "preserved_choices": [
+        "Apron worn over school uniform",
+        "Front fastening release after baking practical"
+      ],
+      "open_scope": [
+        "Local garment-state cues that improve the transition from work to rest",
+        "Cloth fold or fastening presentation that keeps the same coherent action"
+      ],
+      "unknowns": [],
+      "role_focus": "A student loosening the front waist tie of her practical-class apron after baking, with the worn apron still hanging over her school uniform. Show garment state as the consequence of useful work.",
+      "scene_context": "A home-economics classroom; finished bread is cooling beside the wearer. The apron is part of the current class activity.",
+      "language": "en",
+      "grounds": [
+        {
+          "source_pointer": "/event",
+          "start": 0,
+          "end": 26,
+          "quote": "An apron fastening loosens",
+          "source_sha256": "37cf472e24abc1a3f7c7b340fa3e2da49e2746eb5bdcec14a744c2c9c7472a39"
+        },
+        {
+          "source_pointer": "/visual_priorities/1",
+          "start": 0,
+          "end": 49,
+          "quote": "Flour on the worn apron and the nearby bread tray",
+          "source_sha256": "d0d3f0d3b4486b33ffae76763e51e5b5579169afb399f8aa598f9d6fabaeaeb9"
+        }
+      ],
+      "review": {
+        "author": "Codex",
+        "rationale": "Garment state concerns the existing worn apron and its fastening, distinct from changing the character identity or inventing a new outfit. Later material can support a local variation; the full source meaning must still be reviewed."
+      }
+    },
+    "contact_point": {
+      "status": "search",
+      "reason": "The two hand-to-fastening contacts are what distinguishes actual unfastening from merely holding loose cloth.",
+      "expressive_goal": "Make the action and its visible slackening result understandable together.",
+      "observable_targets": [
+        "Left hand steadying the front waist knot",
+        "Right hand pulling one loose tie sideways",
+        "Slack loop at the same fastening"
+      ],
+      "owner_relations": [
+        "Both hands belong to the apron wearer",
+        "Both grips act on the same front waist fastening",
+        "The pulled tie remains visibly connected to the worn apron"
+      ],
+      "required_constraints": [
+        "Keep the student and school-life moment",
+        "Keep the functional hand-target connection legible in one view"
+      ],
+      "preserved_choices": [
+        "Two distinct grips at the same front apron knot",
+        "A stable stance with elbows comfortably beside the waist"
+      ],
+      "open_scope": [
+        "Local grip, tie projection and cloth separation that improve readable contact",
+        "Small changes within the existing waist-height action"
+      ],
+      "unknowns": [],
+      "role_focus": "Two hands of one standing wearer meet her apron front waist fastening: one steadies the knot and the other pulls a loose end, producing a visibly slackening loop. Connect each grip and the garment target in one view.",
+      "scene_context": "An adult fictional student finishes a school baking practical beside her workbench; the apron remains worn over her uniform.",
+      "language": "en",
+      "grounds": [
+        {
+          "source_pointer": "/visual_priorities/0",
+          "start": 0,
+          "end": 102,
+          "quote": "Her two hands, the front apron knot and the slackening tie loop read as one connected clothing action.",
+          "source_sha256": "8676cad04bb369273f22032f06e7e51e67bd59bb260ccbdfcb0b19564acf66e1"
+        }
+      ],
+      "review": {
+        "author": "Codex",
+        "rationale": "This slot is about contact endpoints and ownership, not adding anatomy or a different interaction. The authored geometry already supports the action; optional material may clarify presentation only after complete-source review."
+      }
+    },
+    "situation_context": {
+      "status": "search",
+      "reason": "The class result gives the clothing action a reason and makes the moment readable beyond a costume portrait.",
+      "expressive_goal": "Connect a completed practical task to the wearer taking a small break.",
+      "observable_targets": [
+        "Completed bread on a nearby tray",
+        "Flour on the apron",
+        "Instructional worktables and chalkboard"
+      ],
+      "owner_relations": [
+        "The character stands beside the workbench used for class",
+        "The completed bread and worn apron share the same practical-class context",
+        "The face, fastening and class result remain legible together"
+      ],
+      "required_constraints": [
+        "Retain school-life context and student character",
+        "Do not turn uncertain imagined backstory into a visual fact"
+      ],
+      "preserved_choices": [
+        "Home-economics practical ending",
+        "Quiet transition from concentration to ease"
+      ],
+      "open_scope": [
+        "A local school-room circumstance or contextual trace that strengthens the same moment",
+        "Restrained replacement or subtraction of incidental room details"
+      ],
+      "unknowns": [],
+      "role_focus": "A school home-economics practical has just finished: a student starts loosening her flour-marked apron beside a tray of completed bread. Let the visible work result explain the garment adjustment and her relieved pause.",
+      "scene_context": "The photograph holds student, front waist action and cooling bread in one view inside a recognisable instructional room.",
+      "language": "en",
+      "grounds": [
+        {
+          "source_pointer": "/setting",
+          "start": 0,
+          "end": 52,
+          "quote": "A home-economics classroom after a baking practical.",
+          "source_sha256": "29b701f11ac2d6315777929716604fb835e4060fb01740ce6e77e3b66558cc84"
+        },
+        {
+          "source_pointer": "/event",
+          "start": 30,
+          "end": 91,
+          "quote": "its wearer checks completed bread at the end of the practical",
+          "source_sha256": "37cf472e24abc1a3f7c7b340fa3e2da49e2746eb5bdcec14a744c2c9c7472a39"
+        }
+      ],
+      "review": {
+        "author": "Codex",
+        "rationale": "The local school circumstance supports the existing activity. It does not authorize new people, a new world system, a biographical claim about the reference, or treating an unreadable diagram as narrative proof."
+      }
+    }
+  },
+  "semantic_approval": false,
+  "canonical_sha256": "12b54705b8f35ab7e307c33518c1e65763e9d36ee843c62addbf6ad15b0a0f52"
+}

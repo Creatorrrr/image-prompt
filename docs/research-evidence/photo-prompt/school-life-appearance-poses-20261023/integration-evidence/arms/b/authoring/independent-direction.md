@@ -1,0 +1,9 @@
+# Independent pre-core direction
+
+The requester topic resolves through the actual prior human school-life and pose/clothing messages. No project-local research, candidate, reference guide, earlier run, other arm, or generated image was accessed. The supplied portrait was viewed directly: dark chin-length bob, wispy separated fringe, dark eyes, soft oval lower face, straight brows, small natural lips and visible natural skin texture. These visible cues do not establish actual age, identity, character or history.
+
+Compare two ordinary school-life situations at effective sensual 1, fetish 0, surreal 0, creativity 1: a woman bracing on a classroom windowsill while catching a notebook page, versus a seated woman finishing a shoelace before leaving class. The first has a clear atmosphere but its hand-page event could become a generic reading portrait. The second connects a chosen outfit to a full articulated pose, weight support and hand-object contact in one modest everyday interruption. Choose the second.
+
+Agent-owned fiction: a 22-year-old university student pauses in a quiet classroom to tighten the lace of an Oxford shoe, right ankle across her left thigh. Her notebook and canvas bag rest on the next desk, making departure legible. The reference supplies visible face/hair only. Age, clothing, school role, action, chair and classroom are authorial realizations, not facts about the reference person or requester property locks. Subtle supporting appeal comes from her direct but unforced presence, the soft blouse and knit texture, and a brief glance up during the task.
+
+Selected before baseline drafting: situation, location, subject, pose, hand gesture, clothing, props, composition. The pose must keep pelvis-chair support, grounded left foot, right ankle-left thigh support and both hand-lace contacts visible together. A frontal three-quarter view with the lifted shoe turned toward the camera keeps the hands from hiding the relevant target.

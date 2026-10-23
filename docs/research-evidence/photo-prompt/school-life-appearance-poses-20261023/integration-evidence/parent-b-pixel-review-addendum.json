@@ -1,0 +1,51 @@
+{
+  "arm": "b",
+  "reviewer": "parent",
+  "reviewed_at_utc": "2026-10-23T11:39:34.196575+00:00",
+  "before_child_final_received": true,
+  "source_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-appearance-poses-20261023-b/results/school-life-b-original.png",
+  "image_sha256": "08a6def4b1cbac028d0ebc43db59f09f064228cbb0b34e89e173170aa37f86f3",
+  "primary_inspection": "Original saved whole image at original resolution; existing hands inspection crop consulted only for contact detail. Crop does not repair whole-frame composition.",
+  "first_impression_ko": "따뜻한 창가 빛의 강의실에서 하던 신발끈 작업 중 사진가를 잠깐 보는 자연스러운 귀가 준비 장면. 얼굴이 분명하고 작업 손과 지지한 다리가 연결된다.",
+  "gates": [
+    {
+      "id": "b_reference_appearance",
+      "result": "PASS",
+      "observability": "visible",
+      "evidence": "Dark chin-length curved bob, separated fringe and overall eye/brow/oval-face/lip proportions resemble the appearance guide."
+    },
+    {
+      "id": "b_support_chain",
+      "result": "PASS",
+      "observability": "visible",
+      "evidence": "Pelvis sits on wooden seat; left leg descends to a floor-supported shoe; right socked ankle crosses above left knee with connected leg ownership."
+    },
+    {
+      "id": "b_lace_contact",
+      "result": "FAIL",
+      "observability": "partial",
+      "evidence": "Both acting grips and the raised shoe are visible, but the horizontal cord and loop structure do not uniquely identify two independent free-end paths, one per hand, to that same shoe."
+    },
+    {
+      "id": "b_clothing_pose_relation",
+      "result": "PASS",
+      "observability": "visible",
+      "evidence": "Blue rolled-sleeve blouse, cream cable-knit vest, charcoal pleated skirt around raised knee, socks and brown lace-up shoe coexist."
+    },
+    {
+      "id": "b_school_life_scene",
+      "result": "PASS",
+      "observability": "visible",
+      "evidence": "Rows of desks, chalkboard/windows and bag with notebook on neighboring desk form one connected academic room."
+    }
+  ],
+  "overall": "FAIL",
+  "supplemental_limit": "The grounded shoe toe meets/crosses the lower frame edge. This is a prompt-framing imperfection. It does not remove the declared floor-support/contact evidence, and no new full-toe gate is added after pixels. No blanket claim of exact full-prompt fidelity.",
+  "source_influence": "Not inferred from pixels; use managed source-decision evidence.",
+  "user_acceptance": "pending",
+  "prior_review_sha256": "c9d3c409c0407f6b2ff502e68dd1cf52e0f52aead49193ed6805cb572ed861d3",
+  "prior_review_preserved": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/school-life-appearance-poses-20261023/integration-evidence/parent-b-pixel-review.json",
+  "review_stage": "same-pixels same-predeclared-gate reassessment after independent child inspection",
+  "criterion_change": false,
+  "correction_reason": "Initial parent review established hand-to-lace-segment contact but treated that as sufficient for each grip owning a distinct free lace end. The predeclared gate requires separate end paths to the same shoe. A transverse connecting segment and loops leave that mapping ambiguous; partial_is_fail applies."
+}

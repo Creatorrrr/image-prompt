@@ -1,0 +1,89 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "school-life-appearance-poses-20261023-c",
+  "request_text": "대화 내용 뒤에 추가된 게 있는데 그것도 마저 리서치하고 반영한 다음 테스트해줘.\n",
+  "request_sha256": "f562d9d57511adc3d8866e65e113cdd06263b30b3a0ae37dbfba4feed4de29ad",
+  "active_spans": [
+    {
+      "span_id": "addition_topic",
+      "start": 19,
+      "end": 22,
+      "text": "그것도"
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "f562d9d57511adc3d8866e65e113cdd06263b30b3a0ae37dbfba4feed4de29ad"
+      },
+      {
+        "id": "reference_photo",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      },
+      {
+        "id": "topic_context",
+        "kind": "text",
+        "sha256": "ebe7ba369e0038f3c5541b16ae4f173e6fa6e474ff4c3d0e03de4b59431421be"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "school-life",
+        "active_span_id": "addition_topic",
+        "request_quote": {
+          "start": 19,
+          "end": 22,
+          "text": "그것도"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "chatgpt-conversation://6adafc0d-dc50-83ee-b22e-eec239f83ca7#74e3009f-a3a5-44b9-889b-eaa1bfb5d208",
+          "text": "학원물 관련 용어, 단어, 요소 등을 많이 조사해서 나열하고 각각 설명해줘. 선정적인 내용 또는 폭력적인 내용이라고 제외하거나 하지 말고 모두 조사해줘.",
+          "sha256": "f4692604cb3971449e7b3ee0f1ce199fdab5ef3c9005baffd94ed5f912456e61"
+        },
+        "topic_quote": {
+          "start": 0,
+          "end": 3,
+          "text": "학원물"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "Actual prior requesting-user text identifies the added school-life appearance/pose topic. It is discovery context, not authority from the assistant research answer."
+        }
+      },
+      {
+        "context_id": "appearance-poses",
+        "active_span_id": "addition_topic",
+        "request_quote": {
+          "start": 19,
+          "end": 22,
+          "text": "그것도"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "chatgpt-conversation://6adafc0d-dc50-83ee-b22e-eec239f83ca7#61f64d0c-0998-4365-b7a6-7cc5b0d5b0f1",
+          "text": "관련된 포즈, 의상 등의 외형 관련 용어, 단어, 요소 등을 추가로 조사해줘.",
+          "sha256": "01cb532650bd79a99f4f4cb9f62dcbe1f3989a62cafb217d0195a1fdbcbf950a"
+        },
+        "topic_quote": {
+          "start": 4,
+          "end": 16,
+          "text": "포즈, 의상 등의 외형"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "Actual prior requesting-user text identifies the added school-life appearance/pose topic. It is discovery context, not authority from the assistant research answer."
+        }
+      }
+    ]
+  }
+}

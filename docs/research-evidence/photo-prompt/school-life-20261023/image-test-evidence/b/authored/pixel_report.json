@@ -1,0 +1,240 @@
+{
+  "schema": "school-life-arm-pixel-report/v1",
+  "arm": "b",
+  "source_test_plan_sha256": "7ac54b0254cae6f07ac60d3245685285bfdf7ceeedc8e4b4324b1cf4ae5f1bda",
+  "source_core_sha256": "3e40e25e785a96d7ad8ee2d7a13b47cfcad9e8a23796534eac8c582734595b32",
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/results/arm-b-native-01.png",
+    "sha256": "e291389b52107bcbb390460e6d42e8f346a2b6a2ac04aaae7049d1ca982f7bc2",
+    "width": 1536,
+    "height": 1024
+  },
+  "tool": {
+    "name": "image_gen.imagegen",
+    "mode": "built_in_native",
+    "actual_call_count": 1,
+    "observed_status": "returned",
+    "observed_image_model": null
+  },
+  "reviewer": "Codex",
+  "method": "Direct inspection of the saved 1536x1024 full original image, exact unresampled native-pixel subsets from the same result, and the exact supplied reference.",
+  "initial_unlabeled_impression": "Two students in a sunlit classroom lift a printing screen and inspect a school-festival wave-and-sun poster together. The classroom duty board and clipped prints connect the setting to a shared activity.",
+  "gates": [
+    {
+      "gate_id": "B01_school_classroom",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "The full frame contains repeated school desks and chairs, bags tucked at neighboring desks, a teaching blackboard and classroom windows. Their spatial connection remains visible around the print station.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B02_art_club_festival",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "The blackboard reads 美術部 above an 当番表 grid and 青陽祭 with 9/21 and 9/22 dates. Repeated wave-and-sun prints hang from clips below the windows, connected to the same classroom and current printing task. These marks establish visible preparation context, not real affiliation or an actual future date.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B03_reference_face",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "At native face scale the main subject retains a soft oval facial outline, dark brown eyes, mostly straight dark brows, small nose and naturally full pink lips consistent with the supplied portrait’s specified features. This is a feature-level visual consistency judgment, not verification of identity or a quantified likeness score.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B04_reference_hair",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "The main subject has a dark bob whose ends sit around the chin, with thin separated fringe strands across the forehead. Hair and face belong to the same primary student. The reference’s bob/fringe structure is retained at the requested visible-feature level.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B05_two_distinct_students",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "Two distinct students are visible: the dark-bob main subject behind the lifted frame and the bun-haired classmate at right. Each head, torso and working arms remain assigned to a separate person; no additional principal participant is present.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B06_bilateral_hand_screen_contact",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "The main student’s two arms lead to separate hands wrapped around opposite near corners of the same raised wooden rail. Both hand-to-wood contacts and the intervening connected rail are visible together, with no hand substituted for the classmate’s pointing arm.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B07_complete_print_reveal",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "Two metal hinge assemblies visibly connect the lower/far screen rail to the supported printing base. The mesh frame is tilted up, exposing a real air wedge above flat paper whose corners/edges are taped to the table. Both main grips, both hinges, the gap and the revealed sheet appear in the same saved frame. This pass concerns the complete visible mechanism, not proof of wet ink or actual printing function.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B08_print_visible_result",
+      "status": "fail",
+      "observability": "partial",
+      "verdict": "UNOBSERVABLE_NOT_PASS",
+      "evidence": "The cobalt wave, coral sun, crisp printed boundaries and their position on the taped sheet below the screen are visible. The ink looks largely matte at native scale; I cannot distinguish a wet surface sheen or a local wet-ink trace from ordinary printed color/texture. The planned wet-state component is unobservable, so the complete gate cannot pass.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B09_peer_pointing_support",
+      "status": "fail",
+      "observability": "partial",
+      "verdict": "UNOBSERVABLE_NOT_PASS",
+      "evidence": "The classmate’s separate supporting hand rests on the desk and her other index finger points at the revealed sheet near the clean wave boundary. In the unresampled peer-pointing crop the fingertip is extremely close to the paper and a distinct air gap cannot be confirmed. The picture does not prove whether it touches or hovers; the required above-paper gap therefore does not pass.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B10_shared_attention",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "The main student’s eyes/head are directed down toward the revealed print while the classmate’s fingertip directs attention to that same sheet. The full frame presents one common print target rather than camera engagement or two unrelated work surfaces. It does not prove temporal following or internal recognition.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B11_emerging_relief",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "The main face carries a small softened upward mouth shape while looking toward the print, and the partner smiles at the same result. This supports the planned small visible response in context; the actual feeling of relief or recognition remains an interpretation.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B12_frame_hierarchy",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "The 1536x1024 horizontal open-table-end oblique view keeps the main face, both grips, tilted screen, two hinges and the entire taped print sheet together. Background school desks and the blackboard/prints remain readable. The mechanism and partnership dominate without a face-only crop or foreground obstruction.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B13_embodiment_visible_consistency",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "Visible main shoulders and arms connect coherently to the two rail grips; the table and two hinge bases support the screen. The second student’s forearms connect separately to her pointing hand and table-resting hand. No gross part ownership, reach, support or penetration contradiction is visible. Feet are outside the frame and their exact floor contact remains unobservable, as excluded from this visible-chain gate by the frozen plan.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "gate_id": "B14_whole_school_activity",
+      "status": "pass",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "Without the prompt, the frame reads as two uniformed students collaborating on a festival print in a classroom art club: the raised screen, fresh graphic result, pointing gesture, duty board and clipped earlier prints form one situation. It is a nonsexual everyday school-work scene, not only a uniform portrait. The wetness and fingertip-gap failures remain separate and are not waived by this holistic impression.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    }
+  ],
+  "summary": {
+    "passed": 12,
+    "required_total": 14,
+    "unobservable_not_pass": [
+      "B08_print_visible_result",
+      "B09_peer_pointing_support"
+    ],
+    "complete_testcase": "FAIL",
+    "school_life_topic_visible": true,
+    "reference_features_visually_consistent": true,
+    "new_school_source_offered_unique": 5,
+    "new_school_source_offered_occurrences": 6,
+    "new_school_source_reviewed_unique": 5,
+    "new_school_source_retained_final_inspiration": 0,
+    "causal_improvement_claim": false,
+    "user_acceptance": "pending"
+  },
+  "limitations": [
+    "The initial view_image data URL used application/octet-stream and displayed a thin strip. Re-emitting that same returned URL with the correct image/png MIME displayed the full original successfully; the file and pixel bytes were unchanged and the full saved image was directly re-inspected. Gate results were unchanged.",
+    "Exact chronological age 19, the original portrait person’s identity/age, tomorrow/last-print timing, real affiliation and actual internal relief cannot be established from these pixels.",
+    "The B08 wet-state and B09 fingertip air-gap components remain unobservable despite recognizable overall school activity. An actual returned image with required unobservable elements is a complete testcase failure, not BLOCKED_UNSCORED."
+  ],
+  "analysis_crops": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/analysis-crops/peer-pointing.png",
+      "source_box_xyxy": [
+        1000,
+        650,
+        1500,
+        950
+      ],
+      "resampled": false
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/analysis-crops/main-face.png",
+      "source_box_xyxy": [
+        430,
+        0,
+        900,
+        420
+      ],
+      "resampled": false
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-b/analysis-crops/screen-hinges.png",
+      "source_box_xyxy": [
+        230,
+        430,
+        1100,
+        830
+      ],
+      "resampled": false
+    }
+  ],
+  "supporting_scene_observations": {
+    "wardrobe": "White shirts, green ribbons, charcoal cardigans and turned-back sleeves are visible. The classmate has additional plaid skirt styling, an authorial variation outside reference scope.",
+    "light_texture": "Warm window light, ordinary skin texture, worn wood and ink-stained frame surfaces are visible. The image has a polished but plausible everyday collaborative hierarchy.",
+    "control_impression_before_labels": "The main impression is absorbed, friendly school craft collaboration with subtle everyday charm. It is neither surreal nor an eroticized presentation. This is a perceived-expression observation, not calibration proof or user preference.",
+    "artistic_strength": "Faces, grips, hinges and the poster coexist at useful scale, and the repeated drying prints make the shared result consequential.",
+    "artistic_limit": "The poised fingertip reads as extremely close to the paper, while wetness is not perceptually established. The whole image’s convincing activity cannot establish those missing fine states."
+  },
+  "retry_policy": "Exactly one actual call completed. No regeneration, unchanged retry, gate relaxation or replacement image was attempted."
+}

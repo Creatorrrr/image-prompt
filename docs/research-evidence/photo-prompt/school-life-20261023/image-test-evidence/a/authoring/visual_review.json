@@ -1,0 +1,57 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "9eb41e1310f2946f",
+  "contract_version": "photo-embodiment-preflight/v1",
+  "reviewer": "Codex arm A",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-a/images/attempt-1.png",
+  "result_sha256": "7eb150427284f201b6f558fba5800220f22842f14fe1cab1b11fec4d15cfad06",
+  "hard_gates": {
+    "embodiment_body_ownership": {
+      "status": "pass",
+      "evidence": "The four visible heads and torsos remain distinct. Each raised voter hand connects through its own sleeve and arm to the corresponding far-side voter. The chair owns the open palm and separate resting forearm; the foreground writer is a separate actor. Inspecting native pixels shows no merged consequential owner.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "pass",
+      "evidence": "Both raised arms have plausible shoulder-to-elbow-to-wrist chains, and their hands lie above their own shoulders. The chair’s open hand and supported forearm fit her seated torso. The writer’s visible wrist and gripping hand are coherent; this pass does not credit the hidden pen-to-page contact.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_support_and_balance": {
+      "status": "pass",
+      "evidence": "The participants are coherently seated at classroom desks. The chair’s lower forearm rests at the visible table/page surface, and the writer’s forearm and hand occupy the notebook surface. Ordinary lower-body chair support continues outside the crop; no visible load-bearing contradiction is present.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_contact_and_space": {
+      "status": "fail",
+      "evidence": "The chair’s table support and free open-hand gesture are visible, and the writer holds a pen over the same open notebook. However, the grip hides the lower pen segment and its connection to the page, so actual writing contact cannot be distinguished from hovering. This fails the complete consequential contact check as UNOBSERVABLE_NOT_PASS; no anatomical deformity is diagnosed.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "partial"
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "fail",
+      "evidence": "The face, two raised-hand owners, notebook writer and classroom/board context coexist at readable scale. The writer-contact native crop shows that the hand occludes the lower tool-to-page path. Because this consequential recording relation cannot be assessed directly, the full visibility check is not a pass despite the convincing overall meeting scene.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "partial"
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

@@ -169,3 +169,20 @@ endpoints from identity, consent, provenance, chronology and supernatural cause.
 Three reference-guided native images show the genre but all fail their frozen
 whole-scene relations; source registration and visible local components do not
 confer native qualification or requester acceptance.
+
+The [school-life extension](school-life-semantics.md) retains 90 semantic cards
+and 210 advisory keyword routes, with 66 complete optional bilingual visual
+sources, 24 positive-retrieval-excluded diagnostics and 139 optional bindings.
+Actor ownership, physical supports, directed endpoints and depicted-media
+boundaries remain explicit. Identity, age, intent, consent, repetition, causes,
+chronology and sound are not inferred from school roles or still-image proxies.
+Source registration, installed exposure, exact prompt use and saved-image gates
+are separate results; research graphs confer no native qualification.
+
+The [school appearance and pose extension](school-appearance-poses-semantics.md)
+adds 140 complete bilingual visual options, 28 excluded diagnostics and 211
+optional bindings. It retains 238 compound term routes (189 component-option
+routes, 49 context-only) and six advisory combinations. Garment construction,
+wearing state, limb ownership, physical support, directed contact, gaze,
+camera axes and depicted-media boundaries remain distinct. Routes do not
+make compound terms equivalent to a partial visual alternative.

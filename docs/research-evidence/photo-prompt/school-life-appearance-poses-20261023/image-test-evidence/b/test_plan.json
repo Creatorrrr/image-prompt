@@ -1,0 +1,96 @@
+{
+  "schema": "school-life-appearance-pose-test-plan/v1",
+  "arm": "b",
+  "declared_before_first_candidate_access": true,
+  "candidate_access_at_declaration": false,
+  "reference_viewed": true,
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "frozen_bindings": {
+    "envelope": "978dd7aa7a0115bc5c7d0180d87b7e24183133c8e6506a157b2cc8f288a9abac",
+    "core": "21b1591fcb1b6d855fc555597250cb2a4090c4779a60cccc2447fbd6fbbfa3ef",
+    "intent_lock": "ede266731c66da17bd8288fa809f27e26d83630bd21a2d57fe37c5e461f9c327",
+    "controls": "aa24c4e7c4712331ea1a5c464344f1811c98b6237231023c63b5cca5fb4bdd19"
+  },
+  "baseline_sha256": "56152ae21d4d7bbaf80425c092ba392e16ab36c31a2f45b5d762b38836551a40",
+  "freeze_receipt_file_sha256": "1be46dd46240e2fa56d2351b53e0bddbeea734225b43aab5c8f5275ae2ec4945",
+  "purpose": "Test a natural school-life support/contact pose together with academic clothing and a reference-guided visible face/hair. The experimental requirements below evaluate the authored scene; they are not new requester locks or native candidate adoption authority.",
+  "qualification_rule": {
+    "actual_image_absent": "BLOCKED_UNSCORED",
+    "required_gate_partial_or_unobservable": "FAIL",
+    "required_gate_visible_but_mismatch": "FAIL",
+    "all_required_gates_visible_and_satisfied": "PASS",
+    "user_acceptance": "pending; never inferred from technical or pixel qualification"
+  },
+  "required_gates": [
+    {
+      "id": "b_reference_appearance",
+      "meaning": "The rendered central face/hair retain recognizable supplied visible cues rather than merely a generic short-haired woman.",
+      "required_visible_components": [
+        "face readable at whole-image scale and original pixels",
+        "dark chin-length curved bob and wispy separated fringe",
+        "relative eyes/brows/soft oval facial structure/lip shapes coherently resembling the supplied visible reference"
+      ],
+      "review_scale": "whole image plus original pixel inspection",
+      "scope_limit": "No claim about actual identity, age, personality or biometric equivalence."
+    },
+    {
+      "id": "b_support_chain",
+      "meaning": "A single plausible seated figure-four task shows its connected supports.",
+      "required_visible_components": [
+        "pelvis supported by the chair seat",
+        "left shoe on floor",
+        "right ankle resting across the left thigh above the knee",
+        "connected leg ownership through ordinary joint chains"
+      ],
+      "review_scale": "complete seated figure in one view",
+      "failure_boundary": "A floating ankle, reversed or disconnected limbs, unsupported pose, or a hidden required support is not a complete pass."
+    },
+    {
+      "id": "b_lace_contact",
+      "meaning": "Both hands perform one lace-tightening action on the same identifiable raised Oxford shoe.",
+      "required_visible_components": [
+        "one connected hand owns each acting grip",
+        "each grip contacts its own lace end",
+        "two lace ends lead to the raised right shoe tongue/lacing area",
+        "hands, target shoe and supported lifted foot coexist in the same view"
+      ],
+      "review_scale": "whole image plus original pixel inspection",
+      "failure_boundary": "A hand merely nearby, one end disappearing, decorative fingers without lace contact, or a recognizable shoe without the complete action is insufficient."
+    },
+    {
+      "id": "b_clothing_pose_relation",
+      "meaning": "The chosen academic outfit is visibly legible and follows the seated action coherently.",
+      "required_visible_components": [
+        "blue blouse and cream knit vest layered on torso",
+        "charcoal pleated skirt folding around the raised knee",
+        "socks and brown Oxford shoe form at the task target",
+        "rolled cuffs free the acting wrists"
+      ],
+      "review_scale": "whole image plus original pixels",
+      "failure_boundary": "General school styling alone cannot substitute for the selected clothing/pose relation. Fine stitch count, exact pleat count and tiny branding are not gates."
+    },
+    {
+      "id": "b_school_life_scene",
+      "meaning": "The school-life departure pause reads through connected place, task and belongings.",
+      "required_visible_components": [
+        "classroom context through desks and chalkboard or equivalent visible academic fixtures",
+        "bag and lecture notebook together at the neighboring desk",
+        "the seated task remains spatially connected to those belongings and usable aisle space"
+      ],
+      "review_scale": "whole image",
+      "failure_boundary": "A generic chair portrait with unrelated classroom labels or a cropped-out task context is insufficient."
+    }
+  ],
+  "supplemental_observations": [
+    "Describe the main impression without control labels before comparing sensual 1, fetish 0, surreal 0, creativity 1 intentions.",
+    "Assess subject presence, face/task hierarchy, believable fabric/material response and causal readability separately from hard fidelity.",
+    "Record exposed sources, actual adopted influence and qualified pixels as separate evidence layers.",
+    "Do not lower a declared gate after viewing pixels; partial required evidence makes the overall experiment FAIL."
+  ],
+  "call_budget": {
+    "builtin_image_gen": 1,
+    "referenced_image_paths": "original supplied JPEG",
+    "unchanged_moderation_retry": false,
+    "additional_generation": false
+  }
+}

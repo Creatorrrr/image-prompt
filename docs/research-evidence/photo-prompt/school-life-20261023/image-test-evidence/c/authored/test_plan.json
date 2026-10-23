@@ -1,0 +1,239 @@
+{
+  "schema_version": "photo-arm-pixel-test-plan/v1",
+  "arm": "c",
+  "status": "planned_no_image",
+  "source_binding": {
+    "core_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/revisions/0da09508f5ac4ebea07d43aa5d3c3e90/authorial_core_normalized.json",
+    "core_sha256": "c712f7cb7bc53522536c629295906c1e0cb1f50134f60c4cfc7bad1440be5378",
+    "baseline_sha256": "c969402f9d4aa41416e8a0b79c5c57ed3154f32f5859e8ca12019eceafba6c4a",
+    "intent_lock_sha256": "6df3b2aff95b8bce483721020bf0a0f9db171fd8fde0ef952955a05ab124ded6",
+    "creative_controls_sha256": "87b4a48b4bdb151e55666db2ad1bbf141d8b961c8ebfec9fa6f8eb6781d694fa"
+  },
+  "provenance": {
+    "authored_by": "arm_c_agent",
+    "timing": "after_core_freeze_before_candidate_or_profile_access",
+    "authoring_sources": [
+      "own frozen photo-authorial-core/v3 and its embedded baseline only"
+    ],
+    "research_or_candidate_access": false,
+    "image_generated": false
+  },
+  "scope_note": "C02 and C03 test requester reference use. C01 tests the requester topic through the frozen authorial realization. C04-C08 preserve the independent experiment hypothesis and planned scene; they do not retroactively turn authorial choices into requester-owned constraints.",
+  "immutable_test_policy": {
+    "later_research_may_relax_gates": false,
+    "candidate_success_is_pixel_success": false,
+    "prompt_or_audit_pass_is_pixel_success": false,
+    "partial_is_pass": false,
+    "unobservable_is_pass": false,
+    "one_component_can_pass_multicomponent_gate": false,
+    "user_acceptance_inferred": false,
+    "gate_change_policy": "Preserve this exact plan and its hash. Later candidate or research evidence cannot delete a component, lower observability, or substitute narrative explanation for pixels to make this test pass."
+  },
+  "decision_rules": {
+    "per_gate_observability": [
+      "visible",
+      "partial",
+      "unobservable"
+    ],
+    "visible_pass": "All required components and their required connections are actually visible together and support the gate.",
+    "visible_fail": "A readable component or connection contradicts the frozen scene.",
+    "partial": "At least one component is supported but the complete gate is not; fail the full gate, never count the supported subset as full success.",
+    "unobservable": "Insufficient pixels or unavailable reference prevent the judgment; record BLOCKED_UNSCORED for that judgment and do not claim failure of an unseen component or PASS.",
+    "whole_test_pass": "Every required gate passes with visible evidence.",
+    "whole_test_fail": "Any visible contradiction or partial required relation makes the complete arm test NOT_PASSED.",
+    "whole_test_blocked": "If no observed contradiction/partial failure exists but any gate is unobservable, the complete arm test is BLOCKED_UNSCORED.",
+    "evidence": "For each gate retain the full image path/hash, observability, judgment, crop coordinates if used, concrete pixel observations, and limitations. Crop support cannot replace a required whole-frame relationship."
+  },
+  "required_gates": [
+    {
+      "gate_id": "C01",
+      "name": "학교 일상과 미술 교실 문맥",
+      "required_for_arm_c_test": true,
+      "origin": "request_topic_realized_by_frozen_authorial_scene",
+      "frozen_baseline_evidence": [
+        "a school-life photograph",
+        "Rows of drawing desks and a green teaching board establish a working classroom",
+        "a soft gray school vest over a white shirt and navy trousers"
+      ],
+      "required_visible_components": [
+        "그림용 책상들이 있는 교실 공간",
+        "녹색 수업 보드",
+        "그 안의 학생과 일상적인 교복 차림"
+      ],
+      "observation_scope": "전체 프레임에서 장소와 인물의 관계를 먼저 보고 배경 크롭으로 확인한다. 실제 학교의 주소·건물 신원·소속은 판단하지 않는다.",
+      "pass_criterion": "인물과 그림만 떼어낸 스튜디오 인상에 머물지 않고, 책상 열과 수업 보드가 함께 읽혀 학교의 미술 교실 일상으로 해석할 근거가 보인다.",
+      "partial_criterion": "인물 또는 그림은 보이지만 책상 열이나 수업 보드 중 하나가 잘리거나 너무 작아 교실 맥락의 일부만 확인된다.",
+      "unobservable_criterion": "배경이 크롭·심도·어둠에 묻혀 학교 교실이라는 시각적 근거를 판단할 수 없다.",
+      "visible_fail_criterion": "관찰 가능한 배경이 침실·상점·거리 등으로 바뀌거나, 동결된 교실 문맥과 의복의 핵심 구성이 명백히 달라졌다."
+    },
+    {
+      "gate_id": "C02",
+      "name": "참조에서 가져온 얼굴 외형",
+      "required_for_arm_c_test": true,
+      "origin": "request_reference_use",
+      "frozen_baseline_evidence": [
+        "The supplied reference guides her facial appearance",
+        "her questioning three-quarter face"
+      ],
+      "required_visible_components": [
+        "비교할 수 있는 크기의 삼사분면 얼굴",
+        "참조와 연속적인 전체 얼굴 비례와 눈·코·입 배치",
+        "새 상황에 맞춘 질문하는 표정"
+      ],
+      "observation_scope": "전체 프레임과 원해상도 얼굴 크롭을 함께 본다. 픽셀 비교는 외형 유도 여부에 한정하며 실존 신원·생체인식 일치·원사진 연령·성격·인종의 증명이 아니다.",
+      "pass_criterion": "저장된 원 참조와 생성 얼굴을 직접 대조했을 때 전체 얼굴 비례와 주요 특징 배치가 참조 유도로 읽히며, 삼사분면에서 비교할 충분한 가시성이 있다. 표정 변화는 허용한다.",
+      "partial_criterion": "얼굴 일부는 비교되지만 한쪽 특징이 심한 측면각·가림·블러로 사라져 전체 외형의 연속성을 확인할 수 없다.",
+      "unobservable_criterion": "얼굴이 작거나 가려져 의미 있는 참조 대조를 수행할 수 없다. 원 참조가 리뷰 시 제공되지 않아도 이 상태다.",
+      "visible_fail_criterion": "얼굴이 충분히 보이는데 주요 비례와 특징 배치가 뚜렷하게 다른 일반 인물로 바뀌었다."
+    },
+    {
+      "gate_id": "C03",
+      "name": "참조 단발과 앞머리",
+      "required_for_arm_c_test": true,
+      "origin": "request_reference_use",
+      "frozen_baseline_evidence": [
+        "dark chin-length bob with airy parted fringe"
+      ],
+      "required_visible_components": [
+        "진한 색의 턱 길이 단발 실루엣",
+        "가볍고 갈라진 앞머리",
+        "머리카락과 중앙 인물 얼굴의 같은 소유 관계"
+      ],
+      "observation_scope": "전체에서 얼굴-머리 소유 관계를 보고 머리 크롭에서 길이와 앞머리를 확인한다. 참조의 촬영 장소·의상·원래 자세는 보존 대상이 아니다.",
+      "pass_criterion": "중앙 인물에게 진한 턱 길이 단발과 가볍게 갈라진 앞머리가 동시에 확인되고 참조의 머리 인상과 연속적으로 읽힌다.",
+      "partial_criterion": "단발 또는 앞머리 중 하나만 보이거나 끝단이 잘려 머리 길이의 핵심 관계를 평가하기 어렵다.",
+      "unobservable_criterion": "머리가 가림·작은 크기·암부에 묻혀 형태 자체를 판단할 수 없다.",
+      "visible_fail_criterion": "충분히 보이는 머리가 긴 머리·전혀 다른 길이·다른 앞머리 구조로 바뀌었다."
+    },
+    {
+      "gate_id": "C04",
+      "name": "그림 속 인물과 비어 있는 실제 문간의 완전한 대응",
+      "required_for_arm_c_test": true,
+      "origin": "frozen_authorial_test_hypothesis",
+      "frozen_baseline_evidence": [
+        "a broad charcoal sketch of this classroom doorway, including its distinctive three-pane transom, with a dark human silhouette drawn in the center of the opening",
+        "That open doorway has the same three-pane transom and is visibly empty"
+      ],
+      "required_visible_components": [
+        "그림판 위의 넓은 목탄 문간 그림",
+        "그림 속 문간 중앙의 사람 형태 실루엣",
+        "그림 속 3칸 상부창",
+        "실제 열린 문간과 그 3칸 상부창",
+        "실제 문간 개구부에 사람이 없는 상태",
+        "두 문간이 대응한다고 읽히는 같은 큰 건축 형태"
+      ],
+      "observation_scope": "전체 프레임에서 동시 관계를 확인한 후 그림·문간 크롭으로 각 구성요소를 읽는다. 빈 상태의 범위는 보이는 문간 개구부이며 보이지 않는 복도 전체의 부재를 주장하지 않는다. 가림 뒤에 사람이 있을 수 있을 만큼 핵심 개구부가 숨으면 partial이다.",
+      "pass_criterion": "그림과 실제 문간을 같은 전체 프레임에서 비교할 수 있고, 각각의 3칸 상부창이 구분되며, 그림 속 사람 형태와 실제 빈 개구부의 차이가 동시에 명확하다. 실루엣은 그림 표면의 목탄 표현으로 읽힌다.",
+      "partial_criterion": "여섯 요소 중 일부는 보이지만, 칸 수·실루엣·실제 빈 개구부 또는 대응 관계 중 하나라도 작음·가림·크롭 때문에 확인되지 않는다. 지역 크롭 하나에서만 드러나는 단편은 전체 관계의 통과가 아니다.",
+      "unobservable_criterion": "그림 표면이나 실제 문간이 전혀 판독되지 않아 대응 관계를 평가할 수 없다.",
+      "visible_fail_criterion": "그림의 실루엣이 사라졌거나 실제 문간에도 인물이 서 있거나, 두 문간의 큰 형태·상부창 칸 수가 명백히 다르거나, 그려진 실루엣이 실제 공간의 유령·별도 인물로 나타난다."
+    },
+    {
+      "gate_id": "C05",
+      "name": "단서에서 실제 문간으로 향한 반응",
+      "required_for_arm_c_test": true,
+      "origin": "frozen_authorial_test_hypothesis",
+      "frozen_baseline_evidence": [
+        "her head and eyes turn toward the actual doorway at frame right",
+        "an absorbed, questioning expression"
+      ],
+      "required_visible_components": [
+        "중앙 학생의 머리 방향",
+        "실제 문간을 향하는 눈의 방향",
+        "그림판을 계속 지지하는 현재 상태",
+        "질문하는 표정의 가시적 단서"
+      ],
+      "observation_scope": "전체에서 실제 문간을 대상으로 한 방향을 판단하고 얼굴 크롭으로 눈과 표정을 확인한다. 마음속 의문·정확한 과거 행동·그림을 그린 사람의 정체는 픽셀에서 확정하지 않는다.",
+      "pass_criterion": "학생이 그림판을 든 채 머리와 눈을 실제 오른쪽 문간으로 돌려 대조하는 현재 반응이 읽히고, 표정에 집중·질문하는 기색이 보인다.",
+      "partial_criterion": "머리 방향만 보이고 눈 방향은 작아 확인되지 않거나, 시선은 확인되지만 표정의 주요 부분이 가려졌다.",
+      "unobservable_criterion": "얼굴과 눈이 보이지 않아 반응의 방향을 평가할 수 없다.",
+      "visible_fail_criterion": "충분히 보이는 머리와 눈이 카메라·그림판·다른 대상으로 향해 실제 문간과의 연결이 끊기거나, 과장된 공포·포즈가 동결된 조용한 반응을 대체한다."
+    },
+    {
+      "gate_id": "C06",
+      "name": "양손·그림판·탁자의 연결과 지지",
+      "required_for_arm_c_test": true,
+      "origin": "frozen_authorial_embodiment",
+      "frozen_baseline_evidence": [
+        "stands upright on its bottom edge against the tabletop, held at its two side edges by her hands with her elbows comfortably bent"
+      ],
+      "required_visible_components": [
+        "중앙 인물에게 속한 두 손",
+        "서로 다른 그림판 양옆의 두 손 접촉",
+        "팔과 손의 그럴듯한 연결",
+        "탁자와 맞닿아 지지되는 그림판 아랫변",
+        "직립한 하나의 그림판"
+      ],
+      "observation_scope": "전체에서 몸 소유와 지지를 확인하고 손·보드 하단 크롭으로 접촉을 본다. 장면의 의미에 필요하지 않은 발·발가락까지 보여 주도록 요구하지 않으며, 손가락 개수의 새 세부 요구를 추가하지 않는다.",
+      "pass_criterion": "한 사람의 두 손이 그림판의 서로 다른 양옆을 잡고, 팔꿈치는 편안히 굽으며, 아랫변의 탁자 지지가 보인다. 손·팔·그림판·탁자가 겹치는 공간과 하중 관계에 명백한 모순이 없다.",
+      "partial_criterion": "한쪽 손·팔 소유·접촉 또는 아랫변 지지가 가려져 전체 물리 관계를 확인할 수 없다. 한 손의 국소 접촉만으로 양손 지지 전체를 통과시키지 않는다.",
+      "unobservable_criterion": "손과 탁자 접촉 부분이 모두 크롭·가림에 묻혀 이 기작을 평가할 수 없다.",
+      "visible_fail_criterion": "보이는 손이 그림판을 관통하거나 다른 손에 합쳐지거나, 손이 같은 한쪽 가장자리에 잘못 모이거나, 그림판이 탁자와 떨어져 떠 있거나, 팔 연결·접촉에 명백한 모순이 있다."
+    },
+    {
+      "gate_id": "C07",
+      "name": "한 프레임에서 비교 가능한 크기와 배치",
+      "required_for_arm_c_test": true,
+      "origin": "frozen_authorial_visibility_plan",
+      "frozen_baseline_evidence": [
+        "Place the student and drawing on the left and the actual doorway beside her on the right side wall",
+        "her questioning three-quarter face, both holding hands, the complete drawing, and the empty opening remain readable together",
+        "An eye-height medium-wide horizontal photograph"
+      ],
+      "required_visible_components": [
+        "왼쪽의 학생과 완전한 그림",
+        "오른쪽 옆벽의 실제 문간",
+        "읽을 수 있는 삼사분면 얼굴과 두 손",
+        "서로 비교할 수 있는 깊이·가시 크기",
+        "가로 방향의 중간 넓이 사진 구도"
+      ],
+      "observation_scope": "통과는 실제 전체 이미지에서 성립해야 한다. 서로 다른 크롭·다른 이미지·텍스트 설명을 조합해 동시 가시성을 대신하지 않는다. 정확한 카메라 높이의 수치나 촬영 렌즈는 픽셀만으로 입증하지 않는다.",
+      "pass_criterion": "전체 프레임 하나에서 학생·완전한 그림·실제 문간이 왼쪽과 오른쪽의 대응으로 읽히고, 얼굴·양손·그림·빈 개구부 중 어느 것도 평가를 방해할 만큼 작거나 가려지지 않는다.",
+      "partial_criterion": "전체 관계 중 일부만 들어오거나 크롭을 확대해야만 한 요소가 간신히 보이며 원 프레임에서 주된 대응이 읽히지 않는다.",
+      "unobservable_criterion": "필수 요소가 프레임 밖이거나 극심한 심도·암부로 사라져 동시 배치를 판단할 수 없다.",
+      "visible_fail_criterion": "실제 문간이 학생 뒤에서 완전히 가려지거나, 그림이 뒷면으로 돌아가거나, 대단히 가까운 얼굴만 남아 단서 관계가 사라지거나, 동결된 좌우 대응과 가로 중간 넓이 구도가 명백히 바뀌었다."
+    },
+    {
+      "gate_id": "C08",
+      "name": "장면 전체의 조용한 학교 드라마 인상",
+      "required_for_arm_c_test": true,
+      "origin": "frozen_authorial_whole_scene_direction",
+      "frozen_baseline_evidence": [
+        "Late afternoon window light grazes her face and the charcoal surface, while softer reflected light preserves the doorway detail",
+        "Natural skin texture, restrained color, and ordinary classroom wear give the moment the quiet credibility of a school drama still"
+      ],
+      "required_visible_components": [
+        "관찰자처럼 이웃 책상에 놓인 심리적 거리",
+        "얼굴과 목탄 그림을 연결하는 자연스러운 창빛 인상",
+        "문간 세부를 남기는 밝기",
+        "절제된 색과 사진다운 표면",
+        "한 단서와 반응으로 이어지는 시각적 중심"
+      ],
+      "observation_scope": "전체 인상을 먼저 한 문단으로 기술한 뒤 세부 gate를 판정한다. 정확한 시각·광원 위치·표면 물성의 사실성을 증명했다고 주장하지 않는다. 기술 적합과 예술적 선호, 사용자 수용은 분리한다.",
+      "pass_criterion": "키워드 설명을 가리고 보아도 일상적인 미술 교실에서 학생이 큰 그림과 문간의 차이를 확인하는 조용한 상황이 읽힌다. 얼굴의 존재감과 단서 관계가 함께 살아 있고 광선·심도·색이 이를 지지한다.",
+      "partial_criterion": "개별 단서들은 보이지만 밝기·심도·복잡한 추가 요소 때문에 장면의 연결이나 시각적 중심이 일부만 읽힌다.",
+      "unobservable_criterion": "저장 이미지 또는 전체 프레임을 검토할 수 없어 전체 인상을 판단하지 못한다.",
+      "visible_fail_criterion": "관찰 가능한 전체가 그림·만화·과장된 초자연 장면 등으로 변하거나, 추가 장식과 등장인물이 단서-학생-문간 관계를 지배하거나, 조명 때문에 중요한 관계가 실제로 소실된다."
+    }
+  ],
+  "nonvisual_claim_limits": [
+    "The original reference subject’s age, identity, biography, and personality are not inferred.",
+    "The fictional eighteen-year-old age is an authorial scene setting; exact numerical age is not provable from pixels and gets no pixel PASS gate.",
+    "The preceding act of turning the board and the history of classroom cleanup cannot be confirmed from one still; review only their depicted current state and plausible residue.",
+    "The drawing’s author, a historical visitor, actual supernatural cause, future event, sound, and the student’s thoughts remain unconfirmed.",
+    "Actual school affiliation, exact time, camera height, and lens model are not established by photographic appearance."
+  ],
+  "whole_scene_review_questions": [
+    "Without the synopsis, what visible situation is understandable?",
+    "Do the drawing, the empty opening, and the student’s response connect into one question?",
+    "Does the face retain individual presence while the clue remains readable?",
+    "Which strengths and weaknesses are supported by the image itself rather than the imagined story?"
+  ],
+  "report_separation": [
+    "requester_meaning_fidelity",
+    "frozen_arm_scene_qualification",
+    "technical_runtime_binding",
+    "whole_scene_artistic_observations",
+    "requester_acceptance_pending"
+  ]
+}

@@ -1,0 +1,28 @@
+canonical source verified 90 new candidates
+Loading weights:   0%|          | 0/413 [00:00<?, ?it/s]Loading weights: 100%|██████████| 413/413 [00:00<00:00, 4491.82it/s]
+{"complete": 19878, "records": 19912, "elapsed_seconds": 42.81}
+{"complete": 19910, "records": 19912, "elapsed_seconds": 47.71}
+{"complete": 19912, "records": 19912, "elapsed_seconds": 49.03}
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/school-life-20261023/integration-evidence/build_school_life_release.py", line 138, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/school-life-20261023/integration-evidence/build_school_life_release.py", line 88, in main
+    native_report=nativebuild.build(STAGE/'assets',WORK/'native-index-cache',space=read(N/'embedding-runtime.lock.json')['space'])
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations/2716f0cf11debb32ae3096dbfa130994dd270a1b01376b04b5002b4fe3deee3d/scripts/build_shared_candidate_index.py", line 73, in build
+    staged=layout.build(assets,corpus,vectors);verification=layout.verify(assets,corpus,staged,vectors)
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations/2716f0cf11debb32ae3096dbfa130994dd270a1b01376b04b5002b4fe3deee3d/scripts/photo_search_layout.py", line 160, in build
+    partition(ids)
+    ~~~~~~~~~^^^^^
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations/2716f0cf11debb32ae3096dbfa130994dd270a1b01376b04b5002b4fe3deee3d/scripts/photo_search_layout.py", line 156, in partition
+    node['children'] = [partition(ordered[:middle]), partition(ordered[middle:])]
+                                                     ~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations/2716f0cf11debb32ae3096dbfa130994dd270a1b01376b04b5002b4fe3deee3d/scripts/photo_search_layout.py", line 156, in partition
+    node['children'] = [partition(ordered[:middle]), partition(ordered[middle:])]
+                        ~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations/2716f0cf11debb32ae3096dbfa130994dd270a1b01376b04b5002b4fe3deee3d/scripts/photo_search_layout.py", line 152, in partition
+    b = min(keys, key=lambda cid: (math.sumprod(units[a], units[cid]), cid))
+  File "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations/2716f0cf11debb32ae3096dbfa130994dd270a1b01376b04b5002b4fe3deee3d/scripts/photo_search_layout.py", line 152, in <lambda>
+    b = min(keys, key=lambda cid: (math.sumprod(units[a], units[cid]), cid))
+                                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

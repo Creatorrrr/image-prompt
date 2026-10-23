@@ -1,0 +1,418 @@
+{
+  "schema": "school-life-arm-pixel-test-plan/v1",
+  "arm": "b",
+  "provenance": "agent_from_own_frozen_core_before_candidate_access",
+  "source_binding": {
+    "core_sha256": "3e40e25e785a96d7ad8ee2d7a13b47cfcad9e8a23796534eac8c582734595b32",
+    "baseline_prompt_sha256": "dc5219cf048c9bd88a15e0faac426246c21a72b8ae617a70deb0ebe109c1a9b5",
+    "intent_lock_sha256": "cd48e9bea77168994431d660607255b39dd79cf285c31e624908466c5a65dc41",
+    "controls_sha256": "1a38b654bcce6bdcc6c1371debfba94fd155e433d247253c1511925b892a4955",
+    "reference_image_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+  },
+  "scope_statement": "이 계획은 Arm B의 이미 동결된 독립 testcase에 대한 사전 픽셀 성공 기준이다. authorial_testcase gate는 요청자 소유 anchor/permission을 확장하지 않는다. 이후 후보·리서치·생성 결과를 보고 gate를 낮추거나 생략하지 않는다. 최종 저술이 testcase 구조를 바꾸면 그 차이를 보고하고 원래 gate의 불충족을 보존한다.",
+  "precondition": {
+    "actual_image_required": true,
+    "reference_compare_requires_exact_bound_reference": true,
+    "current_state": "core_frozen; no candidate access or image generation performed"
+  },
+  "decision_rules": {
+    "observability_values": [
+      "visible",
+      "partial",
+      "unobservable"
+    ],
+    "pass": "visible 이고 해당 gate의 모든 요소와 연결이 동시에 확인됨",
+    "partial": "일부 요소만 보이거나 전체 route/endpoint를 확인할 수 없음. partial_is_fail: testcase PASS 금지",
+    "unobservable": "해상도·crop·가림·초점 때문에 판단 불가. UNOBSERVABLE_NOT_PASS: 추정 PASS 금지",
+    "fail": "관찰 가능한 실제 픽셀이 요구와 불일치하거나 관계가 끊김. 도구 이름·메타데이터·prompt/audit PASS로 대체 불가",
+    "required_gate_aggregation": "B01~B14 모두 PASS일 때만 testcase PASS. 평균 점수로 필수 gate의 실패·partial·unobservable을 상쇄하지 않음.",
+    "no_image": "BLOCKED_UNSCORED; 이미지 없이 gate 결과나 픽셀 반영 성공을 생성하지 않음.",
+    "crop_rule": "같은 원본의 확대 crop은 세부 설명용이다. 서로 다른 이미지나 crop을 합쳐 동시에 보이지 않는 관계를 PASS 처리하지 않음.",
+    "review_order": [
+      "prompt/controls 라벨 없이 전체 이미지의 실제 인상과 사건을 먼저 기술",
+      "원본 전체와 필요한 부분 확대를 같은 이미지에 연결",
+      "참조 얼굴·머리를 지정 원본과 나란히 비교",
+      "각 gate의 실제 visible components, missing components, observability, result, 이유를 기록",
+      "주제 반영·참조 외형·mechanism·전체 testcase 결과 및 사용자 취향/수용 상태를 분리 보고"
+    ]
+  },
+  "required_gates": [
+    {
+      "gate_id": "B01_school_classroom",
+      "required_for_testcase_pass": true,
+      "authority": "requester_topic_with_authorial_classroom_realization",
+      "feature_categories": [
+        "feature.situation",
+        "feature.location"
+      ],
+      "frozen_core_evidence": "Regular school chairs and school bags remain visibly pushed under neighboring desks.",
+      "required_visible_components": [
+        "규칙적인 학교 책상·의자 배치",
+        "주변 책상 아래의 학교 가방",
+        "교실 칠판과 창문이 같은 방의 벽면으로 연결됨"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "전체 프레임에서 교실 구조를 읽고 원본 해상도에서 가방·책상 관계 확인",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "가구 하나나 칠판 하나만 읽히며 교실 배치를 연결할 수 없음",
+      "unobservable_criterion": "배경이 잘리거나 흐려 교실인지 판별할 수 없음",
+      "fail_criterion": "공방·스튜디오·주거실 등 다른 공간이 명백하거나 학교 생활의 장소 관계가 없음",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B02_art_club_festival",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_school_activity",
+      "feature_categories": [
+        "feature.situation",
+        "feature.location",
+        "feature.props"
+      ],
+      "frozen_core_evidence": "On the blackboard behind them are a chalked club-duty grid and a simple festival date, while earlier prints hang from clips beneath the classroom windows.",
+      "required_visible_components": [
+        "칠판에 동아리 분담을 나타내는 격자와 축제 날짜 표시",
+        "교실 창문 아래 집게로 매단 이전 인쇄물",
+        "현재 인쇄 작업과 앞선 결과물이 같은 교실의 활동으로 연결됨"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "전체 프레임 및 칠판·집게 인쇄물의 원본 해상도 부분 보기",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "칠판 격자·날짜·집게 인쇄물 중 일부만 확인됨",
+      "unobservable_criterion": "글씨·격자 또는 인쇄물이 너무 작거나 가려 학교 축제 준비 맥락을 확인할 수 없음",
+      "fail_criterion": "동아리 준비의 구체 흔적이 없고 학교풍 의상·장식만 있음",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B03_reference_face",
+      "required_for_testcase_pass": true,
+      "authority": "requester_reference_appearance",
+      "feature_categories": [
+        "feature.subject"
+      ],
+      "frozen_core_evidence": "soft oval facial structure, dark brown eyes, straight dark brows, small nose and naturally full pink lips",
+      "required_visible_components": [
+        "주요 학생의 부드러운 타원형 얼굴 윤곽",
+        "어두운 갈색 눈과 일자에 가까운 어두운 눈썹",
+        "작은 코 및 자연스럽게 도톰한 분홍 입술",
+        "이 특징들이 첨부 참조의 대응 얼굴 외형과 일관되게 이어짐"
+      ],
+      "review_scope": "generated_face_and_supplied_reference",
+      "observation_scale": "원본 이미지 얼굴 영역과 지정 참조를 나란히 관찰; 확대는 원본 픽셀 확인에만 사용",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "일부 얼굴 특징만 비교 가능하거나 윤곽·눈·코·입 중 일부가 가려짐",
+      "unobservable_criterion": "얼굴 크기·초점·후면 각도 때문에 특징 비교가 불가능함",
+      "fail_criterion": "비교 가능한 얼굴 특징이 참조와 명백하게 달라짐; 단순히 단발 여성이라는 범주 유사성만으로 통과 금지",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B04_reference_hair",
+      "required_for_testcase_pass": true,
+      "authority": "requester_reference_appearance",
+      "feature_categories": [
+        "feature.subject"
+      ],
+      "frozen_core_evidence": "dark chin-length bob and wispy fringe",
+      "required_visible_components": [
+        "주요 학생의 어두운 턱 길이 단발",
+        "가벼운 가닥이 보이는 앞머리",
+        "같은 주요 얼굴의 머리로 소유가 이어짐"
+      ],
+      "review_scope": "generated_head_and_supplied_reference",
+      "observation_scale": "주요 인물의 머리 전체 외곽과 이마를 원본 해상도로 확인",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "단발 길이나 앞머리 중 일부만 보임",
+      "unobservable_criterion": "머리 외곽 또는 이마가 잘리거나 가려 형태를 판단할 수 없음",
+      "fail_criterion": "장발·다른 머리색·다른 앞머리 형태처럼 고정 참조 외형과 명백한 차이",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B05_two_distinct_students",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_cast",
+      "feature_categories": [
+        "feature.subject",
+        "feature.interaction"
+      ],
+      "frozen_core_evidence": "A second fictional 19-year-old student stands beside the table",
+      "required_visible_components": [
+        "주요 참조 외형 학생",
+        "그 옆의 별도 두 번째 학생",
+        "각자의 머리·몸통·팔이 별도 인물로 이어짐"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "전체 프레임에서 두 인물의 소유 관계 확인",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "두 사람의 일부 몸이 겹쳐 소유가 모호함",
+      "unobservable_criterion": "한 인물이 잘리거나 실루엣만 보여 두 참여자를 확인할 수 없음",
+      "fail_criterion": "인물이 하나뿐이거나 몸이 합쳐짐 또는 핵심 협업을 바꾸는 추가 주연이 있음",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B06_bilateral_hand_screen_contact",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_primary_relation",
+      "feature_categories": [
+        "feature.action",
+        "feature.props"
+      ],
+      "frozen_core_evidence": "Her left hand grips the near-left wooden rail and her right hand grips the near-right rail",
+      "required_visible_components": [
+        "주요 학생의 왼팔에서 이어진 왼손",
+        "주요 학생의 오른팔에서 이어진 오른손",
+        "서로 다른 두 손이 screen near-left와 near-right wooden rail에 실제로 닿아 잡음",
+        "두 접점이 동일한 screen frame의 소유 구조로 연결됨"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "두 손·손목·팔의 연결과 두 rail 접점이 같은 프레임에서 판독 가능",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "한 접점만 보이거나 손을 가까이 댄 상태만 있고 잡는 연결이 불분명함",
+      "unobservable_criterion": "손·rail 접점이 screen 또는 다른 몸에 가려 확인할 수 없음",
+      "fail_criterion": "손이 떠 있음, 다른 물건을 잡음, 한 손만 작동, 소유가 뒤섞임, rail 관통 또는 명백한 관절 모순",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B07_complete_print_reveal",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_complete_mechanism",
+      "feature_categories": [
+        "feature.action",
+        "feature.props",
+        "feature.situation"
+      ],
+      "frozen_core_evidence": "the two hand-to-rail contacts, the hinges, the screen-to-paper gap and the wet print together",
+      "required_visible_components": [
+        "위로 기울어진 wooden mesh screen",
+        "far-edge hinge clamps가 같은 screen과 table을 실제로 잇는 연결",
+        "아래에 평평하게 놓이고 table에 taped 된 종이",
+        "screen과 paper 사이의 열린 간격",
+        "드러난 인쇄 결과",
+        "B06의 두 hand-to-rail contacts와 이 모든 요소가 같은 view에서 연결됨"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "전체 프레임에서 구조를 읽은 뒤 같은 이미지의 원본 해상도 세부로 각 endpoint 확인",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "screen·종이·경첩·간격·양손 접점 중 하나라도 일부만 보이거나 연결의 일부가 끊겨 읽힘",
+      "unobservable_criterion": "screen 아래 결과나 hinge endpoint가 가려 전체 작동 관계를 판단할 수 없음",
+      "fail_criterion": "screen이 종이에 붙은 채이거나 far hinge가 없음/분리됨, 종이가 mesh와 함께 들림, 또는 단순 완성 포스터 제시로 활동을 대체함",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B08_print_visible_result",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_visible_result",
+      "feature_categories": [
+        "feature.props",
+        "feature.action"
+      ],
+      "frozen_core_evidence": "revealing a freshly printed cobalt wave and coral sun with crisp edges",
+      "required_visible_components": [
+        "종이 위 cobalt 계열 wave 형상",
+        "같은 종이 위 coral 계열 sun 형상",
+        "인쇄된 색 경계가 구분됨",
+        "결과물이 들린 screen 아래 종이의 표면에 놓임",
+        "젖은 인쇄 상태를 뒷받침하는 표면의 광택 또는 잉크 흔적"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "종이 전체가 포함된 view와 원본 해상도 표면 보기",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "모티프·색·종이 위치·젖은 상태 중 일부만 확인됨",
+      "unobservable_criterion": "인쇄물이 가려지거나 작아 문양·표면 상태를 판독할 수 없음",
+      "fail_criterion": "다른 물체에 인쇄됨, 핵심 wave/sun이 없음, 또는 print가 분리된 장식 포스터로 놓임",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B09_peer_pointing_support",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_secondary_relation",
+      "feature_categories": [
+        "feature.interaction",
+        "feature.action"
+      ],
+      "frozen_core_evidence": "one palm resting on the desk, her other index finger pointing above a clean edge of the revealed print",
+      "required_visible_components": [
+        "두 번째 학생의 한 palm과 table의 지지 접촉",
+        "그 학생의 다른 hand에서 이어지는 index finger",
+        "index finger가 revealed print의 깨끗한 edge 위를 가리키는 방향",
+        "손가락과 종이 사이의 구분 가능한 공간"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "두 번째 학생의 팔 소유와 palm-table/fingertip-print 관계를 함께 확인",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "palm 지지나 fingertip target 중 하나만 보임",
+      "unobservable_criterion": "손이 가려지거나 작아 접점·target을 판단할 수 없음",
+      "fail_criterion": "다른 대상을 가리킴, 주인공의 손으로 소유가 바뀜, 손가락이 paper/screen을 관통하거나 두 손의 역할이 무너짐",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B10_shared_attention",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_shared_target",
+      "feature_categories": [
+        "feature.interaction"
+      ],
+      "frozen_core_evidence": "The main student's concentrated gaze follows that fingertip to the paper",
+      "required_visible_components": [
+        "주요 학생의 눈·머리 방향이 인쇄 종이를 향함",
+        "두 번째 학생의 지시 방향이 같은 인쇄 종이를 향함",
+        "두 인물과 종이 사이 공동 target 관계가 한 프레임에 읽힘"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "전체 관계 및 주요 얼굴의 원본 해상도 시선 보기",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "얼굴 방향만 있고 눈 방향을 확인할 수 없거나 fingertip-target 연결 일부만 보임",
+      "unobservable_criterion": "주요 눈이나 지시하는 손이 가려 shared target을 판단할 수 없음",
+      "fail_criterion": "카메라 응시 등으로 주요 시선이 다른 곳을 향하거나 두 사람이 서로 다른 결과를 봄",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B11_emerging_relief",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_visible_expression",
+      "feature_categories": [
+        "feature.facial_expression",
+        "feature.interaction"
+      ],
+      "frozen_core_evidence": "a small relieved smile is beginning as they recognize that the print worked",
+      "required_visible_components": [
+        "주요 학생 얼굴의 작고 시작되는 미소",
+        "그 표현이 B10의 인쇄 결과를 향한 주시와 동시에 나타남"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "전체 장면과 주요 입·눈 주변을 원본 해상도로 확인",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "미소의 일부만 읽히거나 target 연결 없이 표정만 보임",
+      "unobservable_criterion": "얼굴이 작거나 가려 미소를 판독할 수 없음",
+      "fail_criterion": "무관한 과장 포즈·카메라용 활짝 웃음 또는 명백히 다른 표정으로 이 작은 반응이 사라짐",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B12_frame_hierarchy",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_projection",
+      "feature_categories": [
+        "feature.framing",
+        "feature.subject",
+        "feature.props"
+      ],
+      "frozen_core_evidence": "a horizontal three-quarter medium-wide view from the open end of the table",
+      "required_visible_components": [
+        "수평 프레임과 table open-end 쪽 oblique view",
+        "주요 얼굴·양손·기울어진 screen·인쇄 종이 전체의 동시 가시성",
+        "교실의 활동 배경이 판독 가능한 정도로 남음",
+        "인물보다 인쇄 기계만 지배하거나 얼굴 클로즈업만 남지 않는 협업 중심 위계"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "원본 전체 프레임; crop은 설명 보조이며 전체에서 잘린 요소를 복원하는 증거로 사용 불가",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "필수 요소가 프레임에 있으나 일부가 작거나 흐려 관계를 읽지 못함",
+      "unobservable_criterion": "crop·blur·occlusion으로 주요 관계 전체 관찰이 불가능함",
+      "fail_criterion": "세로/얼굴 중심 등으로 관계가 잘리거나 printmaking partnership을 다른 장면으로 바꿈",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B13_embodiment_visible_consistency",
+      "required_for_testcase_pass": true,
+      "authority": "authorial_testcase_physical_realization",
+      "feature_categories": [
+        "feature.action",
+        "feature.interaction"
+      ],
+      "frozen_core_evidence": "Her shoulders incline slightly over the desk while both feet support her on the classroom floor",
+      "required_visible_components": [
+        "보이는 주요 어깨·팔·손이 두 rail grip으로 일관되게 이어짐",
+        "desk가 printing apparatus를 지지함",
+        "보이는 두 번째 학생의 palm이 desk 위에서 일관되게 지지함",
+        "보이는 범위에서 몸·tool·paper의 관통이나 불가능한 동시 상태가 없음"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "보이는 몸통·팔·손·table의 관계; 발이 crop 밖이면 발 지지는 관찰 불가로 별도 기록",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "보이는 작동 사슬의 일부가 가려 소유·reach를 완전히 확인하지 못함",
+      "unobservable_criterion": "보이는 핵심 신체 접점이 없어 물리 일관성을 평가할 수 없음",
+      "fail_criterion": "부속지 소유 오류·불가능한 reach·지지 없는 장치·명백한 물체 관통; prompt의 설명만으로 픽셀 결함을 통과시키지 않음",
+      "pending_result": true
+    },
+    {
+      "gate_id": "B14_whole_school_activity",
+      "required_for_testcase_pass": true,
+      "authority": "requester_topic_plus_authorial_testcase_holistic",
+      "feature_categories": [
+        "feature.situation",
+        "feature.location",
+        "feature.action",
+        "feature.interaction"
+      ],
+      "frozen_core_evidence": "students participating in a school activity",
+      "required_visible_components": [
+        "설명문을 숨겨도 학교 교실의 학생 협업 활동으로 읽힘",
+        "실크스크린을 들어 올려 같은 결과를 확인하는 중심 사건이 읽힘",
+        "얼굴·손·도구·결과·교실의 시각적 연결이 유지됨",
+        "학생의 활동 참여와 비선정적인 일상 학교 장면이 전체 인상으로 성립함"
+      ],
+      "review_scope": "same_full_frame",
+      "observation_scale": "최초 원본 전체 프레임 읽기 후 세부 확인; prompt나 keyword를 보지 않은 장면 요약도 기록",
+      "pass_condition": "모든 required_visible_components 및 그 사이 연결이 같은 원본 이미지에서 함께 확인되어야 한다.",
+      "partial_criterion": "학교 장소 또는 구체 활동 또는 협업 결과 중 일부만 읽힘",
+      "unobservable_criterion": "장면이 지나치게 흐리거나 가려 전체 상황을 판단할 수 없음",
+      "fail_criterion": "학교풍 의상만 있는 인물 사진, 일반 작업실 또는 도구 전시로 보이며 학교의 공동 활동이 성립하지 않음",
+      "pending_result": true
+    }
+  ],
+  "reference_boundaries": {
+    "appearance_only": [
+      "soft oval facial structure",
+      "dark brown eyes",
+      "straight dark brows",
+      "small nose",
+      "naturally full pink lips",
+      "dark chin-length bob",
+      "wispy fringe"
+    ],
+    "not_established_by_reference": [
+      "actual identity",
+      "actual age",
+      "biography",
+      "personality",
+      "consent",
+      "school affiliation"
+    ],
+    "not_locked_from_reference": [
+      "original clothing",
+      "original pose",
+      "original background",
+      "body proportions not specified by request"
+    ]
+  },
+  "nonpixel_or_inference_limits": [
+    {
+      "item": "exact age 19",
+      "handling": "새 장면의 저술/프롬프트 사실이다. 픽셀로 정확한 나이를 검증하거나 원사진 나이를 추정하지 않는다."
+    },
+    {
+      "item": "tomorrow and last print",
+      "handling": "축제 날짜 표시·이전 인쇄물·인쇄 결과는 볼 수 있으나 내일/마지막이라는 시간·순서는 단일 이미지로 증명되지 않는다."
+    },
+    {
+      "item": "relief or recognizing success",
+      "handling": "표정·시선·깨끗한 인쇄 결과의 동시 가시성만 평가한다. 실제 내면 상태를 입증하지 않는다."
+    },
+    {
+      "item": "both feet on floor outside crop",
+      "handling": "발이 프레임 밖이면 정확한 발 지지는 unobservable로 보고한다. B13은 보이는 핵심 작동 사슬을 평가하며 숨은 발을 보았다고 주장하지 않는다."
+    },
+    {
+      "item": "user acceptance and artistic preference",
+      "handling": "기술 audit·필수 픽셀 gate와 별도로 pending requester judgment로 보존한다."
+    }
+  ],
+  "supporting_scene_observations": {
+    "not_substitutes_for_required_gates": true,
+    "items": [
+      "white school shirt, green neck ribbon and charcoal cardigan",
+      "soft late-afternoon window light on face and paper",
+      "ordinary skin texture, worn desk edges and slight ink stains",
+      "natural photographic perspective and moderate depth of field"
+    ],
+    "report_rule": "핵심 gate와 별도로 일치/차이/관찰불가를 기록하고 전체 예술적 인상에 미치는 영향을 설명한다."
+  }
+}

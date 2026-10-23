@@ -1,0 +1,246 @@
+{
+  "schema": "photo-arm-pixel-test-report/v1",
+  "arm": "c",
+  "review_method": "direct inspection of the actual saved original-resolution image and direct comparison with the supplied original reference",
+  "source_plan": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/authored/test_plan.json",
+    "sha256": "c0a1fd6b9513bff357cc1f9f2b2511ba1f1eadd11cc20138e026206c532dd180"
+  },
+  "protocol_clarification": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/authored/pixel_test_protocol_clarification.json",
+    "sha256": "df262daeb06dff94cf8874a204652ef87c50d6833a3afc00361a961a13e78508"
+  },
+  "source_core_sha256": "c712f7cb7bc53522536c629295906c1e0cb1f50134f60c4cfc7bad1440be5378",
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/images/native-1.png",
+    "sha256": "a59d4c8f8181a78ad872ea2abb3ea4fab2c68869299b3f0643550abfd049a987",
+    "dimensions": [
+      1536,
+      1024
+    ]
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "scope": "visible facial appearance and hair only"
+  },
+  "gates": [
+    {
+      "gate_id": "C01",
+      "name": "학교 일상과 미술 교실 문맥",
+      "required_visible_components": [
+        "그림용 책상들이 있는 교실 공간",
+        "녹색 수업 보드",
+        "그 안의 학생과 일상적인 교복 차림"
+      ],
+      "status": "fail",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "Rows of paint-marked drawing desks, a large green teaching board, and the student’s white shirt/gray vest make the school art-room context visible. However, below the vest the generated garment has distinct pleats and a continuous skirt-like panel rather than the explicitly planned navy trousers. The original C01 visible-fail rule covers a clear change to the core clothing configuration. School context passes as a subfinding, but the full original gate fails.",
+      "component_findings": [
+        "School-art-room context: pass.",
+        "Gray vest and white shirt: pass.",
+        "Navy trousers: fail; visible pleated skirt substituted."
+      ]
+    },
+    {
+      "gate_id": "C02",
+      "name": "참조에서 가져온 얼굴 외형",
+      "required_visible_components": [
+        "비교할 수 있는 크기의 삼사분면 얼굴",
+        "참조와 연속적인 전체 얼굴 비례와 눈·코·입 배치",
+        "새 상황에 맞춘 질문하는 표정"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "Direct comparison with the supplied portrait supports reference-guided facial appearance: the softly oval facial contour, large dark eyes, compact nose, and small full lips remain recognizable despite a different questioning three-quarter angle and warmer light. The face is large enough for meaningful comparison. This is an appearance judgment, not biometric identity or age proof.",
+      "component_findings": [
+        "Face and major feature arrangement readable.",
+        "Questioning three-quarter view retained."
+      ]
+    },
+    {
+      "gate_id": "C03",
+      "name": "참조 단발과 앞머리",
+      "required_visible_components": [
+        "진한 색의 턱 길이 단발 실루엣",
+        "가볍고 갈라진 앞머리",
+        "머리카락과 중앙 인물 얼굴의 같은 소유 관계"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "The same student has a dark chin-length bob and light separated fringe. Warm edge light changes its apparent highlights but the dark bob silhouette and parted fringe remain consistent with the reference.",
+      "component_findings": [
+        "Dark bob belongs to the central student.",
+        "Chin-level cut and airy parted fringe visible."
+      ]
+    },
+    {
+      "gate_id": "C04",
+      "name": "그림 속 인물과 비어 있는 실제 문간의 완전한 대응",
+      "required_visible_components": [
+        "그림판 위의 넓은 목탄 문간 그림",
+        "그림 속 문간 중앙의 사람 형태 실루엣",
+        "그림 속 3칸 상부창",
+        "실제 열린 문간과 그 3칸 상부창",
+        "실제 문간 개구부에 사람이 없는 상태",
+        "두 문간이 대응한다고 읽히는 같은 큰 건축 형태"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "The complete board at left shows a broad charcoal doorway, a human-shaped dark silhouette centered in its opening, and three distinct transom panes. The real right doorway also has three separate transom panes, and its visible opening through to the floor is empty. The drawn marks remain on the board; there is no actual person occupying the real opening. Both sides of the comparison read together in the same full frame.",
+      "component_findings": [
+        "Drawn doorway and human silhouette: visible.",
+        "Drawn transom: three panes.",
+        "Actual transom: three panes.",
+        "Actual opening: empty and assessable.",
+        "Matching large architectural geometry: visible."
+      ]
+    },
+    {
+      "gate_id": "C05",
+      "name": "단서에서 실제 문간으로 향한 반응",
+      "required_visible_components": [
+        "중앙 학생의 머리 방향",
+        "실제 문간을 향하는 눈의 방향",
+        "그림판을 계속 지지하는 현재 상태",
+        "질문하는 표정의 가시적 단서"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "The head is turned toward frame right and the visible pupils also point right toward the actual doorway, while both hands remain on the board. Slightly drawn brows and the parted mouth read as concentrated questioning rather than an unrelated camera pose. The picture supports a directed check; it does not establish the student’s hidden thoughts or the drawing’s history.",
+      "component_findings": [
+        "Head and eye direction connect to real right doorway.",
+        "Board remains held during the response."
+      ]
+    },
+    {
+      "gate_id": "C06",
+      "name": "양손·그림판·탁자의 연결과 지지",
+      "required_visible_components": [
+        "중앙 인물에게 속한 두 손",
+        "서로 다른 그림판 양옆의 두 손 접촉",
+        "팔과 손의 그럴듯한 연결",
+        "탁자와 맞닿아 지지되는 그림판 아랫변",
+        "직립한 하나의 그림판"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "Two distinct hands grip the two separate board side edges and the bottom edge visibly rests on the tabletop. The near forearm and bent elbow connect clearly to the student’s white sleeve; the far cuff/hand at the left edge is positioned at a plausible reach, with its intervening arm naturally occluded by the board. No extra hand or contradictory contact is visible. The exact hidden elbow configuration is not claimed. All consequential grip and support endpoints are visible.",
+      "component_findings": [
+        "Separate side-edge grips: visible.",
+        "Bottom-edge/table support: visible.",
+        "Near arm continuity and plausible far-hand ownership: supported."
+      ]
+    },
+    {
+      "gate_id": "C07",
+      "name": "한 프레임에서 비교 가능한 크기와 배치",
+      "required_visible_components": [
+        "왼쪽의 학생과 완전한 그림",
+        "오른쪽 옆벽의 실제 문간",
+        "읽을 수 있는 삼사분면 얼굴과 두 손",
+        "서로 비교할 수 있는 깊이·가시 크기",
+        "가로 방향의 중간 넓이 사진 구도"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "In the one horizontal medium-wide frame the student and complete board occupy the left/center-left and the complete actual open doorway occupies the right. The face, both holding hands, drawing, matching transoms, empty opening, and bottom support are all simultaneously readable at the saved 1536 by 1024 resolution.",
+      "component_findings": [
+        "One full frame contains all required endpoints.",
+        "Left/right comparison and near working-desk viewpoint visible."
+      ]
+    },
+    {
+      "gate_id": "C08",
+      "name": "장면 전체의 조용한 학교 드라마 인상",
+      "required_visible_components": [
+        "관찰자처럼 이웃 책상에 놓인 심리적 거리",
+        "얼굴과 목탄 그림을 연결하는 자연스러운 창빛 인상",
+        "문간 세부를 남기는 밝기",
+        "절제된 색과 사진다운 표면",
+        "한 단서와 반응으로 이어지는 시각적 중심"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "Without the synopsis, the photograph reads as a student in a sunlit art classroom pausing with a drawing of a figure in a doorway while checking an empty doorway beside her. The face, charcoal silhouette, and real opening form the main hierarchy. Natural side light, a slim hair edge, restrained room colors, and used desks sustain a quiet school-drama impression. The skirt and portrait-board departures remain recorded separately and are not erased by this whole-image impression.",
+      "component_findings": [
+        "Coherent ordinary school-drama photograph.",
+        "Face, drawing clue, and empty doorway form one readable question."
+      ]
+    }
+  ],
+  "overall_case": "FAIL",
+  "reason": "Original required gate C01 fails because navy trousers were visibly replaced by a pleated skirt. Seven other original gates have visible support. No gate was softened after seeing candidates or pixels.",
+  "passed_gate_count": 7,
+  "failed_gate_ids": [
+    "C01"
+  ],
+  "unobservable_gate_ids": [],
+  "partial_gate_ids": [],
+  "school_life_topic_subfinding": "visibly_supported",
+  "reference_appearance_subfinding": "visibly_supported_as_guidance_not_identity",
+  "clue_relation_subfinding": "all required drawing/real-door endpoints visibly supported",
+  "additional_baseline_fidelity_observations": [
+    "The board is portrait-oriented, while the baseline described a landscape drawing board. This is a real authored-detail deviation; the original eight gate definitions did not make board aspect ratio a separate hard gate.",
+    "Several art materials and pinned drawings were added by the image model; they remain subordinate to the main clue rather than replacing it."
+  ],
+  "whole_scene_observation_before_control_labels": "A warm and quiet after-class mystery photograph: a close, questioning student holds a large charcoal figure-in-doorway picture and looks to the empty real doorway; the matching transoms make the visual comparison unusually easy to read.",
+  "control_calibration": {
+    "technical_control_binding": "preserved in audited controls",
+    "perceived_expression": "Natural facial warmth and attentiveness support the portrait subtly. No distinct fetish-led or impossible physical treatment is visible. This is a contextual qualitative observation, not a numerical intensity measurement.",
+    "comparative_improvement": "not_established; only one generated image and no generated baseline comparator"
+  },
+  "new_school_source_retained": 0,
+  "causal_data_improvement": "not_established; offered/reviewed sources were not retained in the final prompt",
+  "actual_image_call_count": 1,
+  "retry_performed": false,
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user acceptance has been received."
+  },
+  "inspection_artifacts": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/images/native-1.png",
+      "role": "original_native_scale",
+      "sha256": "a59d4c8f8181a78ad872ea2abb3ea4fab2c68869299b3f0643550abfd049a987"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/school-life-20261023-c/authored/inspection-thumbnail.png",
+      "role": "384_pixel_long_edge_inspection_only",
+      "sha256": "0b83497646859294ace06b47042c19f6001e6e82b4561be77cfc842b544babc4"
+    }
+  ]
+}

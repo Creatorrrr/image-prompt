@@ -1,0 +1,23 @@
+{
+  "schema": "photo-school-life-evidence-scope/v1",
+  "created_at": "2026-10-23T09:59:33.350Z",
+  "manifest": "SHA256SUMS",
+  "purpose": "Reproducible evidence inventory, not blanket staging permission.",
+  "included": [
+    "integration-evidence root regular files except manifest itself",
+    "integration-evidence/arms recursive regular files",
+    "three own school-life run directories excluding .staging and transient lockfiles",
+    "six intentionally changed production source/reference paths",
+    "current canonical SKILL.md",
+    "exact supplied reference JPEG"
+  ],
+  "excluded": [
+    "successor-store",
+    "successor-skill",
+    "build",
+    "transient empty .LOCK and .staging",
+    "unrelated dirty working files"
+  ],
+  "runtime_proof": "Installed immutable generation qualification is recorded in successor.json, native-index-build.json, registration-qualification.json, install.json and validation-execution.json; the full runtime cache is not duplicated in this small evidence inventory.",
+  "historical_research_hash_manifest": "Parent research SHA256SUMS remains unchanged; this inventory is a separate later implementation/test record."
+}

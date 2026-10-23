@@ -1,0 +1,59 @@
+{
+  "schema_version": "school-life-appearance-pose-pixel-test/v1",
+  "arm": "a",
+  "declared_phase": "core_frozen_before_first_candidate_access",
+  "core_sha256": "8401e63cc6a87f51686cec971e1761701b8a58ec92018f3811f123218f1dae6c",
+  "baseline_prompt_sha256": "16deb42a41826a30fa6a76c6c443671194cd4a89ca6fe26a8b860f6298915c67",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "case_direction": "Uniform layered under a practical-class apron; both hands loosen its front waist fastening after baking. This is an authored test scenario, not a requester-prescribed garment or pose.",
+  "evaluation_rules": {
+    "actual_image_absent": "BLOCKED_UNSCORED",
+    "actual_image_available": "PASS only when every required gate passes from original image pixels; any FAIL, partial or unobservable required gate makes the overall test FAIL.",
+    "gate_observability": [
+      "visible",
+      "partial",
+      "unobservable"
+    ],
+    "no_postpixel_relaxation": true,
+    "source_exposure_not_adoption_or_success": true,
+    "technical_audit_not_pixel_success": true,
+    "user_acceptance": "pending_requester_judgment"
+  },
+  "required_gates": [
+    {
+      "id": "school_context",
+      "criterion": "The character and recognisable instructional classroom/workbench context appear together so this reads as a school-life practical-class moment. A costume alone is insufficient."
+    },
+    {
+      "id": "reference_face_hair_scope",
+      "criterion": "Face and hair are sufficiently visible to assess the supplied visual guide: dark chin-length bob with separated fringe and facial shape/eyes broadly consistent with the reference. This is visual resemblance only and establishes no real identity, age or biography."
+    },
+    {
+      "id": "clothing_layer_and_state",
+      "criterion": "A school-uniform layer and the worn practical apron remain visibly distinguishable on the same wearer; apron bib/support and waist ties make a coherent garment, with a visibly loosening front fastening rather than an unrelated held string."
+    },
+    {
+      "id": "unfastening_contact_relation",
+      "criterion": "Both hands belong to that wearer and act on the same front waist fastening: one steadies it, the other pulls a tie, with the slackened loop/tie result and the hand-target contacts visible together. Merely touching the apron, or hiding the required connection, cannot pass."
+    },
+    {
+      "id": "completed_work_relation",
+      "criterion": "The worn/flour-marked apron, nearby completed bread/tray and the character remain legible in one scene, making the end-of-practical clothing release understandable. The exact tiny flour pattern, bread count and incidental diagram are not gates."
+    },
+    {
+      "id": "whole_scene_embodiment",
+      "criterion": "The face, forearms, fastening and completed-work context form a readable hierarchy in one view; body/arms connect plausibly and support the action without a material ownership, reach or occlusion conflict."
+    }
+  ],
+  "supplemental_observations": [
+    "Describe visible overall impression before consulting control labels.",
+    "Assess calm presence, class-to-break transition and contextual appeal at sensual=1 without treating metadata as perceptual proof.",
+    "Assess the original image and any optional crop separately; crops do not repair absent whole-frame relations."
+  ],
+  "not_added_as_gates": [
+    "exact fingers or bread count",
+    "exact uniform badge/buttons",
+    "minute tie topology beyond the visible functional unfastening relation",
+    "imagined mental state, class history, sound or actual personality"
+  ]
+}

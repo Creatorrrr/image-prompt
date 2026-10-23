@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/school-life-appearance-poses-20261023/integration-evidence/qualify_appearance_release.py", line 52, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/school-life-appearance-poses-20261023/integration-evidence/qualify_appearance_release.py", line 17, in main
+    meta=read(g.root/'indexed-documents.json.gz');indexed={v['cid'] for v in meta};pos={cid for cid,x in fresh.items() if x['record_kind']=='visual_option'};diag=set(fresh)-pos
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/school-life-appearance-poses-20261023/integration-evidence/qualify_appearance_release.py", line 6, in read
+    def read(p):return json.loads(p.read_bytes())
+                       ~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 347, in loads
+    s = s.decode(detect_encoding(s), 'surrogatepass')
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte

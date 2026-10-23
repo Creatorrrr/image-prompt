@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import gc,runpy; gc.disable(); runpy.run_path('docs/research-evidence/photo-prompt/school-life-20261023/integration-evidence/adopt_school_life_data.py',run_name='__main__')
+                                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "docs/research-evidence/photo-prompt/school-life-20261023/integration-evidence/adopt_school_life_data.py", line 116, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "docs/research-evidence/photo-prompt/school-life-20261023/integration-evidence/adopt_school_life_data.py", line 90, in main
+    with source_update(S):
+         ~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 176, in source_update
+    raise FreshnessError("source_revision_pending", "another maintenance writer owns this source")
+photo_runtime_sources.FreshnessError: source_revision_pending: another maintenance writer owns this source
