@@ -1,0 +1,64 @@
+{
+  "schema": "agent-medical-image-test/v1",
+  "arm": "b",
+  "scene_title": "평행봉 사이에서 발이 닿는 순간",
+  "authorship": "Independent agent-owned scene and test obligations. These are not requesting-user anchors, diagnoses, biography, source-person age or occupation claims.",
+  "baseline_sha256": "7e121a565261418220cc93aa17de9949bb49425845de7c90bedc2ea14d951215",
+  "expected_visible_relations": [
+    {
+      "id": "B1_parallel_support",
+      "expectation": "Same patient between two parallel rails; each of his two visible hands wraps its respective rail; both rail contacts visible simultaneously.",
+      "complete_components": [
+        "patient",
+        "left hand to one rail",
+        "right hand to other rail",
+        "both rails"
+      ]
+    },
+    {
+      "id": "B2_belt_support",
+      "expectation": "Therapist beside patient, her near hand visibly grasps a lateral gait-belt handle; belt encircles the same patient waist; arm-to-hand ownership visible.",
+      "complete_components": [
+        "therapist arm and hand",
+        "belt lateral handle contact",
+        "belt around same patient waist"
+      ]
+    },
+    {
+      "id": "B3_supported_step",
+      "expectation": "Same patient left foot slightly ahead of right and both shoe soles on the floor in one visible supported state.",
+      "complete_components": [
+        "same patient both lower limbs",
+        "two shoes",
+        "stagger",
+        "both soles on floor"
+      ]
+    },
+    {
+      "id": "B4_reference_appearance",
+      "expectation": "Main therapist face visible enough to compare with supplied image; soft face shape, dark eyes and short dark bob/wispy bangs retain recognizable reference resemblance.",
+      "complete_components": [
+        "readable therapist face",
+        "short dark bob",
+        "wispy bangs",
+        "face resemblance"
+      ]
+    },
+    {
+      "id": "B5_clinical_whole",
+      "expectation": "Rehabilitation room, therapist-patient support interaction, and visible walking apparatus create a readable clinical recovery scene.",
+      "complete_components": [
+        "clinical setting",
+        "two related actors",
+        "support apparatus",
+        "purposeful clinical interaction"
+      ]
+    }
+  ],
+  "policy": {
+    "unobservable": "UNOBSERVABLE_NOT_PASS",
+    "partial": "partial_is_fail"
+  },
+  "user_acceptance": "pending",
+  "story_limits": "Pixels may show supported practice and concentration; first attempt, successful recovery, diagnosis, consent and history cannot be established from a single frame."
+}

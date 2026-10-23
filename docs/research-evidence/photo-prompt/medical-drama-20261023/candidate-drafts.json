@@ -1,0 +1,4996 @@
+{
+  "schema": "medical-drama-inert-candidate-drafts/v1",
+  "drafts": [
+    {
+      "id": "draft_A01",
+      "card_id": "A01",
+      "kind": "authored_visual_option",
+      "en": "A seated clinician and a seated patient face each other across the open end of a desk; an examination couch stands against the adjacent wall.",
+      "ko": "앉은 의료진과 환자가 책상의 열린 끝을 사이에 두고 마주하며, 옆 벽에는 진찰대가 놓여 있다.",
+      "suggested_slots": [
+        "location",
+        "proxemics"
+      ],
+      "source_ids": [
+        "S01",
+        "S04"
+      ],
+      "owner_nodes": [
+        "clinician",
+        "couch",
+        "desk",
+        "patient"
+      ],
+      "relations": [
+        {
+          "from": "clinician",
+          "relation": "faces",
+          "to": "patient"
+        },
+        {
+          "from": "desk",
+          "relation": "beside",
+          "to": "couch"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "직종·진료과·진단을 외형으로 확정하지 않는다."
+    },
+    {
+      "id": "draft_A02",
+      "card_id": "A02",
+      "kind": "authored_visual_option",
+      "en": "A wheeled emergency trolley stands beside a treatment bed, leaving an open working strip along the bed's near side; cables lead from a monitor toward the bed.",
+      "ko": "바퀴 달린 응급카트가 처치 침대 옆에 있고 가까운 침대 측면에는 작업 공간이 남아 있으며, 모니터에서 침대 쪽으로 전선이 이어진다.",
+      "suggested_slots": [
+        "location",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S13",
+        "S17"
+      ],
+      "owner_nodes": [
+        "bed",
+        "monitor",
+        "monitor.cables",
+        "trolley"
+      ],
+      "relations": [
+        {
+          "from": "trolley",
+          "relation": "beside",
+          "to": "bed"
+        },
+        {
+          "from": "monitor.cables",
+          "relation": "toward",
+          "to": "bed"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "실제 응급상태·작동·시간 압박은 별도 문맥이다."
+    },
+    {
+      "id": "draft_A03",
+      "card_id": "A03",
+      "kind": "authored_visual_option",
+      "en": "A small wrapped infant lies on a mattress inside a transparent incubator enclosure; circular access ports interrupt the clear side wall.",
+      "ko": "작게 싸인 신생아가 투명 인큐베이터 안의 매트리스 위에 누워 있고 투명 측벽에는 둥근 접근 구멍이 보인다.",
+      "suggested_slots": [
+        "location",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S01",
+        "S13"
+      ],
+      "owner_nodes": [
+        "incubator",
+        "incubator.ports",
+        "infant"
+      ],
+      "relations": [
+        {
+          "from": "infant",
+          "relation": "inside",
+          "to": "incubator"
+        },
+        {
+          "from": "incubator.ports",
+          "relation": "part_of",
+          "to": "incubator"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "재태주수·질환·임상적 안정성을 추정하지 않는다."
+    },
+    {
+      "id": "draft_A04",
+      "card_id": "A04",
+      "kind": "authored_visual_option",
+      "en": "Two recovery stretchers occupy separate curtained bays; each has its own bedside screen and a clear aisle at the foot.",
+      "ko": "회복용 이동침대 두 개가 커튼으로 나뉜 각각의 구역에 있으며 각 침대 옆에는 별도 화면이 있고 발치에는 통로가 남아 있다.",
+      "suggested_slots": [
+        "location",
+        "spatial_depth"
+      ],
+      "source_ids": [
+        "S01",
+        "S48"
+      ],
+      "owner_nodes": [
+        "bay_one",
+        "bay_two",
+        "screen_one",
+        "screen_two",
+        "stretcher_one",
+        "stretcher_two"
+      ],
+      "relations": [
+        {
+          "from": "stretcher_one",
+          "relation": "inside",
+          "to": "bay_one"
+        },
+        {
+          "from": "stretcher_two",
+          "relation": "inside",
+          "to": "bay_two"
+        },
+        {
+          "from": "screen_one",
+          "relation": "beside",
+          "to": "stretcher_one"
+        },
+        {
+          "from": "screen_two",
+          "relation": "beside",
+          "to": "stretcher_two"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "PACU라는 지정은 요청 문맥에 따른다."
+    },
+    {
+      "id": "draft_A05",
+      "card_id": "A05",
+      "kind": "authored_visual_option",
+      "en": "A counter separates a corridor from a work area containing two computer terminals and a chart rack; one staff member stands on each side of the counter.",
+      "ko": "카운터가 복도와 컴퓨터 단말기 두 대·차트 꽂이가 있는 업무 공간을 나누며 카운터 양쪽에 직원이 한 명씩 서 있다.",
+      "suggested_slots": [
+        "location",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S01",
+        "S20"
+      ],
+      "owner_nodes": [
+        "chart_rack",
+        "corridor",
+        "counter",
+        "terminals",
+        "work_area"
+      ],
+      "relations": [
+        {
+          "from": "counter",
+          "relation": "separates",
+          "to": "corridor"
+        },
+        {
+          "from": "terminals",
+          "relation": "inside",
+          "to": "work_area"
+        },
+        {
+          "from": "chart_rack",
+          "relation": "inside",
+          "to": "work_area"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "복장으로 간호사 직급이나 업무 권한을 판정하지 않는다."
+    },
+    {
+      "id": "draft_A06",
+      "card_id": "A06",
+      "kind": "authored_visual_option",
+      "en": "Three clinicians stand at one bedside; one holds a tablet angled toward the other two while the patient remains visible beside the display.",
+      "ko": "의료진 세 명이 한 병상 옆에 서 있고 한 명이 다른 두 명에게 태블릿을 기울여 보여 주며 화면 옆으로 환자도 보인다.",
+      "suggested_slots": [
+        "relational_action",
+        "gaze_target"
+      ],
+      "source_ids": [
+        "S19",
+        "S20"
+      ],
+      "owner_nodes": [
+        "clinician_one",
+        "clinician_three",
+        "clinician_two",
+        "patient",
+        "tablet",
+        "team"
+      ],
+      "relations": [
+        {
+          "from": "clinician_one",
+          "relation": "holds",
+          "to": "tablet"
+        },
+        {
+          "from": "tablet",
+          "relation": "faces",
+          "to": "clinician_two"
+        },
+        {
+          "from": "tablet",
+          "relation": "faces",
+          "to": "clinician_three"
+        },
+        {
+          "from": "team",
+          "relation": "beside",
+          "to": "patient"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "회진·협진 여부와 전달 내용은 외형만으로 입증되지 않는다."
+    },
+    {
+      "id": "draft_A07",
+      "card_id": "A07",
+      "kind": "authored_visual_option",
+      "en": "One staff member points to a row on a chart while another holds the chart's lower edge; the chart stays between them, clear of the patient's bed.",
+      "ko": "한 직원이 차트의 한 행을 가리키고 다른 직원은 차트 아래쪽을 받치며, 차트는 두 사람 사이에서 환자 침대와 떨어져 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "hand_pose"
+      ],
+      "source_ids": [
+        "S19",
+        "S20"
+      ],
+      "owner_nodes": [
+        "chart",
+        "chart.edge",
+        "chart.row",
+        "staff_one",
+        "staff_one.finger",
+        "staff_pair",
+        "staff_two",
+        "staff_two.hand"
+      ],
+      "relations": [
+        {
+          "from": "staff_one.finger",
+          "relation": "points_to",
+          "to": "chart.row"
+        },
+        {
+          "from": "staff_two.hand",
+          "relation": "supports",
+          "to": "chart.edge"
+        },
+        {
+          "from": "chart",
+          "relation": "between",
+          "to": "staff_pair"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "보이는 것은 기록 공유이며 구두 내용과 책임 이전은 문맥이다."
+    },
+    {
+      "id": "draft_A08",
+      "card_id": "A08",
+      "kind": "authored_visual_option",
+      "en": "Several staff sit around a conference table facing a wall display of simplified case images; paper notes lie on the table rather than across the displayed images.",
+      "ko": "여러 직원이 회의탁자 둘레에 앉아 단순화한 증례 이미지가 있는 벽 화면을 바라보며, 종이 메모는 화면 위가 아니라 탁자 위에 놓여 있다.",
+      "suggested_slots": [
+        "location",
+        "gaze_target"
+      ],
+      "source_ids": [
+        "S18",
+        "S20"
+      ],
+      "owner_nodes": [
+        "display",
+        "display.images",
+        "notes",
+        "staff",
+        "table"
+      ],
+      "relations": [
+        {
+          "from": "staff",
+          "relation": "faces",
+          "to": "display"
+        },
+        {
+          "from": "notes",
+          "relation": "on",
+          "to": "table"
+        },
+        {
+          "from": "display.images",
+          "relation": "inside",
+          "to": "display"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "회의 목적·책임·합의 결과는 단일 장면으로 보이지 않는다."
+    },
+    {
+      "id": "draft_A09",
+      "card_id": "A09",
+      "kind": "authored_visual_option",
+      "en": "A patient stands between two parallel rails with one hand resting on each rail; a therapist stands beside the patient inside the walking lane.",
+      "ko": "환자가 평행봉 두 개 사이에 서서 양손을 각각의 봉에 얹고, 치료사는 같은 보행 통로 안에서 환자 옆에 서 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S28",
+        "S02"
+      ],
+      "owner_nodes": [
+        "patient",
+        "patient.left_hand",
+        "patient.right_hand",
+        "rail_left",
+        "rail_right",
+        "therapist"
+      ],
+      "relations": [
+        {
+          "from": "patient.left_hand",
+          "relation": "contacts",
+          "to": "rail_left"
+        },
+        {
+          "from": "patient.right_hand",
+          "relation": "contacts",
+          "to": "rail_right"
+        },
+        {
+          "from": "therapist",
+          "relation": "beside",
+          "to": "patient"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기능 향상·치료 성공·보행의 시간 경과를 주장하지 않는다."
+    },
+    {
+      "id": "draft_A10",
+      "card_id": "A10",
+      "kind": "authored_visual_option",
+      "en": "A clinician sits beside the bed with their eyes near the reclining patient's eye level; both faces turn toward one another.",
+      "ko": "의료진이 병상 옆에 앉아 기대 누운 환자와 비슷한 눈높이를 이루며 두 사람의 얼굴이 서로를 향한다.",
+      "suggested_slots": [
+        "proxemics",
+        "camera_height"
+      ],
+      "source_ids": [
+        "S21",
+        "S26"
+      ],
+      "owner_nodes": [
+        "bed",
+        "clinician",
+        "clinician.face",
+        "patient",
+        "patient.face"
+      ],
+      "relations": [
+        {
+          "from": "clinician",
+          "relation": "beside",
+          "to": "bed"
+        },
+        {
+          "from": "clinician.face",
+          "relation": "faces",
+          "to": "patient.face"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "경청·신뢰·정서적 효과는 보장하지 않는다."
+    },
+    {
+      "id": "draft_A11",
+      "card_id": "A11",
+      "kind": "authored_visual_option",
+      "en": "A visitor seated beside a bed holds one of the patient's hands above the blanket; both wrists and the two meeting hands remain visible.",
+      "ko": "병상 옆에 앉은 방문자가 담요 위에서 환자의 한 손을 잡고 있으며 두 손목과 맞닿은 두 손이 모두 보인다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S26",
+        "S01"
+      ],
+      "owner_nodes": [
+        "blanket",
+        "patient",
+        "patient.hand",
+        "visitor",
+        "visitor.hand"
+      ],
+      "relations": [
+        {
+          "from": "visitor.hand",
+          "relation": "holds",
+          "to": "patient.hand"
+        },
+        {
+          "from": "patient.hand",
+          "relation": "above",
+          "to": "blanket"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "가족·연인 관계, 감정, 생사, 동의를 손잡기만으로 확정하지 않는다."
+    },
+    {
+      "id": "draft_A12",
+      "card_id": "A12",
+      "kind": "authored_visual_option",
+      "en": "A staff member in scrubs sits leaning back on a chair with both feet on the floor; a folded coat lies on a separate cot.",
+      "ko": "스크럽을 입은 직원이 양발을 바닥에 둔 채 의자 등받이에 기대 앉아 있고, 접은 가운은 별도 간이침대 위에 놓여 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "garment_state"
+      ],
+      "source_ids": [
+        "S01",
+        "S20"
+      ],
+      "owner_nodes": [
+        "chair",
+        "coat",
+        "cot",
+        "floor",
+        "staff",
+        "staff.back",
+        "staff.feet"
+      ],
+      "relations": [
+        {
+          "from": "staff.back",
+          "relation": "supported_by",
+          "to": "chair"
+        },
+        {
+          "from": "staff.feet",
+          "relation": "contacts",
+          "to": "floor"
+        },
+        {
+          "from": "coat",
+          "relation": "on",
+          "to": "cot"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "소진·도덕적 손상·온콜 여부는 문맥으로 유지한다."
+    },
+    {
+      "id": "draft_A13",
+      "card_id": "A13",
+      "kind": "authored_visual_option",
+      "en": "A surgical team faces a checklist held above the instrument trolley; lowered unused instruments remain separate from the draped patient.",
+      "ko": "수술팀이 기구대 위에 든 확인표를 바라보고, 내려놓은 미사용 기구는 포로 덮인 환자와 떨어져 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "procedure_step"
+      ],
+      "source_ids": [
+        "S18",
+        "S03"
+      ],
+      "owner_nodes": [
+        "checklist",
+        "instruments",
+        "patient",
+        "team",
+        "trolley"
+      ],
+      "relations": [
+        {
+          "from": "team",
+          "relation": "faces",
+          "to": "checklist"
+        },
+        {
+          "from": "instruments",
+          "relation": "on",
+          "to": "trolley"
+        },
+        {
+          "from": "instruments",
+          "relation": "separate_from",
+          "to": "patient"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "서류 내용·환자 신원·실제 확인 절차는 별도이다."
+    },
+    {
+      "id": "draft_A14",
+      "card_id": "A14",
+      "kind": "authored_visual_option",
+      "en": "Two paramedics stand at opposite ends of a wheeled stretcher, each gripping an end handle; the patient's body remains supported along the mattress.",
+      "ko": "구급대원 두 명이 바퀴 달린 들것의 양 끝에 서서 각 끝의 손잡이를 잡고 있으며 환자의 몸은 매트리스에 길게 지지되어 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "hand_pose"
+      ],
+      "source_ids": [
+        "S01",
+        "S02"
+      ],
+      "owner_nodes": [
+        "foot_handle",
+        "head_handle",
+        "mattress",
+        "paramedic_one",
+        "paramedic_one.hand",
+        "paramedic_two",
+        "paramedic_two.hand",
+        "patient"
+      ],
+      "relations": [
+        {
+          "from": "paramedic_one.hand",
+          "relation": "grips",
+          "to": "head_handle"
+        },
+        {
+          "from": "paramedic_two.hand",
+          "relation": "grips",
+          "to": "foot_handle"
+        },
+        {
+          "from": "patient",
+          "relation": "supported_by",
+          "to": "mattress"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "정지된 이송 자세를 보여 줄 뿐 이송 동영상이 아니다."
+    },
+    {
+      "id": "draft_B01",
+      "card_id": "B01",
+      "kind": "authored_visual_option",
+      "en": "A white knee-length coat with lapels and patch pockets hangs open over a shirt and trousers; its front edges remain separate from the inner clothes.",
+      "ko": "라펠과 덧주머니가 있는 무릎 길이 백의가 셔츠와 바지 위에서 열려 있으며 앞섶의 가장자리는 안쪽 옷과 구분된다.",
+      "suggested_slots": [
+        "wardrobe_layering",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S01",
+        "S05"
+      ],
+      "owner_nodes": [
+        "coat",
+        "coat.pockets",
+        "shirt"
+      ],
+      "relations": [
+        {
+          "from": "coat",
+          "relation": "over",
+          "to": "shirt"
+        },
+        {
+          "from": "coat.pockets",
+          "relation": "part_of",
+          "to": "coat"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "흰색이나 청진기로 의사 면허·직급을 추정하지 않는다."
+    },
+    {
+      "id": "draft_B02",
+      "card_id": "B02",
+      "kind": "authored_visual_option",
+      "en": "A short-sleeved V-neck scrub top sits over a separate pair of drawstring trousers, with the waistband visible at one side.",
+      "ko": "반소매 V넥 스크럽 상의와 끈 여밈의 별도 바지가 함께 착용되어 한쪽에서 허리선이 보인다.",
+      "suggested_slots": [
+        "wardrobe_style",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "top",
+        "trousers",
+        "trousers.drawstring"
+      ],
+      "relations": [
+        {
+          "from": "top",
+          "relation": "above",
+          "to": "trousers"
+        },
+        {
+          "from": "trousers.drawstring",
+          "relation": "part_of",
+          "to": "trousers"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기관별 색 체계와 성별 역할을 일반화하지 않는다."
+    },
+    {
+      "id": "draft_B03",
+      "card_id": "B03",
+      "kind": "authored_visual_option",
+      "en": "A hip-length clinical tunic has a closed off-centre button placket and short sleeves above straight trousers.",
+      "ko": "엉덩이 길이 의료 튜닉에 중심에서 비껴난 단추 여밈과 반소매가 있고 그 아래에는 일자 바지가 있다.",
+      "suggested_slots": [
+        "wardrobe_style",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "trousers",
+        "tunic",
+        "tunic.placket"
+      ],
+      "relations": [
+        {
+          "from": "tunic.placket",
+          "relation": "part_of",
+          "to": "tunic"
+        },
+        {
+          "from": "tunic",
+          "relation": "above",
+          "to": "trousers"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "여기서는 한 가지 선택적 의상 디자인이다."
+    },
+    {
+      "id": "draft_B04",
+      "card_id": "B04",
+      "kind": "authored_visual_option",
+      "en": "A long-sleeved surgical gown covers a scrub top; the gloves extend over the gown's wrist cuffs, leaving the sleeve-to-glove overlap visible.",
+      "ko": "긴소매 수술가운이 스크럽 상의를 덮고 장갑이 가운의 손목 시보리 위로 이어져 소매와 장갑이 겹치는 부위가 보인다.",
+      "suggested_slots": [
+        "wardrobe_layering",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S05",
+        "S03"
+      ],
+      "owner_nodes": [
+        "glove",
+        "gown",
+        "gown.cuff",
+        "scrubs"
+      ],
+      "relations": [
+        {
+          "from": "gown",
+          "relation": "over",
+          "to": "scrubs"
+        },
+        {
+          "from": "glove",
+          "relation": "overlaps",
+          "to": "gown.cuff"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "물품의 멸균 상태와 지속적인 무균술 준수는 보이지 않는다."
+    },
+    {
+      "id": "draft_B05",
+      "card_id": "B05",
+      "kind": "authored_visual_option",
+      "en": "A loose isolation gown covers a staff member's torso and arms; separate ties close at the back of the neck and at the waist.",
+      "ko": "헐렁한 격리가운이 직원의 몸통과 팔을 덮고, 목 뒤와 허리의 서로 다른 끈이 여며져 있다.",
+      "suggested_slots": [
+        "garment_detail",
+        "garment_state"
+      ],
+      "source_ids": [
+        "S05",
+        "S07"
+      ],
+      "owner_nodes": [
+        "gown",
+        "neck_ties",
+        "staff",
+        "staff.neck",
+        "staff.torso",
+        "staff.waist",
+        "waist_ties"
+      ],
+      "relations": [
+        {
+          "from": "gown",
+          "relation": "covers",
+          "to": "staff.torso"
+        },
+        {
+          "from": "neck_ties",
+          "relation": "at",
+          "to": "staff.neck"
+        },
+        {
+          "from": "waist_ties",
+          "relation": "at",
+          "to": "staff.waist"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "차단 성능·멸균·감염 여부는 외형으로 판정하지 않는다."
+    },
+    {
+      "id": "draft_B06",
+      "card_id": "B06",
+      "kind": "authored_visual_option",
+      "en": "A hooded protective coverall forms one continuous outer garment across the torso, arms and legs; a closed vertical zip runs down its front.",
+      "ko": "후드가 달린 보호복이 몸통·팔·다리로 이어지는 하나의 겉옷을 이루고 앞쪽 세로 지퍼가 닫혀 있다.",
+      "suggested_slots": [
+        "wardrobe_style",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S01",
+        "S07"
+      ],
+      "owner_nodes": [
+        "coverall",
+        "coverall.hood",
+        "staff",
+        "staff.body"
+      ],
+      "relations": [
+        {
+          "from": "coverall.hood",
+          "relation": "part_of",
+          "to": "coverall"
+        },
+        {
+          "from": "coverall",
+          "relation": "covers",
+          "to": "staff.body"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "보호 등급·안전한 밀폐·유행 감염병은 추정하지 않는다."
+    },
+    {
+      "id": "draft_B07",
+      "card_id": "B07",
+      "kind": "authored_visual_option",
+      "en": "A close-fitting cloth surgical cap covers the hair and has two ties knotted behind the head.",
+      "ko": "머리카락을 덮는 몸에 맞는 천 수술모에 뒤통수에서 묶인 두 끈이 있다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "cap",
+        "cap.ties",
+        "hair",
+        "head"
+      ],
+      "relations": [
+        {
+          "from": "cap",
+          "relation": "covers",
+          "to": "hair"
+        },
+        {
+          "from": "cap.ties",
+          "relation": "behind",
+          "to": "head"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기관의 특정 모자 정책이나 착용자의 직급은 뜻하지 않는다."
+    },
+    {
+      "id": "draft_B08",
+      "card_id": "B08",
+      "kind": "authored_visual_option",
+      "en": "A lightweight bouffant cap forms a rounded gathered dome, with an elastic rim encircling the hairline.",
+      "ko": "가벼운 부팡 캡이 주름진 둥근 돔을 이루고 고무줄 가장자리가 머리 둘레를 감싼다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "cap",
+        "cap.dome",
+        "cap.rim",
+        "hair",
+        "hairline"
+      ],
+      "relations": [
+        {
+          "from": "cap.rim",
+          "relation": "encircles",
+          "to": "hairline"
+        },
+        {
+          "from": "cap.dome",
+          "relation": "above",
+          "to": "hair"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "일회용 여부나 재질을 픽셀로 확정하지 않는다."
+    },
+    {
+      "id": "draft_B09",
+      "card_id": "B09",
+      "kind": "authored_visual_option",
+      "en": "A pleated surgical mask covers the nose and mouth, with a shaped nose strip and visible gaps at the cheek edges.",
+      "ko": "주름진 수술용 마스크가 코와 입을 덮고 성형한 코 지지대와 볼 가장자리의 틈이 보인다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "garment_state"
+      ],
+      "source_ids": [
+        "S06"
+      ],
+      "owner_nodes": [
+        "cheek",
+        "mask",
+        "mask.edge",
+        "nose_and_mouth"
+      ],
+      "relations": [
+        {
+          "from": "mask",
+          "relation": "covers",
+          "to": "nose_and_mouth"
+        },
+        {
+          "from": "mask.edge",
+          "relation": "beside",
+          "to": "cheek"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "여과 성능·멸균·실제 착용 적합성을 입증하지 않는다."
+    },
+    {
+      "id": "draft_B10",
+      "card_id": "B10",
+      "kind": "authored_visual_option",
+      "en": "A shaped respirator sits close around the nose and mouth, with two headbands running behind the head at different heights.",
+      "ko": "입체형 호흡보호구가 코와 입 둘레에 가깝게 놓이고 두 개의 머리끈이 서로 다른 높이에서 뒤통수로 이어진다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S06"
+      ],
+      "owner_nodes": [
+        "head",
+        "lower_band",
+        "nose_and_mouth",
+        "respirator",
+        "upper_band"
+      ],
+      "relations": [
+        {
+          "from": "respirator",
+          "relation": "around",
+          "to": "nose_and_mouth"
+        },
+        {
+          "from": "upper_band",
+          "relation": "behind",
+          "to": "head"
+        },
+        {
+          "from": "lower_band",
+          "relation": "behind",
+          "to": "head"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "특정 인증은 명시적인 자료·모델 선택이 있어야 한다."
+    },
+    {
+      "id": "draft_B11",
+      "card_id": "B11",
+      "kind": "authored_visual_option",
+      "en": "Protective goggles surround both eyes with a single clear lens enclosure and a strap around the back of the head.",
+      "ko": "보안경의 하나로 이어진 투명 렌즈부가 두 눈 둘레를 감싸고 끈은 뒤통수를 둘러싼다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S03",
+        "S07"
+      ],
+      "owner_nodes": [
+        "eyes",
+        "goggles",
+        "goggles.strap",
+        "head"
+      ],
+      "relations": [
+        {
+          "from": "goggles",
+          "relation": "around",
+          "to": "eyes"
+        },
+        {
+          "from": "goggles.strap",
+          "relation": "around",
+          "to": "head"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "보호 성능·내충격 인증은 보이지 않는다."
+    },
+    {
+      "id": "draft_B12",
+      "card_id": "B12",
+      "kind": "authored_visual_option",
+      "en": "A clear curved face shield hangs from a forehead band in front of a masked face; an air gap separates the shield from the mask.",
+      "ko": "투명 곡면 안면보호판이 이마 밴드에서 마스크 쓴 얼굴 앞에 내려오며 보호판과 마스크 사이에는 간격이 있다.",
+      "suggested_slots": [
+        "wardrobe_layering",
+        "wearable_accessory"
+      ],
+      "source_ids": [
+        "S03",
+        "S07"
+      ],
+      "owner_nodes": [
+        "forehead",
+        "mask",
+        "shield",
+        "shield.band"
+      ],
+      "relations": [
+        {
+          "from": "shield",
+          "relation": "in_front_of",
+          "to": "mask"
+        },
+        {
+          "from": "shield.band",
+          "relation": "on",
+          "to": "forehead"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "병원체 차단·적합성을 입증하지 않는다."
+    },
+    {
+      "id": "draft_B13",
+      "card_id": "B13",
+      "kind": "authored_visual_option",
+      "en": "A snug examination glove covers one hand to just beyond the wrist; five separate finger sleeves remain distinct as the hand opens above a tray.",
+      "ko": "손목을 조금 넘는 진찰용 장갑이 한 손을 덮고, 트레이 위로 손을 펼쳤을 때 다섯 손가락의 피복이 서로 구분된다.",
+      "suggested_slots": [
+        "hand_pose",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S07",
+        "S05"
+      ],
+      "owner_nodes": [
+        "glove",
+        "hand",
+        "tray"
+      ],
+      "relations": [
+        {
+          "from": "glove",
+          "relation": "covers",
+          "to": "hand"
+        },
+        {
+          "from": "hand",
+          "relation": "above",
+          "to": "tray"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "라텍스·니트릴·멸균 여부는 색이나 광택으로 확정하지 않는다."
+    },
+    {
+      "id": "draft_B14",
+      "card_id": "B14",
+      "kind": "authored_visual_option",
+      "en": "An ID card hangs from a retractable reel clipped to the tunic pocket; a short cord links the reel housing to the card clip.",
+      "ko": "신분 카드가 튜닉 주머니에 집게로 고정한 릴에 매달려 있고, 짧은 줄이 릴 몸체와 카드 집게를 잇는다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "cord",
+        "pocket",
+        "reel",
+        "reel.clip",
+        "reel_and_card"
+      ],
+      "relations": [
+        {
+          "from": "reel.clip",
+          "relation": "attached_to",
+          "to": "pocket"
+        },
+        {
+          "from": "cord",
+          "relation": "connects",
+          "to": "reel_and_card"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "가짜 명찰·촬영 소품과 실제 신원을 구별할 수 없다."
+    },
+    {
+      "id": "draft_B15",
+      "card_id": "B15",
+      "kind": "authored_visual_option",
+      "en": "A thick protective apron covers the torso; a separate wraparound thyroid collar sits above its neckline.",
+      "ko": "두꺼운 보호 앞치마가 몸통을 덮고 별도의 둘러싸는 갑상선 보호대가 목둘레에서 앞치마 목선 위에 놓여 있다.",
+      "suggested_slots": [
+        "wardrobe_layering",
+        "wearable_accessory"
+      ],
+      "source_ids": [
+        "S01",
+        "S09",
+        "S10"
+      ],
+      "owner_nodes": [
+        "apron",
+        "apron.neckline",
+        "collar",
+        "neck",
+        "torso"
+      ],
+      "relations": [
+        {
+          "from": "apron",
+          "relation": "covers",
+          "to": "torso"
+        },
+        {
+          "from": "collar",
+          "relation": "around",
+          "to": "neck"
+        },
+        {
+          "from": "collar",
+          "relation": "above",
+          "to": "apron.neckline"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "납 함량·차폐 성능·검사 장비와의 호환성은 별도 검증이다."
+    },
+    {
+      "id": "draft_B16",
+      "card_id": "B16",
+      "kind": "authored_visual_option",
+      "en": "A blue-and-white striped long-sleeved nursing dress sits beneath a separate long white bib apron with crossed shoulder straps.",
+      "ko": "청백색 줄무늬 긴소매 간호복 원피스 위에 어깨끈이 교차하는 별도의 긴 흰 가슴받이 앞치마가 놓여 있다.",
+      "suggested_slots": [
+        "historical_period",
+        "wardrobe_layering"
+      ],
+      "source_ids": [
+        "S38"
+      ],
+      "owner_nodes": [
+        "apron",
+        "apron.straps",
+        "dress",
+        "shoulders"
+      ],
+      "relations": [
+        {
+          "from": "apron",
+          "relation": "over",
+          "to": "dress"
+        },
+        {
+          "from": "apron.straps",
+          "relation": "cross_over",
+          "to": "shoulders"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "영국 1930-1940 복합 소장품에서 제안; 앞치마 자체 연대는 1910-1935이며 원래 한 벌이었다는 증거가 없다."
+    },
+    {
+      "id": "draft_B17",
+      "card_id": "B17",
+      "kind": "authored_visual_option",
+      "en": "A small stiff white nurse's cap rests above the crown of the head, with a folded raised edge distinct from the hair.",
+      "ko": "작고 빳빳한 흰 간호사 캡이 머리 위에 놓이고 접혀 올라간 가장자리가 머리카락과 구분된다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "historical_period"
+      ],
+      "source_ids": [
+        "S38"
+      ],
+      "owner_nodes": [
+        "cap",
+        "cap.edge",
+        "head"
+      ],
+      "relations": [
+        {
+          "from": "cap",
+          "relation": "above",
+          "to": "head"
+        },
+        {
+          "from": "cap.edge",
+          "relation": "part_of",
+          "to": "cap"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "소장품 기록을 바탕으로 한 제안이며 접힘의 정확한 패턴은 원물 이미지 확인 전이다."
+    },
+    {
+      "id": "draft_B18",
+      "card_id": "B18",
+      "kind": "authored_visual_option",
+      "en": "A short grey shoulder cape with red edging covers the shoulders over a separate dress; its front edges leave the dress visible.",
+      "ko": "빨간 테두리가 있는 짧은 회색 어깨 케이프가 별도의 원피스 위에서 어깨를 덮고 앞 가장자리 사이로 원피스가 보인다.",
+      "suggested_slots": [
+        "wardrobe_layering",
+        "historical_period"
+      ],
+      "source_ids": [
+        "S39"
+      ],
+      "owner_nodes": [
+        "cape",
+        "dress",
+        "shoulders"
+      ],
+      "relations": [
+        {
+          "from": "cape",
+          "relation": "over",
+          "to": "dress"
+        },
+        {
+          "from": "cape",
+          "relation": "covers",
+          "to": "shoulders"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "1910-1920 Batten 소장품의 서술을 참고한 선택지이며 직급을 외형으로 추정하지 않는다."
+    },
+    {
+      "id": "draft_B19",
+      "card_id": "B19",
+      "kind": "authored_visual_option",
+      "en": "A loose button-front pajama top and matching trousers form two separate garments; the sleeves end clear of a wrist identification band.",
+      "ko": "넉넉한 앞단추 환자복 상의와 맞춘 바지가 별도의 두 옷을 이루고 소매 끝 밖으로 손목 확인 팔찌가 보인다.",
+      "suggested_slots": [
+        "wardrobe_style",
+        "garment_detail"
+      ],
+      "source_ids": [
+        "S01",
+        "S13"
+      ],
+      "owner_nodes": [
+        "top",
+        "trousers",
+        "wrist",
+        "wristband"
+      ],
+      "relations": [
+        {
+          "from": "top",
+          "relation": "separate_from",
+          "to": "trousers"
+        },
+        {
+          "from": "wristband",
+          "relation": "around",
+          "to": "wrist"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "패턴·색이 특정 병원이나 중증도를 의미하지 않는다."
+    },
+    {
+      "id": "draft_B20",
+      "card_id": "B20",
+      "kind": "authored_visual_option",
+      "en": "An unpatterned close-fitting knee-high stocking covers the lower leg from foot to below the knee, with a broad top band lying flat against the calf.",
+      "ko": "무늬 없는 밀착형 무릎 아래 스타킹이 발부터 무릎 아래까지 덮고 넓은 윗밴드가 종아리에 평평하게 놓여 있다.",
+      "suggested_slots": [
+        "garment_detail",
+        "garment_fit"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "calf",
+        "lower_leg",
+        "stocking",
+        "stocking.band"
+      ],
+      "relations": [
+        {
+          "from": "stocking",
+          "relation": "covers",
+          "to": "lower_leg"
+        },
+        {
+          "from": "stocking.band",
+          "relation": "around",
+          "to": "calf"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "압박등급·치료 목적·질환을 주장하지 않는다."
+    },
+    {
+      "id": "draft_B21",
+      "card_id": "B21",
+      "kind": "authored_visual_option",
+      "en": "On an explicitly staged adult fashion set, a performer wears a fitted white mini dress with decorative red piping and a small matching cap.",
+      "ko": "명시적으로 연출된 성인 패션 세트에서 퍼포머가 장식용 빨간 파이핑과 작은 맞춤 모자가 있는 몸에 맞는 흰 미니 원피스를 입는다.",
+      "suggested_slots": [
+        "wardrobe_style",
+        "staging_degree"
+      ],
+      "source_ids": [
+        "S01",
+        "S21"
+      ],
+      "owner_nodes": [
+        "cap",
+        "dress",
+        "performer",
+        "performer.head",
+        "piping"
+      ],
+      "relations": [
+        {
+          "from": "dress",
+          "relation": "on",
+          "to": "performer"
+        },
+        {
+          "from": "cap",
+          "relation": "on",
+          "to": "performer.head"
+        },
+        {
+          "from": "piping",
+          "relation": "part_of",
+          "to": "dress"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "의상 요소만 제안하며 성적 취향·흥분·합의를 픽셀로 확정하지 않는다."
+    },
+    {
+      "id": "draft_C01",
+      "card_id": "C01",
+      "kind": "authored_visual_option",
+      "en": "A patient lies face upward with the back supported along a horizontal mattress and both legs extended on the same surface.",
+      "ko": "환자가 얼굴을 위로 향하고 수평 매트리스에 등을 길게 지지하며 두 다리도 같은 면 위에 펴고 누워 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "body_orientation"
+      ],
+      "source_ids": [
+        "S02"
+      ],
+      "owner_nodes": [
+        "mattress",
+        "patient",
+        "patient.back",
+        "patient.legs"
+      ],
+      "relations": [
+        {
+          "from": "patient.back",
+          "relation": "supported_by",
+          "to": "mattress"
+        },
+        {
+          "from": "patient.legs",
+          "relation": "on",
+          "to": "mattress"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "수면·혼수·마취·사망을 자세로 판정하지 않는다."
+    },
+    {
+      "id": "draft_C02",
+      "card_id": "C02",
+      "kind": "authored_visual_option",
+      "en": "A patient lies face downward with the chest and pelvis supported on a mattress; the head turns to one side on a separate cushion.",
+      "ko": "환자가 가슴과 골반을 매트리스에 지지해 엎드리고 머리는 별도 쿠션 위에서 한쪽으로 돌아가 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S02",
+        "S03"
+      ],
+      "owner_nodes": [
+        "cushion",
+        "mattress",
+        "patient",
+        "patient.chest",
+        "patient.head",
+        "patient.pelvis"
+      ],
+      "relations": [
+        {
+          "from": "patient.chest",
+          "relation": "supported_by",
+          "to": "mattress"
+        },
+        {
+          "from": "patient.pelvis",
+          "relation": "supported_by",
+          "to": "mattress"
+        },
+        {
+          "from": "patient.head",
+          "relation": "on",
+          "to": "cushion"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기도 개방·임상적 적합성을 검증하는 자료가 아니다."
+    },
+    {
+      "id": "draft_C03",
+      "card_id": "C03",
+      "kind": "authored_visual_option",
+      "en": "A patient lies on one side with the upper knee bent over a pillow placed between the knees; the lower shoulder rests on the mattress.",
+      "ko": "환자가 한쪽 옆으로 누워 무릎 사이 베개 위에 위쪽 무릎을 굽혀 얹고, 아래쪽 어깨는 매트리스에 닿아 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S02"
+      ],
+      "owner_nodes": [
+        "knees",
+        "mattress",
+        "patient",
+        "patient.lower_shoulder",
+        "patient.upper_knee",
+        "pillow"
+      ],
+      "relations": [
+        {
+          "from": "patient.lower_shoulder",
+          "relation": "contacts",
+          "to": "mattress"
+        },
+        {
+          "from": "patient.upper_knee",
+          "relation": "on",
+          "to": "pillow"
+        },
+        {
+          "from": "pillow",
+          "relation": "between",
+          "to": "knees"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "성별·질환·의식은 따로 정하지 않는다."
+    },
+    {
+      "id": "draft_C04",
+      "card_id": "C04",
+      "kind": "authored_visual_option",
+      "en": "A patient's torso rests against the raised backrest of an articulated bed while the pelvis and legs remain on a lower, nearly horizontal section.",
+      "ko": "환자의 몸통은 관절식 침대의 올린 등받이에 기대고 골반과 다리는 아래쪽의 거의 수평인 부분에 놓여 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S02",
+        "S03"
+      ],
+      "owner_nodes": [
+        "backrest",
+        "lower_section",
+        "patient",
+        "patient.pelvis",
+        "patient.torso",
+        "raised_backrest"
+      ],
+      "relations": [
+        {
+          "from": "patient.torso",
+          "relation": "supported_by",
+          "to": "raised_backrest"
+        },
+        {
+          "from": "patient.pelvis",
+          "relation": "on",
+          "to": "lower_section"
+        },
+        {
+          "from": "backrest",
+          "relation": "hinged_to",
+          "to": "lower_section"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "각도 수치는 변형·문헌마다 다르므로 요청이 없으면 고정하지 않는다."
+    },
+    {
+      "id": "draft_C05",
+      "card_id": "C05",
+      "kind": "authored_visual_option",
+      "en": "A patient's upper body reclines against a gently elevated bed backrest; the hip remains at the bed hinge and the legs extend along the lower section.",
+      "ko": "환자의 상체는 완만하게 올린 침대 등받이에 기대고 엉덩이는 침대의 굴곡 근처에 있으며 다리는 아래쪽 면을 따라 뻗어 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "body_orientation"
+      ],
+      "source_ids": [
+        "S01",
+        "S02"
+      ],
+      "owner_nodes": [
+        "backrest",
+        "bed",
+        "bed.hinge",
+        "patient",
+        "patient.back",
+        "patient.hip"
+      ],
+      "relations": [
+        {
+          "from": "patient.back",
+          "relation": "against",
+          "to": "backrest"
+        },
+        {
+          "from": "patient.hip",
+          "relation": "near",
+          "to": "bed.hinge"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "정확한 각도 범위·치료 적응증은 별도 명세이다."
+    },
+    {
+      "id": "draft_C06",
+      "card_id": "C06",
+      "kind": "authored_visual_option",
+      "en": "A patient sits nearly upright against a high raised bed backrest, with the pelvis supported at the seat and both legs extending forward.",
+      "ko": "환자가 높게 세운 침대 등받이에 거의 똑바로 기대 앉고 골반은 좌면에 지지되며 두 다리가 앞으로 이어진다.",
+      "suggested_slots": [
+        "body_pose",
+        "body_orientation"
+      ],
+      "source_ids": [
+        "S01",
+        "S02"
+      ],
+      "owner_nodes": [
+        "high_backrest",
+        "patient",
+        "patient.back",
+        "patient.pelvis",
+        "seat"
+      ],
+      "relations": [
+        {
+          "from": "patient.back",
+          "relation": "against",
+          "to": "high_backrest"
+        },
+        {
+          "from": "patient.pelvis",
+          "relation": "on",
+          "to": "seat"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "스스로 호흡하는 능력이나 특정 질환을 판정하지 않는다."
+    },
+    {
+      "id": "draft_C07",
+      "card_id": "C07",
+      "kind": "authored_visual_option",
+      "en": "A seated patient leans forward with both forearms supported on an overbed table, while both feet remain planted on the floor.",
+      "ko": "앉은 환자가 상체를 앞으로 기울여 두 팔뚝을 오버베드 테이블에 지지하고 양발은 바닥에 붙어 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S02"
+      ],
+      "owner_nodes": [
+        "floor",
+        "patient",
+        "patient.feet",
+        "patient.forearms",
+        "table"
+      ],
+      "relations": [
+        {
+          "from": "patient.forearms",
+          "relation": "supported_by",
+          "to": "table"
+        },
+        {
+          "from": "patient.feet",
+          "relation": "contacts",
+          "to": "floor"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "호흡곤란·폐질환은 이 자세만으로 확정하지 않는다."
+    },
+    {
+      "id": "draft_C08",
+      "card_id": "C08",
+      "kind": "authored_visual_option",
+      "en": "A patient lies between side-lying and prone, with the upper hip rolled forward and the upper knee flexed on a pillow in front of the lower leg.",
+      "ko": "환자가 측와위와 복와위 사이로 누워 위쪽 골반이 앞으로 돌아가고 굽힌 위쪽 무릎이 아래 다리 앞쪽 베개 위에 놓여 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S02",
+        "S03"
+      ],
+      "owner_nodes": [
+        "lower_hip",
+        "patient",
+        "patient.upper_hip",
+        "patient.upper_knee",
+        "pillow"
+      ],
+      "relations": [
+        {
+          "from": "patient.upper_hip",
+          "relation": "forward_of",
+          "to": "lower_hip"
+        },
+        {
+          "from": "patient.upper_knee",
+          "relation": "on",
+          "to": "pillow"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기관마다 세부 지지가 다르므로 정형화한 팔 위치를 강제하지 않는다."
+    },
+    {
+      "id": "draft_C09",
+      "card_id": "C09",
+      "kind": "authored_visual_option",
+      "en": "An adult patient lies on the back with both hips and knees bent; each lower leg rests in its own padded leg support attached to the examination table.",
+      "ko": "성인 환자가 등을 대고 누워 양쪽 엉덩관절과 무릎을 굽히며, 각각의 종아리가 진찰대에 부착된 별도 패딩 다리받침에 놓여 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S03",
+        "S21"
+      ],
+      "owner_nodes": [
+        "patient",
+        "patient.left_leg",
+        "patient.right_leg",
+        "support_left",
+        "support_right",
+        "table"
+      ],
+      "relations": [
+        {
+          "from": "patient.left_leg",
+          "relation": "on",
+          "to": "support_left"
+        },
+        {
+          "from": "patient.right_leg",
+          "relation": "on",
+          "to": "support_right"
+        },
+        {
+          "from": "support_left",
+          "relation": "attached_to",
+          "to": "table"
+        },
+        {
+          "from": "support_right",
+          "relation": "attached_to",
+          "to": "table"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "검사 목적·성적 상황·동의는 체위에서 추정하지 않는다."
+    },
+    {
+      "id": "draft_C10",
+      "card_id": "C10",
+      "kind": "authored_visual_option",
+      "en": "A straight surgical tabletop tilts as one plane with the patient's head lower than the feet; the supine body follows the continuous inclined surface.",
+      "ko": "곧은 수술대 상판이 하나의 면으로 기울어 환자의 머리가 발보다 낮고, 바로 누운 몸이 연속된 경사면을 따른다.",
+      "suggested_slots": [
+        "body_pose",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "patient",
+        "patient.back",
+        "patient.feet",
+        "patient.head",
+        "tabletop"
+      ],
+      "relations": [
+        {
+          "from": "patient.head",
+          "relation": "lower_than",
+          "to": "patient.feet"
+        },
+        {
+          "from": "patient.back",
+          "relation": "supported_by",
+          "to": "tabletop"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "치료 효과나 모든 쇼크에 적합하다는 의미가 아니다."
+    },
+    {
+      "id": "draft_C11",
+      "card_id": "C11",
+      "kind": "authored_visual_option",
+      "en": "A straight surgical tabletop tilts as one plane with the patient's head higher than the feet; the torso and legs remain aligned along that plane.",
+      "ko": "곧은 수술대 상판이 하나의 면으로 기울어 환자의 머리가 발보다 높고 몸통과 다리가 그 경사면을 따라 정렬된다.",
+      "suggested_slots": [
+        "body_pose",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "patient",
+        "patient.body",
+        "patient.feet",
+        "patient.head",
+        "tabletop"
+      ],
+      "relations": [
+        {
+          "from": "patient.head",
+          "relation": "higher_than",
+          "to": "patient.feet"
+        },
+        {
+          "from": "patient.body",
+          "relation": "aligned_with",
+          "to": "tabletop"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기울기와 지지의 외형만 보여 주며 임상적 적합성을 보장하지 않는다."
+    },
+    {
+      "id": "draft_C12",
+      "card_id": "C12",
+      "kind": "authored_visual_option",
+      "en": "An adult anatomical mannequin rests with both knees and the chest supported on a padded table, raising the pelvis above the chest.",
+      "ko": "성인 해부 모형이 패딩 탁자에 두 무릎과 가슴을 지지해 골반이 가슴보다 높게 놓여 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "chest",
+        "mannequin",
+        "mannequin.chest",
+        "mannequin.knees",
+        "mannequin.pelvis",
+        "table"
+      ],
+      "relations": [
+        {
+          "from": "mannequin.knees",
+          "relation": "on",
+          "to": "table"
+        },
+        {
+          "from": "mannequin.chest",
+          "relation": "on",
+          "to": "table"
+        },
+        {
+          "from": "mannequin.pelvis",
+          "relation": "higher_than",
+          "to": "chest"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "학습 모형의 구조 제안이며 특정 검사의 시행 장면이 아니다."
+    },
+    {
+      "id": "draft_C13",
+      "card_id": "C13",
+      "kind": "authored_visual_option",
+      "en": "An adult anatomical mannequin lies prone across a hinged surgical table; the raised hinge supports the hips while the head and lower legs slope down on opposite sides.",
+      "ko": "성인 해부 모형이 굴곡 있는 수술대에 엎드려 올라온 굴곡점이 골반을 지지하고 머리와 종아리는 서로 반대쪽으로 낮아진다.",
+      "suggested_slots": [
+        "body_pose",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "head",
+        "hips",
+        "lower_legs",
+        "mannequin",
+        "mannequin.hips",
+        "table",
+        "table.hinge"
+      ],
+      "relations": [
+        {
+          "from": "mannequin.hips",
+          "relation": "supported_by",
+          "to": "table.hinge"
+        },
+        {
+          "from": "head",
+          "relation": "lower_than",
+          "to": "hips"
+        },
+        {
+          "from": "lower_legs",
+          "relation": "lower_than",
+          "to": "hips"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "고유 각도·지지 장비·실제 수술 적합성은 추가 도판 검토 대상이다."
+    },
+    {
+      "id": "draft_C14",
+      "card_id": "C14",
+      "kind": "authored_visual_option",
+      "en": "A caregiver supports a patient's shoulder with one hand and hip with the other while the patient rests partly turned on a slide sheet; a wedge supports the back.",
+      "ko": "돌봄 제공자가 환자의 어깨와 골반을 각각 한 손으로 지지하고 환자는 슬라이드 시트 위에서 부분적으로 돌아누워 있으며 등 뒤에는 쐐기 쿠션이 받쳐 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S02"
+      ],
+      "owner_nodes": [
+        "caregiver",
+        "caregiver.hand_one",
+        "caregiver.hand_two",
+        "patient",
+        "patient.back",
+        "patient.hip",
+        "patient.shoulder",
+        "wedge"
+      ],
+      "relations": [
+        {
+          "from": "caregiver.hand_one",
+          "relation": "supports",
+          "to": "patient.shoulder"
+        },
+        {
+          "from": "caregiver.hand_two",
+          "relation": "supports",
+          "to": "patient.hip"
+        },
+        {
+          "from": "wedge",
+          "relation": "supports",
+          "to": "patient.back"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "실제 이동 방법·인원·안전성을 처방하지 않는다."
+    },
+    {
+      "id": "draft_D01",
+      "card_id": "D01",
+      "kind": "authored_visual_option",
+      "en": "A clinician wears the stethoscope earpieces and holds its chestpiece against the patient's upper chest; the tube remains continuous between the chestpiece and the ear tubes.",
+      "ko": "의료진이 청진기 귀꽂이를 착용하고 흉부 청진판을 환자 위쪽 가슴에 대며 청진판에서 귀관까지 튜브가 연속되어 보인다.",
+      "suggested_slots": [
+        "relational_action",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S04",
+        "S44"
+      ],
+      "owner_nodes": [
+        "chestpiece",
+        "clinician",
+        "clinician.ears",
+        "clinician.hand",
+        "patient",
+        "patient.chest",
+        "stethoscope",
+        "stethoscope.earpieces"
+      ],
+      "relations": [
+        {
+          "from": "stethoscope.earpieces",
+          "relation": "in",
+          "to": "clinician.ears"
+        },
+        {
+          "from": "clinician.hand",
+          "relation": "holds",
+          "to": "chestpiece"
+        },
+        {
+          "from": "chestpiece",
+          "relation": "contacts",
+          "to": "patient.chest"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "심음·호흡음·진단은 정지 이미지에서 들리거나 증명되지 않는다."
+    },
+    {
+      "id": "draft_D02",
+      "card_id": "D02",
+      "kind": "authored_visual_option",
+      "en": "A clinician's flat hand rests on a clearly bounded area of the patient's abdomen while the other hand supports the patient's side.",
+      "ko": "의료진의 편 손이 환자 복부의 한정된 부위에 닿고 다른 손은 환자 옆쪽을 지지한다.",
+      "suggested_slots": [
+        "hand_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S04",
+        "S21"
+      ],
+      "owner_nodes": [
+        "clinician",
+        "clinician.hand_one",
+        "clinician.hand_two",
+        "patient",
+        "patient.abdomen",
+        "patient.side"
+      ],
+      "relations": [
+        {
+          "from": "clinician.hand_one",
+          "relation": "contacts",
+          "to": "patient.abdomen"
+        },
+        {
+          "from": "clinician.hand_two",
+          "relation": "supports",
+          "to": "patient.side"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "압력·통증·촉지 결과는 보이지 않는다."
+    },
+    {
+      "id": "draft_D03",
+      "card_id": "D03",
+      "kind": "authored_visual_option",
+      "en": "One clinician's middle finger rests flat on a patient's upper back while the other hand's fingertip is poised just above that finger.",
+      "ko": "의료진의 한 손 중지가 환자 위쪽 등에 평평하게 놓이고 다른 손 손끝은 그 손가락 바로 위에 위치한다.",
+      "suggested_slots": [
+        "hand_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S04"
+      ],
+      "owner_nodes": [
+        "clinician",
+        "clinician.finger_one",
+        "clinician.finger_two",
+        "finger_one",
+        "patient",
+        "patient.back"
+      ],
+      "relations": [
+        {
+          "from": "clinician.finger_one",
+          "relation": "contacts",
+          "to": "patient.back"
+        },
+        {
+          "from": "clinician.finger_two",
+          "relation": "above",
+          "to": "finger_one"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "타진음과 실제 타격 순간·횟수는 정지 장면에서 검증하지 않는다."
+    },
+    {
+      "id": "draft_D04",
+      "card_id": "D04",
+      "kind": "authored_visual_option",
+      "en": "A clinician places two fingertips on the thumb-side of a patient's wrist while the patient's forearm rests palm-up on a support.",
+      "ko": "의료진이 환자의 엄지 쪽 손목에 두 손끝을 대고 환자의 팔뚝은 손바닥을 위로 한 채 받침에 놓여 있다.",
+      "suggested_slots": [
+        "hand_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S04"
+      ],
+      "owner_nodes": [
+        "clinician",
+        "clinician.fingertips",
+        "patient",
+        "patient.forearm",
+        "patient.thumb_side_wrist",
+        "support"
+      ],
+      "relations": [
+        {
+          "from": "clinician.fingertips",
+          "relation": "contacts",
+          "to": "patient.thumb_side_wrist"
+        },
+        {
+          "from": "patient.forearm",
+          "relation": "on",
+          "to": "support"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "맥박의 존재·빈도·세기를 외형으로 판정하지 않는다."
+    },
+    {
+      "id": "draft_D05",
+      "card_id": "D05",
+      "kind": "authored_visual_option",
+      "en": "A clinician holds a penlight to one side of the patient's face, directing its small beam toward one eye while the other hand steadies the brow.",
+      "ko": "의료진이 환자 얼굴 한쪽에서 펜라이트를 잡아 작은 빛을 한 눈 쪽으로 향하게 하고 다른 손은 이마 쪽을 지지한다.",
+      "suggested_slots": [
+        "relational_action",
+        "light_direction"
+      ],
+      "source_ids": [
+        "S01",
+        "S04"
+      ],
+      "owner_nodes": [
+        "clinician",
+        "clinician.hand_one",
+        "clinician.hand_two",
+        "patient",
+        "patient.brow",
+        "patient.eye",
+        "penlight",
+        "penlight.beam"
+      ],
+      "relations": [
+        {
+          "from": "clinician.hand_one",
+          "relation": "holds",
+          "to": "penlight"
+        },
+        {
+          "from": "penlight.beam",
+          "relation": "toward",
+          "to": "patient.eye"
+        },
+        {
+          "from": "clinician.hand_two",
+          "relation": "near",
+          "to": "patient.brow"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "동공 반응·뇌손상·의식상태는 시퀀스나 검사 결과 없이 확정하지 않는다."
+    },
+    {
+      "id": "draft_D06",
+      "card_id": "D06",
+      "kind": "authored_visual_option",
+      "en": "A wide blood-pressure cuff wraps around a patient's upper arm, with a tube leaving the cuff and ending at a separate monitor on a table.",
+      "ko": "넓은 혈압 커프가 환자의 위팔을 둘러싸고 커프에서 나온 관이 탁자 위 별도 모니터에 연결된다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S01",
+        "S12"
+      ],
+      "owner_nodes": [
+        "cuff",
+        "cuff.tube",
+        "monitor",
+        "patient",
+        "patient.upper_arm"
+      ],
+      "relations": [
+        {
+          "from": "cuff",
+          "relation": "around",
+          "to": "patient.upper_arm"
+        },
+        {
+          "from": "cuff.tube",
+          "relation": "connects_to",
+          "to": "monitor"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "측정값·커프 크기의 임상 적합성은 검증하지 않는다."
+    },
+    {
+      "id": "draft_D07",
+      "card_id": "D07",
+      "kind": "authored_visual_option",
+      "en": "A hinged pulse-oximeter clip encloses the tip of one finger, with the fingertip entering between its upper and lower jaws; its small screen faces outward.",
+      "ko": "힌지식 맥박산소측정기 집게가 한 손가락 끝을 감싸고 손끝이 위아래 집게 사이로 들어가 있으며 작은 화면은 바깥쪽을 향한다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S12"
+      ],
+      "owner_nodes": [
+        "clip",
+        "clip.jaws",
+        "clip.screen",
+        "patient",
+        "patient.finger_tip",
+        "viewer"
+      ],
+      "relations": [
+        {
+          "from": "patient.finger_tip",
+          "relation": "between",
+          "to": "clip.jaws"
+        },
+        {
+          "from": "clip.screen",
+          "relation": "faces",
+          "to": "viewer"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "SpO₂ 숫자는 표시 주장이지 검증된 혈중 산소량이 아니다."
+    },
+    {
+      "id": "draft_D08",
+      "card_id": "D08",
+      "kind": "authored_visual_option",
+      "en": "Two short nasal-cannula prongs sit at the nostrils; thin tubing curves across both cheeks and behind the ears, joining below the chin.",
+      "ko": "비강 캐뉼라의 짧은 두 갈래가 콧구멍에 놓이고 가는 관이 양 볼과 귀 뒤를 지나 턱 아래에서 합쳐진다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S44"
+      ],
+      "owner_nodes": [
+        "cannula",
+        "cannula.prong_left",
+        "cannula.prong_right",
+        "cannula.tubing",
+        "patient",
+        "patient.ears",
+        "patient.nostril_left",
+        "patient.nostril_right"
+      ],
+      "relations": [
+        {
+          "from": "cannula.prong_left",
+          "relation": "at",
+          "to": "patient.nostril_left"
+        },
+        {
+          "from": "cannula.prong_right",
+          "relation": "at",
+          "to": "patient.nostril_right"
+        },
+        {
+          "from": "cannula.tubing",
+          "relation": "behind",
+          "to": "patient.ears"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "산소 공급량·치료 필요성·관 내부 흐름은 보이지 않는다."
+    },
+    {
+      "id": "draft_D09",
+      "card_id": "D09",
+      "kind": "authored_visual_option",
+      "en": "A clear oxygen mask covers a patient's nose and mouth; an elastic strap passes behind the head and a narrow supply tube connects at the mask's lower front.",
+      "ko": "투명 산소마스크가 환자의 코와 입을 덮고 고무끈은 뒤통수를 지나며 가는 공급관은 마스크 아래 앞쪽에 연결된다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S44",
+        "S14"
+      ],
+      "owner_nodes": [
+        "head",
+        "mask",
+        "mask.front",
+        "mask.strap",
+        "patient",
+        "patient.nose_and_mouth",
+        "supply_tube"
+      ],
+      "relations": [
+        {
+          "from": "mask",
+          "relation": "covers",
+          "to": "patient.nose_and_mouth"
+        },
+        {
+          "from": "mask.strap",
+          "relation": "behind",
+          "to": "head"
+        },
+        {
+          "from": "supply_tube",
+          "relation": "joins",
+          "to": "mask.front"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "종류별 공급 방식과 임상 설정은 자동 부여하지 않는다."
+    },
+    {
+      "id": "draft_D10",
+      "card_id": "D10",
+      "kind": "authored_visual_option",
+      "en": "A single narrow tube enters one nostril and is secured to the cheek by a strip of tape; its external length continues toward a separate feeding container.",
+      "ko": "가는 관 하나가 한쪽 콧구멍으로 들어가 볼에 테이프로 고정되어 있고 바깥쪽 관은 별도 영양 용기 쪽으로 이어진다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S13"
+      ],
+      "owner_nodes": [
+        "container",
+        "patient",
+        "patient.one_nostril",
+        "tape",
+        "tube"
+      ],
+      "relations": [
+        {
+          "from": "tube",
+          "relation": "enters",
+          "to": "patient.one_nostril"
+        },
+        {
+          "from": "tape",
+          "relation": "secures",
+          "to": "tube"
+        },
+        {
+          "from": "tube",
+          "relation": "toward",
+          "to": "container"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "체내 끝점이 위에 있다는 사실·투여 상태·적합한 위치는 보이지 않는다."
+    },
+    {
+      "id": "draft_D11",
+      "card_id": "D11",
+      "kind": "authored_visual_option",
+      "en": "Separate adhesive electrodes sit on a patient's upper torso, each with its own lead wire running toward a bedside monitor.",
+      "ko": "환자의 상체에 서로 떨어진 접착 전극이 붙어 있고 각각의 리드선이 침상 모니터 쪽으로 이어진다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S01",
+        "S17"
+      ],
+      "owner_nodes": [
+        "electrodes",
+        "lead_wires",
+        "monitor",
+        "patient",
+        "patient.torso"
+      ],
+      "relations": [
+        {
+          "from": "electrodes",
+          "relation": "on",
+          "to": "patient.torso"
+        },
+        {
+          "from": "lead_wires",
+          "relation": "toward",
+          "to": "monitor"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "유도 수·정확한 위치·실제 심장 리듬은 별도 참조가 필요하다."
+    },
+    {
+      "id": "draft_D12",
+      "card_id": "D12",
+      "kind": "authored_visual_option",
+      "en": "A bedside screen contains separate waveform and numeric panels within a visible bezel; the patient's body remains outside the display.",
+      "ko": "침상 화면의 보이는 테두리 안에 파형 구역과 숫자 구역이 따로 있고 환자의 몸은 화면 밖에 있다.",
+      "suggested_slots": [
+        "visible_text",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S12",
+        "S13"
+      ],
+      "owner_nodes": [
+        "display",
+        "monitor",
+        "number_panel",
+        "patient",
+        "waveform_panel"
+      ],
+      "relations": [
+        {
+          "from": "waveform_panel",
+          "relation": "inside",
+          "to": "monitor"
+        },
+        {
+          "from": "number_panel",
+          "relation": "inside",
+          "to": "monitor"
+        },
+        {
+          "from": "patient",
+          "relation": "outside",
+          "to": "display"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "표시 내용은 환자 상태·정확한 리듬·측정 신뢰도의 증거가 아니다."
+    },
+    {
+      "id": "draft_D13",
+      "card_id": "D13",
+      "kind": "authored_visual_option",
+      "en": "A syringe barrel rests horizontally in a pump cradle; the pump's drive block meets the syringe plunger, and thin tubing leaves the syringe tip.",
+      "ko": "주사기 몸통이 펌프 받침에 수평으로 놓이고 펌프의 구동 블록이 플런저에 닿으며 가는 관이 주사기 끝에서 나온다.",
+      "suggested_slots": [
+        "object_structure",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S01",
+        "S13"
+      ],
+      "owner_nodes": [
+        "pump",
+        "pump.cradle",
+        "pump.drive_block",
+        "syringe",
+        "syringe.barrel",
+        "syringe.plunger",
+        "syringe.tip",
+        "tubing"
+      ],
+      "relations": [
+        {
+          "from": "syringe.barrel",
+          "relation": "on",
+          "to": "pump.cradle"
+        },
+        {
+          "from": "pump.drive_block",
+          "relation": "contacts",
+          "to": "syringe.plunger"
+        },
+        {
+          "from": "tubing",
+          "relation": "from",
+          "to": "syringe.tip"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "약물·용량·주입속도와 작동은 주장하지 않는다."
+    },
+    {
+      "id": "draft_D14",
+      "card_id": "D14",
+      "kind": "authored_visual_option",
+      "en": "In an explicit training scene, a rescuer places stacked hands on the centre of a supine adult manikin's chest, with straight arms and shoulders above the hands.",
+      "ko": "명시적 교육 장면에서 구조자가 바로 누운 성인 마네킹 가슴 중앙에 포갠 두 손을 놓고 팔을 편 채 어깨를 손 위에 둔다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S17"
+      ],
+      "owner_nodes": [
+        "hands",
+        "manikin",
+        "manikin.chest",
+        "rescuer",
+        "rescuer.hand_one",
+        "rescuer.hand_two",
+        "rescuer.hands",
+        "rescuer.shoulders"
+      ],
+      "relations": [
+        {
+          "from": "rescuer.hand_one",
+          "relation": "over",
+          "to": "rescuer.hand_two"
+        },
+        {
+          "from": "rescuer.hands",
+          "relation": "contacts",
+          "to": "manikin.chest"
+        },
+        {
+          "from": "rescuer.shoulders",
+          "relation": "above",
+          "to": "hands"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "정지된 자세의 후보이며 완전한 CPR 술기나 의료 지시가 아니다."
+    },
+    {
+      "id": "draft_D15",
+      "card_id": "D15",
+      "kind": "authored_visual_option",
+      "en": "In a staged wound-care scene, two gloved hands press a folded gauze pad directly over a small forearm wound while the arm rests on a support.",
+      "ko": "연출된 상처 돌봄 장면에서 장갑 낀 두 손이 받침 위 팔뚝의 작은 상처 바로 위 접은 거즈를 누르고 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S37",
+        "S01"
+      ],
+      "owner_nodes": [
+        "clinician",
+        "clinician.hands",
+        "gauze",
+        "patient",
+        "patient.forearm",
+        "patient.wound",
+        "support"
+      ],
+      "relations": [
+        {
+          "from": "clinician.hands",
+          "relation": "contacts",
+          "to": "gauze"
+        },
+        {
+          "from": "gauze",
+          "relation": "over",
+          "to": "patient.wound"
+        },
+        {
+          "from": "patient.forearm",
+          "relation": "on",
+          "to": "support"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "출혈이 멎었는지·압력의 적합성은 보이지 않는다."
+    },
+    {
+      "id": "draft_D16",
+      "card_id": "D16",
+      "kind": "authored_visual_option",
+      "en": "One gloved hand offers a ring-handled instrument above a tray while a second person's open gloved hand waits beneath the handle; both arms remain separately visible.",
+      "ko": "한 장갑 낀 손이 트레이 위에서 고리 손잡이 기구를 내밀고 다른 사람의 펼친 장갑 손이 손잡이 아래에서 기다리며 두 팔은 서로 구분되어 보인다.",
+      "suggested_slots": [
+        "hand_pose",
+        "relational_action"
+      ],
+      "source_ids": [
+        "S01",
+        "S03"
+      ],
+      "owner_nodes": [
+        "giver",
+        "giver.hand",
+        "instrument",
+        "instrument.handle",
+        "receiver",
+        "receiver.hand",
+        "tray"
+      ],
+      "relations": [
+        {
+          "from": "giver.hand",
+          "relation": "holds",
+          "to": "instrument"
+        },
+        {
+          "from": "receiver.hand",
+          "relation": "under",
+          "to": "instrument.handle"
+        },
+        {
+          "from": "instrument",
+          "relation": "above",
+          "to": "tray"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "특정 기구의 정확한 이름·안전한 전달 기술은 별도 도판 검토 대상이다."
+    },
+    {
+      "id": "draft_D17",
+      "card_id": "D17",
+      "kind": "authored_visual_option",
+      "en": "A clinician holds wet hands above the elbows over a deep scrub sink; water runs from the hands down the forearms toward the basin.",
+      "ko": "의료진이 깊은 손 소독 싱크 위에서 젖은 손을 팔꿈치보다 높게 들고 물이 손에서 팔뚝을 따라 대야 쪽으로 흐른다.",
+      "suggested_slots": [
+        "hand_pose",
+        "procedure_step"
+      ],
+      "source_ids": [
+        "S01",
+        "S03",
+        "S07"
+      ],
+      "owner_nodes": [
+        "basin",
+        "clinician",
+        "clinician.elbows",
+        "clinician.forearms",
+        "clinician.hands",
+        "water"
+      ],
+      "relations": [
+        {
+          "from": "clinician.hands",
+          "relation": "higher_than",
+          "to": "clinician.elbows"
+        },
+        {
+          "from": "water",
+          "relation": "along",
+          "to": "clinician.forearms"
+        },
+        {
+          "from": "clinician.forearms",
+          "relation": "above",
+          "to": "basin"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "정확한 제품·시간·모든 소독 단계를 입증하지 않는다."
+    },
+    {
+      "id": "draft_D18",
+      "card_id": "D18",
+      "kind": "authored_visual_option",
+      "en": "A clinician extends both arms into a long gown while a second staff member behind them holds the gown's rear ties; their hands remain clear of the gown's front.",
+      "ko": "의료진이 긴 가운 소매에 두 팔을 넣고 뒤의 다른 직원이 가운 뒤쪽 끈을 잡으며 그 손은 가운 앞면과 떨어져 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "wardrobe_layering"
+      ],
+      "source_ids": [
+        "S03",
+        "S05"
+      ],
+      "owner_nodes": [
+        "assistant",
+        "assistant.hands",
+        "gown",
+        "gown.sleeves",
+        "rear_ties",
+        "wearer",
+        "wearer.arms"
+      ],
+      "relations": [
+        {
+          "from": "wearer.arms",
+          "relation": "inside",
+          "to": "gown.sleeves"
+        },
+        {
+          "from": "assistant.hands",
+          "relation": "holds",
+          "to": "rear_ties"
+        },
+        {
+          "from": "assistant",
+          "relation": "behind",
+          "to": "wearer"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "전체 무균 과정·가운의 멸균 상태는 입증하지 않는다."
+    },
+    {
+      "id": "draft_E01",
+      "card_id": "E01",
+      "kind": "authored_visual_option",
+      "en": "A square wound dressing lies against a forearm and a separate narrow bandage wraps over its edges, leaving the central dressing panel visible.",
+      "ko": "사각 상처 드레싱이 팔뚝에 닿고 별도의 좁은 붕대가 가장자리를 둘러 고정하여 가운데 드레싱 면이 보인다.",
+      "suggested_slots": [
+        "garment_detail",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "bandage",
+        "dressing",
+        "dressing.edges",
+        "forearm"
+      ],
+      "relations": [
+        {
+          "from": "dressing",
+          "relation": "on",
+          "to": "forearm"
+        },
+        {
+          "from": "bandage",
+          "relation": "over",
+          "to": "dressing.edges"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "상처 원인·회복·재료의 멸균 여부를 주장하지 않는다."
+    },
+    {
+      "id": "draft_E02",
+      "card_id": "E02",
+      "kind": "authored_visual_option",
+      "en": "A rigid forearm cast encircles the arm from below the elbow to the hand, leaving the fingertips exposed and a padded edge visible at the wrist opening.",
+      "ko": "단단한 팔뚝 캐스트가 팔꿈치 아래부터 손까지 팔을 둘러싸고 손끝은 노출되어 있으며 손목 개구부에 패딩 가장자리가 보인다.",
+      "suggested_slots": [
+        "object_structure",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S29"
+      ],
+      "owner_nodes": [
+        "cast",
+        "cast.edge",
+        "cast.padding",
+        "forearm"
+      ],
+      "relations": [
+        {
+          "from": "cast",
+          "relation": "encircles",
+          "to": "forearm"
+        },
+        {
+          "from": "cast.padding",
+          "relation": "at",
+          "to": "cast.edge"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "정확한 골절·고정 적합성·석고라는 재질 확정은 피한다."
+    },
+    {
+      "id": "draft_E03",
+      "card_id": "E03",
+      "kind": "authored_visual_option",
+      "en": "A rigid splint supports the underside of a forearm without fully enclosing it; separate straps cross the exposed upper side and fasten to the splint edges.",
+      "ko": "단단한 부목이 팔뚝 아래쪽을 지지하되 완전히 둘러싸지 않으며, 별도 끈들이 드러난 위쪽을 가로질러 부목 가장자리에 고정된다.",
+      "suggested_slots": [
+        "object_structure",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S29"
+      ],
+      "owner_nodes": [
+        "forearm",
+        "splint",
+        "splint.edges",
+        "straps"
+      ],
+      "relations": [
+        {
+          "from": "splint",
+          "relation": "under",
+          "to": "forearm"
+        },
+        {
+          "from": "straps",
+          "relation": "across",
+          "to": "forearm"
+        },
+        {
+          "from": "straps",
+          "relation": "attached_to",
+          "to": "splint.edges"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "특정 손상이나 임상적 적합성은 외형으로 확정하지 않는다."
+    },
+    {
+      "id": "draft_E04",
+      "card_id": "E04",
+      "kind": "authored_visual_option",
+      "en": "A fabric sling cradles a bent forearm across the front of the torso; a diagonal strap runs from the sling to the opposite shoulder.",
+      "ko": "천 슬링이 굽힌 팔뚝을 몸통 앞에서 받치고 대각선 끈이 슬링에서 반대쪽 어깨로 이어진다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S01",
+        "S29"
+      ],
+      "owner_nodes": [
+        "forearm",
+        "opposite_shoulder",
+        "sling",
+        "sling.strap"
+      ],
+      "relations": [
+        {
+          "from": "sling",
+          "relation": "supports",
+          "to": "forearm"
+        },
+        {
+          "from": "sling.strap",
+          "relation": "over",
+          "to": "opposite_shoulder"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "손상의 종류·통증·체중 지지 능력을 판정하지 않는다."
+    },
+    {
+      "id": "draft_E05",
+      "card_id": "E05",
+      "kind": "authored_visual_option",
+      "en": "A rigid cervical collar surrounds the neck, with a shaped chin support above a lower section resting on the upper chest.",
+      "ko": "단단한 경추 칼라가 목을 둘러싸고 턱 모양 받침은 위에, 아래 부분은 위쪽 가슴에 놓여 있다.",
+      "suggested_slots": [
+        "wearable_accessory",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "chin",
+        "collar",
+        "collar.base",
+        "collar.chin_support",
+        "neck",
+        "upper_chest"
+      ],
+      "relations": [
+        {
+          "from": "collar",
+          "relation": "around",
+          "to": "neck"
+        },
+        {
+          "from": "collar.chin_support",
+          "relation": "under",
+          "to": "chin"
+        },
+        {
+          "from": "collar.base",
+          "relation": "on",
+          "to": "upper_chest"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "경추 손상 여부·안전한 고정은 별도이다."
+    },
+    {
+      "id": "draft_E06",
+      "card_id": "E06",
+      "kind": "authored_visual_option",
+      "en": "A hinged knee brace wraps around an intact leg; two side bars link an upper thigh cuff to a lower calf cuff beside the visible knee.",
+      "ko": "힌지식 무릎 보조기가 연속된 다리를 둘러싸고, 보이는 무릎 양옆의 두 측면대가 허벅지 커프와 종아리 커프를 잇는다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S01",
+        "S28"
+      ],
+      "owner_nodes": [
+        "brace",
+        "intact_leg",
+        "side_bars",
+        "upper_and_lower_cuffs"
+      ],
+      "relations": [
+        {
+          "from": "brace",
+          "relation": "around",
+          "to": "intact_leg"
+        },
+        {
+          "from": "side_bars",
+          "relation": "connect",
+          "to": "upper_and_lower_cuffs"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "장애·진단·치료 필요성·의지 사용자의 삶을 외형에서 추정하지 않는다."
+    },
+    {
+      "id": "draft_E07",
+      "card_id": "E07",
+      "kind": "authored_visual_option",
+      "en": "An adult's residual lower limb enters a prosthetic socket above a mechanical lower leg and foot; the socket rim remains visible around the limb.",
+      "ko": "성인의 잔존 하지가 기계식 하퇴와 발 위의 의족 소켓 안으로 들어가며 소켓의 가장자리가 잔존지 둘레에 보인다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "body_form"
+      ],
+      "source_ids": [
+        "S28",
+        "S01"
+      ],
+      "owner_nodes": [
+        "prosthetic_foot",
+        "prosthetic_shank",
+        "residual_limb",
+        "socket"
+      ],
+      "relations": [
+        {
+          "from": "residual_limb",
+          "relation": "inside",
+          "to": "socket"
+        },
+        {
+          "from": "socket",
+          "relation": "above",
+          "to": "prosthetic_shank"
+        },
+        {
+          "from": "prosthetic_shank",
+          "relation": "connected_to",
+          "to": "prosthetic_foot"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "절단 원인·시점·사용자의 능력이나 정체성을 추정하지 않는다."
+    },
+    {
+      "id": "draft_E08",
+      "card_id": "E08",
+      "kind": "authored_visual_option",
+      "en": "A seated patient rests on a wheelchair cushion with both feet on separate footplates; the large rear wheels and smaller front casters remain distinct.",
+      "ko": "앉은 환자가 휠체어 쿠션 위에 지지되고 양발은 각각의 발판에 놓이며 큰 뒷바퀴와 작은 앞 캐스터가 구분된다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S28"
+      ],
+      "owner_nodes": [
+        "patient",
+        "patient.foot_left",
+        "patient.foot_right",
+        "wheelchair",
+        "wheelchair.footplate_left",
+        "wheelchair.footplate_right",
+        "wheelchair.seat"
+      ],
+      "relations": [
+        {
+          "from": "patient",
+          "relation": "on",
+          "to": "wheelchair.seat"
+        },
+        {
+          "from": "patient.foot_left",
+          "relation": "on",
+          "to": "wheelchair.footplate_left"
+        },
+        {
+          "from": "patient.foot_right",
+          "relation": "on",
+          "to": "wheelchair.footplate_right"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "진단·영구 장애·보호자 의존은 보이지 않는다."
+    },
+    {
+      "id": "draft_E09",
+      "card_id": "E09",
+      "kind": "authored_visual_option",
+      "en": "A standing patient grips the two handles of a walker in front of them; the walker's four lower ends meet the floor and the patient's feet remain inside the walking space.",
+      "ko": "서 있는 환자가 앞의 보행기 손잡이 두 개를 잡고 보행기 아래 네 끝은 바닥에 닿으며 환자 발은 보행 공간 안에 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S28",
+        "S02"
+      ],
+      "owner_nodes": [
+        "floor",
+        "patient",
+        "patient.hand_left",
+        "patient.hand_right",
+        "walker",
+        "walker.ends",
+        "walker.handle_left",
+        "walker.handle_right"
+      ],
+      "relations": [
+        {
+          "from": "patient.hand_left",
+          "relation": "grips",
+          "to": "walker.handle_left"
+        },
+        {
+          "from": "patient.hand_right",
+          "relation": "grips",
+          "to": "walker.handle_right"
+        },
+        {
+          "from": "walker.ends",
+          "relation": "contacts",
+          "to": "floor"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "체중 지지 처방이나 보행 안전성을 입증하지 않는다."
+    },
+    {
+      "id": "draft_E10",
+      "card_id": "E10",
+      "kind": "authored_visual_option",
+      "en": "A standing patient grips one crutch in each hand, with both rubber tips touching the floor outside the feet and the shafts separate from the legs.",
+      "ko": "서 있는 환자가 각 손에 목발 하나씩을 잡고 두 고무 끝이 발 바깥쪽 바닥에 닿으며 목발 기둥은 다리와 구분된다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S28"
+      ],
+      "owner_nodes": [
+        "crutch_left",
+        "crutch_left.tip",
+        "crutch_right",
+        "crutch_right.tip",
+        "floor",
+        "patient",
+        "patient.hand_left",
+        "patient.hand_right"
+      ],
+      "relations": [
+        {
+          "from": "patient.hand_left",
+          "relation": "grips",
+          "to": "crutch_left"
+        },
+        {
+          "from": "patient.hand_right",
+          "relation": "grips",
+          "to": "crutch_right"
+        },
+        {
+          "from": "crutch_left.tip",
+          "relation": "on",
+          "to": "floor"
+        },
+        {
+          "from": "crutch_right.tip",
+          "relation": "on",
+          "to": "floor"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "실제 부하량·보행 단계·안전한 사용은 정지 이미지로 검증하지 않는다."
+    },
+    {
+      "id": "draft_E11",
+      "card_id": "E11",
+      "kind": "authored_visual_option",
+      "en": "A therapist stands beside a patient using a walker, with one hand on a wide gait belt at the patient's waist and the other hand open near the elbow.",
+      "ko": "치료사가 보행기를 쓰는 환자 옆에서 한 손을 환자 허리의 넓은 보행벨트에 대고 다른 손은 팔꿈치 가까이에 펼치고 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S28",
+        "S02"
+      ],
+      "owner_nodes": [
+        "gait_belt",
+        "patient",
+        "patient.elbow",
+        "patient.waist",
+        "therapist",
+        "therapist.hand_one",
+        "therapist.hand_two"
+      ],
+      "relations": [
+        {
+          "from": "therapist.hand_one",
+          "relation": "contacts",
+          "to": "gait_belt"
+        },
+        {
+          "from": "gait_belt",
+          "relation": "around",
+          "to": "patient.waist"
+        },
+        {
+          "from": "therapist.hand_two",
+          "relation": "near",
+          "to": "patient.elbow"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "지원의 외형이며 실제 이동 기술·안전·회복 정도를 보장하지 않는다."
+    },
+    {
+      "id": "draft_E12",
+      "card_id": "E12",
+      "kind": "authored_visual_option",
+      "en": "Under neutral light, one small patch of the forearm is visibly lighter than the adjacent skin, while the surrounding skin retains its own tone.",
+      "ko": "중립 조명 아래 팔뚝의 작은 한 부위가 인접 피부보다 밝게 보이며 주변 피부는 고유한 색을 유지한다.",
+      "suggested_slots": [
+        "skin_tone",
+        "light_color"
+      ],
+      "source_ids": [
+        "S31"
+      ],
+      "owner_nodes": [
+        "adjacent_skin",
+        "forearm",
+        "lighter_patch"
+      ],
+      "relations": [
+        {
+          "from": "lighter_patch",
+          "relation": "within",
+          "to": "forearm"
+        },
+        {
+          "from": "adjacent_skin",
+          "relation": "around",
+          "to": "lighter_patch"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "단순 색차 대리형이며 창백·색소 소실·원인을 판정하지 않는다."
+    },
+    {
+      "id": "draft_E13",
+      "card_id": "E13",
+      "kind": "authored_visual_option",
+      "en": "Under neutral illumination, a narrow blue-grey tint is confined to the lips while the adjacent facial skin retains a different natural tone.",
+      "ko": "중립 조명 아래 입술에 한정된 좁은 청회색이 주변 얼굴 피부의 자연스러운 색과 구분된다.",
+      "suggested_slots": [
+        "skin_condition",
+        "light_color"
+      ],
+      "source_ids": [
+        "S30"
+      ],
+      "owner_nodes": [
+        "facial_skin",
+        "lips",
+        "tint"
+      ],
+      "relations": [
+        {
+          "from": "tint",
+          "relation": "on",
+          "to": "lips"
+        },
+        {
+          "from": "lips",
+          "relation": "beside",
+          "to": "facial_skin"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "피부색과 부위별 관찰이 달라지며 산소 부족·원인은 입증되지 않는다."
+    },
+    {
+      "id": "draft_E14",
+      "card_id": "E14",
+      "kind": "authored_visual_option",
+      "en": "A close facial view under neutral light shows a yellow tint in the visible sclera, distinct from the iris and eyelid skin.",
+      "ko": "중립 조명의 얼굴 근접 화면에서 보이는 공막에 노란 기운이 있고 홍채와 눈꺼풀 피부는 구분된다.",
+      "suggested_slots": [
+        "eye_detail",
+        "light_color"
+      ],
+      "source_ids": [
+        "S32"
+      ],
+      "owner_nodes": [
+        "iris",
+        "sclera",
+        "yellow_tint"
+      ],
+      "relations": [
+        {
+          "from": "yellow_tint",
+          "relation": "within",
+          "to": "sclera"
+        },
+        {
+          "from": "iris",
+          "relation": "separate_from",
+          "to": "sclera"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "황달·빌리루빈 수치·간질환의 진단이 아니다."
+    },
+    {
+      "id": "draft_E15",
+      "card_id": "E15",
+      "kind": "authored_visual_option",
+      "en": "Small sweat beads gather on a patient's forehead and temple, and damp strands of hair cling separately to the skin.",
+      "ko": "환자의 이마와 관자놀이에 작은 땀방울이 맺히고 젖은 머리카락 가닥이 피부에 각각 붙어 있다.",
+      "suggested_slots": [
+        "surface_moisture",
+        "hair_style"
+      ],
+      "source_ids": [
+        "S47",
+        "S01"
+      ],
+      "owner_nodes": [
+        "forehead",
+        "hair_strands",
+        "sweat",
+        "temple"
+      ],
+      "relations": [
+        {
+          "from": "sweat",
+          "relation": "on",
+          "to": "forehead"
+        },
+        {
+          "from": "hair_strands",
+          "relation": "contacts",
+          "to": "temple"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "땀의 원인·체온·주관적 경험은 별도 문맥이다."
+    },
+    {
+      "id": "draft_F01",
+      "card_id": "F01",
+      "kind": "authored_visual_option",
+      "en": "A hand holds an ultrasound probe against a small gel-coated area of the abdomen; the probe cable runs to a separate cart whose screen contains a bounded grayscale image.",
+      "ko": "손이 젤 바른 복부의 작은 부위에 초음파 탐촉자를 대고 탐촉자 전선은 테두리 안 흑백 영상이 있는 별도 카트로 이어진다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "relational_action"
+      ],
+      "source_ids": [
+        "S11"
+      ],
+      "owner_nodes": [
+        "cart",
+        "cart.screen",
+        "clinician",
+        "clinician.hand",
+        "image",
+        "patient",
+        "patient.abdomen",
+        "probe",
+        "probe.cable"
+      ],
+      "relations": [
+        {
+          "from": "clinician.hand",
+          "relation": "holds",
+          "to": "probe"
+        },
+        {
+          "from": "probe",
+          "relation": "contacts",
+          "to": "patient.abdomen"
+        },
+        {
+          "from": "probe.cable",
+          "relation": "to",
+          "to": "cart"
+        },
+        {
+          "from": "image",
+          "relation": "inside",
+          "to": "cart.screen"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "장기·태아·진단·실시간 작동은 외부 연결만으로 입증되지 않는다."
+    },
+    {
+      "id": "draft_F02",
+      "card_id": "F02",
+      "kind": "authored_visual_option",
+      "en": "A patient lies on a narrow scanner table aligned with the central opening of a short, thick ring-shaped gantry; the table and ring remain separate structures.",
+      "ko": "환자가 짧고 두꺼운 고리형 갠트리의 중앙 구멍에 맞춘 좁은 촬영대에 누워 있고 촬영대와 고리는 별도 구조로 보인다.",
+      "suggested_slots": [
+        "object_structure",
+        "scale_relation"
+      ],
+      "source_ids": [
+        "S09"
+      ],
+      "owner_nodes": [
+        "gantry",
+        "gantry.opening",
+        "patient",
+        "scanner_table"
+      ],
+      "relations": [
+        {
+          "from": "patient",
+          "relation": "on",
+          "to": "scanner_table"
+        },
+        {
+          "from": "scanner_table",
+          "relation": "aligned_with",
+          "to": "gantry.opening"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "전형적인 한 장비안이며 제품별 고증·작동·방사선은 별도이다."
+    },
+    {
+      "id": "draft_F03",
+      "card_id": "F03",
+      "kind": "authored_visual_option",
+      "en": "A patient lies on a table extending into a long cylindrical scanner bore; a separate close-fitting coil housing surrounds the head at the opening.",
+      "ko": "환자가 긴 원통형 촬영 장치 보어 안으로 이어지는 침대에 누워 있고 개구부의 머리 둘레에는 별도 코일 하우징이 놓여 있다.",
+      "suggested_slots": [
+        "object_structure",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S10"
+      ],
+      "owner_nodes": [
+        "coil",
+        "patient",
+        "patient.head",
+        "scanner",
+        "scanner.bore",
+        "table"
+      ],
+      "relations": [
+        {
+          "from": "table",
+          "relation": "into",
+          "to": "scanner.bore"
+        },
+        {
+          "from": "coil",
+          "relation": "around",
+          "to": "patient.head"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "한 구성 제안이며 장비 모델·MR 안전·촬영 부위는 추가 확인한다."
+    },
+    {
+      "id": "draft_F04",
+      "card_id": "F04",
+      "kind": "authored_visual_option",
+      "en": "A monitor displays several grayscale cross-sectional images arranged in a grid, with each image confined to its own pane inside the screen bezel.",
+      "ko": "모니터에 여러 흑백 단면 영상이 격자로 배치되고 각 영상은 화면 테두리 안의 별도 칸에 들어 있다.",
+      "suggested_slots": [
+        "object_structure",
+        "visible_text"
+      ],
+      "source_ids": [
+        "S09",
+        "S10"
+      ],
+      "owner_nodes": [
+        "panes",
+        "screen",
+        "slices"
+      ],
+      "relations": [
+        {
+          "from": "slices",
+          "relation": "inside",
+          "to": "panes"
+        },
+        {
+          "from": "panes",
+          "relation": "inside",
+          "to": "screen"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "환자 소유·확진·PACS 시스템 종류는 UI만으로 보장하지 않는다."
+    },
+    {
+      "id": "draft_F05",
+      "card_id": "F05",
+      "kind": "authored_visual_option",
+      "en": "A strip of gridded paper carries a dark electrical waveform inside its margins; the paper lies flat beside, rather than inside, a model heart.",
+      "ko": "격자 종이에 검은 전기 파형이 종이 테두리 안으로 기록되어 있고 종이는 심장 모형 안이 아니라 그 옆에 평평하게 놓여 있다.",
+      "suggested_slots": [
+        "prop",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S17",
+        "S01"
+      ],
+      "owner_nodes": [
+        "model_heart",
+        "paper",
+        "waveform"
+      ],
+      "relations": [
+        {
+          "from": "waveform",
+          "relation": "inside",
+          "to": "paper"
+        },
+        {
+          "from": "paper",
+          "relation": "beside",
+          "to": "model_heart"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "파형 모양만으로 맥박·순환·심근경색을 판정하지 않는다."
+    },
+    {
+      "id": "draft_F06",
+      "card_id": "F06",
+      "kind": "authored_visual_option",
+      "en": "In an explicit educational diagram, two separate lines connect one arm access to an external dialysis filter assembly and return to the same arm; arrows stay inside the diagram.",
+      "ko": "명시적 교육 도식에서 서로 다른 두 선이 한 팔의 접근부와 체외 투석 필터 장치를 잇고 같은 팔로 돌아오며 화살표는 도식 안에 있다.",
+      "suggested_slots": [
+        "object_structure",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S16"
+      ],
+      "owner_nodes": [
+        "arm_access",
+        "filter",
+        "outgoing_line",
+        "return_line"
+      ],
+      "relations": [
+        {
+          "from": "arm_access",
+          "relation": "connected_to",
+          "to": "outgoing_line"
+        },
+        {
+          "from": "outgoing_line",
+          "relation": "to",
+          "to": "filter"
+        },
+        {
+          "from": "filter",
+          "relation": "to",
+          "to": "return_line"
+        },
+        {
+          "from": "return_line",
+          "relation": "to",
+          "to": "arm_access"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "혈액 여과·기능 회복을 픽셀로 증명하지 않으며 실제 삽관법이 아니다."
+    },
+    {
+      "id": "draft_F07",
+      "card_id": "F07",
+      "kind": "authored_visual_option",
+      "en": "An explicitly illustrative circuit links a patient silhouette to separate pump and oxygenator blocks and back to the silhouette along two distinct tubing paths.",
+      "ko": "명시적 설명용 회로가 환자 실루엣에서 별도 펌프와 산소화기 블록을 거쳐 서로 다른 두 관 경로로 실루엣과 다시 연결된다.",
+      "suggested_slots": [
+        "object_structure",
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S15"
+      ],
+      "owner_nodes": [
+        "drain_path",
+        "oxygenator",
+        "patient",
+        "pump",
+        "return_path"
+      ],
+      "relations": [
+        {
+          "from": "patient",
+          "relation": "to",
+          "to": "drain_path"
+        },
+        {
+          "from": "drain_path",
+          "relation": "to",
+          "to": "pump"
+        },
+        {
+          "from": "pump",
+          "relation": "to",
+          "to": "oxygenator"
+        },
+        {
+          "from": "oxygenator",
+          "relation": "to",
+          "to": "return_path"
+        },
+        {
+          "from": "return_path",
+          "relation": "to",
+          "to": "patient"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기능 블록 도식이며 실제 VA/VV 캐뉼라 위치·혈류·가스교환을 주장하지 않는다."
+    },
+    {
+      "id": "draft_F08",
+      "card_id": "F08",
+      "kind": "authored_visual_option",
+      "en": "From a low reclining viewpoint on a bed, near bed-rail edges frame the lower corners while two clinicians lean into the upper field beneath a ceiling light.",
+      "ko": "침대에서 낮게 기대 누운 시점으로 가까운 난간 가장자리가 아래 모서리를 이루고 천장등 아래 의료진 두 명이 화면 위쪽으로 몸을 기울여 들어온다.",
+      "suggested_slots": [
+        "camera_height",
+        "viewer_position"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "bed_rails",
+        "ceiling_light",
+        "clinicians"
+      ],
+      "relations": [
+        {
+          "from": "bed_rails",
+          "relation": "in_foreground",
+          "to": "clinicians"
+        },
+        {
+          "from": "ceiling_light",
+          "relation": "above",
+          "to": "clinicians"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "주관적 경험을 보장하지 않는 선택적 촬영 위치이다."
+    },
+    {
+      "id": "draft_F09",
+      "card_id": "F09",
+      "kind": "authored_visual_option",
+      "en": "A direct overhead view shows the patient's torso along a table and each forearm resting on a separate side armboard; both armboard attachments remain visible.",
+      "ko": "수직 상부 시점에서 환자 몸통은 탁자를 따르고 각 팔뚝은 옆의 별도 팔받침 위에 있으며 두 팔받침의 부착부도 보인다.",
+      "suggested_slots": [
+        "camera_direction",
+        "contact_point"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "armboard_left",
+        "armboard_right",
+        "patient",
+        "patient.forearm_left",
+        "patient.forearm_right",
+        "table"
+      ],
+      "relations": [
+        {
+          "from": "patient.forearm_left",
+          "relation": "on",
+          "to": "armboard_left"
+        },
+        {
+          "from": "patient.forearm_right",
+          "relation": "on",
+          "to": "armboard_right"
+        },
+        {
+          "from": "armboard_left",
+          "relation": "attached_to",
+          "to": "table"
+        },
+        {
+          "from": "armboard_right",
+          "relation": "attached_to",
+          "to": "table"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "전체 배치가 보여도 실제 수술 체위의 적합성을 뜻하지 않는다."
+    },
+    {
+      "id": "draft_F10",
+      "card_id": "F10",
+      "kind": "authored_visual_option",
+      "en": "A glass partition separates a patient inside a room from a visitor in the corridor; a faint reflection stays on the glass without replacing either real person.",
+      "ko": "유리 칸막이가 방 안 환자와 복도 방문자를 나누고 옅은 반사는 두 실물 인물을 대체하지 않은 채 유리 표면에 남아 있다.",
+      "suggested_slots": [
+        "composition",
+        "reflection_logic"
+      ],
+      "source_ids": [
+        "S08",
+        "S01"
+      ],
+      "owner_nodes": [
+        "glass",
+        "patient_and_visitor",
+        "reflection"
+      ],
+      "relations": [
+        {
+          "from": "glass",
+          "relation": "between",
+          "to": "patient_and_visitor"
+        },
+        {
+          "from": "reflection",
+          "relation": "on",
+          "to": "glass"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "분리와 반사의 외형만 제시한다."
+    },
+    {
+      "id": "draft_F11",
+      "card_id": "F11",
+      "kind": "authored_visual_option",
+      "en": "A partially drawn privacy curtain conceals the near half of a bed while leaving the patient's head and a seated clinician visible through the opening.",
+      "ko": "반쯤 친 프라이버시 커튼이 침대의 가까운 절반을 가리고 열린 부분으로 환자 머리와 앉은 의료진이 보인다.",
+      "suggested_slots": [
+        "composition",
+        "spatial_depth"
+      ],
+      "source_ids": [
+        "S21"
+      ],
+      "owner_nodes": [
+        "bed",
+        "bed.near_half",
+        "clinician",
+        "curtain",
+        "opening",
+        "patient",
+        "patient.head"
+      ],
+      "relations": [
+        {
+          "from": "curtain",
+          "relation": "occludes",
+          "to": "bed.near_half"
+        },
+        {
+          "from": "patient.head",
+          "relation": "visible_through",
+          "to": "opening"
+        },
+        {
+          "from": "clinician",
+          "relation": "visible_through",
+          "to": "opening"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "비밀유지 준수·동의·문밖 관객의 존재는 별도이다."
+    },
+    {
+      "id": "draft_F12",
+      "card_id": "F12",
+      "kind": "authored_visual_option",
+      "en": "A warm bedside lamp lights the joined hands of two people while a neutral ceiling light keeps the patient's face and surrounding medical equipment readable.",
+      "ko": "따뜻한 침상등이 두 사람의 맞잡은 손을 비추고 중립 천장등은 환자 얼굴과 주변 의료 장비를 알아볼 수 있게 한다.",
+      "suggested_slots": [
+        "lighting",
+        "light_color"
+      ],
+      "source_ids": [
+        "S01",
+        "S26"
+      ],
+      "owner_nodes": [
+        "bedside_lamp",
+        "ceiling_light",
+        "joined_hands",
+        "patient_and_equipment"
+      ],
+      "relations": [
+        {
+          "from": "bedside_lamp",
+          "relation": "illuminates",
+          "to": "joined_hands"
+        },
+        {
+          "from": "ceiling_light",
+          "relation": "illuminates",
+          "to": "patient_and_equipment"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "따뜻함·돌봄·로맨스의 감정 효과는 사용자 판단이다."
+    },
+    {
+      "id": "draft_G01",
+      "card_id": "G01",
+      "kind": "authored_visual_option",
+      "en": "On an explicit effects-makeup model, a shallow irregular scraped patch interrupts the forearm surface without a deep open cavity.",
+      "ko": "명시적 특수분장 모형의 팔뚝 표면에 얕고 불규칙한 긁힌 영역이 있으며 깊게 열린 공동은 없다.",
+      "suggested_slots": [
+        "skin_condition",
+        "body_marking"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "model",
+        "model.forearm",
+        "scraped_patch"
+      ],
+      "relations": [
+        {
+          "from": "scraped_patch",
+          "relation": "within",
+          "to": "model.forearm"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "실제 상해·도구·의도·발생 시점은 추정하지 않는다."
+    },
+    {
+      "id": "draft_G02",
+      "card_id": "G02",
+      "kind": "authored_visual_option",
+      "en": "An educational panel contains two separate skin models: one with an uneven torn opening and one with a narrow straight-edged opening; a border separates the examples.",
+      "ko": "교육 패널의 별도 피부 모형 두 개 중 하나에는 불규칙하게 찢어진 개구부가, 다른 하나에는 좁고 곧은 가장자리 개구부가 있으며 예시 사이에는 경계가 있다.",
+      "suggested_slots": [
+        "object_structure",
+        "body_marking"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "border",
+        "model_one",
+        "model_two",
+        "models",
+        "straight_opening",
+        "torn_opening"
+      ],
+      "relations": [
+        {
+          "from": "torn_opening",
+          "relation": "in",
+          "to": "model_one"
+        },
+        {
+          "from": "straight_opening",
+          "relation": "in",
+          "to": "model_two"
+        },
+        {
+          "from": "border",
+          "relation": "between",
+          "to": "models"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "설명용 형태 대비이며 법의학적 상처 판독의 완전한 기준은 아니다."
+    },
+    {
+      "id": "draft_G03",
+      "card_id": "G03",
+      "kind": "authored_visual_option",
+      "en": "An effects-makeup forearm has a bounded purple patch on otherwise intact skin, with a separate small raised swelling beside it.",
+      "ko": "특수분장 팔뚝의 손상 없이 이어진 피부에 한정된 보라색 영역이 있고 그 옆에는 별도의 작은 부기가 올라와 있다.",
+      "suggested_slots": [
+        "skin_condition",
+        "body_marking"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "intact_skin",
+        "purple_patch",
+        "raised_swelling"
+      ],
+      "relations": [
+        {
+          "from": "purple_patch",
+          "relation": "on",
+          "to": "intact_skin"
+        },
+        {
+          "from": "raised_swelling",
+          "relation": "beside",
+          "to": "purple_patch"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "좌상과 혈종은 동의어가 아니며 이 모형은 외형 차이만 제안한다."
+    },
+    {
+      "id": "draft_G04",
+      "card_id": "G04",
+      "kind": "authored_visual_option",
+      "en": "A sealed evidence envelope lies beside a capped sample tube; separate label boxes on the envelope mark sample ID and transfer entries.",
+      "ko": "봉한 증거 봉투가 뚜껑 있는 검체관 옆에 놓이고 봉투의 서로 다른 라벨 칸이 검체 번호와 인계 항목을 구분한다.",
+      "suggested_slots": [
+        "prop",
+        "visible_text"
+      ],
+      "source_ids": [
+        "S25"
+      ],
+      "owner_nodes": [
+        "envelope",
+        "id_box",
+        "sample_tube",
+        "transfer_boxes"
+      ],
+      "relations": [
+        {
+          "from": "envelope",
+          "relation": "beside",
+          "to": "sample_tube"
+        },
+        {
+          "from": "id_box",
+          "relation": "on",
+          "to": "envelope"
+        },
+        {
+          "from": "transfer_boxes",
+          "relation": "on",
+          "to": "envelope"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "외부 기록 매체이며 실제 개인 정보는 쓰지 않는다."
+    },
+    {
+      "id": "draft_G05",
+      "card_id": "G05",
+      "kind": "authored_visual_option",
+      "en": "A patient and two seated listeners face an open document on a small table; a pen rests beside the paper rather than in a signing hand.",
+      "ko": "환자와 앉은 청자 두 명이 작은 탁자의 펼친 문서를 향하고 펜은 서명하는 손이 아니라 종이 옆에 놓여 있다.",
+      "suggested_slots": [
+        "relational_action",
+        "narrative_clue"
+      ],
+      "source_ids": [
+        "S26",
+        "S27",
+        "S21"
+      ],
+      "owner_nodes": [
+        "document",
+        "listeners",
+        "patient",
+        "pen"
+      ],
+      "relations": [
+        {
+          "from": "patient",
+          "relation": "faces",
+          "to": "document"
+        },
+        {
+          "from": "listeners",
+          "relation": "faces",
+          "to": "document"
+        },
+        {
+          "from": "pen",
+          "relation": "beside",
+          "to": "document"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "대화·돌봄 계획의 대리 구성이며 법적 효력이나 결론이 아니다."
+    },
+    {
+      "id": "draft_G06",
+      "card_id": "G06",
+      "kind": "authored_visual_option",
+      "en": "An explicitly staged adult medical-role-play set shows two performers beside a prop examination couch; unused instruments remain on a tray within the studio backdrop.",
+      "ko": "명시적으로 연출된 성인 의료 역할극 세트에 두 퍼포머와 소품 진찰대가 있으며 사용하지 않는 기구가 스튜디오 배경 안 트레이에 놓여 있다.",
+      "suggested_slots": [
+        "staging_degree",
+        "situation_context"
+      ],
+      "source_ids": [
+        "S01",
+        "S21"
+      ],
+      "owner_nodes": [
+        "instruments",
+        "performers",
+        "prop_couch",
+        "scene",
+        "studio_backdrop",
+        "tray"
+      ],
+      "relations": [
+        {
+          "from": "performers",
+          "relation": "beside",
+          "to": "prop_couch"
+        },
+        {
+          "from": "instruments",
+          "relation": "on",
+          "to": "tray"
+        },
+        {
+          "from": "scene",
+          "relation": "inside",
+          "to": "studio_backdrop"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "의료 역할극의 가능한 비명시적 구성이다. 성적 의도·동의는 명시적 문맥으로만 다룬다."
+    },
+    {
+      "id": "draft_R01",
+      "card_id": "R01",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "An articulated surgical lamp hangs over one operating table; a separate metal instrument trolley stands alongside the table.",
+      "ko": "관절식 수술등이 수술대 하나 위에 걸려 있고, 별도의 금속 기구대가 수술대 옆에 놓여 있다.",
+      "suggested_slots": [
+        "location",
+        "object_structure",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "lamp",
+        "table",
+        "trolley"
+      ],
+      "relations": [
+        {
+          "from": "lamp",
+          "relation": "above",
+          "to": "table"
+        },
+        {
+          "from": "trolley",
+          "relation": "beside",
+          "to": "table"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "장비 배치의 창작 실현이며 실제 수술·무균·기관 인증을 입증하지 않는다."
+    },
+    {
+      "id": "draft_R02",
+      "card_id": "R02",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A bedside monitor and a ventilator occupy separate stands beside one hospital bed, leaving their separate cables and breathing circuit visible.",
+      "ko": "침상 모니터와 인공호흡기가 병상 하나 옆의 서로 다른 받침대에 놓여 있으며, 각각의 전선과 호흡 회로가 구별되어 보인다.",
+      "suggested_slots": [
+        "location",
+        "object_structure",
+        "prop"
+      ],
+      "source_ids": [
+        "S13"
+      ],
+      "owner_nodes": [
+        "bed",
+        "monitor",
+        "ventilator"
+      ],
+      "relations": [
+        {
+          "from": "monitor",
+          "relation": "beside",
+          "to": "bed"
+        },
+        {
+          "from": "ventilator",
+          "relation": "beside",
+          "to": "bed"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "기계의 존재는 작동·중증도·생존·의식의 증거가 아니다."
+    },
+    {
+      "id": "draft_R03",
+      "card_id": "R03",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A glazed door separates a single hospital room from a small anteroom; a second door separates that anteroom from the corridor.",
+      "ko": "유리창이 있는 문이 1인 병실과 작은 전실을 나누고, 두 번째 문이 전실과 복도를 나눈다.",
+      "suggested_slots": [
+        "location",
+        "object_structure",
+        "spatial_depth"
+      ],
+      "source_ids": [
+        "S08"
+      ],
+      "owner_nodes": [
+        "anteroom_and_corridor",
+        "door_a",
+        "door_b",
+        "room_and_anteroom"
+      ],
+      "relations": [
+        {
+          "from": "door_a",
+          "relation": "separates",
+          "to": "room_and_anteroom"
+        },
+        {
+          "from": "door_b",
+          "relation": "separates",
+          "to": "anteroom_and_corridor"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "격리 목적·압력 방향·감금·감염을 건축 외형만으로 확정하지 않는다."
+    },
+    {
+      "id": "draft_R04",
+      "card_id": "R04",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "Several closed stainless-steel compartment doors form one wall; each has a handle and a small external label holder.",
+      "ko": "닫힌 스테인리스 칸막이 문 여러 개가 한 벽을 이루며, 각 문에는 손잡이와 작은 외부 라벨 꽂이가 있다.",
+      "suggested_slots": [
+        "location",
+        "object_structure",
+        "surface_material"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "compartment_doors",
+        "label_holders",
+        "wall"
+      ],
+      "relations": [
+        {
+          "from": "compartment_doors",
+          "relation": "form",
+          "to": "wall"
+        },
+        {
+          "from": "label_holders",
+          "relation": "attached_to",
+          "to": "compartment_doors"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "불투명하게 닫힌 서랍의 내용·시신 수·신원·생사·온도는 보이지 않는다."
+    },
+    {
+      "id": "draft_R05",
+      "card_id": "R05",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A microscope stands on a laboratory bench beside a rack of labeled glass slides and a separate specimen container.",
+      "ko": "실험대 위 현미경 옆에 라벨이 붙은 유리 슬라이드 랙과 별도의 표본 용기가 놓여 있다.",
+      "suggested_slots": [
+        "location",
+        "prop",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "microscope",
+        "rack",
+        "slides"
+      ],
+      "relations": [
+        {
+          "from": "slides",
+          "relation": "held_by",
+          "to": "rack"
+        },
+        {
+          "from": "microscope",
+          "relation": "beside",
+          "to": "rack"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "병리 진단·시료의 인체 기원·세포 상태를 작업대 외형으로 확정하지 않는다."
+    },
+    {
+      "id": "draft_R06",
+      "card_id": "R06",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A standalone chrome-colored bivalve speculum rests on a tray, with two opposed blades joined to a hinged handle and a visible adjustment screw.",
+      "ko": "독립된 크롬빛 두 날 검경이 트레이에 놓여 있으며, 마주 보는 두 날이 경첩 손잡이에 연결되고 조절 나사가 보인다.",
+      "suggested_slots": [
+        "object_structure",
+        "prop",
+        "surface_material"
+      ],
+      "source_ids": [
+        "S23"
+      ],
+      "owner_nodes": [
+        "blades",
+        "handle",
+        "hinged_handle",
+        "screw"
+      ],
+      "relations": [
+        {
+          "from": "blades",
+          "relation": "joined_to",
+          "to": "hinged_handle"
+        },
+        {
+          "from": "screw",
+          "relation": "mounted_on",
+          "to": "handle"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "특정 검경 유형에서 착안한 기구다. 신체 접촉·사용 부위·성적 의미를 자동 추가하지 않는다."
+    },
+    {
+      "id": "draft_R07",
+      "card_id": "R07",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "One flexible tube emerges beside a covered abdominal incision on an adult and continues without a gap to a small external collection bulb clipped to the gown.",
+      "ko": "성인의 덮인 복부 절개부 옆에서 유연한 관 하나가 나와, 환자복에 고정된 작은 외부 수집 벌브까지 끊김 없이 이어진다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "contact_point",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S13"
+      ],
+      "owner_nodes": [
+        "bulb",
+        "collection_bulb",
+        "gown",
+        "patient",
+        "patient.abdomen_entry",
+        "tube"
+      ],
+      "relations": [
+        {
+          "from": "tube",
+          "relation": "emerges_at",
+          "to": "patient.abdomen_entry"
+        },
+        {
+          "from": "tube",
+          "relation": "connects_to",
+          "to": "collection_bulb"
+        },
+        {
+          "from": "bulb",
+          "relation": "clipped_to",
+          "to": "gown"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "삽입부와 외부 연결만 평가한다. 피부 아래 경로·흡인 작동·배액 성분은 보이지 않는다."
+    },
+    {
+      "id": "draft_R08",
+      "card_id": "R08",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A fluid bag feeds tubing through a pump beside an adult patient; the same tubing reaches a taped connector on the patient’s forearm.",
+      "ko": "성인 환자 옆 수액 주머니에서 나온 관이 펌프를 통과하고, 같은 관이 환자 팔뚝의 테이프로 고정된 연결부에 닿는다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "contact_point",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S13"
+      ],
+      "owner_nodes": [
+        "bag",
+        "patient",
+        "patient.forearm_connector",
+        "pump",
+        "tube"
+      ],
+      "relations": [
+        {
+          "from": "bag",
+          "relation": "connected_via",
+          "to": "tube"
+        },
+        {
+          "from": "tube",
+          "relation": "passes_through",
+          "to": "pump"
+        },
+        {
+          "from": "tube",
+          "relation": "ends_at",
+          "to": "patient.forearm_connector"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "실제 정맥 삽입·유량·약 성분·치료 효과를 외부 연결만으로 입증하지 않는다."
+    },
+    {
+      "id": "draft_R09",
+      "card_id": "R09",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "An adult’s mouth holds a secured breathing tube whose external connector joins a corrugated breathing circuit leading to a separate ventilator.",
+      "ko": "성인의 입에 고정된 호흡 튜브의 외부 연결부가 주름진 호흡 회로에 이어지고, 회로는 별도의 인공호흡기로 연결된다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "contact_point",
+        "prop"
+      ],
+      "source_ids": [
+        "S14"
+      ],
+      "owner_nodes": [
+        "breathing_circuit",
+        "circuit",
+        "patient",
+        "patient.mouth",
+        "tube",
+        "tube.connector",
+        "ventilator"
+      ],
+      "relations": [
+        {
+          "from": "tube",
+          "relation": "secured_at",
+          "to": "patient.mouth"
+        },
+        {
+          "from": "tube.connector",
+          "relation": "joins",
+          "to": "breathing_circuit"
+        },
+        {
+          "from": "circuit",
+          "relation": "connects_to",
+          "to": "ventilator"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "외부 구강 경로만 평가한다. 올바른 기관 내 위치·실제 환기·의식·생존은 확인 불가."
+    },
+    {
+      "id": "draft_R10",
+      "card_id": "R10",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A fitted mask covers an adult’s nose and mouth; a visible connector joins the mask to a corrugated circuit leading to a bedside breathing machine.",
+      "ko": "밀착 마스크가 성인의 코와 입을 덮고, 보이는 연결부가 마스크와 주름진 회로를 이어 침상 옆 호흡 장치로 연결한다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "contact_point",
+        "prop"
+      ],
+      "source_ids": [
+        "S14"
+      ],
+      "owner_nodes": [
+        "circuit",
+        "mask",
+        "patient",
+        "patient.nose_and_mouth"
+      ],
+      "relations": [
+        {
+          "from": "mask",
+          "relation": "covers",
+          "to": "patient.nose_and_mouth"
+        },
+        {
+          "from": "mask",
+          "relation": "connected_to",
+          "to": "circuit"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "비침습적 외부 연결의 제안이며 작동 방식·임상 적합성은 사진만으로 판정하지 않는다."
+    },
+    {
+      "id": "draft_R11",
+      "card_id": "R11",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A short tube flange rests at the front of an adult’s neck, held by a neck strap; its external connector joins a breathing circuit.",
+      "ko": "짧은 관의 고정판이 성인의 목 앞에 놓여 목끈으로 지지되며, 외부 연결부가 호흡 회로에 이어진다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "contact_point",
+        "object_structure"
+      ],
+      "source_ids": [
+        "S14"
+      ],
+      "owner_nodes": [
+        "circuit",
+        "connector",
+        "flange",
+        "patient",
+        "patient.neck_front",
+        "strap"
+      ],
+      "relations": [
+        {
+          "from": "flange",
+          "relation": "at",
+          "to": "patient.neck_front"
+        },
+        {
+          "from": "strap",
+          "relation": "holds",
+          "to": "flange"
+        },
+        {
+          "from": "connector",
+          "relation": "joins",
+          "to": "circuit"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "별도 목 경로다. 내부 해부·시술 단계·환기 상태는 평가하지 않는다."
+    },
+    {
+      "id": "draft_R12",
+      "card_id": "R12",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "An adult wearing a loose hospital gown is shown from behind; two fabric ties close a narrow overlap along the upper back.",
+      "ko": "헐렁한 환자복을 입은 성인을 뒤에서 보며, 천 끈 두 개가 등 위쪽의 좁은 겹침을 여민다.",
+      "suggested_slots": [
+        "garment_detail",
+        "garment_state",
+        "wardrobe_style"
+      ],
+      "source_ids": [
+        "S21"
+      ],
+      "owner_nodes": [
+        "gown",
+        "gown.back_overlap",
+        "ties"
+      ],
+      "relations": [
+        {
+          "from": "ties",
+          "relation": "close",
+          "to": "gown.back_overlap"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "환자복 외형만 제안한다. 노출 강요·성적 의미·성인 연령 판정은 별도다."
+    },
+    {
+      "id": "draft_R13",
+      "card_id": "R13",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A capped transparent jar contains a small irregular pink specimen submerged below a visible liquid meniscus; the jar stands separate from the body.",
+      "ko": "뚜껑이 닫힌 투명 병 안에서 작은 불규칙한 분홍 표본이 보이는 액면 아래 잠겨 있으며, 병은 신체와 떨어져 놓여 있다.",
+      "suggested_slots": [
+        "liquid_inclusion",
+        "object_structure",
+        "prop_state"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "jar",
+        "liquid",
+        "liquid.meniscus",
+        "specimen"
+      ],
+      "relations": [
+        {
+          "from": "specimen",
+          "relation": "inside",
+          "to": "jar"
+        },
+        {
+          "from": "specimen",
+          "relation": "below",
+          "to": "liquid.meniscus"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "표본·액면·병의 관계만 보인다. 조직 기원·보존액 성분·생체 상태는 입증하지 않는다."
+    },
+    {
+      "id": "draft_R14",
+      "card_id": "R14",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A thin tinted tissue section lies on a rectangular glass slide beneath a smaller coverslip, with a label occupying one end of the slide.",
+      "ko": "직사각 유리 슬라이드 위에 얇게 착색된 조직 절편이 작은 커버글라스 아래 놓이고, 라벨이 슬라이드 한쪽 끝을 차지한다.",
+      "suggested_slots": [
+        "object_structure",
+        "prop_placement",
+        "scale_relation"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "label",
+        "section",
+        "slide",
+        "slide_and_coverslip"
+      ],
+      "relations": [
+        {
+          "from": "section",
+          "relation": "between",
+          "to": "slide_and_coverslip"
+        },
+        {
+          "from": "label",
+          "relation": "at_end_of",
+          "to": "slide"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "가시 배치의 창작 제안이다. 조직학적 진단·염색법·확대율은 별도 검증한다."
+    },
+    {
+      "id": "draft_R15",
+      "card_id": "R15",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "Separate loops or stitches cross between two edges of a bounded fictional tissue seam. Each crossing meets both seam sides with visible attachment points.",
+      "ko": "경계가 분명한 허구의 조직 접합선 양쪽 가장자리 사이로 개별 고리나 봉합 땀이 가로질러 이어진다. 각각의 교차 연결은 눈에 보이는 부착점에서 접합선의 양쪽 면에 모두 닿는다.",
+      "suggested_slots": [
+        "anatomical_connection"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "seam",
+        "seam.opposing_margins",
+        "suture",
+        "suture.loops"
+      ],
+      "relations": [
+        {
+          "from": "suture.loops",
+          "relation": "bridge",
+          "to": "seam.opposing_margins"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "봉합 형태만 평가한다. 치유 시점·시술 원인·동의·특정 수술은 알 수 없다."
+    },
+    {
+      "id": "draft_R16",
+      "card_id": "R16",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A fictional cutaway model shows an outer skin flap separated from an underlying soft-tissue layer, with the two layers still joined at one edge.",
+      "ko": "가상 단면 모형에서 바깥 피부 피판과 하부 연조직층이 떨어져 있으며, 한쪽 가장자리에서는 두 층이 이어져 있다.",
+      "suggested_slots": [
+        "anatomical_connection",
+        "body_form",
+        "medium"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "remaining_edge",
+        "skin",
+        "skin.flap",
+        "underlying_tissue"
+      ],
+      "relations": [
+        {
+          "from": "skin.flap",
+          "relation": "separated_from",
+          "to": "underlying_tissue"
+        },
+        {
+          "from": "skin.flap",
+          "relation": "joined_at",
+          "to": "remaining_edge"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "열린 층 분리의 도식 제안이다. 모든 박리 손상이 열린 상처를 갖는다는 뜻이 아니다."
+    },
+    {
+      "id": "draft_R17",
+      "card_id": "R17",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A sharply bounded dark, dry patch interrupts the lighter surrounding surface of a fictional anatomical model.",
+      "ko": "가상의 해부 모형에서 경계가 뚜렷한 어둡고 건조한 패치가 주변의 옅은 표면을 끊는다.",
+      "suggested_slots": [
+        "skin_condition",
+        "surface_pattern",
+        "texture"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "dark_patch",
+        "model",
+        "model.surface"
+      ],
+      "relations": [
+        {
+          "from": "dark_patch",
+          "relation": "bounded_within",
+          "to": "model.surface"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "색과 표면의 대리 실현이며 조직 사망·혈류·감염·질병을 진단하지 않는다."
+    },
+    {
+      "id": "draft_R18",
+      "card_id": "R18",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "An adult figure has a healed residual forearm ending above the wrist, while a separate prosthetic hand rests on the nearby table.",
+      "ko": "성인 인물의 치유된 잔여 팔뚝이 손목 위에서 끝나며, 별도의 의수 손이 가까운 탁자 위에 놓여 있다.",
+      "suggested_slots": [
+        "body_form",
+        "body_region",
+        "prop_placement"
+      ],
+      "source_ids": [
+        "S28"
+      ],
+      "owner_nodes": [
+        "figure",
+        "prosthetic_hand",
+        "residual_forearm",
+        "wrist_position"
+      ],
+      "relations": [
+        {
+          "from": "residual_forearm",
+          "relation": "ends_above",
+          "to": "wrist_position"
+        },
+        {
+          "from": "prosthetic_hand",
+          "relation": "separate_from",
+          "to": "figure"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "신체 끝과 분리된 소품만 제안한다. 통증·절단 원인·정체성·불완전한 인간이라는 가치판단은 부여하지 않는다."
+    },
+    {
+      "id": "draft_R19",
+      "card_id": "R19",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "An opaque privacy screen stands between an adult patient in a closed gown and a doorway, blocking the doorway’s view of the patient’s lower body.",
+      "ko": "불투명 사생활 가림막이 여민 환자복을 입은 성인 환자와 출입문 사이에 서서, 출입문 쪽에서 환자의 하체를 볼 수 없게 한다.",
+      "suggested_slots": [
+        "prop_placement",
+        "proxemics",
+        "subject_framing"
+      ],
+      "source_ids": [
+        "S21"
+      ],
+      "owner_nodes": [
+        "patient",
+        "patient.lower_body_from_door",
+        "patient_and_door",
+        "screen"
+      ],
+      "relations": [
+        {
+          "from": "screen",
+          "relation": "between",
+          "to": "patient_and_door"
+        },
+        {
+          "from": "screen",
+          "relation": "occludes",
+          "to": "patient.lower_body_from_door"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "가림의 범위만 평가한다. 비동의·관음·강제·검사 실행을 가시 사실로 바꾸지 않는다."
+    },
+    {
+      "id": "draft_R20",
+      "card_id": "R20",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "On a clearly staged studio set, two fully clothed adult performers stand beside a prop examination chair; one wears a stylized white coat and holds unused gloves.",
+      "ko": "명백히 연출된 스튜디오 세트에서 옷을 완전히 입은 성인 연기자 두 명이 소품 진료 의자 옆에 서며, 한 명은 양식화된 흰 가운을 입고 쓰지 않은 장갑을 들고 있다.",
+      "suggested_slots": [
+        "attire_context",
+        "participant_role",
+        "staging_degree"
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "owner_nodes": [
+        "gloves",
+        "performer_a",
+        "performers",
+        "prop_chair"
+      ],
+      "relations": [
+        {
+          "from": "performer_a",
+          "relation": "holds",
+          "to": "gloves"
+        },
+        {
+          "from": "performers",
+          "relation": "beside",
+          "to": "prop_chair"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "성인·연출은 명시적 설정 조건이다. 동의나 성적 취향은 외형으로 승인하지 않으며 성적 연출은 별도 요청 차원이다."
+    },
+    {
+      "id": "draft_R21",
+      "card_id": "R21",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "An opaque drape rises across an adult patient’s upper torso, separating the visible face from a covered lower-body work area.",
+      "ko": "불투명한 수술포가 성인 환자의 상체를 가로질러 세워져, 보이는 얼굴과 가려진 하체 작업 구역을 나눈다.",
+      "suggested_slots": [
+        "body_region",
+        "prop_placement",
+        "subject_framing"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "owner_nodes": [
+        "drape",
+        "patient",
+        "patient.face_and_work_area",
+        "patient.lower_body"
+      ],
+      "relations": [
+        {
+          "from": "drape",
+          "relation": "separates",
+          "to": "patient.face_and_work_area"
+        },
+        {
+          "from": "drape",
+          "relation": "occludes",
+          "to": "patient.lower_body"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "수술포와 가림만 확인 가능하다. 의식·통증·마취 종류·가려진 처치는 단정하지 않는다."
+    },
+    {
+      "id": "draft_R22",
+      "card_id": "R22",
+      "kind": "existing_visual_reuse_proposal",
+      "en": "A pale raised scar crosses an adult model’s forearm; adjacent skin folds converge toward one end of the scar.",
+      "ko": "성인 모형의 팔뚝을 옅게 솟은 흉터가 가로지르며, 이웃 피부 주름들이 흉터 한쪽 끝으로 모인다.",
+      "suggested_slots": [
+        "body_region",
+        "skin_condition",
+        "surface_pattern"
+      ],
+      "source_ids": [
+        "S37"
+      ],
+      "owner_nodes": [
+        "scar",
+        "scar.end",
+        "skin",
+        "skin.folds"
+      ],
+      "relations": [
+        {
+          "from": "skin.folds",
+          "relation": "converge_toward",
+          "to": "scar.end"
+        }
+      ],
+      "preserve_complete_proposition": true,
+      "native_approval": false,
+      "runtime_importable": false,
+      "future_conditions": "Explicitly bind actual owners and all changed dimensions/properties after independently frozen requester meaning.",
+      "claim_limit": "흉터·당김 형태만 평가한다. 운동 제한·통증·외상 원인·시간은 보이지 않는다."
+    }
+  ],
+  "runtime_importable": false
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "agent-medical-image-testcase/v1",
+  "arm": "a",
+  "scene_title": "Light before the next patient",
+  "ownership": "All staging gates are agent test obligations, not requester-owned locks. Required user meaning is medical topic plus reference use; user acceptance stays pending.",
+  "pre_retrieval": true,
+  "baseline_sha256": "bfd4d0e0601abde31c52a18999f80f9854d64813d77529eb211dbd1ddad490e1",
+  "gates": [
+    {
+      "id": "A1_topic",
+      "expected": "An operating theatre is identifiable from the operating table, overhead surgical lamp and clinical team together."
+    },
+    {
+      "id": "A2_grip",
+      "expected": "The nurse right hand grips the surgical-light adjustment handle with a continuous readable arm chain from the nurse body to hand to handle."
+    },
+    {
+      "id": "A3_light",
+      "expected": "The adjusted surgical lamp and its concentrated light pool on the center of the same unoccupied blue-draped table are visible together."
+    },
+    {
+      "id": "A4_team",
+      "expected": "The distinct second clinician rests a hand beside that same light pool and directs their eyes toward the nurse adjusting hand; both endpoints are visible together."
+    },
+    {
+      "id": "A5_reference",
+      "expected": "The primary full face and dark chin-length bob are readable and resemble the supplied reference at image scale."
+    }
+  ],
+  "review_policy": {
+    "partial_is_fail": true,
+    "unobservable": "UNOBSERVABLE_NOT_PASS",
+    "complete_gate": "Every named owner, endpoint and relation must be simultaneously visible."
+  }
+}

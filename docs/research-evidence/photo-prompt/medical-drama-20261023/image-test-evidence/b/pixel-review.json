@@ -1,0 +1,135 @@
+{
+  "schema": "agent-medical-image-pixel-review/v1",
+  "arm": "b",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-drama-20261023-native-b/image.png",
+  "image_sha256": "307e7fbb28b9e60a0d90936276c4a5d422903e9395f32ec8885dd12691c25ef4",
+  "image_call_count": 1,
+  "inspection": "Direct view_image of the actual copied original PNG, detail=original; no other arm output inspected.",
+  "frozen_case_gates": [
+    {
+      "id": "B1_parallel_support",
+      "expectation": "Same patient between two parallel rails; each of his two visible hands wraps its respective rail; both rail contacts visible simultaneously.",
+      "complete_components": [
+        "patient",
+        "left hand to one rail",
+        "right hand to other rail",
+        "both rails"
+      ],
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The same male patient stands between two separate chrome rails. His image-left and image-right hands visibly wrap their respective rails. Each hand connects to his forearm; both contacts coexist in the original frame."
+    },
+    {
+      "id": "B2_belt_support",
+      "expectation": "Therapist beside patient, her near hand visibly grasps a lateral gait-belt handle; belt encircles the same patient waist; arm-to-hand ownership visible.",
+      "complete_components": [
+        "therapist arm and hand",
+        "belt lateral handle contact",
+        "belt around same patient waist"
+      ],
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The therapist's visible forearm reaches to her hand gripping the lateral black belt handle at the same patient waist. The broad belt crosses his front and continues around his sides. The arm/hand belongs to the therapist, not the patient, and no second elbow-hand relation is claimed."
+    },
+    {
+      "id": "B3_supported_step",
+      "expectation": "Same patient left foot slightly ahead of right and both shoe soles on the floor in one visible supported state.",
+      "complete_components": [
+        "same patient both lower limbs",
+        "two shoes",
+        "stagger",
+        "both soles on floor"
+      ],
+      "observability": "visible",
+      "status": "fail",
+      "evidence": "Both shoe/floor support regions and staggered legs are visible, but the patient's RIGHT foot (image-left forward shoe) is ahead; the frozen expectation specifies LEFT shoe ahead of right. This is an agent-owned directional testcase mismatch. Both feet appear supported; right-versus-left cannot be silently relaxed."
+    },
+    {
+      "id": "B4_reference_appearance",
+      "expectation": "Main therapist face visible enough to compare with supplied image; soft face shape, dark eyes and short dark bob/wispy bangs retain recognizable reference resemblance.",
+      "complete_components": [
+        "readable therapist face",
+        "short dark bob",
+        "wispy bangs",
+        "face resemblance"
+      ],
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Therapist face is readable with dark eyes, softly rounded cheek/jaw shape, short dark bob and wispy fringe. The result keeps recognizable appearance resemblance to the supplied portrait at a different angle/expression. This is a qualitative resemblance observation, not a biometric identity or real-person occupation/age finding."
+    },
+    {
+      "id": "B5_clinical_whole",
+      "expectation": "Rehabilitation room, therapist-patient support interaction, and visible walking apparatus create a readable clinical recovery scene.",
+      "complete_components": [
+        "clinical setting",
+        "two related actors",
+        "support apparatus",
+        "purposeful clinical interaction"
+      ],
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Parallel walking rails, a waist support belt, sage scrubs, therapy benches and a clinical room with an anatomical wall chart establish a readable rehabilitation support scene. Therapist attends the patient face while he looks forward with effort; no recovery success, diagnosis or actual clinical safety is established."
+    }
+  ],
+  "adopted_new_source_gates": [
+    {
+      "id": "A09_patient_between_rails",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Patient body and two rail boundaries are visible in one frame."
+    },
+    {
+      "id": "A09_two_owned_hand_contacts",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "One patient hand wraps each distinct rail; both hand/forearm owners and contact boundaries are readable."
+    },
+    {
+      "id": "A09_therapist_beside_same_patient",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Therapist body and belt hand are alongside this same patient."
+    },
+    {
+      "id": "A09_therapist_inside_walking_lane",
+      "observability": "partial",
+      "status": "fail",
+      "evidence": "The torso and near leg appear beside the patient toward the inner side of the right rail, but the rear foot and the right rail floor boundary overlap in projection. The complete therapist-inside-lane placement is not unambiguously established. Do not infer a full inside-lane relation from upper-body proximity."
+    },
+    {
+      "id": "A09_floor_support_and_distinct_actors",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Patient shoes meet the floor and the two people have distinct faces, torsos and visible limbs; no outcome claim follows."
+    }
+  ],
+  "whole_case_status": "fail",
+  "failed_gate_ids": [
+    "B3_supported_step",
+    "A09_therapist_inside_walking_lane"
+  ],
+  "partial_is_fail": true,
+  "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+  "medical_topic_readability": "pass",
+  "reference_resemblance": "pass_qualitative",
+  "data_relation_outcome": "A09 bilateral rails and beside-patient relation survive; complete inside-lane placement remains partial, so full A09 case fails. E11 was not used and its absent walker/second-elbow-hand are not waived or claimed.",
+  "preflight_audit_status": "pass_with_nonblocking_coverage_warnings",
+  "native_qualification": "not_claimed; H-F2 sources native_approval=false",
+  "artistic_quality": {
+    "observation": "Cohesive warm clinical still. Skin, scrubs and metal have convincing light and texture, and the connected belt interaction gives the shared moment a purpose. Patient occupies the larger foreground silhouette while referenced therapist face is clear in the upper right; this places her relational presence second in the visual hierarchy.",
+    "limitation": "The independently chosen foot laterality and fully inside-lane placement did not both survive. Emotional support is a visible reading; first step, treatment outcome, diagnosis, credentials, consent and history are not established."
+  },
+  "control_calibration": {
+    "impression_before_labels": "A warm, attentive clinical assistance scene with a composed therapist and concentrated patient.",
+    "sensual_1": "Personal appeal reads as subtle face, posture and warm light; the clinical interaction remains dominant. This is reviewer perception, not measured intensity or acceptance.",
+    "fetish_0": "No added distinctive erotic focus is observed.",
+    "surreal_0": "The visible setting reads as ordinary physical rehabilitation.",
+    "creativity_1": "The final added only the source-informed shared-lane staging to the independent scene."
+  },
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "render_count": 1,
+  "retry": "none; exact single-call scope exhausted and no automatic repeat made"
+}

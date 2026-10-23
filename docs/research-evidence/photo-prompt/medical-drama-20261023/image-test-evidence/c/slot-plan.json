@@ -1,0 +1,134 @@
+{
+  "schema": "photo-slot-expression-plan/v1",
+  "core_sha256": "4c804e5fe4ca1530a8703ca382bb5bd4b75b817edba2d03a1e912c70b2ba047a",
+  "controls_sha256": "11c344f3eb26499a6347ff3354e59923a43d48c85ddd863a098665820468f6dd",
+  "catalog_spec_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "overall_intent": "A quiet routine blood-pressure recheck, with the referenced clinician's presence and mutual attention organized above a complete visible cuff-to-monitor connection. Search only the selected procedure, apparatus structure and performed interaction roles.",
+  "slots": {
+    "procedure_step": {
+      "status": "search",
+      "reason": "The selected measurement pause needs one coherent clinical stage.",
+      "expressive_goal": "Make the recheck legible as one calm moment while retaining attention between the people.",
+      "observable_targets": [
+        "Cuff fitted above elbow",
+        "Patient forearm supported palm-up",
+        "Clinician hand beside monitor"
+      ],
+      "owner_relations": [
+        "Cuff is around patient upper arm",
+        "Clinician leaves measuring arm undisturbed"
+      ],
+      "required_constraints": [
+        "Medical-drama photograph of a medical encounter",
+        "Central person uses the supplied face and hair appearance guidance"
+      ],
+      "preserved_choices": [
+        "Routine blood-pressure recheck selected independently"
+      ],
+      "open_scope": [
+        "Local timing and posture refinements within the encounter"
+      ],
+      "unknowns": [],
+      "role_focus": "A routine blood-pressure recheck in its quiet measuring stage: fitted upper-arm cuff, supported forearm, clinician pauses beside the monitor.",
+      "scene_context": "Two seated people in an outpatient consulting room; an attentive exchanged look accompanies the measurement.",
+      "language": "en",
+      "grounds": [
+        {
+          "source_pointer": "/event",
+          "start": 0,
+          "end": 22,
+          "quote": "Blood-pressure recheck",
+          "source_sha256": "6ab1acecc99c6098dceb130c81c249f0ebb8c14f28b0394aef4702c3d628b9b1"
+        }
+      ],
+      "review": {
+        "author": "Codex",
+        "rationale": "One still can show the fitted apparatus and waiting posture, without claiming a measured sequence, diagnosis or result."
+      }
+    },
+    "object_structure": {
+      "status": "search",
+      "reason": "The complete physical route is the main observable clinical relation.",
+      "expressive_goal": "Keep the cuff, flexible hose and monitor a visibly connected measuring arrangement.",
+      "observable_targets": [
+        "Cuff connector",
+        "One continuous hose",
+        "Monitor socket"
+      ],
+      "owner_relations": [
+        "Hose attaches cuff connector to monitor socket",
+        "Entire route stays separate from the clinician hand"
+      ],
+      "required_constraints": [
+        "Medical-drama photograph of a medical encounter",
+        "Central person uses the supplied face and hair appearance guidance"
+      ],
+      "preserved_choices": [
+        "Complete cuff-to-monitor route"
+      ],
+      "open_scope": [
+        "Small placement, curvature and contrast refinements"
+      ],
+      "unknowns": [],
+      "role_focus": "Upper-arm blood-pressure cuff joined through one continuous rubber hose to a digital monitor, with both physical joints readable in the same view.",
+      "scene_context": "Patient seated with supported forearm; apparatus on the table beneath the referenced clinician face.",
+      "language": "en",
+      "grounds": [
+        {
+          "source_pointer": "/event",
+          "start": 57,
+          "end": 90,
+          "quote": "cuff and monitor remain connected",
+          "source_sha256": "6ab1acecc99c6098dceb130c81c249f0ebb8c14f28b0394aef4702c3d628b9b1"
+        }
+      ],
+      "review": {
+        "author": "Codex",
+        "rationale": "This is non-anatomical apparatus geometry. The complete route, not a nearby monitor or an isolated cuff, carries the chosen scene relation."
+      }
+    },
+    "relational_action": {
+      "status": "search",
+      "reason": "The people need a visible relationship beyond shared room occupancy.",
+      "expressive_goal": "Make routine care feel attentive through directed mutual engagement around the measurement.",
+      "observable_targets": [
+        "Clinician face directed toward patient",
+        "Patient face directed toward clinician",
+        "Resting clinician hand beside monitor"
+      ],
+      "owner_relations": [
+        "Clinician and patient meet each other's attention",
+        "Medical apparatus belongs to their encounter"
+      ],
+      "required_constraints": [
+        "Medical-drama photograph of a medical encounter",
+        "Central person uses the supplied face and hair appearance guidance"
+      ],
+      "preserved_choices": [
+        "Two-person attentive pause"
+      ],
+      "open_scope": [
+        "Local facial expression and gesture refinement"
+      ],
+      "unknowns": [],
+      "role_focus": "Clinician and patient exchange an attentive look during a blood-pressure recheck; the clinician has finished arranging the cuff and rests an open hand beside the monitor.",
+      "scene_context": "A quiet routine outpatient encounter; patient forearm remains supported and undisturbed.",
+      "language": "en",
+      "grounds": [
+        {
+          "source_pointer": "/event",
+          "start": 30,
+          "end": 50,
+          "quote": "brief exchanged look",
+          "source_sha256": "6ab1acecc99c6098dceb130c81c249f0ebb8c14f28b0394aef4702c3d628b9b1"
+        }
+      ],
+      "review": {
+        "author": "Codex",
+        "rationale": "An exchanged look is the performed relation here. It should not become an invented touch, emergency, reassurance claim or clinical outcome."
+      }
+    }
+  },
+  "semantic_approval": false,
+  "canonical_sha256": "686412a349d98697e662ac2e51eed678eb3e162987a2174aac669d9e7ad16b22"
+}
