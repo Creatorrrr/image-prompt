@@ -1,0 +1,57 @@
+{
+  "schema": "espionage-selected-source-pixel-test/v1",
+  "selected_cid": "cand_e8f9f772b82355b7bbe1c2a949161eab",
+  "selection_lane": "h_f2_material_inspiration_only",
+  "native_chosen_candidate_ids": [],
+  "literal_source_en": "One person extends an envelope while the other person's open hand remains separated from it by a visible gap.",
+  "source_relations": [
+    {
+      "object": "envelope",
+      "relation": "holds",
+      "subject": "A.hand"
+    },
+    {
+      "object": "envelope",
+      "relation": "separated_from",
+      "subject": "B.hand"
+    }
+  ],
+  "frozen_owner_bindings": {
+    "A": "man/adjacent commuter already described in baseline",
+    "A.hand": "his right hand",
+    "B": "reference-guided woman",
+    "B.hand": "her left empty receiving hand",
+    "envelope": "small sealed cream envelope, local paper-carrier refinement"
+  },
+  "gates": [
+    {
+      "id": "esp_A_hand_holds_envelope",
+      "review_scale": "both",
+      "requirement": "The existing man's right hand visibly holds and extends the same readable envelope. Hand/wrist/forearm trace to his body."
+    },
+    {
+      "id": "esp_B_open_hand_empty",
+      "review_scale": "both",
+      "requirement": "The existing woman's left receiving hand is open and empty; wrist/forearm trace to her body and remain separate from her right bouquet hand."
+    },
+    {
+      "id": "esp_B_hand_separated_from_envelope",
+      "review_scale": "both",
+      "requirement": "A clear background gap separates her nearest fingertip/hand boundary from the same envelope's near edge; no touching, joint grip, substituted object or occlusion."
+    },
+    {
+      "id": "esp_whole_connected_state",
+      "review_scale": "both",
+      "requirement": "Both actors, the giver hand, open receiver hand, one envelope and the gap coexist with readable owner chains in one saved image."
+    }
+  ],
+  "rule": {
+    "partial_is_fail": true,
+    "unobservable_not_pass": true,
+    "claim_limit": "The pose is no proof of secrecy, hesitation, allegiance, envelope contents or successful communication."
+  },
+  "original_baseline_test_case": "../test-case.json",
+  "original_test_case_sha256": "9b8eb6c0cd3a15b37e8cdd6438f66118b46dc6358e55dcd2315aa36257e42a98",
+  "independent_original_case_is_preserved": true,
+  "additional_image_calls_authorized": 0
+}

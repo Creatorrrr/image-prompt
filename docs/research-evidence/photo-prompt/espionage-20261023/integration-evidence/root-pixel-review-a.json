@@ -1,0 +1,65 @@
+{
+  "reviewer": "root",
+  "method": "Direct inspection of saved original PNG via view_image(detail=original), compared with supplied portrait, original frozen test-case and selected full source literal before receiving arm pixel verdict.",
+  "image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/espionage-20261023-integration-a/exec/images/espionage-a-native-1.png",
+  "image_sha256": "639d805a13d2c1508ef40b31af337bbba423b9111ee0099391a97a9fa8281c4a",
+  "test_case": "generated/photo-runs/espionage-20261023-integration-a/test-case.json",
+  "gates": [
+    {
+      "id": "contact_transfer",
+      "observability": "visible",
+      "verdict": "FAIL",
+      "evidence": "The man alone grips the envelope. The woman holds an empty open palm with a clearly visible separation. The original criterion requires simultaneous two-owner contact on the same paper and is not met; the original criterion is retained."
+    },
+    {
+      "id": "clandestine_staging",
+      "observability": "partial",
+      "verdict": "FAIL",
+      "evidence": "Close public staging and divergent outward attention are clear. The original shared-contact handoff is instead a pre-contact offer; motive and secrecy cannot be inferred."
+    },
+    {
+      "id": "public_place",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "Flower buckets, wrapped bouquet, visible counter, commuter crowd and station departure board establish the intended public flower-stall/concourse setting."
+    },
+    {
+      "id": "reference_appearance",
+      "observability": "visible",
+      "verdict": "PASS",
+      "evidence": "Short dark bob, wispy bangs, dark eyes and soft face proportions follow the attached portrait broadly; no exact identity or age claim."
+    }
+  ],
+  "new_source_literal_review": {
+    "cid": "cand_e8f9f772b82355b7bbe1c2a949161eab",
+    "mode": "inspiration_only; exact complete English source sentence retained; native chosen lists empty",
+    "literal": "One person extends an envelope while the other person's open hand remains separated from it by a visible gap.",
+    "components": [
+      {
+        "id": "giver_owns_and_holds_envelope",
+        "observability": "visible",
+        "verdict": "PASS",
+        "evidence": "The cream envelope is held by the man’s fingers and his sleeve/forearm connects to the brown-coated body."
+      },
+      {
+        "id": "receiver_owns_open_empty_hand",
+        "observability": "visible",
+        "verdict": "PASS",
+        "evidence": "The woman’s open palm is empty and connects through the coat cuff and arm to her body."
+      },
+      {
+        "id": "same_envelope_visible_gap",
+        "observability": "visible",
+        "verdict": "PASS",
+        "evidence": "The envelope edge is distinctly above and apart from the woman’s palm and fingertips in the same view."
+      }
+    ],
+    "local_literal_pixel_result": "PASS",
+    "limits": "This supports the one complete selected visible realization. It is not formal whole-native source adoption/approval or qualification of the other 110 new visual candidates."
+  },
+  "whole_original_case": "FAIL",
+  "partial_is_fail": true,
+  "artistic_observation": "The adjacent bodies and separated gazes create a clear tense public encounter. Bouquet and station context connect well; a visible offered envelope gives the frame a specific moment. Intent, allegiance, envelope content and a future completed exchange remain unobservable.",
+  "user_acceptance": "pending",
+  "crosscheck_after_arm_review": "The arm also identified that the man’s eyes and upper head are outside the crop. Root confirms this in the original: head orientation is readable, but precise eye-line toward the departure board is not."
+}

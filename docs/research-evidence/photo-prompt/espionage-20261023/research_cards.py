@@ -1,0 +1,75 @@
+"""Authored scene/component proposals. No runtime IDs or native proof."""
+GROUPS = []
+def group(domain, sources, slots, limit, rows):
+    GROUPS.append((domain,sources,slots,limit,rows))
+
+group("exchange_and_documents", "S01,S05,S19,S20,S21", "relational_action,prop_state,contact_point",
+      "Appearance does not prove secrecy, authenticity, allegiance, authorization, a previous/later act or successful communication.", r"""
+direct_handoff|접선 중 직접 전달|Two separately traceable hands touch opposite edges of one envelope between two people.|두 사람에게 각각 이어지는 손이 두 사람 사이 봉투의 반대쪽 끝에 닿는다.|A.hand>contacts>envelope.edge1;B.hand>contacts>envelope.edge2|손 두 개의 소유자가 분리됨;같은 봉투의 양 끝 접촉이 함께 보임|데드 드롭;완료된 소유권 이전
+suspended_handoff|건네다 멈춘 손|One person extends an envelope while the other person's open hand remains separated from it by a visible gap.|한 사람이 봉투를 내밀고 다른 사람의 펼친 손과 봉투 사이에는 빈틈이 보인다.|A.hand>holds>envelope;B.hand>separated_from>envelope|보유한 손과 빈손 구별;봉투와 수신 손 사이 간격|이미 전달된 물건;망설임의 확정
+concealment_cavity|열린 은닉 물체|An opened everyday container exposes a distinct inner cavity holding a folded paper.|열린 일상 물건의 별도 안쪽 공간에 접힌 종이가 들어 있다.|container.cavity>contains>paper;container.lid>separated_from>container.body|일상 물건의 외곽;내부 공간과 종이의 경계|단순 옆에 놓인 종이;범죄 용도 확정
+drop_placement|무인 보관 위치에 놓기|A hand lowers a small packet into an open recess, with the packet edge and recess lip visible together.|손이 열린 홈 안에 작은 꾸러미를 내려놓으며 꾸러미 가장자리와 홈의 턱이 함께 보인다.|A.hand>holds>packet;packet>enters>recess|손-꾸러미 접촉;꾸러미와 홈의 입구|나중의 회수;직접 맞교환
+drop_spike|중공 스파이크 전시|A pointed container lies open beside its detached cap and a folded paper at the cavity mouth.|뾰족한 용기가 열려 있고 분리된 뚜껑과 접힌 종이가 입구 옆에 놓인다.|spike.cavity>opens_at>spike.mouth;cap>separated_from>spike|외형과 열린 입구;분리된 뚜껑|기능 절차 재현;정확한 박물관 복제
+pocket_litter|생활 흔적 소지품|A person's open case contains used tickets, a receipt and a creased card in separate compartments.|한 사람의 열린 케이스 속 칸에 사용 흔적이 있는 표와 영수증, 접힌 카드가 나뉘어 있다.|person.hand>holds>case;case>contains>tickets|한 소유자의 열린 케이스;구분되는 종이 물품|위조 확정;실제 경력이나 정체성
+identity_comparison|신분 자료 비교|Two differently named identity cards lie beside a separate portrait photograph, all within the same tabletop view.|이름이 다른 신분 카드 두 장과 별도의 인물 사진이 같은 탁자 위에 놓인다.|card1>beside>card2;photo>separate_from>card1|카드 두 장의 경계;요청된 경우에만 다른 이름의 판독|이중간첩의 증거;사진 속 인물과 현장 인물 동일시
+redaction|문서의 가림 영역|Opaque rectangular bars interrupt several lines of printed text on a bounded sheet.|경계가 분명한 종이 위 인쇄된 여러 줄의 일부를 불투명 직사각형이 가린다.|bars>occlude>sheet.text|종이 경계;문자 줄과 가림의 교차|검은 무늬;법적 등급이나 삭제 성공
+document_seal|봉인된 봉투|An unbroken adhesive seal bridges the envelope flap and body in one close view.|접착 봉인이 봉투 덮개와 몸체를 연속해서 잇는 부분이 가까이 보인다.|seal>bridges>envelope.flap;seal>bridges>envelope.body|봉인의 양쪽 접점;연속 표면|열람 이력 부재;위조 불가능성
+opened_flap|벌어진 봉투 덮개|An envelope flap is lifted away from the body with exposed adhesive fibers along its edge.|봉투 덮개가 몸체에서 벌어져 가장자리의 접착 섬유가 드러난다.|flap>separated_from>envelope.body;fibers>located_on>flap.edge|들린 덮개와 본체 분리;가장자리 섬유|몰래 개봉한 과정;다시 봉한 시간 순서
+number_pad|숫자열 패드|A small paper pad shows repeated columns of five-digit groups on its top sheet.|작은 종이 패드의 맨 위 장에 다섯 자리 숫자 묶음이 열을 이루어 보인다.|pad>supports>sheet;sheet>carries>number_groups|패드와 인쇄면 분리;요청된 숫자 묶음의 배열|일회용 사용 증명;난수나 해독 성공
+microdot_comparison|미세 점과 확대 매체|A tiny dot on a letter is linked by a thin line to a separately bounded magnified inset of miniature print.|편지 위 작은 점과 미세 인쇄를 확대한 별도 테두리 삽입 화면이 가는 선으로 연결된다.|letter.dot>linked_to>inset;inset>depicts>miniature_print|원본 점의 위치;확대 창의 테두리와 연결|방 안에 거대한 문자가 존재함;실제 촬영 단일 프레임
+analysis_comparison|분석 자료 비교|A seated person points between two separate reports with visibly different chart traces.|앉은 사람이 서로 다른 도표 선이 있는 보고서 두 장 사이를 가리킨다.|A.finger>points_toward>report1;report1>separate_from>report2|각 문서 경계;비교되는 서로 다른 흔적|교차검증 완료;내용의 진실이나 독립성
+source_chain_board|자료 출처 연결도|Three bounded document copies are linked by arrows that converge on one clearly marked origin card.|테두리가 있는 문서 복사본 세 개의 화살표가 하나의 출처 카드로 모인다.|doc1.arrow>points_to>origin;doc2.arrow>points_to>origin;doc3.arrow>points_to>origin|자료와 출처 카드 구분;화살표 종점|독립 출처 셋;순환 보고 실제 발생
+burn_bag|폐기 봉투에 담긴 종이|Printed sheets project from an open paper disposal bag on a desk.|탁자 위 열린 종이 폐기 봉투에서 인쇄된 종이들이 일부 나온다.|bag>contains>sheets;bag>rests_on>desk|봉투 입구와 종이 경계;종이의 일부가 내부에 위치|불타는 장면 의무;기밀 폐기 완료
+briefing_table|보고 테이블의 위치 관계|One standing participant faces two seated listeners across a table with one shared map.|서 있는 한 사람이 탁자 건너 앉은 두 사람을 마주하고 가운데 지도 한 장을 함께 본다.|speaker>faces>listener1;speaker>faces>listener2;map>rests_on>table|세 인물의 독립 몸;공유 지도와 시선 대상|직급 확정;안보 승인이나 동의
+threshold_departure|문턱의 이동 순간|A person's leading foot crosses a doorway threshold while a second person remains inside holding the door.|한 사람의 앞발이 문턱을 넘고 다른 사람은 안쪽에서 문을 잡고 있다.|A.foot>crosses>threshold;B.hand>contacts>door|문턱과 발의 교차;문의 손 접촉|탈출 성공;구조인지 강제 이동인지
+cash_envelope|현금과 봉투의 관계|Several banknotes extend from an envelope held by one person, apart from another person's hand.|한 사람이 든 봉투에서 지폐 여러 장이 나오며 다른 사람의 손과 떨어져 있다.|A.hand>holds>envelope;envelope>contains>banknotes|봉투와 지폐의 연결;서로 다른 손|뇌물;포섭 동기나 수락
+kompromat_display|사진을 제시하는 배치|One person holds a bounded photograph toward another person across a table.|한 사람이 탁자 건너 상대를 향해 테두리가 있는 사진을 들어 보인다.|A.hand>holds>photo;photo.face>oriented_toward>B|사진 매체 경계;제시 방향과 수신 인물|사진의 진위;협박·성행위·동의의 확정
+document_case|잠금장치 있는 서류 케이스|A rigid rectangular case opens on hinges, exposing its lining and a stack of papers inside.|단단한 직사각 케이스가 경첩을 중심으로 열려 안감과 내부 서류 더미가 보인다.|case.lid>hinged_to>case.body;case.body>contains>papers|경첩과 열린 내부;서류의 수납 상태|폭발물이나 무기 추정;소유자의 직업
+""")
+
+group("observation_devices", "S03,S06,S07,S08,S15", "prop,prop_placement,gaze_target",
+      "A visible device, indicator or image does not prove sound, transmission, recording, tracking, identity or covert intent.", r"""
+earpiece_contact|귀와 손과 이어피스|A fingertip touches the earpiece seated at the same person's ear opening.|손끝이 같은 사람의 귀 입구에 자리한 이어피스에 닿는다.|A.finger>contacts>earpiece;earpiece>seated_at>A.ear|손-팔-몸 소유자 연결;장치와 귀의 접점|귀 긁기;실제 통화나 지시 청취
+receiver_pose|수화기 청취 자세|One hand holds a telephone receiver with its upper end beside the same person's ear and lower end beside the mouth.|한 손이 수화기를 들고 위쪽은 같은 사람 귀 옆, 아래쪽은 입 옆에 놓인다.|A.hand>holds>receiver;receiver.upper>beside>A.ear;receiver.lower>beside>A.mouth|손과 얼굴의 소유자;양쪽 수화기 끝의 위치|시대가 다른 단말 혼합;들리는 대화
+button_lens|단추 위치의 렌즈|A small glass lens sits within one coat-button housing on the wearer's front.|착용자 코트 앞면의 단추형 하우징 하나 안에 작은 유리 렌즈가 자리한다.|lens>inside>button_housing;button_housing>attached_to>coat.front|하우징과 코트 부착;렌즈 경계가 읽히는 크기|평범한 단추 반사;정확한 F-21 작동
+watch_camera|손목시계형 카메라|A wrist-mounted round camera body shows a small lens and a strap continuing around the same wrist.|손목에 얹힌 둥근 카메라 몸체에 작은 렌즈가 있고 스트랩이 같은 손목을 감싼다.|lens>part_of>camera;camera.strap>encircles>A.wrist|렌즈와 몸체;스트랩과 손목의 연속성|시간 표시 기능;비밀 촬영 성공
+reel_console|릴 장치와 헤드폰|Two separate reels sit on a recorder while a cable runs from the recorder to worn headphones.|녹음기 위 별도 릴 두 개가 있고 케이블이 장치에서 착용한 헤드폰까지 이어진다.|reel1>mounted_on>recorder;cable>connects>headphones|릴과 장치 경계;장치에서 헤드폰까지 경로|테이프가 돈다는 시간 주장;도청된 음성
+monitor_boundary|감시 화면의 매체 경계|A person's small image appears inside a monitor bezel while the surrounding room remains separate.|모니터 테두리 안에 작은 인물 영상이 있고 주위 방은 별도 공간으로 보인다.|monitor.bezel>bounds>display;display>depicts>person_image|화면 테두리;영상 속 인물과 실내 인물 구분|실제 방에 인물이 중복됨;실시간 연결
+camera_target|렌즈가 향한 대상|A camera body and its lens axis face a separate person across the visible street space.|카메라 몸체와 렌즈 축이 보이는 거리 공간 건너 별도 인물을 향한다.|camera.lens_axis>points_toward>B;A.hand>holds>camera|장치와 대상 분리;렌즈 방향을 읽는 공간|떠다니는 시선 광선;실제 촬영 여부
+window_observer|창과 관찰자의 깊이|A person inside a dim room looks past the edge of a curtain toward a separate figure outside the window.|어두운 실내 인물이 커튼 가장자리 너머 창밖 별도 인물을 본다.|A.gaze>passes>curtain_edge;A>inside>window;B>outside>window|실내외 경계;관찰자와 대상의 다른 깊이|두 인물 합성;감시 의도의 확정
+mirror_attention|거울 속 대상에 향한 시선|A person's eyes turn toward a wall mirror containing a bounded reflection of another person behind them.|한 사람의 눈이 뒤쪽 다른 사람의 반사가 담긴 벽 거울을 향한다.|A.gaze>toward>mirror;mirror>reflects>B|거울 테두리;직접 인물과 대응 반사|얼굴 방향만의 설명;기하적으로 불가능한 반사
+tail_spacing|거리에 따른 두 인물 배치|Two separate walkers face the same direction with a clear stretch of pavement between them.|별도 보행자 두 명이 같은 방향을 향하고 둘 사이에 보도 구간이 보인다.|A>behind>B;A.foot>supported_by>pavement|보행 방향;독립 몸과 거리|미행의 동기;지속적으로 따라왔다는 이력
+concealed_device_view|가구 경계의 소형 장치|An opened furniture panel exposes a small wired device partly recessed inside the cavity.|열린 가구 패널 안 공간에 전선 달린 작은 장치가 일부 들어가 있다.|panel>opens_to>cavity;device>partly_inside>cavity|열린 패널과 공간;장치와 전선|도청·폭발 기능;설치 방법 전체
+""")
+
+group("body_gaze_and_hands", "S16,S08", "body_pose,hand_pose,gaze_direction,contact_point",
+      "Pose, direction and surface tension remain visible facts; emotion, intention, skill, trust and narrative history remain contextual.", r"""
+three_quarter|사선으로 선 몸|A standing person's torso turns partway from the camera, showing the front and one side of the jacket.|서 있는 인물의 몸통이 카메라에서 일부 돌아 재킷 앞면과 한쪽 옆면이 함께 보인다.|A.torso>turned_relative_to>camera|몸통 두 면;카메라 기준 회전|스리쿼터 길이 크롭;얼굴 각도와 몸통 각도 동일시
+profile|측면의 얼굴|The face is presented from the side, with one eye and a continuous nose-to-chin contour.|얼굴이 옆으로 보여 한쪽 눈과 코에서 턱까지 이어진 윤곽이 드러난다.|camera>views_side_of>A.face|단일 측면 윤곽;눈의 가시 상태|사선 얼굴;관찰 대상의 방향
+back_view|등을 향한 시점|The camera faces the person's back, showing the rear coat panels and nape.|카메라가 인물 등을 향해 코트 뒷판과 목덜미가 보인다.|camera>views_back_of>A|뒷판 구조;몸 앞뒤 구분|얼굴 익명성의 보장;떠난다는 시간
+contrapposto|한 다리에 체중을 둔 자세|One leg bears the standing body while the other knee relaxes, with opposed hip and shoulder tilt.|서 있는 몸이 한 다리에 실리고 반대 무릎은 이완되며 골반과 어깨 경사가 대응한다.|A.support_leg>supports>A.pelvis;A.free_leg>relaxed_relative_to>A.support_leg|지지 발과 바닥;골반·어깨 기울기|S자 실루엣만;양발 균등 지지
+s_curve|S자 윤곽|The body's visible outer contour bends in alternating directions through torso and hips.|몸통에서 골반까지 보이는 바깥 윤곽이 번갈아 굽는다.|A.contour>curves_through>A.torso;A.contour>curves_through>A.hips|연속된 윤곽;구부러진 영역 구분|체중 다리의 자동 지정;성격이나 성적 의도
+squared_stance|정면을 향한 상체|Both shoulders and the chest plane face the same opposing person.|양 어깨와 가슴 면이 같은 맞은편 인물을 향한다.|A.chest>faces>B;A.shoulders>aligned_toward>B|어깨·가슴 방향;상대 위치|카메라 정면과 혼동;권력의 확정
+wall_lean|벽에 기댄 어깨|One shoulder and upper back contact a wall while both feet remain on the floor.|한쪽 어깨와 등 윗부분이 벽에 닿고 양발은 바닥에 놓인다.|A.shoulder>contacts>wall;A.feet>supported_by>floor|어깨와 벽 접촉;발의 지지|벽 앞에 떠 있는 몸;피로 원인
+mid_stride|한 걸음 중간|One foot supports the walker while the other foot lifts forward, with the coat hem trailing behind.|보행자의 한 발은 지지하고 다른 발은 앞으로 들리며 코트 자락이 뒤로 남는다.|A.support_foot>contacts>ground;A.free_foot>ahead_of>A.pelvis|서로 다른 발 상태;지면 접촉|정지 자세의 속도 단정;이전 이동 경로
+upright_seated|등을 세워 앉기|A person's pelvis rests on a chair and the torso rises upright above it.|골반이 의자 좌판에 놓이고 몸통이 그 위로 곧게 선다.|A.pelvis>supported_by>chair.seat|골반과 좌판;몸통의 연속성|서 있는 몸의 겹침;충성이나 통제력
+crossed_legs|다리를 교차해 앉기|One thigh crosses over the other above the knees while the pelvis remains on the chair seat.|골반을 좌판에 둔 채 한쪽 허벅지가 다른 쪽 위를 무릎 부근에서 교차한다.|A.thigh1>crosses_over>A.thigh2;A.pelvis>supported_by>chair|두 다리의 몸 연결;교차 위치|꼬인 추가 다리;단순 발목 교차
+forward_lean|앞으로 기울인 상체|A seated torso inclines toward the table while the pelvis stays supported by the chair.|골반은 의자에 지지된 채 앉은 몸통이 탁자 쪽으로 기울어진다.|A.torso>inclines_toward>table;A.pelvis>supported_by>chair|좌판 지지;몸통과 탁자 간격|협박 의도;몸통이 탁자를 통과함
+crouch|낮게 웅크린 몸|Bent knees lower the pelvis close to the heels while both feet meet the ground.|굽힌 무릎이 골반을 발뒤꿈치 가까이 낮추고 양발이 땅에 닿는다.|A.knees>connected_upward_to>A.pelvis;A.knees>connected_downward_to>A.feet;A.feet>contacts>ground|무릎-골반-발 관절 사슬;지면 지지|무릎 꿇기와 자동 동의어;은신의 성공
+over_shoulder_glance|몸과 다른 방향으로 돌아본 고개|The torso faces forward while the head turns back above one shoulder.|몸통이 앞을 향한 채 고개가 한쪽 어깨 위로 뒤를 돌아본다.|A.head>turned_relative_to>A.torso|같은 몸의 목 연결;머리와 몸 방향 차이|오버숄더 숏;모든 반대 방향 시선
+sideways_glance|곁눈질|The face stays mostly forward while the visible pupils shift toward one side.|얼굴은 대체로 앞을 향하고 보이는 눈동자는 한쪽으로 치우친다.|A.pupils>offset_within>A.eyes|눈 흰자와 동공의 위치;얼굴 축 유지|얼굴 전체 회전;의심이나 거짓말
+offscreen_gaze|화면 밖 시선|A person's visible eyes point past one edge of the image without a depicted target.|인물의 보이는 눈이 화면 한쪽 바깥을 향하고 대상은 화면에 없다.|A.gaze>toward>frame_outside|눈 방향;화면 밖 종점 표기|보이지 않는 표적의 확정;카메라 응시
+downcast_gaze|아래쪽 시선|The eyes angle down toward a paper below the face.|눈이 얼굴 아래 놓인 종이 쪽으로 향한다.|A.gaze>toward>paper;paper>below>A.face|시선과 아래 종이;종이 소유자 분리|슬픔의 확정;고개만 숙임
+chin_down|턱을 낮춘 응시|The chin tilts down while the eyes lift toward a person ahead.|턱은 아래로 기울고 눈은 앞사람을 향해 올라간다.|A.chin>lowered_relative_to>A.neck;A.gaze>toward>B|턱의 각과 눈 방향 분리;앞사람 위치|아래만 보는 시선;적대감 확정
+listening_tilt|귀 쪽으로 기울인 고개|A head inclines slightly toward the side where a receiver is held.|수화기가 있는 쪽으로 고개가 조금 기울어진다.|A.head>tilts_toward>receiver|기울어진 머리;장치의 실제 위치|말소리의 존재;복종이나 수락
+restrained_smile|작은 입가 변화|The mouth corners lift slightly while the rest of the face remains comparatively still.|입꼬리만 조금 올라가고 얼굴의 다른 부분은 비교적 움직임이 적다.|A.mouth_corners>raised_relative_to>A.mouth_center|입가의 국소 변화;치아 노출 의무 없음|속마음·배신;미소가 없는 얼굴
+tense_jaw|긴장된 턱선|The lips press together and the jaw contour appears taut beneath the cheek.|입술이 맞닿고 볼 아래 턱선이 팽팽해 보인다.|A.upper_lip>contacts>A.lower_lip;A.jaw>beneath>A.cheek|입술 접촉;턱선의 국소 긴장|공포·분노의 확정;의학적 진단
+cuff_adjustment|소맷부리를 정리하는 손|One hand pinches the opposite sleeve cuff at the same wearer's wrist.|한 손이 같은 착용자의 반대쪽 손목 소맷부리를 집는다.|A.hand1>pinches>A.sleeve2.cuff;A.sleeve2.cuff>around>A.wrist2|양손의 소유자;손끝과 커프 접촉|다른 사람 소매 정리;커프링크스 착용 의무
+lapel_hold|라펠을 잡은 손|Fingers grip the folded lapel edge on the same wearer's jacket.|손가락이 같은 착용자의 재킷 접힌 라펠 가장자리를 잡는다.|A.hand>grips>A.jacket.lapel|라펠 접힘;손의 접점|셔츠 칼라;재킷 전체를 벗는 동작
+loose_tie|느슨한 넥타이 매듭|A hand holds the tie knot below an open collar, leaving a visible gap at the neck.|손이 열린 칼라 아래 넥타이 매듭을 잡아 목과 매듭 사이 간격이 보인다.|A.hand>holds>tie.knot;tie.knot>below>shirt.collar|매듭과 칼라 분리;접촉하는 손|이미 옷을 벗었다는 시간;친밀한 의도
+pocket_hand|주머니에 들어간 손|A forearm leads into a coat pocket opening with the hand partly enclosed by the pocket.|팔뚝이 코트 주머니 입구까지 이어지고 손 일부는 주머니에 들어가 있다.|A.forearm>continues_into>pocket; pocket>partly_encloses>A.hand|팔과 입구의 연결;포켓 경계|손 절단;숨긴 무기 추정
+folded_arms|가슴 앞에서 교차한 팔|Two forearms cross in front of the same person's chest with each elbow traceable to its shoulder.|같은 사람 가슴 앞에서 팔뚝 두 개가 교차하고 각 팔꿈치가 어깨로 이어진다.|A.forearm1>crosses>A.forearm2|각 팔의 연결;가슴 앞 깊이|소유자 뒤섞임;방어적 태도 확정
+glasses_adjustment|안경에 닿은 손|A fingertip touches the bridge of glasses resting on the same person's nose.|손끝이 같은 사람 코 위에 놓인 안경의 브리지에 닿는다.|A.finger>contacts>glasses.bridge;glasses>rests_on>A.nose|손끝과 브리지;안경과 얼굴의 배치|눈 찌르기;변장 증명
+glove_removal|장갑을 당기는 손|Bare fingers pull the cuff of a glove that still covers the other hand.|맨손가락이 다른 손을 아직 덮고 있는 장갑의 커프를 당긴다.|A.hand1>pulls>glove.cuff;glove>covers>A.hand2|맨손과 장갑 낀 손;당기는 접점|완전히 벗은 장갑;피부를 당김
+glass_stem|스템을 잡은 손|Fingers encircle the narrow stem below a glass bowl, keeping the bowl separate from the palm.|손가락이 잔 볼 아래 가는 스템을 감싸고 볼은 손바닥과 떨어져 있다.|A.fingers>grip>glass.stem;glass.bowl>above>glass.stem|스템의 연속성;손가락과 잔 소유자|유리 파손;음료 내용이나 약물
+""")

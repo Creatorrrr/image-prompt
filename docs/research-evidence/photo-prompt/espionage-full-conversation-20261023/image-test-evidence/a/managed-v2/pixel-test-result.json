@@ -1,0 +1,121 @@
+{
+  "schema": "photo-arm-pixel-test-result/v1",
+  "arm": "A",
+  "image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/espionage-full-20261023-a/managed-v2/result.png",
+  "original_image": "/Users/chasoik/.codex/generated_images/01a16923-4035-7eb0-bce7-c3d8f6d69b14/exec-eae080c2-0128-41ea-83ad-75aa0a4116e4.png",
+  "sha256": "6a9a08c4f5b56b59b90dfc9c0198c2d16b94616a5ffd627c8bc91a7cb7fa7d5f",
+  "native_dimensions": [
+    1024,
+    1536
+  ],
+  "inspected_scales": [
+    "native_original",
+    "unresampled_hands_coat_crop",
+    "whole_frame"
+  ],
+  "testcase": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/espionage-full-20261023-a/testcase.precore.json",
+  "component_gates": {
+    "wear_fiber_endpoint": {
+      "id": "wear_fiber_endpoint",
+      "requirement": "At least one visible frayed cuff boundary with separate loose fibers clearly attached to the cuff material, not disconnected specks.",
+      "endpoints": [
+        "coat sleeve",
+        "cuff edge",
+        "attached loose fibers"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "At image left, numerous pale free thread ends visibly continue from the same ragged cuff boundary into intact sleeve cloth. All three endpoints are present together. The side differs from the optional authorial left-cuff direction; the preregistered gate asks for at least one cuff."
+    },
+    "creasing_continuity": {
+      "id": "creasing_continuity",
+      "requirement": "Visible angular crease/ridge and trough crossing a coherent continuous front coat panel; must differ from mottled damage and cast wall shadow.",
+      "endpoints": [
+        "front coat panel",
+        "ridge",
+        "trough"
+      ],
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The front panel is continuous and has broad diagonal pale distressing marks, but a single diagonal raised bright ridge with its adjacent recessed dark trough cannot be distinguished from that flat abrasion/soil pattern. Elbow and waist folds do not supply the required front-panel crease. Partial fabric relief is not the full crease endpoint set."
+    },
+    "wet_weathering": {
+      "id": "wet_weathering",
+      "requirement": "Rain-darkened lower coat region and damp droplets visible on the same coat; dark color alone is insufficient.",
+      "endpoints": [
+        "coat cloth",
+        "dark wet region",
+        "water droplets"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Discrete water beads and localized dark wet spots sit on the lower front coat above the hem, visibly distinct from the drier upper cloth. Moisture is supported by droplets and bounded surface state, not black garment color alone."
+    },
+    "abrasion_boundary": {
+      "id": "abrasion_boundary",
+      "requirement": "Paler rubbed abrasion on the lapel edge with adjacent intact cloth establishing the difference.",
+      "endpoints": [
+        "lapel edge",
+        "abraded patch",
+        "adjacent intact cloth"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The lapel at image right has a pale rubbed/frayed border beside darker intact cloth on the same lapel and coat. The edge, worn patch and adjacent cloth remain visible together."
+    },
+    "scene_relation": {
+      "id": "scene_relation",
+      "requirement": "Person, worn coat, held sealed envelope and service-stair landing read as one coherent covert-return scene; the visible photograph supports tension but does not prove espionage identity.",
+      "endpoints": [
+        "reference-guided person",
+        "same coat",
+        "envelope",
+        "stair landing"
+      ],
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "One reference-guided woman wears the same affected coat, holds a sealed envelope beside a closed steel door, and directs attention toward the descending service stair. These present owners form a coherent guarded pause. The image supports a fictional espionage-like reading without proving a real spy identity, mission, actual cause or chronology."
+    }
+  },
+  "strict_component_result": "fail",
+  "rule": "Every required endpoint together; partial_is_fail; UNOBSERVABLE_NOT_PASS. No averaging with whole-scene or other arms.",
+  "managed_body_gate_result": "fail; contact-and-space target/hand-role mismatch",
+  "reference_guidance": {
+    "status": "pass_as_guidance",
+    "observability": "visible",
+    "evidence": "Short dark bob, separated bangs, soft facial outline and comparable broad eye/lip appearance visibly follow the supplied portrait. This is appearance guidance, not identity verification or exact landmark preservation. No age is inferred.",
+    "attachment_audit": "Original JPEG was actually supplied by referenced_image_paths; its exact SHA is in runtime request and manifest."
+  },
+  "whole_scene": {
+    "status": "coherent_with_limits",
+    "impression_before_control_labels": "A rain-damp, guarded figure in a heavily worn dark coat pauses with a sealed envelope at a stairwell door, under warm lamp and cool lower-stair light.",
+    "strengths": [
+      "The face and envelope organize attention while the stair and closed door make the pause understandable.",
+      "Coat fraying, localized rubbing and water beads have visible owners and do not read as disconnected decoration."
+    ],
+    "weaknesses": [
+      "Broad pale wear marks dominate the front panel and obscure whether a crease has ridge/trough relief.",
+      "The visible envelope grip exchanges the intended right-thumb seal-check emphasis for a two-handed hold."
+    ],
+    "genre_claim_limit": "A confidential-return or espionage-like impression is plausible; occupation, mission, intent, violence or actual preceding events are not established by pixels."
+  },
+  "controls": {
+    "technical_binding": "pass before invocation",
+    "perceived_expression": "Human presence is subtle and supports the guarded pause; no distinct added fetish or surreal treatment is apparent. Creativity 1 is an authoring level, not a pixel score.",
+    "requester_preference": "pending"
+  },
+  "new_source_pixel_proof": {
+    "new_cid": "cand_d5edfac258ee57d097318c5437b07269",
+    "exposed": true,
+    "native_selected": false,
+    "inspiration_retained": false,
+    "literal_final_evidence": null,
+    "pixel_status": "not_tested_as_adopted_source",
+    "reason": "The source requires two separated ragged coat edges and opaque lining through the gap. It was deliberately declined; the independent frayed cuff cannot be relabeled as that source success."
+  },
+  "overall_result": "FAIL",
+  "requester_acceptance": "pending",
+  "additional_image_calls": 0,
+  "actual_native_calls": 1,
+  "reviewed_at": "2026-10-23T15:17:08.944590+00:00"
+}

@@ -1,0 +1,77 @@
+{
+  "schema": "espionage-observable-boundary-regressions/v1",
+  "policy": {
+    "partial_is_fail": true,
+    "unobservable": "UNOBSERVABLE_NOT_PASS",
+    "blocked": "BLOCKED_UNSCORED"
+  },
+  "cases": [
+    {
+      "id": "fray-owner",
+      "positive": "Loose fibres remain directly attached to the cuff edge, with intact adjacent weave.",
+      "negative": "A detached bundle of string is merely near the sleeve.",
+      "must_reject_reason": "No fibre-to-cuff endpoint continuity."
+    },
+    {
+      "id": "wet-not-gloss-only",
+      "positive": "Wet/dry areas on the same opaque cloth plus distinct droplets.",
+      "negative": "Uniform shiny vinyl without a wet/dry boundary or droplets.",
+      "must_reject_reason": "Gloss alone does not establish the selected wet-cloth realization."
+    },
+    {
+      "id": "crease-not-stripe",
+      "positive": "Raised ridges and adjacent shadowed troughs on one sleeve.",
+      "negative": "Printed parallel stripes on flat cloth.",
+      "must_reject_reason": "No actual fold relief."
+    },
+    {
+      "id": "dutch-not-head",
+      "positive": "Room uprights and horizon tilt together relative to frame edges.",
+      "negative": "Actor tilts head while the room remains level.",
+      "must_reject_reason": "Pose and camera-frame axes differ."
+    },
+    {
+      "id": "cowboy-not-waist",
+      "positive": "Head to mid-thigh crop includes waist and hands.",
+      "negative": "Waist-up crop or full shoes below the knees.",
+      "must_reject_reason": "The required lower frame boundary differs."
+    },
+    {
+      "id": "occluder-not-shadow",
+      "positive": "Foreground door jamb overlaps the outer silhouette of a person behind.",
+      "negative": "Dark light stripe painted across the same body plane.",
+      "must_reject_reason": "No separate foreground owner and depth overlap."
+    },
+    {
+      "id": "ots-not-lookback",
+      "positive": "A near shoulder and head edge face a separate far person in focus.",
+      "negative": "A single person looks back over their own shoulder.",
+      "must_reject_reason": "Missing second person and camera/shoulder relation."
+    },
+    {
+      "id": "print-not-room",
+      "positive": "Contact sheet photos stay within paper while a real courtyard is beyond a separate window.",
+      "negative": "A photo-grid border becomes the room window or the printed subject becomes the physical observer.",
+      "must_reject_reason": "Carrier and represented-space owners have collapsed."
+    },
+    {
+      "id": "continuity-not-time-proof",
+      "positive": "Two separate printed photos have corresponding cuff and lapel marks.",
+      "negative": "One print or two mismatched locations, or the claim that matching proves shooting chronology.",
+      "must_reject_reason": "Missing comparison endpoint or unsupported temporal inference."
+    },
+    {
+      "id": "appearance-not-coercion",
+      "positive": "Record visible contacts and distances only.",
+      "negative": "Label consent, coercion, sextortion, loyalty, PTSD or institutional employment from clothing or pose.",
+      "must_reject_reason": "A nonvisual relationship or diagnosis has been inferred."
+    }
+  ],
+  "execution_scope": "Researcher semantic counterexample review; native source qualification and actual saved-image evaluations retain separate evidence. These are not parser-only assertions or additional image generations.",
+  "review": {
+    "reviewer": "coordinator",
+    "status": "10 intended positive/negative distinctions reviewed",
+    "native_approval": false,
+    "pixel_proof": false
+  }
+}

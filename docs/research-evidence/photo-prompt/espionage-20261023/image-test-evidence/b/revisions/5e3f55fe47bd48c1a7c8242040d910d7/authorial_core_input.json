@@ -1,0 +1,151 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "d20ba1b7622096501e6e3cff99de67c505d523b6704867a5c0aa54fa1792643a",
+  "interpreted_intent": "The actual prior user message resolves 이번에 반영한 주제 as espionage terminology. The current user asks for independent random photographic test concepts using the supplied image. The randomly selected authorial direction is an exhibition liaison at a museum conservation-preview reception: public professional behavior masks a paper transfer. This is fictional staging, not a claim about the reference person. A chamber-music event photographer and a planetarium interpreter were independently considered before the random museum draw. The museum version gives the viewer simultaneous access to a credible public role, an information-bearing exchange and the physical screen that hides it from the room. Reference use is face and short dark bob appearance guidance only; outfit, body, action, event and camera are authorial. Sensual 1 supports restrained personal magnetism through bearing, expression and tailored fabric; fetish 0 and surreal 0 add no treatment. Creativity 1 keeps later refinements local. The card must be several centimeters across at waist level, directly below the catalogue, in the same focal plane as both grips. Pixels can establish concealed-transfer staging, not the actors actual intent or institutional identity.",
+  "subject": "A reference-guided woman in an author-invented exhibition liaison role and one male guest at a museum event.",
+  "setting": "Museum conservation-preview reception beside a restored portrait and a controlled conservation-room doorway.",
+  "event": "A staged espionage moment: she passes one folded card to a guest beneath the open exhibition catalogue while maintaining a public greeting.",
+  "visual_priorities": [
+    "The reference-guided face and short bob retain distinctive appearance within an assured public host presence.",
+    "One folded card bridges the woman and guest grips in a visible gap below the open catalogue, connecting the covert act to its public screen.",
+    "The woman greets an approaching visitor while the guest follows the card with his eyes, making the split between public performance and hidden attention readable.",
+    "A restored portrait, formal guests and the roped conservation-room threshold establish the specific reception and why the liaison role belongs there."
+  ],
+  "baseline_prompt_en": "An espionage photograph of a woman guided by the supplied reference face and short dark bob, preserving the reference facial proportions, dark eyes, soft facial contours and wispy fringe. In this invented espionage moment, she is working as an exhibition liaison during a museum conservation-preview reception. Her ivory tailored waistcoat, black trousers and small staff badge belong naturally among the formally dressed visitors. Her restrained warmth and elegant upright bearing give her a quiet personal magnetism. The event takes place beside a recently restored large portrait, with a rope marking the threshold into a brighter conservation room and a uniformed attendant watching the public doorway. At the shutter she is completing a concealed paper transfer while appearing to explain an exhibition catalogue to a male guest. Her left hand holds the open catalogue level at her waist, its broad pages forming a shallow horizontal roof over their lower hands. In the clearly visible gap beneath the catalogue, her right thumb and index finger hold the upper edge of one folded cream card while the guest's left thumb and index finger take its lower edge. The same single card bridges both grips; the hands approach from opposite sides with clear separate wrists. He keeps his other hand on the visible catalogue page, sustaining their ordinary public interaction. Her head turns slightly toward an approaching visitor, a composed welcoming expression maintained while the guest's lowered eyes follow the card. The folded card and joined transfer are visible to the camera from the guest side, while the catalogue screens them from the room behind her. Make a horizontal three-quarter-length cinematic photograph from just below chest height, close enough that her face and the transfer occupy the two dominant areas of the frame. Keep both faces, the catalogue and the card-transfer hands in one readable focal region; let the restored painting, reception guests and controlled doorway remain recognizable behind them. Warm gallery light brushes her cheek and the ivory tailoring, with cooler conservation-room light beyond the rope. Natural skin texture, believable fabric weight and a quiet observational camera position convey the instant when a polished public role and a hidden exchange coexist.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The actual prior requesting-user message names 첩보물 용어 조사. General knowledge resolves this as espionage, including hidden information activity carried out behind a public role. The selected museum scene is agent-owned staging, not a user definition.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the actually viewed attached portrait as face and short dark bob appearance guidance. It supplies no real-world identity, biography, age, clothing or scene restrictions.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "espionage_topic",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "An espionage photograph"
+      },
+      {
+        "anchor_id": "reference_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a woman guided by the supplied reference face and short dark bob"
+      },
+      {
+        "anchor_id": "random_scene_event",
+        "source_text": "주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "this invented espionage moment"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "reference.face_and_hair",
+        "prompt_evidence": "preserving the reference facial proportions, dark eyes, soft facial contours and wispy fringe"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "supplied reference face and short dark bob"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "role",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "current_request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a woman guided by the supplied reference face and short dark bob"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "current_request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic editorial photography",
+    "family": "observational museum reception suspense",
+    "evidence": [
+      "warm gallery light and cooler conservation-room light",
+      "public catalogue gesture paired with a clearly connected lower-hand transfer"
+    ]
+  },
+  "variation_key": "independent-b-museum-liaison"
+}

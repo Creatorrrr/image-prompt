@@ -1,0 +1,115 @@
+{
+  "schema": "independent-strict-pixel-review/v1",
+  "arm": "C",
+  "case_id": "C_contact_sheet_window",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/espionage-full-20261023-c/results/contact-sheet-window.png",
+  "result_sha256": "bd4e244a321f3a0865f1666f9240af9a7cff339264399237142b27d875c9ff29",
+  "policy": [
+    "partial_is_fail",
+    "UNOBSERVABLE_NOT_PASS"
+  ],
+  "review_method": "Direct original full image at native resolution plus unresampled dossier/contact and window crops; no prior arm image used.",
+  "gates": [
+    {
+      "id": "C_record_carrier",
+      "status": "pass",
+      "observability": "visible",
+      "required_together": [
+        "open dossier supported on table",
+        "contact sheet four image cells separated by white gutters",
+        "paper edges distinct from dossier page",
+        "two clips visibly attach sheet to page"
+      ],
+      "observed": "The open bound dossier rests on the table. Its right page carries a distinct sheet with four rectangular black-and-white exposures and white gutters. The sheet outer edge and paper-over-page boundary are visible, with two metal clips at its upper edge fastening to the page.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence_files": [
+        "results/contact-sheet-window.png",
+        "inspection/record-contact-native-crop.png"
+      ]
+    },
+    {
+      "id": "C_representation_live_space",
+      "status": "pass",
+      "observability": "visible",
+      "required_together": [
+        "recognizable gate with diagonal crossbar depicted in paper exposures",
+        "actual gate with crossbar visible beyond real window",
+        "window sill and wall boundary distinct from sheet boundaries"
+      ],
+      "observed": "The contact-sheet exposures depict the iron gate with the diagonal crossbar. A separate actual iron gate and crossbar appear through a real timber window and deep stone wall reveal, beyond sill and glass mullion. Printed imagery stays bounded to the physical sheet; actual exterior occupies a different depth plane.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence_files": [
+        "results/contact-sheet-window.png",
+        "inspection/record-contact-native-crop.png",
+        "inspection/window-native-crop.png"
+      ],
+      "claim_limits": [
+        "Repeated appearance is not proof of identical actual location, identity, truth, date, prior event or causal history.",
+        "The umbrella-bearing figure is visibly inside one paper exposure; it is not a physical present participant."
+      ]
+    },
+    {
+      "id": "C_observer_contact",
+      "status": "fail",
+      "observability": "partial",
+      "required_together": [
+        "portrait-guided observer",
+        "owned left fingertips visibly touch lower white paper margin",
+        "connected wrist/forearm supported by table",
+        "gaze visibly directed toward courtyard window"
+      ],
+      "observed": "Portrait-guided observer, continuous wrist/forearm, supported file and gaze toward the window are visible. Her left fingertips meet the right-side paper border near the lower-right exposure. They do not meet the prescribed lower white margin. The generic contact survives, but the full frozen target-subregion test fails.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence_files": [
+        "results/contact-sheet-window.png",
+        "inspection/record-contact-native-crop.png"
+      ]
+    },
+    {
+      "id": "C_whole_read",
+      "status": "pass",
+      "observability": "visible",
+      "required_together": [
+        "observer, physical record and actual window seen together",
+        "paper representation and current real space remain distinguishable",
+        "dominant image reads as tense information comparison rather than isolated portrait"
+      ],
+      "observed": "The observer, bounded paper record and real courtyard window coexist in one coherent frame. Her gaze toward the live gate and the repeated gate images make an information-comparison situation readable. Face remains present but the sheet and actual window retain enough area to organize the scene.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence_files": [
+        "results/contact-sheet-window.png"
+      ]
+    }
+  ],
+  "reference_review": {
+    "status": "pass_as_appearance_guidance",
+    "observability": "visible",
+    "evidence": "The generated observer retains a dark chin-length bob, fine separated bangs and broadly similar facial appearance/proportions from the supplied portrait while changing gaze and photographic setting. This is appearance guidance assessment, not actual identity or age verification.",
+    "real_identity": "unscored",
+    "age": "unscored"
+  },
+  "whole_case_verdict": "FAIL",
+  "whole_case_reason": "C_observer_contact is only partially realized: wrong paper-margin target. Partial success in other gates cannot pass the complete testcase.",
+  "new_source_review": {
+    "candidate_id": "cand_5428bd31f718509aa5ed96737e2e97f6",
+    "exposed": true,
+    "native_adopted": false,
+    "inspiration_used": false,
+    "final_literal_evidence": null,
+    "source_pixel_verdict": "UNSCORED_NOT_ADOPTED",
+    "qualification_limit": "No claim that source registration, source exposure or this baseline image proves the new source whole-case. It was not rendered as a selected source."
+  },
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "no_additional_generation": true
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "photo-arm-pixel-test/v1",
+  "arm": "A",
+  "status": "precore_frozen_design_pending",
+  "concept": "archive_stair_return",
+  "topic_scope": "Visible wear, creasing and rain state on one continuous coat in a fictional espionage return scene. These surfaces do not prove a real event, intent, identity or cause.",
+  "component_gates": [
+    {
+      "id": "wear_fiber_endpoint",
+      "requirement": "At least one visible frayed cuff boundary with separate loose fibers clearly attached to the cuff material, not disconnected specks.",
+      "endpoints": [
+        "coat sleeve",
+        "cuff edge",
+        "attached loose fibers"
+      ]
+    },
+    {
+      "id": "creasing_continuity",
+      "requirement": "Visible angular crease/ridge and trough crossing a coherent continuous front coat panel; must differ from mottled damage and cast wall shadow.",
+      "endpoints": [
+        "front coat panel",
+        "ridge",
+        "trough"
+      ]
+    },
+    {
+      "id": "wet_weathering",
+      "requirement": "Rain-darkened lower coat region and damp droplets visible on the same coat; dark color alone is insufficient.",
+      "endpoints": [
+        "coat cloth",
+        "dark wet region",
+        "water droplets"
+      ]
+    },
+    {
+      "id": "abrasion_boundary",
+      "requirement": "Paler rubbed abrasion on the lapel edge with adjacent intact cloth establishing the difference.",
+      "endpoints": [
+        "lapel edge",
+        "abraded patch",
+        "adjacent intact cloth"
+      ]
+    },
+    {
+      "id": "scene_relation",
+      "requirement": "Person, worn coat, held sealed envelope and service-stair landing read as one coherent covert-return scene; the visible photograph supports tension but does not prove espionage identity.",
+      "endpoints": [
+        "reference-guided person",
+        "same coat",
+        "envelope",
+        "stair landing"
+      ]
+    }
+  ],
+  "all_components_rule": "Every endpoint must be visible together; partial_is_fail; UNOBSERVABLE_NOT_PASS",
+  "reference_gate": "Face/hair visible correspondence with original JPEG assessed as appearance guidance only; actual input attachment separately audited.",
+  "whole_scene_gate": "Independently assess hierarchy, legibility, moment and genre impression. This cannot repair a failed component gate.",
+  "acceptance": "pending_requester",
+  "image_call_limit": 1,
+  "created_at": "2026-10-23T14:22:42.619804+00:00"
+}

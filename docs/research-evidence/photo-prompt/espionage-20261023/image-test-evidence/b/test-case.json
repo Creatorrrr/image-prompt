@@ -1,0 +1,59 @@
+{
+  "test_id": "espionage-integration-b",
+  "independence": {
+    "precore_allowed_inputs": [
+      "current actual request",
+      "actual prior-user topic",
+      "actual attached portrait viewed directly",
+      "latest SKILL.md",
+      "exact named neutral precore files",
+      "general knowledge"
+    ],
+    "forbidden_inputs_not_read": [
+      "candidate packs",
+      "assets",
+      "references",
+      "scripts except permitted neutral status",
+      "research documents",
+      "existing outputs",
+      "other arms"
+    ],
+    "random_draw_artifact": "independent-concept-draw.json",
+    "freeze_before_retrieval": true
+  },
+  "concept": "Museum exhibition liaison public cover with catalogue-screened card transfer",
+  "observable_checks": [
+    {
+      "id": "cultural_event",
+      "pass_requires": "Museum portrait/conservation setting and reception guests are visible together.",
+      "failure": "Only generic luxury-room styling without a readable cultural event."
+    },
+    {
+      "id": "public_cover",
+      "pass_requires": "The woman visibly occupies an exhibition liaison-like staff role while interacting ordinarily with a guest through the open catalogue.",
+      "failure": "Generic evening guest, unrelated pose or isolated spy costume."
+    },
+    {
+      "id": "screened_transfer",
+      "pass_requires": "One folded card visibly connects her grip and the guest grip beneath the same open catalogue, and the catalogue lies between the transfer and the public room. All endpoints and the screening relation must be observable together.",
+      "failure": "Card missing, separate objects, noncontact hands, hidden transfer, or catalogue unrelated to the exchange. Partial is fail."
+    },
+    {
+      "id": "public_hidden_attention",
+      "pass_requires": "Her outward greeting and the guest card-directed attention are readable in the same moment.",
+      "failure": "Both simply pose for camera or no directed relation to the transfer."
+    },
+    {
+      "id": "reference_appearance",
+      "pass_requires": "Face shape, dark eyes, short dark bob and wispy fringe visibly resemble the supplied reference at a usable face scale.",
+      "failure": "Generic changed face, incompatible hair or face too small/hidden to assess."
+    },
+    {
+      "id": "embodiment",
+      "pass_requires": "Catalogue-holding hand, two transfer grips, separate wrists and the single card coexist plausibly.",
+      "failure": "Merged or impossible hand geometry invalidates the event."
+    }
+  ],
+  "interpretive_limit": "Pixels can support staged cover behavior and a concealed exchange. Actual espionage identity, motives, consent, prior event chronology and actual protected-room authorization remain unobservable.",
+  "status_rule": "PASS only if all focal observable checks are visible and satisfied; partial/unobservable is not pass. Prompt/audit/retrieval success does not prove pixels. User acceptance remains pending."
+}

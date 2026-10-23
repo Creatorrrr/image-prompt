@@ -1,0 +1,72 @@
+{
+  "schema": "photo-independent-theme-pixel-review/v1",
+  "test_id": "espionage-integration-b",
+  "reviewer": "Codex agent_predeclared_case",
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/espionage-20261023-integration-b/results/museum-liaison.png",
+    "sha256": "13da6593b02993bd6962b644ae810067e6161fbd9a75b260c6120d8025653af3",
+    "width": 1536,
+    "height": 1024
+  },
+  "viewed_scales": [
+    "original_native_1536x1024",
+    "unresampled_transfer_crop_740x400",
+    "unresampled_face_crop_500x500",
+    "whole_thumbnail_768x512"
+  ],
+  "predeclared_test_case": "test-case.json",
+  "gates": [
+    {
+      "id": "cultural_event",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The single frame shows formally dressed reception guests with drinks, a large framed painted portrait, museum staff, a red rope across a bright workroom entrance, and an easel/conservation activity beyond it. This supports the authored museum reception setting; exact event title/history is not asserted."
+    },
+    {
+      "id": "public_cover",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The woman wears a museum-style staff badge and discusses an open illustrated exhibition catalogue with the suited guest whose upper hand points at the printed picture. The visible public professional interaction coexists with the note below the catalogue. This is a staged public-role proxy, not proof of actual occupation/allegiance or deception."
+    },
+    {
+      "id": "screened_transfer",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "At native scale one cream folded paper card is continuous from the woman right-hand grip at its left end to the guest left-hand grip at its right end. Both wrists/owners are separate. The open catalogue forms the same broad horizontal layer above the card, screening the lower hands from the room behind her while the observer sees the card. The fold/doubled lower paper edge and all contact endpoints are visible in the unresampled transfer crop."
+    },
+    {
+      "id": "public_hidden_attention",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The woman face and pupils turn toward the suited man area; an outward greeting to a newly approaching third visitor is not clearly distinguishable. His eyes are lowered, but the catalogue illustration and lower card sit along the same broad downward direction, so a card-specific target cannot be established. The complete predeclared outward-greeting/card-attention split is not visible. A composed facial label cannot substitute for that missing relation."
+    },
+    {
+      "id": "reference_appearance",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The generated face preserves the reference soft facial contours, dark eyes, small tapered chin, short dark bob and separated wispy fringe. The face is large and sharply readable. This is a visual resemblance judgment at the allowed appearance scope, not identity or age proof."
+    },
+    {
+      "id": "embodiment",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The woman right arm reaches to her own right-hand card grip; the man left forearm joins the receiving hand. Her other forearm supports the catalogue from below, while his other hand points on the upper page. The same card lies between distinct grip edges in a real gap beneath the book. No material collision or merged third hand is observed."
+    }
+  ],
+  "whole_case_status": "FAIL",
+  "rule": "All predeclared focal gates must pass with visible observability; partial/unobservable cannot pass.",
+  "new_data_pipeline": {
+    "new_source_exposure": true,
+    "new_source_cid": "cand_f7ce8f05d63a57f387d77f4b29d65e9e",
+    "new_source_adopted": false,
+    "native_source_adoption": false,
+    "new_source_pixel_test": "NOT_ADOPTED_UNTESTED",
+    "limit": "The returned image tests the independent espionage direction with a generic existing color-material refinement. It cannot establish pixel realization or improvement from a new espionage candidate that was not selected."
+  },
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "image_calls": 1,
+  "regeneration": false
+}
