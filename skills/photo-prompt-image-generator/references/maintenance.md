@@ -186,3 +186,12 @@ routes, 49 context-only) and six advisory combinations. Garment construction,
 wearing state, limb ownership, physical support, directed contact, gaze,
 camera axes and depicted-media boundaries remain distinct. Routes do not
 make compound terms equivalent to a partial visual alternative.
+
+The [idol-fiction extension](idol-fiction-semantics.md) retains 325 advisory
+keyword routes, 120 complete optional bilingual visual realizations, 45
+positive-retrieval-excluded context diagnostics and 219 optional bindings.
+Actors, hands, garments, supports, audio devices, displays and represented
+figures retain separate owners and endpoints. Time, sound, success, skill,
+identity, consent, real romance and health are not inferred from still-image
+proxies. Nine topics retain additional-source holds. Registration, installed
+exposure, actual prompt use and saved-image quality remain separate results.
