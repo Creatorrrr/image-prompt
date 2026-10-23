@@ -1,0 +1,1300 @@
+{
+  "contract_version": "photo-validation-context/v1",
+  "pack_id": "af4983b492894b76",
+  "authorial_core": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+    "interpreted_intent": "The requester asks for a random palace-court concept using the supplied reference to test the newly integrated topic. Independently choose a Joseon Korean palace corridor waiting scene. Compared a grand seated ceremony with a small threshold pause; choose the latter because the woman, document and closed door create a readable unresolved moment at portrait scale. Face and short hair are visual reference cues only and establish neither identity, age nor personality. Sensual 1 supports appeal through poised gaze and soft daylight; fetish 0 and surreal 0 add no treatment. Creativity 1 permits restrained local refinement after retrieval. Court jacket, folded document, corridor, weather and exact camera are agent staging, not requester locks.",
+    "subject": "A reference-guided woman staged as a Korean palace court attendant",
+    "setting": "A roofed corridor beside a closed red lattice door in a Joseon-era royal residence",
+    "event": "A woman waits for a court audience while carrying a folded document on a tray",
+    "visual_priorities": [
+      "Her reference-guided face remains recognizable at the chosen portrait scale.",
+      "The woman, carried document and closed door make the wait visually intelligible.",
+      "Korean court clothing and palace construction create a coherent cultural setting."
+    ],
+    "baseline_prompt_en": "Create a cinematic historical-fashion photograph of a palace court scene in a Joseon-era Korean royal residence. A woman waits for a court audience beneath a covered corridor, standing just beside a closed red lattice door. Use the supplied image as the visual reference for her face and hair: preserve the soft oval facial contour, dark brown eyes, straight dark chin-length bob, and airy separated fringe. Her composed presence and direct, softly alert gaze carry a subtle personal attraction. She wears a deep crimson silk court jacket with a clean white collar over a full indigo skirt; the rich fabric has weight and quiet surface sheen. She supports a small dark lacquer tray level at her waist, one palm beneath each side, with one neatly folded ivory document lying at its center. Her eyes have turned toward the still-closed doorway while her body remains settled in place, making the short wait feel consequential. Damp courtyard paving beyond the corridor and a narrow strip of clearing morning sky suggest a rain shower has just passed. Dark timber columns, painted eave brackets, and a raised stone threshold establish the palace around her. Frame her from head to below the knees in a three-quarter view, placing her on the left and letting the red door occupy the right half. Keep her face, both supporting hands, tray, folded document, and the door latch legible together. Cool reflected daylight from the courtyard grazes the crimson silk and her cheek, while the interior corridor remains softly shaded. Photograph the texture of skin, woven silk, worn timber, and damp stone with believable depth and restrained colors. The waiting figure, carried document, and closed doorway form the entire dramatic relationship.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "이번에 반영한 주제",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "basis": "request_context",
+        "resolution": "The exact linked earlier user message names palace/court genre terminology; choose one concrete palace-court photograph as a test case.",
+        "sources": []
+      },
+      {
+        "term": "첨부한 이미지",
+        "source_text": "첨부한 이미지를 활용하여",
+        "basis": "request_context",
+        "resolution": "Use the supplied photograph for visible face and hair appearance. Neither identity, age nor character follows from the image.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "style": {
+      "domain": "photography",
+      "family": "restrained cinematic historical fashion portrait",
+      "evidence": [
+        "cool courtyard daylight",
+        "weighted silk and worn timber"
+      ]
+    },
+    "variation_key": "court-a-threshold-morning",
+    "request_binding": {
+      "contract_version": "photo-request-binding/v1",
+      "request_id": "court-palace-20261023-a",
+      "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+      "request_envelope_sha256": "98c7b83568772b56c7ff8c98609e4e7eb0b928d367092351891028376dfc5fcf",
+      "active_spans": [
+        {
+          "span_id": "topic",
+          "start": 76,
+          "end": 135,
+          "text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여"
+        },
+        {
+          "span_id": "reference",
+          "start": 149,
+          "end": 162,
+          "text": "첨부한 이미지를 활용하여"
+        }
+      ],
+      "input_inventory": {
+        "schema": "photo-request-input-inventory/v1",
+        "complete": true,
+        "items": [
+          {
+            "id": "request",
+            "kind": "request_text",
+            "sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c"
+          },
+          {
+            "id": "reference_photo",
+            "kind": "reference_image",
+            "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+          }
+        ]
+      },
+      "topic_context": {
+        "contract_version": "photo-request-topic-context/v1",
+        "links": [
+          {
+            "context_id": "palace_court_topic",
+            "active_span_id": "topic",
+            "request_quote": {
+              "start": 76,
+              "end": 86,
+              "text": "이번에 반영한 주제"
+            },
+            "source_message": {
+              "provenance": "requesting_user",
+              "locator": "current_conversation:previous_user_request",
+              "text": "[궁중물 용어 조사](chatgpt-conversation://6adb17fb-6238-83e8-a54e-d5e467110649) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘.",
+              "sha256": "80a1efd95e181af34879a8918d691c747c2b0b64969a5b3e2313b2fed17e0c9d"
+            },
+            "topic_quote": {
+              "start": 1,
+              "end": 10,
+              "text": "궁중물 용어 조사"
+            },
+            "review": {
+              "polarity": "positive_topic",
+              "rationale": "The prior human request names the palace/court topic. Research content and the assistant report do not supply pre-core details."
+            }
+          }
+        ],
+        "canonical_sha256": "4dbd6bc96bd45bb62bca2c87a617f4835d8fbcc0897294e027327198c4f4979c"
+      }
+    },
+    "runtime_forbidden_labels": [],
+    "creative_controls_sha256": "79a3977dae01a24081c7eeabb10249846f7b51a145b63e21633b21395fa1ad61",
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "court_concept",
+          "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+          "dimension": "concept",
+          "prompt_evidence": "a palace court scene"
+        },
+        {
+          "anchor_id": "court_subject",
+          "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+          "dimension": "subject",
+          "prompt_evidence": "A woman waits"
+        },
+        {
+          "anchor_id": "court_event",
+          "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+          "dimension": "event",
+          "prompt_evidence": "waits for a court audience"
+        },
+        {
+          "anchor_id": "reference_use",
+          "source_text": "첨부한 이미지를 활용하여",
+          "dimension": "reference_use",
+          "prompt_evidence": "Use the supplied image as the visual reference for her face and hair"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "event",
+        "reference_use"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "role",
+        "setting",
+        "pose",
+        "body_geometry",
+        "expression",
+        "action",
+        "framing",
+        "composition",
+        "lighting",
+        "camera",
+        "color",
+        "material",
+        "timing",
+        "atmosphere",
+        "style",
+        "relationship"
+      ],
+      "augmentation_policy": "open_dimensions_only_and_subordinate",
+      "material_change_policy": "rebuild_core_after_requester_input",
+      "candidate_revision_policy": "forbidden",
+      "canonical_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+      "lock_id": "e54161562f8bdd43"
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_category",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "reference"
+        ],
+        "axes": {
+          "subject_category": "human"
+        },
+        "evidence": {
+          "subject_phrase": "A woman waits"
+        },
+        "affected_dimensions": [
+          "subject"
+        ]
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "topic"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {},
+        "affected_dimensions": [
+          "camera"
+        ]
+      }
+    ],
+    "request_lineage": null,
+    "canonical_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+    "core_id": "8076c24f233f6856"
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request, including the depth of candidate-informed reconstruction after the independent baseline is frozen. It changes exploration and authorial reconstruction, not requester ownership or candidate-adoption quotas.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image. After retrieval, retain candidate-informed changes only when needed for faithful meaning, legibility or consistency; do not expand the scene merely to use material.",
+            "1": "Introduce restrained variations close to the requested direction. After retrieval, consider local additions, replacements or subtractions with a concrete expressive benefit, keeping the overall direction close to the request.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction. After retrieval, develop candidate-informed alternatives that reorganize connected authorial choices, including replacement and subtraction rather than only local additions.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving every requester requirement. After retrieval, actively develop whole-photograph reconstructions from that required meaning and compatible candidate material, substantially replacing agent-authored staging when it serves the requested freedom. Do not limit exploration to fixing the baseline or prescribe a minimum adoption count or rewrite percentage."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "95f5fa7261678299478de77adc2242eadad670b6a9aa2dce20423fb68ee189af",
+    "overrides": {},
+    "context": {
+      "subject_category": "human",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 7947697360673300655,
+    "controls": {
+      "sensual": {
+        "value": 1,
+        "source": "saved_setting"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "saved_setting"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "saved_setting"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "saved_setting"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 1,
+        "effective_intensity": 1,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "sensual_led",
+    "emphasis_resolution": {
+      "active": true,
+      "reason": "Effective sensual=1, fetish=0; the higher intensity leads."
+    },
+    "authoring_brief": "sensual: 1 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: This expression is a subtle supporting quality.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request, including the depth of candidate-informed reconstruction after the independent baseline is frozen. It changes exploration and authorial reconstruction, not requester ownership or candidate-adoption quotas.\nLevel: Introduce restrained variations close to the requested direction. After retrieval, consider local additions, replacements or subtractions with a concrete expressive benefit, keeping the overall direction close to the request.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: sensual_led\nResolution: Effective sensual=1, fetish=0; the higher intensity leads.\nEffective meaning: Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "79a3977dae01a24081c7eeabb10249846f7b51a145b63e21633b21395fa1ad61"
+  },
+  "provenance": {
+    "generator_version": "2026.10.1",
+    "seed": 0,
+    "batch_index": 0,
+    "selection_mode": "core_bm25f",
+    "tags_hash": "b3ff5e4ca1fcc56b6ce532f8a3c9d91eb0f8fad393a45c873fdc6039ec81811b",
+    "concept_lock": [
+      "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "첨부한 이미지를 활용하여"
+    ],
+    "additional_requirements": [],
+    "reference_edit_mode": "off",
+    "likeness_mode": "off",
+    "creative_controls": {
+      "contract_version": "photo-creative-controls/v4",
+      "provenance": "resolved_precore",
+      "source_request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+      "definitions": {
+        "contract_version": "photo-creative-control-definitions/v4",
+        "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+        "controls": {
+          "sensual": {
+            "type": "integer",
+            "range": [
+              0,
+              3
+            ],
+            "default": 1,
+            "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+            "levels": {
+              "0": "No added sensual treatment; preserve explicitly requested content.",
+              "1": "This expression is a subtle supporting quality.",
+              "2": "This expression is clearly readable in the image.",
+              "3": "This expression leads the image's appeal and direction."
+            }
+          },
+          "fetish": {
+            "type": "integer",
+            "range": [
+              0,
+              3
+            ],
+            "default": 0,
+            "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+            "levels": {
+              "0": "No added fetish treatment; preserve explicitly requested content.",
+              "1": "This focus is a subtle supporting quality.",
+              "2": "This focus is clearly readable in the image.",
+              "3": "This focus leads the image's appeal and direction."
+            }
+          },
+          "adult_appeal_emphasis": {
+            "type": "enum",
+            "choices": [
+              "auto",
+              "sensual_led",
+              "balanced",
+              "fetish_led"
+            ],
+            "default": "auto",
+            "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+            "choice_descriptions": {
+              "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+              "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+              "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+              "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+            }
+          },
+          "creativity": {
+            "type": "integer",
+            "range": [
+              0,
+              3
+            ],
+            "default": 1,
+            "definition": "Freedom to interpret unspecified choices and explore relationships within the request, including the depth of candidate-informed reconstruction after the independent baseline is frozen. It changes exploration and authorial reconstruction, not requester ownership or candidate-adoption quotas.",
+            "levels": {
+              "0": "Realize the request directly, filling only what is needed for a coherent image. After retrieval, retain candidate-informed changes only when needed for faithful meaning, legibility or consistency; do not expand the scene merely to use material.",
+              "1": "Introduce restrained variations close to the requested direction. After retrieval, consider local additions, replacements or subtractions with a concrete expressive benefit, keeping the overall direction close to the request.",
+              "2": "Actively reinterpret open choices into a coherent authorial direction. After retrieval, develop candidate-informed alternatives that reorganize connected authorial choices, including replacement and subtraction rather than only local additions.",
+              "3": "Boldly explore unexpected relationships and interpretations while preserving every requester requirement. After retrieval, actively develop whole-photograph reconstructions from that required meaning and compatible candidate material, substantially replacing agent-authored staging when it serves the requested freedom. Do not limit exploration to fixing the baseline or prescribe a minimum adoption count or rewrite percentage."
+            }
+          },
+          "viewer_experience": {
+            "type": "boolean",
+            "default": false,
+            "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+          },
+          "reference_edit_mode": {
+            "type": "enum",
+            "choices": [
+              "off",
+              "identity",
+              "younger_self",
+              "brand_board"
+            ],
+            "default": "off",
+            "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+          },
+          "surreal": {
+            "type": "integer",
+            "range": [
+              0,
+              3
+            ],
+            "default": 0,
+            "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+            "levels": {
+              "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+              "1": "Surreal qualities are a subtle supporting presence.",
+              "2": "Surreal qualities are clearly readable in the image.",
+              "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+            }
+          },
+          "trend_layer": {
+            "type": "enum",
+            "choices": [
+              "off",
+              "scrapbook_collage",
+              "action_figure_packaging",
+              "retro_flash",
+              "clean_brand_portrait"
+            ],
+            "default": "off",
+            "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+          }
+        }
+      },
+      "definitions_sha256": "95f5fa7261678299478de77adc2242eadad670b6a9aa2dce20423fb68ee189af",
+      "overrides": {},
+      "context": {
+        "subject_category": "human",
+        "no_people": false,
+        "explicit_nonsexual": false
+      },
+      "seed": 7947697360673300655,
+      "controls": {
+        "sensual": {
+          "value": 1,
+          "source": "saved_setting"
+        },
+        "fetish": {
+          "value": 0,
+          "source": "saved_setting"
+        },
+        "adult_appeal_emphasis": {
+          "value": "auto",
+          "source": "saved_setting"
+        },
+        "creativity": {
+          "value": 1,
+          "source": "saved_setting"
+        },
+        "viewer_experience": {
+          "value": false,
+          "source": "saved_setting"
+        },
+        "reference_edit_mode": {
+          "value": "off",
+          "source": "saved_setting"
+        },
+        "surreal": {
+          "value": 0,
+          "source": "saved_setting"
+        },
+        "trend_layer": {
+          "value": "off",
+          "source": "saved_setting"
+        }
+      },
+      "adult_appeal": {
+        "sensual": {
+          "requested_intensity": 1,
+          "effective_intensity": 1,
+          "reason": "eligible"
+        },
+        "fetish": {
+          "requested_intensity": 0,
+          "effective_intensity": 0,
+          "reason": "eligible"
+        }
+      },
+      "resolved_emphasis": "sensual_led",
+      "emphasis_resolution": {
+        "active": true,
+        "reason": "Effective sensual=1, fetish=0; the higher intensity leads."
+      },
+      "authoring_brief": "sensual: 1 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: This expression is a subtle supporting quality.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request, including the depth of candidate-informed reconstruction after the independent baseline is frozen. It changes exploration and authorial reconstruction, not requester ownership or candidate-adoption quotas.\nLevel: Introduce restrained variations close to the requested direction. After retrieval, consider local additions, replacements or subtractions with a concrete expressive benefit, keeping the overall direction close to the request.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: sensual_led\nResolution: Effective sensual=1, fetish=0; the higher intensity leads.\nEffective meaning: Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+      "canonical_sha256": "79a3977dae01a24081c7eeabb10249846f7b51a145b63e21633b21395fa1ad61"
+    },
+    "creative_control_runtime": {
+      "sensual": 1,
+      "fetish": 0,
+      "adult_appeal_emphasis": "sensual_led",
+      "creativity": 1,
+      "viewer_experience": false,
+      "reference_edit_mode": "off",
+      "surreal": 0,
+      "trend_layer": "off",
+      "sensual_intensity": 1,
+      "fetish_intensity": 0
+    },
+    "creativity": 1,
+    "retrieval_query": {
+      "contract_version": "photo-retrieval-query-provenance/v2",
+      "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+      "source_request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+      "source_fields": [
+        "source_request_scope",
+        "source_request_scope",
+        "request_topic_context",
+        "interpreted_intent",
+        "subject",
+        "setting",
+        "event",
+        "visual_priority",
+        "visual_priority",
+        "visual_priority",
+        "baseline_prompt_en",
+        "interpretation_resolution",
+        "interpretation_resolution",
+        "style_domain",
+        "style_family",
+        "style_evidence",
+        "style_evidence"
+      ],
+      "query_sha256": "052f63281cf9fb3a37bd45a3a503af8f44a25e68db107c5d06a75af351c21d0a",
+      "redacted_source_fields": [],
+      "excluded_term_count": 0,
+      "exclusions_used_as_positive_query": false,
+      "request_envelope_sha256": "98c7b83568772b56c7ff8c98609e4e7eb0b928d367092351891028376dfc5fcf",
+      "active_scope_sha256": "db6f864d264c7215191c59b617fa302a35e82f9a9584b675f6b56e62681c4088",
+      "source_intent_lock_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+      "runtime_forbidden_label_count": 0,
+      "topic_context_sha256": "4dbd6bc96bd45bb62bca2c87a617f4835d8fbcc0897294e027327198c4f4979c"
+    },
+    "embodiment_preflight_required": true
+  },
+  "global_retrieval": {
+    "contract_version": "photo-validation-source/v1",
+    "corpus_sha256": "b3ff5e4ca1fcc56b6ce532f8a3c9d91eb0f8fad393a45c873fdc6039ec81811b",
+    "core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+    "controls_sha256": "79a3977dae01a24081c7eeabb10249846f7b51a145b63e21633b21395fa1ad61",
+    "canonical_sha256": "4d5f3debe85119690ba60c9842856fa323e873853c10db71742a115bc54510dc"
+  },
+  "negative_en": null,
+  "negative_intent_guard": {
+    "contract_version": "photo-negative-intent-guard/v1",
+    "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+    "source_intent_lock_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+    "positive_prompt_policy": "positive_description_only_no_blanket_negative_directives",
+    "automatic_negative_policy": "intent_neutral_photographic_defects_only",
+    "requester_exclusion_policy": "exact_active_request_scope_only",
+    "platform_safety_policy": "enforce_outside_prompt_unless_requester_explicit",
+    "local_boundary_policy": "positive_geometry_or_visible_state",
+    "identity_preservation_enabled": false,
+    "explicit_user_exclusions": [],
+    "emitted_terms": [],
+    "canonical_sha256": "5d667db783e92081ff2200a167cc693cf758daf12bf8f174dfcf67b6dfd8fc9c",
+    "guard_id": "5d667db783e92081"
+  },
+  "embodiment_preflight": {
+    "contract_version": "photo-embodiment-preflight/v1",
+    "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+    "source_intent_lock_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+    "baseline_review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_prepack",
+      "prompt_sha256": "9a840a990c165769a7160d6e17cd21aabd6fd95f4b5a63eafad5c6237519e73a",
+      "scope": "body_action",
+      "summary": "An upright human figure supports a small level tray at waist height; body, forearms, palms and document can coexist visibly in a three-quarter portrait.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "The one depicted woman owns the two hands supporting her tray; there is a single human carrier.",
+          "prompt_evidence": [
+            "She supports a small dark lacquer tray level at her waist, one palm beneath each side"
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "Both hands act close to waist level with elbows naturally flexed; the tray fits between two forearms without crossed ownership.",
+          "prompt_evidence": [
+            "She supports a small dark lacquer tray level at her waist, one palm beneath each side"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "A standing upright body carries a small level tray near its center of mass on the solid palace corridor floor.",
+          "prompt_evidence": [
+            "standing just beside a closed red lattice door",
+            "her body remains settled in place"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "Each palm contacts the underside of its own tray side; the document lies on the tray rather than occupying either hand.",
+          "prompt_evidence": [
+            "one palm beneath each side",
+            "one neatly folded ivory document lying at its center"
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "The head-to-below-knees three-quarter view includes both hand-to-tray contacts and keeps the doorway separate beside her.",
+          "prompt_evidence": [
+            "Frame her from head to below the knees in a three-quarter view",
+            "Keep her face, both supporting hands, tray, folded document, and the door latch legible together"
+          ]
+        }
+      }
+    },
+    "required_checks": [
+      "body_ownership",
+      "joint_chain_and_reach",
+      "support_and_balance",
+      "contact_and_space",
+      "visibility_and_projection"
+    ],
+    "boundary": "Agent review with literal actuation and exact text binding; not a kinematic proof or pixel judgment.",
+    "canonical_sha256": "d59303fe45f3ee6722816f9908f179729cf8ed705faf1f18c70e35f7be4c54b0"
+  },
+  "mandatory_intents": [
+    {
+      "text": "a palace court scene",
+      "source": "concept_lock",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "a palace court scene"
+      ]
+    },
+    {
+      "text": "A woman waits",
+      "source": "concept_lock",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "A woman waits"
+      ]
+    },
+    {
+      "text": "waits for a court audience",
+      "source": "concept_lock",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "waits for a court audience"
+      ]
+    },
+    {
+      "text": "Use the supplied image as the visual reference for her face and hair",
+      "source": "concept_lock",
+      "source_text": "첨부한 이미지를 활용하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "Use the supplied image as the visual reference for her face and hair"
+      ]
+    }
+  ],
+  "uncovered_intents": [
+    {
+      "text": "a palace court scene",
+      "source": "concept_lock",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "a palace court scene"
+      ]
+    },
+    {
+      "text": "A woman waits",
+      "source": "concept_lock",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "A woman waits"
+      ]
+    },
+    {
+      "text": "waits for a court audience",
+      "source": "concept_lock",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "waits for a court audience"
+      ]
+    },
+    {
+      "text": "Use the supplied image as the visual reference for her face and hair",
+      "source": "concept_lock",
+      "source_text": "첨부한 이미지를 활용하여",
+      "status": "uncovered",
+      "covered_by": [],
+      "audit_terms": [
+        "Use the supplied image as the visual reference for her face and hair"
+      ]
+    }
+  ],
+  "intent_contract": [
+    {
+      "id": "intent:4285188856c6",
+      "text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "source": "concept_lock",
+      "polarity": "required",
+      "priority": "critical",
+      "axis_hints": [
+        "domain:portrait"
+      ],
+      "constraints": [],
+      "coverage_mode": "literal_or_asserted_translation",
+      "status": "uncovered",
+      "covered_by": []
+    },
+    {
+      "id": "intent:c6d634161a1b",
+      "text": "첨부한 이미지를 활용하여",
+      "source": "concept_lock",
+      "polarity": "required",
+      "priority": "critical",
+      "axis_hints": [
+        "domain:portrait"
+      ],
+      "constraints": [],
+      "coverage_mode": "literal_or_asserted_translation",
+      "status": "uncovered",
+      "covered_by": []
+    },
+    {
+      "id": "intent:07e010cbca16",
+      "text": "The requester asks for a random palace-court concept using the supplied reference to test the newly integrated topic. Independently choose a Joseon Korean palace corridor waiting scene. Compared a grand seated ceremony with a small threshold pause; choose the latter because the woman, document and closed door create a readable unresolved moment at portrait scale. Face and short hair are visual reference cues only and establish neither identity, age nor personality. Sensual 1 supports appeal through poised gaze and soft daylight; fetish 0 and surreal 0 add no treatment. Creativity 1 permits restrained local refinement after retrieval. Court jacket, folded document, corridor, weather and exact camera are agent staging, not requester locks.",
+      "source": "authorial_core_interpretation",
+      "polarity": "advisory",
+      "priority": "critical",
+      "axis_hints": [
+        "domain:portrait"
+      ],
+      "constraints": [],
+      "coverage_mode": "literal_or_asserted_translation",
+      "status": "uncovered",
+      "covered_by": []
+    },
+    {
+      "id": "intent:39de1ab33281",
+      "text": "Create a cinematic historical-fashion photograph of a palace court scene in a Joseon-era Korean royal residence. A woman waits for a court audience beneath a covered corridor, standing just beside a closed red lattice door. Use the supplied image as the visual reference for her face and hair: preserve the soft oval facial contour, dark brown eyes, straight dark chin-length bob, and airy separated fringe. Her composed presence and direct, softly alert gaze carry a subtle personal attraction. She wears a deep crimson silk court jacket with a clean white collar over a full indigo skirt; the rich fabric has weight and quiet surface sheen. She supports a small dark lacquer tray level at her waist, one palm beneath each side, with one neatly folded ivory document lying at its center. Her eyes have turned toward the still-closed doorway while her body remains settled in place, making the short wait feel consequential. Damp courtyard paving beyond the corridor and a narrow strip of clearing morning sky suggest a rain shower has just passed. Dark timber columns, painted eave brackets, and a raised stone threshold establish the palace around her. Frame her from head to below the knees in a three-quarter view, placing her on the left and letting the red door occupy the right half. Keep her face, both supporting hands, tray, folded document, and the door latch legible together. Cool reflected daylight from the courtyard grazes the crimson silk and her cheek, while the interior corridor remains softly shaded. Photograph the texture of skin, woven silk, worn timber, and damp stone with believable depth and restrained colors. The waiting figure, carried document, and closed doorway form the entire dramatic relationship.",
+      "source": "authorial_core_baseline",
+      "polarity": "advisory",
+      "priority": "support",
+      "axis_hints": [
+        "domain:portrait"
+      ],
+      "constraints": [],
+      "coverage_mode": "literal_or_asserted_translation",
+      "status": "uncovered",
+      "covered_by": []
+    }
+  ],
+  "coverage": {
+    "intent_constraints": {
+      "no_people": false,
+      "subject_categories": [
+        "human"
+      ],
+      "domains": [
+        "portrait"
+      ],
+      "character_response": {
+        "contract_version": "photo-character-response/v1",
+        "enabled": false,
+        "reason": "no_required_typed_assertion",
+        "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593"
+      },
+      "matched": [
+        {
+          "axis": "domain",
+          "value": "portrait",
+          "aliases": [
+            "portrait"
+          ]
+        }
+      ],
+      "source_text_count": 11,
+      "routing_input": "authorial_core_typed_semantics"
+    }
+  },
+  "safety": {
+    "mode": "automatic",
+    "evaluation_requested": false,
+    "status": "pass",
+    "requires_user_approval": false,
+    "items": []
+  },
+  "authorial_composition": {
+    "enabled": true,
+    "prompt_budget": {
+      "contract_version": "photo-authorial-prompt-budget/v3",
+      "language": "en",
+      "minimum_words": 48,
+      "recommended_maximum_words": 720,
+      "absolute_maximum_words": 1280,
+      "required_evidence_headroom_words": 320,
+      "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
+      "policy": {
+        "recommended_maximum_is_warning": true,
+        "absolute_bounds_are_blocking": true,
+        "required_evidence_expands_advisory_ceiling": true,
+        "requester_meaning_outranks_concision": true,
+        "scene_coherence_outranks_concision": true
+      }
+    },
+    "authorship_policy": {
+      "contract_version": "photo-authorial-authorship-policy/v2",
+      "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+      "source_intent_lock_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+      "allowed_dimensions": [
+        "appearance",
+        "role",
+        "setting",
+        "pose",
+        "body_geometry",
+        "expression",
+        "action",
+        "framing",
+        "composition",
+        "lighting",
+        "camera",
+        "color",
+        "material",
+        "timing",
+        "atmosphere",
+        "style",
+        "relationship"
+      ],
+      "minimum_authorial_decisions": 0,
+      "minimum_preserved_evidence_phrases": 0,
+      "dimension_policy": "distinct_open_dimensions_only",
+      "insufficient_freedom_policy": "do_not_invent_open_dimensions",
+      "canonical_sha256": "0246f9e52092ce9d66652edc5c4c6a082ecae1e7dba4002cb84f3cdc8f0ef23f"
+    },
+    "core_binding_contract": {
+      "composed_field": "authorial_core_binding",
+      "minimum_preserved_evidence_phrases": 0,
+      "minimum_authorial_decisions": 0,
+      "evidence_must_be_literal_in_baseline_and_final_prompt": true,
+      "source_intent_lock_sha256_required": true,
+      "all_semantic_anchor_ids_required": true,
+      "authorial_decisions_limited_to_open_dimensions": true,
+      "contract_version": "photo-authorial-core-binding/v3",
+      "source_authorship_policy_sha256": "0246f9e52092ce9d66652edc5c4c6a082ecae1e7dba4002cb84f3cdc8f0ef23f"
+    }
+  },
+  "intent_preservation": {
+    "contract_version": "photo-intent-preservation/v1",
+    "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+    "source_intent_lock_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+    "priority_order": [
+      "requesting_user_definition",
+      "requesting_user_semantic_anchor",
+      "requesting_user_modifier_or_exclusion",
+      "agent_prepack_interpretation",
+      "creative_augmentation"
+    ],
+    "required_anchor_ids": [
+      "court_concept",
+      "court_subject",
+      "court_event",
+      "reference_use"
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "role",
+      "setting",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "style",
+      "relationship"
+    ],
+    "material_change_action": "stop_and_rebuild_core_after_requester_input",
+    "creative_change_boundary": "open_dimensions_only_and_subordinate"
+  },
+  "adult_appeal": {
+    "enabled": true,
+    "requested_enabled": true,
+    "contract_version": "photo-adult-appeal/v2",
+    "activation_source": "precore_controls",
+    "eligibility": {
+      "status": "eligible",
+      "reason": "resolved_precore_context",
+      "axis_reasons": {
+        "sensual": "eligible",
+        "fetish": "eligible"
+      },
+      "subject_category": "human"
+    },
+    "defaults": {
+      "sensual_intensity": 1,
+      "fetish_intensity": 0,
+      "emphasis": "sensual_led"
+    },
+    "axes": {
+      "sensual": {
+        "intensity": 1,
+        "active": true,
+        "carrier_ids": [],
+        "candidate_inventory": [],
+        "requested_intensity": 1,
+        "intensity_meaning": "This expression is a subtle supporting quality.",
+        "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+        "configured_intensity": 1,
+        "configuration_source": "saved_setting"
+      },
+      "fetish": {
+        "intensity": 0,
+        "active": false,
+        "carrier_ids": [],
+        "candidate_inventory": [],
+        "requested_intensity": 0,
+        "intensity_meaning": "No added fetish treatment; preserve explicitly requested content.",
+        "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+        "configured_intensity": 0,
+        "configuration_source": "saved_setting"
+      }
+    },
+    "blend": {
+      "emphasis": "sensual_led",
+      "simultaneous_activation_allowed": true,
+      "requested_emphasis": "sensual_led"
+    },
+    "composition_requirements": {
+      "explicit_adult_original_subject": false,
+      "adult_subject_phrase_required": false,
+      "agency_phrase_required": true,
+      "intensity_is_ordinal_not_exposure_or_detail_count": true,
+      "baseline_expression_may_be_retained": true,
+      "shared_styling_between_axes_allowed": true,
+      "appearance_or_popularity_inference_forbidden": true,
+      "affected_dimensions_per_active_axis": true
+    },
+    "combination_policy": {
+      "risk_groups": {
+        "body_emphasis": {
+          "entry_ids": [
+            "cand_afc1b676748257749140e1e56a9778be",
+            "cand_9aaba53f547453348a88d74142b2d954",
+            "cand_a45495ae697c571daf4ac8d0cce3fc26",
+            "cand_9e5351b7e07a5547be840f657192128f",
+            "cand_db74c9745bb45b50bde16eb15df65e8c"
+          ],
+          "prompt_terms": [
+            "bodyline emphasis",
+            "hip-line emphasis",
+            "legs and heels emphasized",
+            "collarbone and lips emphasized"
+          ]
+        },
+        "extreme_low_angle": {
+          "entry_ids": [
+            "cand_1c2e5bf7206055159b4083840bd6004e",
+            "cand_cd087f4113b856a88b03a6bd28a09d17"
+          ],
+          "prompt_terms": [
+            "extreme low angle",
+            "ground-level low angle"
+          ]
+        },
+        "low_angle": {
+          "entry_ids": [
+            "cand_1c2e5bf7206055159b4083840bd6004e",
+            "cand_cd087f4113b856a88b03a6bd28a09d17",
+            "cand_c1d2449faaac58e997f9ff0d44d63b20"
+          ],
+          "prompt_terms": [
+            "extreme low angle",
+            "ground-level low angle",
+            "low-angle framing"
+          ]
+        },
+        "sheer_or_lingerie": {
+          "entry_ids": [
+            "cand_4f24ccb6751d54fba2ff9ff749fbfbf6",
+            "cand_f495092f5a3d55baab80ed2b024d7c71",
+            "cand_a7333e5afbc45ee3b48eb043bb059186"
+          ],
+          "prompt_terms": [
+            "sheer layering",
+            "sheer layers",
+            "lingerie-inspired"
+          ]
+        }
+      },
+      "hard_combinations": [
+        {
+          "all_of": [
+            "sheer_or_lingerie",
+            "extreme_low_angle"
+          ],
+          "id": "sheer_extreme_low_angle",
+          "reason": "Sheer or lingerie-coded styling combined with an extreme low angle can overwhelm the intended editorial concept; modify the camera or styling before generation."
+        }
+      ],
+      "warning_combinations": [
+        {
+          "all_of": [
+            "body_emphasis",
+            "low_angle"
+          ],
+          "id": "stacked_body_emphasis",
+          "reason": "Body-emphasis framing and a low angle are stacked; confirm that this is intentional and subordinate to the concept core."
+        }
+      ]
+    },
+    "evaluation_boundary": "configuration_scope_and_literal_binding_are_preflight;_perceived_intensity_requires_image_review;_appeal_requires_user_judgment",
+    "dimension_scope": {
+      "contract_version": "photo-adult-appeal-dimension-scope/v4",
+      "policy": "preserve_locked_dimensions",
+      "source_intent_lock_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+      "locked_dimensions": [
+        "concept",
+        "event",
+        "reference_use",
+        "subject"
+      ],
+      "axis_allowed_dimensions": {
+        "sensual": [
+          "action",
+          "appearance",
+          "atmosphere",
+          "body_geometry",
+          "camera",
+          "color",
+          "composition",
+          "expression",
+          "framing",
+          "lighting",
+          "material",
+          "pose",
+          "relationship",
+          "role",
+          "setting",
+          "sexual_tone",
+          "style",
+          "timing"
+        ],
+        "fetish": [
+          "action",
+          "appearance",
+          "atmosphere",
+          "body_geometry",
+          "camera",
+          "color",
+          "composition",
+          "expression",
+          "framing",
+          "lighting",
+          "material",
+          "pose",
+          "relationship",
+          "role",
+          "setting",
+          "sexual_tone",
+          "style",
+          "timing"
+        ]
+      },
+      "protected_properties": []
+    },
+    "contextual_retrieval": {
+      "contract_version": "photo-contextual-appeal/v2",
+      "axes": {
+        "sensual": {
+          "lanes": {
+            "coherence": "lexical_presentation_of_global_hybrid",
+            "alternatives": "lexical_presentation_of_global_hybrid",
+            "relation_event": "lexical_presentation_of_global_hybrid",
+            "relation_concept": "lexical_presentation_of_global_hybrid"
+          },
+          "semantic_candidate_coverage": {
+            "coherence": 0,
+            "alternatives": 0,
+            "relation_event": 0,
+            "relation_concept": 0
+          },
+          "eligible_corpus_count": 0,
+          "retrieved_count": 0,
+          "returned_count": 0,
+          "ranking": "reciprocal_rank_fusion_with_soft_visual_diversity",
+          "classification": "not_performed",
+          "membership_tags_required": false,
+          "intensity_admission_thresholds": false,
+          "scene_reranking": "bounded_request_overlap_preference;_not_applicability_proof"
+        }
+      },
+      "review_candidate_ids": [],
+      "candidate_adoption_required": false,
+      "review_location": "adult_appeal_brief.contextual_review",
+      "comparison_location": "adult_appeal_brief.contextual_comparison",
+      "query_sha256": "ef5a11731810bca0b0ad9bc9d95452c75a43c92e4ce4a32a523abd2a67d575c8",
+      "interpretation_owner": "composer_in_current_scene",
+      "comparison_policy": "baseline_and_coherent_alternatives_at_same_requested_strengths",
+      "adoption_context_contract_version": "photo-candidate-context/v1"
+    }
+  },
+  "semantic_clarification": {
+    "enabled": true,
+    "contract_version": "photo-semantic-clarification/v2",
+    "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+    "selection": "deterministic_contextual_meaning_resolution",
+    "affected_by_creativity": false,
+    "affected_by_seed": false,
+    "user_definition_precedence": true,
+    "candidates": [
+      {
+        "id": "clarification:authorial-core:interpreted-intent",
+        "source": "requester_meaning_bound_by_authorial_core",
+        "interpreted_meaning": "Preserve the requester-owned meaning expressed by the frozen anchors and required assertions.",
+        "meaning_components": [
+          "a palace court scene",
+          "A woman waits",
+          "waits for a court audience",
+          "Use the supplied image as the visual reference for her face and hair"
+        ],
+        "applicability": {
+          "status": "required",
+          "reason": "requester_owned_meaning_is_fixed_while_unbound_authorial_choices_remain_editable"
+        },
+        "required_in_final_prompt": true,
+        "revisable": false,
+        "creative_sampling": false
+      }
+    ],
+    "authorial_direction": {
+      "source": "agent_prepack",
+      "interpreted_intent": "The requester asks for a random palace-court concept using the supplied reference to test the newly integrated topic. Independently choose a Joseon Korean palace corridor waiting scene. Compared a grand seated ceremony with a small threshold pause; choose the latter because the woman, document and closed door create a readable unresolved moment at portrait scale. Face and short hair are visual reference cues only and establish neither identity, age nor personality. Sensual 1 supports appeal through poised gaze and soft daylight; fetish 0 and surreal 0 add no treatment. Creativity 1 permits restrained local refinement after retrieval. Court jacket, folded document, corridor, weather and exact camera are agent staging, not requester locks.",
+      "visual_priorities": [
+        "Her reference-guided face remains recognizable at the chosen portrait scale.",
+        "The woman, carried document and closed door make the wait visually intelligible.",
+        "Korean court clothing and palace construction create a coherent cultural setting."
+      ],
+      "creates_additional_locks": false,
+      "revision_policy": "recompose_agent_choices_within_requester_locks"
+    },
+    "composition_contract": {
+      "composed_field": "semantic_clarification_decisions",
+      "every_candidate_requires_a_typed_decision": true,
+      "required_candidates_cannot_be_rejected": true,
+      "governing_meaning_change_requires_new_core": true,
+      "applied_evidence_must_be_literal": true,
+      "forbidden_runtime_labels_must_remain_absent": true
+    }
+  },
+  "semantic_assertion_obligations": {
+    "contract_version": "photo-semantic-assertion-obligations/v1",
+    "enabled": true,
+    "source": "authorial_core_semantic_assertions",
+    "source_authorial_core_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+    "source_intent_lock_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+    "composed_field": "semantic_assertion_evidence",
+    "obligations": [
+      {
+        "assertion_id": "primary_category",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "reference"
+        ],
+        "semantic_axes": {
+          "subject_category": "human"
+        },
+        "frozen_evidence": {
+          "subject_phrase": "A woman waits"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "subject_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      }
+    ],
+    "canonical_sha256": "4383e3010d42c36eab74e3f91e5724d7e3abe85d6d7574e5c2a63b204b51ef2a"
+  }
+}

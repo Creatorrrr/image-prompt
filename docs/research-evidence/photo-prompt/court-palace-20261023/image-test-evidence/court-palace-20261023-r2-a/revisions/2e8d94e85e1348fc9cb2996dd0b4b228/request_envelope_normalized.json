@@ -1,0 +1,63 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "request-34c08240ed524747afd7b2bba2a3a74e",
+  "request_text": "아까 참조 대화를 모두 볼 수 없었다면 크롬으로 보고 보강해줘. 로그인해놨어. 그 다음 다시 반영하고 테스트해줘.",
+  "request_sha256": "02163f29047c50408a629a7c0dbe5972f8f82f524f946ab38e8182ab867ffc72",
+  "active_spans": [
+    {
+      "span_id": "topic",
+      "start": 3,
+      "end": 8,
+      "text": "참조 대화"
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "02163f29047c50408a629a7c0dbe5972f8f82f524f946ab38e8182ab867ffc72"
+      },
+      {
+        "id": "reference_photo",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "palace_court_full_review_topic",
+        "active_span_id": "topic",
+        "request_quote": {
+          "start": 3,
+          "end": 8,
+          "text": "참조 대화"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "current_conversation:original_user_request",
+          "text": "[궁중물 용어 조사](chatgpt-conversation://6adb17fb-6238-83e8-a54e-d5e467110649) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘.",
+          "sha256": "80a1efd95e181af34879a8918d691c747c2b0b64969a5b3e2313b2fed17e0c9d"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 10,
+          "text": "궁중물 용어 조사"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "Actual prior human topic title resolves the current anaphoric reference. Browser/research contents do not supply precore scene details."
+        }
+      }
+    ],
+    "canonical_sha256": "0de7770259ea0b3b83d69f369f57d061e64b2f705428f1d571c0e8e503adaf93"
+  },
+  "canonical_sha256": "08e99f38658f3708e7da18b61d78375cfcb652d276ad0da2bc3a090e891ae54f",
+  "envelope_id": "08e99f38658f3708"
+}
