@@ -201,3 +201,11 @@ alternatives, 160 excluded context diagnostics and 71 optional bindings.
 Surface state, camera geometry, physical carriers and represented images retain
 separate owners and claim limits. Existing sources and guards remain unchanged;
 registration, retrieval, prompt use and saved pixels are separately verified.
+
+The [medical-drama extension](medical-drama-semantics.md) retains 172 research cards and
+346 advisory keyword routes. It registers 99 complete optional bilingual visual
+sources, 51 positive-retrieval-excluded context/held diagnostics and 198 optional
+bindings, reusing 22 existing complete sources without mutation. Garment layers,
+bodily supports, hand contacts, instrument endpoints and depicted-media owners
+remain explicit. Research metadata, installed exposure, audited prompt use and
+saved-image relations are separate evidence layers.
