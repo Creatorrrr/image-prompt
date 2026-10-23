@@ -1,0 +1,57 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "36492516a19f5da2",
+  "contract_version": "photo-embodiment-preflight/v1",
+  "reviewer": "Codex independent arm C",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-c/images/flintlock-harbor-mender-native.png",
+  "result_sha256": "ac84a6196cba686ee0383076784ec52335898c055d98b188f22420ad86f0af3d",
+  "hard_gates": {
+    "embodiment_body_ownership": {
+      "status": "pass",
+      "evidence": "The mender's two visible arms lead continuously from her shoulders through separate sleeves to the needle hand and stabilizing palm. The sentry's rifle-holding hand and rope-resting hand belong to his separate body; the brass jaws are a tool, not a limb.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "pass",
+      "evidence": "Both mender forearms reach the immediately adjacent tabletop with plausible elbow/wrist articulation. The sentry supports the diagonal musket close to his torso and reaches the adjacent rope bale with his other hand; no material reach contradiction is visible.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_support_and_balance": {
+      "status": "fail",
+      "evidence": "The mender's stabilizing left palm, the supported table cloth and the sentry's ordinary rifle grip are coherent. However, the reviewed final state explicitly uses an independently hovering brass clamp to supply far-edge cloth tension. In the saved image a continuous horizontal brass arm connects that clamp to a solid table-mounted vertical post. This visible mechanical support contradicts the reviewed unsupported support state; a gap below the jaws and blue engraving do not repair it.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_contact_and_space": {
+      "status": "pass",
+      "evidence": "The left palm lies on the patch while the separate right hand holds a slim needle and pulls a visible thread to the cloth. The brass jaw/flag contact is distinct at the far edge and the rope hand remains separate from the rifle grip. The local sewing and grip boundaries have plausible space; the unsupported-versus-post support defect is recorded in its own support gate.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "pass",
+      "evidence": "Native-size stitch and clamp crops make the hand-to-thread-to-cloth route and the clamp's actual support connection assessable. The full frame retains both people, the worktable and the harbor; no critical body contact is hidden. Separate firearm subpart recognition remains a stricter custom testcase failure and is not converted into a body-visibility pass.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

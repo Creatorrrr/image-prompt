@@ -1,0 +1,287 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "b59fd45cb874635a9a0650f491627efb2e84299987fd893b16513bb56e645369",
+  "interpreted_intent": "The requester wants an independently varied random concept that makes the current Flintlock Fantasy topic visually testable and uses the supplied portrait. General knowledge resolves this as gunpowder-age material life coexisting with consequential magic. My drawn civilian episode is a sail-mender repairing a signal flag while a dock sentry waits: craft and a modest magical labor tool carry an ordinary relationship. The unrequested specific repair, cast, harbor, garment, timing and layout remain authorial staging. Supporting sensual=1 is realized as relaxed warm attention and a small half-smile; fetish=0, surreal=0 add no extra treatment beyond the fantasy topic. Creativity=1 favors restrained refinement. The reference contributes appearance only; exact age, identity and biography are unresolved and are not asserted. At the planned scale the table is broad enough to separate sewing contact and hovering clamp; the musket lock faces the camera nearby, not deep in the harbor.",
+  "subject": "A portrait-guided woman as the main subject; a waiting dock sentry is subordinate authorial staging.",
+  "setting": "A quay sail-mending workshop in a Flintlock Fantasy working port.",
+  "event": "Gunpowder-era technology and a physical magical effect coexist in one visible everyday episode, authored here as a signal-flag repair.",
+  "visual_priorities": [
+    "The reference-guided face and warm glance lead the frame.",
+    "The needle, patch and thread form a readable continuous repair contact.",
+    "The unsupported brass clamp grips the flag across a visible air gap, and its tension fold visibly affects the repair.",
+    "The nearby wood-stock musket exposes its flintlock mechanism in the worktable focus plane."
+  ],
+  "baseline_prompt_en": "An environmental photograph of Flintlock Fantasy: a distinct everyday episode in which gunpowder-era technology and a physical magical effect share one working space. The central figure is a woman guided by the supplied portrait, preserving the reference facial proportions and short black bob with wispy bangs. Her dark eyes and softly rounded face remain recognizable within the inhabited scene. She is a sail-mender in a small quay workshop, repairing a salt-stiffened red-and-cream signal flag before the next boat leaves. Her left palm presses a square canvas patch flat against the sloping worktable while her right hand draws a needle through the joined cloth at the near edge of the patch, the loose thread visibly joining that hand to the new stitch. A brass clamp hovers above the far corner of the table, gripping the flag's opposite edge; a clear band of empty air separates its lower jaw from the tabletop, and a restrained blue light follows the engraved grooves in its brass. The lifted flag edge creates a shallow taut fold toward the patch, connecting the impossible tool to the actual repair. She has paused to look toward the waiting dock sentry, with a small amused half-smile and relaxed shoulders; an intimate warmth of expression quietly carries her presence. The sentry at camera-right holds a wood-stock flintlock musket diagonally across his coat, its external cock, frizzen and pan turned toward the viewer in the same focus zone as the worktable. His free hand rests on a weathered rope bale, visibly waiting for the flag rather than interrupting her work. A plain linen shirt with rolled sleeves, faded blue waistcoat and worn apron belong to the workday. Behind them, an open workshop door reveals the low stone quay, moored sailing masts and pale morning water. Frame from just below the tabletop to a little above their heads with the mender dominant left of center, her face, needle contact, hovering clamp and musket lock arranged as four readable points of one scene. Soft harbor daylight from the doorway gives skin, thread and scarred brass tangible texture; cool water reflections stay subordinate to the warm face and red cloth. Use plausible photographic perspective and enough depth of field to connect both people with their tools.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent variation",
+      "source_text": "각각 서로 다른 컨셉으로",
+      "basis": "request_context",
+      "resolution": "Choose an independent concept using a recorded random draw; no other arm outputs are needed or accessed.",
+      "sources": []
+    },
+    {
+      "term": "current Flintlock Fantasy topic",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+      "basis": "request_context",
+      "resolution": "The bound exact prior-user topic names Flintlock Fantasy. General knowledge supports gunpowder-era technology coexisting with magic; the particular civilian repair is authorial.",
+      "sources": []
+    },
+    {
+      "term": "supplied image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as a face-and-hair appearance reference through actual native reference attachment; no reference outfit, exact age or identity is asserted.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "genre",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "Flintlock Fantasy"
+      },
+      {
+        "anchor_id": "distinct_concept",
+        "source_text": "각각 서로 다른 컨셉으로",
+        "dimension": "concept",
+        "prompt_evidence": "a distinct everyday episode"
+      },
+      {
+        "anchor_id": "primary_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a woman guided by the supplied portrait"
+      },
+      {
+        "anchor_id": "genre_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "gunpowder-era technology and a physical magical effect share one working space"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "preserving the reference facial proportions and short black bob with wispy bangs"
+      },
+      {
+        "anchor_id": "face_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "mender",
+        "property": "face.proportions",
+        "prompt_evidence": "the reference facial proportions"
+      },
+      {
+        "anchor_id": "hair_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "mender",
+        "property": "hair.configuration",
+        "prompt_evidence": "short black bob with wispy bangs"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "count",
+      "age",
+      "role",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_human",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a woman guided by the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    },
+    {
+      "assertion_id": "mender_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "mender",
+        "owner_kind": "person"
+      },
+      "evidence": {
+        "owner_phrase": "a woman guided by the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "mender_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "mender"
+      },
+      "evidence": {
+        "owner_phrase": "a woman guided by the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "reference_face",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "mender",
+        "property": "face.proportions",
+        "value_type": "appearance.facial_configuration/v1",
+        "value": "reference facial proportions",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "portrait"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "the reference facial proportions"
+      }
+    },
+    {
+      "assertion_id": "reference_hair",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "mender",
+        "property": "hair.configuration",
+        "value_type": "appearance.hair_configuration/v1",
+        "value": "short black bob with wispy bangs",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "portrait"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "short black bob with wispy bangs"
+      }
+    },
+    {
+      "assertion_id": "reference_scope_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "mender",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"d3ff64d927c12ee3092918bbf186cb63f943de0fbaf5f78406d2bf8799419346\",\"request_envelope_sha256\":\"203feb00a3f6d557b4c953e1910bb9b689662993c551824d88fd81bc548d2746\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"reference_face\",\"dimension\":\"appearance\",\"property\":\"face.proportions\",\"target\":\"mender\",\"value\":{\"type\":\"appearance.facial_configuration/v1\",\"value\":\"reference facial proportions\"}},{\"assertion_id\":\"reference_hair\",\"dimension\":\"appearance\",\"property\":\"hair.configuration\",\"target\":\"mender\",\"value\":{\"type\":\"appearance.hair_configuration/v1\",\"value\":\"short black bob with wispy bangs\"}}],\"reviewed_input_ids\":[\"request\",\"portrait\",\"prior_user_topic\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "scope_phrase": "preserving the reference facial proportions and short black bob with wispy bangs"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental portrait photography",
+    "family": "natural harbor workshop realism",
+    "evidence": [
+      "soft harbor daylight",
+      "tangible skin, thread and scarred brass"
+    ]
+  },
+  "variation_key": "C4-harbor-signal-mender"
+}

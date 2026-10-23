@@ -1,0 +1,98 @@
+{
+  "schema": "prospective-photo-testcase/v1",
+  "arm": "B",
+  "frozen_before": "candidate retrieval and first native image invocation",
+  "core_sha256": "cc3ddba18be6500aabee00332b1bd85be64023cf5be312cd418d60c00e3a1368",
+  "policy": {
+    "partial_is_fail": true,
+    "unobservable": "UNOBSERVABLE_NOT_PASS",
+    "missing_pixels": "BLOCKED_UNSCORED",
+    "user_acceptance": "pending actual requester judgment",
+    "source_retrieval_prompt_pixel_layers": "reported separately"
+  },
+  "gates": [
+    {
+      "id": "B_reference_appearance",
+      "required_components": [
+        "face proportions and distinctive features visibly continuous with supplied portrait",
+        "short black bob and wispy bangs"
+      ],
+      "scale": [
+        "native",
+        "reference comparison"
+      ],
+      "pass_rule": "Both face and hairstyle continuity must be directly assessable; this is visual similarity, not identity proof."
+    },
+    {
+      "id": "B_flintlock_mechanism",
+      "required_components": [
+        "wooden-stock flintlock firearm",
+        "exposed cock holding flint",
+        "priming pan",
+        "hinged steel frizzen in intelligible relationship to cock and pan"
+      ],
+      "scale": [
+        "native",
+        "unresampled crop"
+      ],
+      "pass_rule": "All ignition components and their spatial relationship must be discernible on the same firearm; a generic old pistol silhouette is insufficient."
+    },
+    {
+      "id": "B_fantasy_effect",
+      "required_components": [
+        "visibly self-luminous or supernatural dispatch medium",
+        "its light reaches symbols or nearby physical surface"
+      ],
+      "scale": [
+        "native"
+      ],
+      "pass_rule": "A physically represented fantastic effect must read in the saved pixels; fantasy label, costume, metadata or ordinary warm lamp alone is insufficient."
+    },
+    {
+      "id": "B_fortress_moat_relation",
+      "required_components": [
+        "fortified city wall or rampart",
+        "water-filled moat contiguous with wall base",
+        "both moat banks and intervening strip of water"
+      ],
+      "scale": [
+        "thumbnail",
+        "native"
+      ],
+      "pass_rule": "The complete wall-water-opposite-bank relation must be visible together; distant water without a discernible defensive relation is partial."
+    },
+    {
+      "id": "B_communication_relation",
+      "required_components": [
+        "courier and held near signal device",
+        "separate answering light at opposite watch post",
+        "clear near/far spatial separation across moat"
+      ],
+      "scale": [
+        "thumbnail",
+        "native"
+      ],
+      "pass_rule": "Both endpoints and their scene relationship must be present in the same saved image. Actual coded message transfer or unseen intent is not claimed."
+    },
+    {
+      "id": "B_lantern_contact",
+      "required_components": [
+        "left hand supporting lantern base",
+        "right hand contacting side door",
+        "door and hinge continuous with lantern body",
+        "workable wrist/forearm ownership and space"
+      ],
+      "scale": [
+        "native",
+        "unresampled crop"
+      ],
+      "pass_rule": "Every contact and boundary must be visible together; attractive but ambiguous hand-object overlap is partial and fails this full gate."
+    }
+  ],
+  "whole_image_review": [
+    "subject presence and visual hierarchy",
+    "readable practical circumstance and relation",
+    "subtle personal appeal from focused bearing and motivated light; compare to frozen controls after blind impression"
+  ],
+  "source_specific_extension": "Only complete source conditions actually retained after retrieval may add pre-generation gates; base gates cannot be weakened after pixels."
+}

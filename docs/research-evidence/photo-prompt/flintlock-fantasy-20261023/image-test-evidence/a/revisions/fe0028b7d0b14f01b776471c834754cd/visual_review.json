@@ -1,0 +1,57 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "14799224e70ef0f3",
+  "contract_version": "photo-embodiment-preflight/v1",
+  "reviewer": "arm_A_agent_direct_saved_image_review",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-a/returned-image.png",
+  "result_sha256": "3719e798f46f1d7e48b211ecd150305d31e053af65dd4c1e0fa92338dfd6001e",
+  "hard_gates": {
+    "embodiment_body_ownership": {
+      "status": "pass",
+      "evidence": "At native 1536x1024, two separate hands connect to the subject through their corresponding forearms and sleeves. No extra limb or detached hand is visible; the pistol is independently cradled.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "pass",
+      "evidence": "At native scale both forearms reach nearby bench contacts with coherent wrist and finger directions. Right fingers reach the lever and left fingers reach the bottle support without impossible extension.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_support_and_balance": {
+      "status": "pass",
+      "evidence": "The visible leaning torso is supported through forearms at the bench; padded wooden blocks support the wooden firearm, and the bottle is held by a rigid brass frame. These visible load paths are coherent. Hidden lower-body or chair geometry is not inferred.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_contact_and_space": {
+      "status": "fail",
+      "evidence": "The intended right hand resting open behind the released lever is not preserved: its fingers visibly contact the brass lever. Left fingers touch the supporting brass upright/ring and clear the exposed lock, but the conjunction of intended contacts fails.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "fail",
+      "evidence": "Face, forearms, lock and bottle are assessable at native scale, but the baseline/preflight expressly required the full pistol to be legible. The barrel continues out of the right boundary, hiding its muzzle and complete extent; full short-barrel structure cannot be checked. partial_is_fail and UNOBSERVABLE_NOT_PASS apply.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "partial"
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

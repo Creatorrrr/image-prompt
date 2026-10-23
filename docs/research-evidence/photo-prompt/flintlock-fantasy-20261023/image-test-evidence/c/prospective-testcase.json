@@ -1,0 +1,105 @@
+{
+  "schema": "prospective-testcase/v1",
+  "arm": "C",
+  "core_sha256": "9a458736da4e1aad6a9639d926369eafe69c74e3f5dbca45ab2d4bec77b6515b",
+  "fixed_before_retrieval": true,
+  "fixed_before_generation": true,
+  "rules": [
+    "partial_is_fail",
+    "UNOBSERVABLE_NOT_PASS",
+    "No post-image weakening or replacement of a required test component.",
+    "Source registration, retrieval, source review, prompt evidence, pixels and user acceptance remain separate."
+  ],
+  "gates": [
+    {
+      "gate_id": "C_reference_transport",
+      "layer": "transport",
+      "required": [
+        "The exact local reference is passed through the native reference mechanism.",
+        "The reference hash equals the bound portrait input hash."
+      ]
+    },
+    {
+      "gate_id": "C_reference_appearance",
+      "layer": "pixels",
+      "required": [
+        "The central woman has a short black bob and wispy bangs.",
+        "Visible facial proportions support comparison with the supplied portrait at the generated scale."
+      ],
+      "claim_limit": "Appearance continuity only; no exact identity or age claim."
+    },
+    {
+      "gate_id": "C_flintlock_technology",
+      "layer": "pixels",
+      "required": [
+        "A wood-stock powder-age long firearm is visible.",
+        "The external cock, frizzen and pan are distinguishable on that same firearm."
+      ],
+      "scale": "full_frame and crop_detail"
+    },
+    {
+      "gate_id": "C_functional_magic",
+      "layer": "pixels",
+      "required": [
+        "A brass clamp grips the far edge of the signal flag.",
+        "An observable air gap separates the unsupported clamp from the table.",
+        "The held cloth shows tension connecting the clamp to the repair area."
+      ],
+      "scale": "full_frame and crop_detail",
+      "claim_limit": "Physical appearance of impossible support; provenance of the magic is fictional prompt context."
+    },
+    {
+      "gate_id": "C_civilian_labor",
+      "layer": "pixels",
+      "required": [
+        "The main woman occupies a plausible workshop table with cloth repair materials.",
+        "The quay or sailing-port context is visible.",
+        "The firearm and magical tool belong to the same inhabited scene rather than disconnected collage."
+      ],
+      "scale": "full_frame"
+    },
+    {
+      "gate_id": "C_repair_contact",
+      "layer": "pixels",
+      "required": [
+        "A hand stabilizes the patch on the flag.",
+        "The other hand, needle and thread connect visibly to the new stitch.",
+        "The contact points form a plausible action with their own body owners."
+      ],
+      "scale": "full_frame and crop_detail"
+    },
+    {
+      "gate_id": "C_source_transfer",
+      "layer": "source_to_prompt_to_pixels",
+      "required": [
+        "After retrieval, any selected newly registered source has a source-specific prospective gate fixed before generation.",
+        "Whole source requirements are reviewed; a keyword match alone cannot pass."
+      ],
+      "state": "pending new source discovery; optional source adoption is not predetermined"
+    }
+  ],
+  "image_calls_authorized_for_this_arm": 1,
+  "user_acceptance": "pending",
+  "claim_boundary_note": "Magic gates assess only visible object support, air gaps, contact and cloth tension in one still image. They do not prove actual supernatural function, information transfer, successful signaling or causal efficacy.",
+  "issued_source_transfer": {
+    "new_flintlock_sources_exposed": [
+      {
+        "candidate_id": "cand_ed14f04fba2f5ae9a6af43ea5770ca0b",
+        "card_id": "H08",
+        "occurrences": [
+          "prop_state",
+          "__baseline_prompt__"
+        ]
+      }
+    ],
+    "new_flintlock_sources_adopted": [],
+    "source_to_prompt_status": "NOT_ADOPTED_PREREQUISITE_GAP",
+    "new_source_pixel_transfer": "NOT_TESTABLE_AS_ADOPTION",
+    "reason": "Do not infer declared adulthood or change the repair into the complete sphere/tongs/tray cue to satisfy a dataset test. A01/E01/F01 were not issued; their preliminary alternatives were not selected.",
+    "generic_inspiration_only": [
+      "cand_97a9e11404595121a400288a8adad5be"
+    ]
+  },
+  "final_prompt_sha256": "ccc4a3be380a8e58772311f79b8e530bd8033c19ba473a346798ddff482b4fd2",
+  "generation_not_started": true
+}
