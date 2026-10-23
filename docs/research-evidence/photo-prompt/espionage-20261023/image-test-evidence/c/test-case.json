@@ -1,0 +1,94 @@
+{
+  "test_case_id": "espionage-integration-c",
+  "stage": "precore_frozen_design",
+  "random_draw_file": "random-concept-draw.json",
+  "independence": {
+    "before_freeze_allowed": [
+      "current shared user request/envelope/coordination",
+      "actual prior user message quoted for topic",
+      "supplied portrait directly viewed",
+      "latest SKILL.md",
+      "exact named neutral precore files",
+      "general knowledge and independent visual reasoning"
+    ],
+    "before_freeze_forbidden": [
+      "assets",
+      "references",
+      "scripts",
+      "research materials",
+      "previous prompts or images",
+      "other arm files"
+    ],
+    "no_other_arm_read": true,
+    "coordinator_scope_is_user_constraint": false
+  },
+  "concept": "Rainy midday freight-yard service-room field observation and contemporaneous record; visible wired radio apparatus.",
+  "requester_owned": [
+    "espionage-topic image test",
+    "use supplied reference image",
+    "independent scene selection and actual generation"
+  ],
+  "agent_owned": [
+    "railway service room",
+    "marked van",
+    "camera on beanbag",
+    "notebook record",
+    "wired radio",
+    "rainy midday and viewpoint"
+  ],
+  "pixel_criteria": [
+    {
+      "id": "topic_observation_chain",
+      "required_components": [
+        "human observer oriented to one outside vehicle",
+        "lens physically aimed toward that vehicle",
+        "same vehicle marker identifiable in an in-frame camera capture or notebook photo"
+      ],
+      "failure": "A generic camera or train-yard costume without a visible target-to-record correspondence fails; partial correspondence does not pass."
+    },
+    {
+      "id": "recording_action",
+      "required_components": [
+        "pencil held by the observer",
+        "pencil tip at an open observation record",
+        "record related to the same outside target"
+      ],
+      "failure": "A floating tool, blank unrelated book or contact hidden from view fails."
+    },
+    {
+      "id": "communication_apparatus",
+      "required_components": [
+        "microphone held near observer mouth",
+        "wire visibly connected or continuously traceable to radio on same observer"
+      ],
+      "failure": "Disconnected loose cable or unrelated radio possession is insufficient. Actual speech, message meaning and receipt remain unobservable."
+    },
+    {
+      "id": "reference_appearance",
+      "required_components": [
+        "directly attached portrait in native image call",
+        "face visually guided by reference at assessable scale",
+        "short dark bob retained"
+      ],
+      "failure": "Text-only mention, generic face at unassessable scale or incompatible hair is insufficient; exact real identity is not a pixel claim."
+    },
+    {
+      "id": "body_scene_integrity",
+      "required_components": [
+        "two owned hands with coherent tools and target contact",
+        "supported seated pose",
+        "camera lens route and outdoor subject not contradictory"
+      ],
+      "failure": "Missing hand, merged tools, impossible cable or occluded required contact fails."
+    }
+  ],
+  "qualification": "Every listed compound criterion requires all components to be visible together. partial_is_fail; UNOBSERVABLE_NOT_PASS. Genre impression, native call, audits and user acceptance remain separate.",
+  "nonvisual_limits": [
+    "border jurisdiction",
+    "actual person identity or age",
+    "actual covert motive",
+    "audible speech",
+    "communication content or delivery",
+    "real chronology beyond visible marks"
+  ]
+}
