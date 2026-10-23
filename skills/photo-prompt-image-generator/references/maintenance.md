@@ -186,3 +186,18 @@ routes, 49 context-only) and six advisory combinations. Garment construction,
 wearing state, limb ownership, physical support, directed contact, gaze,
 camera axes and depicted-media boundaries remain distinct. Routes do not
 make compound terms equivalent to a partial visual alternative.
+
+The [espionage extension](espionage-semantics.md) retains 340 advisory keyword
+routes and 138 research cards. It adds 111 complete optional bilingual visual
+sources, 182 positive-retrieval-excluded diagnostics and 158 optional bindings,
+reusing 17 complete sources without mutation. Actor, carrier, contact and
+represented-image endpoints remain distinct. Research metadata, source
+registration, retrieval exposure, native adoption and saved pixels retain
+separate evidence boundaries.
+
+The [espionage full-conversation supplement](espionage-full-conversation.md)
+completes all 500 reference rows and adds 42 bounded bilingual visual
+alternatives, 160 excluded context diagnostics and 71 optional bindings.
+Surface state, camera geometry, physical carriers and represented images retain
+separate owners and claim limits. Existing sources and guards remain unchanged;
+registration, retrieval, prompt use and saved pixels are separately verified.
