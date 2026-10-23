@@ -1,0 +1,103 @@
+"""Authored offline evaluation specifications. No search or image calls."""
+# (category, Korean query, English query, relevant research cards, wrong substitution, claim limit)
+BOUNDARIES = [
+('boundary','병원에서 의료적 가스라이팅을 다루는 현대 장면','A modern medical gaslighting scene','G00','G03','gaslighting은 가스 조명/시대 양식이 아니다'),
+('boundary','수확철 시장의 분주함','The bustle of a harvest market','','G28','일반 bustle을 의복 뒤 볼륨과 구분'),
+('boundary','범인이 남긴 한 장의 플레잉 카드','A single playing card left as a calling card','','G22','방문 명함과 관용적 calling card 구분'),
+('boundary','심지가 든 촛불 랜턴','A candle lantern with a visible wick','','G03','황색 빛으로 가스 연료를 확정하지 않는다'),
+('boundary','1810년대의 노출 불꽃 가스등','An 1810s open-flame gas lamp','G03','G04','맨틀을 시대 전체에 강제하지 않는다'),
+('boundary','몸 둘레 전체로 퍼지는 크리놀린 치마','A crinoline skirt spreading around the whole body','G27','G28','후방 집중 버슬로 대체하지 않는다'),
+('boundary','앞은 평평하고 뒤가 돌출된 버슬 치마','A bustle skirt with a flatter front and projecting rear','G28','G27','넓은 종형 실루엣으로 대체하지 않는다'),
+('boundary','목걸이에 여러 도구가 달려 있다','Several tools hang from a necklace','','G33','허리 장착 관계가 없는 샤틀렌 대체는 실패'),
+('boundary','살아 있는 친구에게 받은 모발 로켓','A hair locket given by a living friend','G37','G35','모발은 사망·애도의 증거가 아니다'),
+('boundary','검은 유리 구슬로 만든 목걸이','A necklace made of black glass beads','','G36','외관으로 jet 재료를 확정하지 않는다'),
+('boundary','인화물 안에 반투명한 인물상이 겹친 심령 사진','A spirit photograph with a faint overlapping figure inside the print','G42','G63','사진 면과 실제 장면 공간을 구분'),
+('boundary','거울 대신 기울어진 투명 판의 무대 환영','A stage illusion formed in an angled transparent pane','G43','G63','진짜 유령으로 결과를 치환하지 않는다'),
+('boundary','알파벳판 위를 가리키는 포인터','A pointer indicating letters on an alphabet board','','G40','바퀴/연필/종이의 자동서기 도구와 구분'),
+('boundary','1891년 프랑스 인쇄 타로 덱','An 1891 French printed tarot deck','G48','','모든 타로에 현대 Rider-Waite-Smith 도상을 넣지 않는다'),
+('boundary','전극이 닿은 조직 표본의 정지 모습','A still view of an electrode touching a tissue specimen','G69','G74','접촉은 소생·인격 복귀의 증거가 아니다'),
+('boundary','눈을 감고 쉬는 사람','A person resting with closed eyes','','G45','최면·빙의·동의 부재를 외형으로 확정하지 않는다'),
+('boundary','혈연 관계가 없는 닮은 성인 두 명','Two similar-looking adults who are unrelated','G65','','닮음은 혈연·동일 정체 증거가 아니다'),
+('boundary','기계 부품 없이 점토로 만든 가상 construct','A fictional clay construct without mechanical parts','G87','G67','construct 범주에 자동인형 링크를 강제하지 않는다'),
+('boundary','같은 방에 선 동성 성인 두 명','Two adults of the same gender standing in one room','','G80','동석은 실제 성적 지향·성관계 증거가 아니다'),
+('boundary','성인 배우의 손목 커프와 의자 고정점','An adult performer’s wrist cuff and chair attachment','G81','G83','구속 외형으로 성폭력·강압·성적 목적을 확정하지 않는다'),
+('boundary','소매에 붉은 포도주를 쏟은 성인','An adult with red wine spilled on a sleeve','','G82','붉은 얼룩은 상처·혈액의 증거가 아니다'),
+('boundary','일반 계약서를 살펴보는 성인 두 명','Two adults examining an ordinary contract','','G56','두 사람+문서만으로 요정 거래를 생성하지 않는다'),
+('boundary','사용인의 옷을 입고 연기하는 성인','An adult actor wearing a servant costume','','G25','의상은 실제 고용 신분을 입증하지 않는다'),
+('boundary','고딕 첨두창과 아르누보 난간을 구분','Distinguish a Gothic pointed window from an Art Nouveau railing','G02','','동일한 꽃 장식이나 건축 시대 하나로 합치지 않는다'),
+('boundary','라벨이 없는 일반 약병','An ordinary medicine bottle without a label','','G72','병 모양으로 laudanum 성분을 확정하지 않는다'),
+('boundary','가스등이 없는 한낮의 밝은 Gaslamp 살롱','A bright daytime Gaslamp salon with no gas lamps','G00|G15','G03','장르명은 가스등·안개·어두운 팔레트 의무가 아니다'),
+('boundary','인물이 거울 시야 밖에 서 있다','A person standing outside the mirror’s field of view','','G61','반사 부재가 기하로 설명되면 초자연 근거 아님'),
+('boundary','잘린 크롭 속 샤틀렌 도구만 보인다','A cropped view showing only chatelaine tools','G33','','허리 걸쇠와 체인 소유자 불명은 전체 gate 실패'),
+('boundary','후프가 가려진 넓은 치마의 외형','The outline of a wide skirt with its hoop support hidden','G27','','실루엣만 보이면 내부 후프 구조 통과로 계산하지 않는다'),
+('boundary','신지학 모임에 임의 악마 인장을 추가하지 말 것','A Theosophical meeting without arbitrary demon sigils','G46','G51','결사/전통 문맥은 임의 상징의 자동 생성 근거가 아니다'),
+]
+GENERALS = [
+('general','맑은 날 현대 카페의 성인','An adult in a modern cafe on a clear day','','G03|G26','Gaslamp 오염이 없어야 한다'),
+('general','인물이 없는 흰 배경 제품 사진','A product photograph on white with no people','','G79','성인·의상·친밀함 후보 강제 금지'),
+('general','검은 배경의 반지 접사','A close-up ring on a black background','','G37','고딕·애도·모발·저주를 임의 추가하지 않는다'),
+('general','색채가 풍부한 가공 세계 도시','A colorful secondary-world city','G01','G08','영국·런던·안개로 자동 수렴하지 않는다'),
+('general','기계를 쓰지 않는 가스램프 세계의 마법사','A magician in a Gaslamp world without machines','G00','G67','기계·비행선은 필수가 아니다'),
+('general','매체로서의 사진과 직업으로서의 영매를 구분','Distinguish photographic medium from a spirit medium','','G39','medium 동음이의어 구분'),
+('general','야생 동물 한 마리','One wild animal','','G58','일반 동물은 사역마가 아니다'),
+('general','세피아 처리한 오늘의 거리 사진','A present-day street photograph graded sepia','','G01','색보정은 시대의 증거가 아니다'),
+]
+NONVISUAL = [
+('nonvisual','사진만 보고 안개의 유해 성분을 확정','Certify the haze’s toxic composition from the photograph alone','G08','','BLOCKED_UNSCORED'),
+('nonvisual','한 장의 사진으로 영적 두드림 소리를 증명','Prove spirit-rapping sounds with one still photograph','G41','','BLOCKED_UNSCORED'),
+('nonvisual','외형만으로 geas의 강제 의무를 판정','Determine a geas obligation from appearance alone','G57','','BLOCKED_UNSCORED'),
+('nonvisual','사진 속 자세로 실제 사망 여부를 확인','Confirm actual death from the photographed pose','G38','','BLOCKED_UNSCORED'),
+('nonvisual','눈과 입 모양으로 계약 동의를 확정','Certify contractual consent from eyes and mouth','G56','','BLOCKED_UNSCORED'),
+('nonvisual','닮은 초상만으로 불멸과 같은 정체를 입증','Prove immortality and identity from a similar portrait','G65','','BLOCKED_UNSCORED'),
+('nonvisual','전극이 보이므로 생명과 인격이 복귀했다','An electrode proves that life and personality returned','G74','','BLOCKED_UNSCORED'),
+('nonvisual','골상 모형을 바탕으로 실제 인물의 범죄성을 추론','Infer a person’s criminality from a phrenology model','G70','','BLOCKED_UNSCORED'),
+]
+
+# Added after complete Chrome recovery. These are authored probes, not an independent gold/holdout.
+BOUNDARIES += [
+('boundary','평범한 겨울 장갑을 낀 성인','An adult wearing ordinary winter gloves','','G91','보통 복식이 성적 페티시즘을 자동 활성화하지 않는다'),
+('boundary','합의된 성인 BDSM 관계라는 명시적 설정','An explicitly consensual adult BDSM relationship','G92','G83','강요·성폭력과 같은 문맥으로 합치지 않는다'),
+('boundary','시체 도굴꾼이라는 역사적 직업','The historical occupation of a resurrectionist','G96','G86','resurrectionist를 부활 마법사로 오해하지 않는다'),
+('boundary','1832년 이후 제도의 해부용 시신 공급','Institutional supply of bodies for anatomy after 1832','G97','G96','모든 공급을 도굴이라고 정규화하지 않는다'),
+('boundary','사랑하는 고인의 모발을 보관한 추모품','A keepsake preserving a loved deceased person’s hair','G37','G94','애도·보관을 시체성애로 분류하지 않는다'),
+('boundary','혈연이 없는 성인들의 닮은 외형','Similar appearance among unrelated adults','G65','G93','외형만으로 근친 관계를 판정하지 않는다'),
+('boundary','한 사건 현장의 몸 하나와 기호','One body and a symbol at a single scene','G110','','단일 장면은 연쇄살인·의식 목적의 증거가 아니다'),
+('boundary','가상 모형의 분리된 팔 부품','Separated arm parts of a fictional anatomical model','','G98','모형 실현을 실제 몸의 절단 증거로 계산하지 않는다'),
+('boundary','도장을 찍었지만 효력이 없는 소품 허가증','A stamped prop permit without legal authority','G103','','물리 도장 접점과 실제 법적 효력을 구분한다'),
+('boundary','오래된 박물관 물건이 정당하게 기증되었다는 설정','An old museum object explicitly donated legitimately','G105','G102','낯선 기원/유물만으로 약탈·식민 폭력을 단정하지 않는다'),
+('boundary','음식으로 놓인 동물 고기','Animal meat served as food','','G111','고기=인간 유래/식인을 자동 부여하지 않는다'),
+('boundary','고딕적인 분위기의 임신하지 않은 성인','A nonpregnant adult in a Gothic atmosphere','','G95','장르·성별·의복으로 임신/생식 공포를 추가하지 않는다'),
+]
+PARAPHRASE_PROBES = [
+('paraphrase_probe','허리의 작은 잠금쇠에서 여러 짧은 사슬이 내려와 도구집을 받친다','Short chains descend from one waist clasp to support small tool cases','G33','','키워드 없이 같은 소유자 연결을 검색'),
+('paraphrase_probe','손바닥 아래 작은 이동판을 통과한 연필이 종이에 닿아 있다','A pencil fitted through a small board under the hands touches the paper','G40','','플랑셰트 단어 없이 구조 검색'),
+('paraphrase_probe','사진 종이의 경계 안에서 실체 있는 인물과 희미한 인물상이 겹친다','An opaque sitter overlaps a faint figure within the boundaries of a paper photograph','G42','','실제 공간의 유령과 구분'),
+('paraphrase_probe','옆에 켠 인물이 비스듬한 투명판에 다른 상으로 비친다','A side-lit figure forms a reflected image in an angled transparent pane','G43','','무대 반사의 전체 관계를 검색'),
+('paraphrase_probe','두 당사자의 손이 같은 양피지 양쪽 끝을 각각 잡는다','Two parties touch opposing edges of the same parchment','G56','','동일 매체와 두 손 소유자 보존'),
+('paraphrase_probe','손목 고리에서 이어진 연결부가 의자에 고정돼 있다','A connector from a wrist cuff is fixed to a chair attachment','G81','','관계는 검색하되 성적 동의는 추정하지 않는다'),
+('paraphrase_probe','전선이 장치에서 이어지고 그 끝 전극이 표본에 닿아 있다','A lead runs from an apparatus to an electrode in contact with a specimen','G69','','갈바니즘 단어 없이 접촉 구조 검색'),
+('paraphrase_probe','투명한 몸의 손이 단단한 주전자 손잡이를 잡고 빈 컵 위에 있다','A translucent figure’s hand grips a solid teapot handle above an empty cup','G106','','초자연 노동을 종/고용 확정 없이 검색'),
+]
+NONVISUAL += [
+('nonvisual','의복만 보고 실제 성적 페티시즘을 확인','Confirm actual sexual fetishism from clothing alone','G91','','BLOCKED_UNSCORED'),
+('nonvisual','닮은 얼굴만 보고 친족과 근친 관계를 확정','Certify kinship and incest from similar faces','G93','','BLOCKED_UNSCORED'),
+('nonvisual','시신 하나로 여러 시점의 동일범 연쇄살인을 확정','Certify serial murders by one perpetrator from one body','G110','','BLOCKED_UNSCORED'),
+('nonvisual','화려한 박물관 사진으로 유물의 적법한 소유권을 확정','Certify lawful artifact ownership from an ornate museum image','G102|G105','','BLOCKED_UNSCORED'),
+('nonvisual','유령이 일하는 사진으로 임금과 자유를 확정','Certify pay and freedom from an image of a working ghost','G106','','BLOCKED_UNSCORED'),
+('nonvisual','문서에 도장이 있으므로 마법 면허가 법적으로 유효하다','A stamp proves a magical licence is legally valid','G103','','BLOCKED_UNSCORED'),
+]
+
+PIXEL_GROUPS = [
+('P01','가스등과 점등원','G03|G05','버너/불꽃/하우징과 봉 접점이 동시에 보이는 한 상태'),
+('P02','가스 제조와 저장의 구분','G06|G07','두 기능을 독립 장면 선택지로 평가하고 부품을 임의 혼합하지 않는다'),
+('P03','크리놀린과 버슬','G27|G28','한 시험에서 요구한 한 변형의 소유자 기준 둘레/후방 구조를 평가'),
+('P04','샤틀렌','G33','허리-걸쇠-체인-도구를 같은 소유자 계통으로 확인'),
+('P05','무도회 카드','G23','수첩/페이지/연필의 접속과 물건 크기; exact text는 별도 선택'),
+('P06','심령 인화물','G42','인화물 경계 안의 두 상을 실제 공간의 유령과 구분'),
+('P07','페퍼스 고스트','G43','원상/반사면/가상상의 일관된 공간 관계'),
+('P08','결계 접점','G52','차단 대상-경계선-바닥의 접점을 가림 없이 확인'),
+('P09','두 당사자의 계약','G56','두 소유자-공유 매체를 한 화면에서 확인; 대가/동의는 비가시로 남김'),
+('P10','자동인형','G67','기구-관절-손-도구의 연결; 자율성/영혼은 판정하지 않음'),
+('P11','갈바니즘 장치','G69','장치-리드선-전극-가상 표본 접속; 소생은 별도'),
+('P12','성인 구속 관계','G81','성인 선언·손목-커프-연결부-의자 고정점; 동의/성폭력 확정 금지'),
+]

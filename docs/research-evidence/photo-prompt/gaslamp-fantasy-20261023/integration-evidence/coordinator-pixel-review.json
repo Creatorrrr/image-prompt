@@ -1,0 +1,149 @@
+{
+  "schema": "gaslamp-coordinator-pixel-review/v1",
+  "frozen_test_capture": "pixel-test-inputs.json",
+  "arms": [
+    {
+      "arm": "A",
+      "reviewer": "coordinator; directly inspected original pixels independently of agent verdict",
+      "at": "2026-10-23T09:30:02.653763+00:00",
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/gaslamp-20261023-a-v3/results/native-original.png",
+      "sha256": "cbb5dbdf7efb3fdcc64470d270612daca48e45dbbbec4599624162221ffba9db",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "theme_visibility": "PASS",
+      "frozen_tests": {
+        "period_city": {
+          "status": "PASS",
+          "evidence": "Canal railings/wet paving, tall masonry houses, streetlamps and distant carriage share the portrait frame."
+        },
+        "supernatural_infrastructure": {
+          "status": "UNOBSERVABLE_NOT_PASS",
+          "evidence": "Visible lower wisps and upper humanlike spirit align at the pipe/post, but the opaque cabinet cap hides an intervening segment. The entire pipe-to-spirit route is not simultaneously observable; connection through the hidden segment would be inferred."
+        },
+        "reference": {
+          "status": "PASS_QUALITATIVE_APPEARANCE",
+          "evidence": "Short dark bob/fine fringe, large dark eyes, soft facial organization follow the reference; no identity/age/biometric claim."
+        },
+        "hands": {
+          "status": "FAIL",
+          "evidence": "Right hand visibly grips a valve; left hand rests on cabinet top lip/roof rather than the specified outer edge of the open door. Open door is on the far right."
+        },
+        "whole_photo": {
+          "status": "PASS_QUALITATIVE",
+          "evidence": "Coherent wet materials, face/hand/apparatus hierarchy and warm/cool lighting; plausible grounded photograph with a visible supernatural element."
+        }
+      },
+      "source_informed_G03_components": {
+        "status": "VISIBLE_COMPONENTS_PASS",
+        "housing": "clear glazed housing",
+        "burner": "visible metal burner inside housing",
+        "open_flame": "blue-white flame arises from burner",
+        "qualification_limit": "Generic source-informed depiction only; no complete native candidate adoption or source approval."
+      },
+      "overall": "FAIL",
+      "rule": "partial_is_fail; wrong left-hand contact target and opaque-cap occlusion fail the frozen whole-scene contract",
+      "user_acceptance": "pending",
+      "review_revisions": [
+        {
+          "at": "2026-10-23T09:31:48.537923+00:00",
+          "previous_supernatural_infrastructure": {
+            "status": "PASS_VISIBLE_RELATION",
+            "evidence": "Translucent humanlike upper form and wispy lower trail meet the exposed valve/pipe area; brass route rises to adjacent lit lamp. This depicts connection, not physical fuel chemistry or temporal causation."
+          },
+          "reason": "Reinspect original cabinet cap occlusion after agent independently flagged the same hidden interval; strict full continuity cannot be inferred through an opaque cap."
+        }
+      ]
+    },
+    {
+      "arm": "B",
+      "reviewer": "coordinator; original pixels inspected before receiving agent pixel verdict",
+      "at": "2026-10-23T09:40:10.251201+00:00",
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/gaslamp-20261023-b/images/spirit-bell.png",
+      "sha256": "914804a60fd159ceb0ef36dbc543cf1472cac73c9067ef00244218cecbd2524d",
+      "dimensions": [
+        1237,
+        1272
+      ],
+      "theme_visibility": "PASS",
+      "components": {
+        "reference": "QUALITATIVE_APPEARANCE_PASS; bob/fine fringe, large dark eyes and facial organization follow reference without identity/age claim",
+        "period_workshop": "PASS; workbench, craft tools, gas-style burner with visible flame, textured period garments and fittings",
+        "apparatus": "PASS; clear bell, worn brass base, long visibly repaired seam",
+        "spectral_hand_inside": "PASS_VISIBLE_CONTAINMENT",
+        "frost_across_repair": "PASS_VISIBLE_COMPONENTS; branching cold trace crosses visible repaired seam",
+        "human_hands": "PASS_VISIBLE_OWNERSHIP; right index extended to outer glass, separate left hand supported on bench"
+      },
+      "frozen_relations": {
+        "glass-contact": {
+          "status": "UNOBSERVABLE_NOT_PASS",
+          "evidence": "Human fingertip reaches the bright central starburst; the visible spectral fingertip appears slightly displaced to its right/lower side. Glow/wisps and glass depth prevent proving that both tips terminate at exactly the same glass point."
+        },
+        "repair-effect": {
+          "status": "PARTIAL_NOT_PASS",
+          "evidence": "Frost is visible across the repaired seam at the bright human contact site, but its origin at one shared human/spectral fingertip point is unproven."
+        },
+        "period-supernatural": {
+          "status": "PASS",
+          "evidence": "Tangible period craft workshop and visibly contained spectral hand share one coherent frame."
+        }
+      },
+      "whole_photo": "COHERENT_QUALITATIVE; face/apparatus/contact all legible with warm/cool source contrast",
+      "overall": "FAIL",
+      "rule": "partial_is_fail; common exact contact point not proven despite strong component/genre depiction",
+      "new_source_prompt_use": 0,
+      "user_acceptance": "pending"
+    },
+    {
+      "arm": "C",
+      "reviewer": "coordinator; directly inspected original pixels after agent reported its endpoint concern; not a blind verdict",
+      "at": "2026-10-23T09:47:51.005724+00:00",
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/gaslamp-20261023-c-neutral-rebuild/generated-image.png",
+      "sha256": "879c3ce514c8f6465354a0b00d207381da02004e830f00e138bfb006bc551ba5",
+      "dimensions": [
+        1312,
+        1199
+      ],
+      "theme_visibility": "PASS",
+      "frozen_tests": {
+        "C1-period-gaslight": {
+          "status": "PASS_VISIBLE_FIXTURES",
+          "evidence": "Period social interior, ornate paired burners with visible flames, clothing and city view share one frame; no chemical fuel/authenticity claim."
+        },
+        "C2-social-transaction": {
+          "status": "PASS_VISIBLE_OFFER",
+          "evidence": "Woman supports a cream document toward opposite seated patron; actors/document form a readable offer, not proof of legal agreement."
+        },
+        "C3-magic-route": {
+          "status": "FAIL_TARGET_MISMATCH",
+          "evidence": "Gold thread visibly touches the red wax seal and forms a continuous arc. Its upper glowing endpoint is on a fingertip/pad beside the signet, rather than visibly terminating on the signet ring metal/face. Near-ring contact is not ring contact."
+        },
+        "C4-reference": {
+          "status": "PASS_QUALITATIVE_APPEARANCE",
+          "evidence": "Dark chin-length bob/fine fringe and soft facial organization follow supplied portrait; no identity or age claim."
+        },
+        "C5-embodiment": {
+          "status": "PASS_VISIBLE_OWNERSHIP",
+          "evidence": "Primary hands visibly support/rest near document, opposite ring hand connects to visible cuff/wrist and remains separated from paper."
+        },
+        "C6-whole-photo": {
+          "status": "PASS_QUALITATIVE",
+          "evidence": "Face/document/raised hand hierarchy and coherent warm lighting/materials show a quiet fictional negotiation; exact supernatural endpoint still fails."
+        }
+      },
+      "overall": "FAIL",
+      "rule": "partial_is_fail; a continuous line to an adjacent fingertip does not satisfy the frozen ring endpoint target",
+      "new_source_prompt_use": 0,
+      "user_acceptance": "pending"
+    }
+  ],
+  "summary": {
+    "native_images_observed": 3,
+    "theme_visibility_pass": 3,
+    "strict_whole_case_pass": 0,
+    "strict_whole_case_fail": 3,
+    "native_approval_granted": false,
+    "user_acceptance": "pending"
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "schema": "gaslamp-coordinator-prerender-testcapture/v1",
+  "at": "2026-10-23T08:58:52.464081+00:00",
+  "rules": [
+    "partial_is_fail",
+    "UNOBSERVABLE_NOT_PASS",
+    "pixel_success_not_user_acceptance"
+  ],
+  "arms": [
+    {
+      "arm": "A",
+      "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/gaslamp-20261023-a-v3/testcase.json",
+      "sha256": "ffa088eec98a713836f9b3d1a6bc09282bffd0c6218a6a2bc77cbb36ebc1f1ca",
+      "criteria": {
+        "arm": "A",
+        "concept_seed": 3950830357,
+        "agent_staging_domain": "night street and civic infrastructure",
+        "concept": "Municipal lamplight inspector releases a gas-bound spirit during a night repair",
+        "authored_before_retrieval": true,
+        "reference_scope": {
+          "source": "appearance-reference",
+          "use": [
+            "face likeness",
+            "short straight dark bob with wispy fringe"
+          ],
+          "not_established": [
+            "real identity",
+            "actual age",
+            "occupation",
+            "personality",
+            "original clothing or setting"
+          ]
+        },
+        "expected_visible": [
+          {
+            "id": "period_city",
+            "criterion": "Gas streetlamp plus nineteenth-century masonry/canal/street life; not only brass costume"
+          },
+          {
+            "id": "supernatural_infrastructure",
+            "criterion": "A visible spirit is continuous with exposed gas pipe and its glow relates to a connected newly illuminated lamp"
+          },
+          {
+            "id": "reference",
+            "criterion": "Face and bob/fringe visibly draw on supplied portrait"
+          },
+          {
+            "id": "hands",
+            "criterion": "Two readable hands contact distinct door edge and valve with plausible ownership and reach"
+          },
+          {
+            "id": "whole_photo",
+            "criterion": "Coherent photograph with woman face primary, a legible cause and consequence, grounded light/material"
+          }
+        ],
+        "verdict_policy": {
+          "occlusion": "UNOBSERVABLE_NOT_PASS",
+          "partial_is_fail": true,
+          "pixel_success_not_user_acceptance": true
+        },
+        "postretrieval_source_checks_before_render": [
+          {
+            "card_id": "G03",
+            "candidate_id": "cand_114de8a843ca53259b82bebca4e4f20d",
+            "rid": "base",
+            "source_sha256": "7227bf21364c987d828faf3b623acdb04fb062a8bc589d0f24d560e0af073ca6",
+            "use": "generic_source_informed_refinement_not_native_adoption",
+            "gates": [
+              "G03.C01 glazed housing",
+              "G03.C02 visible burner inside same housing",
+              "G03.C03 small open flame",
+              "G03.R01 burner inside housing",
+              "G03.R02 flame at burner"
+            ],
+            "claim_limit": "Visible light and structure do not prove fuel chemistry, historical authenticity or magical causal efficacy."
+          }
+        ]
+      },
+      "phase_at_capture": "pack_bound"
+    },
+    {
+      "arm": "B",
+      "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/gaslamp-20261023-b/testcase.json",
+      "sha256": "320341bbe62ed385fa9fb401323d7e349622f6b4ff368219dbc25e39dd61d18c",
+      "criteria": {
+        "contract_version": "gaslamp-independent-native-testcase/v1",
+        "arm": "B",
+        "seed": 2350111417,
+        "state": "frozen_pre_retrieval_expectations",
+        "request_envelope_input_sha256": "4c5f32880ba1064351efc233aefecbc4a8b0da30c1ea2bf18e2b11c2eea80fdc",
+        "baseline_prompt_sha256": "dfe34e9cf6a661062fe1c196b7ddc6ff180b158138c726eb597c72f84d86c96b",
+        "ownership_note": "Expected elements below test agent-owned concrete staging; they do not retroactively become requester locks.",
+        "concept": "First contact across a repaired spirit bell in a nineteenth-century instrument workshop",
+        "reference_scope": {
+          "use": [
+            "visible facial appearance",
+            "short dark bob and wispy fringe"
+          ],
+          "not_inferred": [
+            "actual identity",
+            "age",
+            "personality"
+          ],
+          "clothing_and_setting": "agent-authored"
+        },
+        "expected_components": [
+          "recognizable reference face and short dark bob",
+          "clear glass bell on worn brass base",
+          "visible late-nineteenth-century craft workshop and actual gas flame",
+          "pale-blue translucent hand inside bell",
+          "human right index fingertip outside bell",
+          "one shared point of glass contact",
+          "frost radiating from the point across repaired crack",
+          "separate left hand and coherent supported forearms"
+        ],
+        "expected_relations": [
+          {
+            "id": "glass-contact",
+            "endpoints": [
+              "human outer index fingertip",
+              "spectral inner index fingertip"
+            ],
+            "connection": "both meet the same thin glass boundary at the same projected point",
+            "visibility": "all components and glass boundary visible together"
+          },
+          {
+            "id": "repair-effect",
+            "endpoints": [
+              "shared fingertip contact",
+              "repaired crack"
+            ],
+            "connection": "frost radiates continuously from shared point across the seam",
+            "visibility": "contact, frost and repaired seam distinguishable together"
+          },
+          {
+            "id": "period-supernatural",
+            "endpoints": [
+              "gas-lit period craft workshop",
+              "materially interacting spectral presence"
+            ],
+            "connection": "same inhabited photographic space",
+            "visibility": "both the period setting and impossible interaction readable without the genre label"
+          }
+        ],
+        "whole_scene_criteria": [
+          "Face and apparatus both command enough pixels to read; background remains subordinate.",
+          "Image reads as tangible photography with one coherent supernatural encounter.",
+          "Hands, supports, glass boundaries and tool placement remain plausible and readable.",
+          "Subtle human presence supports the absorbed encounter without replacing genre readability."
+        ],
+        "qualification_rules": {
+          "multi_component": "every component, both endpoints and continuity required",
+          "partial_is_fail": true,
+          "hidden": "UNOBSERVABLE_NOT_PASS",
+          "prompt_or_audit_is_not_pixel_proof": true,
+          "user_acceptance": "pending"
+        }
+      },
+      "phase_at_capture": "pack_bound"
+    },
+    {
+      "arm": "C",
+      "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/gaslamp-20261023-c-neutral-rebuild/testcase.json",
+      "sha256": "016ef7fb5cc35e00b0e4c8541edd107fae1e5848cd9d1f2cbf5635ce05cd547a",
+      "criteria": {
+        "schema": "gaslamp-independent-testcase/v1",
+        "arm": "C",
+        "provenance": "agent_prepack",
+        "seed": 4058490191,
+        "concept": "railway-patron drawing room travel-permit negotiation",
+        "reference_scope": "facial appearance and chin-length black bob with wispy bangs; no inferred identity, age or personality",
+        "baseline_sha256": "c1119e1bb94e3057554648a63b2146232e8f7a95620659152b495eddedd91c43",
+        "pre_retrieval": true,
+        "visible_tests": [
+          {
+            "id": "C1-period-gaslight",
+            "expect": "Period social interior, late-Victorian clothing, visible functioning gas flames in one frame."
+          },
+          {
+            "id": "C2-social-transaction",
+            "expect": "Reference-guided woman offers one document toward opposite patron; document and both actors form a readable exchange."
+          },
+          {
+            "id": "C3-magic-route",
+            "expect": "A complete uninterrupted luminous thread touches red wax seal on permit and signet ring on patron's right finger; both endpoints and full arc are visible simultaneously."
+          },
+          {
+            "id": "C4-reference",
+            "expect": "The primary woman visibly preserves the soft facial organization, large dark eyes, dark chin-length bob and fine bangs of the supplied appearance reference."
+          },
+          {
+            "id": "C5-embodiment",
+            "expect": "Both hands have plausible ownership, reach and wrist chains; paper-support contact and ring-hand gap remain legible."
+          },
+          {
+            "id": "C6-whole-photo",
+            "expect": "A quiet consequential negotiation reads from the pixels; face-to-document-to-arrested-hand hierarchy, coherent photographic light and materials."
+          }
+        ],
+        "gate_policy": "partial_is_fail; UNOBSERVABLE_NOT_PASS; audit/preflight success is not pixel success; user judgment pending"
+      },
+      "phase_at_capture": "pack_bound"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "own_probe_pid": 83711,
+  "state": "temporarily_stopped",
+  "reason": "High host memory compression and concurrent independent arm retrieval. Resume the same unmodified probe process after arms issue material so image tests receive resources first.",
+  "query_inputs_and_kernel_unchanged": true,
+  "time": "2026-10-23T08:29:01.031611+00:00",
+  "arm_schedule": {
+    "active_first": "A material issued; B PID86107 resumed unchanged",
+    "temporarily_stopped": [
+      "C PID86915"
+    ],
+    "reason": "Each full-pool source-contract initializer is memory intensive. Serialize existing independent processes rather than restart/requery.",
+    "unchanged": [
+      "core",
+      "query",
+      "sampling_seed",
+      "source_generation",
+      "kernel_code",
+      "transaction_files"
+    ],
+    "time": "2026-10-23T08:40:04.533485+00:00",
+    "B_resumed_at": "2026-10-23T08:45:43.164199+00:00"
+  },
+  "arm_A_process_policy": {
+    "action": "Move only own active arm PID85604 out of PRIO_DARWIN_BG to normal scheduling using taskpolicy -B. No negative nice priority, source changes, retries or other-user process changes.",
+    "time": "2026-10-23T08:44:41.190821+00:00",
+    "io_tiers": "taskpolicy -t 0 -l 0 -p 85604; only this own running process; normal throughput/latency scheduling, no source or algorithm change"
+  },
+  "arm_B_process_policy": "taskpolicy -B -t0 -l0 applied separately to own process only",
+  "events": [
+    {
+      "at": "2026-10-23T08:52:33.752456+00:00",
+      "pid": 86915,
+      "action": "SIGCONT and normal process throughput/latency tiers",
+      "reason": "B first retrieve completed; continue C unchanged"
+    },
+    {
+      "at": "2026-10-23T08:54:56.926808+00:00",
+      "pid": 83711,
+      "action": "SIGCONT and normal process throughput/latency tiers",
+      "reason": "all three initial retrievals completed; continue unchanged 326-query qualification"
+    },
+    {
+      "at": "2026-10-23T09:09:05.474794+00:00",
+      "action": "execution connection lost; previous own PIDs and exec sessions no longer exist",
+      "evidence": {
+        "previous_exec_parent": 9132,
+        "new_exec_parent": 3136,
+        "qualification_pid": 83711,
+        "qualification_log_empty": true,
+        "arm_phases": [
+          "pack_bound",
+          "pack_bound",
+          "pack_bound"
+        ]
+      },
+      "causal_limit": "Cause not confirmed; do not attribute to OOM or kernel errors",
+      "recovery": "Preserve all immutable query/core/pack/seed/prompt files; repeat only unfinished validation sequentially"
+    },
+    {
+      "at": "2026-10-23T09:22:30.953822+00:00",
+      "action": "sequential generation qualification completed",
+      "after_queries": 326,
+      "before_control_queries": 144,
+      "all_probe_processes_exited": true,
+      "reason": "release probe memory and continue all three authored image arms"
+    }
+  ]
+}

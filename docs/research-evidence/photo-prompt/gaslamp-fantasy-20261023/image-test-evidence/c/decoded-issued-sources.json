@@ -1,0 +1,2302 @@
+[
+  {
+    "id": "cand_f621085139765ad0ba2cbb5da276d9a4",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "source_sha256": "f626d60c7c072bcd258a3bfed71f4e0250db43d8a99e43a57a832278c21993d6",
+    "native_contract": "profile",
+    "full_native": {
+      "activation": {
+        "exact_terms": [
+          "computational multi-frame HDR local-tone balance look",
+          "계산사진 다중프레임 HDR 국소 톤 균형 룩"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "authored_components": {
+        "components": [
+          {
+            "id": "real_brightness_contrast",
+            "match_terms": [
+              "scene contains strong real brightness contrast",
+              "real brightness contrast"
+            ]
+          },
+          {
+            "id": "highlight_detail",
+            "match_terms": [
+              "bright-region detail is retained",
+              "highlight detail"
+            ]
+          },
+          {
+            "id": "clean_shadow_detail",
+            "match_terms": [
+              "shadow detail is clean enough to read",
+              "clean shadow detail"
+            ]
+          },
+          {
+            "id": "local_tone_structure",
+            "match_terms": [
+              "local tone transitions avoid global flattening",
+              "local tone structure"
+            ]
+          },
+          {
+            "id": "coherent_motion_edges",
+            "match_terms": [
+              "moving boundaries remain coherent or show only localized merge residue",
+              "coherent motion edges"
+            ]
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v2",
+        "discovery": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "real_brightness_contrast",
+            "highlight_detail",
+            "clean_shadow_detail",
+            "local_tone_structure",
+            "coherent_motion_edges"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "real_brightness_contrast",
+              "highlight_detail",
+              "clean_shadow_detail",
+              "local_tone_structure",
+              "coherent_motion_edges"
+            ],
+            "evidence": [
+              {
+                "field": "real_brightness_contrast_phrase",
+                "requirement": {
+                  "min_content_words": 2,
+                  "must_mention_any": [
+                    "scene contains strong real brightness contrast",
+                    "real brightness contrast"
+                  ]
+                }
+              },
+              {
+                "field": "highlight_detail_phrase",
+                "requirement": {
+                  "min_content_words": 2,
+                  "must_mention_any": [
+                    "bright-region detail is retained",
+                    "highlight detail"
+                  ]
+                }
+              },
+              {
+                "field": "clean_shadow_detail_phrase",
+                "requirement": {
+                  "min_content_words": 2,
+                  "must_mention_any": [
+                    "shadow detail is clean enough to read",
+                    "clean shadow detail"
+                  ]
+                }
+              },
+              {
+                "field": "local_tone_structure_phrase",
+                "requirement": {
+                  "min_content_words": 2,
+                  "must_mention_any": [
+                    "local tone transitions avoid global flattening",
+                    "local tone structure"
+                  ]
+                }
+              },
+              {
+                "field": "coherent_motion_edges_phrase",
+                "requirement": {
+                  "min_content_words": 2,
+                  "must_mention_any": [
+                    "moving boundaries remain coherent or show only localized merge residue",
+                    "coherent motion edges"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Compose one photograph where scene contains strong real brightness contrast, bright-region detail is retained, shadow detail is clean enough to read, local tone transitions avoid global flattening, and moving boundaries remain coherent or show only localized merge residue coexist and remain separately legible at thumbnail and native review scales.",
+            "render_gates": [
+              {
+                "description": "The saved image makes high-contrast scene is genuine clearly verifiable in one frame.",
+                "id": "vo_era_computational_hdr_local_tone_balance_look_1",
+                "review_scale": "thumbnail"
+              },
+              {
+                "description": "The saved image makes highlight and shadow detail both survive clearly verifiable in one frame.",
+                "id": "vo_era_computational_hdr_local_tone_balance_look_2",
+                "review_scale": "both"
+              },
+              {
+                "description": "The saved image makes local contrast stays structured clearly verifiable in one frame.",
+                "id": "vo_era_computational_hdr_local_tone_balance_look_3",
+                "review_scale": "native"
+              },
+              {
+                "description": "The saved image makes motion edges remain coherent clearly verifiable in one frame.",
+                "id": "vo_era_computational_hdr_local_tone_balance_look_4",
+                "review_scale": "native"
+              },
+              {
+                "description": "The saved image makes algorithm identity is not inferred clearly verifiable in one frame.",
+                "id": "vo_era_computational_hdr_local_tone_balance_look_5",
+                "review_scale": "both"
+              }
+            ]
+          }
+        ]
+      },
+      "category": "photo_era_capture_response",
+      "composition_instruction": "Compose one photograph where scene contains strong real brightness contrast, bright-region detail is retained, shadow detail is clean enough to read, local tone transitions avoid global flattening, and moving boundaries remain coherent or show only localized merge residue coexist and remain separately legible at thumbnail and native review scales.",
+      "concept_candidate": {
+        "concept_terms": [
+          "scene contains strong real brightness contrast",
+          "bright-region detail is retained",
+          "shadow detail is clean enough to read",
+          "local tone transitions avoid global flattening",
+          "moving boundaries remain coherent or show only localized merge residue"
+        ]
+      },
+      "evidence_requirements": {
+        "clean_shadow_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "shadow detail is clean enough to read",
+            "clean shadow detail"
+          ]
+        },
+        "coherent_motion_edges_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "moving boundaries remain coherent or show only localized merge residue",
+            "coherent motion edges"
+          ]
+        },
+        "highlight_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "bright-region detail is retained",
+            "highlight detail"
+          ]
+        },
+        "local_tone_structure_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "local tone transitions avoid global flattening",
+            "local tone structure"
+          ]
+        },
+        "real_brightness_contrast_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "scene contains strong real brightness contrast",
+            "real brightness contrast"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "aggressive HDR halo",
+        "globally flat exposure",
+        "shadow lift alone",
+        "oversharpening",
+        "claim of a specific phone or algorithm"
+      ],
+      "render_gates": [
+        {
+          "description": "The saved image makes high-contrast scene is genuine clearly verifiable in one frame.",
+          "id": "vo_era_computational_hdr_local_tone_balance_look_1",
+          "review_scale": "thumbnail"
+        },
+        {
+          "description": "The saved image makes highlight and shadow detail both survive clearly verifiable in one frame.",
+          "id": "vo_era_computational_hdr_local_tone_balance_look_2",
+          "review_scale": "both"
+        },
+        {
+          "description": "The saved image makes local contrast stays structured clearly verifiable in one frame.",
+          "id": "vo_era_computational_hdr_local_tone_balance_look_3",
+          "review_scale": "native"
+        },
+        {
+          "description": "The saved image makes motion edges remain coherent clearly verifiable in one frame.",
+          "id": "vo_era_computational_hdr_local_tone_balance_look_4",
+          "review_scale": "native"
+        },
+        {
+          "description": "The saved image makes algorithm identity is not inferred clearly verifiable in one frame.",
+          "id": "vo_era_computational_hdr_local_tone_balance_look_5",
+          "review_scale": "both"
+        }
+      ],
+      "required_evidence_fields": [
+        "real_brightness_contrast_phrase",
+        "highlight_detail_phrase",
+        "clean_shadow_detail_phrase",
+        "local_tone_structure_phrase",
+        "coherent_motion_edges_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "forbidden_prompt_terms": [],
+        "prompt_label_terms": [
+          "computational multi-frame HDR local-tone balance look"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "semantics": {
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "scene contains strong real brightness contrast",
+                "real brightness contrast"
+              ],
+              "id": "real_brightness_contrast"
+            },
+            {
+              "any_terms": [
+                "bright-region detail is retained",
+                "highlight detail"
+              ],
+              "id": "highlight_detail"
+            },
+            {
+              "any_terms": [
+                "shadow detail is clean enough to read",
+                "clean shadow detail"
+              ],
+              "id": "clean_shadow_detail"
+            },
+            {
+              "any_terms": [
+                "local tone transitions avoid global flattening",
+                "local tone structure"
+              ],
+              "id": "local_tone_structure"
+            },
+            {
+              "any_terms": [
+                "moving boundaries remain coherent or show only localized merge residue",
+                "coherent motion edges"
+              ],
+              "id": "coherent_motion_edges"
+            }
+          ],
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "real_brightness_contrast",
+            "highlight_detail",
+            "clean_shadow_detail",
+            "local_tone_structure",
+            "coherent_motion_edges"
+          ]
+        },
+        "contrast_examples": [
+          "aggressive HDR halo",
+          "globally flat exposure",
+          "shadow lift alone",
+          "oversharpening",
+          "claim of a specific phone or algorithm"
+        ],
+        "definition": "A photographic visual relation owned by visible capture response in which scene contains strong real brightness contrast, bright-region detail is retained, shadow detail is clean enough to read, local tone transitions avoid global flattening, and moving boundaries remain coherent or show only localized merge residue coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a genuinely high-contrast window interior retains texture outside the bright window and readable low-noise structure in the dark room, with local contrast preserved and moving hand edges coherently merged",
+          "A photographic rendering that keeps scene contains strong real brightness contrast visibly connected to bright-region detail is retained while shadow detail is clean enough to read, local tone transitions avoid global flattening, and moving boundaries remain coherent or show only localized merge residue remain separately legible."
+        ]
+      }
+    }
+  },
+  {
+    "id": "cand_b09debcaaf645732919712ffa0645a42",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "action",
+        "expression",
+        "pose",
+        "setting"
+      ],
+      "properties": []
+    },
+    "source_sha256": "d8330a811147fe3c66fd897fb2c062b3d490e49fcc57c6f9958fbd54254f9243",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [],
+      "concept_units": [
+        "a small role-signaling object rests on a table while both adults' hands are free"
+      ],
+      "contextual_usage": {
+        "contexts": [
+          {
+            "application_conditions": [
+              "This is an optional configuration, not a sensual/fetish classification.",
+              "Every mentioned actor, object, garment and place outside the declared change scope must already be established in the frozen core; otherwise the candidate is inapplicable.",
+              "Any actual wardrobe, material, appearance or scene change must fit the declared effects and the current property locks.",
+              "Established reference appearance and requester-owned identity remain unchanged; natural physical traits are alternatives only when explicitly open."
+            ],
+            "expressive": {
+              "sensual": "물건을 내려놓고 서로를 보는 행동이 평상시 관계로의 복귀를 암시한다.",
+              "sexual_or_fetish": "역할의 종료가 합의된 성적 놀이의 일부일 수 있으나 영구 권력 관계를 뜻하지 않는다."
+            },
+            "id": "context_sfr26_role_cue_set_aside",
+            "limits": [
+              "연극 리허설을 마친 것일 수 있다.",
+              "겉모습이 같아도 기능적·문화적·비성적 해석이 성립할 수 있으며, 매력의 개인차를 단일 점수로 정규화하지 않는다."
+            ],
+            "ordinary": "역할 놀이·촬영을 끝낸다.",
+            "status": "optional_contextual_reading; visible configuration is not proof of desire or a universal preference"
+          }
+        ]
+      },
+      "en": "a small role-signaling object rests on a table while both adults' hands are free",
+      "expression_scope": "portrayal_or_scene_relation",
+      "ko": "작은 역할 소품이 테이블에 놓이고 두 성인의 손이 자유로움",
+      "paraphrases": [],
+      "relations": [
+        {
+          "id": "ctx_role_cue_set_aside_relation",
+          "object": "a small role-signaling object rests on a table while both adults' hands are free",
+          "subject": "the established adult subject and scene elements",
+          "type": "visible_configuration"
+        }
+      ],
+      "tags": [
+        "human",
+        "adult",
+        "contextual_visual_relation"
+      ]
+    }
+  },
+  {
+    "id": "cand_ac6999eed45450d1a3ccc94ba5761e62",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "action",
+        "pose",
+        "relationship",
+        "setting"
+      ],
+      "properties": [
+        {
+          "dimension": "action",
+          "property": "body.action_configuration",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "pose",
+          "property": "body",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "relationship",
+          "property": "work_reference",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "setting",
+          "property": "props",
+          "target": "scene"
+        }
+      ]
+    },
+    "source_sha256": "76db58dd932ef92a563d869e7cb707973ada963381ca729fa200616f719c9268",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "자료 번호와 연결해 손가락으로 논점 세기",
+        "논점 1·2를 손가락으로 세는",
+        "enumerate document points"
+      ],
+      "concept_units": [
+        "declared hand shows a chosen number of fingers",
+        "other hand touches one enumerated finger if requested",
+        "numbered document items correspond to the chosen sequence"
+      ],
+      "contextual_usage": {
+        "contexts": [
+          {
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+            "claim_limits": [
+              "손가락을 무작정 많이 펴는 것·관객 수를 세는 장면과 구별한다."
+            ],
+            "definition": "논점 세기는 손가락의 수와 자료 번호가 연결되어야 한다.",
+            "id": "intellectual_term_042",
+            "observable_interpretation": "한 손의 펼친 손가락과 다른 손의 접촉 또는 1·2·3 자료 참조.",
+            "source_keyword": "손가락으로 논점 세기 — Enumerating gesture"
+          }
+        ]
+      },
+      "core_assertion_discovery": true,
+      "embedding_text": "자료 번호와 연결해 손가락으로 논점 세기; declared hand shows a chosen number of fingers; other hand touches one enumerated finger if requested; numbered document items correspond to the chosen sequence; 지정 손에서 선택한 수의 손가락이 보인다; 요청하면 다른 손이 세고 있는 손가락에 닿는다; 자료의 번호 항목이 선택한 순서에 대응한다; 장면 안에서 지정 손에서 선택한 수의 손가락이 보인다; 요청하면 다른 손이 세고 있는 손가락에 닿는다; 자료의 번호 항목이 선택한 순서에 대응한다; In the photographed scene, declared hand shows a chosen number of fingers; other hand touches one enumerated finger if requested; numbered document items correspond to the chosen sequence; The indicated hand displays the selected finger count; When the touching hand is specified, it contacts one of those counted fingers; The numbered entries on the document follow the same selected order; 해당 손에서 지정한 수의 손가락이 드러난다; 다른 손의 접촉을 지정한 경우 그 손이 세는 손가락 하나에 닿는다; 문서의 번호 항목이 같은 지정 순서에 대응한다",
+      "en": "declared hand shows a chosen number of fingers; other hand touches one enumerated finger if requested; numbered document items correspond to the chosen sequence",
+      "keywords": [
+        "자료 번호와 연결해 손가락으로 논점 세기",
+        "논점 1·2를 손가락으로 세는",
+        "enumerate document points"
+      ],
+      "ko": "자료 번호와 연결해 손가락으로 논점 세기",
+      "paraphrases": [
+        "지정 손에서 선택한 수의 손가락이 보인다; 요청하면 다른 손이 세고 있는 손가락에 닿는다; 자료의 번호 항목이 선택한 순서에 대응한다",
+        "declared hand shows a chosen number of fingers; other hand touches one enumerated finger if requested; numbered document items correspond to the chosen sequence",
+        "장면 안에서 지정 손에서 선택한 수의 손가락이 보인다; 요청하면 다른 손이 세고 있는 손가락에 닿는다; 자료의 번호 항목이 선택한 순서에 대응한다",
+        "In the photographed scene, declared hand shows a chosen number of fingers; other hand touches one enumerated finger if requested; numbered document items correspond to the chosen sequence",
+        "The indicated hand displays the selected finger count; When the touching hand is specified, it contacts one of those counted fingers; The numbered entries on the document follow the same selected order",
+        "해당 손에서 지정한 수의 손가락이 드러난다; 다른 손의 접촉을 지정한 경우 그 손이 세는 손가락 하나에 닿는다; 문서의 번호 항목이 같은 지정 순서에 대응한다"
+      ],
+      "relations": [
+        {
+          "id": "ia_enumeration_r1",
+          "object": "numbered_item",
+          "subject": "enumerated_finger",
+          "type": "corresponds_to"
+        },
+        {
+          "id": "ia_enumeration_r2",
+          "object": "enumerated_finger",
+          "subject": "other_hand",
+          "type": "touches"
+        }
+      ],
+      "tags": [
+        "human",
+        "work_reference"
+      ]
+    }
+  },
+  {
+    "id": "cand_4a322668bf545eeea0325c6b726cc039",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "action",
+        "composition",
+        "setting"
+      ],
+      "properties": []
+    },
+    "source_sha256": "664794d993253d82f1ab938be036c8c3ba6eea20f08555b25384302335c41249",
+    "native_contract": "bundle",
+    "full_native": {
+      "adoption": "optional",
+      "associated_profile_ids": [
+        "cand_bb05d21783fe5e048b393428e8121a9d"
+      ],
+      "components": [
+        {
+          "concept_units": [
+            "a platform edge runs parallel to the rails"
+          ],
+          "id": "component_1",
+          "minimum_realizations": 1
+        },
+        {
+          "concept_units": [
+            "a travel case stands beside the subject holding a small paper ticket"
+          ],
+          "id": "component_2",
+          "minimum_realizations": 1
+        },
+        {
+          "concept_units": [
+            "the traveler faces the carriage entrance from the platform"
+          ],
+          "id": "component_3",
+          "minimum_realizations": 1
+        },
+        {
+          "concept_units": [
+            "a wide view keeps feet platform edge carriage steps and rails spatially legible"
+          ],
+          "id": "component_4",
+          "minimum_realizations": 1
+        }
+      ],
+      "confusion_boundaries": [
+        "1880년대 경인선",
+        "1899년 서울 완전 연결",
+        "현대 전동차·캐리어 기본값"
+      ],
+      "member_candidates": [
+        {
+          "adoption": "optional",
+          "binding_id": "bind_5d0cfe30e99a572bb6c181f1fa1f967a",
+          "candidate_id": "cand_5d0cfe30e99a572bb6c181f1fa1f967a",
+          "requirements": {
+            "relations": []
+          }
+        },
+        {
+          "adoption": "optional",
+          "binding_id": "bind_2fd8f5fe86ac535485c2926f5c57cce7",
+          "candidate_id": "cand_2fd8f5fe86ac535485c2926f5c57cce7",
+          "requirements": {
+            "relations": []
+          }
+        },
+        {
+          "adoption": "optional",
+          "binding_id": "bind_98c5ec4ac6c95bb0804b9c4ed4e459af",
+          "candidate_id": "cand_98c5ec4ac6c95bb0804b9c4ed4e459af",
+          "requirements": {
+            "relations": []
+          }
+        },
+        {
+          "adoption": "optional",
+          "binding_id": "bind_66d57a452014504fadc0304947043d6b",
+          "candidate_id": "cand_66d57a452014504fadc0304947043d6b",
+          "requirements": {
+            "relations": []
+          }
+        }
+      ],
+      "profile_activation": "independent_request_evidence_only",
+      "relations": [],
+      "source_sha256": "76d02261a0c84be70a44ee29bccb5d6fdd354379f06e361c44de9e83b81eaf15"
+    }
+  },
+  {
+    "id": "cand_b545cc9c9df6512bb81b4c86e1582166",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "material"
+      ],
+      "properties": [
+        {
+          "dimension": "material",
+          "property": "surface.finish",
+          "target": "depicted_artifact"
+        }
+      ]
+    },
+    "source_sha256": "dc476b2d1bb581bd2f00e3b1d4d19bc71066993ad4b37eabe3e7ca505f7eb9d6",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "사진 속 종이의 목탄선",
+        "charcoal marks on a depicted paper artifact"
+      ],
+      "concept_units": [
+        "dark powdery charcoal marks occupy the paper surface",
+        "the surrounding scene retains ordinary photographic detail"
+      ],
+      "core_assertion_discovery": true,
+      "embedding_text": "charcoal marks on a depicted paper artifact; dark powdery charcoal marks occupy the paper surface; the surrounding scene retains ordinary photographic detail",
+      "en": "charcoal marks on a depicted paper artifact",
+      "keywords": [
+        "charcoal marks on a depicted paper artifact"
+      ],
+      "ko": "사진 속 종이의 목탄선",
+      "relations": [
+        {
+          "id": "effect_owner",
+          "object": "depicted_paper_surface",
+          "subject": "charcoal marks on a depicted paper artifact",
+          "type": "applies_to"
+        }
+      ]
+    }
+  },
+  {
+    "id": "cand_9a22a165d32a55dbbc2f25c7e9755aea",
+    "conditions": {
+      "requires_primary_any_tags": [
+        "punk_teslapunk"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "setting"
+      ],
+      "properties": []
+    },
+    "source_sha256": "013bc4b7343b8c6a44c276f6980d48338b00ee1e875b25bde6fab79d8e6bb89c",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "교류 발전기·변압기·코일·구리 도체·자기 절연체·통제된 코로나가 하나의 작동 그리드를 이루는 19세기 말~20세기 초 전기 레트로퓨처",
+        "a late-nineteenth- to early-twentieth-century electrical retrofuture whose AC generators, transformers, coils, copper conductors, porcelain insulation, and controlled corona form one working grid",
+        "teslapunk",
+        "테슬라펑크"
+      ],
+      "embedding_text": "Late-nineteenth- and early-twentieth-century high-voltage AC infrastructure becomes a speculative world through functional circuits, transformers, insulation, and controlled discharge.; a late-nineteenth- to early-twentieth-century electrical retrofuture whose AC generators, transformers, coils, copper conductors, porcelain insulation, and controlled corona form one working grid; distinct from magical lightning with no circuit; distinct from generic steampunk brass and gears; distinct from loose electrical arcs touching people or unrelated surfaces",
+      "en": "a late-nineteenth- to early-twentieth-century electrical retrofuture whose AC generators, transformers, coils, copper conductors, porcelain insulation, and controlled corona form one working grid",
+      "facets": {
+        "manifestation_mode": [
+          "diegetic_world_system"
+        ]
+      },
+      "keywords": [
+        "Late-nineteenth- and early-twentieth-century high-voltage AC infrastructure becomes a speculative world through functional circuits, transformers, insulation, and controlled discharge.",
+        "generator transformer coil and load relationship",
+        "connected conductors and switching",
+        "controlled corona spark or arc discharge",
+        "distance and insulation that explain the effect",
+        "copper windings iron cores porcelain and ebonite",
+        "brick laboratory or early grid infrastructure"
+      ],
+      "ko": "교류 발전기·변압기·코일·구리 도체·자기 절연체·통제된 코로나가 하나의 작동 그리드를 이루는 19세기 말~20세기 초 전기 레트로퓨처",
+      "tags": [
+        "worldbuilding_system",
+        "punk_visual_semantics",
+        "punk_teslapunk"
+      ]
+    }
+  },
+  {
+    "id": "cand_498261259fe25b45ac0c37eab40c3403",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "source_sha256": "08b67673d282d1a78b0d628f1d41bf6940b0aee093fdd5e60b4232ffb0d011c9",
+    "native_contract": "profile",
+    "full_native": {
+      "activation": {
+        "exact_terms": [
+          "window-seat quiet activity with directional daylight",
+          "cafe window seat with a half-drawn curtain and small hand action",
+          "창가 좌석의 작은 행동과 방향성 자연광",
+          "커튼을 반쯤 여는 카페 창가 생활 장면"
+        ],
+        "exclude_if_any_terms": [
+          "bright rectangle backdrop",
+          "studio softbox",
+          "subject far from window",
+          "unrelated cup",
+          "exterior-only view"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "authored_components": {
+        "components": [
+          {
+            "id": "physical_window_aperture",
+            "match_terms": [
+              "the frame visibly establishes physical window aperture as a physically coherent same-frame relation"
+            ]
+          },
+          {
+            "id": "near_window_seat_or_table",
+            "match_terms": [
+              "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation"
+            ]
+          },
+          {
+            "id": "hand_object_unfinished_action",
+            "match_terms": [
+              "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+            ]
+          },
+          {
+            "id": "window_to_room_light_gradient",
+            "match_terms": [
+              "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation"
+            ]
+          },
+          {
+            "id": "visible_action_progress_trace",
+            "match_terms": [
+              "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+            ]
+          }
+        ],
+        "contract_version": "photo-authored-visual-components/v2",
+        "discovery": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "physical_window_aperture",
+            "near_window_seat_or_table",
+            "hand_object_unfinished_action",
+            "window_to_room_light_gradient",
+            "visible_action_progress_trace"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "physical_window_aperture",
+              "near_window_seat_or_table",
+              "hand_object_unfinished_action",
+              "window_to_room_light_gradient",
+              "visible_action_progress_trace"
+            ],
+            "evidence": [
+              {
+                "field": "physical_window_aperture_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "the frame visibly establishes physical window aperture as a physically coherent same-frame relation"
+                  ]
+                }
+              },
+              {
+                "field": "near_window_seat_or_table_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation"
+                  ]
+                }
+              },
+              {
+                "field": "hand_object_unfinished_action_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+                  ]
+                }
+              },
+              {
+                "field": "window_to_room_light_gradient_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation"
+                  ]
+                }
+              },
+              {
+                "field": "visible_action_progress_trace_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Keep the aperture boundary, near seat or table, contacting hand and receding room in the same frame; preserve the source-to-receiver light gradient. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+            "render_gates": [
+              {
+                "description": "The frame visibly establishes physical window aperture as a physically coherent same-frame relation.",
+                "id": "vo_place_window_physical_aperture",
+                "review_scale": "thumbnail"
+              },
+              {
+                "description": "The frame visibly establishes near-window activity anchor as a physically coherent same-frame relation.",
+                "id": "vo_place_window_near_activity_anchor",
+                "review_scale": "both"
+              },
+              {
+                "description": "The frame visibly establishes hand-object contact as a physically coherent same-frame relation.",
+                "id": "vo_place_window_hand_contact",
+                "review_scale": "native"
+              },
+              {
+                "description": "The frame visibly establishes directional daylight gradient as a physically coherent same-frame relation.",
+                "id": "vo_place_window_directional_gradient",
+                "review_scale": "both"
+              },
+              {
+                "description": "The frame visibly establishes action progress trace as a physically coherent same-frame relation.",
+                "id": "vo_place_window_progress_trace",
+                "review_scale": "native"
+              }
+            ]
+          }
+        ]
+      },
+      "category": "place_activity_light_relation",
+      "composition_instruction": "Keep the aperture boundary, near seat or table, contacting hand and receding room in the same frame; preserve the source-to-receiver light gradient. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes physical window aperture as a physically coherent same-frame relation",
+          "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation",
+          "the frame visibly establishes hand-object contact as a physically coherent same-frame relation",
+          "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation",
+          "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+        ]
+      },
+      "evidence_requirements": {
+        "hand_object_unfinished_action_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+          ]
+        },
+        "near_window_seat_or_table_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation"
+          ]
+        },
+        "physical_window_aperture_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes physical window aperture as a physically coherent same-frame relation"
+          ]
+        },
+        "visible_action_progress_trace_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+          ]
+        },
+        "window_to_room_light_gradient_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "reject_substitutes": [
+        "bright_rectangle_backdrop",
+        "studio_softbox",
+        "subject_far_from_window",
+        "unrelated_cup",
+        "exterior_only_view"
+      ],
+      "render_gates": [
+        {
+          "description": "The frame visibly establishes physical window aperture as a physically coherent same-frame relation.",
+          "id": "vo_place_window_physical_aperture",
+          "review_scale": "thumbnail"
+        },
+        {
+          "description": "The frame visibly establishes near-window activity anchor as a physically coherent same-frame relation.",
+          "id": "vo_place_window_near_activity_anchor",
+          "review_scale": "both"
+        },
+        {
+          "description": "The frame visibly establishes hand-object contact as a physically coherent same-frame relation.",
+          "id": "vo_place_window_hand_contact",
+          "review_scale": "native"
+        },
+        {
+          "description": "The frame visibly establishes directional daylight gradient as a physically coherent same-frame relation.",
+          "id": "vo_place_window_directional_gradient",
+          "review_scale": "both"
+        },
+        {
+          "description": "The frame visibly establishes action progress trace as a physically coherent same-frame relation.",
+          "id": "vo_place_window_progress_trace",
+          "review_scale": "native"
+        }
+      ],
+      "required_evidence_fields": [
+        "physical_window_aperture_phrase",
+        "near_window_seat_or_table_phrase",
+        "hand_object_unfinished_action_phrase",
+        "window_to_room_light_gradient_phrase",
+        "visible_action_progress_trace_phrase"
+      ],
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "forbidden_prompt_terms": [],
+        "prompt_label_terms": [
+          "window-seat quiet activity with directional daylight",
+          "창가 좌석의 작은 행동과 방향성 자연광"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "semantics": {
+        "component_semantics": {
+          "groups": [
+            {
+              "any_terms": [
+                "the frame visibly establishes physical window aperture as a physically coherent same-frame relation"
+              ],
+              "id": "physical_window_aperture"
+            },
+            {
+              "any_terms": [
+                "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation"
+              ],
+              "id": "near_window_seat_or_table"
+            },
+            {
+              "any_terms": [
+                "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+              ],
+              "id": "hand_object_unfinished_action"
+            },
+            {
+              "any_terms": [
+                "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation"
+              ],
+              "id": "window_to_room_light_gradient"
+            },
+            {
+              "any_terms": [
+                "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+              ],
+              "id": "visible_action_progress_trace"
+            }
+          ],
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "physical_window_aperture",
+            "near_window_seat_or_table",
+            "hand_object_unfinished_action",
+            "window_to_room_light_gradient",
+            "visible_action_progress_trace"
+          ]
+        },
+        "contrast_examples": [
+          "bright rectangle backdrop",
+          "studio softbox",
+          "subject far from window",
+          "unrelated cup",
+          "exterior-only view"
+        ],
+        "definition": "A physical window aperture, near seat or table, contacting small hand action, directional window-to-room gradient, and visible progress trace coexist in one frame. All five relations must coexist; a broad place or mood label alone is not evidence.",
+        "paraphrase_examples": [
+          "A physical window aperture, near seat or table, contacting small hand action, directional window-to-room gradient, and visible progress trace coexist in one frame.",
+          "Keep the aperture boundary, near seat or table, contacting hand and receding room in the same frame; preserve the source-to-receiver light gradient."
+        ]
+      }
+    }
+  },
+  {
+    "id": "cand_209be269a1925824b6f53f16153b534f",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "action",
+        "composition",
+        "relationship"
+      ],
+      "properties": []
+    },
+    "source_sha256": "41fdeab01e590c3b772814ab2142e447dbeedb172dcfb0f688c135055b26f970",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "성인 친밀함과 공간",
+        "adult close face proximity gap"
+      ],
+      "application_contract": "One optional complete authored visual realization. Preserve the complete bilingual proposition, each owner, component, count, representation layer, contact, boundary and directed connection. Only use within independently frozen requester meaning and all affected dimensions and properties. Genre labels never activate this realization. All distinguishing endpoints must be simultaneously legible; partial_is_fail; UNOBSERVABLE_NOT_PASS. Research graphs, references, tags and citations confer no typed native facts, owner permission or native qualification. A visible proxy does not prove fuel chemistry, material identity, historical authenticity, occupation, class, rights, diagnosis, death, consent, identity, motives, temporal sequence, sound or supernatural cause.",
+      "definition": "Optional complete authored visual realization: Two adult participants face one another at close distance with a small visible gap between their faces.",
+      "en": "Two adult participants face one another at close distance with a small visible gap between their faces.",
+      "ko": "성인 참가자 두 명이 가까운 거리에서 서로를 마주하고 얼굴 사이에는 작은 간격이 남아 있다.",
+      "research_semantics": {
+        "activation": "optional_post_core_only; no genre-wide obligations",
+        "automatic_hard_activation": false,
+        "candidate_id": "cand_209be269a1925824b6f53f16153b534f",
+        "claim_limit_ko": "거리·시선만 시각 평가다. 실제 욕망·관계·동의·나이는 선언 맥락을 보존하며 외관으로 추정하지 않는다.",
+        "confusion_boundaries": [
+          "가까움=성관계",
+          "낮은 목선=동의",
+          "위협=매혹 의무"
+        ],
+        "evidence_mode": "proxy",
+        "gates": [
+          {
+            "description_en": "one adult participant",
+            "gate_id": "G79.C01",
+            "kind": "component",
+            "owner": "a",
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "unobservable_status": "UNOBSERVABLE_NOT_PASS"
+          },
+          {
+            "description_en": "second adult participant",
+            "gate_id": "G79.C02",
+            "kind": "component",
+            "owner": "b",
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "unobservable_status": "UNOBSERVABLE_NOT_PASS"
+          },
+          {
+            "description_en": "small visible gap between their faces",
+            "gate_id": "G79.C03",
+            "kind": "component",
+            "owner": "gap",
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "unobservable_status": "UNOBSERVABLE_NOT_PASS"
+          },
+          {
+            "both_endpoints_required": true,
+            "gate_id": "G79.R01",
+            "kind": "relation",
+            "owner_continuity_required": true,
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "required_relation": {
+              "object": "b",
+              "predicate": "faces",
+              "subject": "a"
+            },
+            "unobservable_status": "UNOBSERVABLE_NOT_PASS"
+          },
+          {
+            "both_endpoints_required": true,
+            "gate_id": "G79.R02",
+            "kind": "relation",
+            "owner_continuity_required": true,
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "required_relation": {
+              "object": "a",
+              "predicate": "separates",
+              "subject": "gap"
+            },
+            "unobservable_status": "UNOBSERVABLE_NOT_PASS"
+          },
+          {
+            "both_endpoints_required": true,
+            "gate_id": "G79.R03",
+            "kind": "relation",
+            "owner_continuity_required": true,
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "required_relation": {
+              "object": "b",
+              "predicate": "separates",
+              "subject": "gap"
+            },
+            "unobservable_status": "UNOBSERVABLE_NOT_PASS"
+          }
+        ],
+        "graph_scope": "research review metadata; no typed native facts or adoption authority",
+        "id": "G79",
+        "integration_status": "optional_visual_source",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "origin": "reference_derived_or_expanded",
+        "owners": [
+          {
+            "id": "a",
+            "visible_component_en": "one adult participant"
+          },
+          {
+            "id": "b",
+            "visible_component_en": "second adult participant"
+          },
+          {
+            "id": "gap",
+            "visible_component_en": "small visible gap between their faces"
+          }
+        ],
+        "phrase_en": "Two adult participants face one another at close distance with a small visible gap between their faces.",
+        "phrase_ko": "성인 참가자 두 명이 가까운 거리에서 서로를 마주하고 얼굴 사이에는 작은 간격이 남아 있다.",
+        "pixel_status": "NOT_RUN_FOR_THIS_SOURCE",
+        "priority": "P0",
+        "proposed_current_slots": [
+          "proxemics",
+          "gaze_target"
+        ],
+        "qualification": "RESEARCH_DRAFT_NOT_NATIVE_APPROVED",
+        "reference_keyword_ids": [
+          "K151",
+          "K167",
+          "K213"
+        ],
+        "registration_status": "authored_source_module",
+        "relations": [
+          {
+            "object": "b",
+            "predicate": "faces",
+            "subject": "a"
+          },
+          {
+            "object": "a",
+            "predicate": "separates",
+            "subject": "gap"
+          },
+          {
+            "object": "b",
+            "predicate": "separates",
+            "subject": "gap"
+          }
+        ],
+        "review_before_adoption": "구체 실현·관계·한영 의미를 native 검토에서 확인한다.",
+        "seed_terms": [
+          "Erotic Gothic"
+        ],
+        "source_ids": [
+          "S25",
+          "S23"
+        ],
+        "source_refs": [
+          {
+            "access": "selected_primary_passage",
+            "id": "S25",
+            "locator": "Karnstein portrait/identity conversation, lines 960-970",
+            "reviewed_date_kst": "2026-10-23",
+            "supported_scope_and_limit_ko": "초상·가계·현재 인물의 관계를 다루는 문학 사례. 닮은 초상만으로 동일 인물·혈연·불멸·동의를 확정하지 않는다.",
+            "title": "J. Sheridan Le Fanu: Carmilla, selected passages",
+            "url": "https://www.gutenberg.org/cache/epub/10007/pg10007-images.html"
+          },
+          {
+            "access": "body",
+            "id": "S23",
+            "locator": "lines 165-170",
+            "reviewed_date_kst": "2026-10-23",
+            "supported_scope_and_limit_ko": "1885 입법·1895 Wilde 재판의 억압 맥락. 의상·시선·동성 동석으로 실제 성적 지향이나 범죄를 추론하지 않는다.",
+            "title": "Historic England: Criminal Desires",
+            "url": "https://historicengland.org.uk/research/inclusive-heritage/lgbtq-heritage-project/law-and-oppression/criminal-desires/"
+          }
+        ],
+        "source_support": "Sources support only their stated object, historical context or literary example; the proposed geometry and scene are independently authored, not a source quote.",
+        "title_ko": "성인 친밀함과 공간",
+        "translation_review": "EN/KO named owners and relations manually compared; no independent translator certification"
+      }
+    }
+  },
+  {
+    "id": "cand_6ec311e081c256239949646a57a6b768",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "count",
+        "material",
+        "relationship",
+        "text"
+      ],
+      "properties": []
+    },
+    "source_sha256": "cac777e9a95ca10f93deba6e9a45bad32a0b275ae8d8fdcc5859577b9c696781",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "Chimerism",
+        "Mosaicism",
+        "Cloning / Genetic Engineering",
+        "Xenotransplantation",
+        "서로 다른 코드가 붙은 같은 외형의 시료",
+        "이종이식",
+        "키메라 현상",
+        "모자이크 현상",
+        "복제·유전공학"
+      ],
+      "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "definition": "Optional medical-horror visual realization: 서로 다른 코드가 붙은 같은 외형의 시료",
+      "en": "Two visually similar sealed sample tubes stand side by side, labeled \"SOURCE A\" and \"SOURCE B\"; neither contains a visible miniature organism.",
+      "ko": "외형이 비슷한 밀봉 시료 튜브 두 개가 나란히 있고 각각 \"SOURCE A\", \"SOURCE B\"로 표시되며, 어느 쪽에도 육안으로 보이는 소형 생물은 없다.",
+      "research_semantics": {
+        "activation": "optional_post_core; genre labels never activate all source obligations",
+        "adoption_decision": "pending_full_source_comparison",
+        "basis": "project_authored_visual_proposal",
+        "candidate_id": "cand_6ec311e081c256239949646a57a6b768",
+        "claim_limit_ko": "보이는 것은 표기 차이뿐이다. 키메라·모자이크·이종이식·복제·유전자 조작은 입증하지 않는다.",
+        "confusion_boundaries": [
+          "동일 외형을 복제 증거로 취급",
+          "라벨을 유전자 검사로 취급"
+        ],
+        "evidence_mode": "proxy",
+        "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+        "graph_scope": "research metadata only; not native facts or guard evidence",
+        "id": "L09",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "Two visually similar sealed sample tubes stand side by side, labeled \"SOURCE A\" and \"SOURCE B\"; neither contains a visible miniature organism."
+        ],
+        "phrase_en": "Two visually similar sealed sample tubes stand side by side, labeled \"SOURCE A\" and \"SOURCE B\"; neither contains a visible miniature organism.",
+        "phrase_ko": "외형이 비슷한 밀봉 시료 튜브 두 개가 나란히 있고 각각 \"SOURCE A\", \"SOURCE B\"로 표시되며, 어느 쪽에도 육안으로 보이는 소형 생물은 없다.",
+        "positive_ko": "외형이 비슷한 밀봉 시료 튜브 두 개가 나란히 있고 각각 \"SOURCE A\", \"SOURCE B\"로 표시되며, 어느 쪽에도 육안으로 보이는 소형 생물은 없다.",
+        "priority": "P1",
+        "proposed_slots": [
+          "visible_text",
+          "prop_placement",
+          "object_structure"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+        "registration_status": "authored_visual_source",
+        "relations": [
+          {
+            "object": "tube_a",
+            "predicate": "on",
+            "subject": "label_a"
+          },
+          {
+            "object": "tube_b",
+            "predicate": "on",
+            "subject": "label_b"
+          },
+          {
+            "object": "each_other",
+            "predicate": "beside",
+            "subject": "tubes"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "Two visually similar sealed sample tubes stand side by side, labeled \"SOURCE A\" and \"SOURCE B\"; neither contains a visible miniature organism.",
+            "kind": "complete_visual_proposition"
+          },
+          {
+            "description": "label_a on tube_a",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "label_b on tube_b",
+            "kind": "directed_relation"
+          },
+          {
+            "description": "tubes beside each_other",
+            "kind": "directed_relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-medical-horror-visual-semantics/v1",
+        "seed_terms": [
+          "Chimerism",
+          "Mosaicism",
+          "Cloning / Genetic Engineering",
+          "Xenotransplantation"
+        ],
+        "source_refs": [
+          {
+            "access_status": "definition_read",
+            "claim_limit_ko": "동물 부위 혼합 괴물이나 모자이크 현상과 등치 금지",
+            "id": "S20",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "서로 다른 DNA 배경 세포의 공존; 대개 가시 징후 없음",
+            "title": "NCI Chimerism",
+            "url": "https://www.cancer.gov/publications/dictionaries/cancer-terms/def/chimerism"
+          },
+          {
+            "access_status": "page_read",
+            "claim_limit_ko": "수혜자의 동물 외형·종 혼합 괴물화를 필수화하지 않음",
+            "id": "S23",
+            "quotation_used": false,
+            "reviewed_date_kst": "2026-10-22",
+            "supported_claim_ko": "비인간 동물 유래 살아 있는 조직 등의 이식 범위",
+            "title": "FDA Xenotransplantation",
+            "url": "https://www.fda.gov/vaccines-blood-biologics/xenotransplantation"
+          }
+        ],
+        "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+        "title_ko": "서로 다른 코드가 붙은 같은 외형의 시료",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    }
+  },
+  {
+    "id": "cand_d3ac848c0d015c5fb03ef7e51b701f58",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "body_geometry",
+        "material",
+        "relationship"
+      ],
+      "properties": []
+    },
+    "source_sha256": "8586dd89ec33d36177e2c7e901c6a14f6001ca48c375283e893bcb6a9bcbc6b7",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "지구 모양 구체와 뿌리",
+        "land-patterned sphere with roots",
+        "living world imagery"
+      ],
+      "application_contract": "One complete optional fictional visual realization, never a genre-triggered obligation. Preserve the complete English and Korean positive meaning, every material, count, part, owner, same/different relation, current pose, contact, endpoint and continuity or separation. Use only when the independent requester meaning and every affected dimension/property permit the complete case. All required endpoints and qualifiers must remain visible together; cropped, hidden or partial evidence fails the full case. Research graphs, aliases and citations supply no native facts, guard evidence, existing-owner permissions or whole-source qualification. Visible arrangements alone do not establish identity survival, consciousness, genetics, life or death, kinship, desire, consent, coercion, rights, political institutions, historical age, sequence, sound or supernatural efficacy. An artificial component, anatomical model, fictional shell and actual human injury retain different meanings.",
+      "definition": "Optional complete fictional visual realization: Thick roots extend beneath a land-patterned sphere and pass through a hole in its stand.",
+      "en": "Thick roots extend beneath a land-patterned sphere and pass through a hole in its stand.",
+      "ko": "육지 무늬가 있는 구체 아래에서 굵은 뿌리 묶음이 뻗어 받침 구멍을 통과한다.",
+      "research_semantics": {
+        "activation": "Explicit compatible selection after independent core freeze; no genre-triggered obligation.",
+        "adoption_mode": "optional_complete_realization",
+        "candidate_id": "cand_d3ac848c0d015c5fb03ef7e51b701f58",
+        "card_id": "G05",
+        "claim_limit_ko": "행성의 크기·생명·의식·천체 궤도는 입증하지 않는다.",
+        "component_gates": [
+          {
+            "gate_id": "G05-O-sphere",
+            "owner": "sphere",
+            "partial_is_fail": true,
+            "requirement_en": "land-patterned sphere",
+            "status": "NOT_RUN"
+          },
+          {
+            "gate_id": "G05-O-roots",
+            "owner": "roots",
+            "partial_is_fail": true,
+            "requirement_en": "thick root bundle",
+            "status": "NOT_RUN"
+          },
+          {
+            "gate_id": "G05-O-stand",
+            "owner": "stand",
+            "partial_is_fail": true,
+            "requirement_en": "stand",
+            "status": "NOT_RUN"
+          },
+          {
+            "gate_id": "G05-O-hole",
+            "owner": "hole",
+            "partial_is_fail": true,
+            "requirement_en": "stand hole",
+            "status": "NOT_RUN"
+          }
+        ],
+        "directed_relations": [
+          {
+            "from": "roots",
+            "predicate": "extends_from",
+            "to": "sphere"
+          },
+          {
+            "from": "hole",
+            "predicate": "part_of",
+            "to": "stand"
+          },
+          {
+            "from": "roots",
+            "predicate": "passes_through",
+            "to": "hole"
+          }
+        ],
+        "family": "인간 너머의 규모와 포함 세계",
+        "graph_scope": "Research review only; not typed facts, native guards, owner authority or qualifications.",
+        "language_review": "authored bilingual draft; independent bilingual review pending",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "nearest_confusion_ko": "실제 살아 있는 행성으로 단정",
+        "observability": "visible_arrangement_only",
+        "owners": {
+          "hole": "stand hole",
+          "roots": "thick root bundle",
+          "sphere": "land-patterned sphere",
+          "stand": "stand"
+        },
+        "pixel_status": "NOT_RUN",
+        "priority": "P1",
+        "proposal_en": "Thick roots extend beneath a land-patterned sphere and pass through a hole in its stand.",
+        "proposal_ko": "육지 무늬가 있는 구체 아래에서 굵은 뿌리 묶음이 뻗어 받침 구멍을 통과한다.",
+        "proposed_slots": [
+          "object_structure",
+          "anatomical_connection"
+        ],
+        "provenance_digest_scope": "research specification bytes, not web page bytes",
+        "registration_status": "authored_source_module",
+        "render_gates": [
+          {
+            "both_endpoints_required": true,
+            "gate_id": "G05-R1",
+            "partial_is_fail": true,
+            "relation": {
+              "from": "roots",
+              "predicate": "extends_from",
+              "to": "sphere"
+            },
+            "status": "NOT_RUN"
+          },
+          {
+            "both_endpoints_required": true,
+            "gate_id": "G05-R2",
+            "partial_is_fail": true,
+            "relation": {
+              "from": "hole",
+              "predicate": "part_of",
+              "to": "stand"
+            },
+            "status": "NOT_RUN"
+          },
+          {
+            "both_endpoints_required": true,
+            "gate_id": "G05-R3",
+            "partial_is_fail": true,
+            "relation": {
+              "from": "roots",
+              "predicate": "passes_through",
+              "to": "hole"
+            },
+            "status": "NOT_RUN"
+          }
+        ],
+        "role_descriptors": {
+          "anatomical_connection": {
+            "dimensions": [
+              "body_geometry"
+            ],
+            "property_prefixes": [
+              "body.connection",
+              "body.topology",
+              "anatomy.connection",
+              "topology."
+            ],
+            "semantic_role": "direct"
+          },
+          "object_structure": {
+            "dimensions": [
+              "appearance"
+            ],
+            "property_prefixes": [
+              "object.structure",
+              "object.geometry",
+              "object.connection"
+            ],
+            "semantic_role": "direct"
+          }
+        },
+        "schema": "photo-surreal-posthuman-visual-semantics/v1",
+        "source_ids": [
+          "S08",
+          "S24"
+        ],
+        "source_refs": [
+          {
+            "evidence_kind": "editor_authored_reference_body",
+            "geometry_support": "No candidate geometry is quoted from this source.",
+            "limit_ko": "색·장치·복장 묶음을 장르의 필요충분조건으로 만들지 않음",
+            "read_scope": "Definition and ingredient discussion, lines 23-30",
+            "reviewed_date_kst": "2026-10-22",
+            "source_id": "S08",
+            "supports_ko": "경계가 느슨하며 마법·신·특정 소재가 필수는 아님",
+            "title": "SFE: Science Fantasy",
+            "url": "https://sf-encyclopedia.com/entry/science_fantasy"
+          },
+          {
+            "evidence_kind": "publisher_synopsis",
+            "geometry_support": "No candidate geometry is quoted from this source.",
+            "limit_ko": "건물 사진만으로 특정 유전자·역사·접근 권한을 입증하지 않음",
+            "read_scope": "Series synopsis, lines 28-33",
+            "reviewed_date_kst": "2026-10-22",
+            "source_id": "S24",
+            "supports_ko": "인간의 규모를 넘어선 도시와 유전자·네트워크 접근의 서사",
+            "title": "Kodansha: BLAME!",
+            "url": "https://kodansha.us/series/blame/"
+          }
+        ],
+        "source_support": "Conceptual background or analogy only; all concrete geometry independently authored.",
+        "title_ko": "지구 모양 구체와 뿌리",
+        "whole_positive_meaning_gate": {
+          "all_properties_required": true,
+          "limit": "Relations alone do not cover every material, count, pose or qualifier. All explicit positive clauses remain required.",
+          "proposal_en": "Thick roots extend beneath a land-patterned sphere and pass through a hole in its stand.",
+          "proposal_ko": "육지 무늬가 있는 구체 아래에서 굵은 뿌리 묶음이 뻗어 받침 구멍을 통과한다.",
+          "status": "NOT_RUN"
+        }
+      }
+    }
+  },
+  {
+    "id": "cand_9a37eec2c81d549aafc15ffa67823bf9",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "style"
+      ],
+      "properties": []
+    },
+    "source_sha256": "a024da3b931b6167f7155c1e01ef42b251fa47c6828f81c020ca5ef2f838d8ff",
+    "native_contract": "option",
+    "full_native": {
+      "en": "concept object photography",
+      "ko": "콘셉트 오브젝트 사진",
+      "tags": [
+        "object",
+        "product",
+        "concept"
+      ]
+    }
+  },
+  {
+    "id": "cand_cededa1b5cb157bd87c2578fb65eeaa3",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "action",
+        "age",
+        "appearance",
+        "body_geometry",
+        "composition",
+        "count",
+        "event",
+        "pose",
+        "relationship",
+        "subject"
+      ],
+      "properties": [
+        {
+          "dimension": "action",
+          "property": "action.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "action",
+          "property": "action.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "action",
+          "property": "action.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "action",
+          "property": "action.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "age",
+          "property": "age.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "age",
+          "property": "age.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "age",
+          "property": "age.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "age",
+          "property": "age.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "count",
+          "property": "count.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "count",
+          "property": "count.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "count",
+          "property": "count.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "count",
+          "property": "count.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "event",
+          "property": "event.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "event",
+          "property": "event.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "event",
+          "property": "event.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "event",
+          "property": "event.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "pose",
+          "property": "pose.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "pose",
+          "property": "pose.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "pose",
+          "property": "pose.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "pose",
+          "property": "pose.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.genre_fusion_realization",
+          "target": "table"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.genre_fusion_realization",
+          "target": "human"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.genre_fusion_realization",
+          "target": "nonhuman"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.genre_fusion_realization",
+          "target": "map"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.genre_fusion_realization",
+          "target": "table"
+        }
+      ]
+    },
+    "source_sha256": "5c95e38b1a108d96b4b71d0fb85929744860290550abdcaf15c15efb6b10030c",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "Guild / Workers’ Association — 길드·노동자 조직",
+        "Negotiated Coexistence — 협상된 공존",
+        "서로 다른 접근 높이의 협상 지도"
+      ],
+      "application_contract": "One complete optional fictional visual realization. Preserve the entire positive English and Korean meaning, each owner, part, cardinality, material, action and directed connection. Use only within independently frozen requester meaning and every affected dimension/property. All distinguishing endpoints must be visible together; partial, cropped or hidden evidence does not pass the complete case. Research graphs and citations supply no native facts, existing-owner permission or native qualification. Visible arrangements alone do not prove historical age, scientific mechanism, identity, consciousness, consent, kinship, rights, coercion, fairness, supernatural efficacy, emotion or narrative sequence.",
+      "definition": "Optional complete fictional visual realization: An adult human and a nonhuman delegate point to different places on one route map laid on a low table.",
+      "en": "An adult human and a nonhuman delegate point to different places on one route map laid on a low table.",
+      "ko": "낮은 탁자의 같은 경로 지도에 성인 인간과 비인간 대표가 각각 다른 지점을 가리킨다.",
+      "research_semantics": {
+        "activation": "genre label never activates this card; explicit compatible post-core selection only",
+        "adoption_mode": "optional_complete_realization",
+        "candidate_id": "cand_cededa1b5cb157bd87c2578fb65eeaa3",
+        "card_id": "E11",
+        "claim_limit_ko": "지도에 대한 공동 주의만 보인다. 합의·대표성·시민권·법적 효력은 확정하지 않는다.",
+        "context_scope": null,
+        "directed_relations": [
+          {
+            "from": "human",
+            "predicate": "points_to",
+            "to": "map"
+          },
+          {
+            "from": "nonhuman",
+            "predicate": "points_to",
+            "to": "map"
+          },
+          {
+            "from": "map",
+            "predicate": "on",
+            "to": "table"
+          }
+        ],
+        "family": "공유자원·노동·도시 제도",
+        "gates": [
+          {
+            "both_endpoints_required": true,
+            "gate_id": "E11-R1",
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "required_relation": {
+              "from": "human",
+              "predicate": "points_to",
+              "to": "map"
+            },
+            "unobservable_is_pass": false
+          },
+          {
+            "both_endpoints_required": true,
+            "gate_id": "E11-R2",
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "required_relation": {
+              "from": "nonhuman",
+              "predicate": "points_to",
+              "to": "map"
+            },
+            "unobservable_is_pass": false
+          },
+          {
+            "both_endpoints_required": true,
+            "gate_id": "E11-R3",
+            "partial_is_fail": true,
+            "pixel_status": "NOT_RUN",
+            "required_relation": {
+              "from": "map",
+              "predicate": "on",
+              "to": "table"
+            },
+            "unobservable_is_pass": false
+          }
+        ],
+        "graph_scope": "review metadata; no typed native facts, owner permission or whole-source qualification",
+        "language_review": "authored bilingual draft; independent translator review pending",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "nearest_confusion_ko": "두 지도를 합쳐 같은 지도처럼 세기",
+        "observability": "proxy",
+        "owners": {
+          "human": "adult human",
+          "map": "shared route map",
+          "nonhuman": "nonhuman delegate",
+          "table": "low table"
+        },
+        "pixel_status": "not_rendered",
+        "positive_en": "An adult human and a nonhuman delegate point to different places on one route map laid on a low table.",
+        "positive_ko": "낮은 탁자의 같은 경로 지도에 성인 인간과 비인간 대표가 각각 다른 지점을 가리킨다.",
+        "priority": "P1",
+        "proposal_en": "An adult human and a nonhuman delegate point to different places on one route map laid on a low table.",
+        "proposal_ko": "낮은 탁자의 같은 경로 지도에 성인 인간과 비인간 대표가 각각 다른 지점을 가리킨다.",
+        "proposed_role_descriptors": {
+          "prop_placement": {
+            "dimensions": [
+              "composition",
+              "pose"
+            ],
+            "property_prefixes": [
+              "props.placement",
+              "prop.position",
+              "prop.orientation",
+              "objects.position"
+            ],
+            "semantic_role": "direct"
+          },
+          "relational_action": {
+            "dimensions": [
+              "action",
+              "relationship"
+            ],
+            "property_prefixes": [
+              "action.interaction",
+              "relation.action",
+              "interaction."
+            ],
+            "semantic_role": "direct"
+          }
+        },
+        "proposed_slots": [
+          "relational_action",
+          "prop_placement"
+        ],
+        "provenance_digest_scope": "research specification bytes, not downloaded source webpage bytes",
+        "registration_status": "authored_source_module",
+        "requester_acceptance": "pending",
+        "requester_judgment": "not_yet_received",
+        "role_descriptor_limit": "Current slot vocabulary only; no approved role fit, owner selector, effect declaration, source guard, or runtime registration.",
+        "routed_seed_ids": [
+          110,
+          112,
+          120
+        ],
+        "schema": "photo-genre-fusion-visual-semantics/v1",
+        "seed_ids": [
+          110,
+          120
+        ],
+        "seed_terms": [
+          "Guild / Workers’ Association — 길드·노동자 조직",
+          "Negotiated Coexistence — 협상된 공존"
+        ],
+        "source_ids": [
+          "S12",
+          "S01"
+        ],
+        "source_refs": [
+          {
+            "concrete_geometry": "authored_optional_realization_not_a_source_quote",
+            "read_scope": "official indexed transcript passages read; direct open 403",
+            "reviewed_date_kst": "2026-10-22",
+            "source_id": "S12",
+            "supported_scope_and_limit_ko": "공유자원 규칙·의사소통·상황별 운영의 차이. 보이는 우물·줄서기만으로 소유권·공정성을 판정하지 않는다. 전체 인터뷰 직접 열람은 미완료.",
+            "title": "Elinor Ostrom: Nobel interview transcript",
+            "url": "https://www.nobelprize.org/prizes/economic-sciences/2009/ostrom/164465-ostrom-williamson-interview-transcript/"
+          },
+          {
+            "concrete_geometry": "authored_optional_realization_not_a_source_quote",
+            "read_scope": "body lines 5-7",
+            "reviewed_date_kst": "2026-10-22",
+            "source_id": "S01",
+            "supported_scope_and_limit_ko": "저자의 작업 정의: 도시적 이차세계, 현실 사회의 복잡성, SF·판타지·호러 혼합. 촉수나 정해진 건축 양식의 표준 도감이 아니다.",
+            "title": "Jeff VanderMeer: Working Definition of New Weird",
+            "url": "https://www.jeffvandermeer.com/blog/2007/09/27/working-definition-of-new-weird"
+          }
+        ],
+        "source_support": "meaning/context/analogy only; concrete geometry independently authored",
+        "title_ko": "서로 다른 접근 높이의 협상 지도",
+        "translation_review": "bilingual source authored with explicit owner/relation boundaries; independent translator review remains pending"
+      }
+    }
+  },
+  {
+    "id": "cand_e2fd641657ae5d03a5cda5b1a33b862e",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "setting"
+      ],
+      "properties": []
+    },
+    "source_sha256": "72e0765d284663ea92c90c627cf3f48cede819db45cc4a3d1f2544b8c0d24c39",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "two-world portal location",
+        "차원문 길목"
+      ],
+      "embedding_text": "one complete anchored threshold reveals a materially different far-side environment while retaining enough near-side floor wall and light context for a subject to intersect the plane with coherent occlusion and local residue",
+      "en": "an interworld threshold location where two distinct spaces and one crossing plane remain visible",
+      "keywords": [
+        "near-side room",
+        "different far-side environment",
+        "complete boundary",
+        "crossing clearance"
+      ],
+      "ko": "서로 다른 두 공간과 하나의 통과면을 동시에 촬영할 수 있는 차원문 길목",
+      "tags": [
+        "fantasy",
+        "portal",
+        "threshold",
+        "two_spaces",
+        "crossing"
+      ]
+    }
+  },
+  {
+    "id": "cand_8b4f20a6f0545ae39ffcebe91a4d27e8",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "composition",
+        "count",
+        "relationship",
+        "text"
+      ],
+      "properties": []
+    },
+    "source_sha256": "58d4b8672d9c7d85aced48c1ad436a012d1482adf2fee37c044fe87fbc1087a9",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "서로 충돌하는 방송 그래픽 층",
+        "Broadcast Intrusion / Signal Hijack",
+        "방송 침입·신호 탈취"
+      ],
+      "application_contract": "One optional complete authored realization. Preserve all named components, counts, materials, text carriers, projected boundaries and directed endpoint relations in both languages. Use only when compatible with the independently frozen scene and all affected dimensions. Sibling alternatives are not all required together. Hidden, merged, reversed or cropped required endpoints are unobservable, not passed; partial_is_fail; UNOBSERVABLE_NOT_PASS. The research graph and citations are metadata and grant no typed native fact, owner permission, role approval or native qualification. A still appearance does not establish actual recording provenance, device failure, audio, motion through time, identity, consent, intention, life/death, institutional truth or supernatural effect.",
+      "definition": "Optional complete authored visual realization: Show a recognizable original station graphic. Show a different abrupt rectangular graphic overlapping part of it. The distinct graphic covers only part of the station image.",
+      "en": "Show a recognizable original station graphic. Show a different abrupt rectangular graphic overlapping part of it. The distinct graphic covers only part of the station image.",
+      "ko": "알아볼 수 있는 원래 방송국 그래픽. 일부에 겹친 갑작스러운 별도 직사각형 그래픽. 다른 그래픽이 방송국 영상 일부만 덮는다.",
+      "research_semantics": {
+        "activation": "post_core_optional_complete_realization; broad genre never activates all cards",
+        "candidate_id": "cand_8b4f20a6f0545ae39ffcebe91a4d27e8",
+        "claim_limit_ko": "정지 합성은 충돌하는 층을 보인다. 실제 신호 탈취·원래 방송·침입 주체는 시퀀스와 설정이 필요하다.",
+        "confusion_boundaries_ko": [
+          "단순 PIP를 실제 탈취로 판정",
+          "자막·부서진 화면과 동일시"
+        ],
+        "definition_review": "bounded_source_context_and_authored_realization",
+        "evidence_mode": "proxy",
+        "evidence_status": "research_proposal_not_native_qualified",
+        "graph_scope": "review metadata only; no native owner or causal fact",
+        "id": "A053",
+        "layer": "broadcast_relation",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "owners": [
+          {
+            "id": "base",
+            "visible_en": "a recognizable original station graphic",
+            "visible_ko": "알아볼 수 있는 원래 방송국 그래픽"
+          },
+          {
+            "id": "intrusion",
+            "visible_en": "a different abrupt rectangular graphic overlapping part of it",
+            "visible_ko": "일부에 겹친 갑작스러운 별도 직사각형 그래픽"
+          }
+        ],
+        "positive_en": "Show a recognizable original station graphic. Show a different abrupt rectangular graphic overlapping part of it. The distinct graphic covers only part of the station image.",
+        "positive_ko": "알아볼 수 있는 원래 방송국 그래픽. 일부에 겹친 갑작스러운 별도 직사각형 그래픽. 다른 그래픽이 방송국 영상 일부만 덮는다.",
+        "priority": "P0",
+        "proposed_slots": [
+          "image_artifact",
+          "visible_text"
+        ],
+        "registration_status": "authored_source_module",
+        "relations": [
+          {
+            "object": "base",
+            "predicate": "overlaps",
+            "subject": "intrusion",
+            "visible_en": "The distinct graphic covers only part of the station image",
+            "visible_ko": "다른 그래픽이 방송국 영상 일부만 덮는다"
+          }
+        ],
+        "render_gate_proposals": [
+          {
+            "id": "A053_owner_base",
+            "owner": "base",
+            "requirement_en": "a recognizable original station graphic",
+            "requirement_ko": "알아볼 수 있는 원래 방송국 그래픽",
+            "scale": "native"
+          },
+          {
+            "id": "A053_owner_intrusion",
+            "owner": "intrusion",
+            "requirement_en": "a different abrupt rectangular graphic overlapping part of it",
+            "requirement_ko": "일부에 겹친 갑작스러운 별도 직사각형 그래픽",
+            "scale": "native"
+          },
+          {
+            "id": "A053_relation_1",
+            "object": "base",
+            "predicate": "overlaps",
+            "requirement_en": "The distinct graphic covers only part of the station image",
+            "requirement_ko": "다른 그래픽이 방송국 영상 일부만 덮는다",
+            "scale": "native",
+            "subject": "intrusion"
+          }
+        ],
+        "requester_acceptance": "pending",
+        "runtime_importable": true,
+        "schema": "photo-analog-horror-visual-semantics/v1",
+        "seed_ids": [
+          87
+        ],
+        "semantic_axes": [
+          "image_artifact",
+          "text_carrier"
+        ],
+        "source_claim_scope": "sources support only their ledger scopes; exact components, layouts and scenes are authored proposals, not canonical source descriptions",
+        "source_details": [
+          {
+            "access": "creator_body",
+            "accessed_date": "2026-10-22",
+            "finding_ko": "창작자는 iMovie·Photoshop·Flash로 방송 그래픽과 번짐을 만들었다고 설명한다. 실제 아날로그 촬영이 장르의 필수 조건은 아니다.",
+            "id": "S11",
+            "pixel_reference_reviewed": false,
+            "read_scope": "2016-01-13 production account",
+            "supports": "bounded definitions/context only; exact candidate staging is locally authored",
+            "title": "Kris Straub: New horror! Contingency on Local 58",
+            "url": "https://www.patreon.com/krisstraub/posts/new-horror-on-58-4114380"
+          },
+          {
+            "access": "creator_body",
+            "accessed_date": "2026-10-22",
+            "finding_ko": "작중 WCLV-TV의 디지털 전환 공지를 확인했다. 작품 안의 날짜·기관을 현실 방송 이력으로 읽지 않는다.",
+            "id": "S27",
+            "pixel_reference_reviewed": false,
+            "read_scope": "in-world digital transition notice",
+            "supports": "bounded definitions/context only; exact candidate staging is locally authored",
+            "title": "LOCAL58TV: cached community television homepage",
+            "url": "https://local58.tv/web20210624dgtl/"
+          }
+        ],
+        "source_ids": [
+          "S11",
+          "S27"
+        ],
+        "title_ko": "서로 충돌하는 방송 그래픽 층",
+        "unproven": [
+          "actual medium provenance",
+          "causal mechanism",
+          "temporal behavior",
+          "audio",
+          "identity/consent/intent",
+          "viewer fear or nostalgia"
+        ],
+        "whole_case_rule": "partial_is_fail; UNOBSERVABLE_NOT_PASS"
+      }
+    }
+  },
+  {
+    "id": "cand_85fa5c84b17a5031a77c217ffa84fe87",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "style"
+      ],
+      "properties": []
+    },
+    "source_sha256": "74bba07641245ced8f8c37e2b18e05805123e4a9ea6e0beacd320a6f1407a699",
+    "native_contract": "option",
+    "full_native": {
+      "en": "conceptual photograph",
+      "ko": "콘셉트 포토",
+      "tags": [
+        "concept"
+      ]
+    }
+  },
+  {
+    "id": "cand_1cbfd3c5c40b52d09a1236ea9cb46ea3",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "body_geometry",
+        "appearance"
+      ],
+      "properties": [
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.biopunk_realization",
+          "target": "fictional_body_surface"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.biopunk_realization",
+          "target": "separated_skin_layer"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.biopunk_realization",
+          "target": "fictional_body_surface"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.biopunk_realization",
+          "target": "separated_skin_layer"
+        }
+      ]
+    },
+    "source_sha256": "b7344f129aa8dc66c5798a4fd1fdebced2091780ee144ff0d4847fdb176acb2f",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "Flaying",
+        "a separated skin-like layer beside a revealed surface",
+        "분리 피부층과 노출면의 관계"
+      ],
+      "application_contract": "One complete optional fictional realization. Adopt only when every stated owner, endpoint and relation fits the independently frozen scene and all affected properties remain open. Preserve the whole EN/KO meaning. Required endpoints hidden by framing or occlusion are unobservable, not passed; partial realization fails the whole case. A source term is no proof of biological function, material chemistry, elapsed change, consent, social causation or viewer response. Claim limit: 허구의 상태와 경계만 제안한다. 손상 행위 방법·사망·동의·의료 진단을 제공하거나 추론하지 않는다. Confusion boundaries: 벗는 옷; 질환 진단; 행위자·수술 동의 추론.",
+      "definition": "a separated skin-like layer beside a revealed surface",
+      "en": "A skin-like layer is visibly separated from a fictional body surface along one edge. The layer and underlying differently textured surface retain distinct readable boundaries.",
+      "ko": "피부 같은 층이 한쪽 가장자리를 따라 허구 신체의 표면에서 분리되어 있는 모습이 보인다. 그 층과 아래에 있는 다른 질감의 표면은 각각 뚜렷하고 알아볼 수 있는 경계를 유지한다.",
+      "research_semantics": {
+        "activation": "optional_post_core; no genre label activates a bundle",
+        "basis": "project_authored_visual_inference",
+        "candidate_id": "cand_1cbfd3c5c40b52d09a1236ea9cb46ea3",
+        "claim_limit_ko": "허구의 상태와 경계만 제안한다. 손상 행위 방법·사망·동의·의료 진단을 제공하거나 추론하지 않는다.",
+        "confusion_boundaries": [
+          "벗는 옷",
+          "질환 진단",
+          "행위자·수술 동의 추론"
+        ],
+        "context_description": [],
+        "entity_roots": [
+          "fictional_body_surface",
+          "separated_skin_layer"
+        ],
+        "evidence_mode": "still",
+        "family": "damage",
+        "graph_scope": "semantic_registry_only; no engine fact or authority inferred",
+        "id": "D07",
+        "native_approval": false,
+        "native_qualification": "not_qualified",
+        "observable_components": [
+          "A skin-like layer is visibly separated from a fictional body surface along one edge.",
+          "The layer and underlying differently textured surface retain distinct readable boundaries."
+        ],
+        "owned_effect_policy": "conservative union of the actual described owners; no new existing-owner permission",
+        "owner_roots": [
+          "fictional_body_surface",
+          "separated_skin_layer"
+        ],
+        "positive_ko": "피부 같은 층이 한쪽 가장자리를 따라 허구 신체의 표면에서 분리되어 있는 모습이 보인다. 그 층과 아래에 있는 다른 질감의 표면은 각각 뚜렷하고 알아볼 수 있는 경계를 유지한다.",
+        "proposed_slots": [
+          "anatomical_connection",
+          "skin_condition",
+          "aftermath_trace"
+        ],
+        "registration_status": "authored_source_module",
+        "relation": {
+          "object": "fictional_body_surface",
+          "predicate": "peeled_from",
+          "subject": "separated_skin_layer"
+        },
+        "relations": [
+          {
+            "object": "fictional_body_surface",
+            "predicate": "peeled_from",
+            "subject": "separated_skin_layer"
+          }
+        ],
+        "render_gates": [
+          {
+            "description": "A skin-like layer is visibly separated from a fictional body surface along one edge.",
+            "kind": "component"
+          },
+          {
+            "description": "The layer and underlying differently textured surface retain distinct readable boundaries.",
+            "kind": "component"
+          },
+          {
+            "description": "separated_skin_layer peeled_from fictional_body_surface",
+            "kind": "relation"
+          }
+        ],
+        "runtime_registration": true,
+        "schema": "photo-biopunk-visual-semantics/v1",
+        "seed_terms": [
+          "Flaying"
+        ],
+        "source_refs": [
+          {
+            "claim_limit_ko": "모든 작품에 고어를 필수로 만들지 않는다.",
+            "current_access": "search_body_read",
+            "current_locator": "definition and political/autonomy discussion; not film-by-film pixel analysis",
+            "id": "S01",
+            "prior_access_status": "search_content_read",
+            "quotations_used": false,
+            "reviewed_date_kst": "2026-10-21",
+            "source_type": "institutional_film_criticism",
+            "supported_claim_ko": "신체 변형과 통제 상실, 온전성·자율성의 장르 논의",
+            "title": "BFI: 10 great body horror films",
+            "url": "https://www.bfi.org.uk/lists/10-great-body-horror-films"
+          },
+          {
+            "claim_limit_ko": "재질의 화학적 조성·탄성 수치는 사진으로 확정하지 않는다.",
+            "current_access": "focused_body_read",
+            "current_locator": "epithelium/connective/muscle distinctions; microscopic striations",
+            "id": "S34",
+            "prior_access_status": "search_content_read",
+            "quotations_used": false,
+            "reviewed_date_kst": "2026-10-21",
+            "source_type": "official_textbook",
+            "supported_claim_ko": "섬유성 결합조직·연골·힘줄 등의 구조적 구별",
+            "title": "OpenStax: Animal Primary Tissues",
+            "url": "https://openstax.org/books/biology/pages/33-2-animal-primary-tissues"
+          }
+        ],
+        "source_support_scope": "definition_and_limit_only; concrete geometry is an authored proposal",
+        "title_en": "a separated skin-like layer beside a revealed surface",
+        "title_ko": "분리 피부층과 노출면의 관계",
+        "translation_review": "complete EN/KO counterpart; no diagnostic or causal inference",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "whole_case_policy": "partial_is_fail"
+      }
+    }
+  },
+  {
+    "id": "cand_dcff1701413955659ac92e08f1296b0f",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "setting"
+      ],
+      "properties": []
+    },
+    "source_sha256": "953ae17a1db140018e39f552af435d5f55d3e2d473fffc6030f33607c264cf14",
+    "native_contract": "option",
+    "full_native": {
+      "aliases": [
+        "quiet",
+        "after",
+        "event",
+        "state"
+      ],
+      "embedding_text": "quiet after-event state with chairs, cups, and traces left behind",
+      "en": "quiet after-event state with chairs, cups, and traces left behind",
+      "keywords": [
+        "condition",
+        "after_event",
+        "quiet",
+        "occasion",
+        "after",
+        "event",
+        "state"
+      ],
+      "ko": "행사 직후 조용해진 공간",
+      "phrase_en": "after an event, with chairs and small traces left behind",
+      "phrase_ko": "행사 직후 의자와 작은 흔적만 남아 조용해진 상태로",
+      "tags": [
+        "condition",
+        "after_event",
+        "quiet",
+        "occasion"
+      ]
+    }
+  }
+]
