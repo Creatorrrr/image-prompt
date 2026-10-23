@@ -218,3 +218,12 @@ bindings, reusing 22 existing complete sources without mutation. Garment layers,
 bodily supports, hand contacts, instrument endpoints and depicted-media owners
 remain explicit. Research metadata, installed exposure, audited prompt use and
 saved-image relations are separate evidence layers.
+
+The [military-fiction extension](military-fiction-semantics.md) registers 103
+complete optional bilingual visual sources, 70 excluded context/held diagnostics
+and 203 optional bindings, reuses one complete trench source and narrowly
+clarifies two existing Korean/alias records. Its 393 advisory keyword routes
+retain branch, rank, billet, legal, clinical and narrative boundaries. People,
+garments, supports, straps, devices and represented figures keep separate owners
+and connection endpoints. Registration, sealed exposure, actual prompt use and
+saved pixels are separate evidence; research metadata grants no native approval.

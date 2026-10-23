@@ -1,0 +1,56 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "military-fiction-integration-20261024",
+  "request_text": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+  "active_spans": [
+    {
+      "span_id": "visual_1",
+      "start": 65,
+      "end": 86,
+      "text": "서로 다른 컨셉으로 이번에 반영한 주제"
+    },
+    {
+      "span_id": "visual_2",
+      "start": 115,
+      "end": 130,
+      "text": "주제에 어울리는 랜덤한 컨셉"
+    },
+    {
+      "span_id": "visual_3",
+      "start": 149,
+      "end": 162,
+      "text": "첨부한 이미지를 활용하여"
+    }
+  ],
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "military-topic",
+        "active_span_id": "visual_1",
+        "request_quote": {
+          "start": 76,
+          "end": 86,
+          "text": "이번에 반영한 주제"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "current chat, earlier requesting-user message referring to 군대물 용어 조사",
+          "text": "[군대물 용어 조사](chatgpt-conversation://6adb70a2-a2f8-83ec-ac21-6ec6a88f3c9d) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘. 대화 내용을 도구로 조회했을 때 전체 내용을 모두 볼 수 없었다면 크롬으로 보면 돼. 로그인해놨어.",
+          "sha256": "8d1494d295c1956a41378969fe066244e069c81a802b3b3f8191bc9aaeedcdeb"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 4,
+          "text": "군대물"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "The current request explicitly asks to implement and test the topic researched in the immediately preceding user request, whose linked title explicitly names 군대물. This quote supplies discovery context only, not visual locks or a testcase."
+        }
+      }
+    ]
+  }
+}
