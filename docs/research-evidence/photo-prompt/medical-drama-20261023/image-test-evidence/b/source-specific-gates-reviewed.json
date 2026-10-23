@@ -1,0 +1,62 @@
+{
+  "schema": "agent-source-specific-pixel-gates/v1",
+  "candidate_id": "cand_a5140bd678bf5f49a95fc7588cee61d2",
+  "medical_card_id": "A09",
+  "source_sha256": "6623c01f221a8cb81858b9bf09212ddb177a94bf343d0ec9ab3405c3a228d73e",
+  "native_approval": false,
+  "use": "inspiration_only_whole_visible_meaning_retained",
+  "literal_prompt_evidence": [
+    "He stands between two waist-high parallel bars, each hand visibly wrapped around its own rail",
+    "the therapist stands inside the right rail beside the patient, half a step behind his right hip",
+    "both soles meet the floor"
+  ],
+  "gates": [
+    {
+      "id": "A09_complete",
+      "requires": [
+        "patient between two separate parallel rails",
+        "one patient hand contacts each respective rail",
+        "therapist beside same patient",
+        "therapist inside same walking lane",
+        "patient feet supported on floor",
+        "actors physically separate and recognizable"
+      ]
+    }
+  ],
+  "unobservable": "UNOBSERVABLE_NOT_PASS",
+  "partial": "partial_is_fail",
+  "status": "fail",
+  "pixel_review": "pixel-review.json",
+  "observed_gates": [
+    {
+      "id": "A09_patient_between_rails",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Patient body and two rail boundaries are visible in one frame."
+    },
+    {
+      "id": "A09_two_owned_hand_contacts",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "One patient hand wraps each distinct rail; both hand/forearm owners and contact boundaries are readable."
+    },
+    {
+      "id": "A09_therapist_beside_same_patient",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Therapist body and belt hand are alongside this same patient."
+    },
+    {
+      "id": "A09_therapist_inside_walking_lane",
+      "observability": "partial",
+      "status": "fail",
+      "evidence": "The torso and near leg appear beside the patient toward the inner side of the right rail, but the rear foot and the right rail floor boundary overlap in projection. The complete therapist-inside-lane placement is not unambiguously established. Do not infer a full inside-lane relation from upper-body proximity."
+    },
+    {
+      "id": "A09_floor_support_and_distinct_actors",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Patient shoes meet the floor and the two people have distinct faces, torsos and visible limbs; no outcome claim follows."
+    }
+  ]
+}

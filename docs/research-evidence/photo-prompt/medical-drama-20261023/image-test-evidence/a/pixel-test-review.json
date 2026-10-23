@@ -1,0 +1,85 @@
+{
+  "schema": "agent-medical-image-evaluation/v1",
+  "arm": "a",
+  "reviewer": "Codex independent arm A",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-drama-20261023-native-a/output/light-before-next-patient.png",
+  "image_sha256": "95993119f52826dbdc0bcb0bff9646fb42a7411a7d2f68b06475504425ed8474",
+  "image_call_count": 1,
+  "observed_image_model": null,
+  "original_pixels_inspected": true,
+  "review_scale": "native_original_1536x1024",
+  "gates": [
+    {
+      "gate_id": "A1_topic",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The central draped operating table, large overhead surgical lamp, two scrub-clad clinicians, instrument trolley and clinical equipment jointly establish an operating theatre."
+    },
+    {
+      "gate_id": "A2_grip",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The primary nurse raised right arm is continuous from the shoulder through elbow, forearm and wrist to fingers wrapped around the central grey lamp adjustment handle. The grip and handle boundary are visible."
+    },
+    {
+      "gate_id": "A3_light",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The lit lamp head hangs above the same unoccupied blue-draped foreground table, and a concentrated bright oval is visible on that table. The table surface in the image is unoccupied."
+    },
+    {
+      "gate_id": "A4_team",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The separate clinician across the table places a flat gloved hand at the upper edge of the same illuminated oval and looks upward toward the nurse adjusting hand. Both contact and attention endpoints read together. The light boundary is diffuse and overlaps the fingertips; the image does not show the entire hand strictly outside the light pool."
+    },
+    {
+      "gate_id": "A5_reference",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The central nurse full three-quarter face and dark bob are large and readable. Brown eyes, soft facial contour, short dark fringe and bob preserve a recognizable resemblance to the supplied portrait. The output bob is somewhat longer at the nape; this is resemblance guidance, not an exact identity assertion."
+    },
+    {
+      "gate_id": "A01_complete",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "One articulated surgical light is above the one central operating table; a distinct metal wheeled instrument trolley with separate frame and tabletop stands beside it at image left. All owners and the above/beside relations coexist in the same original image."
+    },
+    {
+      "gate_id": "A01_above",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The surgical-light head, central handle, supporting yoke and visible upper support segment are above the operating table. Ceiling attachment beyond frame is not an additional source endpoint."
+    },
+    {
+      "gate_id": "A01_trolley",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The left instrument trolley is visibly separate from the central operating table: its blue-covered top holds instruments and a metal bowl, and its independent chrome frame, shelf and wheels are readable beside the table."
+    }
+  ],
+  "full_frozen_testcase_status": "pass",
+  "source_specific_complete_visual_case": "pass",
+  "partial_is_fail": true,
+  "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+  "failed_relations": [],
+  "whole_image": {
+    "topic": "pass: a practical operating-theatre preparation moment is visible. This does not prove actual credentials, sterility or an event outcome.",
+    "reference_resemblance": "pass as face/hair guidance; not identity verification.",
+    "artistic_quality": "Coherent clinical editorial photograph. The face, raised grip, colleague attention and light pool make a clear triangle. The oversized lamp crop and crowded background are less subtle than the imagined candid moment, but the main action/result hierarchy survives.",
+    "situation_without_prompt": "Two clinical workers appear to align a surgical light over a draped table. The pixels support this immediate practical task; next-patient timing is supplied by authored context.",
+    "control_calibration": "The first impression is clinical preparation with a gently attractive central portrait. Subtle facial intimacy remains supporting; added fetish and surreal treatment are not perceptually present.",
+    "optional_staging_variation": "The instrument trolley appears behind the nurse on image left rather than behind the colleague. Its complete source-defined beside-table relation remains visible."
+  },
+  "new_medical_data": {
+    "exposed_count": 5,
+    "used_count": 0,
+    "pixel_qualification": "not_tested_for_new_source_relations",
+    "limitation": "The final image uses a legacy A01 lamp/table/trolley relation. It demonstrates medical-topic pixels and that complete existing room relation, while new registered medical-source pixel survival remains unproven in arm A."
+  },
+  "native_approval": false,
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "schema": "agent-medical-image-pixel-review/v1",
+  "arm": "c",
+  "reviewer": "Codex independent arm C",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-drama-20261023-native-c/image.png",
+  "image_sha256": "3a2383ee40d62746f30507bafa2413d19f99a71716808d8610983ee18f2824c3",
+  "native_dimensions": [
+    1312,
+    1199
+  ],
+  "actual_cumulative_image_calls": 1,
+  "frozen_testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/medical-drama-20261023-native-c/authored/testcase.pre-generation.json",
+  "testcase_gates": [
+    {
+      "id": "C1",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The white-coated clinician and seated cuffed-arm patient face each other at a desk in a room with a distinct examination couch; the whole image reads as a routine clinical encounter."
+    },
+    {
+      "id": "C2",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The wide dark cuff encloses the same patient upper arm above the visible elbow; rolled shirt sleeve ends above it. That continuous elbow/forearm lies palm-up across the padded support on the tabletop."
+    },
+    {
+      "id": "C3",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "At native scale a single gray hose exits a short coupling on the cuff edge, crosses the open tabletop without interruption, and enters the monitor socket at the monitor's right side. Both physical junction boundaries and the route appear together; see native-apparatus-crop.png and native-cuff-joint-crop.png."
+    },
+    {
+      "id": "C4",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The clinician hand rests beside the monitor and is separate from the patient measuring arm; both faces are directed toward the encounter. Her fingers are curled into a loose closed/resting shape rather than the specified open hand, so the complete gate fails."
+    },
+    {
+      "id": "C5",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The clinician face is clear at native scale. Dark chin-length bob, fine fringe, eye/cheek/nose and soft-mouth appearance resemble the supplied photo. This is a resemblance observation, not identity proof."
+    }
+  ],
+  "source_specific_gates": [
+    {
+      "id": "D06-complete",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Wide cuff on the patient upper arm, cuff-edge tube coupling, uninterrupted tube and separate tabletop monitor socket are visible in one original image. No physiological measurement accuracy or device function is inferred."
+    },
+    {
+      "id": "A01-complete",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The clinician and patient are seated facing each other, and desk/examination couch are separate with couch against the adjacent wall. The actual desk open-end boundary and the claimed chair placement across that end are obscured by the foreground patient or cropped. Ordinary across-desk seating does not establish the complete open-end relation."
+    }
+  ],
+  "full_case_status": "fail",
+  "full_case_rule": "Every frozen gate and each retained complete-source relation must pass in this same image; partial_is_fail; UNOBSERVABLE_NOT_PASS.",
+  "failed_relation_ids": [
+    "C4",
+    "A01-complete"
+  ],
+  "separate_assessments": {
+    "whole_image_topic": {
+      "status": "pass",
+      "evidence": "The complete scene reads as an ordinary outpatient measurement and face-to-face encounter rather than medical costume alone."
+    },
+    "reference_face_hair_resemblance": {
+      "status": "pass",
+      "evidence": "Strong recognizable appearance resemblance at useful face scale; no factual identity, real occupation or age claimed."
+    },
+    "new_medical_data_relations": {
+      "D06": "pass",
+      "A01": "partial_fail",
+      "note": "D06 complete visible mechanism passes. A01 has seated-facing and couch context but insufficient proof of desk-end placement."
+    },
+    "artistic_quality": {
+      "assessment": "coherent and visually strong, with an identifiable small clinical interaction",
+      "strengths": [
+        "Clear clinician face and patient-directed attention",
+        "Foreground cuff apparatus provides a legible clinical reason for the encounter",
+        "Soft window daylight, sage and gray palette, and readable couch unify the scene"
+      ],
+      "limitations": [
+        "Patient occupies the right foreground and hides the desk-end geometry",
+        "Clinician fingers curl instead of the planned open resting hand",
+        "Displayed numerals are merely in-image marks; neither accuracy nor function is established"
+      ]
+    },
+    "control_calibration": {
+      "plain_impression": "A calm attentive clinician speaks with a seated patient during a cuff measurement; the face and foreground arm share the visual hierarchy.",
+      "frozen_direction_comparison": "The supporting human appeal is readable through clear facial presence, eye catchlights and skin texture. The image stays within ordinary realism and restrained creativity. These are perceptual judgments separate from the saved intensity bindings."
+    },
+    "user_acceptance": {
+      "status": "pending",
+      "source": "not_yet_received",
+      "baseline_comparison": "not_applicable"
+    }
+  }
+}
