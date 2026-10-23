@@ -22,3 +22,18 @@ store is independently copied and is preserved.
 Existing research checksums refer to their original phase snapshots. Publication
 checks and hashes are separate under `publication-evidence/`; subsequent local
 push/cleanup proof is in `generated/maintenance/medical-drama-publication-20261024/`.
+
+## Merged-source validation
+
+The merge retains the complete current origin/main data including idol fiction,
+and all 150 medical source records. The final source has 21,601 CIDs, including
+20,516 positive candidates. The exact source-derived index verifies its full
+statistics, payload and lossless vector closure. Existing vectors reused:
+20,417; qualified cache hits: 99; embedding provider calls: 0. Twenty-two focused
+material-projection, validation-context and sampling tests pass. The image
+results remain the prior A PASS and B/C FAIL; no new images were generated.
+
+The final layout is `46528a47b95c4e5cbcf0d5644738da99720da0b01f55778eb93151757c688327`. Obsolete parent index members are
+removed only when absent from the final declared closure. Publication proof:
+`publication-evidence/index-build.final.json`, `index-closure.final.json`,
+`both-parent-blob-verification.json`, and `dictionary-validation.final.json`.
