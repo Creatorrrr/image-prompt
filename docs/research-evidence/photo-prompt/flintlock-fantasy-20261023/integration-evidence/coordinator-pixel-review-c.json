@@ -1,0 +1,86 @@
+{
+  "schema": "coordinator-independent-pixel-review/v1",
+  "arm": "C",
+  "reviewer": "root",
+  "reviewed_utc": "2026-10-23T09:20:44.189081+00:00",
+  "inspection": "view_image original; decoded native file 1237x1272; no resampling or alteration; subsequently inspected and byte-verified exact unresampled stitch/lock crops",
+  "image_path": "/Users/chasoik/.codex/generated_images/01a167b4-ee26-7843-8582-f4d726b09875/exec-bf27a20e-6eaf-4047-bae9-a84e10d6acbb.png",
+  "image_sha256": "ac84a6196cba686ee0383076784ec52335898c055d98b188f22420ad86f0af3d",
+  "prospective_testcase": "generated/photo-runs/flintlock-fantasy-20261023-c/prospective-testcase.json",
+  "prospective_testcase_sha256_at_review": "f638ea237deee579520a1545d096844e722e8a714c620ebe6d7b6108ba648e1a",
+  "impression_before_control_labels": "A warm sunlit harbor work scene, focused cloth repair and a friendly waiting guard. The blue etched brass looks like a mounted workshop fixture, so ordinary craft is clearer than an impossible event.",
+  "gates": [
+    {
+      "gate_id": "C_reference_appearance",
+      "observability": "visible",
+      "result": "pass",
+      "evidence": "Short dark bob, wispy bangs and facial proportions support appearance continuity with the supplied portrait; no identity claim.",
+      "qualification_label": "PASS"
+    },
+    {
+      "gate_id": "C_flintlock_technology",
+      "observability": "partial",
+      "result": "fail",
+      "evidence": "Wood stock, external cock and upright steel are visible on the same long firearm. The shallow pan is not separately unambiguous enough to pass the complete mechanism gate.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    },
+    {
+      "gate_id": "C_functional_magic",
+      "observability": "visible",
+      "result": "fail",
+      "evidence": "The brass jaw grips the flag, but its horizontal arm visibly joins the vertical brass support at frame right. There is no unsupported floating clamp; blue grooves alone do not meet the air-gap requirement.",
+      "qualification_label": "FAIL"
+    },
+    {
+      "gate_id": "C_civilian_labor",
+      "observability": "visible",
+      "result": "pass",
+      "evidence": "Patch and flag on a worktable, sewing supplies, masts, boats and quay form one inhabited repair scene with the waiting armed figure.",
+      "qualification_label": "PASS"
+    },
+    {
+      "gate_id": "C_repair_contact",
+      "observability": "visible",
+      "result": "pass",
+      "evidence": "The exact native crop separates the held slim needle, taut white thread ending at the new patch-edge stitch, and the other palm stabilizing the patch. Owned forearms and contact points form a plausible sewing action.",
+      "qualification_label": "PASS"
+    }
+  ],
+  "pixel_base_passes": 3,
+  "pixel_base_gates": 5,
+  "full_case": "FAIL",
+  "new_source_transfer": "NOT_EXERCISED: exposed H08 was declined before generation; no new-source improvement claim",
+  "user_acceptance": "pending",
+  "limits": "Supplemental independent review, not the managed runtime audit or historical source-image verification. Still pixels do not establish functioning firearms, message transfer or actual magic.",
+  "crop_verification": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-c/images/review-stitch.png",
+      "bounds": [
+        50,
+        790,
+        720,
+        1190
+      ],
+      "unresampled_native_pixels": true,
+      "sha256": "206c28d61ba70283ec192a526d3efb22f866a7118e47f02ddb62c1f05487cf69"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-c/images/review-flintlock.png",
+      "bounds": [
+        710,
+        280,
+        1230,
+        710
+      ],
+      "unresampled_native_pixels": true,
+      "sha256": "b7ae4b199d1c3e5996a0f8a472e46581fcfa818f7ef58160e2303ed605db63e5"
+    }
+  ],
+  "observation_revision": {
+    "reason": "Additional native-scale stitch crop resolves the previously ambiguous needle and thread contact; no gate was changed",
+    "previous_C_repair_contact": "partial/fail",
+    "reviewed_utc": "2026-10-23T09:22:46.641110+00:00"
+  },
+  "partial_is_fail": true,
+  "unobservable_not_pass": true
+}

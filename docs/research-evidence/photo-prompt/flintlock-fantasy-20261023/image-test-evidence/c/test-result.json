@@ -1,0 +1,123 @@
+{
+  "schema": "independent-arm-test-result/v1",
+  "arm": "C",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-c/prospective-testcase.json",
+  "testcase_sha256": "f638ea237deee579520a1545d096844e722e8a714c620ebe6d7b6108ba648e1a",
+  "prompt_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-c/runtime-prompt-exact.txt",
+  "prompt_sha256": "ccc4a3be380a8e58772311f79b8e530bd8033c19ba473a346798ddff482b4fd2",
+  "image": {
+    "actual_returned_path": "/Users/chasoik/.codex/generated_images/01a167b4-ee26-7843-8582-f4d726b09875/exec-bf27a20e-6eaf-4047-bae9-a84e10d6acbb.png",
+    "repo_local_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-c/images/flintlock-harbor-mender-native.png",
+    "image_sha256": "ac84a6196cba686ee0383076784ec52335898c055d98b188f22420ad86f0af3d",
+    "dimensions": [
+      1237,
+      1272
+    ],
+    "image_call_count": 1,
+    "tool": "image_gen.imagegen",
+    "observed_image_model": "unknown",
+    "reference_attached": true
+  },
+  "strict_pixel_result": "fail",
+  "new_data_end_to_end_transfer": "not_demonstrated_new_source_not_adopted",
+  "all_required_components_in_one_image": false,
+  "rules": [
+    "partial_is_fail",
+    "UNOBSERVABLE_NOT_PASS"
+  ],
+  "gate_results": [
+    {
+      "gate_id": "C_reference_transport",
+      "status": "pass",
+      "observability": "visible",
+      "layer": "transport",
+      "evidence": "Audited payload contains the exact supplied local portrait path; recorded reference SHA256 equals 06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7. Actual imagegen call used that payload once."
+    },
+    {
+      "gate_id": "C_reference_appearance",
+      "status": "pass",
+      "observability": "visible",
+      "layer": "pixels",
+      "evidence": "The central face in the unresampled face crop retains a short dark bob, wispy fringe, rounded facial outline, large dark eyes, small nose and softly shaped mouth comparable with the supplied portrait. View and expression differ. This is appearance continuity, not identity or exact age.",
+      "crop": "images/review-face.png"
+    },
+    {
+      "gate_id": "C_flintlock_technology",
+      "status": "fail",
+      "observability": "partial",
+      "layer": "pixels",
+      "evidence": "One long wood-stock firearm and external cock/frizzen-like pieces are clear at the sentry's chest. The shallow priming pan does not have a sufficiently distinct, independently readable rim and boundary in the original-size lock crop. The full cock/frizzen/pan gate cannot pass by inferring the missing part from the gun label. No ignition, loading or historical model claim is made.",
+      "crop": "images/review-flintlock.png"
+    },
+    {
+      "gate_id": "C_functional_magic",
+      "status": "fail",
+      "observability": "visible",
+      "layer": "pixels",
+      "evidence": "The brass jaws visibly grip the raised flag edge; cloth tension and a gap beneath the jaw are visible. However, a continuous horizontal brass arm joins the jaws to a solid vertical table-mounted post. The planned unsupported hovering clamp is replaced by an ordinary mechanical support. Blue engraved light does not satisfy that missing support relation or prove supernatural causation.",
+      "crop": "images/review-clamp.png"
+    },
+    {
+      "gate_id": "C_civilian_labor",
+      "status": "pass",
+      "observability": "visible",
+      "layer": "pixels",
+      "evidence": "A woman stabilizes and stitches a patch on a signal cloth at a workshop table, with tools and fabric around her; water, moored sailing boats, masts and quay masonry are visible behind her. The separate sentry, wood-stock firearm and luminous brass tool share one coherent space. Occupation and genre remain authored context, with visible labor and equipment as support."
+    },
+    {
+      "gate_id": "C_repair_contact",
+      "status": "pass",
+      "observability": "visible",
+      "layer": "pixels",
+      "evidence": "Her left palm presses the patch flat. Her other hand holds a slim visible needle, and one light thread runs continuously from that hand toward its cloth exit on the patch. The action reads as a just-withdrawn needle pull; the acting hand, cloth and existing stitchwork have coherent ownership.",
+      "crop": "images/review-stitch.png"
+    },
+    {
+      "gate_id": "C_source_transfer",
+      "status": "not_tested_as_not_adopted",
+      "observability": "unobservable",
+      "layer": "source_to_prompt_to_pixels",
+      "evidence": "The only newly registered Flintlock source issued is H08 (sphere held by tongs above tray, adult worker), in two queries. It was declined for missing frozen adulthood and complete source mismatch. No new Flintlock CID was adopted and no H08 prompt or pixel transfer is claimed. Unissued A01/E01/F01 preliminary alternatives were not used."
+    }
+  ],
+  "source_pipeline": {
+    "new_positive_sources_registered_in_generation": 52,
+    "new_sources_exposed": [
+      {
+        "card": "H08",
+        "cid": "cand_ed14f04fba2f5ae9a6af43ea5770ca0b",
+        "queries": [
+          "prop_state",
+          "__baseline_prompt__"
+        ]
+      }
+    ],
+    "new_sources_adopted": [],
+    "new_source_prompt_literals": [],
+    "new_source_pixels": "not_scored_as_not_adopted",
+    "generic_inspiration_only_cid": "cand_97a9e11404595121a400288a8adad5be",
+    "generic_prompt_literal": "the thread pulled taut between her right hand and the new stitch makes a slight pucker at the needle exit",
+    "generic_pixel_observation": "Thread tension is visible. The slight needle-exit pucker is subtle and cannot be isolated confidently as a separate material response."
+  },
+  "source_authority": "No whole native source qualification or adoption was inferred from metadata.",
+  "image_call_count": 1,
+  "additional_image_calls": 0,
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "managed_review_status": {
+    "status": "pass",
+    "record_valid": true,
+    "technical_qualification": "fail",
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "not_applicable",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user judgment has been received."
+    }
+  },
+  "completed": true,
+  "workflow_phase": "review_record_validated"
+}

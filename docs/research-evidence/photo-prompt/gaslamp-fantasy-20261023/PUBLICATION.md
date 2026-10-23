@@ -23,3 +23,12 @@
 원본 연구와 실험 JSON의 절대 경로와 해시는 역사 기록으로 그대로 보존했다. 읽기용 통합 보고서는 저장소 내부 경로를 사용한다. 5MB를 넘는 두 임시 원문 snapshot은 무손실 gzip으로 보관하며 원본 SHA를 매핑에 유지한다. 외부 Downloads의 참조 인물 원본은 Git에 복사하지 않았다. 임시 모델 복제·빌드·인코딩 캐시와 이 작업의 전용 워크트리는 실제 원격 main SHA를 확인한 다음 제거한다. 운영 중인 설치 runtime/공유 모델과 최종 이미지·프롬프트·증거는 보존한다.
 
 실제 commit/push 및 cleanup 완료 SHA는 로컬 `generated/publication-receipts/gaslamp-fantasy-20261023.json`의 최종 원격 조회 결과로 확인한다. 이 문서는 미래 SHA를 미리 만들어 적지 않는다.
+
+초기 작성 형식/소유권을 고치면서 교체한 세 draft run은 실제 이미지 호출0회다. [검증한 압축 이력](publication-evidence/ABANDONED-AUTHORING.json)과 tar.gz에 원문을 보존한 뒤 임시 원본 폴더를 정리한다. 세 최종 이미지 run과 그 산출물은 유지한다.
+
+최종 병합 대상은 `a8732e20dc681c5827e05db5352782d075fe422b`다. Flintlock·Art Horror 등 기존 후보20,314개/연결15,035개와 87개 모듈 파일을 원문 그대로 보존하고, 총20,421개/15,179개로 확장했다. 최종 레이아웃 `a941304f7180dd443b016025e0d402813af9165426c3018579725f9eb7c8339a`는 양쪽 소스에서 검증했으며 기존 벡터19,815개와 새72개로 구성된다.
+
+- [최종 소스 보존](publication-evidence/source-preservation.final.json)
+- [최종 인덱스 빌드·전체 검증](publication-evidence/index-build.final.json)
+- [최종 사전 검증](publication-evidence/dictionary-validation.final.json)
+- [고정 SHA 기반 병합 규칙](publication-evidence/merge-resolution.json)

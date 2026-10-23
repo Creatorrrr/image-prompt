@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/gaslamp-publication/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 115, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/chasoik/.codex/worktrees/gaslamp-publication/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 110, in main
+    with source_update(root,a.runtime_store):result=build(a.assets,a.cache or Path.home()/'.cache/image-prompt/shared-embedding-build',a.workers,a.repair_unknown,space=space,batch_size=a.batch_size)
+                                                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/gaslamp-publication/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 33, in build
+    reader=SearchReader(assets)
+  File "/Users/chasoik/.codex/worktrees/gaslamp-publication/image-prompt/skills/photo-prompt-image-generator/scripts/photo_search_reader.py", line 57, in __init__
+    self.identities={r['path']:identity(regular(self.assets,r['path'])) for r in rows}
+                                        ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/gaslamp-publication/image-prompt/skills/photo-prompt-image-generator/scripts/photo_search_reader.py", line 30, in regular
+    if not p.is_file(): raise ValueError('missing required search shard: '+relative)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: missing required search shard: photo_candidate_search_shards/1fc41326fb4661bd0f98f50bcdba4886714e65158435e619e40d5f4025acf69a/payload-00000.json.gz

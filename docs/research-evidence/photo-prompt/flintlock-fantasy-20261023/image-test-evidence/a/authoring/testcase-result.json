@@ -1,0 +1,129 @@
+{
+  "schema": "arm-prospective-testcase-result/v1",
+  "arm": "A",
+  "criteria_changed_after_image": false,
+  "prospective_files": [
+    "authoring/prospective_pixel_gates.json",
+    "authoring/prospective-issued-source-gates.json"
+  ],
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-a/returned-image.png",
+  "image_sha256": "3719e798f46f1d7e48b211ecd150305d31e053af65dd4c1e0fa92338dfd6001e",
+  "image_call_count": 1,
+  "reference_attached_via": "native referenced_image_paths actual payload",
+  "observed_image_model": "unknown",
+  "native_tool_outcome": "returned",
+  "overall": "FAIL",
+  "independent_scene_gates": {
+    "pass": 5,
+    "fail": 1
+  },
+  "new_source_B02_complete_case": "FAIL",
+  "new_source_B02_gates": {
+    "pass": 1,
+    "fail": 2
+  },
+  "partial_is_fail": true,
+  "unobservable_not_pass": true,
+  "gates": [
+    {
+      "id": "reference_appearance",
+      "group": "independent_precore",
+      "fixed_requirement": "Reference-guided facial proportions and short dark bob with wispy bangs visibly continuous; actual exact identity is not claimed.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Facial proportions, short dark bob, wispy bangs and mouth/eye shape visibly continue the reference; no exact identity claim.",
+      "qualification_label": "PASS"
+    },
+    {
+      "id": "flintlock_mechanism",
+      "group": "independent_precore",
+      "fixed_requirement": "A wood-stocked period pistol and a connected visible lock with flint-gripping cock, frizzen and shallow pan are recognizable together. Generic pistol silhouette alone fails.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Curved wooden stock plus external cock gripping flint, forward-open frizzen and shallow pan are recognizable together. The cropped muzzle is separately failed under short-barrel/source gates.",
+      "qualification_label": "PASS"
+    },
+    {
+      "id": "working_magic",
+      "group": "independent_precore",
+      "fixed_requirement": "A glass bottle contains a visible miniature storm or lightning impossible under ordinary physical scale; blue light alone is insufficient.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "A miniature cloud with forked blue lightning is depicted inside the glass bottle; this judges the represented visual effect only.",
+      "qualification_label": "PASS"
+    },
+    {
+      "id": "coexistence_relation",
+      "group": "independent_precore",
+      "fixed_requirement": "Human attention, actual flintlock apparatus and working bottled magic share one intelligible workshop testing scene rather than separate decorative genre badges.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The leaning subject touches the test lever and bottle support around the same bench-mounted flintlock and storm bottle. It reads as one workshop test; camera-facing gaze weakens the authored storm-attention detail.",
+      "qualification_label": "PASS"
+    },
+    {
+      "id": "body_contact",
+      "group": "independent_precore",
+      "fixed_requirement": "Two owned hands with plausible forearm reach; right rests behind lever, left steadies bottle support, with clear mechanism clearance.",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "Two hands have plausible ownership and reach, and left hand touches brass bottle support clear of the lock. Right fingers visibly touch the lever instead of resting behind it; the full conjunction fails.",
+      "qualification_label": "FAIL"
+    },
+    {
+      "id": "whole_image",
+      "group": "independent_precore",
+      "fixed_requirement": "A photographic person-centered scene preserves face presence while allocating enough visible pixels to the genre mechanisms.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Photographic person-centered workshop includes a large face and enough pixels to inspect the lock and represented bottle effect. The full pistol framing requested in baseline is a separate deviation.",
+      "qualification_label": "PASS"
+    },
+    {
+      "id": "B02-R1",
+      "group": "issued_source_B02",
+      "fixed_requirement": "one short barrel above the curved wooden grip",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "Curved wooden grip is visible below the barrel, but the right end/muzzle leaves frame and the visible assembly is elongated. A complete short-barrel pistol relation is not observable; partial_is_fail.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    },
+    {
+      "id": "B02-R2",
+      "group": "issued_source_B02",
+      "fixed_requirement": "external flint-gripping lock visibly attached beside that same barrel",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The exposed cock visibly grips a chipped flint and its external lock is attached beside the same visible barrel.",
+      "qualification_label": "PASS"
+    },
+    {
+      "id": "B02-N-barrel",
+      "group": "issued_source_B02",
+      "fixed_requirement": "exactly one short barrel",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "One barrel is visible, but its complete extent and shortness cannot be verified because the muzzle is outside the frame. The exact one-short-barrel requirement is not fully observed.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    }
+  ],
+  "native_source_qualification": "not_qualified; manual source-linked pixel test only",
+  "user_acceptance": "pending",
+  "claim_limits": [
+    "No controlled causal comparison of before/after data generations.",
+    "No qualification of other unissued new sources or all 52 additions.",
+    "No actual supernatural causality, ignition function, historical accuracy, barrel contents, identity or age claim.",
+    "Generation succeeded; complete prospective testcase failed."
+  ],
+  "formal_review_audit": {
+    "status": "pass",
+    "record_valid": true,
+    "technical_qualification": "fail",
+    "workflow_phase": "review_record_validated",
+    "evidence_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-a/authoring/review-audit-output.json"
+  },
+  "formal_embodiment_gates": {
+    "pass": 3,
+    "fail": 2
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "schema": "coordinator-independent-pixel-review/v1",
+  "arm": "B",
+  "reviewer": "root",
+  "reviewed_utc": "2026-10-23T09:30:37.667675+00:00",
+  "inspection": "view_image original 1536x1024 plus two exact native crops; no resampling",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-b/flintlock-signal-courier.png",
+  "image_sha256": "b90bb01d7658b9cab040d53fd6a24b31f8d7f483190c4e50c9f7f70748863de2",
+  "impression_evidence": "coordinator-pixel-impression-b.json",
+  "crop_verification": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-b/pistol-inspection-crop.png",
+      "bounds": [
+        470,
+        760,
+        830,
+        1020
+      ],
+      "unresampled_native_pixels": true,
+      "sha256": "ccf665b652024956453ec53a92e7eb8278520233fbb8853da6b97fc2ceff4535"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/flintlock-fantasy-20261023-b/lantern-inspection-crop.png",
+      "bounds": [
+        130,
+        340,
+        550,
+        750
+      ],
+      "unresampled_native_pixels": true,
+      "sha256": "248339e8f5ee8acbf41fe3497d926d2bab3b96f57995a557f0e7161def437b91"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "B_reference_appearance",
+      "observability": "visible",
+      "result": "pass",
+      "evidence": "Short dark bob, wispy bangs and face proportions support portrait-guided appearance continuity, without identity verification.",
+      "qualification_label": "PASS"
+    },
+    {
+      "gate_id": "B_flintlock_mechanism",
+      "observability": "partial",
+      "result": "fail",
+      "evidence": "The wood pistol and external lock silhouette are readable. In the exact native crop the gripped stone cannot be independently separated from the metallic jaw, and the shallow pan remains confluent with surrounding lock parts. All four required components are not distinct.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    },
+    {
+      "gate_id": "B_fantasy_effect",
+      "observability": "partial",
+      "result": "fail",
+      "evidence": "A luminous circular glyph panel and warm projected ornament are visible. They remain visually compatible with ordinary backlighting and light through cut-outs; self-luminous supernatural dispatch medium is not independently clear enough for this strict gate. No actual cause is inferred.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    },
+    {
+      "gate_id": "B_fortress_moat_relation",
+      "observability": "partial",
+      "result": "fail",
+      "evidence": "The far wall base, water and near parapet are clear, but the near wall-base/water junction is hidden by the foreground parapet. The complete two-bank and wall-base relation is not visible together.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    },
+    {
+      "gate_id": "B_communication_relation",
+      "observability": "visible",
+      "result": "pass",
+      "evidence": "Held near lantern and the distinct lit opposite watch tower share a readable near/far relation across water. Actual signaling is not proven.",
+      "qualification_label": "PASS"
+    },
+    {
+      "gate_id": "B_lantern_contact",
+      "observability": "visible",
+      "result": "pass",
+      "evidence": "The left hand wraps under the lantern base; the right fingertips contact the side leaf/frame with its visible hinge/edge continuous with the lantern. Separate wrist ownership and local contact are readable in the exact crop.",
+      "qualification_label": "PASS"
+    }
+  ],
+  "pixel_base_passes": 3,
+  "pixel_base_gates": 6,
+  "new_source_gates": [
+    {
+      "gate_id": "A01-R1",
+      "observability": "partial",
+      "result": "fail",
+      "evidence": "A distinct clamped flint cannot be separated from the metallic cock/jaw at native resolution.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    },
+    {
+      "gate_id": "A01-R2",
+      "observability": "partial",
+      "result": "fail",
+      "evidence": "Upright steel is visible; a separate shallow pan and the complete over-pan relation are not unambiguous.",
+      "qualification_label": "UNOBSERVABLE_NOT_PASS"
+    }
+  ],
+  "new_source_gate_passes": 0,
+  "full_case": "FAIL",
+  "typed_native_adoption": false,
+  "user_acceptance": "pending",
+  "comparison_with_arm_review": "Arm B reports 4/6 base gates. Root applies the same prewritten fantasy criterion conservatively: the glowing panel/pattern does not clearly distinguish supernatural medium from ordinary lantern optics. Both reviews fail the complete case and both A01 source gates. No criterion or image was changed.",
+  "partial_is_fail": true,
+  "unobservable_not_pass": true
+}
