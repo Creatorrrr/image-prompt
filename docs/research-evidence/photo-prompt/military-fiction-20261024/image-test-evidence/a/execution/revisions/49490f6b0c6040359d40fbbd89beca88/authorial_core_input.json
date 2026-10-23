@@ -1,0 +1,285 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "b23904fc160026a2df2d32524b6bc15c81f90e0f2a9deaa3b458b79914f21825",
+  "interpreted_intent": "The prior requesting-user topic 군대물 용어 조사 resolves 이번에 반영한 주제 as military fiction. The user asks for distinct random concepts, reference use and generation tests. The random draw selects a quiet pre-formation shoulder-cord adjustment. This staging, rank-neutral fictional uniforms, supporting comrade, hands and courtyard are agent-owned and replaceable. Compared with an isolated ceremonial portrait, the small practical act gives military ritual an intelligible human relationship. At sensual 1, attraction is a subtle quality of absorbed expression and tactile natural light; fetish 0 and surreal 0 add no treatment. Creativity 1 keeps later refinements local. The reference supplies face/hair appearance, not actual age, identity or biography.",
+  "subject": "A fictional servicewoman guided by supplied face and hair appearance, with a comrade.",
+  "setting": "The covered entry to a military parade courtyard just before morning ceremonial formation.",
+  "event": "She settles a shoulder-cord loop on a comrade’s tunic while a formation waits.",
+  "visual_priorities": [
+    "The main woman’s face and bob remain recognizably reference guided.",
+    "Two independently owned hands connect to the same attached shoulder cord and visibly settle its loop.",
+    "The comrade’s patient response and waiting formation make the small act matter.",
+    "Uniform structure, courtyard line and flagpole make noncombat military life legible."
+  ],
+  "baseline_prompt_en": "A naturalistic military-fiction photograph centered on a reference-guided woman taking part in a moment of military unit life. Just before a ceremonial formation, she is checking a comrade’s gold braided shoulder cord in the covered entry to a parade courtyard. her facial appearance follows the reference image, with large brown eyes, a softly rounded small nose and softly full pink lips; her hair follows the reference image, a dark straight chin-length bob with fine separated wispy fringe. Her individual presence comes through quiet concentration and the relaxed softness of her mouth, her gaze following the braid rather than posing for the camera. Both wear olive ceremonial tunics with structured shoulders and small plain metal collar insignia. The comrade stands to her right, turned slightly toward her, with his left shoulder facing the camera and his arms resting at his sides. She stands close on both feet; her right thumb and forefinger pinch the braid beside his left epaulette while her left palm supports the hanging loop below, easing it into a smooth continuous curve across his upper chest. Her two forearms extend from separate visible sleeves into these contacts, and the cord remains visibly attached at his shoulder. He looks down patiently at the settling loop. Behind them, four uniformed figures stand at measured intervals along a painted courtyard line, waiting for the pair to join them; an empty flagpole and the squared barracks doorway give the pause its institutional setting. The small act of care carries the moment: one uniform is almost ready, and the waiting formation makes its completion matter. Photograph them from just above waist height in a three-quarter, knee-up two-shot, with her face, both of her hands, his left shoulder and the entire hanging loop simultaneously legible. A 50 mm perspective keeps faces and hands proportionate. Open shade separates the olive cloth and warm braid; a low strip of morning sun catches her bob and the courtyard paving. Fine cloth texture, small creases beside the working wrist and a slight asymmetry in their stances make this feel like an observed instant before ceremony.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "서로 다른 컨셉으로 이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The actual previous requesting-user text 군대물 용어 조사 supplies the positive military-fiction topic; distinct concept choice is agent-owned.",
+      "sources": []
+    },
+    {
+      "term": "주제에 어울리는 랜덤한 컨셉",
+      "source_text": "주제에 어울리는 랜덤한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "Choose a concrete photographic scene in military unit life; the random result and all specific staging remain authorial.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied reference for visible face and hair appearance; no real identity, age or profession is inferred.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "A naturalistic military-fiction photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a reference-guided woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "a moment of military unit life"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "ref_person",
+        "property": "face.appearance",
+        "prompt_evidence": "her facial appearance follows the reference image, with large brown eyes, a softly rounded small nose and softly full pink lips"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "ref_person",
+        "property": "hair.appearance",
+        "prompt_evidence": "her hair follows the reference image, a dark straight chin-length bob with fine separated wispy fringe"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "count",
+      "role",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "visual_3"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a reference-guided woman"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_2"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    },
+    {
+      "assertion_id": "main_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "visual_3"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "ref_person",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "owner_phrase": "a reference-guided woman"
+      }
+    },
+    {
+      "assertion_id": "main_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "visual_3"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "ref_person"
+      },
+      "evidence": {
+        "owner_phrase": "a reference-guided woman"
+      }
+    },
+    {
+      "assertion_id": "reference_face_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "visual_3"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "ref_person",
+        "property": "face.appearance",
+        "value_type": "face.appearance/v1",
+        "value": [
+          "large brown eyes",
+          "softly rounded small nose",
+          "softly full pink lips"
+        ],
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "appearance_reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "her facial appearance follows the reference image, with large brown eyes, a softly rounded small nose and softly full pink lips"
+      }
+    },
+    {
+      "assertion_id": "reference_hair_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "visual_3"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "ref_person",
+        "property": "hair.appearance",
+        "value_type": "hair.appearance/v1",
+        "value": [
+          "dark straight chin-length bob",
+          "fine separated wispy fringe"
+        ],
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "appearance_reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "her hair follows the reference image, a dark straight chin-length bob with fine separated wispy fringe"
+      }
+    },
+    {
+      "assertion_id": "reference_scope",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "visual_3"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "ref_person",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"1b02443956713dd0393aeb647ab8e039625a668374eb3e53bd721735002b664d\",\"request_envelope_sha256\":\"b0b5a79362115668550d6d0676f73e402b2c8eb4bf0784f19586acd729d5cdf2\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"reference_face_fact\",\"dimension\":\"appearance\",\"property\":\"face.appearance\",\"target\":\"ref_person\",\"value\":{\"type\":\"face.appearance/v1\",\"value\":[\"large brown eyes\",\"softly rounded small nose\",\"softly full pink lips\"]}},{\"assertion_id\":\"reference_hair_fact\",\"dimension\":\"appearance\",\"property\":\"hair.appearance\",\"target\":\"ref_person\",\"value\":{\"type\":\"hair.appearance/v1\",\"value\":[\"dark straight chin-length bob\",\"fine separated wispy fringe\"]}}],\"reviewed_input_ids\":[\"request\",\"prior_request\",\"appearance_reference\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "reference_phrase": "a reference-guided woman"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "naturalistic narrative photography",
+    "family": "observed military ceremonial life",
+    "evidence": [
+      "structured olive tunics",
+      "unposed connected hand action",
+      "soft courtyard morning light"
+    ]
+  },
+  "variation_key": "military-a-2526402208739747887"
+}

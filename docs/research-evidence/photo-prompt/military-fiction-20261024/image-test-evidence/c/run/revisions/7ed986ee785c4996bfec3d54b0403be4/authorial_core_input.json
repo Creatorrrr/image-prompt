@@ -1,0 +1,147 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "79cfb6281632ec28d6911c538cc337d21c987ee338be3ce14490935699e82446",
+  "interpreted_intent": "The requester asks three independent random concepts for the newly integrated topic, whose actual prior-user antecedent is military fiction, and asks use of the attached reference. The coordinator scope equipment preparation is authorial. Seed 202610240303 selects field-radio battery replacement. I compared a seated administrative charging station with a standing dawn shelter workbench: the latter connects maintenance effort to visible impending departure, while allowing face and mechanism in one plane. This is an invented fictional scene, not biography of the reference person. Subtle everyday attraction comes from absorbed expression and the small intimacy of a working distance, with sensual 1, fetish 0, surreal 0 and creativity 1. The photograph should make the viewer feel the short pause when an ordinary piece of preparation must work before the group can leave. Open battery insertion, removed battery and ready rucksack give present visible cause and consequence; their exact mechanics remain authorial choices.",
+  "subject": "A fictional woman military service member, using reference face and hair appearance only",
+  "setting": "Dawn canvas equipment shelter at a rough workshop bench",
+  "event": "Preparing a portable field radio through replacement battery insertion before departure",
+  "visual_priorities": [
+    "A radio held upright in the left hand and a replacement battery engaged halfway down its rear rails in the right hand, with both wrists visible.",
+    "The reference-guided face and dark bob remain readable while her attention follows the mechanism.",
+    "A removed battery beside an open padded case and departure gear connect the action to a readying military scene.",
+    "Face and battery connection are projected at a useful scale in one coherent right-front-quarter view."
+  ],
+  "baseline_prompt_en": "A documentary photograph from a fictional military story, showing a woman military service member preparing a portable field radio for departure at a rough workshop bench inside a canvas equipment shelter just before dawn. Her facial appearance follows the supplied portrait: a softly rounded face, dark brown eyes, fine dark eyebrows, a small rounded nose, gently full pink lips, and a smooth short dark bob with separated wispy bangs. The portrait guides face and hair appearance only. She stands squarely behind the waist-high bench in olive field fatigues with the collar loosened by ordinary work, her quietly absorbing concentration lending the scene a subtle personal warmth. Her left hand holds the rugged olive radio upright at lower chest height, with her thumb bracing its side and the palm supporting its base. Her right hand grips a rectangular replacement battery and slides it down the exposed guide rails on the radio's rear; the battery is halfway seated, its lower edge visibly engaged with the rails and its upper edge still projecting above the radio body. The two wrists and both forearms remain visible and connect naturally to her shoulders. A second, removed battery rests flat on the bench beside the open padded equipment case, making the maintenance state readable. She watches the battery meet its rail with lowered eyes and slightly parted lips. A packed rucksack and a folded route map occupy the far end of the bench, while the open shelter flap reveals cool first light and the blurred shape of a waiting utility vehicle. Compose a vertical medium photograph from just above the bench to above her head, from her right front quarter so her face and the radio's rear rail connection share a readable view. The hands, battery and radio are together in the foreground focal plane, with the face close behind them and sharp enough for facial comparison. Soft blue dawn entering the flap meets a warm task lamp across the radio housing and her cheek; restrained grain, realistic skin and scuffed equipment surfaces preserve the unglamorous material effort of getting ready. The frame's visual order is the connected hands and half-seated battery, her attentive face, then the ready gear and opening toward departure.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "서로 다른 컨셉으로 이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The actual previous requesting-user message supplies military fiction as the topic; independent random scene choices are authored rather than requester-owned.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 컨셉",
+      "source_text": "주제에 어울리는 랜덤한 컨셉",
+      "basis": "request_context",
+      "resolution": "A seed-recorded independent photographic concept suitable to the established military-fiction topic.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "The supplied portrait informs facial features and hair appearance of a fictional subject, without inferring actual identity, age or military history.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "서로 다른 컨셉으로 이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "a fictional military story"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "주제에 어울리는 랜덤한 컨셉",
+        "dimension": "subject",
+        "prompt_evidence": "a woman military service member"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "preparing a portable field radio for departure"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "The portrait guides face and hair appearance only"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "face.features",
+        "prompt_evidence": "a softly rounded face, dark brown eyes, fine dark eyebrows, a small rounded nose, gently full pink lips"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "hair.style",
+        "prompt_evidence": "a smooth short dark bob with separated wispy bangs"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "setting",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "relationship",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "role",
+      "text",
+      "format"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "documentary photography",
+    "family": "fictional field-work still",
+    "evidence": [
+      "realistic skin and scuffed equipment surfaces",
+      "restrained grain"
+    ]
+  },
+  "variation_key": "military-c-seed-202610240303"
+}
