@@ -1,0 +1,4036 @@
+[
+  {
+    "source": {
+      "candidate_id": "cand_128f950339f85957a8e027e38f56bf8d",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "recording",
+          "studio"
+        ],
+        "embedding_text": "inside a recording studio",
+        "en": "inside a recording studio",
+        "keywords": [
+          "interior",
+          "music",
+          "studio"
+        ],
+        "ko": "레코딩 스튜디오 안",
+        "tags": [
+          "interior",
+          "music",
+          "studio"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "inside a recording studio",
+        "/content/en": "inside a recording studio",
+        "/content/ko": "레코딩 스튜디오 안"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "setting"
+        ],
+        "properties": []
+      },
+      "source_sha256": "210a0f73115e01e458163dd3276226bd48fcc18db048303ab4dd5c6d73e17081",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_4045284670e3552fab595383245b6f3d",
+      "realization_id": "base",
+      "native": {
+        "activation": {
+          "exact_terms": [
+            "one physical room remains beside its recording display; a distinct extra presence occupies only the display."
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "one physical room remains beside its recording display; a distinct extra presence occupies only the display."
+                ],
+                "id": "complete_owned_proposition"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "component_01",
+              "match_terms": [
+                "one physical room remains beside its recording display",
+                "physical room beside its display",
+                "room and CCTV comparison",
+                "same room landmarks on screen",
+                "실제 공간과 대응 화면"
+              ]
+            },
+            {
+              "id": "component_02",
+              "match_terms": [
+                "a distinct extra presence occupies only the display",
+                "additional person only on screen",
+                "recording-only presence",
+                "extra figure on display",
+                "화면에만 추가 인물"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "component_01",
+              "component_02"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "component_01",
+                "component_02"
+              ],
+              "evidence": [
+                {
+                  "field": "component_01_phrase",
+                  "requirement": {
+                    "min_content_words": 2,
+                    "must_mention_any": [
+                      "one physical room remains beside its recording display"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_02_phrase",
+                  "requirement": {
+                    "min_content_words": 2,
+                    "must_mention_any": [
+                      "a distinct extra presence occupies only the display"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Retain all selected comparison owners and connected components together in one readable photograph: one physical room remains beside its recording display; a distinct extra presence occupies only the display.",
+              "render_gates": [
+                {
+                  "description": "Inspect the original image for this component on its stated owner: one physical room remains beside its recording display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+                  "id": "vo_hvr_recording_local_discrepancy_01",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "Inspect the original image for this component on its stated owner: a distinct extra presence occupies only the display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+                  "id": "vo_hvr_recording_local_discrepancy_02",
+                  "review_scale": "native"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "observable_horror_relation",
+        "composition_instruction": "Retain all selected comparison owners and connected components together in one readable photograph: one physical room remains beside its recording display; a distinct extra presence occupies only the display.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "composition",
+            "setting",
+            "count"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "composition",
+              "property": "display_relation",
+              "target": "*"
+            },
+            {
+              "dimension": "setting",
+              "property": "objects",
+              "target": "*"
+            },
+            {
+              "dimension": "count",
+              "property": "people",
+              "target": "scene"
+            },
+            {
+              "dimension": "count",
+              "property": "entities",
+              "target": "recorded_scene"
+            }
+          ],
+          "concept_terms": [
+            "낡은 녹화물",
+            "one physical room remains beside its recording display",
+            "a distinct extra presence occupies only the display"
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_01_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "one physical room remains beside its recording display"
+            ]
+          },
+          "component_02_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "a distinct extra presence occupies only the display"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "generic noise",
+          "different camera angle explains difference"
+        ],
+        "render_gates": [
+          {
+            "description": "Inspect the original image for this component on its stated owner: one physical room remains beside its recording display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+            "id": "vo_hvr_recording_local_discrepancy_01",
+            "review_scale": "native"
+          },
+          {
+            "description": "Inspect the original image for this component on its stated owner: a distinct extra presence occupies only the display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+            "id": "vo_hvr_recording_local_discrepancy_02",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_01_phrase",
+          "component_02_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "This is a project-authored observable interpretation, not a mandatory genre definition or a universal cultural appearance.",
+            "A still image does not establish sound, elapsed time, supernatural causation, biography, mental state, consent, chemical identity or cultural authenticity.",
+            "Approximate discovery is optional. Selecting this realization requires every comparison owner and component, and cannot override frozen requester meaning."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "one physical room remains beside its recording display",
+                  "physical room beside its display",
+                  "room and CCTV comparison",
+                  "same room landmarks on screen",
+                  "실제 공간과 대응 화면"
+                ],
+                "id": "component_01"
+              },
+              {
+                "any_terms": [
+                  "a distinct extra presence occupies only the display",
+                  "additional person only on screen",
+                  "recording-only presence",
+                  "extra figure on display",
+                  "화면에만 추가 인물"
+                ],
+                "id": "component_02"
+              }
+            ],
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "component_01",
+              "component_02"
+            ]
+          },
+          "contrast_examples": [
+            "generic noise",
+            "different camera angle explains difference"
+          ],
+          "definition": "one physical room remains beside its recording display; a distinct extra presence occupies only the display",
+          "interpretation_scope": {
+            "description": "A concrete optional realization of the named research topic; all physical owners must remain readable.",
+            "kind": "project_visual_interpretation"
+          },
+          "paraphrase_examples": [
+            "낡은 녹화물의 관찰 가능한 관계",
+            "현재 장소와 기록 화면의 국소 차이를 한 프레임에서 비교한다.",
+            "one physical room remains beside its recording display; a distinct extra presence occupies only the display"
+          ],
+          "visual_components": [
+            "one physical room remains beside its recording display",
+            "a distinct extra presence occupies only the display"
+          ]
+        }
+      },
+      "meaning": {
+        "/content/authored_components/obligations/0/instruction": "Retain all selected comparison owners and connected components together in one readable photograph: one physical room remains beside its recording display; a distinct extra presence occupies only the display.",
+        "/content/authored_components/obligations/0/render_gates/0/description": "Inspect the original image for this component on its stated owner: one physical room remains beside its recording display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+        "/content/authored_components/obligations/0/render_gates/1/description": "Inspect the original image for this component on its stated owner: a distinct extra presence occupies only the display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+        "/content/composition_instruction": "Retain all selected comparison owners and connected components together in one readable photograph: one physical room remains beside its recording display; a distinct extra presence occupies only the display.",
+        "/content/render_gates/0/description": "Inspect the original image for this component on its stated owner: one physical room remains beside its recording display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+        "/content/render_gates/1/description": "Inspect the original image for this component on its stated owner: a distinct extra presence occupies only the display. Hidden owners, incomplete comparison or a substitute fail this gate.",
+        "/content/semantics/definition": "one physical room remains beside its recording display; a distinct extra presence occupies only the display",
+        "/content/semantics/interpretation_scope/description": "A concrete optional realization of the named research topic; all physical owners must remain readable.",
+        "/content/semantics/interpretation_scope/kind": "project_visual_interpretation",
+        "/content/semantics/paraphrase_examples/0": "낡은 녹화물의 관찰 가능한 관계",
+        "/content/semantics/paraphrase_examples/1": "현재 장소와 기록 화면의 국소 차이를 한 프레임에서 비교한다.",
+        "/content/semantics/paraphrase_examples/2": "one physical room remains beside its recording display; a distinct extra presence occupies only the display",
+        "/content/semantics/visual_components/0": "one physical room remains beside its recording display",
+        "/content/semantics/visual_components/1": "a distinct extra presence occupies only the display"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "source_sha256": "c6821964795ab94f1c7bfc86924420ec3392275ffa66dfb83e8de0c206845e56",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_44135ace34e857e6af25d223c05a3fb0",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "펜을 낮추고 지정 화자를 바라보는 순간",
+          "펜을 낮추고 질문자를 바라보는",
+          "current listening arrangement"
+        ],
+        "concept_units": [
+          "listener's pen is lowered without writing",
+          "listener's torso or face turns toward the declared speaker",
+          "shared material retains one anchor",
+          "each hand has one role"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "속도·리듬·숙고 시간을 스틸에서 판정하지 않는다."
+              ],
+              "definition": "신중한 대응의 뜻과 물리적 측정의 뜻을 나눈다.",
+              "id": "intellectual_term_017",
+              "observable_interpretation": "펜을 낮춘 손과 명시된 상대·자료를 보는 절제된 대응을 선택한다.",
+              "source_keyword": "신중하고 절제된 — Measured"
+            },
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "렌즈 근접·허리 굽힘만으로 경청을 증명하지 않는다."
+              ],
+              "definition": "몸통 전방 기울기와 카메라 접근을 나눈다.",
+              "id": "intellectual_term_027",
+              "observable_interpretation": "앉은 골반의 지지, 몸통의 앞 기울기, 전완의 책상 지지, 상대 지향.",
+              "source_keyword": "전방 경청 자세 — Forward lean"
+            },
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "군기·긴장·권위·순종을 자동 추가하지 않는다."
+              ],
+              "definition": "직립 자세와 실제 경청·복종을 구별한다.",
+              "id": "intellectual_term_028",
+              "observable_interpretation": "등의 축, 내려간 어깨, 무릎이나 노트 위 손, 요청한 화자 지향.",
+              "source_keyword": "직립 경청 자세 — Upright attentive posture"
+            },
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "무감정·무능·침묵 동의를 추론하지 않는다."
+              ],
+              "definition": "중립 얼굴은 경청의 확정 증거가 아니다.",
+              "id": "intellectual_term_053",
+              "observable_interpretation": "낮춘 펜과 화자를 향한 몸·얼굴·공유 자료를 연결한다.",
+              "source_keyword": "중립적인 경청 표정"
+            },
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "단일 눈을 두 방향으로 보내거나 복수 얼굴로 시간 전환을 흉내내지 않는다."
+              ],
+              "definition": "자료와 화자를 오간다는 뜻은 시선의 시간적 교대다.",
+              "id": "intellectual_term_059",
+              "observable_interpretation": "스틸은 둘 중 하나를 현재 시선 대상으로 명시한다.",
+              "source_keyword": "자료와 화자를 오가는 시선"
+            },
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "청각·질문 이해·동의의 실제 성공은 판정하지 않는다."
+              ],
+              "definition": "질문을 듣는 순간의 물리 종점을 선택한다.",
+              "id": "intellectual_term_118",
+              "observable_interpretation": "낮춘 펜, 질문자를 향한 몸·시선, 공유 항목.",
+              "source_keyword": "질문을 듣는 순간"
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "펜을 낮추고 지정 화자를 바라보는 순간; listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role; 듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다; 장면 안에서 듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다; In the photographed scene, listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role; The listening person's pen remains lowered and clear of writing contact; Their face or torso turns toward the identified speaker; The shared reference material keeps a single identifiable anchor; Each of the listener's hands has a distinct visible role; 듣는 사람의 펜은 낮춰져 있으며 필기 접촉을 하지 않는다; 그 사람의 얼굴 또는 몸통이 해당 화자를 향해 돌아 있다; 공유 참조 자료에 식별 가능한 앵커 하나가 유지된다; 듣는 사람의 각 손에 구별되는 보이는 역할이 있다",
+        "en": "listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role",
+        "keywords": [
+          "펜을 낮추고 지정 화자를 바라보는 순간",
+          "펜을 낮추고 질문자를 바라보는",
+          "current listening arrangement"
+        ],
+        "ko": "펜을 낮추고 지정 화자를 바라보는 순간",
+        "paraphrases": [
+          "듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다",
+          "listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role",
+          "장면 안에서 듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다",
+          "In the photographed scene, listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role",
+          "The listening person's pen remains lowered and clear of writing contact; Their face or torso turns toward the identified speaker; The shared reference material keeps a single identifiable anchor; Each of the listener's hands has a distinct visible role",
+          "듣는 사람의 펜은 낮춰져 있으며 필기 접촉을 하지 않는다; 그 사람의 얼굴 또는 몸통이 해당 화자를 향해 돌아 있다; 공유 참조 자료에 식별 가능한 앵커 하나가 유지된다; 듣는 사람의 각 손에 구별되는 보이는 역할이 있다"
+        ],
+        "relations": [
+          {
+            "id": "ia_listening_reference_r1",
+            "object": "speaker",
+            "subject": "listener",
+            "type": "oriented_toward"
+          },
+          {
+            "id": "ia_listening_reference_r2",
+            "object": "lowered_pen",
+            "subject": "listener_hand",
+            "type": "holds"
+          },
+          {
+            "id": "ia_listening_reference_r3",
+            "object": "shared_anchor",
+            "subject": "speaker",
+            "type": "refers_to"
+          }
+        ],
+        "tags": [
+          "human",
+          "work_reference"
+        ]
+      },
+      "meaning": {
+        "/content/concept_units/0": "listener's pen is lowered without writing",
+        "/content/concept_units/1": "listener's torso or face turns toward the declared speaker",
+        "/content/concept_units/2": "shared material retains one anchor",
+        "/content/concept_units/3": "each hand has one role",
+        "/content/embedding_text": "펜을 낮추고 지정 화자를 바라보는 순간; listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role; 듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다; 장면 안에서 듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다; In the photographed scene, listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role; The listening person's pen remains lowered and clear of writing contact; Their face or torso turns toward the identified speaker; The shared reference material keeps a single identifiable anchor; Each of the listener's hands has a distinct visible role; 듣는 사람의 펜은 낮춰져 있으며 필기 접촉을 하지 않는다; 그 사람의 얼굴 또는 몸통이 해당 화자를 향해 돌아 있다; 공유 참조 자료에 식별 가능한 앵커 하나가 유지된다; 듣는 사람의 각 손에 구별되는 보이는 역할이 있다",
+        "/content/en": "listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role",
+        "/content/ko": "펜을 낮추고 지정 화자를 바라보는 순간",
+        "/content/paraphrases/0": "듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다",
+        "/content/paraphrases/1": "listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role",
+        "/content/paraphrases/2": "장면 안에서 듣는 인물의 펜은 필기 없이 낮춰져 있다; 몸통이나 얼굴이 지정 화자를 향한다; 공유 자료가 하나의 앵커를 갖는다; 각 손에 하나의 역할이 있다",
+        "/content/paraphrases/3": "In the photographed scene, listener's pen is lowered without writing; listener's torso or face turns toward the declared speaker; shared material retains one anchor; each hand has one role",
+        "/content/paraphrases/4": "The listening person's pen remains lowered and clear of writing contact; Their face or torso turns toward the identified speaker; The shared reference material keeps a single identifiable anchor; Each of the listener's hands has a distinct visible role",
+        "/content/paraphrases/5": "듣는 사람의 펜은 낮춰져 있으며 필기 접촉을 하지 않는다; 그 사람의 얼굴 또는 몸통이 해당 화자를 향해 돌아 있다; 공유 참조 자료에 식별 가능한 앵커 하나가 유지된다; 듣는 사람의 각 손에 구별되는 보이는 역할이 있다",
+        "/content/relations/0/object": "speaker",
+        "/content/relations/0/subject": "listener",
+        "/content/relations/0/type": "oriented_toward",
+        "/content/relations/1/object": "lowered_pen",
+        "/content/relations/1/subject": "listener_hand",
+        "/content/relations/1/type": "holds",
+        "/content/relations/2/object": "shared_anchor",
+        "/content/relations/2/subject": "speaker",
+        "/content/relations/2/type": "refers_to"
+      },
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "action",
+          "pose",
+          "relationship",
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "action",
+            "property": "body.action_configuration",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "pose",
+            "property": "body",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "relationship",
+            "property": "work_reference",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "expression",
+            "property": "eyes.gaze_direction",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "relationship",
+            "property": "interaction",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "pose",
+            "property": "body",
+            "target": "partner"
+          },
+          {
+            "dimension": "expression",
+            "property": "eyes.gaze_direction",
+            "target": "partner"
+          }
+        ]
+      },
+      "source_sha256": "640ae71e44272a3dd177de9de26452a85195d7170dc389d318dace9e7970c363",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_45ebbe14c98d5e6ba4941753ce3c380e",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "요청된 응대 장면의 작은 미소",
+          "a small closed-mouth smile within the already requested service encounter"
+        ],
+        "concept_units": [
+          "a small closed-mouth smile is visible",
+          "the existing scene's service role and addressee are preserved"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "application_conditions": [
+                "Do not reuse affiliative_reassurance_smile unless reassurance is part of the frozen scene."
+              ],
+              "id": "ae_service_smile_portrayal_context",
+              "limits": [
+                "service occupation invented",
+                "insincerity judged from eye wrinkles"
+              ],
+              "status": "optional_contextual_portrayal_not_hidden_state_inference"
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "요청된 응대 장면의 작은 미소; a small closed-mouth smile is visible; the existing scene's service role and addressee are preserved; 요청된 응대 장면의 작은 미소; a small closed-mouth smile within the already requested service encounter",
+        "en": "a small closed-mouth smile is visible; the existing scene's service role and addressee are preserved",
+        "keywords": [
+          "요청된 응대 장면의 작은 미소",
+          "a small closed-mouth smile within the already requested service encounter"
+        ],
+        "ko": "요청된 응대 장면의 작은 미소",
+        "relations": [
+          {
+            "id": "actor_owner",
+            "object": "the declared actor's stated local face and eye configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "acting_expression",
+          "expression"
+        ]
+      },
+      "meaning": {
+        "/content/concept_units/0": "a small closed-mouth smile is visible",
+        "/content/concept_units/1": "the existing scene's service role and addressee are preserved",
+        "/content/embedding_text": "요청된 응대 장면의 작은 미소; a small closed-mouth smile is visible; the existing scene's service role and addressee are preserved; 요청된 응대 장면의 작은 미소; a small closed-mouth smile within the already requested service encounter",
+        "/content/en": "a small closed-mouth smile is visible; the existing scene's service role and addressee are preserved",
+        "/content/ko": "요청된 응대 장면의 작은 미소",
+        "/content/relations/0/object": "the declared actor's stated local face and eye configuration",
+        "/content/relations/0/subject": "main_subject",
+        "/content/relations/0/type": "declared_owner_scope"
+      },
+      "conditions": {
+        "for_any": [
+          "human"
+        ],
+        "requires_primary_any_tags": [
+          "service",
+          "customer",
+          "reception",
+          "응대"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "source_sha256": "3b8441ca6c703646dfa1c96c6de7892452d112fdf08aba8b4bdda5e7813f8104",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_744d5a96cb9d5bce8d4ebfcc1ff96119",
+      "realization_id": "base",
+      "native": {
+        "embedding_text": "a recording booth studio",
+        "en": "a recording booth studio",
+        "ko": "녹음 부스 스튜디오",
+        "tags": [
+          "location",
+          "interior"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "a recording booth studio",
+        "/content/en": "a recording booth studio",
+        "/content/ko": "녹음 부스 스튜디오"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "setting"
+        ],
+        "properties": []
+      },
+      "source_sha256": "19c970164759ae042178b0b54ad8e77fa7d7182561277ec1c26350edcce1d10f",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_7b9f8fb6091451e3b3251bcca89b19a2",
+      "realization_id": "base",
+      "native": {
+        "embedding_text": "a music-show backstage room",
+        "en": "a music-show backstage room",
+        "ko": "음악 방송 무대 뒤",
+        "tags": [
+          "location",
+          "interior"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "a music-show backstage room",
+        "/content/en": "a music-show backstage room",
+        "/content/ko": "음악 방송 무대 뒤"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "setting"
+        ],
+        "properties": []
+      },
+      "source_sha256": "dd2b62579f97b8aa60450eec6e9933f1b19c4f76dd7585abcfe117e1fde185b8",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_a5f5b205f75e5040b3d3e3d00121ea20",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "희연사",
+          "미공개컷",
+          "비하인드컷",
+          "촬영장 비하인드",
+          "behind-the-scenes production photo"
+        ],
+        "embedding_text": "a clearly adult performer is visibly between takes while a camera rig light stand monitor slate cable crew hand or wardrobe tool intrudes into the frame and one rehearsal reset adjustment or preparation action remains unfinished",
+        "en": "between-takes production capture with visible apparatus crew work and one unfinished adjustment",
+        "keywords": [
+          "camera rig",
+          "light stand",
+          "monitor operation",
+          "wardrobe adjustment",
+          "unfinished rehearsal reset"
+        ],
+        "ko": "제작 장비·스태프 작업·끝나지 않은 조정이 성인 피사체와 같은 프레임에 남는 테이크 사이 촬영",
+        "tags": [
+          "capture",
+          "human",
+          "behind_scenes",
+          "production",
+          "between_takes",
+          "crew"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "a clearly adult performer is visibly between takes while a camera rig light stand monitor slate cable crew hand or wardrobe tool intrudes into the frame and one rehearsal reset adjustment or preparation action remains unfinished",
+        "/content/en": "between-takes production capture with visible apparatus crew work and one unfinished adjustment",
+        "/content/ko": "제작 장비·스태프 작업·끝나지 않은 조정이 성인 피사체와 같은 프레임에 남는 테이크 사이 촬영"
+      },
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "source_sha256": "6d72f54ec00ec86af954e4ab03322a035eac1678a8b4a68ac1612ae61b92540b",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action",
+      "social_cue",
+      "__baseline_prompt__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_cf90e9b3d3f5536b846f170f882fcc01",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "방송실의 작업 접점"
+        ],
+        "application_contract": "One complete optional authored school-life realization. Retain the complete English and Korean propositions, stated owners, object and person counts, garment layers, physical supports, directed connections and depicted-media boundaries together. Apply only within independently frozen requester meaning and allowed changes. Research graphs and citations are review metadata, not native facts, owner selections, qualification or effect permission. Student roles and school clothing do not establish age, identity, nationality, consent, personality, popularity, academic ability, repetition, causation, diagnosis, sound or temporal history. Selected distinguishing components and both relation endpoints must be observable together; partial or hidden required evidence cannot pass the full relation.",
+        "definition": "Complete optional school-life visual realization: A seated operator faces a desk microphone and mixer, with one hand on a fader and a cable visibly joining the microphone to the desk equipment.",
+        "en": "A seated operator faces a desk microphone and mixer, with one hand on a fader and a cable visibly joining the microphone to the desk equipment.",
+        "ko": "앉은 조작자 앞에 탁상 마이크와 믹서가 있고 한 손이 페이더에 닿으며 마이크 케이블이 장비에 이어진다.",
+        "research_semantics": {
+          "activation": "requester_selection_and_native_review_required",
+          "bilingual_review": "Complete English and Korean propositions reviewed with same owners and endpoints; no substitution from short label.",
+          "candidate_id": "cand_cf90e9b3d3f5536b846f170f882fcc01",
+          "card_id": "S03",
+          "confusion_boundary": "소리·방송 송출·말 내용은 정지사진으로 확인 못함",
+          "effects_review": "Review every introduced or changed person/object/count/wardrobe/pose/contact/setting/light/text/media property before adoption.",
+          "evidence_status": "authored_optional_realization_with_context_sources_not_source_proven_geometry",
+          "graph_scope": "Review metadata only. No typed native facts, owner choices, guards or effect permissions.",
+          "id": "S03",
+          "mode": "visible",
+          "name_ko": "방송실의 작업 접점",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "not_provable_from_still": "소리·방송 송출·말 내용은 정지사진으로 확인 못함",
+          "observable_gate": "손·페이더·마이크·케이블 양끝의 작업 관계",
+          "owner_policy": "Bind to independently declared requester owners; graph node labels create no entity or permission.",
+          "pixel_status": "NOT_RUN",
+          "positive_en": "A seated operator faces a desk microphone and mixer, with one hand on a fader and a cable visibly joining the microphone to the desk equipment.",
+          "positive_ko": "앉은 조작자 앞에 탁상 마이크와 믹서가 있고 한 손이 페이더에 닿으며 마이크 케이블이 장비에 이어진다.",
+          "priority": "P0",
+          "provenance_boundary": "Research-file SHA, not remote webpage content hash. Scene geometry is authored proposal.",
+          "registration_status": "authored_optional_source",
+          "research_owner_nodes": [
+            "fader",
+            "microphone",
+            "mixer",
+            "operator"
+          ],
+          "research_relations": [
+            {
+              "from": "operator",
+              "relation": "touches",
+              "to": "fader"
+            },
+            {
+              "from": "microphone",
+              "relation": "cabled_to",
+              "to": "mixer"
+            }
+          ],
+          "runtime_importable": true,
+          "schema": "photo-school-life-visual-semantics/v1",
+          "scope": "authored school scene",
+          "source_details": [
+            {
+              "access": "body_excerpt",
+              "access_date": "2026-10-23",
+              "id": "S01",
+              "limits": "개별 학교나 한국·전 세계의 보편 규칙이 아님; 제안 장면의 배치 근거 아님",
+              "media_pixels_reviewed": false,
+              "publisher": "Web Japan / MOFA",
+              "read_scope": "School Life / Club Activities",
+              "supports": "일본 학교생활·급식·청소·행사·부활동의 구분",
+              "title": "Schools - Explore Japan",
+              "url": "https://web-japan.org/kidsweb/explore/schools/"
+            },
+            {
+              "access": "body_excerpt",
+              "access_date": "2026-10-23",
+              "id": "S04",
+              "limits": "2008/2009 개정 지침 페이지; 현행 규정이나 학생회 수사권·사법권의 근거 아님",
+              "media_pixels_reviewed": false,
+              "publisher": "MEXT",
+              "read_scope": "학생회활동·학교행사 항목",
+              "supports": "자치 활동·행사 협조·공동 활동",
+              "title": "第5章 特別活動",
+              "url": "https://www.mext.go.jp/a_menu/shotou/new-cs/youryou/chu/toku.htm"
+            }
+          ],
+          "source_ids": [
+            "S01",
+            "S04"
+          ],
+          "source_keyword_ids": [
+            78,
+            208
+          ],
+          "source_status": "research_only",
+          "suggested_slots": [
+            "location",
+            "prop",
+            "contact_point"
+          ]
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional authored school-life realization. Retain the complete English and Korean propositions, stated owners, object and person counts, garment layers, physical supports, directed connections and depicted-media boundaries together. Apply only within independently frozen requester meaning and allowed changes. Research graphs and citations are review metadata, not native facts, owner selections, qualification or effect permission. Student roles and school clothing do not establish age, identity, nationality, consent, personality, popularity, academic ability, repetition, causation, diagnosis, sound or temporal history. Selected distinguishing components and both relation endpoints must be observable together; partial or hidden required evidence cannot pass the full relation.",
+        "/content/definition": "Complete optional school-life visual realization: A seated operator faces a desk microphone and mixer, with one hand on a fader and a cable visibly joining the microphone to the desk equipment.",
+        "/content/en": "A seated operator faces a desk microphone and mixer, with one hand on a fader and a cable visibly joining the microphone to the desk equipment.",
+        "/content/ko": "앉은 조작자 앞에 탁상 마이크와 믹서가 있고 한 손이 페이더에 닿으며 마이크 케이블이 장비에 이어진다."
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "action",
+          "appearance",
+          "composition",
+          "count",
+          "lighting",
+          "pose",
+          "relationship",
+          "role",
+          "setting",
+          "subject"
+        ],
+        "properties": []
+      },
+      "source_sha256": "1cc6c0349b300ab85963b9badcfd886f12ca56e72bf7d363e937b6f4c0360c91",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "action"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_62be2ae458f55a3983a6bbef0051f040",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "a fictional head is separated from its identifiable torso; both occupy one continuous scene"
+        ],
+        "concept_terms": [
+          "참수",
+          "a fictional head is separated from its identifiable torso",
+          "both occupy one continuous scene"
+        ],
+        "concept_units": [
+          "a fictional head is separated from its identifiable torso",
+          "both occupy one continuous scene"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "This is a project-authored observable interpretation, not a mandatory genre definition or a universal cultural appearance.",
+                "A still image does not establish sound, elapsed time, supernatural causation, biography, mental state, consent, chemical identity or cultural authenticity.",
+                "Approximate discovery is optional. Selecting this realization requires every comparison owner and component, and cannot override frozen requester meaning.",
+                "Reject visual substitutions: head outside crop; mask on a table; Penanggalan conflated with all decapitation"
+              ],
+              "definition": "머리 몸 분리의 상태와 절단 행위의 시간적 순간을 구분한다.",
+              "id": "hr_decapitation_head_body_observable_scope",
+              "observable_interpretation": "a fictional head is separated from its identifiable torso; both occupy one continuous scene"
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "참수의 관찰 가능한 관계 ; 머리 몸 분리의 상태와 절단 행위의 시간적 순간을 구분한다. ; a fictional head is separated from its identifiable torso; both occupy one continuous scene",
+        "en": "a fictional head is separated from its identifiable torso; both occupy one continuous scene",
+        "keywords": [
+          "참수",
+          "a fictional head is separated from its identifiable torso",
+          "both occupy one continuous scene"
+        ],
+        "ko": "참수의 관찰 가능한 관계",
+        "paraphrases": [
+          "머리 몸 분리의 상태와 절단 행위의 시간적 순간을 구분한다.",
+          "a fictional head is separated from its identifiable torso; both occupy one continuous scene"
+        ],
+        "relations": [
+          {
+            "id": "relation_01",
+            "object": "both occupy one continuous scene",
+            "subject": "a fictional head is separated from its identifiable torso",
+            "type": "jointly_visible_in_same_event"
+          }
+        ],
+        "tags": [
+          "observable_relation"
+        ]
+      },
+      "meaning": {
+        "/content/concept_units/0": "a fictional head is separated from its identifiable torso",
+        "/content/concept_units/1": "both occupy one continuous scene",
+        "/content/embedding_text": "참수의 관찰 가능한 관계 ; 머리 몸 분리의 상태와 절단 행위의 시간적 순간을 구분한다. ; a fictional head is separated from its identifiable torso; both occupy one continuous scene",
+        "/content/en": "a fictional head is separated from its identifiable torso; both occupy one continuous scene",
+        "/content/ko": "참수의 관찰 가능한 관계",
+        "/content/paraphrases/0": "머리 몸 분리의 상태와 절단 행위의 시간적 순간을 구분한다.",
+        "/content/paraphrases/1": "a fictional head is separated from its identifiable torso; both occupy one continuous scene",
+        "/content/relations/0/object": "both occupy one continuous scene",
+        "/content/relations/0/subject": "a fictional head is separated from its identifiable torso",
+        "/content/relations/0/type": "jointly_visible_in_same_event"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "body_geometry",
+          "material"
+        ],
+        "properties": [
+          {
+            "dimension": "body_geometry",
+            "property": "anatomy",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "material",
+            "property": "junction",
+            "target": "*"
+          }
+        ]
+      },
+      "source_sha256": "0ed913a49ce2594b97f7def3338515cb5aa9a51434dd5187b44932919841b2db",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "social_cue"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_674306f040675d6fa6b8f7cf96ecdcb8",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "Unreliable narrator / Recording",
+          "믿을 수 없는 화자·기록"
+        ],
+        "application_contract": "One complete optional fictional realization. Adopt only if every stated owner and directed relation fits the independently frozen scene and all affected dimensions are open. Preserve the complete EN/KO meaning; do not select a convenient fragment. Required endpoints must be visible together; occluded, tiny or cropped endpoints are unobservable, and partial realization fails the complete case. Research graph is review metadata, not native qualification. Claim limit: 같은 방의 두 기록이라는 요청 설정 아래 차이를 보인다. 어느 것이 참인지 판단하지 않는다. Confusions: 기록 조작 확정; 관점 차이 무시.",
+        "definition": "Unreliable narrator / Recording / 믿을 수 없는 화자·기록",
+        "en": "One invented printed room image. A second image of the same identified room. One visible difference in depicted door count. The doors differs between the record a. The record b placed beside the record a.",
+        "ko": "같은 방이라는 설정의 가상 인쇄 이미지 두 장이 나란히 놓여 있고, 두 기록에 묘사된 문의 개수가 눈에 보이게 다르다.",
+        "research_semantics": {
+          "activation": "optional complete selection after independent core; a label never activates the bundle",
+          "candidate_id": "cand_674306f040675d6fa6b8f7cf96ecdcb8",
+          "claim_limit_ko": "같은 방의 두 기록이라는 요청 설정 아래 차이를 보인다. 어느 것이 참인지 판단하지 않는다.",
+          "confusion_boundaries_ko": [
+            "기록 조작 확정",
+            "관점 차이 무시"
+          ],
+          "evidence_mode": "proxy",
+          "evidence_status": "research_reviewed_not_native_qualified",
+          "graph_scope": "review metadata only; no native fact, authority or existing-owner permission",
+          "id": "L173",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "owners": [
+            {
+              "id": "record_a",
+              "visible_property_en": "one invented printed room image"
+            },
+            {
+              "id": "record_b",
+              "visible_property_en": "a second image of the same identified room"
+            },
+            {
+              "id": "doors",
+              "visible_property_en": "one visible difference in depicted door count"
+            }
+          ],
+          "pixel_status": "not_rendered",
+          "planned_slots": [
+            "prop",
+            "image_detail"
+          ],
+          "positive_en": "One invented printed room image. A second image of the same identified room. One visible difference in depicted door count. The doors differs between the record a. The record b placed beside the record a.",
+          "positive_ko": "같은 방이라는 설정의 가상 인쇄 이미지 두 장이 나란히 놓여 있고, 두 기록에 묘사된 문의 개수가 눈에 보이게 다르다.",
+          "priority": "P1",
+          "realization_authorship": "agent_authored_creative_proposal",
+          "registration_status": "authored_source_module",
+          "relations": [
+            {
+              "object": "record_a",
+              "predicate": "differs_between",
+              "subject": "doors"
+            },
+            {
+              "object": "record_a",
+              "predicate": "placed_beside",
+              "subject": "record_b"
+            }
+          ],
+          "render_gate_proposals": [
+            {
+              "id": "L173_owner_record_a",
+              "kind": "visible_component",
+              "owner": "record_a",
+              "requirement_en": "one invented printed room image",
+              "scale": "native"
+            },
+            {
+              "id": "L173_owner_record_b",
+              "kind": "visible_component",
+              "owner": "record_b",
+              "requirement_en": "a second image of the same identified room",
+              "scale": "native"
+            },
+            {
+              "id": "L173_owner_doors",
+              "kind": "visible_component",
+              "owner": "doors",
+              "requirement_en": "one visible difference in depicted door count",
+              "scale": "native"
+            },
+            {
+              "id": "L173_relation_1",
+              "kind": "visible_relation",
+              "object": "record_a",
+              "predicate": "differs_between",
+              "scale": "native",
+              "subject": "doors"
+            },
+            {
+              "id": "L173_relation_2",
+              "kind": "visible_relation",
+              "object": "record_a",
+              "predicate": "placed_beside",
+              "scale": "native",
+              "subject": "record_b"
+            }
+          ],
+          "requester_acceptance": "pending",
+          "review_rule": "all required owners and relations visible together; partial_is_fail; UNOBSERVABLE_NOT_PASS",
+          "runtime_importable": true,
+          "schema": "photo-liminal-visual-semantics/v1",
+          "seed_id": 173,
+          "source_claim_scope": "cited terms or adjacent context; exact fictional scene authored locally",
+          "source_ids": [
+            "S05",
+            "S36"
+          ],
+          "source_refs": [
+            {
+              "id": "S05",
+              "limited_finding_ko": "Fisher의 존재·부재와 행위자 불확실성을 시각화에 응용한 에세이. 사진의 보편적 효과를 입증한 실험은 아니다.",
+              "review_scope": "full_short_essay",
+              "title": "Matthew Brehmer: Visualizing the Weird and the Eerie",
+              "url": "https://arxiv.org/html/2309.01763v1"
+            },
+            {
+              "id": "S36",
+              "limited_finding_ko": "아날로그·디지털·오디오·필름 오류가 구분된다는 분류 근거. 개별 오류의 전 원인을 이 목록만으로 설명하지 않는다.",
+              "review_scope": "technical_taxonomy",
+              "title": "AV Artifact Atlas: Browse by Categories",
+              "url": "https://www.avartifactatlas.com/categories.html"
+            }
+          ],
+          "still_candidate_draft": "draft_L173",
+          "term_en": "Unreliable narrator / Recording",
+          "term_ko": "믿을 수 없는 화자·기록",
+          "translation_review": "complete positive EN/KO owners and directed relations; no sound or temporal proof",
+          "unobserved_claims": "Not accepted as pixel facts; retained only in research context"
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional fictional realization. Adopt only if every stated owner and directed relation fits the independently frozen scene and all affected dimensions are open. Preserve the complete EN/KO meaning; do not select a convenient fragment. Required endpoints must be visible together; occluded, tiny or cropped endpoints are unobservable, and partial realization fails the complete case. Research graph is review metadata, not native qualification. Claim limit: 같은 방의 두 기록이라는 요청 설정 아래 차이를 보인다. 어느 것이 참인지 판단하지 않는다. Confusions: 기록 조작 확정; 관점 차이 무시.",
+        "/content/definition": "Unreliable narrator / Recording / 믿을 수 없는 화자·기록",
+        "/content/en": "One invented printed room image. A second image of the same identified room. One visible difference in depicted door count. The doors differs between the record a. The record b placed beside the record a.",
+        "/content/ko": "같은 방이라는 설정의 가상 인쇄 이미지 두 장이 나란히 놓여 있고, 두 기록에 묘사된 문의 개수가 눈에 보이게 다르다."
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "camera",
+          "relationship",
+          "role",
+          "style",
+          "subject"
+        ],
+        "properties": [
+          {
+            "dimension": "camera",
+            "property": "camera.liminal_realization",
+            "target": "record_a"
+          },
+          {
+            "dimension": "camera",
+            "property": "camera.liminal_realization",
+            "target": "record_b"
+          },
+          {
+            "dimension": "camera",
+            "property": "camera.liminal_realization",
+            "target": "doors"
+          },
+          {
+            "dimension": "relationship",
+            "property": "relationship.liminal_realization",
+            "target": "record_a"
+          },
+          {
+            "dimension": "relationship",
+            "property": "relationship.liminal_realization",
+            "target": "record_b"
+          },
+          {
+            "dimension": "relationship",
+            "property": "relationship.liminal_realization",
+            "target": "doors"
+          },
+          {
+            "dimension": "role",
+            "property": "role.liminal_realization",
+            "target": "record_a"
+          },
+          {
+            "dimension": "role",
+            "property": "role.liminal_realization",
+            "target": "record_b"
+          },
+          {
+            "dimension": "role",
+            "property": "role.liminal_realization",
+            "target": "doors"
+          },
+          {
+            "dimension": "style",
+            "property": "style.liminal_realization",
+            "target": "record_a"
+          },
+          {
+            "dimension": "style",
+            "property": "style.liminal_realization",
+            "target": "record_b"
+          },
+          {
+            "dimension": "style",
+            "property": "style.liminal_realization",
+            "target": "doors"
+          },
+          {
+            "dimension": "subject",
+            "property": "subject.liminal_realization",
+            "target": "record_a"
+          },
+          {
+            "dimension": "subject",
+            "property": "subject.liminal_realization",
+            "target": "record_b"
+          },
+          {
+            "dimension": "subject",
+            "property": "subject.liminal_realization",
+            "target": "doors"
+          }
+        ]
+      },
+      "source_sha256": "57052b5995b940c1d4a561614ce18bda58fb622698d0b7aa35ee2f2daf40e4d0",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "social_cue"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_73a814e849d65a9490fecb0ed2e63296",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "경멸 연기를 위한 윗입술 들림 선택형",
+          "a raised upper lip in an explicitly contemptuous portrayal"
+        ],
+        "concept_units": [
+          "the upper lip lifts",
+          "the user's contempt portrayal is preserved as scene context"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "application_conditions": [
+                "An explicitly requested human face or actor; preserve the frozen owner and crop."
+              ],
+              "id": "ae_sneer_variant_portrayal_context",
+              "limits": [
+                "smirk without upper-lip motion",
+                "every sneer forced into one muscle pattern"
+              ],
+              "status": "optional_contextual_portrayal_not_hidden_state_inference"
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "경멸 연기를 위한 윗입술 들림 선택형; the upper lip lifts; the user's contempt portrayal is preserved as scene context; 경멸 연기를 위한 윗입술 들림 선택형; a raised upper lip in an explicitly contemptuous portrayal",
+        "en": "the upper lip lifts; the user's contempt portrayal is preserved as scene context",
+        "keywords": [
+          "경멸 연기를 위한 윗입술 들림 선택형",
+          "a raised upper lip in an explicitly contemptuous portrayal"
+        ],
+        "ko": "경멸 연기를 위한 윗입술 들림 선택형",
+        "relations": [
+          {
+            "id": "actor_owner",
+            "object": "the declared actor's stated local face and eye configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "acting_expression",
+          "expression"
+        ]
+      },
+      "meaning": {
+        "/content/concept_units/0": "the upper lip lifts",
+        "/content/concept_units/1": "the user's contempt portrayal is preserved as scene context",
+        "/content/embedding_text": "경멸 연기를 위한 윗입술 들림 선택형; the upper lip lifts; the user's contempt portrayal is preserved as scene context; 경멸 연기를 위한 윗입술 들림 선택형; a raised upper lip in an explicitly contemptuous portrayal",
+        "/content/en": "the upper lip lifts; the user's contempt portrayal is preserved as scene context",
+        "/content/ko": "경멸 연기를 위한 윗입술 들림 선택형",
+        "/content/relations/0/object": "the declared actor's stated local face and eye configuration",
+        "/content/relations/0/subject": "main_subject",
+        "/content/relations/0/type": "declared_owner_scope"
+      },
+      "conditions": {
+        "for_any": [
+          "human"
+        ],
+        "requires_primary_any_tags": [
+          "contempt",
+          "contemptuous",
+          "disdain",
+          "경멸"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "source_sha256": "9187d1ca2679b91d253eae624e317807439abc7cc2629d4697bb4de0d9490a36",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "social_cue"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_9314f1838eb25a38abff9a7fc0ea026c",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "겹겹의 제어 창",
+          "nested control room windows",
+          "nested spaces"
+        ],
+        "application_contract": "One complete optional fictional visual realization, never a genre-triggered obligation. Preserve the complete English and Korean positive meaning, every material, count, part, owner, same/different relation, current pose, contact, endpoint and continuity or separation. Use only when the independent requester meaning and every affected dimension/property permit the complete case. All required endpoints and qualifiers must remain visible together; cropped, hidden or partial evidence fails the full case. Research graphs, aliases and citations supply no native facts, guard evidence, existing-owner permissions or whole-source qualification. Visible arrangements alone do not establish identity survival, consciousness, genetics, life or death, kinship, desire, consent, coercion, rights, political institutions, historical age, sequence, sound or supernatural efficacy. An artificial component, anatomical model, fictional shell and actual human injury retain different meanings.",
+        "definition": "Optional complete fictional visual realization: A smaller control-room window is visible through a larger control-room window on the same central axis.",
+        "en": "A smaller control-room window is visible through a larger control-room window on the same central axis.",
+        "ko": "큰 제어실 창 너머에 더 작은 제어실 창이 같은 중심축으로 겹쳐 보인다.",
+        "research_semantics": {
+          "activation": "Explicit compatible selection after independent core freeze; no genre-triggered obligation.",
+          "adoption_mode": "optional_complete_realization",
+          "candidate_id": "cand_9314f1838eb25a38abff9a7fc0ea026c",
+          "card_id": "G04",
+          "claim_limit_ko": "포함 관계만 보이며 창조자·상위 시뮬레이션은 확정하지 않는다.",
+          "component_gates": [
+            {
+              "gate_id": "G04-O-outer",
+              "owner": "outer",
+              "partial_is_fail": true,
+              "requirement_en": "large control-room window",
+              "status": "NOT_RUN"
+            },
+            {
+              "gate_id": "G04-O-inner",
+              "owner": "inner",
+              "partial_is_fail": true,
+              "requirement_en": "smaller control-room window",
+              "status": "NOT_RUN"
+            }
+          ],
+          "directed_relations": [
+            {
+              "from": "inner",
+              "predicate": "visible_through",
+              "to": "outer"
+            }
+          ],
+          "family": "인간 너머의 규모와 포함 세계",
+          "graph_scope": "Research review only; not typed facts, native guards, owner authority or qualifications.",
+          "language_review": "authored bilingual draft; independent bilingual review pending",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "nearest_confusion_ko": "창문 반사만으로 중첩을 오인",
+          "observability": "visible_arrangement_only",
+          "owners": {
+            "inner": "smaller control-room window",
+            "outer": "large control-room window"
+          },
+          "pixel_status": "NOT_RUN",
+          "priority": "P1",
+          "proposal_en": "A smaller control-room window is visible through a larger control-room window on the same central axis.",
+          "proposal_ko": "큰 제어실 창 너머에 더 작은 제어실 창이 같은 중심축으로 겹쳐 보인다.",
+          "proposed_slots": [
+            "spatial_depth",
+            "environment_detail"
+          ],
+          "provenance_digest_scope": "research specification bytes, not web page bytes",
+          "registration_status": "authored_source_module",
+          "render_gates": [
+            {
+              "both_endpoints_required": true,
+              "gate_id": "G04-R1",
+              "partial_is_fail": true,
+              "relation": {
+                "from": "inner",
+                "predicate": "visible_through",
+                "to": "outer"
+              },
+              "status": "NOT_RUN"
+            }
+          ],
+          "role_descriptors": {
+            "environment_detail": {
+              "dimensions": [
+                "setting",
+                "material"
+              ],
+              "property_prefixes": [
+                "environment.detail",
+                "setting.detail",
+                "background.surface"
+              ],
+              "semantic_role": "direct"
+            },
+            "spatial_depth": {
+              "dimensions": [
+                "composition"
+              ],
+              "property_prefixes": [
+                "spatial.depth",
+                "composition.depth",
+                "layout.depth"
+              ],
+              "semantic_role": "direct"
+            }
+          },
+          "schema": "photo-surreal-posthuman-visual-semantics/v1",
+          "source_ids": [
+            "S08",
+            "S24"
+          ],
+          "source_refs": [
+            {
+              "evidence_kind": "editor_authored_reference_body",
+              "geometry_support": "No candidate geometry is quoted from this source.",
+              "limit_ko": "색·장치·복장 묶음을 장르의 필요충분조건으로 만들지 않음",
+              "read_scope": "Definition and ingredient discussion, lines 23-30",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S08",
+              "supports_ko": "경계가 느슨하며 마법·신·특정 소재가 필수는 아님",
+              "title": "SFE: Science Fantasy",
+              "url": "https://sf-encyclopedia.com/entry/science_fantasy"
+            },
+            {
+              "evidence_kind": "publisher_synopsis",
+              "geometry_support": "No candidate geometry is quoted from this source.",
+              "limit_ko": "건물 사진만으로 특정 유전자·역사·접근 권한을 입증하지 않음",
+              "read_scope": "Series synopsis, lines 28-33",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S24",
+              "supports_ko": "인간의 규모를 넘어선 도시와 유전자·네트워크 접근의 서사",
+              "title": "Kodansha: BLAME!",
+              "url": "https://kodansha.us/series/blame/"
+            }
+          ],
+          "source_support": "Conceptual background or analogy only; all concrete geometry independently authored.",
+          "title_ko": "겹겹의 제어 창",
+          "whole_positive_meaning_gate": {
+            "all_properties_required": true,
+            "limit": "Relations alone do not cover every material, count, pose or qualifier. All explicit positive clauses remain required.",
+            "proposal_en": "A smaller control-room window is visible through a larger control-room window on the same central axis.",
+            "proposal_ko": "큰 제어실 창 너머에 더 작은 제어실 창이 같은 중심축으로 겹쳐 보인다.",
+            "status": "NOT_RUN"
+          }
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional fictional visual realization, never a genre-triggered obligation. Preserve the complete English and Korean positive meaning, every material, count, part, owner, same/different relation, current pose, contact, endpoint and continuity or separation. Use only when the independent requester meaning and every affected dimension/property permit the complete case. All required endpoints and qualifiers must remain visible together; cropped, hidden or partial evidence fails the full case. Research graphs, aliases and citations supply no native facts, guard evidence, existing-owner permissions or whole-source qualification. Visible arrangements alone do not establish identity survival, consciousness, genetics, life or death, kinship, desire, consent, coercion, rights, political institutions, historical age, sequence, sound or supernatural efficacy. An artificial component, anatomical model, fictional shell and actual human injury retain different meanings.",
+        "/content/definition": "Optional complete fictional visual realization: A smaller control-room window is visible through a larger control-room window on the same central axis.",
+        "/content/en": "A smaller control-room window is visible through a larger control-room window on the same central axis.",
+        "/content/ko": "큰 제어실 창 너머에 더 작은 제어실 창이 같은 중심축으로 겹쳐 보인다."
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "body_geometry",
+          "composition",
+          "count",
+          "relationship",
+          "setting"
+        ],
+        "properties": []
+      },
+      "source_sha256": "eaae44cf06b025cb0db53f59fb00653ed97dc7e6f9e665f88a5c6992ae86b37d",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "social_cue"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_cbeb98a902245d5cb6575e6aba18a63a",
+      "realization_id": "base",
+      "native": {
+        "en": "friends inside a Korean coin-karaoke room",
+        "kind": [
+          "human"
+        ],
+        "ko": "코인노래방 안의 친구들",
+        "primary_context_alternatives": [
+          [
+            "subject:friends",
+            "location:karaoke"
+          ],
+          [
+            "subject:friends",
+            "location:coin-karaoke"
+          ],
+          [
+            "subject:friends",
+            "subject:karaoke"
+          ],
+          [
+            "subject:friends",
+            "subject:coin-karaoke"
+          ]
+        ],
+        "tags": [
+          "human",
+          "group",
+          "karaoke",
+          "korea",
+          "music",
+          "social"
+        ]
+      },
+      "meaning": {
+        "/content/en": "friends inside a Korean coin-karaoke room",
+        "/content/ko": "코인노래방 안의 친구들"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "subject"
+        ],
+        "properties": []
+      },
+      "source_sha256": "56958af193bbe1fd6784e38da16d78de207b3c2c4c74a9774ef6d0e9ac90eaf2",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "social_cue"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_d0603251f8825a9ea649688de72de2fd",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "보컬 부스와 컨트롤룸"
+        ],
+        "application_contract": "One complete optional authored idol-scene visual realization, not a genre definition or a mandatory bundle. Retain every stated actor, limb, garment, prop, floor support, display boundary, represented-image owner, count and directed endpoint in the selected English and Korean proposition. Review all whole-scene conditions and actual effects against independently frozen requester meaning and locked dimensions/properties; a role tag or lexical hit creates no owner or permission. Do not combine sibling alternatives or transfer a hand, garment, device, mark or represented face to another owner. The cited sources establish bounded domain context, not this authored whole-scene geometry or exact visual specimen. All selected distinguishing components and both relation endpoints must be observable together; hidden or partial required evidence cannot pass. Research metadata is not native typed-fact qualification. A still image does not establish identity, age beyond explicit fictional setting, consent, coercion, sexual orientation, actual romance, rank, skill, popularity, debut history, first victory, revenue, debt, medical state, repetition, timing, sound, live singing, lip sync, real-time tracking, AI autonomy, material chemistry or legal conclusions.",
+        "definition": "A singer faces a pop filter in a recording booth; beyond a framed glass partition, an engineer sits at a mixing desk facing the booth.",
+        "en": "A singer faces a pop filter in a recording booth; beyond a framed glass partition, an engineer sits at a mixing desk facing the booth.",
+        "ko": "가수는 녹음 부스의 팝필터를 마주 보고, 테두리가 있는 유리 칸막이 너머 엔지니어는 부스를 향한 믹싱 데스크에 앉아 있다.",
+        "research_semantics": {
+          "adoption_rule": "Optional whole proposition only, subject to frozen request compatibility; no keyword-triggered adoption.",
+          "authorship": "original_optional_scene_proposition_not_source_quote",
+          "candidate_id": "cand_d0603251f8825a9ea649688de72de2fd",
+          "confusion_boundary": "장비가 작곡 참여·실제 발성·좋은 음질을 증명하지 않음",
+          "evidence_level": "authored_research_draft",
+          "family": "training",
+          "id": "I003",
+          "name_ko": "보컬 부스와 컨트롤룸",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "observable_components": [
+            {
+              "id": "I003.1",
+              "required_if_selected": true,
+              "requirement_ko": "가수-팝필터 방향"
+            },
+            {
+              "id": "I003.2",
+              "required_if_selected": true,
+              "requirement_ko": "유리 경계"
+            },
+            {
+              "id": "I003.3",
+              "required_if_selected": true,
+              "requirement_ko": "엔지니어-데스크 소유"
+            }
+          ],
+          "owner_relation_contract": {
+            "actor_count": "only_the_count_explicit_in_this_selected_proposition",
+            "complete_proposition_en": "A singer faces a pop filter in a recording booth; beyond a framed glass partition, an engineer sits at a mixing desk facing the booth.",
+            "complete_proposition_ko": "가수는 녹음 부스의 팝필터를 마주 보고, 테두리가 있는 유리 칸막이 너머 엔지니어는 부스를 향한 믹싱 데스크에 앉아 있다.",
+            "no_new_owner_permission": true,
+            "occluded_endpoint": "unobservable_not_pass",
+            "owner_rule": "Retain each stated actor, limb, garment, prop, surface, display and represented image owner; every directed relation keeps both endpoints."
+          },
+          "phrase_en": "A singer faces a pop filter in a recording booth; beyond a framed glass partition, an engineer sits at a mixing desk facing the booth.",
+          "phrase_ko": "가수는 녹음 부스의 팝필터를 마주 보고, 테두리가 있는 유리 칸막이 너머 엔지니어는 부스를 향한 믹싱 데스크에 앉아 있다.",
+          "pixel_gate": "All selected distinguishing components and relation endpoints jointly observable; hidden or partial required evidence cannot pass.",
+          "proposed_slots": [
+            "location",
+            "prop_placement"
+          ],
+          "registration_status": "authored_optional_source",
+          "runtime_importable": true,
+          "schema": "idol-research-visual-card/v1",
+          "seed_ids": [
+            "K036",
+            "K039",
+            "K042"
+          ],
+          "slot_status": "unreviewed_role_proposals",
+          "source_ids": [
+            "S04",
+            "S06"
+          ],
+          "source_support": "domain_context_only_not_whole_scene_or_exact_specimen_proof",
+          "status": "research_only_draft_requires_bilingual_source_and_role_review"
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional authored idol-scene visual realization, not a genre definition or a mandatory bundle. Retain every stated actor, limb, garment, prop, floor support, display boundary, represented-image owner, count and directed endpoint in the selected English and Korean proposition. Review all whole-scene conditions and actual effects against independently frozen requester meaning and locked dimensions/properties; a role tag or lexical hit creates no owner or permission. Do not combine sibling alternatives or transfer a hand, garment, device, mark or represented face to another owner. The cited sources establish bounded domain context, not this authored whole-scene geometry or exact visual specimen. All selected distinguishing components and both relation endpoints must be observable together; hidden or partial required evidence cannot pass. Research metadata is not native typed-fact qualification. A still image does not establish identity, age beyond explicit fictional setting, consent, coercion, sexual orientation, actual romance, rank, skill, popularity, debut history, first victory, revenue, debt, medical state, repetition, timing, sound, live singing, lip sync, real-time tracking, AI autonomy, material chemistry or legal conclusions.",
+        "/content/definition": "A singer faces a pop filter in a recording booth; beyond a framed glass partition, an engineer sits at a mixing desk facing the booth.",
+        "/content/en": "A singer faces a pop filter in a recording booth; beyond a framed glass partition, an engineer sits at a mixing desk facing the booth.",
+        "/content/ko": "가수는 녹음 부스의 팝필터를 마주 보고, 테두리가 있는 유리 칸막이 너머 엔지니어는 부스를 향한 믹싱 데스크에 앉아 있다."
+      },
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "action",
+          "composition",
+          "count",
+          "pose",
+          "relationship",
+          "setting"
+        ],
+        "properties": []
+      },
+      "source_sha256": "6175ccfdfc7b7745d931fbda7a5b5adc27c0bf51506f52c897c927eda5b8e93d",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "social_cue"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_f749fe1555f359f69a5118943cd4c5ef",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "아이돌·유닛형 앙상블 설계을 보여 주는 분명한 성인 오리지널 주체",
+          "three adult original performers with distinct roles"
+        ],
+        "embedding_text": "three adult original performers with distinct roles",
+        "en": "three adult original performers with distinct roles",
+        "facets": {},
+        "kind": [
+          "human",
+          "adult"
+        ],
+        "ko": "아이돌·유닛형 앙상블 설계을 보여 주는 분명한 성인 오리지널 주체",
+        "tags": [
+          "character_scene_grammar",
+          "idol_unit_ensemble_design",
+          "performance_identity_progression",
+          "character_idol_unit_ensemble_scene_atomic_scene",
+          "original_character",
+          "human",
+          "adult",
+          "age_context_only"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "three adult original performers with distinct roles",
+        "/content/en": "three adult original performers with distinct roles",
+        "/content/ko": "아이돌·유닛형 앙상블 설계을 보여 주는 분명한 성인 오리지널 주체"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "subject"
+        ],
+        "properties": []
+      },
+      "source_sha256": "34a7dfb4409c530073d6f0a17d78aedebd3d453ec5c2725e6b7b764fc4c125d3",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "social_cue"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_01a84ab8e29c5280a21f768af26965ef",
+      "realization_id": "base",
+      "native": {
+        "embedding_text": "real subject and mismatched mirror image in the same frame",
+        "en": "real subject and mismatched mirror image in the same frame",
+        "ko": "실물과 어긋난 거울상이 같은 프레임에 있는 구도",
+        "tags": [
+          "portrait",
+          "composition"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "real subject and mismatched mirror image in the same frame",
+        "/content/en": "real subject and mismatched mirror image in the same frame",
+        "/content/ko": "실물과 어긋난 거울상이 같은 프레임에 있는 구도"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "composition"
+        ],
+        "properties": []
+      },
+      "source_sha256": "8be0007fd23b64dc4a0084dd704a69ba3ffd0f13e59b0a0e1ce276751d932bf4",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_03c99dfde05b5be2a51953dc15841756",
+      "realization_id": "base",
+      "native": {
+        "en": "cosplay concept photography",
+        "ko": "코스프레 콘셉트 사진",
+        "tags": [
+          "portrait",
+          "cosplay",
+          "concept",
+          "human"
+        ]
+      },
+      "meaning": {
+        "/content/en": "cosplay concept photography",
+        "/content/ko": "코스프레 콘셉트 사진"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "style"
+        ],
+        "properties": []
+      },
+      "source_sha256": "df35fb4fbca03f4b6cd55ee54053b280906aab8be632279841356a2edc86f308",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_141a68ddd35b5d6ea45b58f770abf4b5",
+      "realization_id": "base",
+      "native": {
+        "activation": {
+          "exact_terms": [
+            "both selected elements remain identifiable; a shared spatial or material relation makes their contrast readable; neither element replaces a locked subject or event"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": false
+        },
+        "authored_components": {
+          "components": [
+            {
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "both selected elements remain identifiable"
+              ],
+              "id": "component_1",
+              "instruction": "Preserve the requested subject and make this selected relation visible: both selected elements remain identifiable",
+              "match_terms": [
+                "both selected elements remain identifiable"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "both selected elements remain identifiable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+                "id": "vo_mep_visual_juxtaposition_1",
+                "review_scale": "both"
+              }
+            },
+            {
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "a shared spatial or material relation makes their contrast readable"
+              ],
+              "id": "component_2",
+              "instruction": "Preserve the requested subject and make this selected relation visible: a shared spatial or material relation makes their contrast readable",
+              "match_terms": [
+                "a shared spatial or material relation makes their contrast readable"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "a shared spatial or material relation makes their contrast readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+                "id": "vo_mep_visual_juxtaposition_2",
+                "review_scale": "native"
+              }
+            },
+            {
+              "evidence_field": "component_3_phrase",
+              "evidence_terms": [
+                "neither element replaces a locked subject or event"
+              ],
+              "id": "component_3",
+              "instruction": "Preserve the requested subject and make this selected relation visible: neither element replaces a locked subject or event",
+              "match_terms": [
+                "neither element replaces a locked subject or event"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "neither element replaces a locked subject or event. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+                "id": "vo_mep_visual_juxtaposition_3",
+                "review_scale": "both"
+              }
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v1"
+        },
+        "category": "photographic_presentation_relation",
+        "composition_instruction": "Preserve the requested subject and make this selected relation visible: both selected elements remain identifiable Preserve the requested subject and make this selected relation visible: a shared spatial or material relation makes their contrast readable Preserve the requested subject and make this selected relation visible: neither element replaces a locked subject or event",
+        "concept_candidate": {
+          "concept_terms": [
+            "지정한 두 요소의 병치",
+            "visual juxtaposition",
+            "visual tension",
+            "both selected elements remain identifiable",
+            "a shared spatial or material relation makes their contrast readable",
+            "neither element replaces a locked subject or event"
+          ]
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "both selected elements remain identifiable"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "a shared spatial or material relation makes their contrast readable"
+            ]
+          },
+          "component_3_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "neither element replaces a locked subject or event"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "무관한 소품 나열",
+          "색 차이만으로 서사 완성 주장"
+        ],
+        "render_gates": [
+          {
+            "description": "both selected elements remain identifiable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+            "id": "vo_mep_visual_juxtaposition_1",
+            "review_scale": "both"
+          },
+          {
+            "description": "a shared spatial or material relation makes their contrast readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+            "id": "vo_mep_visual_juxtaposition_2",
+            "review_scale": "native"
+          },
+          {
+            "description": "neither element replaces a locked subject or event. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+            "id": "vo_mep_visual_juxtaposition_3",
+            "review_scale": "both"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase",
+          "component_3_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "source가 증명하는 것은 콘셉트 가능성이고 이 구체 규격은 연구 제안이다.",
+            "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "both selected elements remain identifiable"
+                ],
+                "id": "component_1"
+              },
+              {
+                "any_terms": [
+                  "a shared spatial or material relation makes their contrast readable"
+                ],
+                "id": "component_2"
+              },
+              {
+                "any_terms": [
+                  "neither element replaces a locked subject or event"
+                ],
+                "id": "component_3"
+              }
+            ],
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "component_1",
+              "component_2",
+              "component_3"
+            ]
+          },
+          "contrast_examples": [
+            "무관한 소품 나열",
+            "색 차이만으로 서사 완성 주장"
+          ],
+          "definition": "both selected elements remain identifiable; a shared spatial or material relation makes their contrast readable; neither element replaces a locked subject or event",
+          "paraphrase_examples": [
+            "지정한 두 요소의 병치",
+            "visual juxtaposition",
+            "visual tension",
+            "Juxtaposition",
+            "Concept-driven"
+          ]
+        }
+      },
+      "meaning": {
+        "/content/authored_components/components/0/instruction": "Preserve the requested subject and make this selected relation visible: both selected elements remain identifiable",
+        "/content/authored_components/components/0/render_gate/description": "both selected elements remain identifiable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+        "/content/authored_components/components/1/instruction": "Preserve the requested subject and make this selected relation visible: a shared spatial or material relation makes their contrast readable",
+        "/content/authored_components/components/1/render_gate/description": "a shared spatial or material relation makes their contrast readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+        "/content/authored_components/components/2/instruction": "Preserve the requested subject and make this selected relation visible: neither element replaces a locked subject or event",
+        "/content/authored_components/components/2/render_gate/description": "neither element replaces a locked subject or event. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+        "/content/composition_instruction": "Preserve the requested subject and make this selected relation visible: both selected elements remain identifiable Preserve the requested subject and make this selected relation visible: a shared spatial or material relation makes their contrast readable Preserve the requested subject and make this selected relation visible: neither element replaces a locked subject or event",
+        "/content/render_gates/0/description": "both selected elements remain identifiable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+        "/content/render_gates/1/description": "a shared spatial or material relation makes their contrast readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+        "/content/render_gates/2/description": "neither element replaces a locked subject or event. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails.",
+        "/content/semantics/definition": "both selected elements remain identifiable; a shared spatial or material relation makes their contrast readable; neither element replaces a locked subject or event",
+        "/content/semantics/paraphrase_examples/0": "지정한 두 요소의 병치",
+        "/content/semantics/paraphrase_examples/1": "visual juxtaposition",
+        "/content/semantics/paraphrase_examples/2": "visual tension",
+        "/content/semantics/paraphrase_examples/3": "Juxtaposition",
+        "/content/semantics/paraphrase_examples/4": "Concept-driven"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "source_sha256": "b16ed4fc51bfec1bbb43cb7a1e2007889c2ef34d7bf3ca6632a2b95e7fc363ce",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_2ae9ee547be95b9bb665ab5cb23aac3b",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "거울 속 대응 불일치"
+        ],
+        "application_contract": "One complete optional authored school-life realization. Retain the complete English and Korean propositions, stated owners, object and person counts, garment layers, physical supports, directed connections and depicted-media boundaries together. Apply only within independently frozen requester meaning and allowed changes. Research graphs and citations are review metadata, not native facts, owner selections, qualification or effect permission. Student roles and school clothing do not establish age, identity, nationality, consent, personality, popularity, academic ability, repetition, causation, diagnosis, sound or temporal history. Selected distinguishing components and both relation endpoints must be observable together; partial or hidden required evidence cannot pass the full relation.",
+        "definition": "Complete optional school-life visual realization: One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+        "en": "One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+        "ko": "한 사람이 두 팔을 내린 채 거울을 향하지만 같은 반사 프레임의 대응 인물은 한 팔을 든다.",
+        "research_semantics": {
+          "activation": "requester_selection_and_native_review_required",
+          "bilingual_review": "Complete English and Korean propositions reviewed with same owners and endpoints; no substitution from short label.",
+          "candidate_id": "cand_2ae9ee547be95b9bb665ab5cb23aac3b",
+          "card_id": "H05",
+          "confusion_boundary": "유령 정체·원한·장소에 묶임은 불일치로 입증하지 않음",
+          "effects_review": "Review every introduced or changed person/object/count/wardrobe/pose/contact/setting/light/text/media property before adoption.",
+          "evidence_status": "authored_optional_realization_with_context_sources_not_source_proven_geometry",
+          "graph_scope": "Review metadata only. No typed native facts, owner choices, guards or effect permissions.",
+          "id": "H05",
+          "mode": "visible",
+          "name_ko": "거울 속 대응 불일치",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "not_provable_from_still": "유령 정체·원한·장소에 묶임은 불일치로 입증하지 않음",
+          "observable_gate": "원인 몸·반사 프레임·대응 팔이 동시에 가시; 두 실제 인물 실패",
+          "owner_policy": "Bind to independently declared requester owners; graph node labels create no entity or permission.",
+          "pixel_status": "NOT_RUN",
+          "positive_en": "One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+          "positive_ko": "한 사람이 두 팔을 내린 채 거울을 향하지만 같은 반사 프레임의 대응 인물은 한 팔을 든다.",
+          "priority": "P1",
+          "provenance_boundary": "Research-file SHA, not remote webpage content hash. Scene geometry is authored proposal.",
+          "registration_status": "authored_optional_source",
+          "research_owner_nodes": [
+            "actual_arm",
+            "mirror",
+            "person",
+            "reflected_arm",
+            "reflected_person"
+          ],
+          "research_relations": [
+            {
+              "from": "person",
+              "relation": "faces",
+              "to": "mirror"
+            },
+            {
+              "from": "reflected_person",
+              "relation": "within",
+              "to": "mirror"
+            },
+            {
+              "from": "reflected_arm",
+              "relation": "differs_from",
+              "to": "actual_arm"
+            }
+          ],
+          "runtime_importable": true,
+          "schema": "photo-school-life-visual-semantics/v1",
+          "scope": "original supernatural image",
+          "source_details": [
+            {
+              "access": "search_index_only_after_fetch_timeout",
+              "access_date": "2026-10-23",
+              "id": "S23",
+              "limits": "본문 접근 실패; 전편 감상·장면별 분석·현재 학교 제도의 근거로 쓰지 않음",
+              "media_pixels_reviewed": false,
+              "publisher": "KOFIC",
+              "read_scope": "공식 페이지의 검색 색인",
+              "supports": "학교 제도·체벌 등 사회적 공포와의 연결",
+              "title": "The Social Horrors of WHISPERING CORRIDORS",
+              "url": "https://www.koreanfilm.or.kr/eng/news/features.jsp?blbdComCd=601013&mode=FEATURES_VIEW&seq=512"
+            }
+          ],
+          "source_ids": [
+            "S23"
+          ],
+          "source_keyword_ids": [
+            182,
+            183
+          ],
+          "source_status": "research_only",
+          "suggested_slots": [
+            "reflection_logic",
+            "composition"
+          ]
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional authored school-life realization. Retain the complete English and Korean propositions, stated owners, object and person counts, garment layers, physical supports, directed connections and depicted-media boundaries together. Apply only within independently frozen requester meaning and allowed changes. Research graphs and citations are review metadata, not native facts, owner selections, qualification or effect permission. Student roles and school clothing do not establish age, identity, nationality, consent, personality, popularity, academic ability, repetition, causation, diagnosis, sound or temporal history. Selected distinguishing components and both relation endpoints must be observable together; partial or hidden required evidence cannot pass the full relation.",
+        "/content/definition": "Complete optional school-life visual realization: One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+        "/content/en": "One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+        "/content/ko": "한 사람이 두 팔을 내린 채 거울을 향하지만 같은 반사 프레임의 대응 인물은 한 팔을 든다."
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "action",
+          "appearance",
+          "composition",
+          "count",
+          "pose",
+          "relationship",
+          "setting",
+          "subject"
+        ],
+        "properties": []
+      },
+      "source_sha256": "540c3b51f1054346c3e02b1929b2f9d76a4ad2df11d73a7cc2ed973d91ffcb57",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_2ebe83378ba65815ab58f05b6f522e19",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "서로 다른 보관 표기",
+          "Unreliable Narrator / Archive",
+          "불신할 수 있는 화자·기록",
+          "Cover-up",
+          "은폐"
+        ],
+        "application_contract": "One optional complete authored realization. Preserve all named components, counts, materials, text carriers, projected boundaries and directed endpoint relations in both languages. Use only when compatible with the independently frozen scene and all affected dimensions. Sibling alternatives are not all required together. Hidden, merged, reversed or cropped required endpoints are unobservable, not passed; partial_is_fail; UNOBSERVABLE_NOT_PASS. The research graph and citations are metadata and grant no typed native fact, owner permission, role approval or native qualification. A still appearance does not establish actual recording provenance, device failure, audio, motion through time, identity, consent, intention, life/death, institutional truth or supernatural effect.",
+        "definition": "Optional complete authored visual realization: Show a tape sleeve with a short date label. Show a matching catalogue card with a different date. The two visible date labels disagree.",
+        "en": "Show a tape sleeve with a short date label. Show a matching catalogue card with a different date. The two visible date labels disagree.",
+        "ko": "짧은 날짜 라벨이 있는 테이프 케이스. 다른 날짜가 적힌 대응 목록 카드. 두 곳에 보이는 날짜 표기가 다르다.",
+        "research_semantics": {
+          "activation": "post_core_optional_complete_realization; broad genre never activates all cards",
+          "candidate_id": "cand_2ebe83378ba65815ab58f05b6f522e19",
+          "claim_limit_ko": "불일치만 가시화한다. 누가 왜 바꿨는지·어느 기록이 참인지는 정하지 않는다.",
+          "confusion_boundaries_ko": [
+            "오타를 자동 은폐·거짓말로 판정",
+            "역사 위조 확정"
+          ],
+          "definition_review": "bounded_source_context_and_authored_realization",
+          "evidence_mode": "proxy",
+          "evidence_status": "research_proposal_not_native_qualified",
+          "graph_scope": "review metadata only; no native owner or causal fact",
+          "id": "A050",
+          "layer": "archive_relation",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "owners": [
+            {
+              "id": "tape",
+              "visible_en": "a tape sleeve with a short date label",
+              "visible_ko": "짧은 날짜 라벨이 있는 테이프 케이스"
+            },
+            {
+              "id": "file",
+              "visible_en": "a matching catalogue card with a different date",
+              "visible_ko": "다른 날짜가 적힌 대응 목록 카드"
+            }
+          ],
+          "positive_en": "Show a tape sleeve with a short date label. Show a matching catalogue card with a different date. The two visible date labels disagree.",
+          "positive_ko": "짧은 날짜 라벨이 있는 테이프 케이스. 다른 날짜가 적힌 대응 목록 카드. 두 곳에 보이는 날짜 표기가 다르다.",
+          "priority": "P1",
+          "proposed_slots": [
+            "visible_text",
+            "narrative_clue"
+          ],
+          "registration_status": "authored_source_module",
+          "relations": [
+            {
+              "object": "tape",
+              "predicate": "contradicts_label_of",
+              "subject": "file",
+              "visible_en": "The two visible date labels disagree",
+              "visible_ko": "두 곳에 보이는 날짜 표기가 다르다"
+            }
+          ],
+          "render_gate_proposals": [
+            {
+              "id": "A050_owner_tape",
+              "owner": "tape",
+              "requirement_en": "a tape sleeve with a short date label",
+              "requirement_ko": "짧은 날짜 라벨이 있는 테이프 케이스",
+              "scale": "native"
+            },
+            {
+              "id": "A050_owner_file",
+              "owner": "file",
+              "requirement_en": "a matching catalogue card with a different date",
+              "requirement_ko": "다른 날짜가 적힌 대응 목록 카드",
+              "scale": "native"
+            },
+            {
+              "id": "A050_relation_1",
+              "object": "tape",
+              "predicate": "contradicts_label_of",
+              "requirement_en": "The two visible date labels disagree",
+              "requirement_ko": "두 곳에 보이는 날짜 표기가 다르다",
+              "scale": "native",
+              "subject": "file"
+            }
+          ],
+          "requester_acceptance": "pending",
+          "runtime_importable": true,
+          "schema": "photo-analog-horror-visual-semantics/v1",
+          "seed_ids": [
+            82,
+            129
+          ],
+          "semantic_axes": [
+            "text_carrier",
+            "narrative_clue"
+          ],
+          "source_claim_scope": "sources support only their ledger scopes; exact components, layouts and scenes are authored proposals, not canonical source descriptions",
+          "source_details": [
+            {
+              "access": "body_selected",
+              "accessed_date": "2026-10-22",
+              "finding_ko": "매체를 소비하는 행위와 소리·영상의 질감이 인터넷 호러에서 중요함을 논한다. 모든 작품의 단일 정의나 생성 성공률 근거는 아니다.",
+              "id": "S21",
+              "pixel_reference_reviewed": false,
+              "read_scope": "abstract; introduction; hauntology sections",
+              "supports": "bounded definitions/context only; exact candidate staging is locally authored",
+              "title": "Tam Lines: Isolated Together, Sonic Scope",
+              "url": "https://www.sonicscope.org/pub/uooqf9rf/release/3"
+            }
+          ],
+          "source_ids": [
+            "S21"
+          ],
+          "title_ko": "서로 다른 보관 표기",
+          "unproven": [
+            "actual medium provenance",
+            "causal mechanism",
+            "temporal behavior",
+            "audio",
+            "identity/consent/intent",
+            "viewer fear or nostalgia"
+          ],
+          "whole_case_rule": "partial_is_fail; UNOBSERVABLE_NOT_PASS"
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One optional complete authored realization. Preserve all named components, counts, materials, text carriers, projected boundaries and directed endpoint relations in both languages. Use only when compatible with the independently frozen scene and all affected dimensions. Sibling alternatives are not all required together. Hidden, merged, reversed or cropped required endpoints are unobservable, not passed; partial_is_fail; UNOBSERVABLE_NOT_PASS. The research graph and citations are metadata and grant no typed native fact, owner permission, role approval or native qualification. A still appearance does not establish actual recording provenance, device failure, audio, motion through time, identity, consent, intention, life/death, institutional truth or supernatural effect.",
+        "/content/definition": "Optional complete authored visual realization: Show a tape sleeve with a short date label. Show a matching catalogue card with a different date. The two visible date labels disagree.",
+        "/content/en": "Show a tape sleeve with a short date label. Show a matching catalogue card with a different date. The two visible date labels disagree.",
+        "/content/ko": "짧은 날짜 라벨이 있는 테이프 케이스. 다른 날짜가 적힌 대응 목록 카드. 두 곳에 보이는 날짜 표기가 다르다."
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "appearance",
+          "composition",
+          "count",
+          "material",
+          "relationship",
+          "text"
+        ],
+        "properties": []
+      },
+      "source_sha256": "eebee6fe9f300b738d8a15bc19b90e9be5e9f073aaddb380512693635949ae10",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_85fa5c84b17a5031a77c217ffa84fe87",
+      "realization_id": "base",
+      "native": {
+        "en": "conceptual photograph",
+        "ko": "콘셉트 포토",
+        "tags": [
+          "concept"
+        ]
+      },
+      "meaning": {
+        "/content/en": "conceptual photograph",
+        "/content/ko": "콘셉트 포토"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "style"
+        ],
+        "properties": []
+      },
+      "source_sha256": "e07435447dfbd7d49d9c6b2b882985168f5cf52751a1ac4b0f7d4c164acc8667",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_e1eae4183b3c5330acdd9bbada5ed54f",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "동일 식별자와 구별되는 두 몸",
+          "인격 동일성",
+          "Personal Identity",
+          "수적 동일성·질적 동일성",
+          "Numerical / Qualitative Identity",
+          "인격 분기",
+          "Fission",
+          "상태창·캐릭터 시트",
+          "Status Screen / Character Sheet"
+        ],
+        "application_contract": "One complete optional authored visual realization, not a genre-triggered obligation or a claim about actual consciousness, identity or causal control. Preserve every positive English and Korean clause, material, count, part, owner, attachment, endpoint, state and scope. Use only when compatible with independently frozen requester meaning and every affected dimension and property. Every distinguishing component and directed relation must be legible together in the selected evidence unit; hidden, cropped, partial or unobservable required evidence does not pass. Research graphs, aliases and citations add no typed native facts, guard evidence, owner permissions or whole-source qualification. Visible form does not establish consent, rights, life state, diagnosis, continuity of identity, consciousness, historical sequence or causation. Declared sequences and still-image proxies retain their distinct evidence scopes.",
+        "definition": "Optional complete authored visual realization: Two adults stand apart, each wearing a clearly legible tag marked A7; their hands rest on two separate rails.",
+        "en": "Two adults stand apart, each wearing a clearly legible tag marked A7; their hands rest on two separate rails.",
+        "ko": "서로 떨어진 성인 둘이 각각 A7이라고 분명히 읽히는 태그를 달고 다른 난간에 손을 얹고 있다.",
+        "research_semantics": {
+          "activation": "optional_complete_realization_after_independent_requester_core; broad_terms_never_activate",
+          "candidate_id": "cand_e1eae4183b3c5330acdd9bbada5ed54f",
+          "claim_limit_ko": "동일 문자열과 분리된 몸만 증명한다. 시스템 ID의 고유성·수적 동일성·의식은 판정하지 않는다.",
+          "confusion_boundaries": [
+            "같은 식별자로 한 개체 판정",
+            "다중 노출"
+          ],
+          "evidence_mode": "proxy",
+          "family": "자아·복제·동일성",
+          "gates": [
+            {
+              "id": "C04-O1",
+              "kind": "owner_component",
+              "owner": "left",
+              "requirement": "left adult"
+            },
+            {
+              "id": "C04-O2",
+              "kind": "owner_component",
+              "owner": "right",
+              "requirement": "right adult"
+            },
+            {
+              "id": "C04-O3",
+              "kind": "owner_component",
+              "owner": "tag_a",
+              "requirement": "tag displaying A7"
+            },
+            {
+              "id": "C04-O4",
+              "kind": "owner_component",
+              "owner": "tag_b",
+              "requirement": "tag displaying A7"
+            },
+            {
+              "both_endpoints_required": true,
+              "id": "C04-R1",
+              "kind": "directed_relation",
+              "object": "left",
+              "predicate": "attached_to",
+              "subject": "tag_a"
+            },
+            {
+              "both_endpoints_required": true,
+              "id": "C04-R2",
+              "kind": "directed_relation",
+              "object": "right",
+              "predicate": "attached_to",
+              "subject": "tag_b"
+            },
+            {
+              "both_endpoints_required": true,
+              "id": "C04-R3",
+              "kind": "directed_relation",
+              "object": "right",
+              "predicate": "separate_from",
+              "subject": "left"
+            }
+          ],
+          "graph_scope": "Reviewed research relations only; not typed native facts, source guard support or owner permissions.",
+          "id": "C04",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "owners": {
+            "left": "left adult",
+            "right": "right adult",
+            "tag_a": "tag displaying A7",
+            "tag_b": "tag displaying A7"
+          },
+          "phrase_en": "Two adults stand apart, each wearing a clearly legible tag marked A7; their hands rest on two separate rails.",
+          "phrase_ko": "서로 떨어진 성인 둘이 각각 A7이라고 분명히 읽히는 태그를 달고 다른 난간에 손을 얹고 있다.",
+          "priority": "P1",
+          "proposed_slots": [
+            "visible_text",
+            "subject_count"
+          ],
+          "provenance_digest_scope": "research specification bytes, not downloaded web page bytes",
+          "registration_status": "authored_source_module",
+          "relations": [
+            {
+              "object": "left",
+              "predicate": "attached_to",
+              "subject": "tag_a"
+            },
+            {
+              "object": "right",
+              "predicate": "attached_to",
+              "subject": "tag_b"
+            },
+            {
+              "object": "right",
+              "predicate": "separate_from",
+              "subject": "left"
+            }
+          ],
+          "requester_acceptance": "not_yet_received",
+          "review_policy": {
+            "minimum_evidence_unit": "single_frame_visible_relation_only",
+            "partial_is_fail": true,
+            "unobservable": "UNOBSERVABLE_NOT_PASS"
+          },
+          "schema": "photo-metafiction-visual-semantics/v1",
+          "seed_ids": [
+            45,
+            46,
+            48,
+            61
+          ],
+          "source_refs": [
+            {
+              "access_status": "body_targeted",
+              "checked_on_kst": "2026-10-22",
+              "geometry_support": "context_or_definition_only; selected scene geometry is independently authored",
+              "id": "S11",
+              "kind": "scholarly_encyclopedia",
+              "read_scope": "Persistence, psychological continuity, fission",
+              "supported_claim_and_limit_ko": "닮음과 한 개체의 지속은 다르다. 복제·분기·심리적 연속성에 대한 논쟁을 하나의 외형으로 해결하지 않는다.",
+              "title": "Personal Identity — Stanford Encyclopedia of Philosophy",
+              "url": "https://plato.stanford.edu/entries/identity-personal/"
+            },
+            {
+              "access_status": "body_targeted",
+              "checked_on_kst": "2026-10-22",
+              "geometry_support": "context_or_definition_only; selected scene geometry is independently authored",
+              "id": "S20",
+              "kind": "official_rules",
+              "read_scope": "Hit Points, Dead, Experience Points/Level terminology",
+              "supported_claim_and_limit_ko": "한 규칙 판본의 추상화다. HP를 상처량·통증의 물리 총량으로 번역하거나 모든 LitRPG의 부활 규칙으로 일반화하지 않는다.",
+              "title": "D&D 2024 Basic Rules — Rules Glossary",
+              "url": "https://www.dndbeyond.com/sources/dnd/br-2024/rules-glossary"
+            }
+          ],
+          "source_support": "Source definitions or analogies only; specific geometry and fictional rule proposals are independently authored.",
+          "title_ko": "동일 식별자와 구별되는 두 몸"
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional authored visual realization, not a genre-triggered obligation or a claim about actual consciousness, identity or causal control. Preserve every positive English and Korean clause, material, count, part, owner, attachment, endpoint, state and scope. Use only when compatible with independently frozen requester meaning and every affected dimension and property. Every distinguishing component and directed relation must be legible together in the selected evidence unit; hidden, cropped, partial or unobservable required evidence does not pass. Research graphs, aliases and citations add no typed native facts, guard evidence, owner permissions or whole-source qualification. Visible form does not establish consent, rights, life state, diagnosis, continuity of identity, consciousness, historical sequence or causation. Declared sequences and still-image proxies retain their distinct evidence scopes.",
+        "/content/definition": "Optional complete authored visual realization: Two adults stand apart, each wearing a clearly legible tag marked A7; their hands rest on two separate rails.",
+        "/content/en": "Two adults stand apart, each wearing a clearly legible tag marked A7; their hands rest on two separate rails.",
+        "/content/ko": "서로 떨어진 성인 둘이 각각 A7이라고 분명히 읽히는 태그를 달고 다른 난간에 손을 얹고 있다."
+      },
+      "conditions": {
+        "requires_adult_context": true
+      },
+      "effects": {
+        "dimensions": [
+          "age",
+          "appearance",
+          "count",
+          "material",
+          "pose",
+          "relationship",
+          "subject",
+          "text"
+        ],
+        "properties": []
+      },
+      "source_sha256": "18f46eac57813b50e7d6a4535827b2fe151f9d98fc477efb0a5291f58ed2cf44",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_f0a91c41dcb85e719b988cd8f2f701c6",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "Last of Their Kind — 마지막 생존자〔소재〕",
+          "The Carrier Bag Theory of Fiction — 이야기의 운반용 가방 이론",
+          "구획된 씨앗 보존 상자"
+        ],
+        "application_contract": "One complete optional fictional visual realization. Preserve the entire positive English and Korean meaning, each owner, part, cardinality, material, action and directed connection. Use only within independently frozen requester meaning and every affected dimension/property. All distinguishing endpoints must be visible together; partial, cropped or hidden evidence does not pass the complete case. Research graphs and citations supply no native facts, existing-owner permission or native qualification. Visible arrangements alone do not prove historical age, scientific mechanism, identity, consciousness, consent, kinship, rights, coercion, fairness, supernatural efficacy, emotion or narrative sequence.",
+        "definition": "Optional complete fictional visual realization: Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+        "en": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+        "ko": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다.",
+        "research_semantics": {
+          "activation": "genre label never activates this card; explicit compatible post-core selection only",
+          "adoption_mode": "optional_complete_realization",
+          "candidate_id": "cand_f0a91c41dcb85e719b988cd8f2f701c6",
+          "card_id": "A09",
+          "claim_limit_ko": "멸종 위기·마지막 종·발아 가능성은 외관만으로 확정하지 않는다.",
+          "context_scope": null,
+          "directed_relations": [
+            {
+              "from": "seed",
+              "predicate": "inside",
+              "to": "box"
+            },
+            {
+              "from": "label",
+              "predicate": "attached_to",
+              "to": "box"
+            }
+          ],
+          "family": "소진되는 세계·시간·자원",
+          "gates": [
+            {
+              "both_endpoints_required": true,
+              "gate_id": "A09-R1",
+              "partial_is_fail": true,
+              "pixel_status": "NOT_RUN",
+              "required_relation": {
+                "from": "seed",
+                "predicate": "inside",
+                "to": "box"
+              },
+              "unobservable_is_pass": false
+            },
+            {
+              "both_endpoints_required": true,
+              "gate_id": "A09-R2",
+              "partial_is_fail": true,
+              "pixel_status": "NOT_RUN",
+              "required_relation": {
+                "from": "label",
+                "predicate": "attached_to",
+                "to": "box"
+              },
+              "unobservable_is_pass": false
+            }
+          ],
+          "graph_scope": "review metadata; no typed native facts, owner permission or whole-source qualification",
+          "language_review": "authored bilingual draft; independent translator review pending",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "nearest_confusion_ko": "장식 구슬 상자, 씨앗과 무관한 라벨",
+          "observability": "proxy",
+          "owners": {
+            "box": "partitioned seed box",
+            "label": "legible accession labels",
+            "seed": "distinct seeds"
+          },
+          "pixel_status": "not_rendered",
+          "positive_en": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+          "positive_ko": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다.",
+          "priority": "P1",
+          "proposal_en": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+          "proposal_ko": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다.",
+          "proposed_role_descriptors": {
+            "object_structure": {
+              "dimensions": [
+                "appearance"
+              ],
+              "property_prefixes": [
+                "object.structure",
+                "object.geometry",
+                "object.connection"
+              ],
+              "semantic_role": "direct"
+            },
+            "prop_placement": {
+              "dimensions": [
+                "composition",
+                "pose"
+              ],
+              "property_prefixes": [
+                "props.placement",
+                "prop.position",
+                "prop.orientation",
+                "objects.position"
+              ],
+              "semantic_role": "direct"
+            }
+          },
+          "proposed_slots": [
+            "object_structure",
+            "prop_placement"
+          ],
+          "provenance_digest_scope": "research specification bytes, not downloaded source webpage bytes",
+          "registration_status": "authored_source_module",
+          "requester_acceptance": "pending",
+          "requester_judgment": "not_yet_received",
+          "role_descriptor_limit": "Current slot vocabulary only; no approved role fit, owner selector, effect declaration, source guard, or runtime registration.",
+          "routed_seed_ids": [
+            12,
+            28
+          ],
+          "schema": "photo-genre-fusion-visual-semantics/v1",
+          "seed_ids": [
+            28,
+            142
+          ],
+          "seed_terms": [
+            "Last of Their Kind — 마지막 생존자〔소재〕",
+            "The Carrier Bag Theory of Fiction — 이야기의 운반용 가방 이론"
+          ],
+          "source_ids": [
+            "S05",
+            "S18"
+          ],
+          "source_refs": [
+            {
+              "concrete_geometry": "authored_optional_realization_not_a_source_quote",
+              "read_scope": "official book overview lines 25-32; full essay not read",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S05",
+              "supported_scope_and_limit_ko": "운반·수집·담기 중심의 이야기 관점. 이번에는 저자 사이트의 소개를 읽었으며 에세이 전체의 논증을 검증했다고 하지 않는다.",
+              "title": "Ursula K. Le Guin: The Carrier Bag Theory of Fiction",
+              "url": "https://www.ursulakleguin.com/the-carrier-bag-theory-of-fiction"
+            },
+            {
+              "concrete_geometry": "authored_optional_realization_not_a_source_quote",
+              "read_scope": "publisher description and contents; full book not read",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S18",
+              "supported_scope_and_limit_ko": "함께 살아가는 관계·making kin·sympoiesis의 개념 위치. Chthulucene을 러브크래프트의 Cthulhu와 동의어로 쓰지 않는다.",
+              "title": "Duke University Press: Staying with the Trouble",
+              "url": "https://www.dukeupress.edu/staying-with-the-trouble"
+            }
+          ],
+          "source_support": "meaning/context/analogy only; concrete geometry independently authored",
+          "title_ko": "구획된 씨앗 보존 상자",
+          "translation_review": "bilingual source authored with explicit owner/relation boundaries; independent translator review remains pending"
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional fictional visual realization. Preserve the entire positive English and Korean meaning, each owner, part, cardinality, material, action and directed connection. Use only within independently frozen requester meaning and every affected dimension/property. All distinguishing endpoints must be visible together; partial, cropped or hidden evidence does not pass the complete case. Research graphs and citations supply no native facts, existing-owner permission or native qualification. Visible arrangements alone do not prove historical age, scientific mechanism, identity, consciousness, consent, kinship, rights, coercion, fairness, supernatural efficacy, emotion or narrative sequence.",
+        "/content/definition": "Optional complete fictional visual realization: Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+        "/content/en": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+        "/content/ko": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다."
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "appearance",
+          "composition",
+          "pose",
+          "relationship",
+          "text"
+        ],
+        "properties": [
+          {
+            "dimension": "appearance",
+            "property": "appearance.genre_fusion_realization",
+            "target": "box"
+          },
+          {
+            "dimension": "appearance",
+            "property": "appearance.genre_fusion_realization",
+            "target": "seed"
+          },
+          {
+            "dimension": "appearance",
+            "property": "appearance.genre_fusion_realization",
+            "target": "label"
+          },
+          {
+            "dimension": "composition",
+            "property": "composition.genre_fusion_realization",
+            "target": "box"
+          },
+          {
+            "dimension": "composition",
+            "property": "composition.genre_fusion_realization",
+            "target": "seed"
+          },
+          {
+            "dimension": "composition",
+            "property": "composition.genre_fusion_realization",
+            "target": "label"
+          },
+          {
+            "dimension": "pose",
+            "property": "pose.genre_fusion_realization",
+            "target": "box"
+          },
+          {
+            "dimension": "pose",
+            "property": "pose.genre_fusion_realization",
+            "target": "seed"
+          },
+          {
+            "dimension": "pose",
+            "property": "pose.genre_fusion_realization",
+            "target": "label"
+          },
+          {
+            "dimension": "relationship",
+            "property": "relationship.genre_fusion_realization",
+            "target": "box"
+          },
+          {
+            "dimension": "relationship",
+            "property": "relationship.genre_fusion_realization",
+            "target": "seed"
+          },
+          {
+            "dimension": "relationship",
+            "property": "relationship.genre_fusion_realization",
+            "target": "label"
+          },
+          {
+            "dimension": "text",
+            "property": "text.genre_fusion_realization",
+            "target": "box"
+          },
+          {
+            "dimension": "text",
+            "property": "text.genre_fusion_realization",
+            "target": "seed"
+          },
+          {
+            "dimension": "text",
+            "property": "text.genre_fusion_realization",
+            "target": "label"
+          }
+        ]
+      },
+      "source_sha256": "29e2b4fb82a5317c68eee2bab2224f328d8eeb4192d16d7f85c51a7f67a78399",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__request_topic__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_0b6c5d28066e5414b6b9bba6fe866526",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "헤드셋의 입 앞 캡슐"
+        ],
+        "application_contract": "One complete optional authored idol-scene visual realization, not a genre definition or a mandatory bundle. Retain every stated actor, limb, garment, prop, floor support, display boundary, represented-image owner, count and directed endpoint in the selected English and Korean proposition. Review all whole-scene conditions and actual effects against independently frozen requester meaning and locked dimensions/properties; a role tag or lexical hit creates no owner or permission. Do not combine sibling alternatives or transfer a hand, garment, device, mark or represented face to another owner. The cited sources establish bounded domain context, not this authored whole-scene geometry or exact visual specimen. All selected distinguishing components and both relation endpoints must be observable together; hidden or partial required evidence cannot pass. Research metadata is not native typed-fact qualification. A still image does not establish identity, age beyond explicit fictional setting, consent, coercion, sexual orientation, actual romance, rank, skill, popularity, debut history, first victory, revenue, debt, medical state, repetition, timing, sound, live singing, lip sync, real-time tracking, AI autonomy, material chemistry or legal conclusions.",
+        "definition": "A head-worn microphone curves around a performer's ear and ends with a small capsule beside the mouth, while both hands remain empty and separately visible.",
+        "en": "A head-worn microphone curves around a performer's ear and ends with a small capsule beside the mouth, while both hands remain empty and separately visible.",
+        "ko": "퍼포머의 귀 주위에 착용한 마이크가 입 옆 작은 캡슐로 끝나며 두 손은 비어 있고 각각 보인다.",
+        "research_semantics": {
+          "adoption_rule": "Optional whole proposition only, subject to frozen request compatibility; no keyword-triggered adoption.",
+          "authorship": "original_optional_scene_proposition_not_source_quote",
+          "candidate_id": "cand_0b6c5d28066e5414b6b9bba6fe866526",
+          "confusion_boundary": "헤드셋은 인이어 모니터나 립싱크의 증거가 아님",
+          "evidence_level": "authored_research_draft",
+          "family": "equipment",
+          "id": "I110",
+          "name_ko": "헤드셋의 입 앞 캡슐",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "observable_components": [
+            {
+              "id": "I110.1",
+              "required_if_selected": true,
+              "requirement_ko": "귀 지지부"
+            },
+            {
+              "id": "I110.2",
+              "required_if_selected": true,
+              "requirement_ko": "입 옆 캡슐"
+            },
+            {
+              "id": "I110.3",
+              "required_if_selected": true,
+              "requirement_ko": "빈 양손"
+            }
+          ],
+          "owner_relation_contract": {
+            "actor_count": "only_the_count_explicit_in_this_selected_proposition",
+            "complete_proposition_en": "A head-worn microphone curves around a performer's ear and ends with a small capsule beside the mouth, while both hands remain empty and separately visible.",
+            "complete_proposition_ko": "퍼포머의 귀 주위에 착용한 마이크가 입 옆 작은 캡슐로 끝나며 두 손은 비어 있고 각각 보인다.",
+            "no_new_owner_permission": true,
+            "occluded_endpoint": "unobservable_not_pass",
+            "owner_rule": "Retain each stated actor, limb, garment, prop, surface, display and represented image owner; every directed relation keeps both endpoints."
+          },
+          "phrase_en": "A head-worn microphone curves around a performer's ear and ends with a small capsule beside the mouth, while both hands remain empty and separately visible.",
+          "phrase_ko": "퍼포머의 귀 주위에 착용한 마이크가 입 옆 작은 캡슐로 끝나며 두 손은 비어 있고 각각 보인다.",
+          "pixel_gate": "All selected distinguishing components and relation endpoints jointly observable; hidden or partial required evidence cannot pass.",
+          "proposed_slots": [
+            "prop_placement"
+          ],
+          "registration_status": "authored_optional_source",
+          "runtime_importable": true,
+          "schema": "idol-research-visual-card/v1",
+          "seed_ids": [
+            "K276"
+          ],
+          "slot_status": "unreviewed_role_proposals",
+          "source_ids": [
+            "S05"
+          ],
+          "source_support": "domain_context_only_not_whole_scene_or_exact_specimen_proof",
+          "status": "research_only_draft_requires_bilingual_source_and_role_review"
+        }
+      },
+      "meaning": {
+        "/content/application_contract": "One complete optional authored idol-scene visual realization, not a genre definition or a mandatory bundle. Retain every stated actor, limb, garment, prop, floor support, display boundary, represented-image owner, count and directed endpoint in the selected English and Korean proposition. Review all whole-scene conditions and actual effects against independently frozen requester meaning and locked dimensions/properties; a role tag or lexical hit creates no owner or permission. Do not combine sibling alternatives or transfer a hand, garment, device, mark or represented face to another owner. The cited sources establish bounded domain context, not this authored whole-scene geometry or exact visual specimen. All selected distinguishing components and both relation endpoints must be observable together; hidden or partial required evidence cannot pass. Research metadata is not native typed-fact qualification. A still image does not establish identity, age beyond explicit fictional setting, consent, coercion, sexual orientation, actual romance, rank, skill, popularity, debut history, first victory, revenue, debt, medical state, repetition, timing, sound, live singing, lip sync, real-time tracking, AI autonomy, material chemistry or legal conclusions.",
+        "/content/definition": "A head-worn microphone curves around a performer's ear and ends with a small capsule beside the mouth, while both hands remain empty and separately visible.",
+        "/content/en": "A head-worn microphone curves around a performer's ear and ends with a small capsule beside the mouth, while both hands remain empty and separately visible.",
+        "/content/ko": "퍼포머의 귀 주위에 착용한 마이크가 입 옆 작은 캡슐로 끝나며 두 손은 비어 있고 각각 보인다."
+      },
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "appearance",
+          "composition",
+          "pose"
+        ],
+        "properties": []
+      },
+      "source_sha256": "d21d60e3974f69cc57ca8aebfaa1ef98f909040b653fe2e357f7cb739d96a526",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__baseline_prompt__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_2bef2863f75b5a85ae834e7821f06897",
+      "realization_id": "base",
+      "native": {
+        "activation": {
+          "exact_terms": [
+            "round face shape",
+            "rounded face shape",
+            "둥근 얼굴형",
+            "동그란 얼굴",
+            "圆脸",
+            "丸顔"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "full_face_perimeter",
+              "match_terms": [
+                "complete bilateral face contour remains visible",
+                "hairline cheek edges jawlines and chin are unobscured",
+                "얼굴 양쪽 외곽 전체가 보임"
+              ]
+            },
+            {
+              "id": "compact_vertical_relation",
+              "match_terms": [
+                "facial length stays close to width",
+                "compact vertical-to-transverse relation",
+                "세로 길이와 가로 폭이 비슷함"
+              ]
+            },
+            {
+              "id": "broad_cheek_width",
+              "match_terms": [
+                "cheek-to-cheek region carries broad width",
+                "rounded lateral cheek presence",
+                "볼 부근의 가로 폭이 넓게 이어짐"
+              ]
+            },
+            {
+              "id": "curved_short_lower_contour",
+              "match_terms": [
+                "soft curved jaw ends in a short rounded chin",
+                "no broad angular corner or pointed tip",
+                "둥근 턱선이 짧은 둥근 턱끝으로 이어짐"
+              ]
+            },
+            {
+              "id": "confound_control",
+              "match_terms": [
+                "cheek fullness smile lens and hair do not substitute for the whole shape",
+                "neutral distortion-controlled contour read",
+                "볼살 미소 원근과 헤어 효과를 분리함"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 5,
+            "required_group_ids": [
+              "full_face_perimeter",
+              "compact_vertical_relation",
+              "broad_cheek_width",
+              "curved_short_lower_contour",
+              "confound_control"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "full_face_perimeter",
+                "compact_vertical_relation",
+                "broad_cheek_width",
+                "curved_short_lower_contour",
+                "confound_control"
+              ],
+              "evidence": [
+                {
+                  "field": "face_perimeter_phrase",
+                  "requirement": {
+                    "min_content_words": 6,
+                    "must_mention_any": [
+                      "complete bilateral face perimeter remains unobscured",
+                      "hairline cheek edges jawlines and chin remain visible"
+                    ]
+                  }
+                },
+                {
+                  "field": "vertical_relation_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "facial length stays close to width",
+                      "compact vertical-to-transverse facial relation"
+                    ]
+                  }
+                },
+                {
+                  "field": "width_hierarchy_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "cheek-to-cheek region carries broad width",
+                      "broad lateral cheek presence remains visible"
+                    ]
+                  }
+                },
+                {
+                  "field": "lower_contour_phrase",
+                  "requirement": {
+                    "min_content_words": 6,
+                    "must_mention_any": [
+                      "soft curved jaw ends in a short rounded chin",
+                      "continuous rounded lower contour reaches a short chin"
+                    ]
+                  }
+                },
+                {
+                  "field": "confound_control_phrase",
+                  "requirement": {
+                    "min_content_words": 7,
+                    "must_mention_any": [
+                      "cheek fullness smile lens and hair do not substitute for the whole shape",
+                      "neutral expression and controlled perspective preserve the global contour"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Show the full face perimeter under a neutral expression and controlled portrait perspective. Keep facial length close to width, let broad cheek-to-cheek presence continue into a soft curved jaw and short rounded chin, and prevent hair, smile compression, isolated cheek fullness, or a close wide lens from substituting for the global relation.",
+              "render_gates": [
+                {
+                  "description": "The complete bilateral face perimeter is readable rather than inferred from cheeks alone.",
+                  "id": "vo_face_round_full_perimeter",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "Facial length stays close to width and reads compact rather than oval or oblong.",
+                  "id": "vo_face_round_vertical_relation",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "Broad cheek-to-cheek presence participates in the global contour.",
+                  "id": "vo_face_round_cheek_width",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "A soft curved jaw terminates in a short rounded chin without angular corners or an isolated point.",
+                  "id": "vo_face_round_lower_curve",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "Cheek fullness, smile, hairstyle, contour makeup, and near-lens distortion do not create the result alone.",
+                  "id": "vo_face_round_confound_control",
+                  "review_scale": "native"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "facial_shape_relation",
+        "composition_instruction": "Show the full face perimeter under a neutral expression and controlled portrait perspective. Keep facial length close to width, let broad cheek-to-cheek presence continue into a soft curved jaw and short rounded chin, and prevent hair, smile compression, isolated cheek fullness, or a close wide lens from substituting for the global relation.",
+        "concept_candidate": {
+          "concept_terms": [
+            "complete bilateral face perimeter",
+            "length close to width",
+            "compact facial span",
+            "broad cheek-to-cheek region",
+            "soft continuous side contour",
+            "curved lower jaw",
+            "short rounded chin",
+            "no isolated cheek-fullness substitute",
+            "neutral expression",
+            "controlled portrait perspective"
+          ]
+        },
+        "evidence_requirements": {
+          "confound_control_phrase": {
+            "min_content_words": 7,
+            "must_mention_any": [
+              "cheek fullness smile lens and hair do not substitute for the whole shape",
+              "neutral expression and controlled perspective preserve the global contour"
+            ]
+          },
+          "face_perimeter_phrase": {
+            "min_content_words": 6,
+            "must_mention_any": [
+              "complete bilateral face perimeter remains unobscured",
+              "hairline cheek edges jawlines and chin remain visible"
+            ]
+          },
+          "lower_contour_phrase": {
+            "min_content_words": 6,
+            "must_mention_any": [
+              "soft curved jaw ends in a short rounded chin",
+              "continuous rounded lower contour reaches a short chin"
+            ]
+          },
+          "vertical_relation_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "facial length stays close to width",
+              "compact vertical-to-transverse facial relation"
+            ]
+          },
+          "width_hierarchy_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "cheek-to-cheek region carries broad width",
+              "broad lateral cheek presence remains visible"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "full_cheeks_only",
+          "smile_compression_only",
+          "round_object_or_frame",
+          "wide_angle_face_enlargement",
+          "short_chin_only",
+          "value_or_weight_inference"
+        ],
+        "render_gates": [
+          {
+            "description": "The complete bilateral face perimeter is readable rather than inferred from cheeks alone.",
+            "id": "vo_face_round_full_perimeter",
+            "review_scale": "thumbnail"
+          },
+          {
+            "description": "Facial length stays close to width and reads compact rather than oval or oblong.",
+            "id": "vo_face_round_vertical_relation",
+            "review_scale": "both"
+          },
+          {
+            "description": "Broad cheek-to-cheek presence participates in the global contour.",
+            "id": "vo_face_round_cheek_width",
+            "review_scale": "both"
+          },
+          {
+            "description": "A soft curved jaw terminates in a short rounded chin without angular corners or an isolated point.",
+            "id": "vo_face_round_lower_curve",
+            "review_scale": "native"
+          },
+          {
+            "description": "Cheek fullness, smile, hairstyle, contour makeup, and near-lens distortion do not create the result alone.",
+            "id": "vo_face_round_confound_control",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "face_perimeter_phrase",
+          "vertical_relation_phrase",
+          "width_hierarchy_phrase",
+          "lower_contour_phrase",
+          "confound_control_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "label_plus_definition",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [
+            "round compact face contour"
+          ],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "complete bilateral face contour remains visible",
+                  "hairline cheek edges jawlines and chin are unobscured",
+                  "얼굴 양쪽 외곽 전체가 보임"
+                ],
+                "id": "full_face_perimeter"
+              },
+              {
+                "any_terms": [
+                  "facial length stays close to width",
+                  "compact vertical-to-transverse relation",
+                  "세로 길이와 가로 폭이 비슷함"
+                ],
+                "id": "compact_vertical_relation"
+              },
+              {
+                "any_terms": [
+                  "cheek-to-cheek region carries broad width",
+                  "rounded lateral cheek presence",
+                  "볼 부근의 가로 폭이 넓게 이어짐"
+                ],
+                "id": "broad_cheek_width"
+              },
+              {
+                "any_terms": [
+                  "soft curved jaw ends in a short rounded chin",
+                  "no broad angular corner or pointed tip",
+                  "둥근 턱선이 짧은 둥근 턱끝으로 이어짐"
+                ],
+                "id": "curved_short_lower_contour"
+              },
+              {
+                "any_terms": [
+                  "cheek fullness smile lens and hair do not substitute for the whole shape",
+                  "neutral distortion-controlled contour read",
+                  "볼살 미소 원근과 헤어 효과를 분리함"
+                ],
+                "id": "confound_control"
+              }
+            ],
+            "minimum_component_groups": 5,
+            "required_group_ids": [
+              "full_face_perimeter",
+              "compact_vertical_relation",
+              "broad_cheek_width",
+              "curved_short_lower_contour",
+              "confound_control"
+            ]
+          },
+          "contrast_examples": [
+            "full cheeks on a visibly elongated face",
+            "a wide-angle close-up that enlarges the center of the face",
+            "an oval face with a longer vertical span",
+            "a round mirror or circular frame"
+          ],
+          "definition": "A complete compact face perimeter whose vertical length stays close to its transverse width, with broad cheek-to-cheek presence and a continuously curved jaw that ends in a short rounded chin.",
+          "paraphrase_examples": [
+            "얼굴 세로와 가로가 비슷하고 볼 부근이 넓게 이어지며 턱선이 짧고 둥근 얼굴",
+            "a compact face with near-equal length and width and no abrupt angular jaw corner",
+            "broad cheek width continuing through a curved lower contour into a short rounded chin"
+          ]
+        }
+      },
+      "meaning": {
+        "/content/authored_components/obligations/0/instruction": "Show the full face perimeter under a neutral expression and controlled portrait perspective. Keep facial length close to width, let broad cheek-to-cheek presence continue into a soft curved jaw and short rounded chin, and prevent hair, smile compression, isolated cheek fullness, or a close wide lens from substituting for the global relation.",
+        "/content/authored_components/obligations/0/render_gates/0/description": "The complete bilateral face perimeter is readable rather than inferred from cheeks alone.",
+        "/content/authored_components/obligations/0/render_gates/1/description": "Facial length stays close to width and reads compact rather than oval or oblong.",
+        "/content/authored_components/obligations/0/render_gates/2/description": "Broad cheek-to-cheek presence participates in the global contour.",
+        "/content/authored_components/obligations/0/render_gates/3/description": "A soft curved jaw terminates in a short rounded chin without angular corners or an isolated point.",
+        "/content/authored_components/obligations/0/render_gates/4/description": "Cheek fullness, smile, hairstyle, contour makeup, and near-lens distortion do not create the result alone.",
+        "/content/composition_instruction": "Show the full face perimeter under a neutral expression and controlled portrait perspective. Keep facial length close to width, let broad cheek-to-cheek presence continue into a soft curved jaw and short rounded chin, and prevent hair, smile compression, isolated cheek fullness, or a close wide lens from substituting for the global relation.",
+        "/content/render_gates/0/description": "The complete bilateral face perimeter is readable rather than inferred from cheeks alone.",
+        "/content/render_gates/1/description": "Facial length stays close to width and reads compact rather than oval or oblong.",
+        "/content/render_gates/2/description": "Broad cheek-to-cheek presence participates in the global contour.",
+        "/content/render_gates/3/description": "A soft curved jaw terminates in a short rounded chin without angular corners or an isolated point.",
+        "/content/render_gates/4/description": "Cheek fullness, smile, hairstyle, contour makeup, and near-lens distortion do not create the result alone.",
+        "/content/semantics/definition": "A complete compact face perimeter whose vertical length stays close to its transverse width, with broad cheek-to-cheek presence and a continuously curved jaw that ends in a short rounded chin.",
+        "/content/semantics/paraphrase_examples/0": "얼굴 세로와 가로가 비슷하고 볼 부근이 넓게 이어지며 턱선이 짧고 둥근 얼굴",
+        "/content/semantics/paraphrase_examples/1": "a compact face with near-equal length and width and no abrupt angular jaw corner",
+        "/content/semantics/paraphrase_examples/2": "broad cheek width continuing through a curved lower contour into a short rounded chin"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "source_sha256": "7a92fb26ca7093b800c59de8c5ce733acd2bdc1f3c489db781ada33f11e05057",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__baseline_prompt__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_39f049ad04d051ab8bae49ea7e6b8268",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "environmental three-quarter portrait",
+          "환경형 3/4 인물 구도",
+          "얼굴 몸 장소 동시 프레임"
+        ],
+        "embedding_text": "a three-quarter environmental portrait keeps the clearly adult subject's face, torso, both action-bearing hands and enough room depth readable together, preventing a headless body crop or an isolated face from replacing the scene relation",
+        "en": "environmental three-quarter portrait retaining face, torso, action, and room depth",
+        "facets": {
+          "placement": [
+            "centered",
+            "layered_depth"
+          ]
+        },
+        "keywords": [
+          "face readable",
+          "torso and hands",
+          "unfinished action",
+          "environment depth"
+        ],
+        "ko": "얼굴·상체·동작·환경 깊이가 함께 남는 3/4 인물 구도",
+        "tags": [
+          "composition",
+          "human",
+          "adult",
+          "environmental_portrait",
+          "three_quarter",
+          "holistic"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "a three-quarter environmental portrait keeps the clearly adult subject's face, torso, both action-bearing hands and enough room depth readable together, preventing a headless body crop or an isolated face from replacing the scene relation",
+        "/content/en": "environmental three-quarter portrait retaining face, torso, action, and room depth",
+        "/content/ko": "얼굴·상체·동작·환경 깊이가 함께 남는 3/4 인물 구도"
+      },
+      "conditions": {
+        "for_any": [
+          "human",
+          "adult"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "composition"
+        ],
+        "properties": []
+      },
+      "source_sha256": "b9090e704120f96a70a3c6f9f19e9d6ef1a92823e9c0618ce1d105586f5f6ca6",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__baseline_prompt__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_8fb45cf54296562a8686d81030fc85ac",
+      "realization_id": "base",
+      "native": {
+        "activation": {
+          "exact_terms": [
+            "split half-face light pattern",
+            "ninety-degree side split portrait",
+            "스플릿 반면 인물 조명",
+            "얼굴 중앙 경계 측면광"
+          ],
+          "exclude_if_any_terms": [
+            "solid silhouette",
+            "broad lighting",
+            "rembrandt triangle",
+            "generic dark cheek",
+            "post split tone mask"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "split_face_light_pattern_component_1",
+              "match_terms": [
+                "one side key approaches a lateral ninety-degree relation to the face",
+                "the key reaches the face from nearly a right-angle side direction",
+                "주광이 얼굴에 거의 직각인 옆 방향에서 들어온다"
+              ]
+            },
+            {
+              "id": "split_face_light_pattern_component_2",
+              "match_terms": [
+                "the principal light-shadow boundary tracks the nose and face center region",
+                "the main bright-dark border follows the central nose and face region",
+                "주된 명암 경계가 코와 얼굴 중앙 부근을 따른다"
+              ]
+            },
+            {
+              "id": "split_face_light_pattern_component_3",
+              "match_terms": [
+                "one face half is decisively illuminated while the other is decisively shadowed",
+                "the same face has a clearly bright half opposite a clearly shaded half",
+                "같은 얼굴의 밝은 반쪽과 그늘진 반쪽이 뚜렷하게 마주한다"
+              ]
+            },
+            {
+              "id": "split_face_light_pattern_component_4",
+              "match_terms": [
+                "the shadow half preserves eye contour cheek and jaw structure",
+                "eye cheek and jaw outlines persist on the shaded half",
+                "그늘 반쪽에 눈·볼·턱의 윤곽이 남는다"
+              ]
+            },
+            {
+              "id": "split_face_light_pattern_component_5",
+              "match_terms": [
+                "the illuminated half and shadow half retain distinct facial planes across the central nose boundary",
+                "the face planes preserve their two-tone division across the nose center",
+                "얼굴 면들이 코 중앙을 가로지르는 두 명암 영역의 구분을 유지한다"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 5,
+            "required_group_ids": [
+              "split_face_light_pattern_component_1",
+              "split_face_light_pattern_component_2",
+              "split_face_light_pattern_component_3",
+              "split_face_light_pattern_component_4",
+              "split_face_light_pattern_component_5"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "split_face_light_pattern_component_1",
+                "split_face_light_pattern_component_2",
+                "split_face_light_pattern_component_3",
+                "split_face_light_pattern_component_4",
+                "split_face_light_pattern_component_5"
+              ],
+              "evidence": [
+                {
+                  "field": "split_face_light_pattern_component_1_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "one side key approaches a lateral ninety-degree relation to the face",
+                      "the key reaches the face from nearly a right-angle side direction",
+                      "주광이 얼굴에 거의 직각인 옆 방향에서 들어온다"
+                    ]
+                  }
+                },
+                {
+                  "field": "split_face_light_pattern_component_2_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "the principal light-shadow boundary tracks the nose and face center region",
+                      "the main bright-dark border follows the central nose and face region",
+                      "주된 명암 경계가 코와 얼굴 중앙 부근을 따른다"
+                    ]
+                  }
+                },
+                {
+                  "field": "split_face_light_pattern_component_3_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "one face half is decisively illuminated while the other is decisively shadowed",
+                      "the same face has a clearly bright half opposite a clearly shaded half",
+                      "같은 얼굴의 밝은 반쪽과 그늘진 반쪽이 뚜렷하게 마주한다"
+                    ]
+                  }
+                },
+                {
+                  "field": "split_face_light_pattern_component_4_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "the shadow half preserves eye contour cheek and jaw structure",
+                      "eye cheek and jaw outlines persist on the shaded half",
+                      "그늘 반쪽에 눈·볼·턱의 윤곽이 남는다"
+                    ]
+                  }
+                },
+                {
+                  "field": "split_face_light_pattern_component_5_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "the illuminated half and shadow half retain distinct facial planes across the central nose boundary",
+                      "the face planes preserve their two-tone division across the nose center",
+                      "얼굴 면들이 코 중앙을 가로지르는 두 명암 영역의 구분을 유지한다"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "A near-side key produces a clear face-center division so one half is illuminated and the other half remains modeled shadow, while the head contour and shadow-side structure stay readable enough to distinguish the pattern from silhouette. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence.",
+              "render_gates": [
+                {
+                  "description": "One side key approaches a lateral ninety-degree relation to the face.",
+                  "id": "vo_lighting_split_face_light_pattern_1",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "The principal light-shadow boundary tracks the nose and face center region.",
+                  "id": "vo_lighting_split_face_light_pattern_2",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "One face half is decisively illuminated while the other is decisively shadowed.",
+                  "id": "vo_lighting_split_face_light_pattern_3",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "The shadow half preserves eye contour cheek and jaw structure.",
+                  "id": "vo_lighting_split_face_light_pattern_4",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "The face remains a two-sided modeled subject rather than a solid silhouette or broad-light turn.",
+                  "id": "vo_lighting_split_face_light_pattern_5",
+                  "review_scale": "native"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "capture_lighting_split_face_light_pattern",
+        "composition_instruction": "A near-side key produces a clear face-center division so one half is illuminated and the other half remains modeled shadow, while the head contour and shadow-side structure stay readable enough to distinguish the pattern from silhouette. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence.",
+        "concept_candidate": {
+          "concept_terms": [
+            "one side key approaches a lateral ninety-degree relation to the face",
+            "the principal light-shadow boundary tracks the nose and face center region",
+            "one face half is decisively illuminated while the other is decisively shadowed",
+            "the shadow half preserves eye contour cheek and jaw structure",
+            "the face remains a two-sided modeled subject rather than a solid silhouette or broad-light turn",
+            "A lateral key divides the same face at its center into a bright half and a modeled shadow half with readable facial contours.",
+            "측면 주광이 같은 얼굴 중앙을 기준으로 밝은 반쪽과 윤곽이 읽히는 그늘 반쪽을 구분한다.",
+            "the key reaches the face from nearly a right-angle side direction",
+            "주광이 얼굴에 거의 직각인 옆 방향에서 들어온다",
+            "the main bright-dark border follows the central nose and face region",
+            "주된 명암 경계가 코와 얼굴 중앙 부근을 따른다",
+            "the same face has a clearly bright half opposite a clearly shaded half",
+            "같은 얼굴의 밝은 반쪽과 그늘진 반쪽이 뚜렷하게 마주한다",
+            "eye cheek and jaw outlines persist on the shaded half",
+            "그늘 반쪽에 눈·볼·턱의 윤곽이 남는다",
+            "the face planes preserve their two-tone division across the nose center",
+            "얼굴 면들이 코 중앙을 가로지르는 두 명암 영역의 구분을 유지한다"
+          ]
+        },
+        "evidence_requirements": {
+          "split_face_light_pattern_component_1_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "one side key approaches a lateral ninety-degree relation to the face",
+              "the key reaches the face from nearly a right-angle side direction",
+              "주광이 얼굴에 거의 직각인 옆 방향에서 들어온다"
+            ]
+          },
+          "split_face_light_pattern_component_2_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "the principal light-shadow boundary tracks the nose and face center region",
+              "the main bright-dark border follows the central nose and face region",
+              "주된 명암 경계가 코와 얼굴 중앙 부근을 따른다"
+            ]
+          },
+          "split_face_light_pattern_component_3_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "one face half is decisively illuminated while the other is decisively shadowed",
+              "the same face has a clearly bright half opposite a clearly shaded half",
+              "같은 얼굴의 밝은 반쪽과 그늘진 반쪽이 뚜렷하게 마주한다"
+            ]
+          },
+          "split_face_light_pattern_component_4_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "the shadow half preserves eye contour cheek and jaw structure",
+              "eye cheek and jaw outlines persist on the shaded half",
+              "그늘 반쪽에 눈·볼·턱의 윤곽이 남는다"
+            ]
+          },
+          "split_face_light_pattern_component_5_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "the illuminated half and shadow half retain distinct facial planes across the central nose boundary",
+              "the face planes preserve their two-tone division across the nose center",
+              "얼굴 면들이 코 중앙을 가로지르는 두 명암 영역의 구분을 유지한다"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "solid_silhouette",
+          "broad_lighting",
+          "rembrandt_triangle",
+          "generic_dark_cheek",
+          "post_split_tone_mask"
+        ],
+        "render_gates": [
+          {
+            "description": "One side key approaches a lateral ninety-degree relation to the face.",
+            "id": "vo_lighting_split_face_light_pattern_1",
+            "review_scale": "thumbnail"
+          },
+          {
+            "description": "The principal light-shadow boundary tracks the nose and face center region.",
+            "id": "vo_lighting_split_face_light_pattern_2",
+            "review_scale": "both"
+          },
+          {
+            "description": "One face half is decisively illuminated while the other is decisively shadowed.",
+            "id": "vo_lighting_split_face_light_pattern_3",
+            "review_scale": "both"
+          },
+          {
+            "description": "The shadow half preserves eye contour cheek and jaw structure.",
+            "id": "vo_lighting_split_face_light_pattern_4",
+            "review_scale": "native"
+          },
+          {
+            "description": "The face remains a two-sided modeled subject rather than a solid silhouette or broad-light turn.",
+            "id": "vo_lighting_split_face_light_pattern_5",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "split_face_light_pattern_component_1_phrase",
+          "split_face_light_pattern_component_2_phrase",
+          "split_face_light_pattern_component_3_phrase",
+          "split_face_light_pattern_component_4_phrase",
+          "split_face_light_pattern_component_5_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [
+            "split half-face light pattern",
+            "ninety-degree side split portrait"
+          ],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "one side key approaches a lateral ninety-degree relation to the face",
+                  "the key reaches the face from nearly a right-angle side direction",
+                  "주광이 얼굴에 거의 직각인 옆 방향에서 들어온다"
+                ],
+                "id": "split_face_light_pattern_component_1"
+              },
+              {
+                "any_terms": [
+                  "the principal light-shadow boundary tracks the nose and face center region",
+                  "the main bright-dark border follows the central nose and face region",
+                  "주된 명암 경계가 코와 얼굴 중앙 부근을 따른다"
+                ],
+                "id": "split_face_light_pattern_component_2"
+              },
+              {
+                "any_terms": [
+                  "one face half is decisively illuminated while the other is decisively shadowed",
+                  "the same face has a clearly bright half opposite a clearly shaded half",
+                  "같은 얼굴의 밝은 반쪽과 그늘진 반쪽이 뚜렷하게 마주한다"
+                ],
+                "id": "split_face_light_pattern_component_3"
+              },
+              {
+                "any_terms": [
+                  "the shadow half preserves eye contour cheek and jaw structure",
+                  "eye cheek and jaw outlines persist on the shaded half",
+                  "그늘 반쪽에 눈·볼·턱의 윤곽이 남는다"
+                ],
+                "id": "split_face_light_pattern_component_4"
+              },
+              {
+                "any_terms": [
+                  "the illuminated half and shadow half retain distinct facial planes across the central nose boundary",
+                  "the face planes preserve their two-tone division across the nose center",
+                  "얼굴 면들이 코 중앙을 가로지르는 두 명암 영역의 구분을 유지한다"
+                ],
+                "id": "split_face_light_pattern_component_5"
+              }
+            ],
+            "minimum_component_groups": 5,
+            "required_group_ids": [
+              "split_face_light_pattern_component_1",
+              "split_face_light_pattern_component_2",
+              "split_face_light_pattern_component_3",
+              "split_face_light_pattern_component_4",
+              "split_face_light_pattern_component_5"
+            ]
+          },
+          "contrast_examples": [
+            "solid silhouette",
+            "broad lighting",
+            "rembrandt triangle",
+            "generic dark cheek",
+            "post split tone mask"
+          ],
+          "definition": "A near-side key produces a clear face-center division so one half is illuminated and the other half remains modeled shadow, while the head contour and shadow-side structure stay readable enough to distinguish the pattern from silhouette.",
+          "paraphrase_examples": [
+            "One key set nearly ninety degrees to the side of the face creates a light-shadow division along the nose and face center, leaving one half clearly lit and the other in modeled shadow with readable eye contour, cheek, jaw, and head outline.",
+            "A nearly lateral ninety-degree key lights one facial half and shadows the other across a boundary that follows the central nose region, while both halves retain facial planes and the shadow-side eye contour, cheek, jaw, and head contour remain readable.",
+            "With one key approaching a right-angle side position relative to the face, the main light-shadow boundary follows the nose and face center; the lit half and shadow half stay distinct, and modeled shadow preserves the eye contour, cheek, jaw, and head outline.",
+            "A lateral key divides the same face at its center into a bright half and a modeled shadow half with readable facial contours.",
+            "측면 주광이 같은 얼굴 중앙을 기준으로 밝은 반쪽과 윤곽이 읽히는 그늘 반쪽을 구분한다."
+          ]
+        }
+      },
+      "meaning": {
+        "/content/authored_components/obligations/0/instruction": "A near-side key produces a clear face-center division so one half is illuminated and the other half remains modeled shadow, while the head contour and shadow-side structure stay readable enough to distinguish the pattern from silhouette. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence.",
+        "/content/authored_components/obligations/0/render_gates/0/description": "One side key approaches a lateral ninety-degree relation to the face.",
+        "/content/authored_components/obligations/0/render_gates/1/description": "The principal light-shadow boundary tracks the nose and face center region.",
+        "/content/authored_components/obligations/0/render_gates/2/description": "One face half is decisively illuminated while the other is decisively shadowed.",
+        "/content/authored_components/obligations/0/render_gates/3/description": "The shadow half preserves eye contour cheek and jaw structure.",
+        "/content/authored_components/obligations/0/render_gates/4/description": "The face remains a two-sided modeled subject rather than a solid silhouette or broad-light turn.",
+        "/content/composition_instruction": "A near-side key produces a clear face-center division so one half is illuminated and the other half remains modeled shadow, while the head contour and shadow-side structure stay readable enough to distinguish the pattern from silhouette. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence.",
+        "/content/render_gates/0/description": "One side key approaches a lateral ninety-degree relation to the face.",
+        "/content/render_gates/1/description": "The principal light-shadow boundary tracks the nose and face center region.",
+        "/content/render_gates/2/description": "One face half is decisively illuminated while the other is decisively shadowed.",
+        "/content/render_gates/3/description": "The shadow half preserves eye contour cheek and jaw structure.",
+        "/content/render_gates/4/description": "The face remains a two-sided modeled subject rather than a solid silhouette or broad-light turn.",
+        "/content/semantics/definition": "A near-side key produces a clear face-center division so one half is illuminated and the other half remains modeled shadow, while the head contour and shadow-side structure stay readable enough to distinguish the pattern from silhouette.",
+        "/content/semantics/paraphrase_examples/0": "One key set nearly ninety degrees to the side of the face creates a light-shadow division along the nose and face center, leaving one half clearly lit and the other in modeled shadow with readable eye contour, cheek, jaw, and head outline.",
+        "/content/semantics/paraphrase_examples/1": "A nearly lateral ninety-degree key lights one facial half and shadows the other across a boundary that follows the central nose region, while both halves retain facial planes and the shadow-side eye contour, cheek, jaw, and head contour remain readable.",
+        "/content/semantics/paraphrase_examples/2": "With one key approaching a right-angle side position relative to the face, the main light-shadow boundary follows the nose and face center; the lit half and shadow half stay distinct, and modeled shadow preserves the eye contour, cheek, jaw, and head outline.",
+        "/content/semantics/paraphrase_examples/3": "A lateral key divides the same face at its center into a bright half and a modeled shadow half with readable facial contours.",
+        "/content/semantics/paraphrase_examples/4": "측면 주광이 같은 얼굴 중앙을 기준으로 밝은 반쪽과 윤곽이 읽히는 그늘 반쪽을 구분한다."
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "source_sha256": "516d43fe745a0079538dfecf446b67f0a7172d4149e316e99fe3c1758f8774e3",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__baseline_prompt__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_9070371335915d4f8790e08aac0ae9cf",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "측면 캐스팅 기록",
+          "casting profile view"
+        ],
+        "concept_units": [
+          "casting profile view",
+          "the nose lip and chin contours form a readable side profile",
+          "the head remains connected naturally to the neck and shoulders",
+          "hair placement preserves the requested profile landmarks"
+        ],
+        "embedding_text": "측면 캐스팅 기록; casting profile view; the nose lip and chin contours form a readable side profile; the head remains connected naturally to the neck and shoulders; hair placement preserves the requested profile landmarks",
+        "en": "the nose lip and chin contours form a readable side profile; the head remains connected naturally to the neck and shoulders; hair placement preserves the requested profile landmarks",
+        "keywords": [
+          "casting profile view",
+          "Digitals",
+          "Casting Polaroid"
+        ],
+        "ko": "측면 캐스팅 기록",
+        "relations": [
+          {
+            "id": "mep_casting_profile_owner_relation",
+            "object": "the declared photographic subject and frame",
+            "subject": "adult head and neck",
+            "type": "side view"
+          }
+        ],
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "portrait",
+          "photographic_presentation"
+        ]
+      },
+      "meaning": {
+        "/content/concept_units/0": "casting profile view",
+        "/content/concept_units/1": "the nose lip and chin contours form a readable side profile",
+        "/content/concept_units/2": "the head remains connected naturally to the neck and shoulders",
+        "/content/concept_units/3": "hair placement preserves the requested profile landmarks",
+        "/content/embedding_text": "측면 캐스팅 기록; casting profile view; the nose lip and chin contours form a readable side profile; the head remains connected naturally to the neck and shoulders; hair placement preserves the requested profile landmarks",
+        "/content/en": "the nose lip and chin contours form a readable side profile; the head remains connected naturally to the neck and shoulders; hair placement preserves the requested profile landmarks",
+        "/content/ko": "측면 캐스팅 기록",
+        "/content/relations/0/object": "the declared photographic subject and frame",
+        "/content/relations/0/subject": "adult head and neck",
+        "/content/relations/0/type": "side view"
+      },
+      "conditions": {
+        "for_any": [
+          "human"
+        ],
+        "requires_primary_any_tags": [
+          "human",
+          "portrait",
+          "fashion",
+          "beauty",
+          "commercial"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "pose",
+          "framing"
+        ],
+        "properties": []
+      },
+      "source_sha256": "b5ec6c2c0a860e0debb254e08396704d2a1b4ec29d754ca0cca130c63c165566",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__baseline_prompt__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_d06d7cf071375dc9a06740589bb76a1f",
+      "realization_id": "base",
+      "native": {
+        "activation": {
+          "exact_terms": [
+            "between-takes production photograph",
+            "production-gap behind-the-scenes photo",
+            "behind-the-scenes production process photo",
+            "촬영 중간 비하인드 사진",
+            "테이크 사이 제작 현장 사진",
+            "제작 과정이 보이는 비하인드컷"
+          ],
+          "project_glossary_aliases": [
+            "촬영장 비하인드컷"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "production_apparatus",
+              "match_terms": [
+                "a camera rig light stand monitor slate or wardrobe tool is physically visible",
+                "카메라 리그 조명 스탠드 모니터 슬레이트 의상 도구 중 하나가 실제로 보임"
+              ]
+            },
+            {
+              "id": "crew_operation_trace",
+              "match_terms": [
+                "a crew member hand cable adjustment or monitor operation shows active production work",
+                "스태프 손 케이블 조정 또는 모니터 운용이 제작 작업을 보여줌"
+              ]
+            },
+            {
+              "id": "adult_performer_between_takes",
+              "match_terms": [
+                "the clearly adult performer is visibly between takes rather than performing the finished scene",
+                "분명한 성인 피사체가 완성 장면 연기가 아니라 테이크 사이 상태임"
+              ]
+            },
+            {
+              "id": "unfinished_work_action",
+              "match_terms": [
+                "one rehearsal reset adjustment or preparation action remains visibly unfinished",
+                "리허설 리셋 조정 또는 준비 행동 하나가 끝나지 않은 채 보임"
+              ]
+            },
+            {
+              "id": "apparatus_frame_relation",
+              "match_terms": [
+                "production apparatus intrudes at the frame edge and shares the performer's space",
+                "제작 장비가 프레임 가장자리에 들어와 피사체와 같은 공간을 차지함"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 5,
+            "required_group_ids": [
+              "production_apparatus",
+              "crew_operation_trace",
+              "adult_performer_between_takes",
+              "unfinished_work_action",
+              "apparatus_frame_relation"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "production_apparatus",
+                "crew_operation_trace",
+                "adult_performer_between_takes",
+                "unfinished_work_action",
+                "apparatus_frame_relation"
+              ],
+              "evidence": [
+                {
+                  "field": "production_apparatus_phrase",
+                  "requirement": {
+                    "min_content_words": 11,
+                    "must_mention_any": [
+                      "a camera rig light stand monitor slate or wardrobe tool is physically visible"
+                    ]
+                  }
+                },
+                {
+                  "field": "crew_operation_phrase",
+                  "requirement": {
+                    "min_content_words": 12,
+                    "must_mention_any": [
+                      "a crew member hand cable adjustment or monitor operation shows active production work"
+                    ]
+                  }
+                },
+                {
+                  "field": "between_takes_adult_phrase",
+                  "requirement": {
+                    "min_content_words": 12,
+                    "must_mention_any": [
+                      "the clearly adult performer is visibly between takes rather than performing the finished scene"
+                    ]
+                  }
+                },
+                {
+                  "field": "unfinished_action_phrase",
+                  "requirement": {
+                    "min_content_words": 11,
+                    "must_mention_any": [
+                      "one rehearsal reset adjustment or preparation action remains visibly unfinished"
+                    ]
+                  }
+                },
+                {
+                  "field": "apparatus_frame_relation_phrase",
+                  "requirement": {
+                    "min_content_words": 10,
+                    "must_mention_any": [
+                      "production apparatus intrudes at the frame edge and shares the performer's space"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Keep one clearly adult performer and one unfinished rehearsal, reset, wardrobe, lighting, or camera-preparation action in the same frame as concrete production apparatus. Let a rig, monitor, light, cable, slate, crew hand, or wardrobe tool cross the frame edge so the making process remains first-read.",
+              "render_gates": [
+                {
+                  "description": "Concrete production apparatus is immediately visible beside the adult performer.",
+                  "id": "vo_rare_bts_production_apparatus",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "A crew operation, cable, monitor, tool, or adjustment shows active making rather than decorative equipment.",
+                  "id": "vo_rare_bts_active_crew_trace",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "The performer reads as between takes, rehearsing, resetting, or being adjusted.",
+                  "id": "vo_rare_bts_between_takes_state",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "One production action is visibly in progress and incomplete in the saved frame.",
+                  "id": "vo_rare_bts_unfinished_action",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "A polished scene still, ordinary dressing-room portrait, empty backstage decor, concert frame, or metadata-only unreleased claim does not substitute.",
+                  "id": "vo_rare_bts_not_finished_still_empty_backstage",
+                  "review_scale": "native"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "capture_relation_between_takes_production",
+        "composition_instruction": "Keep one clearly adult performer and one unfinished rehearsal, reset, wardrobe, lighting, or camera-preparation action in the same frame as concrete production apparatus. Let a rig, monitor, light, cable, slate, crew hand, or wardrobe tool cross the frame edge so the making process remains first-read.",
+        "concept_candidate": {
+          "concept_terms": [
+            "visible production apparatus",
+            "crew operation trace",
+            "adult performer between takes",
+            "unfinished rehearsal reset or adjustment",
+            "apparatus intruding at frame edge",
+            "making-process evidence rather than publication status"
+          ]
+        },
+        "evidence_requirements": {
+          "apparatus_frame_relation_phrase": {
+            "min_content_words": 10,
+            "must_mention_any": [
+              "production apparatus intrudes at the frame edge and shares the performer's space"
+            ]
+          },
+          "between_takes_adult_phrase": {
+            "min_content_words": 12,
+            "must_mention_any": [
+              "the clearly adult performer is visibly between takes rather than performing the finished scene"
+            ]
+          },
+          "crew_operation_phrase": {
+            "min_content_words": 12,
+            "must_mention_any": [
+              "a crew member hand cable adjustment or monitor operation shows active production work"
+            ]
+          },
+          "production_apparatus_phrase": {
+            "min_content_words": 11,
+            "must_mention_any": [
+              "a camera rig light stand monitor slate or wardrobe tool is physically visible"
+            ]
+          },
+          "unfinished_action_phrase": {
+            "min_content_words": 11,
+            "must_mention_any": [
+              "one rehearsal reset adjustment or preparation action remains visibly unfinished"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "polished_finished_scene_still",
+          "ordinary_dressing_room_portrait",
+          "empty_backstage_corridor",
+          "concert_performance_frame",
+          "metadata_only_unreleased_claim"
+        ],
+        "render_gates": [
+          {
+            "description": "Concrete production apparatus is immediately visible beside the adult performer.",
+            "id": "vo_rare_bts_production_apparatus",
+            "review_scale": "thumbnail"
+          },
+          {
+            "description": "A crew operation, cable, monitor, tool, or adjustment shows active making rather than decorative equipment.",
+            "id": "vo_rare_bts_active_crew_trace",
+            "review_scale": "both"
+          },
+          {
+            "description": "The performer reads as between takes, rehearsing, resetting, or being adjusted.",
+            "id": "vo_rare_bts_between_takes_state",
+            "review_scale": "both"
+          },
+          {
+            "description": "One production action is visibly in progress and incomplete in the saved frame.",
+            "id": "vo_rare_bts_unfinished_action",
+            "review_scale": "native"
+          },
+          {
+            "description": "A polished scene still, ordinary dressing-room portrait, empty backstage decor, concert frame, or metadata-only unreleased claim does not substitute.",
+            "id": "vo_rare_bts_not_finished_still_empty_backstage",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "production_apparatus_phrase",
+          "crew_operation_phrase",
+          "between_takes_adult_phrase",
+          "unfinished_action_phrase",
+          "apparatus_frame_relation_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [
+            "BTS photo"
+          ],
+          "prompt_label_terms": [
+            "between-takes production photograph"
+          ],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "a camera rig light stand monitor slate or wardrobe tool is physically visible",
+                  "카메라 리그 조명 스탠드 모니터 슬레이트 의상 도구 중 하나가 실제로 보임"
+                ],
+                "id": "production_apparatus"
+              },
+              {
+                "any_terms": [
+                  "a crew member hand cable adjustment or monitor operation shows active production work",
+                  "스태프 손 케이블 조정 또는 모니터 운용이 제작 작업을 보여줌"
+                ],
+                "id": "crew_operation_trace"
+              },
+              {
+                "any_terms": [
+                  "the clearly adult performer is visibly between takes rather than performing the finished scene",
+                  "분명한 성인 피사체가 완성 장면 연기가 아니라 테이크 사이 상태임"
+                ],
+                "id": "adult_performer_between_takes"
+              },
+              {
+                "any_terms": [
+                  "one rehearsal reset adjustment or preparation action remains visibly unfinished",
+                  "리허설 리셋 조정 또는 준비 행동 하나가 끝나지 않은 채 보임"
+                ],
+                "id": "unfinished_work_action"
+              },
+              {
+                "any_terms": [
+                  "production apparatus intrudes at the frame edge and shares the performer's space",
+                  "제작 장비가 프레임 가장자리에 들어와 피사체와 같은 공간을 차지함"
+                ],
+                "id": "apparatus_frame_relation"
+              }
+            ],
+            "minimum_component_groups": 5,
+            "required_group_ids": [
+              "production_apparatus",
+              "crew_operation_trace",
+              "adult_performer_between_takes",
+              "unfinished_work_action",
+              "apparatus_frame_relation"
+            ]
+          },
+          "contrast_examples": [
+            "a polished finished scene still",
+            "an ordinary dressing-room portrait",
+            "an empty backstage corridor",
+            "a concert performance frame",
+            "an image labeled unreleased without visible production activity"
+          ],
+          "definition": "A clearly adult performer is captured during a real production gap while apparatus, crew operation, and an unfinished between-takes action remain simultaneously visible. The image shows the making process rather than a polished scene still, an empty backstage location, or the publication status of an unreleased image.",
+          "paraphrase_examples": [
+            "조명 스탠드와 카메라 모니터가 프레임 가장자리에 있고 스태프가 의상을 조정하는 테이크 사이 성인 배우",
+            "희연사나 미공개 비하인드로 수집될 수 있지만 픽셀 계약은 실제 제작 장비와 진행 중인 작업에 한정한 사진",
+            "an adult performer pauses mid-adjustment while a camera rig crew hand and monitor expose the unfinished production phase"
+          ]
+        }
+      },
+      "meaning": {
+        "/content/authored_components/obligations/0/instruction": "Keep one clearly adult performer and one unfinished rehearsal, reset, wardrobe, lighting, or camera-preparation action in the same frame as concrete production apparatus. Let a rig, monitor, light, cable, slate, crew hand, or wardrobe tool cross the frame edge so the making process remains first-read.",
+        "/content/authored_components/obligations/0/render_gates/0/description": "Concrete production apparatus is immediately visible beside the adult performer.",
+        "/content/authored_components/obligations/0/render_gates/1/description": "A crew operation, cable, monitor, tool, or adjustment shows active making rather than decorative equipment.",
+        "/content/authored_components/obligations/0/render_gates/2/description": "The performer reads as between takes, rehearsing, resetting, or being adjusted.",
+        "/content/authored_components/obligations/0/render_gates/3/description": "One production action is visibly in progress and incomplete in the saved frame.",
+        "/content/authored_components/obligations/0/render_gates/4/description": "A polished scene still, ordinary dressing-room portrait, empty backstage decor, concert frame, or metadata-only unreleased claim does not substitute.",
+        "/content/composition_instruction": "Keep one clearly adult performer and one unfinished rehearsal, reset, wardrobe, lighting, or camera-preparation action in the same frame as concrete production apparatus. Let a rig, monitor, light, cable, slate, crew hand, or wardrobe tool cross the frame edge so the making process remains first-read.",
+        "/content/render_gates/0/description": "Concrete production apparatus is immediately visible beside the adult performer.",
+        "/content/render_gates/1/description": "A crew operation, cable, monitor, tool, or adjustment shows active making rather than decorative equipment.",
+        "/content/render_gates/2/description": "The performer reads as between takes, rehearsing, resetting, or being adjusted.",
+        "/content/render_gates/3/description": "One production action is visibly in progress and incomplete in the saved frame.",
+        "/content/render_gates/4/description": "A polished scene still, ordinary dressing-room portrait, empty backstage decor, concert frame, or metadata-only unreleased claim does not substitute.",
+        "/content/semantics/definition": "A clearly adult performer is captured during a real production gap while apparatus, crew operation, and an unfinished between-takes action remain simultaneously visible. The image shows the making process rather than a polished scene still, an empty backstage location, or the publication status of an unreleased image.",
+        "/content/semantics/paraphrase_examples/0": "조명 스탠드와 카메라 모니터가 프레임 가장자리에 있고 스태프가 의상을 조정하는 테이크 사이 성인 배우",
+        "/content/semantics/paraphrase_examples/1": "희연사나 미공개 비하인드로 수집될 수 있지만 픽셀 계약은 실제 제작 장비와 진행 중인 작업에 한정한 사진",
+        "/content/semantics/paraphrase_examples/2": "an adult performer pauses mid-adjustment while a camera rig crew hand and monitor expose the unfinished production phase"
+      },
+      "conditions": {},
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "source_sha256": "3c2d7cc272cb5a2cf8f5fb246da1c35585ee9954a2f250d5024e42adbf8fbfd2",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__baseline_prompt__"
+    ]
+  },
+  {
+    "source": {
+      "candidate_id": "cand_d9cfecae95b65976bf302392a95b2c3a",
+      "realization_id": "base",
+      "native": {
+        "aliases": [
+          "아이돌·유닛형 앙상블 설계의 행동 결과를 보여 주는 비고유 소품",
+          "an unbranded handheld microphone and cable loop shared across three roles"
+        ],
+        "embedding_text": "an unbranded handheld microphone and cable loop shared across three roles",
+        "en": "an unbranded handheld microphone and cable loop shared across three roles",
+        "facets": {},
+        "ko": "아이돌·유닛형 앙상블 설계의 행동 결과를 보여 주는 비고유 소품",
+        "tags": [
+          "character_scene_grammar",
+          "idol_unit_ensemble_design",
+          "performance_identity_progression",
+          "character_idol_unit_ensemble_scene_atomic_scene",
+          "original_character"
+        ]
+      },
+      "meaning": {
+        "/content/embedding_text": "an unbranded handheld microphone and cable loop shared across three roles",
+        "/content/en": "an unbranded handheld microphone and cable loop shared across three roles",
+        "/content/ko": "아이돌·유닛형 앙상블 설계의 행동 결과를 보여 주는 비고유 소품"
+      },
+      "conditions": {
+        "requires_primary_any_tags": [
+          "character_idol_unit_ensemble_scene_atomic_scene"
+        ]
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "source_sha256": "f8aae38a4220d8d0fbcdf7580aa13b7823750d7e425d3feba944285aa3fe2961",
+      "native_approval": false,
+      "application": "unreviewed;preserve complete source and requester constraints"
+    },
+    "queries": [
+      "__baseline_prompt__"
+    ]
+  }
+]
