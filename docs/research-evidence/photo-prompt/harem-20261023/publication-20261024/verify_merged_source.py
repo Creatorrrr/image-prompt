@@ -9,7 +9,8 @@ for cid,review in reviews.items():
 manifest=json.loads(gitread(A+'photo_candidate_corpus_manifest.json'));expected=json.loads(json.dumps(manifest));
 for row in [{'file':'photo_candidate_harem_20261023.json','kind':'candidates'},{'file':'photo_candidate_harem_bindings_20261023.json','kind':'slot_bindings'}]:
  if not any(x['file']==row['file'] for x in expected['modules']):expected['modules'].append(row)
- else:assert row in expected['modules'];assert read(W/A/'photo_candidate_corpus_manifest.json')==expected
+ else:assert row in expected['modules']
+assert read(W/A/'photo_candidate_corpus_manifest.json')==expected
 new=read(W/A/'photo_candidate_harem_20261023.json')['candidates'];assert new==read(O.parent/'integration-evidence/new-native-records.json')
 files=[row['file'] for row in manifest['modules'] if row['file'] not in {x['file'] for x in reviews.values()}]
 for name in files:assert (W/A/name).read_bytes()==gitread(A+name),name
