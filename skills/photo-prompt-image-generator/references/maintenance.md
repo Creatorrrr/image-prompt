@@ -143,3 +143,11 @@ scale, structure, function, political rights, distributed identity, consent,
 kinship, event history and physical performance retain separate evidence
 boundaries. Source registration, installed exposure, exact prompt use and saved
 pixels are verified separately; research graphs confer no native approval.
+
+The [flintlock fantasy extension](flintlock-fantasy-semantics.md) retains 81
+visual and 21 context cards, 319 advisory routes and 57 bounded sources. It
+registers 52 optional bilingual visual literals, 21 excluded diagnostics and
+99 bindings; five existing CIDs receive complete Korean translations and one
+complete existing source is reused. Twenty-two mechanisms/specimens await
+plate review. Source registration, installed search, whole-literal adoption,
+reference transport and saved-image endpoint gates remain separate results.
