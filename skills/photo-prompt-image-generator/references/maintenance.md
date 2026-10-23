@@ -124,3 +124,13 @@ The [clockpunk extension](clockpunk-semantics.md) retains 88 research cards and
 transmission, regulation, cam programming and astronomical-instrument owners
 remain distinct. Source registration, sealed retrieval, actual prompt use and
 saved-image relation gates are separately checked; seven cards remain held.
+
+The [space-opera extension](space-opera-visual-semantics.md) retains 72 semantic
+cards, 26 contextual distinctions and 291 keyword routes, with 62 complete
+optional bilingual visual sources, 33 positive-retrieval-excluded diagnostics
+and 120 optional bindings. Three existing pressure/thermal/life-support sources
+are reused without mutation; four source-dependent cards remain held. Space
+scale, structure, function, political rights, distributed identity, consent,
+kinship, event history and physical performance retain separate evidence
+boundaries. Source registration, installed exposure, exact prompt use and saved
+pixels are verified separately; research graphs confer no native approval.
