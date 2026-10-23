@@ -202,6 +202,15 @@ Surface state, camera geometry, physical carriers and represented images retain
 separate owners and claim limits. Existing sources and guards remain unchanged;
 registration, retrieval, prompt use and saved pixels are separately verified.
 
+The [idol-fiction extension](idol-fiction-semantics.md) retains 325 advisory
+keyword routes, 120 complete optional bilingual visual realizations, 45
+positive-retrieval-excluded context diagnostics and 219 optional bindings.
+Actors, hands, garments, supports, audio devices, displays and represented
+figures retain separate owners and endpoints. Time, sound, success, skill,
+identity, consent, real romance and health are not inferred from still-image
+proxies. Nine topics retain additional-source holds. Registration, installed
+exposure, actual prompt use and saved-image quality remain separate results.
+
 The [medical-drama extension](medical-drama-semantics.md) retains 172 research cards and
 346 advisory keyword routes. It registers 99 complete optional bilingual visual
 sources, 51 positive-retrieval-excluded context/held diagnostics and 198 optional
