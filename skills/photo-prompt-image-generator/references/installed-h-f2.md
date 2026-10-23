@@ -275,3 +275,11 @@ and narrative claims retain separate meanings. New sources have no native
 approval; discovery exposure, complete-source compatibility and saved pixels
 are evaluated separately. The active installed generation remains selected by
 `retrieval-runtime.json`.
+
+The [military-fiction data extension](military-fiction-semantics.md) preserves
+393 advisory term routes and contributes complete optional visual material for
+barracks, uniforms, equipment, maintenance, ceremonial contact and represented
+images. The selected installed config remains the runtime authority; source
+registration alone does not change search. See the topic integration evidence
+for the scoped successor, qualification and independent three-arm image tests.
+
