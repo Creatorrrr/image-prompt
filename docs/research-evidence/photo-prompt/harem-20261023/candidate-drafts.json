@@ -1,0 +1,3177 @@
+{
+  "schema": "harem-research-drafts/v1",
+  "runtime_importable": false,
+  "drafts": [
+    {
+      "draft_id": "DRAFT-H01",
+      "card_id": "H01",
+      "label_ko": "동일 수신자에게 향하는 복수 제안",
+      "en": "B and C each extend a separate wrapped gift toward A; both gifts stop in front of A, whose empty hands remain apart.",
+      "ko": "B와 C가 각자 포장 선물 하나를 A에게 내밀며 두 선물 모두 A 앞에 멈추고 A의 빈 두 손은 서로 떨어져 있다.",
+      "suggested_slots": [
+        "prop_placement",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "gift_B",
+        "gift_C"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "holds",
+          "to": "gift_B"
+        },
+        {
+          "from": "C",
+          "relation": "holds",
+          "to": "gift_C"
+        },
+        {
+          "from": "gift_B",
+          "relation": "directed_toward",
+          "to": "A"
+        },
+        {
+          "from": "gift_C",
+          "relation": "directed_toward",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "두 제안자·두 선물·같은 수신자 A·미접촉 손이 함께 읽힘",
+      "confusion_boundary": "선물 교환만으로 구애·하렘·합의를 증명하지 못함; 인원은 요청에서 결정",
+      "priority": "P0",
+      "source_ids": [
+        "R01",
+        "R03"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H02",
+      "card_id": "H02",
+      "label_ko": "한 자리의 경쟁",
+      "en": "B and C each rest a hand on the back of the single empty chair beside seated A; B looks at C across that chair.",
+      "ko": "앉은 A 옆의 빈 의자 하나 등받이에 B와 C가 각각 손을 얹고 B가 그 의자 너머 C를 본다.",
+      "suggested_slots": [
+        "composition",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "chair_A",
+        "empty_chair"
+      ],
+      "research_relations": [
+        {
+          "from": "A",
+          "relation": "sits_on",
+          "to": "chair_A"
+        },
+        {
+          "from": "B",
+          "relation": "hand_on",
+          "to": "empty_chair"
+        },
+        {
+          "from": "C",
+          "relation": "hand_on",
+          "to": "empty_chair"
+        },
+        {
+          "from": "B",
+          "relation": "looks_at",
+          "to": "C"
+        }
+      ],
+      "acceptance_gate": "의자 1개·각 손의 팔 연결·A의 인접 좌석·B→C 시선",
+      "confusion_boundary": "유일한 자리·선택 충돌은 선택한 실현일 뿐 모든 하렘의 필요조건 아님",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H03",
+      "card_id": "H03",
+      "label_ko": "상호 다른 곳을 보는 집단",
+      "en": "A reads a book at the table while B pours water into C's cup; their faces and arms remain separate in the same frame.",
+      "ko": "A가 탁자에서 책을 읽고 B가 C의 컵에 물을 따르며 세 인물의 얼굴과 팔이 같은 화면에서 분리되어 보인다.",
+      "suggested_slots": [
+        "composition"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "book",
+        "cup_C"
+      ],
+      "research_relations": [
+        {
+          "from": "A",
+          "relation": "reads",
+          "to": "book"
+        },
+        {
+          "from": "B",
+          "relation": "pours_into",
+          "to": "cup_C"
+        },
+        {
+          "from": "C",
+          "relation": "owns",
+          "to": "cup_C"
+        }
+      ],
+      "acceptance_gate": "3인·독립 과업과 각 소유자 확인",
+      "confusion_boundary": "중심 인물이 화면 가운데 있어도 연애 관계망이 아님",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H04",
+      "card_id": "H04",
+      "label_ko": "삼인 시선 비대칭",
+      "en": "B looks toward A's face, A looks toward C's face, and C looks down at a cup held in C's own hands.",
+      "ko": "B는 A 얼굴을 보고 A는 C 얼굴을 보며 C는 자기 두 손에 든 컵을 내려다본다.",
+      "suggested_slots": [
+        "composition",
+        "gaze_target"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "cup_C"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "looks_at",
+          "to": "A"
+        },
+        {
+          "from": "A",
+          "relation": "looks_at",
+          "to": "C"
+        },
+        {
+          "from": "C",
+          "relation": "looks_at",
+          "to": "cup_C"
+        },
+        {
+          "from": "C",
+          "relation": "holds",
+          "to": "cup_C"
+        }
+      ],
+      "acceptance_gate": "B→A·A→C·C→컵을 얼굴 방향과 눈으로 구분",
+      "confusion_boundary": "삼각 배치≠삼각 연애; 질투의 원인·내면은 문맥",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H05",
+      "card_id": "H05",
+      "label_ko": "상대 소매를 잡는 손",
+      "en": "B pinches the fabric of A's sleeve near A's cuff; the sleeve remains continuous with A's forearm and B's fingers stay clear of A's wrist.",
+      "ko": "B가 A 손목 근처 소매 천을 집고 그 소매가 A 팔뚝으로 이어지며 B의 손가락은 A 손목에서 떨어져 있다.",
+      "suggested_slots": [
+        "contact_point",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "B",
+        "forearm_A",
+        "sleeve_A"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "pinches",
+          "to": "sleeve_A"
+        },
+        {
+          "from": "sleeve_A",
+          "relation": "covers",
+          "to": "forearm_A"
+        }
+      ],
+      "acceptance_gate": "B 손→천 접점→A 소매→A 팔 경로",
+      "confusion_boundary": "자기 소매·상대 피부·손목 잡기와 구별",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H06",
+      "card_id": "H06",
+      "label_ko": "두 손의 손바닥 접촉",
+      "en": "A's right hand meets B's left hand palm to palm between them, with each wrist continuously connected to its owner's forearm.",
+      "ko": "두 사람 사이에서 A 오른손과 B 왼손의 손바닥이 맞닿고 각 손목이 자기 주인의 팔뚝으로 연속된다.",
+      "suggested_slots": [
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "hand_A",
+        "hand_B"
+      ],
+      "research_relations": [
+        {
+          "from": "hand_A",
+          "relation": "palm_contacts",
+          "to": "hand_B"
+        },
+        {
+          "from": "hand_A",
+          "relation": "belongs_to",
+          "to": "A"
+        },
+        {
+          "from": "hand_B",
+          "relation": "belongs_to",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "두 손·손바닥 접점·두 손목 주인",
+      "confusion_boundary": "깍지·손끝 접촉·손목 파지의 자동 대체 금지",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H07",
+      "card_id": "H07",
+      "label_ko": "깍지 낀 손가락",
+      "en": "A and B hold hands between their bodies with alternating fingers from both hands visibly interwoven; both thumbs and wrists remain distinct.",
+      "ko": "A와 B가 몸 사이에서 손을 잡고 양손 손가락이 번갈아 엇갈리며 두 엄지와 손목이 구분된다.",
+      "suggested_slots": [
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "hand_A",
+        "hand_B"
+      ],
+      "research_relations": [
+        {
+          "from": "hand_A",
+          "relation": "interlaces_with",
+          "to": "hand_B"
+        },
+        {
+          "from": "hand_A",
+          "relation": "belongs_to",
+          "to": "A"
+        },
+        {
+          "from": "hand_B",
+          "relation": "belongs_to",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "교차하는 양손 손가락과 각 손목 연결",
+      "confusion_boundary": "손바닥만 맞대거나 융합된 손은 깍지 통과 아님",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H08",
+      "card_id": "H08",
+      "label_ko": "서로 팔짱 끼기",
+      "en": "B's bent forearm passes around A's bent elbow as they stand side by side; A's arm remains separate from B's torso.",
+      "ko": "나란히 선 B의 굽힌 팔뚝이 A의 굽힌 팔꿈치에 걸리고 A의 팔이 B 몸통과 분리되어 보인다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "elbow_A",
+        "forearm_B"
+      ],
+      "research_relations": [
+        {
+          "from": "forearm_B",
+          "relation": "loops_around",
+          "to": "elbow_A"
+        },
+        {
+          "from": "forearm_B",
+          "relation": "belongs_to",
+          "to": "B"
+        },
+        {
+          "from": "elbow_A",
+          "relation": "belongs_to",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "두 팔의 주인·팔꿈치 걸림",
+      "confusion_boundary": "자기 가슴 앞 양팔 교차와 상대 팔짱의 한국어 다의성",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H09",
+      "card_id": "H09",
+      "label_ko": "중앙 인물의 서로 다른 팔",
+      "en": "B holds the fabric around A's left upper arm while C holds A's right sleeve; A stands between them with both shoulders and both arm connections visible.",
+      "ko": "B는 A 왼쪽 위팔을 덮는 천을 잡고 C는 A 오른쪽 소매를 잡으며 A가 둘 사이에 서고 양어깨와 두 팔 연결이 보인다.",
+      "suggested_slots": [
+        "contact_point",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "left_sleeve_A",
+        "right_sleeve_A"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "grips",
+          "to": "left_sleeve_A"
+        },
+        {
+          "from": "C",
+          "relation": "grips",
+          "to": "right_sleeve_A"
+        },
+        {
+          "from": "A",
+          "relation": "between",
+          "to": "B"
+        },
+        {
+          "from": "A",
+          "relation": "between",
+          "to": "C"
+        }
+      ],
+      "acceptance_gate": "B→A왼팔·C→A오른소매·중앙 A 모두 유지",
+      "confusion_boundary": "접촉만으로 독점욕·경쟁·동의 확정 불가; 좌우는 A 기준",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H10",
+      "card_id": "H10",
+      "label_ko": "상대 넥타이 매듭 정리",
+      "en": "B's fingertips rest on the knot of the tie worn by A; the tie continues down A's shirt front and B's hands remain connected to B's arms.",
+      "ko": "B 손끝이 A가 맨 넥타이 매듭에 닿고 넥타이가 A 셔츠 앞판으로 내려오며 B의 두 손이 B의 팔로 이어진다.",
+      "suggested_slots": [
+        "contact_point",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "tie_A",
+        "tie_knot_A"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "touches",
+          "to": "tie_knot_A"
+        },
+        {
+          "from": "tie_knot_A",
+          "relation": "part_of",
+          "to": "tie_A"
+        },
+        {
+          "from": "tie_A",
+          "relation": "worn_by",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "매듭·셔츠 착용자 A·행위자 B 손",
+      "confusion_boundary": "자기 넥타이 정리·목 조르기·손이 옷 속에 있는 상태와 구분",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H11",
+      "card_id": "H11",
+      "label_ko": "상대 어깨에 머리 기대기",
+      "en": "A sits beside B with A's temple resting on B's near shoulder; B's neck and A's head remain separately outlined.",
+      "ko": "A가 B 옆에 앉아 관자놀이를 B의 가까운 어깨에 얹고 B 목과 A 머리의 윤곽이 분리되어 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "head_A",
+        "shoulder_B"
+      ],
+      "research_relations": [
+        {
+          "from": "head_A",
+          "relation": "rests_on",
+          "to": "shoulder_B"
+        },
+        {
+          "from": "shoulder_B",
+          "relation": "belongs_to",
+          "to": "B"
+        },
+        {
+          "from": "head_A",
+          "relation": "belongs_to",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "A머리→B어깨 접점과 별도 목·얼굴",
+      "confusion_boundary": "부유 머리·같은 인물 어깨로의 합체·연인 확정 금지",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H12",
+      "card_id": "H12",
+      "label_ko": "등 뒤에서 안기",
+      "en": "B stands directly behind A and wraps both arms around A's clothed waist; B's forearms meet in front of A while A's own hands remain below them.",
+      "ko": "B가 A 바로 뒤에 서서 옷을 입은 A 허리를 두 팔로 감싸고 B 두 팔뚝은 A 앞에서 만나며 A 자기 두 손은 그 아래에 있다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "arms_B",
+        "hands_A",
+        "waist_A"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "behind",
+          "to": "A"
+        },
+        {
+          "from": "arms_B",
+          "relation": "around",
+          "to": "waist_A"
+        },
+        {
+          "from": "hands_A",
+          "relation": "below",
+          "to": "arms_B"
+        }
+      ],
+      "acceptance_gate": "후방 B·허리 양팔 경로·A 손 별도",
+      "confusion_boundary": "정면 포옹·팔 수 증가·애정/제압 의도 자동 판정 금지",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H13",
+      "card_id": "H13",
+      "label_ko": "머리 위에 얹은 상대 손",
+      "en": "B rests an open palm on the top of A's hair, with B's fingers following the outer curve of A's head.",
+      "ko": "B가 편 손바닥을 A 머리카락 윗면에 얹고 손가락이 A 머리 바깥 곡선을 따른다.",
+      "suggested_slots": [
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "hair_A",
+        "head_A",
+        "palm_B"
+      ],
+      "research_relations": [
+        {
+          "from": "palm_B",
+          "relation": "rests_on",
+          "to": "hair_A"
+        },
+        {
+          "from": "hair_A",
+          "relation": "covers",
+          "to": "head_A"
+        }
+      ],
+      "acceptance_gate": "B손→A머리 표면 접점",
+      "confusion_boundary": "단일 프레임은 반복 쓰다듬음·칭찬·서열을 증명하지 않음",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H14",
+      "card_id": "H14",
+      "label_ko": "머리가 허벅지에 놓인 무릎베개",
+      "en": "B sits on a bench while A lies along it with the side of A's head resting across B's clothed thighs; A's shoulders and torso are supported by the bench.",
+      "ko": "B가 벤치에 앉고 A는 벤치를 따라 누워 머리 옆면을 옷을 입은 B 허벅지 위에 놓으며 A 어깨와 몸통은 벤치가 받친다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "B",
+        "bench",
+        "head_A",
+        "thighs_B",
+        "torso_A"
+      ],
+      "research_relations": [
+        {
+          "from": "head_A",
+          "relation": "rests_on",
+          "to": "thighs_B"
+        },
+        {
+          "from": "torso_A",
+          "relation": "supported_by",
+          "to": "bench"
+        },
+        {
+          "from": "B",
+          "relation": "sits_on",
+          "to": "bench"
+        }
+      ],
+      "acceptance_gate": "A머리→B허벅지·A몸통→벤치·B앉은 지지",
+      "confusion_boundary": "머리가 무릎 앞에서 뜨거나 B배에 놓이면 다른 자세",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H15",
+      "card_id": "H15",
+      "label_ko": "등과 무릎 뒤의 두 지지점",
+      "en": "Standing A carries B horizontally with one forearm under B's upper back and the other under B's knees; B's bent legs and torso remain continuous.",
+      "ko": "선 A가 한 팔뚝으로 B 윗등 아래를 다른 팔뚝으로 B 무릎 아래를 받쳐 B를 가로로 안고 B 굽힌 다리와 몸통이 이어진다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "back_B",
+        "forearm_A_1",
+        "forearm_A_2",
+        "knees_B"
+      ],
+      "research_relations": [
+        {
+          "from": "forearm_A_1",
+          "relation": "supports",
+          "to": "back_B"
+        },
+        {
+          "from": "forearm_A_2",
+          "relation": "supports",
+          "to": "knees_B"
+        },
+        {
+          "from": "A",
+          "relation": "carries",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "두 지지점·양팔 주인·B전신 하중 경로",
+      "confusion_boundary": "등만 잡은 부유 신체·어깨 업기와 구별; 현실 수행 검증 아님",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H16",
+      "card_id": "H16",
+      "label_ko": "벽의 손과 상대 머리 옆 공간",
+      "en": "A stands facing B near a wall and plants one palm on the wall beside B's head; A's elbow bends clear of B's face and B's hands remain visible at B's sides.",
+      "ko": "벽 가까이의 B를 향해 A가 서서 B 머리 옆 벽에 한 손바닥을 짚고 A 팔꿈치는 B 얼굴에서 떨어져 굽혀지며 B의 두 손은 몸 옆에 보인다.",
+      "suggested_slots": [
+        "contact_point",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "B",
+        "head_B",
+        "palm_A",
+        "wall"
+      ],
+      "research_relations": [
+        {
+          "from": "palm_A",
+          "relation": "contacts",
+          "to": "wall"
+        },
+        {
+          "from": "B",
+          "relation": "near",
+          "to": "wall"
+        },
+        {
+          "from": "palm_A",
+          "relation": "beside",
+          "to": "head_B"
+        }
+      ],
+      "acceptance_gate": "A손→벽·B머리와의 위치·각 몸통 연결",
+      "confusion_boundary": "벽 소음 항의와 구별; 낭만·성별·동의·탈출 가능성을 자세로 단정 불가",
+      "priority": "P0",
+      "source_ids": [
+        "R08"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H17",
+      "card_id": "H17",
+      "label_ko": "턱 아래의 손끝",
+      "en": "A's fingertips touch the underside of B's chin while B's face tilts upward; A's hand stays below B's jaw rather than across B's neck.",
+      "ko": "A 손끝이 B 턱 아랫면에 닿고 B 얼굴이 위로 기울며 A 손은 B 목을 가로지르지 않고 턱 아래에 있다.",
+      "suggested_slots": [
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "chin_B",
+        "face_B",
+        "fingers_A"
+      ],
+      "research_relations": [
+        {
+          "from": "fingers_A",
+          "relation": "touch",
+          "to": "chin_B"
+        },
+        {
+          "from": "face_B",
+          "relation": "tilts_above",
+          "to": "chin_B"
+        }
+      ],
+      "acceptance_gate": "손 주인·턱 접점·얼굴 기울기",
+      "confusion_boundary": "턱 괴기·목 파지와 구별; 강압/동의를 시각 사실로 추가하지 않음",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H18",
+      "card_id": "H18",
+      "label_ko": "이마의 접점",
+      "en": "A and B lean their heads toward one another until their foreheads touch, while their noses and mouths remain separated.",
+      "ko": "A와 B가 서로 머리를 기울여 이마를 맞대고 두 코와 입은 떨어져 있다.",
+      "suggested_slots": [
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "forehead_A",
+        "forehead_B",
+        "mouth_A",
+        "mouth_B"
+      ],
+      "research_relations": [
+        {
+          "from": "forehead_A",
+          "relation": "touches",
+          "to": "forehead_B"
+        },
+        {
+          "from": "mouth_A",
+          "relation": "separate_from",
+          "to": "mouth_B"
+        }
+      ],
+      "acceptance_gate": "이마 접촉·입술 간격·두 얼굴 분리",
+      "confusion_boundary": "코/입 접촉으로 대체하면 다른 실현",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H19",
+      "card_id": "H19",
+      "label_ko": "손등에 닿는 입술",
+      "en": "A raises B's hand and bends toward it so A's lips touch the back of B's hand; B's fingers point away from A's face.",
+      "ko": "A가 B의 손을 들어 몸을 숙여 B 손등에 입술을 대고 B 손가락은 A 얼굴 반대편으로 향한다.",
+      "suggested_slots": [
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "hand_B",
+        "hand_back_B",
+        "lips_A"
+      ],
+      "research_relations": [
+        {
+          "from": "lips_A",
+          "relation": "touch",
+          "to": "hand_back_B"
+        },
+        {
+          "from": "A",
+          "relation": "supports",
+          "to": "hand_B"
+        },
+        {
+          "from": "hand_B",
+          "relation": "belongs_to",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "입술→손등·B손목→B팔",
+      "confusion_boundary": "손바닥·자기 손·공중 키스 대체 금지; 귀족·혼약 확정 아님",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H20",
+      "card_id": "H20",
+      "label_ko": "키스 전의 남은 간격",
+      "en": "A and B face one another at close range with a narrow visible gap between their lips; neither mouth overlaps the other.",
+      "ko": "A와 B가 가까이 마주하고 두 입술 사이에 좁지만 보이는 틈이 있으며 어느 입도 서로 겹치지 않는다.",
+      "suggested_slots": [
+        "composition",
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "lips_A",
+        "lips_B"
+      ],
+      "research_relations": [
+        {
+          "from": "lips_A",
+          "relation": "separated_by_gap",
+          "to": "lips_B"
+        },
+        {
+          "from": "A",
+          "relation": "faces",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "두 입술의 별도 윤곽·간격",
+      "confusion_boundary": "이미 닿은 키스·다음 순간 키스한다는 시간 주장과 구별",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H21",
+      "card_id": "H21",
+      "label_ko": "한입을 내밀고 기다리기",
+      "en": "A holds a spoon carrying a small piece of food in front of B's mouth, leaving a visible gap; B faces the spoon with hands resting on the table.",
+      "ko": "A가 한입 음식을 담은 숟가락을 B 입 앞에 틈을 두고 들며 B는 숟가락을 향하고 두 손은 탁자 위에 있다.",
+      "suggested_slots": [
+        "prop_placement",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "food",
+        "hands_B",
+        "mouth_B",
+        "spoon",
+        "table"
+      ],
+      "research_relations": [
+        {
+          "from": "A",
+          "relation": "holds",
+          "to": "spoon"
+        },
+        {
+          "from": "food",
+          "relation": "on",
+          "to": "spoon"
+        },
+        {
+          "from": "spoon",
+          "relation": "in_front_of",
+          "to": "mouth_B"
+        },
+        {
+          "from": "hands_B",
+          "relation": "rest_on",
+          "to": "table"
+        }
+      ],
+      "acceptance_gate": "A손→숟가락→음식·B입 앞 틈",
+      "confusion_boundary": "도구가 입을 관통하거나 수락·이미 삼킴을 추가하면 실패",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H22",
+      "card_id": "H22",
+      "label_ko": "간병의 물과 손수건",
+      "en": "B sits beside reclining A and holds a glass of water within A's reach; a folded cloth rests on A's forehead.",
+      "ko": "기댄 A 옆에 B가 앉아 A가 닿을 거리에 물잔을 들고 접은 천이 A 이마에 놓여 있다.",
+      "suggested_slots": [
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "cloth",
+        "forehead_A",
+        "glass"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "holds",
+          "to": "glass"
+        },
+        {
+          "from": "cloth",
+          "relation": "rests_on",
+          "to": "forehead_A"
+        },
+        {
+          "from": "B",
+          "relation": "beside",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "B물잔·A이마의 천·A/B의 위치",
+      "confusion_boundary": "열·병명·치료 효과·연애·과거의 역할 역전은 증명 불가",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H23",
+      "card_id": "H23",
+      "label_ko": "내민 손과 수락 전 상태",
+      "en": "A extends an open hand toward B, whose two hands stay close to B's own torso with an unclosed gap between all hands.",
+      "ko": "A가 B에게 편 손을 내밀고 B 두 손은 자기 몸통 가까이에 있으며 어느 손 사이도 닿지 않은 틈이 남아 있다.",
+      "suggested_slots": [
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "B",
+        "hand_A",
+        "hands_B",
+        "torso_B"
+      ],
+      "research_relations": [
+        {
+          "from": "hand_A",
+          "relation": "directed_toward",
+          "to": "B"
+        },
+        {
+          "from": "hands_B",
+          "relation": "near",
+          "to": "torso_B"
+        },
+        {
+          "from": "hand_A",
+          "relation": "separate_from",
+          "to": "hands_B"
+        }
+      ],
+      "acceptance_gate": "행위자·상대·편 손·미접촉",
+      "confusion_boundary": "거절·동의·AI 자발성·관계 확정은 문맥; 손 내밈은 선택적 실현",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H24",
+      "card_id": "H24",
+      "label_ko": "도움을 주며 시선을 돌리는 대비",
+      "en": "B slides a closed lunchbox across the table toward A while B's face turns toward the window; A's hands wait beside the box's path.",
+      "ko": "B가 닫힌 도시락을 탁자 위로 A 쪽에 밀며 얼굴은 창으로 돌리고 A 두 손은 도시락 이동 경로 옆에서 기다린다.",
+      "suggested_slots": [
+        "gaze_target",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "face_B",
+        "lunchbox",
+        "window"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "slides",
+          "to": "lunchbox"
+        },
+        {
+          "from": "face_B",
+          "relation": "turned_toward",
+          "to": "window"
+        },
+        {
+          "from": "lunchbox",
+          "relation": "directed_toward",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "도움 물건의 방향·B시선·A손 분리",
+      "confusion_boundary": "츤데레·쿠데레의 전체 성격·말투·과거 변화는 단일 장면이 증명 못함",
+      "priority": "P0",
+      "source_ids": [
+        "R06"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H25",
+      "card_id": "H25",
+      "label_ko": "선물 둘의 다른 전달자",
+      "en": "A stands between B and C, who each hold one differently wrapped box at chest height; the two boxes remain separate and face A.",
+      "ko": "A가 B와 C 사이에 서고 B와 C가 서로 다른 포장의 상자를 각자 가슴 높이에 하나씩 들어 A를 향하며 두 상자는 분리되어 있다.",
+      "suggested_slots": [
+        "prop_placement",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "box_B",
+        "box_C"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "holds",
+          "to": "box_B"
+        },
+        {
+          "from": "C",
+          "relation": "holds",
+          "to": "box_C"
+        },
+        {
+          "from": "box_B",
+          "relation": "faces",
+          "to": "A"
+        },
+        {
+          "from": "box_C",
+          "relation": "faces",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "2상자·서로 다른 주인·동일 수신 방향",
+      "confusion_boundary": "가격·진심·우열·경쟁은 포장색이나 크기로 판정하지 않음",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-H26",
+      "card_id": "H26",
+      "label_ko": "공동 주방의 독립 과업",
+      "en": "A chops vegetables at the counter, B sets three bowls on the table, and C carries a pot with both hands along the open aisle between them.",
+      "ko": "A가 조리대에서 채소를 썰고 B가 탁자에 그릇 세 개를 놓으며 C는 둘 사이 열린 통로에서 냄비를 두 손으로 운반한다.",
+      "suggested_slots": [
+        "composition",
+        "relational_action"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "bowls",
+        "pot",
+        "table",
+        "vegetables"
+      ],
+      "research_relations": [
+        {
+          "from": "A",
+          "relation": "cuts",
+          "to": "vegetables"
+        },
+        {
+          "from": "B",
+          "relation": "places",
+          "to": "bowls"
+        },
+        {
+          "from": "bowls",
+          "relation": "on",
+          "to": "table"
+        },
+        {
+          "from": "C",
+          "relation": "carries",
+          "to": "pot"
+        }
+      ],
+      "acceptance_gate": "각 사람·도구 주인·탁자와 통로·다른 과업",
+      "confusion_boundary": "동거·발견한 가족·다자연애를 공동 식사로 확정하지 않음",
+      "priority": "P0",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P01",
+      "card_id": "P01",
+      "label_ko": "한쪽 다리로 옮긴 체중",
+      "en": "A stands with weight over the right leg, the left knee relaxed, and the pelvis and shoulder line tilting in opposing directions.",
+      "ko": "A가 오른다리에 체중을 싣고 왼무릎을 풀며 골반선과 어깨선은 반대 방향으로 기울어진다.",
+      "suggested_slots": [
+        "body_pose"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "left_knee_A",
+        "right_leg_A"
+      ],
+      "research_relations": [
+        {
+          "from": "A",
+          "relation": "weight_on",
+          "to": "right_leg_A"
+        },
+        {
+          "from": "left_knee_A",
+          "relation": "belongs_to",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "지지 다리·느슨한 다리·골반/어깨",
+      "confusion_boundary": "허리 비틀기·양다리 같은 하중과 구별; 유혹 의도 아님",
+      "priority": "P1",
+      "source_ids": [
+        "R13"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P02",
+      "card_id": "P02",
+      "label_ko": "자기 허리에 둔 두 손",
+      "en": "A places both hands on A's own waist with fingers forward and elbows projecting outward.",
+      "ko": "A가 손가락을 앞으로 향해 자기 허리에 두 손을 얹고 두 팔꿈치를 바깥으로 벌린다.",
+      "suggested_slots": [
+        "body_pose",
+        "hand_pose"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "elbows_A",
+        "hands_A",
+        "waist_A"
+      ],
+      "research_relations": [
+        {
+          "from": "hands_A",
+          "relation": "on",
+          "to": "waist_A"
+        },
+        {
+          "from": "elbows_A",
+          "relation": "belong_to",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "자기 손→자기 허리·두 팔꿈치",
+      "confusion_boundary": "자신감·불만은 표정과 상황에 따라 다름",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P03",
+      "card_id": "P03",
+      "label_ko": "자기 팔을 교차하기",
+      "en": "A folds both forearms across A's own chest, with the wrists tucked near opposite elbows.",
+      "ko": "A가 자기 가슴 앞에서 두 팔뚝을 교차하고 손목을 반대 팔꿈치 근처에 둔다.",
+      "suggested_slots": [
+        "body_pose"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "arms_A",
+        "forearm_A_1",
+        "forearm_A_2"
+      ],
+      "research_relations": [
+        {
+          "from": "forearm_A_1",
+          "relation": "crosses",
+          "to": "forearm_A_2"
+        },
+        {
+          "from": "arms_A",
+          "relation": "belong_to",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "같은 몸의 두 팔·교차점",
+      "confusion_boundary": "상대 팔짱·적대·철벽 성격과 비동치",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P04",
+      "card_id": "P04",
+      "label_ko": "몸과 다른 방향으로 돌아본 얼굴",
+      "en": "A's torso faces away from B while A turns the head back over one shoulder and looks toward B's face.",
+      "ko": "A 몸통은 B 반대를 향하지만 머리를 한쪽 어깨 너머로 돌려 B 얼굴을 본다.",
+      "suggested_slots": [
+        "body_pose",
+        "gaze_target"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "torso_A"
+      ],
+      "research_relations": [
+        {
+          "from": "torso_A",
+          "relation": "faces_away_from",
+          "to": "B"
+        },
+        {
+          "from": "A",
+          "relation": "looks_at",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "몸통 방향·목 연결·A→B 시선",
+      "confusion_boundary": "OTS 카메라 숏과 뒤돌아보기 인물 행동은 별개",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P05",
+      "card_id": "P05",
+      "label_ko": "귀 옆 머리카락의 손끝",
+      "en": "A's fingers gather the hair beside A's cheek and hold it behind A's near ear; the hand connects to A's bent arm.",
+      "ko": "A 손가락이 자기 뺨 옆 머리카락을 모아 가까운 귀 뒤에 두고 손은 A의 굽힌 팔로 이어진다.",
+      "suggested_slots": [
+        "contact_point",
+        "hand_pose"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "ear_A",
+        "fingers_A",
+        "hair_A"
+      ],
+      "research_relations": [
+        {
+          "from": "fingers_A",
+          "relation": "hold_behind",
+          "to": "hair_A"
+        },
+        {
+          "from": "hair_A",
+          "relation": "behind",
+          "to": "ear_A"
+        }
+      ],
+      "acceptance_gate": "같은 사람의 손·귀·모발",
+      "confusion_boundary": "상대 머리 손질·귀 액세서리로 대체 금지",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P06",
+      "card_id": "P06",
+      "label_ko": "팔꿈치로 지지한 턱",
+      "en": "A rests the chin on A's palm while the same arm's elbow rests on the tabletop.",
+      "ko": "A가 손바닥에 자기 턱을 얹고 같은 팔의 팔꿈치는 탁자 위에 놓는다.",
+      "suggested_slots": [
+        "body_pose",
+        "contact_point"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "chin_A",
+        "elbow_A",
+        "palm_A",
+        "table"
+      ],
+      "research_relations": [
+        {
+          "from": "chin_A",
+          "relation": "rests_on",
+          "to": "palm_A"
+        },
+        {
+          "from": "elbow_A",
+          "relation": "rests_on",
+          "to": "table"
+        }
+      ],
+      "acceptance_gate": "턱→손→팔꿈치→탁자 지지",
+      "confusion_boundary": "상대 턱 들기·부유 팔꿈치와 구별; 지루함은 문맥",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P07",
+      "card_id": "P07",
+      "label_ko": "소파에 지지된 기대 눕기",
+      "en": "A reclines lengthwise on a sofa, with the back against its raised end and the hips and legs supported by its seat.",
+      "ko": "A가 소파 길이를 따라 기대어 누워 등은 높은 끝에 닿고 엉덩이와 다리는 좌면이 받친다.",
+      "suggested_slots": [
+        "body_pose"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "back_A",
+        "hips_A",
+        "legs_A",
+        "sofa_end",
+        "sofa_seat"
+      ],
+      "research_relations": [
+        {
+          "from": "back_A",
+          "relation": "against",
+          "to": "sofa_end"
+        },
+        {
+          "from": "hips_A",
+          "relation": "supported_by",
+          "to": "sofa_seat"
+        },
+        {
+          "from": "legs_A",
+          "relation": "supported_by",
+          "to": "sofa_seat"
+        }
+      ],
+      "acceptance_gate": "등·골반·다리의 지지면",
+      "confusion_boundary": "휴식 자세 자체는 관능·성적 가용성·오달리스크 역사 증명 아님",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-P08",
+      "card_id": "P08",
+      "label_ko": "한쪽 눈만 감긴 표정",
+      "en": "A closes the left eyelid while the right eye remains open and directed toward B.",
+      "ko": "A가 왼눈꺼풀을 닫고 오른눈은 뜬 채 B를 향한다.",
+      "suggested_slots": [
+        "expression"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "B",
+        "left_eye_A",
+        "left_eyelid_A",
+        "right_eye_A"
+      ],
+      "research_relations": [
+        {
+          "from": "left_eyelid_A",
+          "relation": "closed_over",
+          "to": "left_eye_A"
+        },
+        {
+          "from": "right_eye_A",
+          "relation": "looks_at",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "두 눈꺼풀의 다른 상태·B방향",
+      "confusion_boundary": "단순 반쯤 감은 양눈·눈 가림·합의 신호 확정과 구별",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A01",
+      "card_id": "A01",
+      "label_ko": "겹치지 않는 세 실루엣",
+      "en": "A has a short rounded hair outline, B has a long straight hair outline, and C has a high tied hair outline; all three head silhouettes remain separate.",
+      "ko": "A는 짧고 둥근 머리 윤곽 B는 길고 곧은 윤곽 C는 높이 묶인 윤곽이며 세 머리 실루엣이 분리되어 있다.",
+      "suggested_slots": [
+        "character_contrast",
+        "composition"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "hair_A",
+        "hair_B",
+        "hair_C"
+      ],
+      "research_relations": [
+        {
+          "from": "hair_A",
+          "relation": "belongs_to",
+          "to": "A"
+        },
+        {
+          "from": "hair_B",
+          "relation": "belongs_to",
+          "to": "B"
+        },
+        {
+          "from": "hair_C",
+          "relation": "belongs_to",
+          "to": "C"
+        }
+      ],
+      "acceptance_gate": "3인 머리 윤곽을 겹침 없이 식별",
+      "confusion_boundary": "키·체형·의상 전부를 한꺼번에 바꿀 필요 없음; 성격 대응 금지",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A02",
+      "card_id": "A02",
+      "label_ko": "인물별 의복 색의 귀속",
+      "en": "A wears a red scarf, B a blue scarf, and C a green scarf; each scarf stays on its own wearer throughout the frame.",
+      "ko": "A는 빨간 B는 파란 C는 초록 스카프를 두르고 각 스카프는 자기 착용자에게만 놓인다.",
+      "suggested_slots": [
+        "character_contrast",
+        "color"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C",
+        "blue_scarf",
+        "green_scarf",
+        "red_scarf"
+      ],
+      "research_relations": [
+        {
+          "from": "red_scarf",
+          "relation": "worn_by",
+          "to": "A"
+        },
+        {
+          "from": "blue_scarf",
+          "relation": "worn_by",
+          "to": "B"
+        },
+        {
+          "from": "green_scarf",
+          "relation": "worn_by",
+          "to": "C"
+        }
+      ],
+      "acceptance_gate": "사람별 색 소유자와 스카프 착용점",
+      "confusion_boundary": "색=성격·혈통·인기·관계 우열 아님; 전체 장면 tint로 대체 금지",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A03",
+      "card_id": "A03",
+      "label_ko": "두 묶임점의 트윈테일",
+      "en": "A's hair gathers into two distinct tied tails on opposite sides of the head; each tie connects to its own hanging bundle.",
+      "ko": "A 머리는 머리 양옆의 서로 다른 두 묶임점에서 두 꼬리로 이어지고 각 묶임점이 별도 내려오는 다발과 연결된다.",
+      "suggested_slots": [
+        "hair_style"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "head_A",
+        "tail_left",
+        "tail_right",
+        "tie_left",
+        "tie_right",
+        "ties"
+      ],
+      "research_relations": [
+        {
+          "from": "tail_left",
+          "relation": "attached_to",
+          "to": "tie_left"
+        },
+        {
+          "from": "tail_right",
+          "relation": "attached_to",
+          "to": "tie_right"
+        },
+        {
+          "from": "ties",
+          "relation": "on",
+          "to": "head_A"
+        }
+      ],
+      "acceptance_gate": "좌우 두 뿌리·두 다발",
+      "confusion_boundary": "포니테일·양갈래 땋음·잘린 모발 파편과 구별",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A04",
+      "card_id": "A04",
+      "label_ko": "일자 앞머리와 짧은 옆머리",
+      "en": "A has straight fringe across the forehead, blunt cheek-length side locks, and longer hair continuing behind those side locks.",
+      "ko": "A는 이마를 가로지르는 일자 앞머리와 뺨 길이에서 수평으로 끝난 옆머리를 가지며 그 뒤로 더 긴 머리카락이 이어진다.",
+      "suggested_slots": [
+        "hair_style"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "forehead_A",
+        "fringe",
+        "long_hair_A",
+        "side_locks"
+      ],
+      "research_relations": [
+        {
+          "from": "fringe",
+          "relation": "over",
+          "to": "forehead_A"
+        },
+        {
+          "from": "side_locks",
+          "relation": "in_front_of",
+          "to": "long_hair_A"
+        }
+      ],
+      "acceptance_gate": "앞머리·양옆 단층·긴 뒷머리",
+      "confusion_boundary": "단발이나 공주 신분과 비동치; 히메컷의 모든 변형 정의 아님",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A05",
+      "card_id": "A05",
+      "label_ko": "수직 나선형 모발 다발",
+      "en": "Two thick hair bundles beside A's face form repeated vertical corkscrew turns, each continuous from its upper attachment to its lower tip.",
+      "ko": "A 얼굴 옆 굵은 모발 두 다발이 위 부착점부터 아래 끝까지 연속된 수직 나선으로 감긴다.",
+      "suggested_slots": [
+        "hair_style"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "curl_left",
+        "curl_right",
+        "face_A"
+      ],
+      "research_relations": [
+        {
+          "from": "curl_left",
+          "relation": "beside",
+          "to": "face_A"
+        },
+        {
+          "from": "curl_right",
+          "relation": "beside",
+          "to": "face_A"
+        }
+      ],
+      "acceptance_gate": "각 나선의 연속성과 두 모발 다발",
+      "confusion_boundary": "드릴 기계·리본·산발 곱슬과 구별; 사진에서는 가발/성형 정도 선택",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A06",
+      "card_id": "A06",
+      "label_ko": "동물귀 머리띠의 받침",
+      "en": "A wears two fabric animal ears mounted on a narrow band that remains visible across the top of A's hair.",
+      "ko": "A가 천 동물귀 둘이 달린 좁은 밴드를 착용하고 밴드가 머리 윗부분을 가로질러 보인다.",
+      "suggested_slots": [
+        "wearable_accessory"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "fabric_ears",
+        "headband"
+      ],
+      "research_relations": [
+        {
+          "from": "fabric_ears",
+          "relation": "mounted_on",
+          "to": "headband"
+        },
+        {
+          "from": "headband",
+          "relation": "worn_by",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "두 귀→밴드→머리 위 연결",
+      "confusion_boundary": "실제 비인간 해부학·귀 움직임·종족으로 승격하지 않음",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A07",
+      "card_id": "A07",
+      "label_ko": "머리에 연결된 동물귀",
+      "en": "A has two furred animal ears emerging directly from the upper head, with fur continuing from each ear base into the scalp.",
+      "ko": "A는 머리 윗부분에서 직접 나온 털 동물귀 둘을 가지며 각 귀 뿌리의 털이 두피 털로 이어진다.",
+      "suggested_slots": [
+        "species_marker"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "furred_ears",
+        "head_A"
+      ],
+      "research_relations": [
+        {
+          "from": "furred_ears",
+          "relation": "anatomically_attached_to",
+          "to": "head_A"
+        }
+      ],
+      "acceptance_gate": "두 귀 뿌리·두피 연속성",
+      "confusion_boundary": "머리띠와 대안 분리; 인간귀 유무는 요청에서 별도 확정",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A08",
+      "card_id": "A08",
+      "label_ko": "좌우 홍채의 서로 다른 색",
+      "en": "A's left iris is amber and the right iris is blue, with both irises simultaneously visible under the same neutral light.",
+      "ko": "같은 중성 조명 아래 A 왼홍채는 호박색 오른홍채는 파란색이며 두 홍채가 동시에 보인다.",
+      "suggested_slots": [
+        "eye_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "amber_iris",
+        "blue_iris",
+        "left_eye_A",
+        "right_eye_A"
+      ],
+      "research_relations": [
+        {
+          "from": "amber_iris",
+          "relation": "in",
+          "to": "left_eye_A"
+        },
+        {
+          "from": "blue_iris",
+          "relation": "in",
+          "to": "right_eye_A"
+        }
+      ],
+      "acceptance_gate": "좌우 홍채·동일 조명·실제 색 차",
+      "confusion_boundary": "반사광·이색 조명·렌즈·혈통/능력 주장을 구별",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A09",
+      "card_id": "A09",
+      "label_ko": "눈꼬리 형태와 눈꺼풀 상태",
+      "en": "A's outer eye corners slope upward while the upper eyelids sit low over the irises; the eye shape and eyelid position remain separately readable.",
+      "ko": "A 양눈 바깥꼬리는 위로 기울고 윗눈꺼풀은 홍채 위로 낮게 내려와 눈매 형태와 눈꺼풀 위치가 따로 읽힌다.",
+      "suggested_slots": [
+        "expression",
+        "eye_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "eyes_A",
+        "irises_A",
+        "outer_corners",
+        "upper_lids"
+      ],
+      "research_relations": [
+        {
+          "from": "outer_corners",
+          "relation": "belong_to",
+          "to": "eyes_A"
+        },
+        {
+          "from": "upper_lids",
+          "relation": "over",
+          "to": "irises_A"
+        }
+      ],
+      "acceptance_gate": "꼬리 방향·위 눈꺼풀·홍채",
+      "confusion_boundary": "츠리메 구조와 지토메 표정 분리; 성격·질투 진위 확정 금지",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-A10",
+      "card_id": "A10",
+      "label_ko": "뺨의 붉은 표면 기운",
+      "en": "A's cheeks carry a localized red flush while the surrounding skin retains its usual tone.",
+      "ko": "A 양뺨에 국소적인 붉은 기운이 있고 주변 피부는 본래 색조를 유지한다.",
+      "suggested_slots": [
+        "expression"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "cheeks_A",
+        "red_flush"
+      ],
+      "research_relations": [
+        {
+          "from": "red_flush",
+          "relation": "localized_on",
+          "to": "cheeks_A"
+        }
+      ],
+      "acceptance_gate": "국소 홍조와 조명색 구별",
+      "confusion_boundary": "사랑·수줍음·성적 흥분·열·분노 중 원인을 자동 선택하지 않음",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W01",
+      "card_id": "W01",
+      "label_ko": "앞치마와 원피스의 별도 층",
+      "en": "A wears a white apron over a dark long-sleeved dress; the apron bib and waist ties remain distinct from the dress sleeves and skirt.",
+      "ko": "A가 짙은 긴소매 원피스 위에 흰 앞치마를 두르고 앞가슴 덮개와 허리끈이 원피스 소매·치마와 구별된다.",
+      "suggested_slots": [
+        "wardrobe_layering"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "apron",
+        "dress_A",
+        "waist_ties"
+      ],
+      "research_relations": [
+        {
+          "from": "apron",
+          "relation": "over",
+          "to": "dress_A"
+        },
+        {
+          "from": "waist_ties",
+          "relation": "part_of",
+          "to": "apron"
+        },
+        {
+          "from": "dress_A",
+          "relation": "worn_by",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "앞치마·허리끈·아래 원피스 층",
+      "confusion_boundary": "메이드 직업·역사적 복식·애정·종속은 복장만으로 확정 불가",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W02",
+      "card_id": "W02",
+      "label_ko": "재킷 아래 별도 조끼",
+      "en": "A wears a waistcoat over a shirt and under an open jacket, with the waistcoat's separate hem and button row visible above the trousers.",
+      "ko": "A가 셔츠 위 열린 재킷 아래에 조끼를 입고 조끼의 별도 밑단과 단추 열이 바지 위에서 보인다.",
+      "suggested_slots": [
+        "wardrobe_layering"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "jacket",
+        "shirt",
+        "trousers",
+        "waistcoat"
+      ],
+      "research_relations": [
+        {
+          "from": "jacket",
+          "relation": "over",
+          "to": "waistcoat"
+        },
+        {
+          "from": "waistcoat",
+          "relation": "over",
+          "to": "shirt"
+        },
+        {
+          "from": "trousers",
+          "relation": "worn_by",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "재킷·조끼·셔츠 세 층과 바지",
+      "confusion_boundary": "단추 프린트·붙임 앞판과 별도 조끼 구별; 귀족·집사 확정 아님",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W03",
+      "card_id": "W03",
+      "label_ko": "접혀 올라간 소매 단",
+      "en": "A's shirt sleeves are folded back in two visible cuffs below the elbows, leaving both forearms uncovered.",
+      "ko": "A 셔츠 소매가 팔꿈치 아래에서 두 겹의 보이는 접힌 단으로 말려 올라가 두 팔뚝이 드러난다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "cuffs",
+        "folded_cuffs",
+        "forearms_A",
+        "shirt_A"
+      ],
+      "research_relations": [
+        {
+          "from": "folded_cuffs",
+          "relation": "part_of",
+          "to": "shirt_A"
+        },
+        {
+          "from": "forearms_A",
+          "relation": "below",
+          "to": "cuffs"
+        }
+      ],
+      "acceptance_gate": "소매 원천·접힘·끝단·팔뚝",
+      "confusion_boundary": "짧은 소매·찢긴 소매와 구별; 유능함·사회인 신분 아님",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W04",
+      "card_id": "W04",
+      "label_ko": "오픈 칼라와 풀린 매듭",
+      "en": "A's top shirt button is open and the tie knot hangs below the separated collar points, with the tie still passing around A's neck.",
+      "ko": "A 셔츠 맨 위 단추가 열리고 넥타이 매듭은 벌어진 칼라 끝 아래로 내려와 있으며 넥타이는 계속 목 둘레를 지난다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "collar_points",
+        "neck_A",
+        "tie",
+        "tie_knot"
+      ],
+      "research_relations": [
+        {
+          "from": "tie_knot",
+          "relation": "below",
+          "to": "collar_points"
+        },
+        {
+          "from": "tie",
+          "relation": "around",
+          "to": "neck_A"
+        }
+      ],
+      "acceptance_gate": "열린 단추·칼라·낮은 매듭·목 둘레",
+      "confusion_boundary": "노타이·자기 넥타이 정리 동작과 구별; 성적 분위기 필수 아님",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W05",
+      "card_id": "W05",
+      "label_ko": "여유 있는 니트 윤곽",
+      "en": "A's knit sweater hangs away from the torso with dropped shoulder seams and sleeves extending over the wrists.",
+      "ko": "A 니트가 몸통에서 여유 있게 떨어지고 어깨선이 내려오며 소매는 손목 너머까지 이어진다.",
+      "suggested_slots": [
+        "garment_fit"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "sleeves",
+        "sweater",
+        "torso_A",
+        "wrists_A"
+      ],
+      "research_relations": [
+        {
+          "from": "sweater",
+          "relation": "loose_around",
+          "to": "torso_A"
+        },
+        {
+          "from": "sleeves",
+          "relation": "extend_past",
+          "to": "wrists_A"
+        }
+      ],
+      "acceptance_gate": "몸/의복 사이 여유·어깨선·소매길이",
+      "confusion_boundary": "빌려 입은 상대·체형·나이·친밀관계는 추론하지 않음",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W06",
+      "card_id": "W06",
+      "label_ko": "어깨 아래의 네크라인",
+      "en": "A's dress neckline runs below both shoulder joints, leaving the shoulders visible while the upper sleeves encircle the upper arms.",
+      "ko": "A 드레스 네크라인이 양어깨 관절 아래를 지나 어깨가 드러나고 소매 윗부분은 위팔을 감싼다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "neckline",
+        "shoulders_A",
+        "sleeves",
+        "upper_arms_A"
+      ],
+      "research_relations": [
+        {
+          "from": "neckline",
+          "relation": "below",
+          "to": "shoulders_A"
+        },
+        {
+          "from": "sleeves",
+          "relation": "around",
+          "to": "upper_arms_A"
+        }
+      ],
+      "acceptance_gate": "양어깨·네크라인·소매 상단",
+      "confusion_boundary": "끈 없는 상의·한쪽 어깨·홀터넥과 다름",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W07",
+      "card_id": "W07",
+      "label_ko": "목 뒤로 이어지는 홀터 지지",
+      "en": "Two fabric supports rise from A's bodice and join behind the neck, leaving the outer shoulders clear.",
+      "ko": "두 천 지지부가 A 몸판에서 올라가 목 뒤에서 만나고 어깨 바깥은 드러난다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "bodice_A",
+        "neck_A",
+        "supports"
+      ],
+      "research_relations": [
+        {
+          "from": "supports",
+          "relation": "rise_from",
+          "to": "bodice_A"
+        },
+        {
+          "from": "supports",
+          "relation": "join_behind",
+          "to": "neck_A"
+        }
+      ],
+      "acceptance_gate": "몸판→지지부→목뒤 경로",
+      "confusion_boundary": "목걸이·끊긴 끈·보이지 않는 뒤 매듭을 증명으로 사용 금지",
+      "priority": "P1",
+      "source_ids": [
+        "R10"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W08",
+      "card_id": "W08",
+      "label_ko": "등판의 경계 있는 개구",
+      "en": "A's gown has an open back bounded by fabric at the sides and waist; the gown continues around the hips.",
+      "ko": "A 가운 등판은 양옆 천과 허리선으로 경계가 잡힌 채 열려 있고 의복은 골반 둘레로 이어진다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "back_opening",
+        "gown",
+        "gown_edges",
+        "hips_A"
+      ],
+      "research_relations": [
+        {
+          "from": "back_opening",
+          "relation": "bounded_by",
+          "to": "gown_edges"
+        },
+        {
+          "from": "gown",
+          "relation": "around",
+          "to": "hips_A"
+        }
+      ],
+      "acceptance_gate": "등 개구·측면과 허리 경계·몸판 연속성",
+      "confusion_boundary": "앞 네크라인 노출·투명 천·찢김과 구별",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W09",
+      "card_id": "W09",
+      "label_ko": "밑단으로 열린 슬릿",
+      "en": "One side of A's skirt has a slit that opens continuously to the hem, with two finished fabric edges separated beside the leg.",
+      "ko": "A 치마 한쪽 트임이 밑단까지 연속해서 열리고 다리 옆에 마감된 두 천 가장자리가 떨어져 있다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "finished_edges",
+        "hem",
+        "leg_A",
+        "slit"
+      ],
+      "research_relations": [
+        {
+          "from": "slit",
+          "relation": "opens_to",
+          "to": "hem"
+        },
+        {
+          "from": "finished_edges",
+          "relation": "beside",
+          "to": "leg_A"
+        }
+      ],
+      "acceptance_gate": "트임→밑단 연결·양 가장자리",
+      "confusion_boundary": "둘러막힌 컷아웃·겹친 앞판·우연한 파손과 비동치",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W10",
+      "card_id": "W10",
+      "label_ko": "둘러싸인 컷아웃",
+      "en": "A's garment contains a small side opening completely surrounded by finished fabric edges, while the hem remains unbroken below it.",
+      "ko": "A 의상 옆의 작은 개구는 마감된 천 가장자리로 완전히 둘러싸이고 그 아래 밑단은 이어져 있다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "cutout",
+        "fabric_edges",
+        "hem"
+      ],
+      "research_relations": [
+        {
+          "from": "cutout",
+          "relation": "enclosed_by",
+          "to": "fabric_edges"
+        },
+        {
+          "from": "hem",
+          "relation": "below",
+          "to": "cutout"
+        }
+      ],
+      "acceptance_gate": "개구 전 둘레·밑단 연속성",
+      "confusion_boundary": "밑단 트임·투명 패널·옷 사고와 구별",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W11",
+      "card_id": "W11",
+      "label_ko": "연결된 보디수트 몸판",
+      "en": "A wears a one-piece bodysuit whose torso fabric continues through the hips into the lower section, with leg openings at both sides.",
+      "ko": "A가 몸통 천이 골반을 거쳐 하부로 이어지고 양쪽 다리 개구가 있는 한 벌 보디수트를 입는다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "bodysuit_A",
+        "leg_openings",
+        "lower_panel",
+        "torso_panel"
+      ],
+      "research_relations": [
+        {
+          "from": "torso_panel",
+          "relation": "continuous_with",
+          "to": "lower_panel"
+        },
+        {
+          "from": "leg_openings",
+          "relation": "in",
+          "to": "bodysuit_A"
+        }
+      ],
+      "acceptance_gate": "몸통→골반→하부 연속성·다리 개구",
+      "confusion_boundary": "같은색 상하의·수영복 기능·레오타드 용도를 자동 판정하지 않음",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W12",
+      "card_id": "W12",
+      "label_ko": "보강 채널과 앞 여밈",
+      "en": "A's corset has narrow vertical boning channels and a center-front busk with paired fastening points; both side panels continue to the waist.",
+      "ko": "A 코르셋에는 좁은 세로 보강 채널과 짝지은 여밈점의 중앙 앞 버스크가 있고 양옆 몸판이 허리로 이어진다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "busk",
+        "channels",
+        "corset",
+        "corset_front"
+      ],
+      "research_relations": [
+        {
+          "from": "channels",
+          "relation": "on",
+          "to": "corset"
+        },
+        {
+          "from": "busk",
+          "relation": "at",
+          "to": "corset_front"
+        },
+        {
+          "from": "corset",
+          "relation": "worn_by",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "채널·중앙 여밈·몸판",
+      "confusion_boundary": "보이는 채널로 실제 보강재 재료·의학적 지지·압박량 확정 못함; 모든 코르셋 필수 형상 아님",
+      "priority": "P1",
+      "source_ids": [
+        "R09",
+        "R10"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W13",
+      "card_id": "W13",
+      "label_ko": "짧은 구조 상의 뷔스티에",
+      "en": "A wears a fitted bustier ending above the hips, with shaped bust panels and short visible reinforcing seams down the front.",
+      "ko": "A가 골반 위에서 끝나는 밀착 뷔스티에를 입고 입체 가슴 패널과 앞의 짧은 보강 솔기가 보인다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "bust_panels",
+        "bustier",
+        "reinforcing_seams"
+      ],
+      "research_relations": [
+        {
+          "from": "bust_panels",
+          "relation": "part_of",
+          "to": "bustier"
+        },
+        {
+          "from": "reinforcing_seams",
+          "relation": "on",
+          "to": "bustier"
+        }
+      ],
+      "acceptance_gate": "짧은 몸판·가슴 패널·솔기",
+      "confusion_boundary": "강한 허리 압박·코르셋 전체 구조를 필수화하지 않음",
+      "priority": "P1",
+      "source_ids": [
+        "R10"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W14",
+      "card_id": "W14",
+      "label_ko": "캐미솔 위 열린 로브",
+      "en": "A wears a thin-strapped camisole under an open robe; the robe's front edges frame the camisole without merging with its straps.",
+      "ko": "A가 가는 어깨끈 캐미솔 위에 열린 로브를 입고 로브 앞 가장자리가 캐미솔을 둘러싸며 끈과 합쳐지지 않는다.",
+      "suggested_slots": [
+        "wardrobe_layering"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "camisole",
+        "robe",
+        "straps"
+      ],
+      "research_relations": [
+        {
+          "from": "camisole",
+          "relation": "under",
+          "to": "robe"
+        },
+        {
+          "from": "straps",
+          "relation": "part_of",
+          "to": "camisole"
+        },
+        {
+          "from": "robe",
+          "relation": "worn_by",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "캐미솔·로브 두 벌·서로 다른 가장자리",
+      "confusion_boundary": "페뇨아르·실내복의 역사적 종류와 용도는 추가 확인",
+      "priority": "P1",
+      "source_ids": [
+        "R10"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W15",
+      "card_id": "W15",
+      "label_ko": "슬립 위 별도 겉드레스",
+      "en": "A's outer dress hangs over a separate thin-strapped slip whose lower hem remains visible just beneath the outer dress hem.",
+      "ko": "A 겉드레스 아래 별도 가는 끈 슬립을 입고 슬립 아랫단이 겉드레스 밑단 바로 아래에 보인다.",
+      "suggested_slots": [
+        "wardrobe_layering"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "dress_hem",
+        "outer_dress",
+        "slip",
+        "slip_hem"
+      ],
+      "research_relations": [
+        {
+          "from": "outer_dress",
+          "relation": "over",
+          "to": "slip"
+        },
+        {
+          "from": "slip_hem",
+          "relation": "below",
+          "to": "dress_hem"
+        }
+      ],
+      "acceptance_gate": "독립 두 밑단·두 의복 층",
+      "confusion_boundary": "슬립드레스 한 벌·박음 장식·속옷 기능의 자동 외형 판정 금지",
+      "priority": "P1",
+      "source_ids": [
+        "R10"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W16",
+      "card_id": "W16",
+      "label_ko": "가슴 아래에서 퍼지는 베이비돌",
+      "en": "A's short babydoll nightdress gathers below the bust and flares loosely toward a hem above the knees.",
+      "ko": "A 짧은 베이비돌 잠옷이 가슴 아래에서 모이고 무릎 위 밑단으로 느슨하게 퍼진다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "bust_A",
+        "gathering",
+        "hem",
+        "nightdress"
+      ],
+      "research_relations": [
+        {
+          "from": "gathering",
+          "relation": "below",
+          "to": "bust_A"
+        },
+        {
+          "from": "nightdress",
+          "relation": "flares_toward",
+          "to": "hem"
+        }
+      ],
+      "acceptance_gate": "높은 모임선·느슨한 아래·짧은 밑단",
+      "confusion_boundary": "이름을 인물 연령으로 해석하지 않음; A라인 일반 드레스와 용도 구분",
+      "priority": "P1",
+      "source_ids": [
+        "R10"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W17",
+      "card_id": "W17",
+      "label_ko": "허리벨트에서 스타킹까지",
+      "en": "A's garter belt sits at the waist with two visible straps descending to clips fastened to the top edges of separate stockings.",
+      "ko": "A 가터벨트가 허리에 놓이고 보이는 끈 둘이 내려가 별도 스타킹 윗단에 고정된 클립으로 이어진다.",
+      "suggested_slots": [
+        "garment_detail"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "clips",
+        "stocking_tops",
+        "straps",
+        "waist_belt"
+      ],
+      "research_relations": [
+        {
+          "from": "straps",
+          "relation": "descend_from",
+          "to": "waist_belt"
+        },
+        {
+          "from": "clips",
+          "relation": "attach_to",
+          "to": "stocking_tops"
+        },
+        {
+          "from": "clips",
+          "relation": "at_end_of",
+          "to": "straps"
+        }
+      ],
+      "acceptance_gate": "허리밴드→끈→클립→스타킹 단",
+      "confusion_boundary": "허벅지 링·자립 스타킹·장식 스트랩과 다름; 선택한 보이는 두 끈만 기술",
+      "priority": "P1",
+      "source_ids": [
+        "R09"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W18",
+      "card_id": "W18",
+      "label_ko": "하의와 양말 사이의 피부 띠",
+      "en": "A's skirt hem ends above the tops of A's thigh-high socks, leaving a continuous visible band of skin between each sock and the skirt.",
+      "ko": "A 치마 밑단이 허벅지 양말 윗단보다 높게 끝나 각 양말과 치마 사이에 연속된 피부 띠가 보인다.",
+      "suggested_slots": [
+        "wardrobe_layering"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "skin_band",
+        "skirt_hem",
+        "sock_tops"
+      ],
+      "research_relations": [
+        {
+          "from": "skirt_hem",
+          "relation": "above",
+          "to": "sock_tops"
+        },
+        {
+          "from": "skin_band",
+          "relation": "between",
+          "to": "skirt_hem"
+        },
+        {
+          "from": "skin_band",
+          "relation": "between",
+          "to": "sock_tops"
+        }
+      ],
+      "acceptance_gate": "하의단·양말단·그 사이 공간",
+      "confusion_boundary": "단순 맨다리·부츠·스타킹 전체와 구별; 비율 공식을 만들지 않음",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W19",
+      "card_id": "W19",
+      "label_ko": "레이스 구멍과 별도 안감",
+      "en": "A lace panel with open patterned holes lies over a separate opaque lining, which remains continuous behind the holes.",
+      "ko": "뚫린 무늬의 레이스 패널 아래 별도 불투명 안감이 놓이고 안감은 구멍 뒤로 이어진다.",
+      "suggested_slots": [
+        "surface_material",
+        "wardrobe_layering"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "lace_holes",
+        "lace_panel",
+        "lining"
+      ],
+      "research_relations": [
+        {
+          "from": "lace_panel",
+          "relation": "over",
+          "to": "lining"
+        },
+        {
+          "from": "lining",
+          "relation": "behind",
+          "to": "lace_holes"
+        }
+      ],
+      "acceptance_gate": "레이스 개구·하부 안감",
+      "confusion_boundary": "레이스=피부 비침 아님; 소재명만으로 노출량 고정하지 않음",
+      "priority": "P1",
+      "source_ids": [
+        "R09"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W20",
+      "card_id": "W20",
+      "label_ko": "새틴 같은 표면 광택",
+      "en": "A draped fabric panel shows smooth broad highlights that follow its folds, while the shaded folds remain visibly continuous.",
+      "ko": "드레이프 천 표면에 주름을 따라 넓고 매끈한 하이라이트가 있고 어두운 주름도 연속되어 보인다.",
+      "suggested_slots": [
+        "surface_material"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "fabric_panel",
+        "folds",
+        "highlights"
+      ],
+      "research_relations": [
+        {
+          "from": "highlights",
+          "relation": "follow",
+          "to": "folds"
+        },
+        {
+          "from": "folds",
+          "relation": "in",
+          "to": "fabric_panel"
+        }
+      ],
+      "acceptance_gate": "광택이 주름 곡면을 따르는 표면",
+      "confusion_boundary": "실크 섬유·새틴 조직은 이름·문맥으로 보존; 사진의 광택만으로 성분 판정 불가",
+      "priority": "P1",
+      "source_ids": [
+        "R09"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W21",
+      "card_id": "W21",
+      "label_ko": "벨벳의 짧은 기모 표면",
+      "en": "A dark fabric panel shows a dense short pile with directional light and dark patches across a continuous surface.",
+      "ko": "짙은 천에 조밀한 짧은 기모가 보이고 연속된 표면 위로 방향에 따른 밝고 어두운 영역이 생긴다.",
+      "suggested_slots": [
+        "surface_material"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "fabric_panel",
+        "light_patches",
+        "pile",
+        "short_pile"
+      ],
+      "research_relations": [
+        {
+          "from": "short_pile",
+          "relation": "on",
+          "to": "fabric_panel"
+        },
+        {
+          "from": "light_patches",
+          "relation": "on",
+          "to": "pile"
+        }
+      ],
+      "acceptance_gate": "기모와 방향광·연속 천 표면",
+      "confusion_boundary": "검은 비닐·단순 무광과 다름; 섬유 종류·촉감은 확정 못함",
+      "priority": "P1",
+      "source_ids": [
+        "R09"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W22",
+      "card_id": "W22",
+      "label_ko": "피시넷의 망과 아래 층",
+      "en": "An open diamond mesh panel lies over an opaque cloth layer, with the diamond openings and underlying cloth separately readable.",
+      "ko": "열린 마름모 망 패널이 불투명 천 위에 놓이고 마름모 개구와 그 아래 천이 따로 읽힌다.",
+      "suggested_slots": [
+        "surface_material"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "diamond_holes",
+        "mesh_panel",
+        "opaque_cloth"
+      ],
+      "research_relations": [
+        {
+          "from": "mesh_panel",
+          "relation": "over",
+          "to": "opaque_cloth"
+        },
+        {
+          "from": "diamond_holes",
+          "relation": "in",
+          "to": "mesh_panel"
+        }
+      ],
+      "acceptance_gate": "망의 교차선·구멍·아래 층",
+      "confusion_boundary": "인쇄된 격자·피부 비침·소재 성분을 혼동하지 않음",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W23",
+      "card_id": "W23",
+      "label_ko": "장식 하네스의 스트랩 연결",
+      "en": "A wears decorative shoulder straps joined to a narrow belt over a fully clothed torso; the joining rings and strap paths remain visible.",
+      "ko": "A가 옷 입은 몸통 위로 좁은 벨트에 연결된 장식 어깨끈을 착용하고 연결 고리와 끈 경로가 보인다.",
+      "suggested_slots": [
+        "wearable_accessory"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "belt",
+        "clothes_A",
+        "harness",
+        "rings",
+        "shoulder_straps"
+      ],
+      "research_relations": [
+        {
+          "from": "shoulder_straps",
+          "relation": "join_at",
+          "to": "rings"
+        },
+        {
+          "from": "rings",
+          "relation": "connect_to",
+          "to": "belt"
+        },
+        {
+          "from": "harness",
+          "relation": "over",
+          "to": "clothes_A"
+        }
+      ],
+      "acceptance_gate": "스트랩→고리→벨트·옷 위 층",
+      "confusion_boundary": "등반·구조·구속·BDSM 역할·동의로 자동 전환 금지",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-W24",
+      "card_id": "W24",
+      "label_ko": "팔꿈치 위까지 이어진 장갑",
+      "en": "A's gloves cover the fingers and continue without a gap past the elbows to the upper arms, with distinct top edges below the shoulders.",
+      "ko": "A 장갑이 손가락을 덮고 틈 없이 팔꿈치를 넘어 위팔까지 이어지며 윗단은 어깨 아래에서 구별된다.",
+      "suggested_slots": [
+        "wearable_accessory"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "elbows_A",
+        "gloves",
+        "hands_A"
+      ],
+      "research_relations": [
+        {
+          "from": "gloves",
+          "relation": "cover",
+          "to": "hands_A"
+        },
+        {
+          "from": "gloves",
+          "relation": "extend_past",
+          "to": "elbows_A"
+        }
+      ],
+      "acceptance_gate": "손끝→손목→팔꿈치→윗단",
+      "confusion_boundary": "탈착 소매·짧은 장갑·연인 역할과 구분",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C01",
+      "card_id": "C01",
+      "label_ko": "안쪽으로 향한 인물 배치",
+      "en": "A occupies the middle of the frame while B and C stand on opposite sides with their torsos turned toward A; the three faces remain unobstructed.",
+      "ko": "A가 화면 가운데 있고 B와 C가 반대쪽에서 몸통을 A 쪽으로 돌려 서며 세 얼굴이 가리지 않는다.",
+      "suggested_slots": [
+        "composition"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "faces_toward",
+          "to": "A"
+        },
+        {
+          "from": "C",
+          "relation": "faces_toward",
+          "to": "A"
+        },
+        {
+          "from": "A",
+          "relation": "between",
+          "to": "B"
+        },
+        {
+          "from": "A",
+          "relation": "between",
+          "to": "C"
+        }
+      ],
+      "acceptance_gate": "같은 중앙인물·양측 몸 방향·얼굴 가시성",
+      "confusion_boundary": "중앙 배치=연애 구조·상호 구애 아님",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C02",
+      "card_id": "C02",
+      "label_ko": "깊이가 다른 세 인물",
+      "en": "B stands in the foreground beside the frame edge, A in the middle distance, and C farther back; all three faces remain large enough to identify their gaze directions.",
+      "ko": "B는 화면 가장자리 전경 A는 중경 C는 더 먼 곳에 있고 세 얼굴은 시선 방향이 읽힐 크기를 유지한다.",
+      "suggested_slots": [
+        "composition"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "C"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "in_front_of",
+          "to": "A"
+        },
+        {
+          "from": "A",
+          "relation": "in_front_of",
+          "to": "C"
+        }
+      ],
+      "acceptance_gate": "깊이 구분·얼굴 크기·가림 방지",
+      "confusion_boundary": "후경의 작음=패배 히로인·소외 원인 아님",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C03",
+      "card_id": "C03",
+      "label_ko": "물리적 두 사람의 투샷",
+      "en": "A and B appear together from the waist up in one continuous room, with both faces and the space between them visible.",
+      "ko": "A와 B가 연속된 방 하나에서 허리 위로 함께 보이고 두 얼굴과 사이 공간이 보인다.",
+      "suggested_slots": [
+        "composition"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "gap"
+      ],
+      "research_relations": [
+        {
+          "from": "A",
+          "relation": "shares_room_with",
+          "to": "B"
+        },
+        {
+          "from": "gap",
+          "relation": "between",
+          "to": "A"
+        },
+        {
+          "from": "gap",
+          "relation": "between",
+          "to": "B"
+        }
+      ],
+      "acceptance_gate": "같은 물리 공간의 두 사람",
+      "confusion_boundary": "거울·사진 속 복제·별도 패널 합성을 실제 두 사람으로 세지 않음",
+      "priority": "P1",
+      "source_ids": [
+        "R14"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C04",
+      "card_id": "C04",
+      "label_ko": "어깨너머의 상대",
+      "en": "The back of A's shoulder occupies one foreground edge while B's face is visible beyond it; B looks toward A rather than into the camera.",
+      "ko": "A 어깨 뒷면이 전경 한 가장자리에 있고 그 너머 B 얼굴이 보이며 B는 카메라 대신 A를 본다.",
+      "suggested_slots": [
+        "composition",
+        "viewer_position"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "shoulder_A"
+      ],
+      "research_relations": [
+        {
+          "from": "shoulder_A",
+          "relation": "in_front_of",
+          "to": "B"
+        },
+        {
+          "from": "B",
+          "relation": "looks_at",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "전경 A어깨·후방 B얼굴·B→A",
+      "confusion_boundary": "POV와 OTS 구별; B가 보는 상대를 카메라로 바꾸지 않음",
+      "priority": "P1",
+      "source_ids": [
+        "R14"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C05",
+      "card_id": "C05",
+      "label_ko": "화면 속 여러 경로",
+      "en": "A framed game display contains one portrait of A and three separately bordered character panels; the screen bezel encloses every portrait and panel.",
+      "ko": "테두리 있는 게임 화면 안에 A 초상 하나와 별도 경계의 인물 패널 셋이 있고 화면 베젤이 모든 초상과 패널을 둘러싼다.",
+      "suggested_slots": [
+        "composition",
+        "object_structure"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "bezel",
+        "character_panels",
+        "portrait_A",
+        "screen"
+      ],
+      "research_relations": [
+        {
+          "from": "portrait_A",
+          "relation": "inside",
+          "to": "screen"
+        },
+        {
+          "from": "character_panels",
+          "relation": "inside",
+          "to": "screen"
+        },
+        {
+          "from": "screen",
+          "relation": "bounded_by",
+          "to": "bezel"
+        }
+      ],
+      "acceptance_gate": "베젤·네 패널·모두 매체 안에 있음",
+      "confusion_boundary": "실제 인물 4명·동시 교제·루트 선택 완료로 바꾸지 않음",
+      "priority": "P1",
+      "source_ids": [
+        "R15"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C06",
+      "card_id": "C06",
+      "label_ko": "한 배우의 역할 비교 패널",
+      "en": "A single printed contact sheet repeats the same adult performer's face in three bordered panels with different expressions; every face stays inside the sheet.",
+      "ko": "인쇄된 콘택트시트 한 장의 경계 있는 세 패널에 같은 성인 배우 얼굴이 다른 표정으로 반복되고 모든 얼굴은 종이 안에 있다.",
+      "suggested_slots": [
+        "composition",
+        "object_structure"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "contact_sheet",
+        "face_copies",
+        "panels"
+      ],
+      "research_relations": [
+        {
+          "from": "face_copies",
+          "relation": "inside",
+          "to": "panels"
+        },
+        {
+          "from": "panels",
+          "relation": "inside",
+          "to": "contact_sheet"
+        }
+      ],
+      "acceptance_gate": "한 매체·반복 얼굴·분리 표정",
+      "confusion_boundary": "실제 복제 3인·다중 인격·동시 하렘이 아님; 정체성 동일성은 외부 문맥",
+      "priority": "P1",
+      "source_ids": [
+        "R05"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C07",
+      "card_id": "C07",
+      "label_ko": "거울 속 상대와 실제 상대",
+      "en": "A stands before a mirror while B remains behind A; the mirror frame encloses B's reflected face and B's physical body stays outside that frame.",
+      "ko": "A가 거울 앞에 서고 B는 A 뒤에 있으며 거울틀 안에는 B 반사 얼굴이 있고 B 실제 몸은 그 틀 밖에 있다.",
+      "suggested_slots": [
+        "composition",
+        "object_structure"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "A",
+        "B",
+        "body_B",
+        "mirror",
+        "reflection_B"
+      ],
+      "research_relations": [
+        {
+          "from": "reflection_B",
+          "relation": "inside",
+          "to": "mirror"
+        },
+        {
+          "from": "body_B",
+          "relation": "outside",
+          "to": "mirror"
+        },
+        {
+          "from": "B",
+          "relation": "behind",
+          "to": "A"
+        }
+      ],
+      "acceptance_gate": "거울틀·B실물·B반사상",
+      "confusion_boundary": "반사상을 새 연애 상대·카메라 시선으로 증가시키지 않음",
+      "priority": "P1",
+      "source_ids": [],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    },
+    {
+      "draft_id": "DRAFT-C08",
+      "card_id": "C08",
+      "label_ko": "반응과 계기의 같은 화면",
+      "en": "In the foreground B looks toward A and C, whose hands meet in the middle distance; B's face and the joined hands remain visible together.",
+      "ko": "전경 B가 중경에서 손을 맞댄 A와 C를 보고 B 얼굴과 맞닿은 두 손이 함께 보인다.",
+      "suggested_slots": [
+        "composition",
+        "gaze_target"
+      ],
+      "prerequisites": "Independently declared owners, participant count and selected visual state; no invented relationship, age, consent or backstory.",
+      "conditions_review_required": true,
+      "effects_review_required": true,
+      "owner_binding_review_required": true,
+      "research_owner_nodes": [
+        "B",
+        "hand_A",
+        "hand_C",
+        "joined_hands"
+      ],
+      "research_relations": [
+        {
+          "from": "B",
+          "relation": "looks_at",
+          "to": "joined_hands"
+        },
+        {
+          "from": "hand_A",
+          "relation": "touches",
+          "to": "hand_C"
+        }
+      ],
+      "acceptance_gate": "B→A/C·손 접점·B얼굴",
+      "confusion_boundary": "숏 편집의 전후 관계를 단일 사진에 있다고 주장 금지; 질투는 문맥",
+      "priority": "P1",
+      "source_ids": [
+        "R14"
+      ],
+      "native_qualification": "NOT_RUN",
+      "runtime_importable": false
+    }
+  ]
+}

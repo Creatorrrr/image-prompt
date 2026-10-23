@@ -1,0 +1,57 @@
+{
+  "schema": "independent-image-test-case/v1",
+  "arm": 1,
+  "concept_seed": 15860614853432875241,
+  "concept": "Fictional court reverse-harem: interrupted farewell at the palace ferry landing after a diplomatic banquet.",
+  "authoring_inputs": {
+    "baseline_sha256": "60e73a5c01756e7cd9b288770f698debabe4ab4ea82c5850b6943a357d1a7223",
+    "core_sha256": "b6dbf5dce8cb9795b295409e3ecfb5192958bf5c09b731387d933a08882d26a1",
+    "intent_lock_sha256": "4693fba615339ad6405eb0bb3aea42e01369c590c761e2c169ed93e70c57f678",
+    "controls_sha256": "4a9fc1f85cfdadd3f2e66b00d06c125d41582b1a1ef1b419326e6ddb09864b4a"
+  },
+  "source_ownership": "Detailed count, genders, adult casting, pose, outfit and plot are authored test design, not requester-owned locks. Prior-topic linkage is discovery-only.",
+  "gates": [
+    {
+      "id": "genre_shared_romantic_target",
+      "requirement": "At least two distinct adult suitors visibly direct courtship toward the same central woman, with connected recipient response; formal attendance, service or a group pose is insufficient.",
+      "multi_component": true,
+      "required_for_scene_pass": true
+    },
+    {
+      "id": "rivalry_and_agency",
+      "requirement": "Rival suitors attend to that same woman or one another’s competing claim while the woman visibly responds or delays choosing; the actual visible relations must carry this rather than labels.",
+      "multi_component": true,
+      "required_for_scene_pass": true
+    },
+    {
+      "id": "farewell_context",
+      "requirement": "A fictional court setting and imminent ferry departure are readable together with the courtship encounter.",
+      "multi_component": true,
+      "required_for_scene_pass": true
+    },
+    {
+      "id": "authored_courtship_mechanics",
+      "requirement": "Hand kiss, flower offer and open ring-box offer have distinct owners and visible targets in one frame; the hand contact and both object offers are all assessable.",
+      "multi_component": true,
+      "required_for_scene_pass": true
+    },
+    {
+      "id": "reference_appearance",
+      "requirement": "Focal character reasonably retains visible reference face and dark bob/bangs appearance at the delivered review scale; no identity or age claim is made.",
+      "multi_component": true,
+      "required_for_scene_pass": true
+    },
+    {
+      "id": "physical_coherence",
+      "requirement": "Bodies, hands and objects in consequential contact remain connected to plausible owners without contradictory contact or serious anatomical break.",
+      "multi_component": true,
+      "required_for_scene_pass": true
+    }
+  ],
+  "verdict_policy": {
+    "pass": "Every required gate passes from visible evidence.",
+    "partial": "Some carrying relations are present but one or more full gates fail or have only partial/unobservable evidence.",
+    "blocked": "No pixels available because native execution was blocked.",
+    "acceptance": "Requester acceptance stays pending; candidate discovery and technical audit do not prove pixel success."
+  }
+}

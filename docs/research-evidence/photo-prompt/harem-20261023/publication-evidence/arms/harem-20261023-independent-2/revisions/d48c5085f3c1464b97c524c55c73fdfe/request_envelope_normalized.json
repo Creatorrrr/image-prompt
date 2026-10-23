@@ -1,0 +1,68 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "request-b580c15cc9584ddc9328cde96a7db736",
+  "request_text": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+  "active_spans": [
+    {
+      "span_id": "test_request",
+      "start": 62,
+      "end": 201,
+      "text": "각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘."
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c"
+      },
+      {
+        "id": "reference",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      },
+      {
+        "id": "prior_topic",
+        "kind": "text",
+        "sha256": "e447f1c460b57b936ebb8d26ec108212ba34ede963a681b60124060d4cece3f9"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "harem_topic",
+        "active_span_id": "test_request",
+        "request_quote": {
+          "start": 76,
+          "end": 86,
+          "text": "이번에 반영한 주제"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "current chat earlier human research request",
+          "text": "[하렘물 용어 조사](chatgpt-conversation://6adb5af5-62c0-83ee-ac08-0af3cfba439a) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘.",
+          "sha256": "e447f1c460b57b936ebb8d26ec108212ba34ede963a681b60124060d4cece3f9"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 4,
+          "text": "하렘물"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "The current user asks to test the subject just researched in this chat; the preceding human request names 하렘물. This contextual discovery link adds no scene recipe or requester-owned geometry."
+        }
+      }
+    ],
+    "canonical_sha256": "15fa2bc6062ce11d98db26c969f39f0385fde6c23c7d18d0598062fdc0ae9f6a"
+  },
+  "canonical_sha256": "8b1b2eadfff374e796920f5694e07b2e02ca83e9cdfa6e9a18631ed3a9efc8d8",
+  "envelope_id": "8b1b2eadfff374e7"
+}
