@@ -1,0 +1,108 @@
+{
+  "schema": "bounded-source-pixel-review/v1",
+  "reviewer": "Codex court-r2-a",
+  "reviewed_at_utc": "2026-10-23T15:00:54.279184+00:00",
+  "source_module_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_candidate_court_palace_full_review_20261023.json",
+  "source_module_file_sha256": "404aaa211a707f016ff4c066e19f2b34fb331b01df21512468131efe93d1ac4f",
+  "candidate_id": "cand_62417f539ce85c71b6a80fafca578545",
+  "semantic_id": "R2V01",
+  "source_candidate_sha256": "661dfcb13abe57762f76a2510d4a4baf0687ad0348ee4d5390b9128fb8bdc5bc",
+  "source_native_approval": false,
+  "route": "direct_postcore_source_informed_test",
+  "natural_h_f2_exposure": false,
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/court-palace-20261023-r2-a/result.png",
+  "image_sha256": "eca7aa5208fe0711e320b01bbeaf9ebf2c3ae29178049ab246b12af18b85c169",
+  "gates": [
+    {
+      "gate_id": "R2V01-boundary",
+      "status": "pass",
+      "observability": "visible",
+      "review_scale": [
+        "native",
+        "unresampled_crop"
+      ],
+      "evidence": "Both wrists show a real white textile facing above a plum sleeve. The white/plum boundary is clear, and the white fabric projects with thickness and shadow rather than looking printed. See both cuff crops.",
+      "regions_xyxy": [
+        [
+          165,
+          740,
+          380,
+          1005
+        ],
+        [
+          705,
+          820,
+          930,
+          1120
+        ]
+      ]
+    },
+    {
+      "gate_id": "R2V01-folded-return-edge",
+      "status": "pass",
+      "observability": "visible",
+      "review_scale": [
+        "native",
+        "unresampled_crop"
+      ],
+      "evidence": "The screen-left cuff has a doubled returning edge at its lower V-shaped opening; the screen-right cuff shows a rounded doubled lower turn. Inner and outer white surfaces meet around the opening with local thickness and a small occlusion shadow.",
+      "regions_xyxy": [
+        [
+          235,
+          900,
+          333,
+          995
+        ],
+        [
+          735,
+          1010,
+          835,
+          1105
+        ]
+      ]
+    },
+    {
+      "gate_id": "R2V01-same-sleeve-transition",
+      "status": "pass",
+      "observability": "visible",
+      "review_scale": [
+        "native",
+        "unresampled_crop"
+      ],
+      "evidence": "On each same sleeve, the visible inner white surface continues around the opening into the outward white facing lying over the plum exterior. The lower V on the screen-left sleeve and lower return on screen-right connect the inside surface to the outside facing in the same saved frame. The hands emerge from these openings, excluding a detached white glove reading.",
+      "regions_xyxy": [
+        [
+          190,
+          800,
+          365,
+          1000
+        ],
+        [
+          700,
+          900,
+          875,
+          1120
+        ]
+      ]
+    }
+  ],
+  "verdict": "PASS_BOUNDED_VISIBLE_REALIZATION",
+  "policy": {
+    "unobservable_is_pass": false,
+    "partial_is_fail": true
+  },
+  "limits": [
+    "This qualifies only the visible local sleeve/lining fold, not a whole historical court ensemble or the historical term in all contexts.",
+    "Local visible continuity does not prove unseen tailoring construction, complete inner lining routes, era, rank or identity.",
+    "This record supplies no native typed-fact approval and does not activate a native obligation."
+  ],
+  "evidence_files": [
+    "/Users/chasoik/Projects/image-prompt/generated/photo-runs/court-palace-20261023-r2-a/cuff-screen-left.png",
+    "/Users/chasoik/Projects/image-prompt/generated/photo-runs/court-palace-20261023-r2-a/cuff-screen-right.png",
+    "/Users/chasoik/Projects/image-prompt/generated/photo-runs/court-palace-20261023-r2-a/crop-provenance.json"
+  ],
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

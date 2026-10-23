@@ -1,0 +1,211 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester asks for a random palace-court concept using the supplied reference to test the newly integrated topic. Independently choose a Joseon Korean palace corridor waiting scene. Compared a grand seated ceremony with a small threshold pause; choose the latter because the woman, document and closed door create a readable unresolved moment at portrait scale. Face and short hair are visual reference cues only and establish neither identity, age nor personality. Sensual 1 supports appeal through poised gaze and soft daylight; fetish 0 and surreal 0 add no treatment. Creativity 1 permits restrained local refinement after retrieval. Court jacket, folded document, corridor, weather and exact camera are agent staging, not requester locks.",
+  "subject": "A reference-guided woman staged as a Korean palace court attendant",
+  "setting": "A roofed corridor beside a closed red lattice door in a Joseon-era royal residence",
+  "event": "A woman waits for a court audience while carrying a folded document on a tray",
+  "visual_priorities": [
+    "Her reference-guided face remains recognizable at the chosen portrait scale.",
+    "The woman, carried document and closed door make the wait visually intelligible.",
+    "Korean court clothing and palace construction create a coherent cultural setting."
+  ],
+  "baseline_prompt_en": "Create a cinematic historical-fashion photograph of a palace court scene in a Joseon-era Korean royal residence. A woman waits for a court audience beneath a covered corridor, standing just beside a closed red lattice door. Use the supplied image as the visual reference for her face and hair: preserve the soft oval facial contour, dark brown eyes, straight dark chin-length bob, and airy separated fringe. Her composed presence and direct, softly alert gaze carry a subtle personal attraction. She wears a deep crimson silk court jacket with a clean white collar over a full indigo skirt; the rich fabric has weight and quiet surface sheen. She supports a small dark lacquer tray level at her waist, one palm beneath each side, with one neatly folded ivory document lying at its center. Her eyes have turned toward the still-closed doorway while her body remains settled in place, making the short wait feel consequential. Damp courtyard paving beyond the corridor and a narrow strip of clearing morning sky suggest a rain shower has just passed. Dark timber columns, painted eave brackets, and a raised stone threshold establish the palace around her. Frame her from head to below the knees in a three-quarter view, placing her on the left and letting the red door occupy the right half. Keep her face, both supporting hands, tray, folded document, and the door latch legible together. Cool reflected daylight from the courtyard grazes the crimson silk and her cheek, while the interior corridor remains softly shaded. Photograph the texture of skin, woven silk, worn timber, and damp stone with believable depth and restrained colors. The waiting figure, carried document, and closed doorway form the entire dramatic relationship.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "The exact linked earlier user message names palace/court genre terminology; choose one concrete palace-court photograph as a test case.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied photograph for visible face and hair appearance. Neither identity, age nor character follows from the image.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "style": {
+    "domain": "photography",
+    "family": "restrained cinematic historical fashion portrait",
+    "evidence": [
+      "cool courtyard daylight",
+      "weighted silk and worn timber"
+    ]
+  },
+  "variation_key": "court-a-threshold-morning",
+  "request_binding": {
+    "contract_version": "photo-request-binding/v1",
+    "request_id": "court-palace-20261023-a",
+    "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+    "request_envelope_sha256": "98c7b83568772b56c7ff8c98609e4e7eb0b928d367092351891028376dfc5fcf",
+    "active_spans": [
+      {
+        "span_id": "topic",
+        "start": 76,
+        "end": 135,
+        "text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여"
+      },
+      {
+        "span_id": "reference",
+        "start": 149,
+        "end": 162,
+        "text": "첨부한 이미지를 활용하여"
+      }
+    ],
+    "input_inventory": {
+      "schema": "photo-request-input-inventory/v1",
+      "complete": true,
+      "items": [
+        {
+          "id": "request",
+          "kind": "request_text",
+          "sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c"
+        },
+        {
+          "id": "reference_photo",
+          "kind": "reference_image",
+          "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+        }
+      ]
+    },
+    "topic_context": {
+      "contract_version": "photo-request-topic-context/v1",
+      "links": [
+        {
+          "context_id": "palace_court_topic",
+          "active_span_id": "topic",
+          "request_quote": {
+            "start": 76,
+            "end": 86,
+            "text": "이번에 반영한 주제"
+          },
+          "source_message": {
+            "provenance": "requesting_user",
+            "locator": "current_conversation:previous_user_request",
+            "text": "[궁중물 용어 조사](chatgpt-conversation://6adb17fb-6238-83e8-a54e-d5e467110649) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘.",
+            "sha256": "80a1efd95e181af34879a8918d691c747c2b0b64969a5b3e2313b2fed17e0c9d"
+          },
+          "topic_quote": {
+            "start": 1,
+            "end": 10,
+            "text": "궁중물 용어 조사"
+          },
+          "review": {
+            "polarity": "positive_topic",
+            "rationale": "The prior human request names the palace/court topic. Research content and the assistant report do not supply pre-core details."
+          }
+        }
+      ],
+      "canonical_sha256": "4dbd6bc96bd45bb62bca2c87a617f4835d8fbcc0897294e027327198c4f4979c"
+    }
+  },
+  "runtime_forbidden_labels": [],
+  "creative_controls_sha256": "79a3977dae01a24081c7eeabb10249846f7b51a145b63e21633b21395fa1ad61",
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "court_concept",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "a palace court scene"
+      },
+      {
+        "anchor_id": "court_subject",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "subject",
+        "prompt_evidence": "A woman waits"
+      },
+      {
+        "anchor_id": "court_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "waits for a court audience"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied image as the visual reference for her face and hair"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "role",
+      "setting",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "style",
+      "relationship"
+    ],
+    "augmentation_policy": "open_dimensions_only_and_subordinate",
+    "material_change_policy": "rebuild_core_after_requester_input",
+    "candidate_revision_policy": "forbidden",
+    "canonical_sha256": "e54161562f8bdd438afc6a581978b3d26474706108141293f0f0625899437d04",
+    "lock_id": "e54161562f8bdd43"
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "A woman waits"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {},
+      "affected_dimensions": [
+        "camera"
+      ]
+    }
+  ],
+  "request_lineage": null,
+  "canonical_sha256": "8076c24f233f685665b0800365b8fb821d372a8d743f53fd14ed661ad52ea593",
+  "core_id": "8076c24f233f6856"
+}
