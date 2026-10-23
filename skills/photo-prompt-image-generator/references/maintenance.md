@@ -144,6 +144,22 @@ kinship, event history and physical performance retain separate evidence
 boundaries. Source registration, installed exposure, exact prompt use and saved
 pixels are verified separately; research graphs confer no native approval.
 
+The [flintlock fantasy extension](flintlock-fantasy-semantics.md) retains 81
+visual and 21 context cards, 319 advisory routes and 57 bounded sources. It
+registers 52 optional bilingual visual literals, 21 excluded diagnostics and
+99 bindings; five existing CIDs receive complete Korean translations and one
+complete existing source is reused. Twenty-two mechanisms/specimens await
+plate review. Source registration, installed search, whole-literal adoption,
+reference transport and saved-image endpoint gates remain separate results.
+
+The [Art Horror extension](art-horror-semantics.md) retains 64 visual cards,
+29 context distinctions, 154 keyword routes, 19 reference-work routes and six
+combination routes, all advisory. It registers 63 new
+optional bilingual visual sources and 29 excluded diagnostics, reuses one
+complete room-model source and adds 126 optional bindings. Bounded mirrors,
+represented bodies, material boundaries and directed relations retain their
+owners; critical terms confer no appearance, intent, consent or cause.
+
 
 The [Gaslamp Fantasy extension](gaslamp-fantasy-semantics.md) retains 113 semantic
 cards, 217 reference routes, 72 new complete bilingual visual sources, 35 excluded
