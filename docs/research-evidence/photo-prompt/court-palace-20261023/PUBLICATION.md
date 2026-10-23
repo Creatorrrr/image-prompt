@@ -25,3 +25,13 @@
 원본 보고서·receipt·ledger의 절대 경로와 hash는 당시 증거로 그대로 보존했다. 사본의 저장소 경로는 EVIDENCE-PATH-MAP.json에 연결한다. 역사적 checksum은 당시 snapshot용이며, 이후 수정된 시각 sidecar·공유 manifest·로컬 runtime 설정 전체가 아직 같은 바이트라는 뜻이 아니다. 이 발행본의 checksum은 PUBLICATION-SHA256SUMS로 별도 검증한다.
 
 모델 사본·중단 빌드·successor-store·중복 인덱스 빌드 캐시는 발행하지 않는다. 원격 푸시 검증 이후 이번 작업의 중복 임시 데이터만 제거한다. 실제 이미지와 검증 증거 및 사용 중인 설치 runtime은 보존한다.
+
+## 통합 소스 검증
+
+통합 기준 origin/main은 `264a5ab9f15a689f22b2984d917711940f90bf17`다. 후보 20,791개·binding 15,636개에서 원래의 모든 레코드와 조건·효과·출처를 보존했다. 이번 신규 후보 112개·optional binding 107개 및 기존 항목 4개 보정만 포함한다.
+
+검증된 로컬 EmbeddingGemma-2로 정확한 통합 source에서 인덱스 `0d03d3f3d84759eb9f02219d1c3a426598ddd13e313b7a094a9bb929823c1ccf`를 다시 만들었다. positive 20,144개, 기존 벡터 20,089개 재사용, 신규·변경 문서 55개 계산이며 complete source/index 검증을 통과했다.
+
+회귀 검사 101개가 통과했다. 과거 기본 generation은 로컬에 없어, 전용 워크트리에서만 이미 검증된 현재 설치본을 잠시 연결해 managed dependency를 읽었다. 테스트 후 설정을 byte-exact 원복했고 실제 사용 중인 primary 설정은 변경하지 않았다. [검증 집계](PUBLICATION-VALIDATION.json)에 환경과 범위를 기록했다.
+
+기존 증거 두 파일의 공백은 당시 바이트와 hash를 유지하기 위한 예외로 보존했으며, 새 source와 발행 안내의 공백 검사는 통과했다. 원격 반영과 정리 여부는 커밋 후 실제 원격 SHA로 별도 확인한다.
