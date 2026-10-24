@@ -2,10 +2,13 @@
 import copy
 import json
 from pathlib import Path
+import sys
 import unittest
 
 SKILL = Path(__file__).resolve().parents[1]
 RESEARCH = SKILL.parents[1] / 'docs/research-evidence/photo-prompt/marine-literature-20261024'
+sys.path.insert(0, str(SKILL / 'scripts'))
+import photo_global_index as projection
 
 
 def read(path):
@@ -62,6 +65,16 @@ class MarineSourceBoundaries(unittest.TestCase):
             self.assertEqual(binding['role'], 'optional')
             self.assertIn(binding['candidate_id'], set(self.current) | reused)
         self.assertEqual(len(self.sidecar['cards']), 96)
+
+    def test_real_positive_projection_excludes_diagnostics_and_review_metadata(self):
+        docs = projection.documents({'candidates': self.current})
+        self.assertEqual(set(docs), {cid for cid, row in self.current.items() if row['record_kind'] == 'visual_option'})
+        self.assertEqual(len(docs), 87)
+        record = copy.deepcopy(next(row for row in self.current.values() if row['record_kind'] == 'visual_option'))
+        marker = 'REVIEW_METADATA_IS_NOT_POSITIVE_EVIDENCE_47291'
+        record['content']['research_semantics']['render_planning']['status'] = marker
+        record['content']['research_semantics']['relations'].append({'subject': marker, 'predicate': marker, 'object': marker})
+        self.assertNotIn(marker, projection.text(record)[1])
 
 
 if __name__ == '__main__':
