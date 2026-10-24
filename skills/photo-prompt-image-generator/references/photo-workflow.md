@@ -251,4 +251,11 @@ core or provider invocation is implied. A malformed review may need correction
 before the coordinator can verify its parent. A separate requester correction
 is a new authorized request, not a mechanical retry of a provider rejection.
 
-Retries require a current `photo-workflow-run/v2` parent, its core validation context or native V10 pack and issued runtime receipt V3. Archived runs retain their evidence; create and audit a fresh current run before retrying. No parent-manifest import or historical worker is supported.
+Retries require a current `photo-workflow-run/v2` parent, its core validation context or native V10 pack and issued runtime receipt V3. Audit that parent through its fully verified, receipt-bound executable closure; a later installed default must not substitute its kernel for the parent's kernel. Child validation still uses the child's current implementation. Archived runs retain their evidence; create and audit a fresh current run before retrying. No parent-manifest import or arbitrary historical worker is supported.
+
+For a revised-content child, a preserved `scope_inventory` keeps its actual scope,
+owners, state, completeness, items and evidence. Only the inventory's request,
+envelope, input-inventory hashes and reviewed input IDs may bind to the child's
+actual inputs. Preserved fact inputs and reference/identity input bytes must
+still match the parent. This provenance rebinding does not permit changing a
+preserved fact, source condition, pixel gate or invocation budget.
