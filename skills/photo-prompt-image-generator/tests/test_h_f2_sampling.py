@@ -54,5 +54,27 @@ class Sampling(unittest.TestCase):
         self.assertEqual(sampling.candidates({'top8': rows(8)}), rows(8))
         self.assertEqual(sampling.candidates({'candidates': rows(16)}), rows(16))
 
+    def test_best_eligible_source_survives_every_seed_without_more_material(self):
+        for level in range(4):
+            for seed in range(64):
+                selected, proof = sampling.sample(rows(400), level, seed, 'structure', 'a' * 64)
+                self.assertEqual(selected[0], rows(1)[0])
+                self.assertEqual(proof['anchor_ids'], ['cid0|base'])
+                self.assertEqual(len(selected), sampling.policy(level)['sample_limit'])
+
+    def test_anchor_is_first_projected_source_not_an_unfiltered_rank_or_origin(self):
+        projected = rows(100)[13:]
+        projected[1]['origin'] = 'newly_authored'
+        selected, proof = sampling.sample(projected, 1, 1, 'structure', 'b' * 64)
+        self.assertEqual(selected[0]['cid'], 'cid13')
+        self.assertEqual(proof['anchor_ids'], ['cid13|base'])
+        self.assertNotIn('cid0', {row['cid'] for row in selected})
+
+    def test_single_source_and_empty_window_do_not_pad_anchor(self):
+        for population in ([], rows(1)):
+            selected, proof = sampling.sample(population, 1, 23, 'structure', 'c' * 64)
+            self.assertEqual(selected, population)
+            self.assertEqual(proof['anchor_ids'], [row['id'] for row in population])
+
 
 if __name__ == '__main__':unittest.main()
