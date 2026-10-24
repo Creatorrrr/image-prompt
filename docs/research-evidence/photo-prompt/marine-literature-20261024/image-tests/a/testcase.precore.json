@@ -1,0 +1,47 @@
+{
+  "schema": "independent-image-testcase/v1",
+  "arm": "a",
+  "frozen_before_candidate_access": true,
+  "concept": "Barracks Inspection Couture",
+  "requester_requirements": [
+    "This arm uses a random theme-appropriate concept related to the current topic resolved through actual previous requester text.",
+    "Use the supplied reference image in prompt and generation.",
+    "Generate an image and judge whether the topic is visually realized."
+  ],
+  "authorial_realization": "A fictional military performer in exaggerated ceremonial tailoring treats inspection of an ordinary boot as a solemn event. Costume and bodily interaction carry the absurd military hierarchy, rather than relying on the genre label or readable text.",
+  "pixel_gates": [
+    {
+      "id": "genre_military_context",
+      "requirement": "Military role reads from the subject plus beret, structured parade jacket and orderly ceremonial hardware in one frame. A red palette alone is insufficient."
+    },
+    {
+      "id": "genre_absurd_hierarchy",
+      "requirement": "An ordinary recognizable boot is elevated on a small presentation plinth while the richly decorated performer gives it a solemn meticulous inspection; actor, mundane object, presentation relation and inspection action must be visible together. Generic military portrait alone fails."
+    },
+    {
+      "id": "physical_inspection_relation",
+      "requirement": "The performer owns the two visible gloved hands; one palm supports the plinth under the boot and the other hand's index fingertip visibly meets the toe leather. Both contact endpoints must be visible; obscured contact is UNOBSERVABLE_NOT_PASS."
+    },
+    {
+      "id": "reference_appearance",
+      "requirement": "The main face and dark chin-length bob with fine bangs remain assessable at the delivered scale against the supplied reference. Similarity is a visual judgment only, with no identity claim."
+    },
+    {
+      "id": "fashion_presence",
+      "requirement": "The exaggerated tailored costume, poised face and deliberate editorial lighting form a coherent person-centered fashion photograph; props do not erase the person."
+    }
+  ],
+  "scoring_policy": {
+    "PASS": "Every gate visible and supported.",
+    "FAIL": "A visible required component or relation is absent or contradicted.",
+    "UNOBSERVABLE_NOT_PASS": "Partial or obscured evidence cannot pass a full gate.",
+    "BLOCKED_UNSCORED": "A blocked attempt without an actual image file has no pixel score.",
+    "overall": "partial_is_fail; source, retrieval, prompt audit and runtime success do not establish pixel PASS."
+  },
+  "generation_budget": "One built-in image_gen call for this arm; preserve exact audited runtime prompt; no automatic same-prompt repeat.",
+  "genre_specificity_review": {
+    "scope": "One independently authored facet of the topic: absurd military discipline in an inflated ceremonial fashion portrait.",
+    "limit": "Red military clothing, a beret, a boot or a military role alone cannot prove the broader named internet genre. Pixel review must separately state whether the combined action reads as military absurdist satire and whether topic-specific recognition remains uncertain. A passed costume gate cannot establish exhaustive topic fidelity.",
+    "forbidden_inference": "The image cannot establish actual military affiliation, real coercion, identity, consent, a prior event or unseen violence."
+  }
+}

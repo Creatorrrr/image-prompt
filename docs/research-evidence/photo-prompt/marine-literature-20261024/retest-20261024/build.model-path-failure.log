@@ -1,0 +1,23 @@
+canonical source verified 334 new candidates
+released completed validation corpus copies
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/build_marine_release.py", line 161, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/build_marine_release.py", line 109, in main
+    native_report=nativebuild.build(STAGE/'assets',WORK/'native-index-cache',space=read(N/'embedding-runtime.lock.json')['space'])
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/successor-skill/scripts/build_shared_candidate_index.py", line 34, in build
+    reader=SearchReader(assets)
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/successor-skill/scripts/photo_search_reader.py", line 52, in __init__
+    validate_space(self.manifest.get('space'))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/successor-skill/scripts/photo_embedding_provider.py", line 17, in validate_space
+    if space!=local_space():raise ValueError('foreign local embedding space')
+              ~~~~~~~~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/successor-skill/scripts/photo_local_embedding.py", line 73, in space
+    return dict(runtime_lock(root)['space'])
+                ~~~~~~~~~~~~^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/successor-skill/scripts/photo_local_embedding.py", line 43, in runtime_lock
+    if package.is_symlink() or root not in package.resolve().parents:raise ValueError('unsafe local model package')
+                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unsafe local model package

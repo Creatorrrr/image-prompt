@@ -1,0 +1,43 @@
+{
+  "schema": "independent-photo-testcase/v1",
+  "arm": "c",
+  "authored_phase": "before candidate access",
+  "requester_required": [
+    "The actual prior-user positive topic is 해병문학.",
+    "Use supplied reference image.",
+    "Independent differing random concept, prompt and actual image test."
+  ],
+  "authorial_test_target": "Formal inspection in a shallowly flooded barracks corridor, central recruit salutes while holding a mop; senior sits at a desk in a grounded dinghy. This is an agent test realization, not a requester-owned mandatory setting.",
+  "gates": [
+    {
+      "id": "c_genre",
+      "requirement": "At least two military-barracks cues (training clothes/beret, bunks/lockers, inspection relation) coexist with deadpan inspection behavior.",
+      "pass": "All components visible together; genre inference stated separately from visible cues."
+    },
+    {
+      "id": "c_absurd_space",
+      "requirement": "The same continuous corridor floor is shallowly flooded, with a grounded inflatable boat carrying a dry inspection table and senior.",
+      "pass": "Corridor/water/boat/table/senior relation is visible; a generic boat portrait fails."
+    },
+    {
+      "id": "c_action_chain",
+      "requirement": "Central woman salutes with one hand and visibly holds a continuous mop with the other; the mop head meets wet floor beside her boots.",
+      "pass": "Owner, grip, handle, head and wet-floor contact simultaneously visible. Partial/hidden contact => UNOBSERVABLE_NOT_PASS."
+    },
+    {
+      "id": "c_reference",
+      "requirement": "Reference-guided facial proportions and dark jaw-length bob with a soft fringe are assessable.",
+      "pass": "Face and hair have enough visible detail for similarity assessment; this never proves real identity or age."
+    },
+    {
+      "id": "c_scene_legibility",
+      "requirement": "Recruit/inspector orientation, inspection prop and absurd room arrangement connect in one environmental portrait.",
+      "pass": "The observable inspection situation is inferable without prose; underlying order, spoken dialogue and coercion remain unclaimed."
+    }
+  ],
+  "aggregation": "partial_is_fail; all mandatory authorial testcase gates must pass for whole-scene PASS. Each gate uses visible / partial / unobservable. No file or blocked generation => BLOCKED_UNSCORED. Retrieval/audit/runtime/pixels/user acceptance are distinct.",
+  "tool_budget": {
+    "built_in_imagegen_calls": 1,
+    "automatic_same_prompt_repeat": false
+  }
+}

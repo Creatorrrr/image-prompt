@@ -1,0 +1,46 @@
+{
+  "schema": "agent-prerender-pixel-gates/v1",
+  "agent": "C",
+  "created_before_retrieval": true,
+  "baseline_sha256": "6dfbdfa953312286dfb69a5357400722d9c9221b9ed8d36bcd39c0e764264f0c",
+  "rule": "partial_is_fail; UNOBSERVABLE_NOT_PASS",
+  "gates": [
+    {
+      "id": "reference_appearance",
+      "required": [
+        "soft oval face",
+        "large brown eyes",
+        "dark chin-length bob",
+        "wispy separated fringe"
+      ],
+      "pass": "All are visible in the one primary person; similarity of portrait presence assessed separately from identity."
+    },
+    {
+      "id": "satirical_environment_relation",
+      "required": [
+        "polished corridor",
+        "wet exterior boundary",
+        "arrival boots at threshold",
+        "continuous wet boot-print trail crossing into clean interior",
+        "cleaner paused with resting mop"
+      ],
+      "pass": "Every component and contact is simultaneously visible and the boot-to-trail-to-clean-floor relation can be followed without prose."
+    },
+    {
+      "id": "mop_embodiment",
+      "required": [
+        "hand owns grip",
+        "upright handle continues to resting mop head",
+        "mop head on floor",
+        "standing support"
+      ],
+      "pass": "All connected geometry is visible and coherent."
+    }
+  ],
+  "supplemental": [
+    "Does the room visibly defeat the cleaning duty?",
+    "Is institutional satire supported beyond generic military decor?",
+    "Does the main person retain attentive presence at the environmental scale?"
+  ],
+  "candidate_contract_gates": "Append all full source obligations after retrieval; never weaken these prior baseline gates."
+}

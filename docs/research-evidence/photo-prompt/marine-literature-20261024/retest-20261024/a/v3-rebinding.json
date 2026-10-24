@@ -1,0 +1,34 @@
+{
+  "reason": "Coordinator added official request query scope before any candidate search; reference transport is excluded from topic search while reference meaning remains protected.",
+  "baseline_changed": false,
+  "controls_changed": false,
+  "concept_changed": false,
+  "scope_input_binding": {
+    "request_sha256": "7cfa2c879ae7b9e68a1e67eebeb1ffe1704a3b839a33e0e77a509f2f9854b080",
+    "request_envelope_sha256": "6a99167cafbeb94d23bb63e5febdc6c4c73957dfb28bec4a31012b7ae1ee97b2",
+    "input_inventory_sha256": "cf9c233ee0e14dd389b11298003ceb31d07689bf843bb25e1265e956245964db"
+  },
+  "query_scope": {
+    "contract_version": "photo-request-query-scope/v1",
+    "segments": [
+      {
+        "active_span_id": "reference",
+        "start": 40,
+        "end": 49,
+        "text": "같은 첨부 이미지",
+        "purpose": "reference_use",
+        "reason": "Actual requester reference-use modifier retained for meaning and reference transport, not scene discovery."
+      },
+      {
+        "active_span_id": "topic",
+        "start": 83,
+        "end": 89,
+        "text": "신규 데이터",
+        "purpose": "topic_reference",
+        "reason": "Anaphoric new-data topic resolved only through the exact previous requester topic quote."
+      }
+    ],
+    "canonical_sha256": "db8a92d9954c31db5ca7724e99a597e5f635b9b41423b1c180957ce2efd232b1"
+  },
+  "baseline_sha256": "c46f1ba2f90d62c5a409abb3134c4d58d2a9117947ba182f8c4bd7432dc901b7"
+}
