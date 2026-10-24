@@ -228,6 +228,15 @@ garments, supports, straps, devices and represented figures keep separate owners
 and connection endpoints. Registration, sealed exposure, actual prompt use and
 saved pixels are separate evidence; research metadata grants no native approval.
 
+The [estate-management extension](estate-management-semantics.md) retains 60
+visual cards, 20 context cards and 374 advisory term rows. It adds 22 bounded
+optional bilingual visual sources, 56 excluded held/context diagnostics and
+56 optional bindings, reusing two complete existing sources without mutation.
+Document contacts, map endpoints, work and goods paths, garment carriers and
+access relations remain distinct from legal rights, title and chronology.
+Source registration, installed retrieval, audited prompt use and saved pixels
+are separate evidence; unresolved historical details remain held.
+
 
 The [marine literature extension](marine-literature-semantics.md) retains 96 research
 cards and 247 term rows, registers 87 optional bilingual visual sources,

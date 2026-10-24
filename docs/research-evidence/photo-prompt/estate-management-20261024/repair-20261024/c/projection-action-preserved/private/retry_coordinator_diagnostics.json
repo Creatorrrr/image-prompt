@@ -1,0 +1,109 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "0cc31928b09ef8ed",
+      "validation_context_version": "photo-validation-context/v1",
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": null,
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "an inhabited territorial estate whose resources are administered with its resident community"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "the reference-guided woman and the estate's residents"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a public exchange about a shared estate resource"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "preserve her softly oval face, large dark brown eyes, natural nose and lips"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "short dark bob with fine separated bangs"
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "0cc31928b09ef8ed",
+      "status": "pass",
+      "runtime_prompt_id": "7e51d3c566003f84",
+      "source_intent_lock_sha256": "ca9a8a282d9c73b4146f5acfbb82797c0b7e4247f05cc2f7d84d084b894ef020",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": null,
+    "contract_failures": [],
+    "repair": null,
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "0cc31928b09ef8ed",
+      "contract_version": "photo-embodiment-preflight/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 5,
+      "required_hard_gates": [
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "The front loaf contacts and separate baker grips are visible, but the woman's second supporting contact is partly occluded by the loaf and baker's near hand. The exact reviewed two-hands-under-near-half arrangement cannot be completely assessed in the original image. The loaf also appears more fully divided than the planned small initial tear. This is missing contact/state evidence, not a diagnosis of hidden deformity."
+        },
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "The face, grain bins, fitted lid, clerk, record and major loaf exchange remain legible together, but the projected overlap hides part of the woman's second hand/loaf boundary. The full consequential contact relation is therefore not assessable at native scale. Partial visibility cannot pass the complete reviewed actuation."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": "No requesting-user judgment has been received."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}
