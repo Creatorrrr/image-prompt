@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 115, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 110, in main
+    with source_update(root,a.runtime_store):result=build(a.assets,a.cache or Path.home()/'.cache/image-prompt/shared-embedding-build',a.workers,a.repair_unknown,space=space,batch_size=a.batch_size)
+                                                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 30, in build
+    assets=Path(assets);cache=Path(cache);corpus=c.load(assets)
+                                                 ~~~~~~^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py", line 328, in load
+    return validate(corpus)
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py", line 280, in validate
+    references(corpus)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py", line 276, in references
+    references(nested)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py", line 276, in references
+    references(nested)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py", line 276, in references
+    references(nested)
+    ~~~~~~~~~~^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py", line 279, in references
+    references(nested)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/surreal-control-publication-20261024/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_corpus.py", line 260, in references
+    raise ValueError(f'dangling candidate reference: {value}')
+ValueError: dangling candidate reference: cand_7767dc7dc8b7561cb5d955b385decea2
