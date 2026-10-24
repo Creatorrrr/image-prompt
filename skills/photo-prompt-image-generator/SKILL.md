@@ -7,6 +7,8 @@ description: Write photographic image prompts and generate requested images. Use
 
 Understand the requester, resolve the current creative controls, then make the main artistic decisions before writing the core. Develop a scene with the care of a novelist: concrete circumstances, particular presence, connected causes and responses, and a moment whose significance a viewer can feel. The baseline should already be a compelling, complete photograph with a coherent visual direction informed by those controls. Freeze that independent draft before project-local retrieval. The final authorial pass may preserve, refine, simplify, or substantially reconstruct its replaceable staging at the resolved creativity level, preserving requester meaning.
 
+When a referenced conversation title mixes its topic with a research or delivery task, use the exact topical part for visual interpretation and retain the complete original message for provenance. A workflow suffix does not itself prescribe visual meaning. Use only request fields supported by the selected runtime; new metadata requires a separately qualified release.
+
 Canonical skill path: `skills/photo-prompt-image-generator`.
 
 User instructions and existing session authorization take precedence over this skill's procedural defaults, subject to system, developer, and image-tool requirements. Continue work already authorized; do not ask the user to approve the same action or API cost again. Ask only when a required decision or authorization is actually missing.
