@@ -1,0 +1,58 @@
+{
+  "status": "METHODOLOGY_LIMITED",
+  "scope": "Semantic ownership review; mechanical audits passed but do not prove minimum requester-owned anchor scope.",
+  "findings": [
+    {
+      "arm": "a",
+      "overbroad_requester_evidence": [
+        {
+          "anchor_id": "campus_concept",
+          "source_text": "이번에 반영한 주제",
+          "dimension": "concept",
+          "prompt_evidence": "A campus-life photograph of university students working together"
+        },
+        {
+          "anchor_id": "campus_event",
+          "source_text": "주제에 어울리는 랜덤한 컨셉",
+          "dimension": "event",
+          "prompt_evidence": "They are university students at a shared practical assignment"
+        }
+      ],
+      "finding": "Collaborative student work and practical assignment are agent-authored staging included in requester-bound evidence.",
+      "core_not_rewritten_after_generation": true
+    },
+    {
+      "arm": "b",
+      "overbroad_requester_evidence": [
+        {
+          "anchor_id": "campus_event",
+          "source_text": "주제에 어울리는 랜덤한 컨셉",
+          "dimension": "event",
+          "prompt_evidence": "students preparing a club activity"
+        }
+      ],
+      "finding": "Preparing a club activity is agent-authored staging included in requester-bound event evidence.",
+      "core_not_rewritten_after_generation": true
+    },
+    {
+      "arm": "c",
+      "overbroad_requester_evidence": [
+        {
+          "anchor_id": "core_concept",
+          "source_text": "이번에 반영한 주제",
+          "dimension": "concept",
+          "prompt_evidence": "a university campus interior"
+        }
+      ],
+      "finding": "Interior is agent-authored staging included in requester-bound concept evidence.",
+      "core_not_rewritten_after_generation": true
+    }
+  ],
+  "other_notes": [
+    "A read the allowed neutral catalog before choosing the direction; order caveat preserved.",
+    "Default shared query-proof cache is computation reuse, not another arm creative input; do not delete it.",
+    "Exact issued request-topic inputs contain procedure wording. Causal effect on ranking was not tested."
+  ],
+  "interpretation": "These limitations can affect candidate comparison. Do not attribute zero new candidate adoption solely to source data quality, or claim strict latest-skill procedure qualification. Scene pixels remain directly reviewable.",
+  "repair_policy": "Preserve the actual frozen runs and outputs. A future corrected comparison needs an explicit new lineage and independently authored pre-core inputs; never relabel old pixels."
+}

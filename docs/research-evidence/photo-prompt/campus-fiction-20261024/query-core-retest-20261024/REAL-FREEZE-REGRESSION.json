@@ -1,0 +1,23 @@
+{
+  "image_calls": 0,
+  "cases": [
+    {
+      "case": "new freeze without ownership review rejected",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"status\": \"error\", \"code\": \"requester_ownership_review_required_for_new_freeze\", \"detail\": \"requester_ownership_review_required_for_new_freeze\"}"
+    },
+    {
+      "case": "atomic author staging inside longer mandatory phrase rejected by real freeze",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "{\"status\": \"error\", \"code\": \"invalid_author_input\", \"detail\": \"authorial detail is locked by requester evidence: feature.location / cafeteria table / intent_lock.semantic_anchors[2].prompt_evidence\"}"
+    },
+    {
+      "case": "same independent baseline with narrow requester anchors freezes",
+      "exit_code": 0,
+      "stdout": "{\"status\": \"pass\", \"phase\": \"core_frozen\"}",
+      "stderr": ""
+    }
+  ]
+}
