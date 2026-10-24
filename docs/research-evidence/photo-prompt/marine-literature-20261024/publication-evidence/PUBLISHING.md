@@ -1,11 +1,11 @@
-# Scoped main publication
+# 해병문학 데이터 main 발행 검증
 
-The marine research, integration, original images and independent retest evidence are published from an isolated worktree. The first source commit is `115e001c3fd7fdc29898f55c3a37e57110bceac2`; it was followed by `git pull --no-rebase origin main`.
+최초 소스 커밋 `115e001c3fd7fdc29898f55c3a37e57110bceac2` 후 `git pull --no-rebase origin main`을 실행했다. 검증 중 추가된 영지경영 발행 `a7a71087ce2e49bc0296c7a7663397bc4f6fed5e`도 다시 pull하여 합쳤다. 후보 목록은 파일명·종류로 합치고, 두 안내문의 추가 내용을 보존했으며 검색 인덱스는 합본 소스에서 재구축했다.
 
-The main parent source modules are byte-identical, with only the two marine module registrations appended. All copied research/evidence bytes remain exact. Six generated PNG originals are published as byte-identical copies; the input portrait is preserved locally. Existing historical CRLF/trailing whitespace is retained to avoid changing evidence hashes.
+최신 원격 모듈 113개가 바이트 단위로 동일하고, 해병문학 모듈 두 개를 추가했다. 시각 87개·진단 247개·바인딩 166개와 의미 sidecar를 포함한다. 복사한 연구·재시험 증거는 원본 바이트를 보존했다. 생성 이미지 6장의 동일 바이트 사본도 포함했으며 입력 사진은 로컬에 보존한다. 기존 증거의 CRLF·후행 공백을 해시 유지를 위해 보존했다.
 
-The compatible local index was rebuilt from this merged source: 22,198 candidate records, 20,782 positive records, 20,695 reused vectors, and 87 actual local document embeddings. Full build verification passed. Twenty-seven semantic regression tests passed, including the new marine contract-preservation and actual diagnostic-exclusion checks. Full dictionary verification is recorded separately.
+최종 검증은 후보 22,284개, 바인딩 16,834개, 긍정 레코드 20,811개이며 사전 오류 0건이다. 의미 회귀 테스트 27개가 통과했다. 최종 인덱스는 `d7759f55904a7ede925c013f8103e8452bef85cc833714f7b8e10fc620a67e96`다. 초기 임시 인덱스는 현재 트리에서 제거하고 이전 커밋의 이력을 남겼다.
 
-The default installed runtime configuration and independent unpublished implementation changes are excluded from this data publication. The original runtime-dependent topic regression is preserved as research evidence; its separately installed test generation and previous image outcomes are not relabeled as this committed source/index. A portable topic/title interpretation guideline is included in SKILL.md without introducing unsupported request fields.
+기본 설치 런타임 설정과 다른 작업의 미발행 코드·설정 변경을 보존했다. 최신의 별도 설치 버전으로 수행한 주제 회귀와 이미지 결과는 연구 증거이며, 이번 소스/인덱스 발행의 실행 결과로 다시 이름 붙이지 않는다. 런타임 의존 회귀의 원문은 evidence에 보존하고 SKILL.md에는 버전과 무관한 주제 해석 지침만 반영했다.
 
-The final push/local/tracking/live-remote SHA comparison and cleanup receipt are written after the push to `generated/publication-receipts/marine-literature-20261024/`. Dedicated worktree removal and task cache cleanup are permitted only after a successful normal push and remote ancestry verification. Final images, prompts, reports, the input portrait, selected runtime/index closures and unrelated dirty work are protected.
+이 문서는 푸시 전 검증 기록이다. 실제 푸시와 로컬/tracking/live 원격 SHA 대조, 워크트리 제거 및 캐시 정리 결과는 `generated/publication-receipts/marine-literature-20261024/`에 별도로 기록한다. 사용자 입력 사진, 최종 원본·프롬프트·보고서, 선택된 공용 런타임과 활성 인덱스, 다른 작업의 변경은 정리 대상에서 제외한다.
