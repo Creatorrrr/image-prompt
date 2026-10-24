@@ -251,6 +251,19 @@ core or provider invocation is implied. A malformed review may need correction
 before the coordinator can verify its parent. A separate requester correction
 is a new authorized request, not a mechanical retry of a provider rejection.
 
+Before a child's first `prepare-render`, copy the exact reference role and digest
+from the closed context's `execution_scope.references`; keep explanatory prose
+in authoring notes. Equal file bytes do not make an expanded role string equal.
+Some historical sealed workflows validate an already admitted render request
+before reading replacement parameters, so a stale role can block an otherwise
+valid correction. Preserve that failed request and stop before invoking an image
+tool. Do not hand-edit the workflow, drop its binding, reroll material, or weaken
+the lineage check. A coordinator recovery must retain all frozen, material and
+composed bytes, prove no reservation or invocation exists, validate the exact
+prospective transport through every unchanged lineage and runtime auditor, and
+admit it through the managed atomic revision mechanism with separate recovery
+evidence. A non-role transport or meaning change requires its ordinary route.
+
 Retries require a current `photo-workflow-run/v2` parent, its core validation context or native V10 pack and issued runtime receipt V3. Audit that parent through its fully verified, receipt-bound executable closure; a later installed default must not substitute its kernel for the parent's kernel. Child validation still uses the child's current implementation. Archived runs retain their evidence; create and audit a fresh current run before retrying. No parent-manifest import or arbitrary historical worker is supported.
 
 For a revised-content child, a preserved `scope_inventory` keeps its actual scope,
