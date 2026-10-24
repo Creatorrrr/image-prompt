@@ -7,7 +7,9 @@ bytes, auditor details, and coordinator diagnostics are never printed here.
 from __future__ import annotations
 import argparse
 import json
+import os
 from pathlib import Path
+import subprocess
 import sys
 
 from photo_retry_projection import project
@@ -22,6 +24,51 @@ def one(raw):
     return raw
 
 
+def audit_parent_generation(state, *, runtime=False, reviews=False):
+    """Audit the parent with its verified executable closure, not child code."""
+    from photo_runtime_sources import SnapshotPublisher, code_inventory, default_store
+    from photo_installed_h_f2 import release, runtime_python
+    receipt = one(value(state, "runtime_receipt"))
+    store = Path((state.get("source_binding") or {}).get("runtime_store") or default_store()).resolve()
+    native_id = receipt["generation_id"]
+    if state.get("h_f2_binding"):
+        binding = state["h_f2_binding"]
+        if Path(binding["store"]).resolve() != store:
+            raise WorkflowError("parent_runtime_store_mismatch")
+        native, manifest, _ = release(store, binding["generation_id"], full=True)
+        if manifest["native_generation_id"] != native_id:
+            raise WorkflowError("parent_runtime_generation_mismatch")
+        python = runtime_python(native, manifest)
+    else:
+        # Preserve the native-v10 route with its own sealed runtime.
+        native = store / "generations" / native_id
+        manifest = SnapshotPublisher._verify_generation(native, native_id, full=True)
+        if code_inventory(native) != manifest["source"]["code"]:
+            raise WorkflowError("parent_executable_closure_changed")
+        lock = read_json(native / "embedding-runtime.lock.json")
+        python = native / lock["python"]
+        if not python.is_file():
+            raise WorkflowError("parent_runtime_python_missing")
+    program = ("import gc,json,sys;gc.disable();sys.path.insert(0,sys.argv[1]);"
+               "from photo_workflow_worker import audit_bound;"
+               "result=audit_bound(json.load(sys.stdin),runtime=sys.argv[2]=='yes',reviews=sys.argv[3]=='yes');"
+               "print(json.dumps(result,ensure_ascii=False))")
+    env = dict(os.environ, HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1", PYTHONNOUSERSITE="1")
+    for key in ("PYTHONPATH", "GEMINI_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY"):
+        env.pop(key, None)
+    checked = subprocess.run([str(python), "-I", "-c", program, str(native / "scripts"),
+                              "yes" if runtime else "no", "yes" if reviews else "no"],
+                             env=env, input=json.dumps(state), capture_output=True, text=True)
+    if checked.returncode:
+        error = WorkflowError("parent_sealed_audit_failed")
+        error.private_detail = checked.stderr
+        raise error
+    try:
+        return json.loads(checked.stdout)
+    except ValueError as error:
+        raise WorkflowError("parent_sealed_audit_invalid_output") from error
+
+
 
 
 def parent_inputs(parent_state, attempt_path, ledger_path):
@@ -31,7 +78,7 @@ def parent_inputs(parent_state, attempt_path, ledger_path):
     pack, receipt, composed, runtime = (one(value(parent_state, k)) for k in ("pack", "runtime_receipt", "composed", "render_request"))
     if pack.get("contract_version") not in {"photo-candidate-pack/v10", "photo-validation-context/v1"} or pack["authorial_core"] != core or pack["creative_controls"] != controls:
         raise WorkflowError("parent_core_pack_mismatch")
-    audit = audit_bound(parent_state, runtime=True, reviews=True)
+    audit = audit_parent_generation(parent_state, runtime=True, reviews=True)
     if audit["composed_audit"]["status"] != "pass" or audit["runtime_audit"]["status"] != "pass" or audit.get("contract_failures"):
         raise WorkflowError("parent_audit_failed")
     attempt = one(read_json(attempt_path))
@@ -212,9 +259,57 @@ def attach_child(args):
     return {"status": "pass", "retry_attached": True}
 
 
+def _preserved_assertion_matches(expected, actual, parent_core, child_core):
+    """Preserve scope meaning while independently rebinding current inputs.
+
+    A scope inventory's request hashes cannot be copied into a new request.
+    Its owner, complete contents, state and supporting reference bytes can.
+    Ordinary required assertions retain the original exact comparison.
+    """
+    axes = expected.get("axes", {})
+    if axes.get("native_schema") != "photo-frozen-semantics/v1" or axes.get("kind") != "scope_inventory":
+        return all(actual.get(k) == v for k, v in expected.items())
+    if any(actual.get(k) != v for k, v in expected.items() if k != "axes"):
+        return False
+    current_axes = actual.get("axes", {})
+    if set(current_axes) != set(axes) or any(current_axes.get(k) != v for k, v in axes.items() if k != "inventory"):
+        return False
+    try:
+        old_inventory = json.loads(axes["inventory"])
+        new_inventory = json.loads(current_axes["inventory"])
+        semantic_keys = {"schema", "complete", "state", "items"}
+        if set(old_inventory) != semantic_keys | {"input_binding", "reviewed_input_ids"} or set(new_inventory) != set(old_inventory):
+            return False
+        if any(old_inventory[k] != new_inventory[k] for k in semantic_keys):
+            return False
+        from photo_precore_bridge import load
+        witnesses = load("photo_semantic_witnesses")
+        parent_binding, child_binding = parent_core["request_binding"], child_core["request_binding"]
+        old_inputs = witnesses.validate_input_inventory(parent_binding["input_inventory"], parent_binding["request_sha256"])
+        new_inputs = witnesses.validate_input_inventory(child_binding["input_inventory"], child_binding["request_sha256"])
+        if (new_inventory["input_binding"] != witnesses.input_binding(child_binding)
+                or new_inventory["reviewed_input_ids"] != [row["id"] for row in new_inputs["items"]]):
+            return False
+        old_by_id = {row["id"]: row for row in old_inputs["items"]}
+        new_by_id = {row["id"]: row for row in new_inputs["items"]}
+        reference_kinds = {"reference_image", "identity_reference", "other"}
+        if ({k: v for k, v in old_by_id.items() if v["kind"] in reference_kinds}
+                != {k: v for k, v in new_by_id.items() if v["kind"] in reference_kinds}):
+            return False
+        facts = {row["assertion_id"]: row for row in parent_core["semantic_assertions"]}
+        for item in old_inventory["items"]:
+            fact = facts[item["assertion_id"]]
+            for source_id in fact["axes"].get("source_input_ids", []):
+                if source_id not in old_by_id or new_by_id.get(source_id) != old_by_id[source_id]:
+                    return False
+        return True
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
 def verify_child(state):
     proof, context = value(state, "retry_proof"), value(state, "retry_context")
-    actual, _parent = recompute(proof)
+    actual, parent = recompute(proof)
     if actual != context or context["projection_sha256"] != proof["projection_sha256"]:
         raise WorkflowError("retry_projection_mismatch")
     from photo_precore_bridge import load
@@ -246,7 +341,7 @@ def verify_child(state):
             raise WorkflowError("child_preserved_lock_missing")
     for assertion in context["required_assertions"]:
         row = assertion["value"]
-        if not any(all(a.get(k) == v for k, v in row.items()) for a in child["semantic_assertions"]):
+        if not any(_preserved_assertion_matches(row, a, parent["core"], child) for a in child["semantic_assertions"]):
             raise WorkflowError("child_required_relation_missing")
     child_targets = lineage.get("repair_targets", [])
     for target in child_targets:

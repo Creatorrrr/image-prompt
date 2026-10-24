@@ -1,0 +1,132 @@
+{
+  "schema": "estate-retest-prospective-gates/v1",
+  "created_utc": "2026-10-23T23:40:17.052175+00:00",
+  "before_new_generation": true,
+  "policy": [
+    "partial_is_fail",
+    "UNOBSERVABLE_NOT_PASS",
+    "BLOCKED_UNSCORED"
+  ],
+  "user_acceptance": "PENDING",
+  "cases": [
+    {
+      "arm": "A",
+      "concept": "타작장·배수 점검",
+      "parent_gate_sources": [
+        "independent-pixel-review-a.json",
+        "pixel-adjudication-a.json"
+      ],
+      "gates": [
+        {
+          "id": "management_target_gaze",
+          "criterion": "Inspector points to working cart/store target and foreman looks at that same target while supporting the plan.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "productive_route",
+          "criterion": "Worked grain, real open yard exit, loaded cart transport and store entrance form one fully traceable visible chain; the village/field-to-store route and both loaded carts remain on that same visible route.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "drain_outfall_plan",
+          "criterion": "Dry paving, open channel, outlet lip/flow and lower wet receiving ground are all visible together; plan and scene preserve matching floor/store/drain arrangement.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "boots_ground",
+          "criterion": "Both boot soles and their contacts with the ground are visible.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "appearance",
+          "criterion": "Main face/hair visibly follow the supplied dark bob/bangs and facial appearance; no exact identity claim.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "estate_scene",
+          "criterion": "People, plan, productive work, cart route and storage jointly read as the same estate inspection concept.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        }
+      ]
+    },
+    {
+      "arm": "B",
+      "concept": "지도·장부로 경계 청원 처리",
+      "parent_gate_sources": [
+        "independent-pixel-review-b.json"
+      ],
+      "gates": [
+        {
+          "id": "administrative_scene",
+          "criterion": "Administrator, two petitioners, same disputed map region and separate writing clerk form the same estate petition concept.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "same_parcel",
+          "criterion": "Two separate petitioner fingertips visibly land within the same disputed closed parcel on the same river bank.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "complete_map_register",
+          "criterion": "The complete corresponding river bend, bridge, parcel boundary and endpoints remain visible on both map and bound register. Ruler/hands do not hide the connections.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "actual_register_writing",
+          "criterion": "Clerk pen tip and ink stroke touch the corresponding entry of the actual bound register, rather than another sheet.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "task_gaze",
+          "criterion": "Administrator directs attention toward the task or participants rather than looking at the capture camera.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "appearance",
+          "criterion": "Main face/hair visibly follow the supplied dark bob/bangs and facial appearance; no exact identity claim.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        }
+      ]
+    },
+    {
+      "arm": "C",
+      "concept": "공동 화덕에서 한 빵을 나누는 만남",
+      "parent_gate_sources": [
+        "independent-pixel-review-c.json"
+      ],
+      "gates": [
+        {
+          "id": "appearance",
+          "criterion": "Main face/hair visibly follow the supplied dark bob/bangs and facial appearance; no exact identity claim.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "estate_resource_scene",
+          "criterion": "The same practical bakehouse/resource/community encounter remains visible; no rank, repair history, chronology or ownership is inferred.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "working_context",
+          "criterion": "Oven, bread output, residents and active handling show practical resource use together.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "four_support_contacts",
+          "criterion": "Both people each visibly support the same loaf with two hands: four distinct wrists/hands and four actual unobscured hand-to-loaf contacts.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "small_connected_tear",
+          "criterion": "The loaf has only a small initial central fissure and retains a broad intact lower crust connection, rather than two detached or deeply separated halves.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        },
+        {
+          "id": "A07_continuity",
+          "criterion": "If the original A07 arrangement is retained: grain in one open bin, a separate closed bin with fitted lid, and a separate clerk checking the record beside both remain jointly visible. Otherwise report NOT_RETAINED, never silently count as a new complete A07 pass.",
+          "pass_rule": "Every named visible carrier/contact/endpoint jointly observable; partial or occluded is not pass."
+        }
+      ]
+    }
+  ],
+  "limits": "Three specific before/after cases, not a data-only ablation or general accuracy estimate. Native source qualification remains separate."
+}
