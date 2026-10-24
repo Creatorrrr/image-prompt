@@ -4,7 +4,7 @@
 
 저장소 main의 native V3 출처 형식을 유지했다. 이미지 시험의 설치 세대는 별도의 canonical transport 표현을 사용한다. A12의 저장소 원문 SHA는 `5c2bf0a1e8fcfedb9e66cf907d4daea8e8bd4b403faa072075f2a08cd43a10f6`, 시험 설치본 SHA는 `e59ab2eab2d390e7609b1e50e6e2f9289b553548286e9a26980c770ef6c20f55`로 표현층이 다르다. 두 표현의 전체 원문, conditions, effects, provenance가 동일함을 확인했다. 관련 없는 형식 변환 코드는 끌어오지 않았다.
 
-발행 전 회귀 66개가 통과했고, 기존 실제 부모 실행을 부모 자신의 검증된 봉인 코드로 재감사해 composed/runtime PASS를 확인했다(이미지 호출 0). 기존 main의 109개 출처 모듈 바이트를 보존하고 메카 2개 모듈만 추가했다. 호환되는 로컬 EmbeddingGemma-2 레시피로 인덱스를 재생성했다. 기존 벡터 20,695개를 재사용하고 신규 107개를 계산했으며 전체 20,802개 양성 레코드/22,005개 전체 후보의 layout 검증을 통과했다. pull/통합 뒤의 최종 검증은 별도 `merge-validation.json`에 기록한다.
+발행 전 회귀 66개가 통과했고, 기존 실제 부모 실행을 부모 자신의 검증된 봉인 코드로 재감사해 composed/runtime PASS를 확인했다(이미지 호출 0). 기존 main의 109개 출처 모듈 바이트를 보존하고 메카 2개 모듈만 추가했다. 호환되는 로컬 EmbeddingGemma-2 레시피로 인덱스를 재생성했다. 기존 벡터 20,695개를 재사용하고 신규 107개를 계산했으며 전체 20,802개 양성 레코드/22,005개 전체 후보의 layout 검증을 통과했다. pull/통합 뒤의 최종 검증은 별도 `publication-evidence/merge-validation.json`에 기록한다.
 
 이번 Git 발행은 설치된 기본 런타임과 CURRENT를 변경하지 않는다. [2차 시험 결과](repair-round-2/REPAIR-RESULTS.md)의 0/3 엄격 통과, 미채택·미노출 및 후속 초안의 미검증 상태를 보존한다. [최종 픽셀 대조](repair-round-2/FINAL-RESULTS.json)와 [원문 보존 검증](publication-evidence/source-preservation-initial.json)을 함께 확인할 수 있다. 과거 76개 검증은 당시 설치 세대 기준이며 이번 source publication 66개 검증과 구분한다.
 

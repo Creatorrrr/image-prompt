@@ -236,3 +236,12 @@ relations preserve human/device owners and visible paths. Sampling v2 retains
 the first eligible source before drawing diversity within the existing budget.
 Six reference-guided images and the second repair round retain their strict
 failures; registration, exposure, prompt use and whole pixels remain separate.
+
+The [estate-management extension](estate-management-semantics.md) retains 60
+visual cards, 20 context cards and 374 advisory term rows. It adds 22 bounded
+optional bilingual visual sources, 56 excluded held/context diagnostics and
+56 optional bindings, reusing two complete existing sources without mutation.
+Document contacts, map endpoints, work and goods paths, garment carriers and
+access relations remain distinct from legal rights, title and chronology.
+Source registration, installed retrieval, audited prompt use and saved pixels
+are separate evidence; unresolved historical details remain held.

@@ -1,0 +1,77 @@
+{
+  "schema": "estate-repair-independent-pixel-review/v1",
+  "arm": "A",
+  "reviewer": "root",
+  "observed_utc": "2026-10-24T00:09:09.118861+00:00",
+  "review_method": "Actual saved original PNG viewed with view_image original before author final pixel verdict. No prompt/audit result used as pixel proof.",
+  "image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/estate-20261024-repair-a/images/result.png",
+  "sha256": "9dc6cbe69828fc41226be5a7c80dc2d485684ea4e4695c4d7a8ab04aa4331d32",
+  "format": "PNG",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "file_integrity": "PIL verify pass",
+  "prospective_gates_sha256": "b758b2afcd4cd677b746ccc2cea46a8841a62bcef9a79dc11141b79f59863ffd",
+  "gates": [
+    {
+      "id": "management_target_gaze",
+      "status": "NOT_PASS",
+      "observability": "partial",
+      "evidence": "The foreman turns his face toward the right work/store direction rather than the protagonist. The exact cart versus workers target is not uniquely resolved. His hands are visibly clasped empty at his waist: he does not support the required yard plan. The protagonist holds a small tally board instead.",
+      "components": {
+        "foreman_no_longer_looks_at_protagonist": "PASS_BOUNDED",
+        "same_cart_target": "UNOBSERVABLE_NOT_PASS",
+        "foreman_supports_plan": "NOT_PASS"
+      }
+    },
+    {
+      "id": "productive_route",
+      "status": "UNOBSERVABLE_NOT_PASS",
+      "observability": "partial",
+      "evidence": "Grain work, a gateway region, one loaded cart and the open store are visible. The village/field incoming lane disappears behind the foreground people/wall before its joining point. A complete uninterrupted village/field-to-store route cannot be traced, and a second loaded cart is not visible.",
+      "prior_source_count_note": "The current baseline specifies one cart, so the missing second cart is a non-retained A01/R01 full-source component rather than an extra model count failure. The explicitly promised complete incoming route itself still fails."
+    },
+    {
+      "id": "drain_outfall_plan",
+      "status": "NOT_PASS",
+      "observability": "partial",
+      "evidence": "The right channel bed, outlet lip, falling water, lower wet receiving earth and puddle are clearly visible together: the previous cropped outfall is repaired. A matching yard/store/drain plan cannot be seen; the foreman holds no plan and the protagonist clipboard presents a tally sheet, not a legible matching diagram.",
+      "components": {
+        "outlet_water_lower_wet_ground": "PASS_BOUNDED",
+        "yard_to_channel_origin": "UNOBSERVABLE_NOT_PASS",
+        "matching_plan": "NOT_PASS"
+      }
+    },
+    {
+      "id": "boots_ground",
+      "status": "PASS_BOUNDED",
+      "observability": "visible",
+      "evidence": "Both complete protagonist boots and their ground contact strips are inside the frame. The foreman boots also contact the same stone/dirt verge visibly."
+    },
+    {
+      "id": "appearance",
+      "status": "PASS_BOUNDED",
+      "observability": "visible",
+      "evidence": "Main face/hair remain large and readable, with dark bob, separated bangs, dark eyes and rounded facial proportions consistent with the reference. No exact identity or age claim."
+    },
+    {
+      "id": "estate_scene",
+      "status": "PASS_BOUNDED",
+      "observability": "visible",
+      "evidence": "Direction gesture, separate foreman, working grain yard, loaded cart, sacks and store form an agricultural inspection scene; rank, legal authority and successful engineering remain unproved."
+    }
+  ],
+  "whole_scene_strict_pass": false,
+  "qualitative_theme_presence": true,
+  "source_native_qualification": false,
+  "user_acceptance": "PENDING",
+  "new_prompt_issue": "The independent final baseline explicitly replaces the foreman plan with empty gathered hands and a protagonist tally board. This drops the original plan-correspondence test requirement; it is a prompt-level coverage regression, not attributable solely to image realization.",
+  "limits": "One unpaired retry image. New repair candidates were exposed but none retained in A; data-only causal improvement is not established.",
+  "formal_additional_support_observation": {
+    "status": "PARTIAL_NOT_PASS",
+    "evidence": "The boots are now fully inside the image and supported. The literal frozen dry stone verge is not clearly the actual sole-bearing surface: they sit on the adjoining dusty/gravel lane beside the raised stone border. Nearby ground support does not certify the full declared carrier relation. This is not a diagnosis of anatomical imbalance.",
+    "prospective_visibility_gate_retained": "boots_ground remains bounded PASS for visibility/ordinary ground contact only; the stricter frozen support-carrier contract remains FAIL."
+  },
+  "new_prompt_issue_authority": "Experimental plan-correspondence coverage regression; no claim that every optional original staging choice is requester-owned."
+}
