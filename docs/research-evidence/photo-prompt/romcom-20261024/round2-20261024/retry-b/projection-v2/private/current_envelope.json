@@ -1,0 +1,89 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "romcom-20261024-r2-b",
+  "request_text": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.\n신규 후보가 전혀 채택되지 않은 원인과 세 테스트의 실패 원인을 분석해서 스킬과 데이터를 개선하고, 같은 참조 이미지로 독립 서브에이전트 3개에서 다시 생성·검증해줘.",
+  "request_sha256": "0055cef063eb81c4fa689c4df205d24087de267b606cfc35fc3f625c562c20e6",
+  "active_spans": [
+    {
+      "span_id": "topic",
+      "start": 76,
+      "end": 86,
+      "text": "이번에 반영한 주제"
+    },
+    {
+      "span_id": "variation",
+      "start": 62,
+      "end": 73,
+      "text": "각각 서로 다른 컨셉"
+    },
+    {
+      "span_id": "random_concept",
+      "start": 115,
+      "end": 130,
+      "text": "주제에 어울리는 랜덤한 컨셉"
+    },
+    {
+      "span_id": "reference",
+      "start": 149,
+      "end": 162,
+      "text": "첨부한 이미지를 활용하여"
+    },
+    {
+      "span_id": "repair_reference",
+      "start": 258,
+      "end": 268,
+      "text": "같은 참조 이미지로"
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "0055cef063eb81c4fa689c4df205d24087de267b606cfc35fc3f625c562c20e6"
+      },
+      {
+        "id": "prior_topic",
+        "kind": "text",
+        "sha256": "e94726233ad175f238c9d69374dad6536d7bb5279fff8f94b7c77e8e50f25d61"
+      },
+      {
+        "id": "reference",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "romcom_antecedent",
+        "active_span_id": "topic",
+        "request_quote": {
+          "start": 76,
+          "end": 86,
+          "text": "이번에 반영한 주제"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "current-conversation:prior-user-research-request",
+          "text": "[러브코미디 요소 조사](chatgpt-conversation://6adb7078-3e30-83ee-a7e7-d068606052dc) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘.",
+          "sha256": "e94726233ad175f238c9d69374dad6536d7bb5279fff8f94b7c77e8e50f25d61"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 6,
+          "text": "러브코미디"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "The prior requesting-user research subject is explicitly romantic comedy; the current phrase refers to that same subject. No assistant research geometry is imported."
+        }
+      }
+    ]
+  }
+}
