@@ -1,0 +1,50 @@
+{
+  "agent": "C",
+  "independence": {
+    "previous_results_read": false,
+    "other_arm_results_read": false,
+    "candidates_read_before_final_freeze": false,
+    "reinitialized_official_run": false
+  },
+  "coordinator_successors": [
+    {
+      "run_suffix": "c",
+      "reason": "Active reference modifier absent; no authoring or retrieval performed."
+    },
+    {
+      "run_suffix": "c-v2",
+      "reason": "Frozen, no retrieval; successor added reviewed request-query scope."
+    },
+    {
+      "run_suffix": "c-v3",
+      "reason": "Frozen, no retrieval; coordinator mode was prompt_only."
+    },
+    {
+      "run_suffix": "c-v4",
+      "reason": "Official image-mode final run; same baseline, controls seed and gates, new envelope binding."
+    }
+  ],
+  "precore_repairs": [
+    {
+      "detail": "Ownership checker found independently authored facial-expression adjective small overlapping reference small straight nose; removed the optional adjective from baseline and refreshed baseline hashes and reviews before first successful freeze.",
+      "candidate_access": false
+    }
+  ],
+  "neutral_cli_repairs": [
+    {
+      "detail": "Explicit generation/store flags unsupported on prepare-slot-intents; reran neutral command without flags after confirming live config pin4a."
+    },
+    {
+      "detail": "Slot-expression review author requires exact Codex value; corrected Codex C to Codex before sealing.",
+      "semantic_text_changed": false
+    }
+  ],
+  "scope": [
+    "location",
+    "environment_detail",
+    "contact_point"
+  ],
+  "slot_plan_sha256": "e910a576660b25272dc6e21fbc8ee197ba6585cb3ee3f0237c8349e733206725",
+  "render_limit": 1,
+  "render_lane": "native"
+}

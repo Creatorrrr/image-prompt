@@ -1,0 +1,39 @@
+{
+  "schema": "final-pre-image-pixel-criteria/v1",
+  "created_before_candidate_access": true,
+  "gate_policy": {
+    "partial_is_fail": true,
+    "UNOBSERVABLE_NOT_PASS": true
+  },
+  "reference_scope": "visible face/hair cues only; no real identity, age or affiliation claim",
+  "gates": [
+    {
+      "id": "ref_visible_face_hair",
+      "criterion": "The original image visibly retains dark eyes, softly tapered jaw, softly full lips, dark jaw-length bob and separated wispy bangs at assessable scale.",
+      "kind": "requester_reference"
+    },
+    {
+      "id": "person_presence",
+      "criterion": "The portrait subject remains the central perceptual presence with readable facial response.",
+      "kind": "art_direction"
+    },
+    {
+      "id": "measurement_complete",
+      "criterion": "The separate clerk's hand traces through one connected arm, gripping the ruler from above; the ruler lower long edge is flush on the placard top edge with both ruler ends and both card top corners visible together.",
+      "kind": "baseline_optional_mechanism"
+    },
+    {
+      "id": "blank_honor",
+      "criterion": "The complete large blank card and its small ceremonial rosette read together, while subject hands support the lower corners.",
+      "kind": "baseline_optional_mechanism"
+    },
+    {
+      "id": "generic_frame_rail_lettering",
+      "kind": "generic_material_inspiration_not_native_contract",
+      "criterion": "The original saved image visibly prints APPROVED on the front surface of the preexisting hollow empty frame lower rail, with the letters inside the rail and clear of people/ruler. A solid slogan signboard or floating text is not evidence of this chosen generic refinement."
+    }
+  ],
+  "postretrieval_rule": "Selected optional source contracts add their complete explicit gates; unselected candidates add none. Baseline optional mechanisms may be replaced within open scope after equal-level comparison, recording replacement rather than falsely passing an obsolete gate.",
+  "final_prompt_sha256": "6caf0028341c848c1cc00e02b840575e73bb967d0c7d4c906a76ef35eedea8f4",
+  "native_source_case_gate": "Not adopted; V090 complete case cannot be promoted to pass from generic lettering."
+}

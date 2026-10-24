@@ -1,0 +1,382 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "신규 후보가 검색·채택되지 않은 원인과 픽셀 실패를 분석해서 보완해줘. 같은 첨부 이미지와 최신 스킬로 독립 서브에이전트 3개에서 다시 테스트하고, 신규 데이터가 프롬프트와 원본 이미지에 실제로 반영됐는지 검증해줘.",
+  "creative_controls_sha256": "f3f15b10bdc856b7d1b7236f78954179dd7c539aab50366bda2a4b2aa6646335",
+  "interpreted_intent": "The active topic refers to newly researched data, with the antecedent retained only as discovery context. Independently stage a person-centered institutional farce for the ceremonial/censorship test axis. The selected blank-award measuring ceremony is an agent-owned choice from three independently compared concepts, randomized once. Preserve only visible reference face and hair cues, without inferring identity, age or affiliation. The controlled attraction is subtle individual presence in warm facial light, not an erotic premise; creativity 1 allows restrained local refinements after retrieval. Read the absurdity from a solemn physical inspection of an empty award. Keep both ruler ends, the top corners, connected clerk arm and the subject face in one plane so the measurement reads without tiny text. The art direction, jacket, rosette, measuring event, room and camera arrangement remain replaceable authorial choices.",
+  "subject": "The portrait-referenced person as a fictional ceremony participant, with a separate clerk.",
+  "setting": "A modest fictional ceremonial inspection room.",
+  "event": "The person participates in a staged scene; the chosen baseline shows a clerk measuring a blank award.",
+  "visual_priorities": [
+    "Individual face and restrained response remain the primary presence.",
+    "One connected clerk arm holds a ruler in visible contact with the complete top edge of a blank award placard.",
+    "The large blank field and ceremonial rosette turn meticulous inspection into an absurd honor."
+  ],
+  "baseline_prompt_en": "Create a photographic scene in which the portrait-referenced person participates in a staged scene. Use the supplied portrait for visible face and hair cues: the face has dark eyes, a softly tapered jaw and softly full lips, and the hair is a dark jaw-length bob with wispy separated bangs. Preserve these visible features in a fictional institutional farce. In a modest ceremonial inspection room, the person stands facing the camera in a neatly pressed plain olive jacket, holding a broad cream award placard upright against the lower chest. Its large central field is completely blank; a small red ceremonial rosette at the upper center gives that emptiness the gravity of a formal honor. Both of the person's hands support the placard at its lower corners, leaving its face and top corners visible. At screen right, a separate clerk stands beside the person and solemnly measures the placard's empty upper margin with a rigid ruler. The clerk's near hand grips the ruler at its midpoint from above, holding its lower long edge flush against the placard's top edge; both ruler ends extend beyond the placard, and both placard top corners remain visible. The person watches the measuring hand with a restrained, barely raised eyebrow and a composed mouth, a private flicker of disbelief inside a perfectly obedient portrait. Frame from the hips upward with the face, entire placard, ruler and clerk's connected arm in the same shallow plane. A dull institutional wall and one empty picture frame sit behind them. Soft window light gives the face a gentle warm sheen, with crisp cream paper and matte olive fabric. The visual hierarchy moves from the person's individual presence to the solemn measuring contact and finally to the conspicuously blank award. Render as a restrained, convincing editorial photograph, quietly absurd in its exact physical seriousness.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "같은 첨부 이미지",
+      "source_text": "같은 첨부 이미지",
+      "basis": "request_context",
+      "resolution": "Use the same supplied image as a visible face and hair reference; no real identity, age or affiliation is inferred.",
+      "sources": []
+    },
+    {
+      "term": "신규 데이터",
+      "source_text": "신규 데이터",
+      "basis": "request_context",
+      "resolution": "The current execution request asks to test the newly researched data in a photographic scene. The positive prior-user topic is kept only in the bound discovery context; the independent scene is agent-authored.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "신규 데이터",
+        "dimension": "concept",
+        "prompt_evidence": "a photographic scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "같은 첨부 이미지",
+        "dimension": "subject",
+        "prompt_evidence": "the portrait-referenced person"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "신규 데이터",
+        "dimension": "event",
+        "prompt_evidence": "participates in a staged scene"
+      },
+      {
+        "anchor_id": "same_reference",
+        "source_text": "같은 첨부 이미지",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied portrait for visible face and hair cues"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "같은 첨부 이미지",
+        "dimension": "appearance",
+        "target": "portrait_face",
+        "property": "appearance.visible_cues",
+        "prompt_evidence": "the face has dark eyes, a softly tapered jaw and softly full lips"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "같은 첨부 이미지",
+        "dimension": "appearance",
+        "target": "portrait_hair",
+        "property": "appearance.visible_cues",
+        "prompt_evidence": "the hair is a dark jaw-length bob with wispy separated bangs"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "owner_person",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "portrait_person",
+        "owner_kind": "person"
+      },
+      "evidence": {
+        "phrase": "the portrait-referenced person"
+      }
+    },
+    {
+      "assertion_id": "role_main",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "portrait_person"
+      },
+      "evidence": {
+        "phrase": "the portrait-referenced person"
+      }
+    },
+    {
+      "assertion_id": "owner_face",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "portrait_face",
+        "owner_kind": "face"
+      },
+      "evidence": {
+        "phrase": "the face has dark eyes, a softly tapered jaw and softly full lips"
+      }
+    },
+    {
+      "assertion_id": "role_face",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "primary_face",
+        "owner": "portrait_face"
+      },
+      "evidence": {
+        "phrase": "the face has dark eyes, a softly tapered jaw and softly full lips"
+      }
+    },
+    {
+      "assertion_id": "face_part",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "part_of",
+        "left": "portrait_face",
+        "right": "portrait_person"
+      },
+      "evidence": {
+        "phrase": "the portrait-referenced person"
+      }
+    },
+    {
+      "assertion_id": "owner_hair",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "portrait_hair",
+        "owner_kind": "hair"
+      },
+      "evidence": {
+        "phrase": "the hair is a dark jaw-length bob with wispy separated bangs"
+      }
+    },
+    {
+      "assertion_id": "role_hair",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "primary_hair",
+        "owner": "portrait_hair"
+      },
+      "evidence": {
+        "phrase": "the hair is a dark jaw-length bob with wispy separated bangs"
+      }
+    },
+    {
+      "assertion_id": "hair_part",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "part_of",
+        "left": "portrait_hair",
+        "right": "portrait_person"
+      },
+      "evidence": {
+        "phrase": "Use the supplied portrait for visible face and hair cues"
+      }
+    },
+    {
+      "assertion_id": "visible_face",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "portrait_face",
+        "property": "appearance.visible_cues",
+        "value_type": "appearance.visible_cues/v1",
+        "value": "dark eyes, softly tapered jaw, softly full lips",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "request",
+          "portrait"
+        ]
+      },
+      "evidence": {
+        "phrase": "the face has dark eyes, a softly tapered jaw and softly full lips"
+      }
+    },
+    {
+      "assertion_id": "visible_hair",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "portrait_hair",
+        "property": "appearance.visible_cues",
+        "value_type": "appearance.visible_cues/v1",
+        "value": "dark jaw-length bob with wispy separated bangs",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "request",
+          "portrait"
+        ]
+      },
+      "evidence": {
+        "phrase": "the hair is a dark jaw-length bob with wispy separated bangs"
+      }
+    },
+    {
+      "assertion_id": "reference_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "portrait_person",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"cf9c233ee0e14dd389b11298003ceb31d07689bf843bb25e1265e956245964db\",\"request_envelope_sha256\":\"6a99167cafbeb94d23bb63e5febdc6c4c73957dfb28bec4a31012b7ae1ee97b2\",\"request_sha256\":\"7cfa2c879ae7b9e68a1e67eebeb1ffe1704a3b839a33e0e77a509f2f9854b080\"},\"items\":[{\"assertion_id\":\"visible_face\",\"dimension\":\"appearance\",\"property\":\"appearance.visible_cues\",\"target\":\"portrait_face\",\"value\":{\"type\":\"appearance.visible_cues/v1\",\"value\":\"dark eyes, softly tapered jaw, softly full lips\"}},{\"assertion_id\":\"visible_hair\",\"dimension\":\"appearance\",\"property\":\"appearance.visible_cues\",\"target\":\"portrait_hair\",\"value\":{\"type\":\"appearance.visible_cues/v1\",\"value\":\"dark jaw-length bob with wispy separated bangs\"}}],\"reviewed_input_ids\":[\"request\",\"previous_request\",\"portrait\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "phrase": "Use the supplied portrait for visible face and hair cues"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial photography",
+    "family": "restrained fictional institutional satire",
+    "evidence": [
+      "matte olive fabric and cream paper",
+      "a warm human face against a dull official room"
+    ]
+  },
+  "variation_key": "marine-retest-a-silence-award-1507400942864074053"
+}

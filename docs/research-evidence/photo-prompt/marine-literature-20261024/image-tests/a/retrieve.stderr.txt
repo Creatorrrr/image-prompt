@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys,runpy;from pathlib import Path;entry=sys.argv.pop(1);sys.path.insert(0,str(Path(entry).parent));runpy.run_path(entry,run_name='__main__')
+                                                                                                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_workflow.py", line 920, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_workflow.py", line 911, in main
+    else: result = handlers[args.command](args)
+                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_workflow.py", line 197, in retrieve
+    return h_retrieve(args)
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_h_f2_workflow.py", line 87, in retrieve
+    provider=RuntimeSnapshotProvider(store=args.runtime_store);snapshot=provider.load_generation(native_id)
+                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_runtime_sources.py", line 361, in load_generation
+    data=generator.load_runtime_data(root/'assets');bound=BoundRuntimeData(data)
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/prompt_generator.py", line 8524, in load_runtime_data
+    return LazyRuntimeData(SearchReader(assets))
+                           ~~~~~~~~~~~~^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_search_reader.py", line 52, in __init__
+    validate_space(self.manifest.get('space'))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_embedding_provider.py", line 17, in validate_space
+    if space!=local_space():raise ValueError('foreign local embedding space')
+              ~~~~~~~~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_local_embedding.py", line 73, in space
+    return dict(runtime_lock(root)['space'])
+                ~~~~~~~~~~~~^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/marine-literature-20261024/integration-evidence/successor-store/generations/7907fa1dcf32e7a0915a7f1a2833408f3bef41f62ee2371cdafbf44657ac0e74/scripts/photo_local_embedding.py", line 60, in runtime_lock
+    raise RuntimeError('local_model_missing_or_unsafe: '+name)
+RuntimeError: local_model_missing_or_unsafe: 1_Pooling/config.json

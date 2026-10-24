@@ -1,0 +1,32 @@
+{
+  "schema": "pre-retrieval-pixel-criteria/v1",
+  "created_before_candidate_access": true,
+  "gate_policy": {
+    "partial_is_fail": true,
+    "UNOBSERVABLE_NOT_PASS": true
+  },
+  "reference_scope": "visible face/hair cues only; no real identity, age or affiliation claim",
+  "gates": [
+    {
+      "id": "ref_visible_face_hair",
+      "criterion": "The original image visibly retains dark eyes, softly tapered jaw, softly full lips, dark jaw-length bob and separated wispy bangs at assessable scale.",
+      "kind": "requester_reference"
+    },
+    {
+      "id": "person_presence",
+      "criterion": "The portrait subject remains the central perceptual presence with readable facial response.",
+      "kind": "art_direction"
+    },
+    {
+      "id": "measurement_complete",
+      "criterion": "The separate clerk's hand traces through one connected arm, gripping the ruler from above; the ruler lower long edge is flush on the placard top edge with both ruler ends and both card top corners visible together.",
+      "kind": "baseline_optional_mechanism"
+    },
+    {
+      "id": "blank_honor",
+      "criterion": "The complete large blank card and its small ceremonial rosette read together, while subject hands support the lower corners.",
+      "kind": "baseline_optional_mechanism"
+    }
+  ],
+  "postretrieval_rule": "Selected optional source contracts add their complete explicit gates; unselected candidates add none. Baseline optional mechanisms may be replaced within open scope after equal-level comparison, recording replacement rather than falsely passing an obsolete gate."
+}

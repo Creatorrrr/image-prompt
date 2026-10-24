@@ -1,0 +1,64 @@
+{
+  "schema": "independent-image-testcase/v1",
+  "arm": "b",
+  "concept": "roadside_flat",
+  "written_before_candidate_access": true,
+  "random_record": "random-concept.json",
+  "meaning_boundary": "Genre meaning uses general knowledge of fictional Korean marine military black comedy; the particular roadside ritual is agent staging, not requester quotation. The image can support visible ritual and setting, not actual coercion, sound, identity, chronology, or a real unit.",
+  "gate_policy": {
+    "full_pass": "all B01-B05 PASS",
+    "partial": "FAIL overall; record UNOBSERVABLE_NOT_PASS for hidden required relations",
+    "no_pixels": "BLOCKED_UNSCORED"
+  },
+  "gates": [
+    {
+      "id": "B01",
+      "requirement": "Reference appearance",
+      "pass": "Main woman visibly retains the short dark cheek-length rounded bob with separated fringe and recognizable soft oval face/dark eyes at review scale.",
+      "fail": "Hair silhouette or visible face materially departs.",
+      "partial": "Face or hair too small/occluded to assess."
+    },
+    {
+      "id": "B02",
+      "requirement": "Mundane transit failure",
+      "pass": "A road-going military minibus, one visibly flat attached wheel, and an unattached small spare wheel are simultaneously visible on a roadside.",
+      "fail": "No failed road vehicle or no distinguishable flat/spare relation.",
+      "partial": "Wheel state or vehicle attachment is hidden."
+    },
+    {
+      "id": "B03",
+      "requirement": "Absurd care applied to equipment",
+      "pass": "The woman grips one red ceremonial flagpole with connected hands/arms, and the same flag visibly casts shade over the small spare wheel.",
+      "fail": "Flag/hand target relation breaks or shadow belongs elsewhere.",
+      "partial": "Flag, grip, wheel, or projected shade cannot be traced together."
+    },
+    {
+      "id": "B04",
+      "requirement": "Hierarchy ritual directed at trivial target",
+      "pass": "A separate senior-looking uniformed marine stands with a legible salute whose face/body orientation is toward the spare wheel; the wheel reads as the ceremonial target in the same frame.",
+      "fail": "Salute absent or clearly directed at camera/person.",
+      "partial": "Target direction or salute contact/pose is hidden."
+    },
+    {
+      "id": "B05",
+      "requirement": "Military black-comedy whole frame",
+      "pass": "Marine-coded uniforms/red ceremonial equipment and the over-serious wheel ritual are readable together; humor derives from formal hierarchy attached to a mundane travel interruption.",
+      "fail": "Only ordinary tire change, a generic fashion portrait, or unexplained military decoration is visible.",
+      "partial": "One relation is visible but the complete situation cannot be read."
+    }
+  ],
+  "ownership_review": {
+    "requester_owned": [
+      "topic fidelity to fictional marine military black comedy",
+      "use of supplied image in prompt and generation"
+    ],
+    "agent_owned_test_targets": [
+      "particular roadside puncture",
+      "small spare wheel",
+      "flag shading action",
+      "separate marine salute to spare",
+      "vehicle and person staging"
+    ],
+    "interpretation": "B02-B04 score the chosen independent embodiment. They are not represented as exact user requirements or inherited candidate contracts. Hidden contact or target relationships still fail this declared experiment."
+  }
+}

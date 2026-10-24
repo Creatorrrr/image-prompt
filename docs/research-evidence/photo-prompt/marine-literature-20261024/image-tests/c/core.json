@@ -1,0 +1,122 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "4a464f0cfe6e3a06d7ef75f9205f550a3411d4afd0a0ecf8f2160095b41654c7",
+  "interpreted_intent": "The current elliptical topic is linked through the supplied actual prior user message to 해병문학. I interpret it independently as Korean internet fiction that satirizes Marine barracks hierarchy through exaggerated solemnity and absurd military-life circumstances. The image should read as an environmental portrait in a fictional formal inspection whose senseless setting is apparent. The coordinator assigned only a broad absurd-space exploration area; my OS-randomized choice is the flooded corridor and grounded inspection dinghy, not a requester definition. Compared with a tiny parade lane and stair-landing summit, this choice lets water reflections, an earnest face, mop and floating-looking administrative station form one spatial joke. Saved creativity=1 calls for a restrained, photographically plausible staged variation; surreal=0 keeps scale and physics ordinary. Sensual=1 is a subtle personal appeal in the calm face, gentle light and composed bearing; fetish=0 adds no treatment. The scene is fictional; reference pixels establish appearance guidance rather than real identity, age, intentions, consent, occupation or military history. Only face and hair cues are used; clothes/body/background/camera are agent-owned. Essential projection: main subject occupies about half the image height with face, saluting arm and continuous mop route readable, while a separate depth plane preserves the seated inspector/table/grounded boat and corridor water. The picture cannot prove orders, coercion, spoken catchphrases or genre readership by itself.",
+  "subject": "A fictional Marine woman guided by the supplied face and short-bob appearance reference, with a senior Marine as supporting actor.",
+  "setting": "A physically stageable shallowly flooded military barracks corridor with an inspection desk in a grounded dinghy.",
+  "event": "A solemn inspection made absurd by the administrative boat station while a recruit salutes with a mop ready beside her.",
+  "visual_priorities": [
+    "Marine barracks context plus deliberate solemnity and absurd inspection arrangement must read together.",
+    "The reference-guided central face and bob remain recognizable at the environmental portrait scale.",
+    "All consequential hand-to-mop, mop-to-floor and boat-table support connections remain visible.",
+    "A coherent plausible stage set with warm human presence makes the joke carry beyond a generic military costume."
+  ],
+  "baseline_prompt_en": "Create an environmental portrait as a satirical scene of fictional Korean Marine barracks life, with a reference-guided central person and a military inspection turned absurd. Use the supplied image as appearance guidance for her face and short black bob. Her visible facial proportions, brown eyes, soft straight fringe and jaw-length dark hair carry into a fictional Marine woman. She stands at attention in ankle-deep clear water inside a worn barracks corridor, wearing a red Marine training T-shirt, khaki utility shorts and black boots. She holds a long mop upright with her left hand; its continuous handle leads down to the wet mop head resting beside her boots. Her right hand makes a crisp salute at her temple, elbow bent naturally. She looks toward a solemn senior Marine sitting behind a dry inspection table inside a black inflatable dinghy that is grounded across the corridor. The senior wears fatigues and a red beret, holds a clipboard and looks from the recruit toward the mop. A ruler lies neatly along the table edge. The absurdity comes from an impeccably formal inspection continuing while both corridor and boat have become an indoor shoreline. Open barracks doorways reveal aligned bunks and wall lockers. A soft reflected window light gives the central woman's face an appealing, quietly composed presence; the heavy practical setting and her dignified seriousness carry the joke together. Photograph the full central figure from eye level in a three-quarter view with a 35mm lens, framing her, the complete hand-to-mop connection, the boat, the table and the senior together. Landscape frame, connected depth, natural skin texture, subdued olive walls, red clothing accents and gentle water reflections, staged editorial photography with convincing physical scale.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제 / random fitting concept",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 ",
+      "basis": "request_context",
+      "resolution": "Actual prior requester message identifies 해병문학; general knowledge resolves a fictional Korean Marine barracks satire. The randomized concrete scene is authorial and replaceable.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지 활용",
+      "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait for visible face and short dark bob appearance guidance, independently choosing the fictional military situation and clothing.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "a satirical scene of fictional Korean Marine barracks life"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a reference-guided central person"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "주제에 어울리는 랜덤한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "a military inspection turned absurd"
+      },
+      {
+        "anchor_id": "reference_guidance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied image as appearance guidance for her face and short black bob"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "setting",
+      "role",
+      "count",
+      "appearance",
+      "pose",
+      "expression",
+      "action",
+      "relationship",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental portrait photography",
+    "family": "staged deadpan military-life editorial satire",
+    "evidence": [
+      "formal inspection in an incongruous grounded dinghy",
+      "natural skin and water reflections"
+    ]
+  },
+  "variation_key": "c-indoor-tide-16956679749321016893"
+}

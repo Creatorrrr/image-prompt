@@ -1,0 +1,50 @@
+{
+  "schema": "independent-photo-testcase-result/v1",
+  "testcase_sha256": "c14178d0547a62d88f15836b7fdf7283e451bf80023eb883f8b7df2b3bc45299",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/marine-literature-20261024-c/results/c-inspection.png",
+  "image_sha256": "8221331f2767683c5090a24b9c3bea0bb906bcdcaf171eadbaa529d71e2cd81d",
+  "width": 1536,
+  "height": 1024,
+  "imagegen_call_count": 1,
+  "review_method": "Direct original supplied reference inspection before authoring; generated original and byte-identical project file inspected using view_image with explicit original detail. No edited image or other-arm output used.",
+  "gates": [
+    {
+      "id": "c_genre",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The same frame contains aligned bunks and lockers behind doorways, red MARINES training shirt, camouflaged senior in a red beret, a salute and a clipboard inspection. These pixels support military-barracks satire; exact Internet-genre membership remains a context-informed interpretation, not a direct pixel fact."
+    },
+    {
+      "id": "c_absurd_space",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "Clear shallow water continues down the corridor. A black inflated boat tube surrounds a dry desk-like tabletop and the senior. The lower hull/keel and its meeting with the corridor floor are hidden by tube, water and the lower/right crop, so the requested grounded-boat relation cannot be observed. Table support and the senior seat/feet are also hidden. UNOBSERVABLE_NOT_PASS; this does not diagnose floating or a physical defect."
+    },
+    {
+      "id": "c_action_chain",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The central person salutes with her own right hand and grips the mop with her own left hand. An uninterrupted shaft descends to the green collar and wet string head beside both boots; the strings visibly meet the water at the corridor floor. Boot outlines and reflections are interrupted at contact."
+    },
+    {
+      "id": "c_reference",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "At the original 1536x1024 output, the central face has assessable soft facial proportions, brown eyes, straight light fringe and jaw-length dark bob that follow the supplied portrait. This is qualitative appearance guidance, not exact identity confirmation, an age finding or proof of the real person's military history."
+    },
+    {
+      "id": "c_scene_legibility",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The standing saluting mop-holder is adjacent to a seated uniformed man with a clipboard behind a ruler-lined tabletop in a boat. Their orientation and props support a formal inspection in an absurd indoor setting without needing a caption. Orders, coercion, dialogue and events before the still image remain unobserved."
+    }
+  ],
+  "overall": "FAIL",
+  "aggregation": "partial_is_fail",
+  "primary_failure": "c_absurd_space: UNOBSERVABLE_NOT_PASS",
+  "new_data_exposure": 0,
+  "new_data_use": 0,
+  "new_data_effect": "NOT_ESTABLISHED",
+  "claim_limit": "This arm generated the independent topic scene, but it cannot establish a causal benefit from the new 87 CIDs, because none was returned or used.",
+  "user_acceptance": "pending_not_yet_received"
+}

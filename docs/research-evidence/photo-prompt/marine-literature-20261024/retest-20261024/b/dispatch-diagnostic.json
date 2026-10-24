@@ -1,0 +1,27 @@
+{
+  "schema": "pre-invocation-dispatch-diagnostic/v1",
+  "symptom": "CLI prepare-slot-intents and authorize reported invalid_workflow_input while live neutral verify_freeze passed.",
+  "cause": "CLI main dispatches to selected installed kernel; new query_scope and ownership fields not yet ported there.",
+  "direct_function_diagnostic": {
+    "function": "photo_workflow.authorize",
+    "effect": "Only existing user authorization scope was recorded.",
+    "lanes": [
+      "native"
+    ],
+    "invocation_limit": 1,
+    "candidate_search_calls": 0,
+    "image_tool_calls": 0
+  },
+  "coordinator_instruction": "Do not further bypass dispatch; wait for pinned installed release and rerun authorize via CLI for actual pinned validation.",
+  "shared_source_edits": false,
+  "pinned_cli_reverification": {
+    "generation_id": "4a05dd82d952b3df246e9d0375a2e4c91a4e7a3cca6a7d3e15fbfb4d3ffc2878",
+    "code_sha256": "b6536c01e6853044b4ca4c6a53277699123be192134f8c6ff8c76e79a91b4653",
+    "prepare_slot_intents": "pass",
+    "seal_slot_intents": "pass",
+    "authorize": "pass",
+    "candidate_search_calls": 0,
+    "image_tool_calls": 0
+  },
+  "procedure_limit": "Generic non-retrieve subparsers do not accept explicit generation/store flags. Verified selected config and used normal managed CLI; actual retrieve will bind supplied marine release explicitly."
+}
