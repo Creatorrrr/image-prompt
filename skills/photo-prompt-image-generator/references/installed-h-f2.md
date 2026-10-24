@@ -122,7 +122,16 @@ Every new retrieval also issues two independent queries after core freeze:
 
 - `__request_topic__`: this arm's active requester spans, using the existing
   positive-text projection to remove creative-control assignments and explicit
-  exclusions. Inactive arms and delivery text outside active spans are omitted.
+  exclusions. A frozen `topic_context` may add only exact reviewed positive
+  topic quotes from actual previous requesting-user messages, linked to a
+  literal antecedent in this arm. Its hash is in query provenance. This does
+  not broaden active request authority. A reviewed `query_scope` partitions exact
+  active text by purpose: retain visual requirements, replace a topic reference
+  with its exact prior-user quote, and omit workflow/reference-transport wording
+  from discovery. The raw request and hard meaning remain bound. Query provenance
+  records the scope hash and purposes; older envelopes retain their original
+  projection. Inactive arms, unquoted prior prose and delivery text outside
+  active spans are omitted.
 - `__baseline_prompt__`: the complete frozen `baseline_prompt_en`, through the
   same explicit-exclusion firewall.
 

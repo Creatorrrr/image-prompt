@@ -3096,7 +3096,7 @@ def authorial_core_intent_contract_valid(
     if not isinstance(source_request, str) or not source_request or not isinstance(binding, dict):
         return False
     if (
-        set(binding) - {"input_inventory"}
+        set(binding) - {"input_inventory", "topic_context", "query_scope"}
         != {
             "contract_version",
             "request_id",
@@ -3165,6 +3165,20 @@ def authorial_core_intent_contract_valid(
             reconstructed_envelope["input_inventory"] = _neutral_inventory_load("photo_semantic_witnesses").validate_input_inventory(
                 binding["input_inventory"],binding["request_sha256"])
         except (ValueError,KeyError,TypeError):
+            return False
+    if "topic_context" in binding:
+        try:
+            from photo_precore_bridge import load as _neutral_context_load
+            reconstructed_envelope["topic_context"] = _neutral_context_load("photo_authoring_wire").normalize_topic_context(
+                binding["topic_context"], source_request, spans)
+        except (ValueError, KeyError, TypeError):
+            return False
+    if "query_scope" in binding:
+        try:
+            from photo_precore_bridge import load as _neutral_scope_load
+            reconstructed_envelope["query_scope"] = _neutral_scope_load("photo_authoring_wire").normalize_request_query_scope(
+                binding["query_scope"], source_request, spans, reconstructed_envelope.get("topic_context"))
+        except (ValueError, KeyError, TypeError):
             return False
     if binding.get("request_envelope_sha256") != canonical_json_sha256(reconstructed_envelope):
         return False
@@ -3718,8 +3732,24 @@ def expected_authorial_core_retrieval_provenance(
             fields.append((field, text))
 
     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
-        for value in authorial_core_active_span_texts(core):
-            add("source_request_scope", creative_controls.strip_assignments(value))
+        binding = core.get("request_binding") or {}
+        context = None
+        from photo_precore_bridge import load as _neutral_context_load
+        wire = _neutral_context_load("photo_authoring_wire")
+        if "topic_context" in binding:
+            context = wire.normalize_topic_context(
+                binding["topic_context"], str(core.get("source_request") or ""), binding.get("active_spans") or [])
+        if "query_scope" in binding:
+            query_scope = wire.normalize_request_query_scope(
+                binding["query_scope"], str(core.get("source_request") or ""), binding.get("active_spans") or [], context)
+            for field, value in wire.request_query_scope_fields(query_scope, context):
+                add(field, creative_controls.strip_assignments(value))
+        else:
+            for value in authorial_core_active_span_texts(core):
+                add("source_request_scope", creative_controls.strip_assignments(value))
+            if context is not None:
+                for link in context["links"]:
+                    add("request_topic_context", creative_controls.strip_assignments(link["topic_quote"]["text"]))
     else:
         add("source_request", core.get("source_request"))
     add("interpreted_intent", core.get("interpreted_intent"))
@@ -3797,6 +3827,11 @@ def expected_authorial_core_retrieval_provenance(
                 ),
             }
         )
+        if "topic_context" in binding:
+            provenance["topic_context_sha256"] = context["canonical_sha256"]
+        if "query_scope" in binding:
+            provenance["request_query_scope_sha256"] = query_scope["canonical_sha256"]
+            provenance["request_query_segment_purposes"] = [r["purpose"] for r in query_scope["segments"]]
     return provenance
 
 

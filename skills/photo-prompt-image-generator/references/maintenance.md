@@ -245,3 +245,5 @@ Document contacts, map endpoints, work and goods paths, garment carriers and
 access relations remain distinct from legal rights, title and chronology.
 Source registration, installed retrieval, audited prompt use and saved pixels
 are separate evidence; unresolved historical details remain held.
+
+The [campus-life extension](campus-life-semantics.md) registers 100 complete optional bilingual visual sources and 23 excluded diagnostics, with 124 semantic cards, 356 advisory routes and 220 bindings. Requester topic scope, agent-owned staging, complete source conditions and saved-pixel qualification remain separate.

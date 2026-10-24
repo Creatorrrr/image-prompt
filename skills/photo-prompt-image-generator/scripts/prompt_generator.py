@@ -2648,8 +2648,21 @@ def authorial_core_retrieval_text(
         if isinstance(item, dict) and str(item.get("text") or "")
     ]
     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
-        for item in active_spans:
-            add("source_request_scope", creative_controls.strip_assignments(str(item.get("text") or "")))
+        context = None
+        if "topic_context" in request_binding:
+            context = _authoring_wire.normalize_topic_context(request_binding["topic_context"], str(core.get("source_request") or ""), active_spans)
+        if "query_scope" in request_binding:
+            query_scope = _authoring_wire.normalize_request_query_scope(
+                request_binding["query_scope"], str(core.get("source_request") or ""), active_spans, context)
+            for field, value in _authoring_wire.request_query_scope_fields(query_scope, context):
+                add(field, creative_controls.strip_assignments(value))
+        else:
+            # Frozen historical requests retain their original projection.
+            for item in active_spans:
+                add("source_request_scope", creative_controls.strip_assignments(str(item.get("text") or "")))
+            if context is not None:
+                for link in context["links"]:
+                    add("request_topic_context", creative_controls.strip_assignments(link["topic_quote"]["text"]))
     else:
         add("source_request", core.get("source_request"))
     add("interpreted_intent", core.get("interpreted_intent"))
@@ -2720,6 +2733,11 @@ def authorial_core_retrieval_text(
                 ),
             }
         )
+        if "topic_context" in request_binding:
+            provenance["topic_context_sha256"] = context["canonical_sha256"]
+        if "query_scope" in request_binding:
+            provenance["request_query_scope_sha256"] = query_scope["canonical_sha256"]
+            provenance["request_query_segment_purposes"] = [r["purpose"] for r in query_scope["segments"]]
     return query, provenance
 
 
