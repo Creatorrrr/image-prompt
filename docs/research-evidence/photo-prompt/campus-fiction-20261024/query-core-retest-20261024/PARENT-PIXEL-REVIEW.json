@@ -1,0 +1,93 @@
+{
+  "reviewed_utc": "2026-10-23T23:46:19.331973+00:00",
+  "arms": [
+    {
+      "arm": "a",
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/campus-query-core-20261024-a/image.png",
+      "image_sha256": "9d2aca6ba948a3ab49af4453c950e8be2a401d15986eb4eab0d5c829dd168953",
+      "inspection": "Parent independently viewed the original pixels. No extra generation, resampling, edited image or child verdict substituted for inspection.",
+      "new_source_gates": [
+        {
+          "id": "tiered_long_seat_rows",
+          "status": "pass",
+          "evidence": "Long seating/writing rows and stepped levels are visible."
+        },
+        {
+          "id": "front_lectern",
+          "status": "partial",
+          "evidence": "The front has a long instructor desk/counter; a distinct lectern cannot be reliably distinguished."
+        },
+        {
+          "id": "front_screen",
+          "status": "pass",
+          "evidence": "A screen is recognizable above the front teaching area."
+        },
+        {
+          "id": "seats_face_front",
+          "status": "pass",
+          "evidence": "Rows and seated background people face that front teaching area."
+        },
+        {
+          "id": "side_aisle_to_every_row",
+          "status": "unobservable",
+          "evidence": "Right-side steps are visible, but the foreground subject/table obscure row-to-aisle endpoints, so every connection cannot be traced."
+        }
+      ],
+      "strict_new_source_pass": false,
+      "strict_policy": "partial_is_fail; UNOBSERVABLE_NOT_PASS",
+      "summary": "New S01 components reach the pixels, but two complete-source relations do not qualify.",
+      "reference_visible_features": "Dark short bob/wispy fringe, broad facial shape and visible features resemble the supplied reference; no real-identity claim.",
+      "technical_note": "Separate managed review is authoritative for its own bounded checks. For C, left fingers/palm touch the page rather than the requested separate clear table surface."
+    },
+    {
+      "arm": "b2",
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/campus-query-core-20261024-b2/image.png",
+      "image_sha256": "75666cd95093397efa48c23f0a7e4aa8a1c21afba7045deacd171808d0be6565",
+      "inspection": "Parent independently viewed the original pixels. No extra generation, resampling, edited image or child verdict substituted for inspection.",
+      "new_source_gates": [
+        {
+          "id": "campus_S11_two_beds",
+          "status": "pass",
+          "evidence": "Two separate bed shapes are recognizable in the same room."
+        },
+        {
+          "id": "campus_S11_two_desks",
+          "status": "pass",
+          "evidence": "Two desk work surfaces with separate working zones are recognizable at the rear."
+        },
+        {
+          "id": "campus_S11_separate_zones",
+          "status": "partial",
+          "evidence": "Drawer/storage shapes appear near the workspaces and under the beds, but two distinct bedside-storage-to-corresponding-desk relations are not both clear. Under-bed storage alone cannot prove bedside adjacency."
+        }
+      ],
+      "strict_new_source_pass": false,
+      "strict_policy": "partial_is_fail; UNOBSERVABLE_NOT_PASS",
+      "summary": "New S11 counts reach the pixels, but the full storage ownership/adjacency does not qualify.",
+      "reference_visible_features": "Dark short bob/wispy fringe, broad facial shape and visible features resemble the supplied reference; no real-identity claim.",
+      "technical_note": "Separate managed review is authoritative for its own bounded checks. For C, left fingers/palm touch the page rather than the requested separate clear table surface.",
+      "preauthored_gate_reconciliation": {
+        "complete_bed_shapes": "partial",
+        "count_observation": "Two beds remain countable; the preauthored gate additionally requires complete shapes, and the doorframe/crop hides boundaries. No gate was relaxed.",
+        "storage_relation": "partial",
+        "strict_outcome": "fail"
+      }
+    },
+    {
+      "arm": "c",
+      "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/campus-query-core-20261024-c/actual1.png",
+      "image_sha256": "4b11d9bf0eab7a80bb9472df9c69e3a22d2539af0a9bfeae4663502628e6fd16",
+      "inspection": "Parent independently viewed the original pixels. No extra generation, resampling, edited image or child verdict substituted for inspection.",
+      "new_source_gates": [],
+      "strict_new_source_pass": false,
+      "strict_policy": "partial_is_fail; UNOBSERVABLE_NOT_PASS",
+      "summary": "No newly registered campus source was retained. Existing café/reading material is visible; this is not new-source success.",
+      "reference_visible_features": "Dark short bob/wispy fringe, broad facial shape and visible features resemble the supplied reference; no real-identity claim.",
+      "technical_note": "Separate managed review is authoritative for its own bounded checks. For C, left fingers/palm touch the page rather than the requested separate clear table surface."
+    }
+  ],
+  "new_source_prompt_transmission_count": 2,
+  "new_source_partial_pixel_transmission_count": 2,
+  "strict_new_source_pixel_pass_count": 0,
+  "user_acceptance": "pending"
+}

@@ -1,0 +1,375 @@
+--- installed-before/precore/photo_request_query_scope.py
++++ reviewed-overlay/precore/photo_request_query_scope.py
+@@ -0,0 +1,73 @@
++"""Exact requester-text discovery scope; contains no scene examples or candidates."""
++from __future__ import annotations
++import hashlib
++import json
++
++VERSION = 'photo-request-query-scope/v1'
++PURPOSES = frozenset({'visual', 'topic_reference', 'reference_use', 'workflow'})
++
++def digest(value):
++    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
++                                     separators=(',', ':')).encode()).hexdigest()
++
++def normalize(payload, request_text, active_spans, topic_context=None):
++    if not isinstance(payload, dict) or set(payload) - {'contract_version', 'segments', 'canonical_sha256'}:
++        raise ValueError('request query scope has unsupported fields')
++    if payload.get('contract_version') != VERSION:
++        raise ValueError('unsupported request query scope')
++    rows = payload.get('segments')
++    if not isinstance(rows, list) or not 1 <= len(rows) <= 64:
++        raise ValueError('request query scope needs one to 64 reviewed segments')
++    spans = {r['span_id']: r for r in active_spans}
++    coverage = {key: set() for key in spans}
++    links = (topic_context or {}).get('links', [])
++    out = []
++    for row in rows:
++        if not isinstance(row, dict) or set(row) != {'active_span_id', 'start', 'end', 'text', 'purpose', 'reason'}:
++            raise ValueError('request query segment fields are incomplete or unsupported')
++        if not isinstance(row['active_span_id'], str):
++            raise ValueError('request query segment needs an active span ID')
++        span = spans.get(row['active_span_id'])
++        start, end = row['start'], row['end']
++        if (span is None or type(start) is not int or type(end) is not int
++                or not span['start'] <= start < end <= span['end']
++                or request_text[start:end] != row['text']):
++            raise ValueError('request query segment is not exact active requester text')
++        if (not isinstance(row['purpose'], str) or row['purpose'] not in PURPOSES
++                or not isinstance(row['reason'], str) or not row['reason'].strip()):
++            raise ValueError('request query segment needs a reviewed purpose')
++        positions = set(range(start, end))
++        if coverage[row['active_span_id']] & positions:
++            raise ValueError('request query segments overlap')
++        coverage[row['active_span_id']].update(positions)
++        if row['purpose'] == 'topic_reference' and not any(
++                link['active_span_id'] == row['active_span_id']
++                and start <= link['request_quote']['start'] < link['request_quote']['end'] <= end
++                for link in links):
++            raise ValueError('topic reference segment has no exact reviewed antecedent')
++        out.append(dict(row))
++    for key, span in spans.items():
++        if any(i not in coverage[key] and not request_text[i].isspace()
++               for i in range(span['start'], span['end'])):
++            raise ValueError('request query scope leaves active requester text unreviewed')
++    result = {'contract_version': VERSION,
++              'segments': sorted(out, key=lambda r: (r['start'], r['end']))}
++    result['canonical_sha256'] = digest(result)
++    if payload.get('canonical_sha256', result['canonical_sha256']) != result['canonical_sha256']:
++        raise ValueError('request query scope canonical hash mismatch')
++    return result
++
++def retrieval_fields(scope, topic_context=None):
++    """Workflow/reference transport is retained in the envelope, not discovery text."""
++    fields = []
++    links = (topic_context or {}).get('links', [])
++    for row in scope['segments']:
++        if row['purpose'] == 'visual':
++            fields.append(('source_request_visual_scope', row['text']))
++        elif row['purpose'] == 'topic_reference':
++            fields.extend(('request_topic_context', link['topic_quote']['text'])
++                          for link in links
++                          if link['active_span_id'] == row['active_span_id']
++                          and row['start'] <= link['request_quote']['start']
++                          < link['request_quote']['end'] <= row['end'])
++    return fields
+--- installed-before/precore/photo_request_ownership.py
++++ reviewed-overlay/precore/photo_request_ownership.py
+@@ -0,0 +1,72 @@
++"""Candidate-free review of requester anchors and atomic authorial detail."""
++from __future__ import annotations
++import hashlib
++import re
++
++VERSION = 'photo-requester-ownership-review/v1'
++
++def contains(text, phrase):
++    text, phrase = (' '.join(v.split()).casefold() for v in (text, phrase))
++    return re.search(r'(?<!\w)' + re.escape(phrase) + r'(?!\w)', text) is not None
++
++def validate(review, core, selection, envelope, required_evidence):
++    if not isinstance(review, dict) or set(review) != {
++            'contract_version', 'request_sha256', 'baseline_prompt_sha256',
++            'anchors', 'authorial_details'}:
++        raise ValueError('requester ownership review fields are incomplete or unsupported')
++    baseline = core['baseline_prompt_en']
++    if (review['contract_version'] != VERSION
++            or review['request_sha256'] != envelope['request_sha256']
++            or review['baseline_prompt_sha256'] != hashlib.sha256(baseline.encode()).hexdigest()):
++        raise ValueError('requester ownership review input binding mismatch')
++    anchors = {a['anchor_id']: a for a in core['intent_lock']['semantic_anchors']}
++    rows = review['anchors']
++    if not isinstance(rows, list) or len(rows) != len(anchors):
++        raise ValueError('requester ownership review must cover every anchor exactly once')
++    seen = set()
++    for row in rows:
++        if not isinstance(row, dict) or set(row) != {
++                'anchor_id', 'source_text', 'prompt_evidence', 'requester_meaning', 'reason'}:
++            raise ValueError('requester ownership anchor review fields are invalid')
++        key = row['anchor_id']
++        if key not in anchors or key in seen:
++            raise ValueError('requester ownership review has missing or duplicate anchors')
++        seen.add(key)
++        if any(row[f] != anchors[key][f] for f in ('source_text', 'prompt_evidence')):
++            raise ValueError('requester ownership review changed an anchor')
++        if any(not isinstance(row[f], str) or not row[f].strip()
++               for f in ('requester_meaning', 'reason')):
++            raise ValueError('requester ownership anchor needs semantic review')
++    authored = {r['category_id']: r for r in selection['selected']
++                if r['basis'] == 'agent_visual_choice'}
++    details = review['authorial_details']
++    if not isinstance(details, list) or len(details) != len(authored):
++        raise ValueError('ownership review must cover every authorial feature category')
++    seen = set()
++    for row in details:
++        if not isinstance(row, dict) or set(row) != {'category_id', 'literals', 'reason'}:
++            raise ValueError('authorial detail review fields are invalid')
++        key = row['category_id']
++        if key not in authored or key in seen:
++            raise ValueError('authorial detail categories must be exact and distinct')
++        seen.add(key)
++        literals = row['literals']
++        if (not isinstance(literals, list) or not 1 <= len(literals) <= 8
++                or not isinstance(row['reason'], str) or not row['reason'].strip()):
++            raise ValueError('authorial feature needs one to eight reviewed atomic literals')
++        if any(not isinstance(v, str) for v in literals):
++            raise ValueError('authorial detail literals must be text')
++        if len(set(literals)) != len(literals):
++            raise ValueError('duplicate authorial detail literal')
++        for literal in literals:
++            if (not isinstance(literal, str) or not literal.strip()
++                    or not re.search(r'\w', literal)
++                    or literal not in authored[key]['baseline_evidence']):
++                raise ValueError('authorial detail must be an exact part of its feature evidence')
++            for path, required in required_evidence:
++                if contains(required, literal):
++                    raise ValueError('authorial detail is locked by requester evidence: '
++                                     + key + ' / ' + literal + ' / ' + path)
++    return {'valid': True, 'contract_version': VERSION,
++            'reviewed_anchor_count': len(anchors), 'reviewed_authorial_categories': len(authored),
++            'limit': 'Exact atomic overlap and complete review binding; natural-language ownership still needs semantic judgment.'}
+--- installed-before/precore/photo_authoring_wire.py
++++ reviewed-overlay/precore/photo_authoring_wire.py
+@@ -12,6 +12,7 @@
+ from photo_semantic_witnesses import normalize_check as _native_witness_check, is_native_fact as _native_fact_row
+ from typing import Any, Dict, List, Mapping, Optional, Sequence, Set
+ import creative_controls
++import photo_request_query_scope
+ import photo_camera_authoring as photo_camera_evidence
+ from photo_authoring_contracts import (
+     AUTHORIAL_CORE_V3_CONTRACT_VERSION,
+@@ -155,6 +156,7 @@
+         "active_spans",
+         "input_inventory",
+         "topic_context",
++        "query_scope",
+     }
+     unknown_fields = sorted(set(payload) - allowed_fields)
+     if unknown_fields:
+@@ -239,9 +241,18 @@
+         normalized["input_inventory"] = _native_witnesses.validate_input_inventory(payload["input_inventory"],request_sha256)
+     if "topic_context" in payload:
+         normalized["topic_context"] = normalize_topic_context(payload["topic_context"], request_text, spans)
++    if "query_scope" in payload:
++        normalized["query_scope"] = normalize_request_query_scope(
++            payload["query_scope"], request_text, spans, normalized.get("topic_context"))
+     normalized["canonical_sha256"] = canonical_json_sha256(normalized)
+     normalized["envelope_id"] = normalized["canonical_sha256"][:16]
+     return normalized
++
++def normalize_request_query_scope(payload, request_text, active_spans, topic_context=None):
++    return photo_request_query_scope.normalize(payload, request_text, active_spans, topic_context)
++
++def request_query_scope_fields(scope, topic_context=None):
++    return photo_request_query_scope.retrieval_fields(scope, topic_context)
+ 
+ def normalize_topic_context(payload: Any, request_text: str, active_spans: List[JsonDict]) -> JsonDict:
+     """Bind quoted conversation antecedents for discovery, never intent authority.
+@@ -1199,6 +1210,8 @@
+         normalized["request_binding"]["input_inventory"] = copy.deepcopy(request_envelope["input_inventory"])
+     if "topic_context" in request_envelope:
+         normalized["request_binding"]["topic_context"] = copy.deepcopy(request_envelope["topic_context"])
++    if "query_scope" in request_envelope:
++        normalized["request_binding"]["query_scope"] = copy.deepcopy(request_envelope["query_scope"])
+     runtime_forbidden_labels = [
+         str(item).strip()
+         for item in normalize_list(payload.get("runtime_forbidden_labels"))
+--- installed-before/precore/photo_feature_selection.py
++++ reviewed-overlay/precore/photo_feature_selection.py
+@@ -3,6 +3,7 @@
+ import hashlib
+ import json
+ import re
++import photo_request_ownership
+ from pathlib import Path
+ from typing import Any
+ from photo_authoring_wire import clean_spaces
+@@ -234,6 +235,7 @@
+             "request_sha256",
+             "baseline_prompt_sha256",
+             "selected",
++            "ownership_review",
+         },
+         "selection",
+     )
+@@ -370,6 +372,10 @@
+         evidence_phrases.append(normalized_evidence)
+         evidence_pairs.append((normalized_reason, normalized_evidence))
+ 
++    ownership = None
++    if "ownership_review" in record:
++        ownership = photo_request_ownership.validate(record["ownership_review"], authorial_core,
++                                                      record, request_envelope, required_evidence)
+     warnings: list[str] = []
+     if len(set(reasons)) != len(reasons):
+         warnings.append("repeated_reason")
+@@ -386,4 +392,5 @@
+         "selected_category_ids": selected_ids,
+         "selected_count": len(selected_ids),
+         "warnings": warnings,
++        **({"ownership_review": ownership} if ownership is not None else {}),
+     }
+--- installed-before/precore/prepare_photo_run.py
++++ reviewed-overlay/precore/prepare_photo_run.py
+@@ -56,6 +56,8 @@
+         envelope["input_inventory"] = read_json(args.input_inventory)
+     if getattr(args,"topic_context",None) is not None:
+         envelope["topic_context"] = read_json(args.topic_context)
++    if getattr(args,"query_scope",None) is not None:
++        envelope["query_scope"] = read_json(args.query_scope)
+     wire.normalize_request_envelope(envelope)
+     with locked_state(args.run) as state:
+         if state is not None:
+@@ -113,6 +115,8 @@
+         declared = "camera" in set(core["intent_lock"]["open_dimensions"]) | set(core["intent_lock"]["locked_dimensions"])
+         camera.camera_authoring_declaration(core, required=declared)
+         selection = read_json(args.selection)
++        if "ownership_review" not in selection:
++            raise WorkflowError("requester_ownership_review_required_for_new_freeze")
+         catalog = Path(__file__).with_name("visual_feature_catalog.json").read_bytes()
+         for key, expected in {"contract_version": features.SELECTION_VERSION, "catalog_path": features.CATALOG_PATH,
+             "catalog_schema_version": features.CATALOG_VERSION, "catalog_sha256": digest(catalog),
+@@ -159,6 +163,7 @@
+     p.add_argument("--request", type=Path, required=True); p.add_argument("--request-id")
+     p.add_argument("--input-inventory", type=Path, help="explicit complete/partial caller input inventory; never inferred")
+     p.add_argument("--topic-context", type=Path, help="reviewed exact prior-user quotes linked to active current spans; discovery only")
++    p.add_argument("--query-scope", type=Path, help="exact reviewed visual/topic/reference/workflow segments; discovery only")
+     group = p.add_mutually_exclusive_group(required=True)
+     group.add_argument("--whole-request", action="store_true"); group.add_argument("--spans", type=Path)
+     p.add_argument("--mode", choices=("prompt_only", "image"), required=True)
+--- installed-before/scripts/prompt_generator.py
++++ reviewed-overlay/scripts/prompt_generator.py
+@@ -3158,12 +3158,21 @@
+         if isinstance(item, dict) and str(item.get("text") or "")
+     ]
+     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
+-        for item in active_spans:
+-            add("source_request_scope", creative_controls.strip_assignments(str(item.get("text") or "")))
++        context = None
+         if "topic_context" in request_binding:
+             context = _authoring_wire.normalize_topic_context(request_binding["topic_context"], str(core.get("source_request") or ""), active_spans)
+-            for link in context["links"]:
+-                add("request_topic_context", creative_controls.strip_assignments(link["topic_quote"]["text"]))
++        if "query_scope" in request_binding:
++            query_scope = _authoring_wire.normalize_request_query_scope(
++                request_binding["query_scope"], str(core.get("source_request") or ""), active_spans, context)
++            for field, value in _authoring_wire.request_query_scope_fields(query_scope, context):
++                add(field, creative_controls.strip_assignments(value))
++        else:
++            # Frozen historical requests retain their original projection.
++            for item in active_spans:
++                add("source_request_scope", creative_controls.strip_assignments(str(item.get("text") or "")))
++            if context is not None:
++                for link in context["links"]:
++                    add("request_topic_context", creative_controls.strip_assignments(link["topic_quote"]["text"]))
+     else:
+         add("source_request", core.get("source_request"))
+     add("interpreted_intent", core.get("interpreted_intent"))
+@@ -3236,6 +3245,9 @@
+         )
+         if "topic_context" in request_binding:
+             provenance["topic_context_sha256"] = context["canonical_sha256"]
++        if "query_scope" in request_binding:
++            provenance["request_query_scope_sha256"] = query_scope["canonical_sha256"]
++            provenance["request_query_segment_purposes"] = [r["purpose"] for r in query_scope["segments"]]
+     return query, provenance
+ 
+ 
+--- installed-before/scripts/photo_h_f2_queries.py
++++ reviewed-overlay/scripts/photo_h_f2_queries.py
+@@ -3,7 +3,7 @@
+ import photo_slot_expression as expression
+ import photo_slot_queries as queries
+ RECIPE='photo-h-f2/v1'
+-WHOLE_RECIPE='photo-h-f2-whole-scene-query/v2'
++WHOLE_RECIPE='photo-h-f2-whole-scene-query/v3'
+ REQUEST_TOPIC='__request_topic__'
+ BASELINE_PROMPT='__baseline_prompt__'
+ WHOLE_QUERY_IDS=frozenset({REQUEST_TOPIC,BASELINE_PROMPT})
+--- installed-before/scripts/audit_composed_prompt.py
++++ reviewed-overlay/scripts/audit_composed_prompt.py
+@@ -3252,7 +3252,7 @@
+     if not isinstance(source_request, str) or not source_request or not isinstance(binding, dict):
+         return False
+     if (
+-        set(binding) - {"input_inventory", "topic_context"}
++        set(binding) - {"input_inventory", "topic_context", "query_scope"}
+         != {
+             "contract_version",
+             "request_id",
+@@ -3327,6 +3327,13 @@
+             from photo_precore_bridge import load as _neutral_context_load
+             reconstructed_envelope["topic_context"] = _neutral_context_load("photo_authoring_wire").normalize_topic_context(
+                 binding["topic_context"], source_request, spans)
++        except (ValueError, KeyError, TypeError):
++            return False
++    if "query_scope" in binding:
++        try:
++            from photo_precore_bridge import load as _neutral_scope_load
++            reconstructed_envelope["query_scope"] = _neutral_scope_load("photo_authoring_wire").normalize_request_query_scope(
++                binding["query_scope"], source_request, spans, reconstructed_envelope.get("topic_context"))
+         except (ValueError, KeyError, TypeError):
+             return False
+     if binding.get("request_envelope_sha256") != canonical_json_sha256(reconstructed_envelope):
+@@ -3881,15 +3888,24 @@
+             fields.append((field, text))
+ 
+     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
+-        for value in authorial_core_active_span_texts(core):
+-            add("source_request_scope", creative_controls.strip_assignments(value))
+         binding = core.get("request_binding") or {}
++        context = None
++        from photo_precore_bridge import load as _neutral_context_load
++        wire = _neutral_context_load("photo_authoring_wire")
+         if "topic_context" in binding:
+-            from photo_precore_bridge import load as _neutral_context_load
+-            context = _neutral_context_load("photo_authoring_wire").normalize_topic_context(
++            context = wire.normalize_topic_context(
+                 binding["topic_context"], str(core.get("source_request") or ""), binding.get("active_spans") or [])
+-            for link in context["links"]:
+-                add("request_topic_context", creative_controls.strip_assignments(link["topic_quote"]["text"]))
++        if "query_scope" in binding:
++            query_scope = wire.normalize_request_query_scope(
++                binding["query_scope"], str(core.get("source_request") or ""), binding.get("active_spans") or [], context)
++            for field, value in wire.request_query_scope_fields(query_scope, context):
++                add(field, creative_controls.strip_assignments(value))
++        else:
++            for value in authorial_core_active_span_texts(core):
++                add("source_request_scope", creative_controls.strip_assignments(value))
++            if context is not None:
++                for link in context["links"]:
++                    add("request_topic_context", creative_controls.strip_assignments(link["topic_quote"]["text"]))
+     else:
+         add("source_request", core.get("source_request"))
+     add("interpreted_intent", core.get("interpreted_intent"))
+@@ -3969,6 +3985,9 @@
+         )
+         if "topic_context" in binding:
+             provenance["topic_context_sha256"] = context["canonical_sha256"]
++        if "query_scope" in binding:
++            provenance["request_query_scope_sha256"] = query_scope["canonical_sha256"]
++            provenance["request_query_segment_purposes"] = [r["purpose"] for r in query_scope["segments"]]
+     return provenance
+ 
+ 

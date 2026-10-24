@@ -1,0 +1,3 @@
+Publication source tests: 72 PASS. The unchanged legacy-v2 query lane stays in main; H-F2 tests use the deployed v4 expression/query support and the publication producer/auditor/neutral modules. Installed runtime config is preserved from main; historical image runs keep their issued release. No unrelated automatic-negative, styling or sampling policy edit is published.
+
+Whitespace verification excludes historical .diff evidence (context blank-line spaces are patch syntax) and the byte-preserved VISUAL-CARDS.md research snapshot with one terminal blank line. All remaining staged source/document paths pass git diff --check; original research checksums remain unchanged.
