@@ -1,0 +1,45 @@
+from pathlib import Path
+import json,uuid,copy,hashlib
+R=Path('/Users/chasoik/Projects/image-prompt');O=Path(__file__).resolve().parent;A=R/'skills/photo-prompt-image-generator/assets'
+read=lambda p:json.loads(p.read_bytes())
+def write(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+baseline=O/'baseline/skills/photo-prompt-image-generator/assets'
+x=read(baseline/'photo_candidate_romcom_20261024.json');reg=read(baseline/'photo_romcom_semantics_20261024.json');bindings=read(baseline/'photo_candidate_romcom_bindings_20261024.json');old=copy.deepcopy(x);changed={}
+catalog=read(Path(read(O/'BASELINE.json')['native'])/'assets/photo_candidate_slot_catalog.json')['slot_catalog']
+# Explicit authored lookup phrases connect the actual user topic to optional forms.
+# Existing positive propositions, guards, effects and provenance remain exact.
+for cid,r in x['candidates'].items():
+ c=r['content'];m=c['research_semantics'];k=m['id']
+ if (k.startswith('R') or k in {'S01','S02','S04','S05','S08','E01','E02','E03','E04','E05','E06','E07','E12','F01','F02','F03','F04','C01','C02','C03','C04'}):
+  c['aliases']=list(dict.fromkeys(c.get('aliases',[])+['러브코미디 장면: '+m['label_ko'],'romantic comedy photographic staging: '+c['en']]))
+  changed[cid]=r
+P=[
+ ('P01','공유 대상의 경합과 호감이 함께 읽히는 구도','Make a shared-object disagreement legible through opposed reach directions, separately owned hands and an observable limit on the available resource; place the participants\' different facial responses beside that same point of contention.','공유 물건에 대한 다툼은 서로 반대인 손의 접근 방향, 구별되는 손의 주인, 눈에 보이는 수량 제한으로 드러내고 서로 다른 두 얼굴의 반응을 같은 경합 지점 곁에 둔다.',['composition','social_cue','situation_context'],['shared_resource','hand_A','hand_B','face_A','face_B'],'Separate reaches and visible resource limit coexist with different readable responses.','Scarcity cannot be inferred from abundant substitutes or an unseen prior contest.'),
+ ('P02','작은 어긋남과 서로 다른 반응을 한 화면에','Give a small comic interruption an identifiable visible stimulus and two contrasting responses in the same connected space; the affected person may retain a composed face while the other visibly struggles to suppress a smile.','작은 코믹한 어긋남의 눈에 보이는 계기와 서로 다른 두 반응을 연결된 같은 공간에 두며, 영향을 받은 사람은 태연한 표정을 유지하고 상대는 웃음을 참으려는 표정을 드러낼 수 있다.',['social_cue','expression','situation_context'],['stimulus','affected_person','responding_person'],'Stimulus and contrasting responses remain readable without a caption.','A shared pleasant smile alone does not show an interrupted plan, history or actual romantic feeling.'),
+ ('P03','균형을 읽히게 하는 지지점과 여백','For a depicted balance recovery, show the relevant body lean, separately owned assistance contact and every support endpoint required by that pose in one frame; place usable ground and frame margin beyond the endpoints.','균형을 회복하는 자세에서는 몸의 기울기, 주인이 구별되는 도움의 접촉, 그 자세에 필요한 모든 지지 끝점을 한 화면에 보이고 끝점 바깥에도 지면과 프레임 여백을 둔다.',['body_geometry','composition','pose'],['leaning_body','assisting_body','contact','support_endpoints','ground'],'All pose-dependent support endpoints and assistance contact visible together.','An off-frame far support or an unexplained hovering limb is not observable support.'),
+ ('P04','기둥과 조작부를 구별하는 손의 접촉','When a hand is depicted operating an object, show its grip on the actual moving handle or actuator and the actuator\'s connection to the object; separate that grip from adjacent poles, housings and merely nearby fingers.','손이 물건을 조작할 때는 실제로 움직이는 손잡이·조작부를 쥔 접촉과 그 조작부에서 물건으로 이어지는 연결을 보이고, 옆 기둥·외장이나 가까이만 있는 손가락과 그 접촉을 구별한다.',['action','composition','object_condition'],['hand','actuator','object','adjacent_support'],'Actual hand-actuator contact and actuator-object connection coexist.','Gripping a nearby support cannot substitute for operating the specified actuator.'),
+ ('P05','표정과 사건의 접점을 함께 살리는 초점','Place the interaction\'s decisive contact or visible stimulus and both relevant faces in a readable depth arrangement; choose framing, scale and focus for their simultaneous recognition rather than maximizing only one face.','상호작용의 결정적 접점·눈에 보이는 계기와 두 얼굴을 함께 읽을 수 있는 깊이에 두고, 한 얼굴만 크게 만드는 대신 이들이 동시에 식별되는 프레이밍·크기·초점을 선택한다.',['composition','framing','depth_of_field'],['contact_or_stimulus','face_A','face_B','focus_plane'],'Decisive endpoint and both responses visible at the declared image scale.','A sharp portrait with a hidden critical contact is not full interaction evidence.'),
+ ('P06','태연한 표정과 어긋난 상황의 대비','Build a restrained comic contrast between a plainly visible small practical mishap and a participant\'s conspicuously composed posture or expression; let the partner\'s directed reaction connect the contrast to their encounter.','작고 분명한 실용적 실수와 유난히 태연한 자세·표정의 대비를 만들고 상대가 그 어긋남에 방향을 둔 반응을 보여 만남과 대비를 연결한다.',['social_cue','expression','situation_context'],['visible_mishap','composed_person','reacting_partner'],'Concrete mismatch and a directed partner response coexist.','Personality, cause, accident, consent and romantic agreement remain unestablished by a still image.')]
+write(O/'authored-transfer-guidance.json',P)
+source_sha=hashlib.sha256((O/'authored-transfer-guidance.json').read_bytes()).hexdigest()
+for key,label,en,ko,slots,nodes,gate,boundary in P:
+ cid='cand_'+uuid.uuid5(uuid.NAMESPACE_URL,'image-prompt:romcom:20261024:transfer:'+key).hex
+ m={'id':key,'label_ko':label,'mode':'optional_compositional_guidance','term_refs':[],'suggested_slots':slots,'source_ids':[],'positive_en':en,'positive_ko':ko,'owner_nodes':nodes,'research_relations':[],'observable_gate':gate,'confusion_boundary':boundary,'provenance':'agent_authored_round2_analysis','source_relation':'Transferable photographic guidance authored from recorded test defects, not an external lexical definition or approved native visual profile.','activation':'Post-core optional reference only; no automatic hard activation.','native_approval':False,'automatic_hard_activation':False,'pixel_status':'NOT_RUN','runtime_registration':'pending_round2_seal','graph_scope':'Review metadata only; no fact, owner, contract or effect permission.','registration_status':'authored_optional_source','native_qualification':'not_qualified','candidate_id':cid,'actual_slot_suggestions':slots}
+ contract='Optional general photographic composition guidance. This is not a prescribed whole-scene template or native visual profile. Apply only as an independently justified authorial decision on open dimensions, with actual final evidence. It supplies no actor, relationship, age, object, hard obligation or source qualification. Preserve any independently required owner, contact, actuator and support endpoints; partial or unobservable required evidence cannot pass. Research metadata and search exposure never confer native adoption authority.'
+ r={'id':cid,'record_kind':'visual_option','content':{'en':en,'ko':ko,'definition':'Optional transferable photographic guidance for a romantic-comedy encounter. '+en,'aliases':['러브코미디 사진 구도: '+label,'romantic comedy interaction composition: '+en],'application_contract':contract,'research_semantics':m},'conditions':{'for_any':['human']},'effects':{'dimensions':['action','body_geometry','camera','composition','expression','framing','pose'],'properties':[]},'provenance':[{'source':str((O/'authored-transfer-guidance.json').relative_to(R))+'#'+key,'sha256':source_sha}]}
+ x['candidates'][cid]=r;reg['cards'].append(copy.deepcopy(m));changed[cid]=r
+ # Bind only catalog-confirmed roles, using presentation relations without ranking votes.
+ for slot in slots:
+  if slot not in catalog:continue
+  bid='bind_'+uuid.uuid5(uuid.NAMESPACE_URL,'image-prompt:romcom:20261024:transfer:'+key+':'+slot).hex
+  bindings['slot_bindings'][bid]={'id':bid,'candidate_id':cid,'slot_id':slot,'role':'optional','semantic_role':catalog[slot]['semantic_role'],'conditions':{'subject_applicability':{}},'weight':1.0}
+# The original 317 routes, 19 diagnostics and 118 original propositions stay intact.
+for cid,prior in old['candidates'].items():
+ now=x['candidates'][cid]
+ for k in ('conditions','effects','provenance'):assert now[k]==prior[k]
+ for k in ('en','ko','definition','application_contract','research_semantics'):
+  assert now['content'].get(k)==prior['content'].get(k)
+write(A/'photo_candidate_romcom_20261024.json',x);write(A/'photo_romcom_semantics_20261024.json',reg);write(A/'photo_candidate_romcom_bindings_20261024.json',bindings)
+write(O/'reviewed-native-records.json',changed)
+write(O/'data-change-summary.json',{'existing_discovery_alias_updates':len(changed)-6,'new_transferable_guidance':6,'original_propositions_conditions_effects_provenance_preserved':118,'original_routes_preserved':317,'diagnostics':19,'total_records':len(x['candidates']),'bindings':len(bindings['slot_bindings']),'native_approval':False,'adoption_quota':0,'sampling_policy_changed':False})
+print(json.dumps(read(O/'data-change-summary.json')))

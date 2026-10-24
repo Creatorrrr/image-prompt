@@ -1,0 +1,53 @@
+{
+  "schema_version": "photo-image-render-review/v1",
+  "pack_id": "57a0908873142b0e",
+  "source_render_repair_contract_sha256": "ceec0c46fe3c91f166175ecb5ad2867fe7cdcbe49debc0be77295d7c4caa1faf",
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/romcom-20261024-r2-b/compatible-run/result.png",
+    "sha256": "72e9c16664e5f082b0aad5317b51b84a642fd9c8bfe631689ee03dd418718d97"
+  },
+  "reviewer": {
+    "reviewer_id": "Codex independent arm B",
+    "method": "direct_pixel_inspection"
+  },
+  "gates": [
+    {
+      "gate_id": "rr_four_skate_ice_support_object_class_legible",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "At native and 384x256 thumbnail scale, four separate lace-up boots with metal skate hardware are recognizable as ice skates worn by the two people. All four boots are inside the image, including the far screen-right dark skate.",
+      "observability": "visible"
+    },
+    {
+      "gate_id": "rr_four_skate_ice_support_gross_structure_coherent",
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "Three long blade structures are readable. The screen-left white skate is strongly toe-on and tipped, exposing only a narrow front metal portion; the full rear/long blade structure cannot be followed beneath the boot. Do not infer complete fourth-blade structure from its visible tip or diagnose an unseen deformity.",
+      "observability": "partial"
+    },
+    {
+      "gate_id": "rr_four_skate_ice_support_intended_interaction_matches",
+      "status": "fail",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "All four boots are worn and the pair retains rail-assisted skating support, but the frozen interaction requires all four complete blade-to-ice support relations together. Only the front tip/contact of the screen-left white skate is resolved; its complete long blade/ice edge remains unassessable at native scale and the thumbnail. The former far-right crop defect is repaired, but this endpoint is not dropped to pass.",
+      "observability": "partial"
+    },
+    {
+      "gate_id": "rr_four_skate_ice_support_contact_anatomy_coherent",
+      "status": "pass",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "Each of the four boots visibly continues from its own ankle and leg; the two people retain separate hip-knee-ankle chains. The inner hands visibly join and both outer gloved hands brace the rail. No severe actor-to-skate fusion or impossible principal articulation is visible. This does not certify the hidden long blade boundary.",
+      "observability": "visible"
+    }
+  ]
+}
