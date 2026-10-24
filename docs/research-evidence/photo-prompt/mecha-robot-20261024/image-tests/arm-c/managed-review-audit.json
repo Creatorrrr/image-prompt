@@ -1,0 +1,47 @@
+{
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "d9c80345c0edc508",
+    "contract_version": "photo-embodiment-preflight/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "required_hard_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_joint_chain_and_reach",
+        "status": "fail",
+        "evidence": "The driver-hand reach and metal wrist connection are coherent, but the declared distinct elbow-to-wrist topology cannot be fully certified in this projection. A compact covered proximal section is visible; naming an unseen elbow would exceed the pixel evidence. This is an observability failure, not a diagnosis of hidden deformation."
+      },
+      {
+        "gate": "embodiment_contact_and_space",
+        "status": "fail",
+        "evidence": "The driver tip visibly meets a wrist fastener and the skin/tool/metal boundaries are coherent. The supporting hand is visible on the distal wrist/palm region, rather than clearly on the exposed forearm frame specified in the reviewed prompt. That contact subcomponent cannot pass the complete intended-contact gate."
+      },
+      {
+        "gate": "embodiment_visibility_and_projection",
+        "status": "fail",
+        "evidence": "The robot head/body, human face/hands, empty socket, detached arm and both separated frayed cable endpoints are visible together. However, the exact elbow topology and support-hand-to-exposed-frame contact remain insufficiently observable; the complete whole-prompt gate therefore fails despite J01 endpoints passing."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "not_applicable",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user judgment has been received."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}

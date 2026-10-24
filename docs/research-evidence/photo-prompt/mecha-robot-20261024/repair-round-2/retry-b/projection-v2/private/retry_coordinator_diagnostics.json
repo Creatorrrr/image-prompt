@@ -1,0 +1,119 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "c14970d65f8ee95e",
+      "validation_context_version": "photo-validation-context/v1",
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": null,
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "A photograph of a mecha subject"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a mechanical structure"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "the mechanical subject is visibly present"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "Use the supplied portrait as the pilot's facial and hair appearance reference."
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "brown eyes and softly rounded facial contours"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a short dark brown bob, wispy separated bangs"
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "c14970d65f8ee95e",
+      "status": "pass",
+      "runtime_prompt_id": "5fc274cb7b7f4573",
+      "source_intent_lock_sha256": "52af058e0ed0ff751b12c80b3b4bf825054109b49dcf12bd4b43cdf4df26468e",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": null,
+    "contract_failures": [],
+    "repair": null,
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "c14970d65f8ee95e",
+      "contract_version": "photo-embodiment-preflight/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 5,
+      "required_hard_gates": [
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_support_and_balance",
+          "status": "fail",
+          "evidence": "The seatback, torso restraint and seated thighs are visible, and one rear machine foot touches the salt bed. The specified human boot-to-cockpit-floor contacts are hidden. The closest machine limb is cropped before its ground endpoint, so the complete reviewed support footprint is not observable. This is a visibility failure, not a diagnosis of impossible hidden support."
+        },
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "Local contacts are coherent: a forearm rests on the sill and the opposite hand lies on the map over a thigh. Owner-relative sides are reversed from the exact final prompt: the sill arm is the pilot anatomical RIGHT (image left), while the map hand is anatomical LEFT (image right). The prompt specified left forearm on sill and right hand on map; intended contact assignment therefore fails."
+        },
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "The pilot, hatch and both machine shoulder junctions are assessable together; the source F13 comparison is visible. However the final reviewed camera clause also required a full near machine leg reaching the ground, and that closest ground endpoint is cropped. Human boots and floor contact are hidden. The full declared projection/support evidence set cannot pass."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": "No requesting-user judgment has been received."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

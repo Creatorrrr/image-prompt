@@ -1,0 +1,116 @@
+{
+  "schema": "mecha-root-native-pixel-review/v1",
+  "reviewer": "root",
+  "inspected_at_utc": "2026-10-24T00:42:34.074281+00:00",
+  "method": "view_image detail=original, exact saved image; visual inspection",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-transport-b/image.png",
+  "image_sha256": "9ad7b028c21b0fb973942ebdf12472759941901247d114b9e99ca3c16df6024b",
+  "dimensions": [
+    1237,
+    1272
+  ],
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-transport-b/immutable-pixel-testcase.json",
+  "testcase_sha256": "60882736d80a267197e909102d950e0b4716403b12ad7a4166b989295c5b0611",
+  "testcase_unchanged": true,
+  "runtime_prompt_sha256": "164f0a7e7d417eebfa36262b382a46ba2862957eaf55373bb002338e70be2b9b",
+  "first_whole_image_impression": "A grounded outdoor pilot portrait inside a worn bipedal machine; the calm map-reading action, tan work clothes and industrial scale are coherent. The framing gives both feet and the cockpit task room.",
+  "reference_appearance": "Dark bob and separated wispy bangs, approximate face proportions correspond qualitatively. Downward gaze makes brown iris color unobservable, so full color preservation is not passed and identity is not claimed.",
+  "expected_relation_observations": [
+    {
+      "id": "left_forearm_sill",
+      "status": "PASS",
+      "evidence": "Anatomical LEFT forearm spans about x735–865/y290–350 and rests on the image-right sill around x780–920/y334–382."
+    },
+    {
+      "id": "right_palm_map",
+      "status": "PASS",
+      "evidence": "Anatomical RIGHT hand at about x480–550/y342–403 lies on the map across the right thigh at image-left."
+    },
+    {
+      "id": "two_boots_floor",
+      "status": "PASS",
+      "evidence": "Both boot toe/sole edges near (510,727) and (713,731) meet the visible cockpit grating above the lower front rim. The support surface is visible between them; whole underside visibility is not required to observe contact."
+    },
+    {
+      "id": "two_machine_feet_ground",
+      "status": "PASS",
+      "evidence": "Two complete legs descend from chassis side joints to separate full feet, with visible ground-edge contacts around y1210; margin remains around both feet."
+    }
+  ],
+  "hard_gates": [
+    {
+      "id": "embodiment_body_ownership",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Both human arm chains belong to the pilot; LEFT forearm on image-right, RIGHT palm on image-left; separate walker body and legs."
+    },
+    {
+      "id": "embodiment_joint_chain_and_reach",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Both human elbows/wrists reach their intended targets coherently; machine hips/legs/ankles form two full visible chains."
+    },
+    {
+      "id": "embodiment_support_and_balance",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Pilot seat/back support and both boot-sole edges against cockpit grating are visible; both machine feet meet the yard surface."
+    },
+    {
+      "id": "embodiment_contact_and_space",
+      "status": "PARTIAL",
+      "passes": false,
+      "evidence": "Anatomical side/contact mapping is correct, but the distal LEFT forearm/wrist extends inward beyond the image-right sill pad. Frozen required phrase demands support under the full left forearm; only proximal/elbow portion is supported."
+    },
+    {
+      "id": "embodiment_visibility_and_projection",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Pilot, both arm targets, exposed cockpit grating, both boots, two complete machine legs and both ground contacts occur together."
+    },
+    {
+      "id": "rr_map_hand_contact_object_class_legible",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Paper route map and compact open-front walker read clearly."
+    },
+    {
+      "id": "rr_map_hand_contact_gross_structure_coherent",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Pilot, sill, map, floor and walker form coherent large structures."
+    },
+    {
+      "id": "rr_map_hand_contact_intended_interaction_matches",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Anatomical LEFT forearm on left sill (image-right); anatomical RIGHT palm on map over right thigh (image-left)."
+    },
+    {
+      "id": "rr_map_hand_contact_contact_anatomy_coherent",
+      "status": "PASS",
+      "passes": true,
+      "evidence": "Distinct human wrists/fingers and both target contacts are coherent, with no consequential hidden target."
+    }
+  ],
+  "hard_gate_passes": 8,
+  "hard_gate_total": 9,
+  "generic_gate_passes": 4,
+  "generic_gate_total": 5,
+  "repair_gate_passes": 4,
+  "repair_gate_total": 4,
+  "strict_final_prompt_fidelity": "FAIL",
+  "new_mecha_exposure": 0,
+  "new_mecha_adoption": 0,
+  "source_specific_qualification": "Not applicable: no new mecha material was issued or retained. Pixel repair PASS is not new-source integration.",
+  "native_qualification": false,
+  "partial_is_fail": true,
+  "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+  "requester_acceptance": "pending",
+  "additional_image_calls": 0,
+  "corrected_at_utc": "2026-10-24T00:44:13.840941+00:00",
+  "correction_reason": "Root initial review verified ordinary forearm-on-sill contact but missed the stronger authored full-forearm support phrase in the frozen required assertion and exact runtime prompt. That phrase is not waived after viewing pixels.",
+  "remaining_defect": "Residual authored full-forearm support obligation is only partially realized.",
+  "local_requested_repairs": "PASS: anatomical left/right, map contact, both human boot-floor and both machine ground contacts.",
+  "full_prompt_additional_observation": "Brown eye color cannot be verified at this gaze/scale; this is separate from the nine declared geometry gates."
+}

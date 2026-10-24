@@ -1,0 +1,89 @@
+{
+  "schema": "mecha-pixel-testcase/v1",
+  "arm": "B",
+  "candidate_id": "cand_c8be7d8fe59c593eb879ec256793c82a",
+  "card_id": "F13",
+  "query": "__baseline_prompt__",
+  "native_approval": false,
+  "native_selection": false,
+  "interpretation": "Complete asymmetric-shoulder authored proposal used as exposed H-F2 inspiration and supplemental visual testcase, not native whole-source qualification.",
+  "required_owners": [
+    "machine_left_shoulder",
+    "machine_right_shoulder",
+    "same_machine_torso",
+    "broad_rectangular_plate",
+    "smaller_rounded_shell"
+  ],
+  "gates": [
+    {
+      "id": "F13-C0",
+      "components": [
+        "broad rectangular plate on machine own left shoulder",
+        "smaller rounded shell on machine own right shoulder",
+        "both shoulder assemblies attached to same torso"
+      ],
+      "review_scale": [
+        "whole",
+        "native"
+      ],
+      "partial_is_fail": true,
+      "unobservable_is_pass": false
+    },
+    {
+      "id": "F13-R1",
+      "from": "machine_left_shoulder",
+      "predicate": "attached_to",
+      "to": "same_machine_torso",
+      "review_scale": [
+        "whole",
+        "native"
+      ],
+      "partial_is_fail": true
+    },
+    {
+      "id": "F13-R2",
+      "from": "machine_right_shoulder",
+      "predicate": "attached_to",
+      "to": "same_machine_torso",
+      "review_scale": [
+        "whole",
+        "native"
+      ],
+      "partial_is_fail": true
+    },
+    {
+      "id": "F13-R3",
+      "from": "broad_rectangular_plate",
+      "predicate": "on",
+      "to": "machine_left_shoulder",
+      "review_scale": [
+        "whole",
+        "native"
+      ],
+      "partial_is_fail": true
+    },
+    {
+      "id": "F13-R4",
+      "from": "smaller_rounded_shell",
+      "predicate": "on",
+      "to": "machine_right_shoulder",
+      "review_scale": [
+        "whole",
+        "native"
+      ],
+      "partial_is_fail": true
+    }
+  ],
+  "confusions": [
+    "shoulders from separate machines",
+    "only perspective-induced size difference",
+    "cropped or hidden shoulder-to-torso connection",
+    "viewer left substituted for machine own left"
+  ],
+  "claim_limits": [
+    "does not establish retrofit history or shield function",
+    "does not establish machine weight or autonomy",
+    "does not identify the portrait person or their personality"
+  ],
+  "user_judgment": "pending"
+}

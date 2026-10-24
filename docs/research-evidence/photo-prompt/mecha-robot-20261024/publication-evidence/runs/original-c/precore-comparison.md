@@ -1,0 +1,3 @@
+Independent pre-core choice: closed seaside ferry terminal repair kiosk.
+
+Alternatives considered: greenhouse service-robot repair and laundromat maintenance. The terminal offers a compact plausible service bench and a quiet shared focus after departure. These are agent decisions, not user requirements. The portrait was inspected directly; only visible face and hair are preserved. No candidate, profile, research artifact, earlier run, or other arm was opened. Correct supplied seed chose the scene; the controls snapshot retains the separately recorded mistaken integer seed without altering resolved saved defaults.

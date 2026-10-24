@@ -1,0 +1,53 @@
+{
+  "schema_version": "photo-image-render-review/v1",
+  "pack_id": "a9278e5f00019ade",
+  "source_render_repair_contract_sha256": "0a4423061cefc55f159183158658664c7447716ceacc83726dee1bf0051d4415",
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-anchored-c/output/mecha-repair2-c.png",
+    "sha256": "d9290ae4b637e694a8382bfcfc177499425e00b8ae12d62d9834cb36a4d617b8"
+  },
+  "reviewer": {
+    "reviewer_id": "codex-independent-arm-c",
+    "method": "direct_pixel_inspection"
+  },
+  "gates": [
+    {
+      "gate_id": "rr_arm_contact_topology_object_class_legible",
+      "status": "pass",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "evidence": "At full-frame thumbnail and native scale the separate assembly reads as a manufactured robot arm with upper segment, large elbow, open metal forearm, wrist and mechanical hand beside a distinct robot chassis. It is not merely scattered metal or a human arm covering.",
+      "observability": "visible"
+    },
+    {
+      "gate_id": "rr_arm_contact_topology_gross_structure_coherent",
+      "status": "pass",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The upper shell joins a large round elbow, its open forearm rail/cylinder assembly continues to a distinct wrist collar and articulated hand. The major mechanical structure is connected and coherent; surface wear and bolt differences are incidental.",
+      "observability": "visible"
+    },
+    {
+      "gate_id": "rr_arm_contact_topology_intended_interaction_matches",
+      "status": "pass",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "evidence": "The woman holds a driver whose visible tip meets the wrist-region fastener while the other hand stabilizes the exposed mid-forearm frame on bench supports. Both repair targets remain present and active in the same image; contact was not transferred to the robot palm or removed. This interaction match does not waive the separate full human-chain requirement.",
+      "observability": "visible"
+    },
+    {
+      "gate_id": "rr_arm_contact_topology_contact_anatomy_coherent",
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The visible driver grip, seated tip and supporting fingers on the bare rail are coherent with distinct boundaries. The complete support-hand wrist/forearm connection is hidden behind the frame between the sleeve patch and the visible palm/fingers, so the testcase requirement for both principal human hand/arm chains is not fully observable. This is an observability failure, not a diagnosis of impossible unseen anatomy.",
+      "observability": "partial"
+    }
+  ]
+}

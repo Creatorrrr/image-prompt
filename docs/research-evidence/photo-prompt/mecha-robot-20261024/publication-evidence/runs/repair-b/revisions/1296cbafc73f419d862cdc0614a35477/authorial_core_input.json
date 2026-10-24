@@ -1,0 +1,308 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘. 같은 첨부 이미지를 활용해 독립 서브에이전트 3개에서 다시 프롬프트 작성과 이미지 생성을 진행하고 실제 픽셀까지 검증해줘.",
+  "creative_controls_sha256": "ada40b309474c507d4e66ad4805147226afd05511b19abc46a0f40018c8e412d",
+  "interpreted_intent": "Repair the projected mecha scene while preserving its mechanical subject, reference face/hair and intended left-forearm sill/right-hand map interaction. The viewer should feel a quiet human pause inside a weight-bearing machine and be able to trace the meaningful contacts. I compared a tall machine framed at environmental distance with a compact low cockpit rig; the latter serves the same meaning with readable hands, boots and full machine ground support. Compact proportions, yard, suit, palette, camera and light are replaceable authorial staging at creativity 1. Subtle sensual appeal comes from distinctive calm presence and softly lit facial detail; fetish 0 and surreal 0 add no treatment. Current discovery uses the antecedent mecha topic only, and new candidates may refine open staging after freeze.",
+  "subject": "A mechanical mecha structure with a seated pilot using the supplied face and hair appearance.",
+  "setting": "An outdoor proving yard, chosen as replaceable staging.",
+  "event": "The mechanical subject is visibly present; a pilot pauses with the specified forearm and map contacts.",
+  "visual_priorities": [
+    "Readable actor-relative left forearm and right map-hand assignment",
+    "Visible human cockpit supports and complete machine ground supports in one frame",
+    "Reference-informed face and hair amid a tangible mechanical scene"
+  ],
+  "baseline_prompt_en": "A photograph of a mecha subject: a mechanical structure with an open-front cockpit above two compact articulated walking legs, parked in a quiet outdoor proving yard. In the frame, the mechanical subject is visibly present as a substantial working machine with joints, overlapping plates and worn load-bearing feet. A pilot sits in the cockpit, pausing over a folded route map before setting off. Use the supplied portrait as the pilot's facial and hair appearance reference. Preserve brown eyes and softly rounded facial contours, with a short dark brown bob, wispy separated bangs. Her face has a calm, concentrated presence in the soft daylight. The pilot rests her anatomical LEFT forearm along the left cockpit sill; her anatomical RIGHT hand lies flat on the paper route map. The map rests on her right thigh. The left cockpit sill is a broad horizontal support under the full left forearm. The paper route map shows a route line across its paper surface. The folded sheet has visible paper edges beneath her palm. Seen from the front, her left forearm and sill are on image right, while her right hand, map and right thigh are on image left. Her shoulders, elbows, wrists and fingers form relaxed, traceable chains. The seat supports her pelvis and back, and both boot soles are planted on the shallow open-front cockpit floor, with their sole-to-floor contacts exposed below her knees. The machine's two walking legs are separated in projection from hip joints through knees and ankles to two broad feet resting flat on the yard surface. A low front rim keeps the pilot's boot contacts in view. Frame the complete compact machine at a mild front three-quarter angle, including the pilot's face, both arm contacts, the cockpit floor, both complete machine legs and both ground contacts together, with a small margin of ground below the feet. Let a 50mm-equivalent photographic view, clear midtone daylight and deep usable focus make the human pause and the machine's weight equally tangible. Her practical sand-colored work suit and the machine's pale worn metal belong to the same restrained, credible field scene.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "repair antecedent",
+      "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+      "basis": "request_context",
+      "resolution": "The exact current repair refers to the projected prior mecha subject and reported native-pixel defects; preserve minimal concept/subject/event and correct intended contacts without inheriting incidental staging.",
+      "sources": []
+    },
+    {
+      "term": "reference use",
+      "source_text": "같은 첨부 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "Use the same supplied portrait for visible facial and hair appearance only; it establishes neither fictional role nor identity or story.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "mecha_concept",
+        "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "A photograph of a mecha subject"
+      },
+      {
+        "anchor_id": "mechanical_subject",
+        "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "a mechanical structure"
+      },
+      {
+        "anchor_id": "visible_event",
+        "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+        "dimension": "event",
+        "prompt_evidence": "the mechanical subject is visibly present"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied portrait as the pilot's facial and hair appearance reference."
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "appearance",
+        "target": "pilot",
+        "property": "face.appearance",
+        "prompt_evidence": "brown eyes and softly rounded facial contours"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "appearance",
+        "target": "pilot",
+        "property": "hair.appearance",
+        "prompt_evidence": "a short dark brown bob, wispy separated bangs"
+      },
+      {
+        "anchor_id": "contact_assignment",
+        "source_text": "좌우 반전·연결·접점 가림 문제",
+        "dimension": "action",
+        "prompt_evidence": "The pilot rests her anatomical LEFT forearm along the left cockpit sill; her anatomical RIGHT hand lies flat on the paper route map."
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "action"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "style",
+      "expression",
+      "role",
+      "format"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    },
+    {
+      "assertion_id": "repair_map_contact",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "actor_relative_sides": "left_forearm_sill_right_hand_map",
+        "contact_state": "resting_contact"
+      },
+      "evidence": {
+        "interaction_phrase": "The pilot rests her anatomical LEFT forearm along the left cockpit sill; her anatomical RIGHT hand lies flat on the paper route map.",
+        "recognition_phrase": "The paper route map shows a route line across its paper surface.",
+        "sill_recognition_phrase": "The left cockpit sill is a broad horizontal support under the full left forearm."
+      }
+    },
+    {
+      "assertion_id": "machine_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "machine",
+        "owner_kind": "object"
+      },
+      "evidence": {
+        "owner_phrase": "a mechanical structure"
+      }
+    },
+    {
+      "assertion_id": "pilot_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "pilot",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "owner_phrase": "the pilot's facial and hair appearance"
+      }
+    },
+    {
+      "assertion_id": "machine_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "machine"
+      },
+      "evidence": {
+        "owner_phrase": "a mechanical structure"
+      }
+    },
+    {
+      "assertion_id": "pilot_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "secondary_subject",
+        "owner": "pilot"
+      },
+      "evidence": {
+        "owner_phrase": "the pilot's facial and hair appearance"
+      }
+    }
+  ],
+  "request_lineage": {
+    "contract_version": "photo-request-lineage/v2",
+    "parent_request_id": "request-d501e0b8b97245959064128623a0fa1c",
+    "parent_core_sha256": "181087ffa60cb1eab2a34c75fb3f2b89479e5ae43ef01977060e05c23fea8795",
+    "preserved_dimensions": [
+      "appearance",
+      "concept",
+      "event",
+      "reference_use",
+      "subject"
+    ],
+    "allowed_changes": [
+      "action",
+      "age",
+      "atmosphere",
+      "body_geometry",
+      "camera",
+      "color",
+      "composition",
+      "count",
+      "expression",
+      "format",
+      "framing",
+      "identity",
+      "lighting",
+      "material",
+      "pose",
+      "relationship",
+      "role",
+      "setting",
+      "sexual_tone",
+      "species",
+      "style",
+      "text",
+      "timing",
+      "viewer_outcome"
+    ],
+    "repair_targets": [
+      {
+        "repair_id": "map_hand_contact",
+        "source_span_ids": [
+          "repair"
+        ],
+        "importance": "primary",
+        "relation_origin": "requester_corrected",
+        "actor_phrase": "The pilot",
+        "object_phrase": "paper route map",
+        "interaction_state": "used",
+        "actor_object_contact": "required",
+        "protected_dimensions": [
+          "action"
+        ],
+        "allowed_repair_axes": [
+          "camera",
+          "contact_geometry",
+          "framing",
+          "lighting",
+          "local_pose",
+          "object_geometry",
+          "occlusion"
+        ],
+        "interaction_phrase": "The pilot rests her anatomical LEFT forearm along the left cockpit sill; her anatomical RIGHT hand lies flat on the paper route map.",
+        "recognition_phrase": "The paper route map shows a route line across its paper surface."
+      }
+    ]
+  },
+  "style": {
+    "domain": "cinematic practical-mecha photography",
+    "family": "quiet field portrait",
+    "evidence": [
+      "credible worn metal and joints",
+      "restrained clear daylight"
+    ]
+  },
+  "variation_key": "repair2-b-independent"
+}

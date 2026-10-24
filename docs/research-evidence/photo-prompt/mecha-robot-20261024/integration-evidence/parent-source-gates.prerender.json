@@ -1,0 +1,136 @@
+{
+  "schema": "mecha-parent-source-gates/v1",
+  "authored_at": "2026-10-23T17:06:29.718432+00:00",
+  "timing": "After actual source exposure reports; before any render output available to parent",
+  "condition": "Apply only when the arm elects this complete source proposition in its final prompt. Otherwise record rejection/no adoption, not a source test success.",
+  "registry_sha256": "a9bdd8c8f3b7cf3cebf102849abfcc00872ab3b6c491dd19c5621ff2032c080f",
+  "arm_b": {
+    "card_id": "F13",
+    "candidate_id": "cand_c8be7d8fe59c593eb879ec256793c82a",
+    "proposal_en": "A machine's left shoulder carries a broad rectangular shield plate while its right shoulder has a smaller rounded shell; both shoulders remain attached to one torso.",
+    "gates": [
+      {
+        "id": "F13-C0",
+        "kind": "complete_realization",
+        "required_en": "A machine's left shoulder carries a broad rectangular shield plate while its right shoulder has a smaller rounded shell; both shoulders remain attached to one torso.",
+        "required_ko": "기계 왼어깨에는 넓은 직사각 방패판이 있고 오른어깨에는 작은 둥근 외장이 있으며 두 어깨는 같은 몸통에 이어져 있다.",
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "F13-R1",
+        "relation": {
+          "from": "left_shoulder",
+          "predicate": "attached_to",
+          "to": "torso"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "F13-R2",
+        "relation": {
+          "from": "right_shoulder",
+          "predicate": "attached_to",
+          "to": "torso"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "F13-R3",
+        "relation": {
+          "from": "large_plate",
+          "predicate": "on",
+          "to": "left_shoulder"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "F13-R4",
+        "relation": {
+          "from": "small_shell",
+          "predicate": "on",
+          "to": "right_shoulder"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      }
+    ]
+  },
+  "arm_c": {
+    "card_id": "J01",
+    "candidate_id": "cand_6706eaae3c8b52e7afef740b3b8c99da",
+    "proposal_en": "A detached mechanical arm lies beside the machine's empty shoulder socket; frayed cables remain visible at both separated ends.",
+    "gates": [
+      {
+        "id": "J01-C0",
+        "kind": "complete_realization",
+        "required_en": "A detached mechanical arm lies beside the machine's empty shoulder socket; frayed cables remain visible at both separated ends.",
+        "required_ko": "분리된 기계 팔이 기계의 빈 어깨 소켓 옆에 놓이고 양쪽 떨어진 끝에 흐트러진 케이블이 보인다.",
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "J01-R1",
+        "relation": {
+          "from": "shoulder_socket",
+          "predicate": "part_of",
+          "to": "machine"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "J01-R2",
+        "relation": {
+          "from": "arm",
+          "predicate": "separated_from",
+          "to": "shoulder_socket"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "J01-R3",
+        "relation": {
+          "from": "arm_cables",
+          "predicate": "part_of",
+          "to": "arm"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "J01-R4",
+        "relation": {
+          "from": "body_cables",
+          "predicate": "inside",
+          "to": "shoulder_socket"
+        },
+        "both_endpoints_required": true,
+        "partial_is_fail": true,
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+        "status": "NOT_RUN"
+      }
+    ]
+  },
+  "arm_a": "No actual new source returned. Do not award new-data adoption from image similarity or sampled-out sources."
+}
