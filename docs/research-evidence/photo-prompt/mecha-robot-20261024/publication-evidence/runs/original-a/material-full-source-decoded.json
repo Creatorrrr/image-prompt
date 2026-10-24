@@ -1,0 +1,4490 @@
+[
+  {
+    "cid": "cand_2cf86781b1fd5f819c055c6d51c101e6",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_contract": "profile",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "activation": {
+          "exact_terms": [
+            "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+                ],
+                "id": "complete_selected_relation"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+              ],
+              "id": "component_1",
+              "instruction": "Keep the selected owner and complete visible relation together: The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+              "match_terms": [
+                "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+                "upper cabinet",
+                "reaching arm"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails.",
+                "id": "vo_wkr_wk094_selected_relation_1",
+                "review_scale": "native"
+              }
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v1"
+        },
+        "category": "wardrobe_owner_selected_relation",
+        "composition_instruction": "Keep the selected owner and complete visible relation together: The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "action",
+            "setting",
+            "pose"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "action",
+              "property": "reach_and_prop_contact",
+              "target": "main_subject"
+            },
+            {
+              "dimension": "setting",
+              "property": "props.support",
+              "target": "main_subject"
+            },
+            {
+              "dimension": "pose",
+              "property": "posture.limb_contact",
+              "target": "main_subject"
+            },
+            {
+              "dimension": "setting",
+              "property": "spatial_support_and_props",
+              "target": "scene"
+            }
+          ],
+          "concept_terms": [
+            "지지된 발과 열린 높은 찬장으로 뻗은 손",
+            "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "부유하는 발",
+          "가려진 관절로 도달 가능하다고 확정",
+          "소품을 자동 병합"
+        ],
+        "render_gates": [
+          {
+            "description": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails.",
+            "id": "vo_wkr_wk094_selected_relation_1",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "A complete selected relation; broad garment labels, palette inventories and historical combinations create no automatic duty.",
+            "Only the visible owner, endpoints and state can be assessed; hidden manufacture, identity and temporal claims need separate evidence."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+                  "upper cabinet",
+                  "reaching arm"
+                ],
+                "id": "component_1"
+              }
+            ],
+            "minimum_component_groups": 1,
+            "required_group_ids": [
+              "component_1"
+            ]
+          },
+          "contrast_examples": [
+            "부유하는 발",
+            "가려진 관절로 도달 가능하다고 확정",
+            "소품을 자동 병합"
+          ],
+          "definition": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+          "paraphrase_examples": [
+            "지지된 발과 열린 높은 찬장으로 뻗은 손"
+          ],
+          "visual_components": [
+            "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+          ]
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+      "u1": "photo-visual-hard-activation/v1",
+      "u10": "native",
+      "u11": "photo-authored-visual-components/v1",
+      "u12": "wardrobe_owner_selected_relation",
+      "u13": "action",
+      "u14": "setting",
+      "u15": "pose",
+      "u16": "reach_and_prop_contact",
+      "u17": "main_subject",
+      "u18": "props.support",
+      "u19": "posture.limb_contact",
+      "u2": "complete_selected_relation",
+      "u20": "spatial_support_and_props",
+      "u21": "scene",
+      "u22": "지지된 발과 열린 높은 찬장으로 뻗은 손",
+      "u23": "부유하는 발",
+      "u24": "가려진 관절로 도달 가능하다고 확정",
+      "u25": "소품을 자동 병합",
+      "u26": "definition_with_optional_label",
+      "u27": "A complete selected relation; broad garment labels, palette inventories and historical combinations create no automatic duty.",
+      "u28": "Only the visible owner, endpoints and state can be assessed; hidden manufacture, identity and temporal claims need separate evidence.",
+      "u3": "component_1_phrase",
+      "u4": "component_1",
+      "u5": "Keep the selected owner and complete visible relation together: The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+      "u6": "upper cabinet",
+      "u7": "reaching arm",
+      "u8": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails.",
+      "u9": "vo_wkr_wk094_selected_relation_1"
+    },
+    "provenance": [
+      {
+        "sha256": "1aef6f7dd881fcbe76d8411138656646cff486b95631755d4e384ae21465b233",
+        "source": "visual_profile:wkr_wk094_selected_relation"
+      }
+    ],
+    "record_kind": "visual_profile"
+  },
+  {
+    "cid": "cand_8881ea844b644df0b5836e6374b8de81",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance"
+      ],
+      "properties": [
+        {
+          "dimension": "appearance",
+          "property": "object.structure.hinge_cup",
+          "target": "cabinet"
+        },
+        {
+          "dimension": "appearance",
+          "property": "object.connection.hinge_arm",
+          "target": "cabinet"
+        },
+        {
+          "dimension": "appearance",
+          "property": "object.connection.mounting_plate",
+          "target": "cabinet"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "en": "A cabinet door carries a circular recessed hinge cup on its inner face near the edge. An articulated hinge arm extends from that cup to a separate mounting plate fixed on the cabinet side panel. The cup, arm and plate remain distinguishable parts connecting the same door to its own cabinet carcass.",
+        "ko": "캐비닛 문 안쪽 면의 가장자리 가까이에 원형으로 들어간 힌지 컵이 있다. 관절이 있는 힌지 암이 이 컵에서 캐비닛 옆판에 고정된 별도의 장착판까지 이어진다. 컵, 암, 장착판은 같은 문을 그 문이 속한 캐비닛 몸체에 연결하는 구별 가능한 부품이다."
+      }
+    },
+    "all_source_literals": {
+      "u0": "A cabinet door carries a circular recessed hinge cup on its inner face near the edge. An articulated hinge arm extends from that cup to a separate mounting plate fixed on the cabinet side panel. The cup, arm and plate remain distinguishable parts connecting the same door to its own cabinet carcass.",
+      "u1": "캐비닛 문 안쪽 면의 가장자리 가까이에 원형으로 들어간 힌지 컵이 있다. 관절이 있는 힌지 암이 이 컵에서 캐비닛 옆판에 고정된 별도의 장착판까지 이어진다. 컵, 암, 장착판은 같은 문을 그 문이 속한 캐비닛 몸체에 연결하는 구별 가능한 부품이다."
+    },
+    "provenance": [
+      {
+        "sha256": "551b3d7035fc5e6f9c2745885b9354b1f21b8cadae76653087fa65c727e5fdd0",
+        "source": "https://www.ikea.com/ch/en/assembly_instructions/utrusta-hinge__AA-845308-3.pdf"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_83133a955fd55289b63252802d5bc3e9",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "pose"
+      ],
+      "properties": [
+        {
+          "dimension": "pose",
+          "property": "body.support_and_configuration",
+          "target": "main_subject"
+        }
+      ]
+    },
+    "native_contract": "bundle",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "adoption": "optional",
+        "associated_profile_ids": [
+          "cand_2fd3ad8569575006b9a879f8a006650b"
+        ],
+        "components": [
+          {
+            "concept_units": [
+              "one leg supports the body"
+            ],
+            "id": "component_1",
+            "minimum_realizations": 1
+          },
+          {
+            "concept_units": [
+              "other knee folds and opens in the selected variant"
+            ],
+            "id": "component_2",
+            "minimum_realizations": 1
+          },
+          {
+            "concept_units": [
+              "working foot rests near the support-leg knee"
+            ],
+            "id": "component_3",
+            "minimum_realizations": 1
+          },
+          {
+            "concept_units": [
+              "support foot contact is explicitly visible"
+            ],
+            "id": "component_4",
+            "minimum_realizations": 1
+          }
+        ],
+        "confusion_boundaries": [
+          "generic one-knee-up",
+          "passé whole movement claimed from a still"
+        ],
+        "member_candidates": [
+          {
+            "adoption": "optional",
+            "binding_id": "bind_7592eb2da4a4570baed9dcc5b3bc88ba",
+            "candidate_id": "cand_7592eb2da4a4570baed9dcc5b3bc88ba",
+            "requirements": {}
+          }
+        ],
+        "profile_activation": "independent_request_evidence_only",
+        "relations": [
+          {
+            "id": "owner_scope",
+            "object": "the expressly declared support and contact configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "source_sha256": "9f2c662b98ad13fffe8e57edec0b25a8e31b491493dab09205520bcd1fd9c1a6"
+      }
+    },
+    "all_source_literals": {
+      "u0": "optional",
+      "u1": "cand_2fd3ad8569575006b9a879f8a006650b",
+      "u10": "generic one-knee-up",
+      "u11": "passé whole movement claimed from a still",
+      "u12": "bind_7592eb2da4a4570baed9dcc5b3bc88ba",
+      "u13": "cand_7592eb2da4a4570baed9dcc5b3bc88ba",
+      "u14": "independent_request_evidence_only",
+      "u15": "owner_scope",
+      "u16": "the expressly declared support and contact configuration",
+      "u17": "main_subject",
+      "u18": "declared_owner_scope",
+      "u19": "9f2c662b98ad13fffe8e57edec0b25a8e31b491493dab09205520bcd1fd9c1a6",
+      "u2": "one leg supports the body",
+      "u20": "main_subject declared_owner_scope the expressly declared support and contact configuration",
+      "u3": "component_1",
+      "u4": "other knee folds and opens in the selected variant",
+      "u5": "component_2",
+      "u6": "working foot rests near the support-leg knee",
+      "u7": "component_3",
+      "u8": "support foot contact is explicitly visible",
+      "u9": "component_4"
+    },
+    "provenance": [
+      {
+        "sha256": "d43c92fc28b7e27307916dd500526a0f73481aacc8c8d6f432c1228d1298c68e",
+        "source": "bundle:pv_bundle_retire"
+      }
+    ],
+    "record_kind": "visual_bundle"
+  },
+  {
+    "cid": "cand_385b569147a35240b1f53465cf941899",
+    "conditions": {
+      "requires_primary_any_tags": [
+        "character_pose_proxemics_scene_atomic_scene"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "action"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "포즈와 인물 간 거리를 보편적 친밀도 공식으로 쓰지 않고, 두 성인 공예가의 무게 중심, 작업 거리, 몸 방향과 공유 작업물로 관계를 보여주는 장면",
+          "adjusting distance as one lowers their weight to support a panel and the other reaches functionally to pass a tool"
+        ],
+        "embedding_text": "adjusting distance as one lowers their weight to support a panel and the other reaches functionally to pass a tool",
+        "en": "adjusting distance as one lowers their weight to support a panel and the other reaches functionally to pass a tool",
+        "facets": {},
+        "ko": "포즈와 인물 간 거리를 보편적 친밀도 공식으로 쓰지 않고, 두 성인 공예가의 무게 중심, 작업 거리, 몸 방향과 공유 작업물로 관계를 보여주는 장면",
+        "tags": [
+          "character_scene_grammar",
+          "pose_gesture_proxemics",
+          "relationship_blocking",
+          "character_pose_proxemics_scene_atomic_scene",
+          "original_character"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "포즈와 인물 간 거리를 보편적 친밀도 공식으로 쓰지 않고, 두 성인 공예가의 무게 중심, 작업 거리, 몸 방향과 공유 작업물로 관계를 보여주는 장면",
+      "u1": "adjusting distance as one lowers their weight to support a panel and the other reaches functionally to pass a tool",
+      "u2": "character_scene_grammar",
+      "u3": "pose_gesture_proxemics",
+      "u4": "relationship_blocking",
+      "u5": "character_pose_proxemics_scene_atomic_scene",
+      "u6": "original_character"
+    },
+    "provenance": [
+      {
+        "sha256": "9819d825a1d80f007eef59aabb1d83278f561e5428e5a760c0ddde3e2715814a",
+        "source": "slot:action:character_pose_proxemics_scene_action"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_ac05a22d4b1f57fdb06e5284e7e599d8",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "action",
+        "pose",
+        "setting"
+      ],
+      "properties": [
+        {
+          "dimension": "action",
+          "property": "reach_and_prop_contact",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "setting",
+          "property": "props.support",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "pose",
+          "property": "posture.limb_contact",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "setting",
+          "property": "spatial_support_and_props",
+          "target": "scene"
+        }
+      ]
+    },
+    "native_contract": "bundle",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "adoption": "optional",
+        "associated_profile_ids": [
+          "cand_2cf86781b1fd5f819c055c6d51c101e6"
+        ],
+        "components": [
+          {
+            "concept_units": [
+              "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+            ],
+            "id": "component_1",
+            "minimum_realizations": 1
+          }
+        ],
+        "confusion_boundaries": [
+          "부유하는 발",
+          "가려진 관절로 도달 가능하다고 확정",
+          "소품을 자동 병합"
+        ],
+        "member_candidates": [
+          {
+            "adoption": "optional",
+            "binding_id": "bind_21692b3bf9615d61855e0392a8ef5707",
+            "candidate_id": "cand_21692b3bf9615d61855e0392a8ef5707",
+            "requirements": {}
+          }
+        ],
+        "profile_activation": "independent_request_evidence_only",
+        "relations": [
+          {
+            "id": "wkr_wk094_selected_relation_relation_1",
+            "object": "same person two feet",
+            "subject": "floor",
+            "type": "supports"
+          },
+          {
+            "id": "wkr_wk094_selected_relation_relation_2",
+            "object": "open upper cabinet",
+            "subject": "same person connected arm",
+            "type": "reaches_toward"
+          }
+        ],
+        "source_sha256": "52fcb2824863b92ed57e5410620e5fe309b295b9723c88e97abbeaa02851cbd9"
+      }
+    },
+    "all_source_literals": {
+      "u0": "optional",
+      "u1": "cand_2cf86781b1fd5f819c055c6d51c101e6",
+      "u10": "wkr_wk094_selected_relation_relation_1",
+      "u11": "same person two feet",
+      "u12": "floor",
+      "u13": "supports",
+      "u14": "wkr_wk094_selected_relation_relation_2",
+      "u15": "open upper cabinet",
+      "u16": "same person connected arm",
+      "u17": "reaches_toward",
+      "u18": "52fcb2824863b92ed57e5410620e5fe309b295b9723c88e97abbeaa02851cbd9",
+      "u19": "floor supports same person two feet",
+      "u2": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+      "u20": "same person connected arm reaches_toward open upper cabinet",
+      "u3": "component_1",
+      "u4": "부유하는 발",
+      "u5": "가려진 관절로 도달 가능하다고 확정",
+      "u6": "소품을 자동 병합",
+      "u7": "bind_21692b3bf9615d61855e0392a8ef5707",
+      "u8": "cand_21692b3bf9615d61855e0392a8ef5707",
+      "u9": "independent_request_evidence_only"
+    },
+    "provenance": [
+      {
+        "sha256": "e29e0f43e339cb08e1f4edda23089a9f55a1085ffb09f2703f2dee9ff04ab9b7",
+        "source": "bundle:wkr_wk094_selected_relation_bundle"
+      }
+    ],
+    "record_kind": "visual_bundle"
+  },
+  {
+    "cid": "cand_587c1279d1de513bbddd2c2a0c35d35a",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "action",
+        "appearance",
+        "body_geometry",
+        "count",
+        "event",
+        "relationship",
+        "setting",
+        "subject"
+      ],
+      "properties": [
+        {
+          "dimension": "action",
+          "property": "action.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "action",
+          "property": "action.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "action",
+          "property": "action.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "action",
+          "property": "action.scp_realization",
+          "target": "animal"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.scp_realization",
+          "target": "animal"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "body_geometry.scp_realization",
+          "target": "animal"
+        },
+        {
+          "dimension": "count",
+          "property": "count.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "count",
+          "property": "count.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "count",
+          "property": "count.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "count",
+          "property": "count.scp_realization",
+          "target": "animal"
+        },
+        {
+          "dimension": "event",
+          "property": "event.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "event",
+          "property": "event.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "event",
+          "property": "event.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "event",
+          "property": "event.scp_realization",
+          "target": "animal"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.scp_realization",
+          "target": "animal"
+        },
+        {
+          "dimension": "setting",
+          "property": "setting.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "setting",
+          "property": "setting.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "setting",
+          "property": "setting.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "setting",
+          "property": "setting.scp_realization",
+          "target": "animal"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.scp_realization",
+          "target": "worker"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.scp_realization",
+          "target": "crate"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.scp_realization",
+          "target": "door"
+        },
+        {
+          "dimension": "subject",
+          "property": "subject.scp_realization",
+          "target": "animal"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "윌슨 야생동물구제",
+          "야생동물 구조와 장비 소유"
+        ],
+        "application_contract": "One complete optional fictional realization. Preserve the whole positive EN/KO meaning, every stated owner, count, part, material and directed connection. Use only if compatible with the independently frozen scene and all affected properties. Every distinguishing endpoint must remain legible together; hidden, cropped or partial required evidence cannot pass the whole case. Source citations and research graphs grant no native facts or owner permissions. Fictional mechanism, causation, diagnosis, identity, memory, faith, consent, history and elapsed time are not proved by a still image.",
+        "definition": "Optional source-scoped fictional visual realization: An adult worker supports a transport-crate door while a small animal stands on the inner floor, separate from the worker’s gloved hand.",
+        "en": "An adult worker supports a transport-crate door while a small animal stands on the inner floor, separate from the worker’s gloved hand.",
+        "ko": "성인 작업자가 상자 문을 받치고, 그 안의 작은 동물은 작업자의 장갑과 분리된 바닥에 서 있다.",
+        "research_semantics": {
+          "candidate_id": "cand_587c1279d1de513bbddd2c2a0c35d35a",
+          "card_id": "G10",
+          "claim_limit": "동물의 병력·의도·구조 성과·윌슨 소속은 문맥이다.",
+          "directed_relations": [
+            {
+              "from": "worker",
+              "relation": "supports",
+              "to": "door"
+            },
+            {
+              "from": "door",
+              "relation": "part_of",
+              "to": "crate"
+            },
+            {
+              "from": "animal",
+              "relation": "inside",
+              "to": "crate"
+            }
+          ],
+          "graph_scope": "research review metadata; no typed native facts, owner permissions or whole-source qualification",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "nearest_confusion": "희귀 외형=변칙 종, 포획=학대 또는 구조 성공",
+          "observability": "proxy",
+          "owners": {
+            "animal": "small animal",
+            "crate": "transport container",
+            "door": "crate door",
+            "worker": "adult handler"
+          },
+          "pixel_status": "not_rendered",
+          "positive_en": "An adult worker supports a transport-crate door while a small animal stands on the inner floor, separate from the worker’s gloved hand.",
+          "positive_ko": "성인 작업자가 상자 문을 받치고, 그 안의 작은 동물은 작업자의 장갑과 분리된 바닥에 서 있다.",
+          "priority": "P1",
+          "proposal_en": "An adult worker supports a transport-crate door while a small animal stands on the inner floor, separate from the worker’s gloved hand.",
+          "proposal_ko": "성인 작업자가 상자 문을 받치고, 그 안의 작은 동물은 작업자의 장갑과 분리된 바닥에 서 있다.",
+          "proposed_slots": [
+            "companion_animal",
+            "relational_action"
+          ],
+          "registration_status": "authored_source_module",
+          "regression_near_miss": {
+            "execution": "NOT_RUN",
+            "expected": "reject_equivalence_or_leave_unobservable",
+            "input": "희귀 외형=변칙 종, 포획=학대 또는 구조 성공"
+          },
+          "requester_acceptance": "pending",
+          "review_gates": [
+            {
+              "gate_id": "G10-R1",
+              "partial_is_fail": true,
+              "pixel_status": "NOT_RUN",
+              "required_visible_relation": {
+                "from": "worker",
+                "relation": "supports",
+                "to": "door"
+              },
+              "unobservable_is_pass": false
+            },
+            {
+              "gate_id": "G10-R2",
+              "partial_is_fail": true,
+              "pixel_status": "NOT_RUN",
+              "required_visible_relation": {
+                "from": "door",
+                "relation": "part_of",
+                "to": "crate"
+              },
+              "unobservable_is_pass": false
+            },
+            {
+              "gate_id": "G10-R3",
+              "partial_is_fail": true,
+              "pixel_status": "NOT_RUN",
+              "required_visible_relation": {
+                "from": "animal",
+                "relation": "inside",
+                "to": "crate"
+              },
+              "unobservable_is_pass": false
+            }
+          ],
+          "schema": "photo-scp-visual-semantics/v1",
+          "seed_terms": [
+            "윌슨 야생동물구제"
+          ],
+          "semantic_authority": "research_only",
+          "source_claim_scope": "term/source-scoped context; selected scene geometry is authored unless explicitly described as versioned",
+          "source_ids": [
+            "S025"
+          ],
+          "source_refs": [
+            {
+              "access_status": "body_available",
+              "author_status": "parsed_from_licensebox_recheck_before_publication",
+              "detected_licensebox_author": "Staff",
+              "finding": "조직의 활동 범위와 종교 분파의 큰 구분을 대조했다.",
+              "http_status": 200,
+              "limit": "단체 외형·관계·도덕성은 일괄 고정할 수 없다.",
+              "media_reuse": "none; individual images have separate provenance and licenses",
+              "read_scope": "group overview entries used in sections 12/13",
+              "retrieved_on": "2026-10-22",
+              "review_status": "targeted_passages_reviewed",
+              "revision_html": "page revision: 435, last edited: <span class=\"odate time_1792246895 format_%25e%20%25b%20%25Y%2C%20%25H%3A%25M%20%28%25O%20ago%29\">17 Oct 2026 14:21</",
+              "source_id": "S025",
+              "source_key": "groups-of-interest",
+              "text_chars": 99678,
+              "text_license": "SCP Wiki default CC BY-SA 3.0; page-specific exceptions require review",
+              "text_sha256": "cbc5263bcc2976667010f7613c4ed39688bac219c53dbf5f18e31e5fc06f3ac2",
+              "title": "Groups Of Interest - SCP Foundation",
+              "url": "https://scp-wiki.wikidot.com/groups-of-interest"
+            }
+          ],
+          "source_slugs": [
+            "groups-of-interest"
+          ],
+          "title": "야생동물 구조와 장비 소유",
+          "translation_review": "selected EN/KO meaning reviewed for owners, endpoints, scope and source limits; not an automatic entailment proof",
+          "visual_status": "authored_optional_realization_not_canonical_design"
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "An adult worker supports a transport-crate door while a small animal stands on the inner floor, separate from the worker’s gloved hand.",
+      "u1": "성인 작업자가 상자 문을 받치고, 그 안의 작은 동물은 작업자의 장갑과 분리된 바닥에 서 있다.",
+      "u10": "crate door",
+      "u11": "small animal",
+      "u12": "worker",
+      "u13": "supports",
+      "u14": "door",
+      "u15": "part_of",
+      "u16": "crate",
+      "u17": "animal",
+      "u18": "inside",
+      "u19": "희귀 외형=변칙 종, 포획=학대 또는 구조 성공",
+      "u2": "Optional source-scoped fictional visual realization: An adult worker supports a transport-crate door while a small animal stands on the inner floor, separate from the worker’s gloved hand.",
+      "u20": "동물의 병력·의도·구조 성과·윌슨 소속은 문맥이다.",
+      "u21": "companion_animal",
+      "u22": "relational_action",
+      "u23": "groups-of-interest",
+      "u24": "P1",
+      "u25": "research_only",
+      "u26": "authored_optional_realization_not_canonical_design",
+      "u27": "S025",
+      "u28": "G10-R1",
+      "u29": "NOT_RUN",
+      "u3": "윌슨 야생동물구제",
+      "u30": "G10-R2",
+      "u31": "G10-R3",
+      "u32": "term/source-scoped context; selected scene geometry is authored unless explicitly described as versioned",
+      "u33": "reject_equivalence_or_leave_unobservable",
+      "u34": "photo-scp-visual-semantics/v1",
+      "u35": "cand_587c1279d1de513bbddd2c2a0c35d35a",
+      "u36": "https://scp-wiki.wikidot.com/groups-of-interest",
+      "u37": "Groups Of Interest - SCP Foundation",
+      "u38": "2026-10-22",
+      "u39": "body_available",
+      "u4": "야생동물 구조와 장비 소유",
+      "u40": "cbc5263bcc2976667010f7613c4ed39688bac219c53dbf5f18e31e5fc06f3ac2",
+      "u41": "page revision: 435, last edited: <span class=\"odate time_1792246895 format_%25e%20%25b%20%25Y%2C%20%25H%3A%25M%20%28%25O%20ago%29\">17 Oct 2026 14:21</",
+      "u42": "targeted_passages_reviewed",
+      "u43": "group overview entries used in sections 12/13",
+      "u44": "조직의 활동 범위와 종교 분파의 큰 구분을 대조했다.",
+      "u45": "단체 외형·관계·도덕성은 일괄 고정할 수 없다.",
+      "u46": "Staff",
+      "u47": "parsed_from_licensebox_recheck_before_publication",
+      "u48": "SCP Wiki default CC BY-SA 3.0; page-specific exceptions require review",
+      "u49": "none; individual images have separate provenance and licenses",
+      "u5": "One complete optional fictional realization. Preserve the whole positive EN/KO meaning, every stated owner, count, part, material and directed connection. Use only if compatible with the independently frozen scene and all affected properties. Every distinguishing endpoint must remain legible together; hidden, cropped or partial required evidence cannot pass the whole case. Source citations and research graphs grant no native facts or owner permissions. Fictional mechanism, causation, diagnosis, identity, memory, faith, consent, history and elapsed time are not proved by a still image.",
+      "u50": "research review metadata; no typed native facts, owner permissions or whole-source qualification",
+      "u51": "authored_source_module",
+      "u52": "not_qualified",
+      "u53": "not_rendered",
+      "u54": "pending",
+      "u55": "selected EN/KO meaning reviewed for owners, endpoints, scope and source limits; not an automatic entailment proof",
+      "u6": "G10",
+      "u7": "proxy",
+      "u8": "adult handler",
+      "u9": "transport container"
+    },
+    "provenance": [
+      {
+        "sha256": "edf2f77d9c016c4020a748ef9015c9f995031b1d3418116bbc40ced70c041586",
+        "source": "https://scp-wiki.wikidot.com/groups-of-interest"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_c7946ccf7b7c56439e1fcfef9815b2d2",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "pose",
+        "relationship"
+      ],
+      "properties": [
+        {
+          "dimension": "pose",
+          "property": "body.contact_configuration",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "relationship",
+          "property": "body.contact_configuration",
+          "target": "main_subject"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "좌면을 짚는 한 손바닥의 지지",
+          "seated single-palm brace",
+          "one-hand palm brace on sitting surface"
+        ],
+        "concept_units": [
+          "one declared palm contacts the sitting surface beside or behind the pelvis",
+          "that hand connects through its wrist and elbow to the same shoulder",
+          "the arm and sitting surface form a visible bracing arrangement",
+          "the seated pelvis and folded or planted legs maintain the remaining support base"
+        ],
+        "core_assertion_discovery": true,
+        "embedding_text": "좌면을 짚는 한 손바닥의 지지; seated single-palm brace; one-hand palm brace on sitting surface; one declared palm contacts the sitting surface beside or behind the pelvis; that hand connects through its wrist and elbow to the same shoulder; the arm and sitting surface form a visible bracing arrangement; the seated pelvis and folded or planted legs maintain the remaining support base",
+        "en": "one declared palm contacts the sitting surface beside or behind the pelvis; that hand connects through its wrist and elbow to the same shoulder; the arm and sitting surface form a visible bracing arrangement; the seated pelvis and folded or planted legs maintain the remaining support base",
+        "keywords": [
+          "좌면을 짚는 한 손바닥의 지지",
+          "seated single-palm brace",
+          "one-hand palm brace on sitting surface"
+        ],
+        "ko": "좌면을 짚는 한 손바닥의 지지",
+        "relations": [
+          {
+            "id": "owner_scope",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "pose_vocabulary",
+          "contact_point"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "좌면을 짚는 한 손바닥의 지지",
+      "u1": "seated single-palm brace",
+      "u10": "the body parts, support surfaces and contact targets stated in this configuration",
+      "u11": "main_subject",
+      "u12": "declared_owner_scope",
+      "u13": "human",
+      "u14": "pose_vocabulary",
+      "u15": "contact_point",
+      "u16": "main_subject declared_owner_scope the body parts, support surfaces and contact targets stated in this configuration",
+      "u2": "one-hand palm brace on sitting surface",
+      "u3": "one declared palm contacts the sitting surface beside or behind the pelvis",
+      "u4": "that hand connects through its wrist and elbow to the same shoulder",
+      "u5": "the arm and sitting surface form a visible bracing arrangement",
+      "u6": "the seated pelvis and folded or planted legs maintain the remaining support base",
+      "u7": "좌면을 짚는 한 손바닥의 지지; seated single-palm brace; one-hand palm brace on sitting surface; one declared palm contacts the sitting surface beside or behind the pelvis; that hand connects through its wrist and elbow to the same shoulder; the arm and sitting surface form a visible bracing arrangement; the seated pelvis and folded or planted legs maintain the remaining support base",
+      "u8": "one declared palm contacts the sitting surface beside or behind the pelvis; that hand connects through its wrist and elbow to the same shoulder; the arm and sitting surface form a visible bracing arrangement; the seated pelvis and folded or planted legs maintain the remaining support base",
+      "u9": "owner_scope"
+    },
+    "provenance": [
+      {
+        "sha256": "313740822cb49249987a8645031a6bcd9226f14bd4b03cd7b88567b53af992e5",
+        "source": "slot:contact_point:pv_seated_palm_brace"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_e2408c406bf153af8ba0eb8b81796873",
+    "conditions": {
+      "requires_adult_context": true
+    },
+    "effects": {
+      "dimensions": [
+        "age",
+        "body_geometry",
+        "relationship",
+        "setting",
+        "subject"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "손바닥과 거대 문고리",
+          "hand and enormous handle",
+          "scale relation"
+        ],
+        "application_contract": "One complete optional fictional visual realization, never a genre-triggered obligation. Preserve the complete English and Korean positive meaning, every material, count, part, owner, same/different relation, current pose, contact, endpoint and continuity or separation. Use only when the independent requester meaning and every affected dimension/property permit the complete case. All required endpoints and qualifiers must remain visible together; cropped, hidden or partial evidence fails the full case. Research graphs, aliases and citations supply no native facts, guard evidence, existing-owner permissions or whole-source qualification. Visible arrangements alone do not establish identity survival, consciousness, genetics, life or death, kinship, desire, consent, coercion, rights, political institutions, historical age, sequence, sound or supernatural efficacy. An artificial component, anatomical model, fictional shell and actual human injury retain different meanings.",
+        "definition": "Optional complete fictional visual realization: An adult palm touches a small part of an enormous door handle, with fingers and the handle contact visible together.",
+        "en": "An adult palm touches a small part of an enormous door handle, with fingers and the handle contact visible together.",
+        "ko": "성인 손바닥이 거대한 문고리의 일부에 닿고, 손가락과 문고리의 접점이 함께 보인다.",
+        "research_semantics": {
+          "activation": "Explicit compatible selection after independent core freeze; no genre-triggered obligation.",
+          "adoption_mode": "optional_complete_realization",
+          "candidate_id": "cand_e2408c406bf153af8ba0eb8b81796873",
+          "card_id": "B05",
+          "claim_limit_ko": "실제 거리·동일 평면 근거 없이 물리적 치수 비율은 확정하지 않는다.",
+          "component_gates": [
+            {
+              "gate_id": "B05-O-hand",
+              "owner": "hand",
+              "partial_is_fail": true,
+              "requirement_en": "adult palm and fingers",
+              "status": "NOT_RUN"
+            },
+            {
+              "gate_id": "B05-O-handle",
+              "owner": "handle",
+              "partial_is_fail": true,
+              "requirement_en": "enormous door handle",
+              "status": "NOT_RUN"
+            }
+          ],
+          "directed_relations": [
+            {
+              "from": "hand",
+              "predicate": "touches",
+              "to": "handle"
+            }
+          ],
+          "family": "이중 이미지와 지각 불일치",
+          "graph_scope": "Research review only; not typed facts, native guards, owner authority or qualifications.",
+          "language_review": "authored bilingual draft; independent bilingual review pending",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "nearest_confusion_ko": "원근으로 크게 보이는 전경 소품",
+          "observability": "visible_arrangement_only",
+          "owners": {
+            "hand": "adult palm and fingers",
+            "handle": "enormous door handle"
+          },
+          "pixel_status": "NOT_RUN",
+          "priority": "P1",
+          "proposal_en": "An adult palm touches a small part of an enormous door handle, with fingers and the handle contact visible together.",
+          "proposal_ko": "성인 손바닥이 거대한 문고리의 일부에 닿고, 손가락과 문고리의 접점이 함께 보인다.",
+          "proposed_slots": [
+            "scale_relation",
+            "contact_point"
+          ],
+          "provenance_digest_scope": "research specification bytes, not web page bytes",
+          "registration_status": "authored_source_module",
+          "render_gates": [
+            {
+              "both_endpoints_required": true,
+              "gate_id": "B05-R1",
+              "partial_is_fail": true,
+              "relation": {
+                "from": "hand",
+                "predicate": "touches",
+                "to": "handle"
+              },
+              "status": "NOT_RUN"
+            }
+          ],
+          "role_descriptors": {
+            "contact_point": {
+              "dimensions": [
+                "relationship"
+              ],
+              "property_prefixes": [
+                "contact.",
+                "body.contact",
+                "support.",
+                "relation.contact"
+              ],
+              "semantic_role": "direct"
+            },
+            "scale_relation": {
+              "dimensions": [
+                "body_geometry"
+              ],
+              "property_prefixes": [
+                "scale.",
+                "size.relation",
+                "body.scale"
+              ],
+              "semantic_role": "direct"
+            }
+          },
+          "schema": "photo-surreal-posthuman-visual-semantics/v1",
+          "source_ids": [
+            "S01",
+            "S04",
+            "S21",
+            "S30"
+          ],
+          "source_refs": [
+            {
+              "evidence_kind": "museum_educational_body",
+              "geometry_support": "No candidate geometry is quoted from this source.",
+              "limit_ko": "개별 무늬가 실제 자동기술로 제작됐다는 증거는 아님",
+              "read_scope": "Origins and artist entries; follow-up glossary request timed out",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S01",
+              "supports_ko": "꿈·욕망·자동기술·이질적 병치의 역사적 연결",
+              "title": "Centre Pompidou: Surrealist art",
+              "url": "https://mediation.centrepompidou.fr/education/ressources/ENS-surrealistart-EN/ENS-surrealistart-EN.htm"
+            },
+            {
+              "evidence_kind": "primary_essay_body",
+              "geometry_support": "No candidate geometry is quoted from this source.",
+              "limit_ko": "특정 형태를 모든 관객이 무서워한다는 보편 법칙은 아님",
+              "read_scope": "Authorized translation, affinity hypothesis and movement discussion",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S04",
+              "supports_ko": "인간 유사성과 친화감의 비선형 관계를 제안한 가설",
+              "title": "Mori: The Uncanny Valley, authorized translation",
+              "url": "https://spectrum.ieee.org/the-uncanny-valley"
+            },
+            {
+              "evidence_kind": "museum_collection_body",
+              "geometry_support": "No candidate geometry is quoted from this source.",
+              "limit_ko": "단일 정면 이미지로 각도 변화에 따른 검증을 완료할 수 없음",
+              "read_scope": "About the work, lines 99-106",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S21",
+              "supports_ko": "관찰 각도에 따라 해골로 읽히는 왜상의 사례",
+              "title": "National Gallery: The Ambassadors",
+              "url": "https://www.nationalgallery.org.uk/paintings/hans-holbein-the-younger-the-ambassadors"
+            },
+            {
+              "evidence_kind": "museum_essay_body",
+              "geometry_support": "No candidate geometry is quoted from this source.",
+              "limit_ko": "관객 반응은 경험에 좌우되며 Freud 원전 전문을 읽은 것은 아님",
+              "read_scope": "Researcher essay body, lines 11-48; comments excluded",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S30",
+              "supports_ko": "친숙함의 낯설어짐·분신·반복의 역사적 맥락",
+              "title": "Freud Museum: The Uncanny",
+              "url": "https://www.freud.org.uk/2019/09/18/the-uncanny/"
+            }
+          ],
+          "source_support": "Conceptual background or analogy only; all concrete geometry independently authored.",
+          "title_ko": "손바닥과 거대 문고리",
+          "whole_positive_meaning_gate": {
+            "all_properties_required": true,
+            "limit": "Relations alone do not cover every material, count, pose or qualifier. All explicit positive clauses remain required.",
+            "proposal_en": "An adult palm touches a small part of an enormous door handle, with fingers and the handle contact visible together.",
+            "proposal_ko": "성인 손바닥이 거대한 문고리의 일부에 닿고, 손가락과 문고리의 접점이 함께 보인다.",
+            "status": "NOT_RUN"
+          }
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "An adult palm touches a small part of an enormous door handle, with fingers and the handle contact visible together.",
+      "u1": "성인 손바닥이 거대한 문고리의 일부에 닿고, 손가락과 문고리의 접점이 함께 보인다.",
+      "u10": "enormous door handle",
+      "u11": "hand",
+      "u12": "touches",
+      "u13": "handle",
+      "u14": "scale_relation",
+      "u15": "contact_point",
+      "u16": "direct",
+      "u17": "body_geometry",
+      "u18": "scale.",
+      "u19": "size.relation",
+      "u2": "Optional complete fictional visual realization: An adult palm touches a small part of an enormous door handle, with fingers and the handle contact visible together.",
+      "u20": "body.scale",
+      "u21": "relationship",
+      "u22": "contact.",
+      "u23": "body.contact",
+      "u24": "support.",
+      "u25": "relation.contact",
+      "u26": "S01",
+      "u27": "S04",
+      "u28": "S21",
+      "u29": "S30",
+      "u3": "손바닥과 거대 문고리",
+      "u30": "Conceptual background or analogy only; all concrete geometry independently authored.",
+      "u31": "visible_arrangement_only",
+      "u32": "원근으로 크게 보이는 전경 소품",
+      "u33": "실제 거리·동일 평면 근거 없이 물리적 치수 비율은 확정하지 않는다.",
+      "u34": "P1",
+      "u35": "optional_complete_realization",
+      "u36": "Explicit compatible selection after independent core freeze; no genre-triggered obligation.",
+      "u37": "B05-O-hand",
+      "u38": "NOT_RUN",
+      "u39": "B05-O-handle",
+      "u4": "hand and enormous handle",
+      "u40": "Relations alone do not cover every material, count, pose or qualifier. All explicit positive clauses remain required.",
+      "u41": "B05-R1",
+      "u42": "authored bilingual draft; independent bilingual review pending",
+      "u43": "photo-surreal-posthuman-visual-semantics/v1",
+      "u44": "cand_e2408c406bf153af8ba0eb8b81796873",
+      "u45": "authored_source_module",
+      "u46": "Centre Pompidou: Surrealist art",
+      "u47": "https://mediation.centrepompidou.fr/education/ressources/ENS-surrealistart-EN/ENS-surrealistart-EN.htm",
+      "u48": "museum_educational_body",
+      "u49": "Origins and artist entries; follow-up glossary request timed out",
+      "u5": "scale relation",
+      "u50": "꿈·욕망·자동기술·이질적 병치의 역사적 연결",
+      "u51": "개별 무늬가 실제 자동기술로 제작됐다는 증거는 아님",
+      "u52": "2026-10-22",
+      "u53": "No candidate geometry is quoted from this source.",
+      "u54": "Mori: The Uncanny Valley, authorized translation",
+      "u55": "https://spectrum.ieee.org/the-uncanny-valley",
+      "u56": "primary_essay_body",
+      "u57": "Authorized translation, affinity hypothesis and movement discussion",
+      "u58": "인간 유사성과 친화감의 비선형 관계를 제안한 가설",
+      "u59": "특정 형태를 모든 관객이 무서워한다는 보편 법칙은 아님",
+      "u6": "One complete optional fictional visual realization, never a genre-triggered obligation. Preserve the complete English and Korean positive meaning, every material, count, part, owner, same/different relation, current pose, contact, endpoint and continuity or separation. Use only when the independent requester meaning and every affected dimension/property permit the complete case. All required endpoints and qualifiers must remain visible together; cropped, hidden or partial evidence fails the full case. Research graphs, aliases and citations supply no native facts, guard evidence, existing-owner permissions or whole-source qualification. Visible arrangements alone do not establish identity survival, consciousness, genetics, life or death, kinship, desire, consent, coercion, rights, political institutions, historical age, sequence, sound or supernatural efficacy. An artificial component, anatomical model, fictional shell and actual human injury retain different meanings.",
+      "u60": "National Gallery: The Ambassadors",
+      "u61": "https://www.nationalgallery.org.uk/paintings/hans-holbein-the-younger-the-ambassadors",
+      "u62": "museum_collection_body",
+      "u63": "About the work, lines 99-106",
+      "u64": "관찰 각도에 따라 해골로 읽히는 왜상의 사례",
+      "u65": "단일 정면 이미지로 각도 변화에 따른 검증을 완료할 수 없음",
+      "u66": "Freud Museum: The Uncanny",
+      "u67": "https://www.freud.org.uk/2019/09/18/the-uncanny/",
+      "u68": "museum_essay_body",
+      "u69": "Researcher essay body, lines 11-48; comments excluded",
+      "u7": "B05",
+      "u70": "친숙함의 낯설어짐·분신·반복의 역사적 맥락",
+      "u71": "관객 반응은 경험에 좌우되며 Freud 원전 전문을 읽은 것은 아님",
+      "u72": "not_qualified",
+      "u73": "Research review only; not typed facts, native guards, owner authority or qualifications.",
+      "u74": "research specification bytes, not web page bytes",
+      "u8": "이중 이미지와 지각 불일치",
+      "u9": "adult palm and fingers"
+    },
+    "provenance": [
+      {
+        "sha256": "1fb739a26a84c606794f45d1f588727d55a6453d95c36dbc3cb13733f82f545f",
+        "source": "https://mediation.centrepompidou.fr/education/ressources/ENS-surrealistart-EN/ENS-surrealistart-EN.htm"
+      },
+      {
+        "sha256": "1fb739a26a84c606794f45d1f588727d55a6453d95c36dbc3cb13733f82f545f",
+        "source": "https://spectrum.ieee.org/the-uncanny-valley"
+      },
+      {
+        "sha256": "1fb739a26a84c606794f45d1f588727d55a6453d95c36dbc3cb13733f82f545f",
+        "source": "https://www.nationalgallery.org.uk/paintings/hans-holbein-the-younger-the-ambassadors"
+      },
+      {
+        "sha256": "1fb739a26a84c606794f45d1f588727d55a6453d95c36dbc3cb13733f82f545f",
+        "source": "https://www.freud.org.uk/2019/09/18/the-uncanny/"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_1e8558b4fec05ae2b09a58e3110d0579",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "action",
+        "expression",
+        "pose"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [],
+        "concept_units": [
+          "elbow support remains while part of the forearm lifts and sleeve folds relax"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "application_conditions": [
+                "This is an optional configuration, not a sensual/fetish classification.",
+                "Every mentioned actor, object, garment and place outside the declared change scope must already be established in the frozen core; otherwise the candidate is inapplicable.",
+                "Any actual wardrobe, material, appearance or scene change must fit the declared effects and the current property locks.",
+                "Established reference appearance and requester-owned identity remain unchanged; natural physical traits are alternatives only when explicitly open."
+              ],
+              "expressive": {
+                "sensual": "압축된 주름과 풀리는 주름의 차이가 몸의 작은 조절을 드러낸다.",
+                "sexual_or_fetish": "압력의 시각적 흔적 자체가 개인적 관심 대상이라는 맥락이 있을 때만 가능하다."
+              },
+              "id": "context_sfr26_forearm_release",
+              "limits": [
+                "피로를 덜기 위한 평범한 자세 조절일 수 있다.",
+                "겉모습이 같아도 기능적·문화적·비성적 해석이 성립할 수 있으며, 매력의 개인차를 단일 점수로 정규화하지 않는다."
+              ],
+              "ordinary": "팔을 편하게 고쳐 놓는다.",
+              "status": "optional_contextual_reading; visible configuration is not proof of desire or a universal preference"
+            }
+          ]
+        },
+        "en": "elbow support remains while part of the forearm lifts and sleeve folds relax",
+        "expression_scope": "portrayal_or_scene_relation",
+        "ko": "팔꿈치 쪽 지지는 남고 전완 아래 접촉이 일부 풀림",
+        "paraphrases": [],
+        "relations": [
+          {
+            "id": "ctx_forearm_release_relation",
+            "object": "elbow support remains while part of the forearm lifts and sleeve folds relax",
+            "subject": "the established adult subject and scene elements",
+            "type": "visible_configuration"
+          }
+        ],
+        "tags": [
+          "human",
+          "adult",
+          "contextual_visual_relation"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "elbow support remains while part of the forearm lifts and sleeve folds relax",
+      "u1": "This is an optional configuration, not a sensual/fetish classification.",
+      "u10": "팔을 편하게 고쳐 놓는다.",
+      "u11": "optional_contextual_reading; visible configuration is not proof of desire or a universal preference",
+      "u12": "portrayal_or_scene_relation",
+      "u13": "팔꿈치 쪽 지지는 남고 전완 아래 접촉이 일부 풀림",
+      "u14": "ctx_forearm_release_relation",
+      "u15": "the established adult subject and scene elements",
+      "u16": "visible_configuration",
+      "u17": "human",
+      "u18": "adult",
+      "u19": "contextual_visual_relation",
+      "u2": "Every mentioned actor, object, garment and place outside the declared change scope must already be established in the frozen core; otherwise the candidate is inapplicable.",
+      "u20": "the established adult subject and scene elements visible_configuration elbow support remains while part of the forearm lifts and sleeve folds relax",
+      "u3": "Any actual wardrobe, material, appearance or scene change must fit the declared effects and the current property locks.",
+      "u4": "Established reference appearance and requester-owned identity remain unchanged; natural physical traits are alternatives only when explicitly open.",
+      "u5": "압축된 주름과 풀리는 주름의 차이가 몸의 작은 조절을 드러낸다.",
+      "u6": "압력의 시각적 흔적 자체가 개인적 관심 대상이라는 맥락이 있을 때만 가능하다.",
+      "u7": "context_sfr26_forearm_release",
+      "u8": "피로를 덜기 위한 평범한 자세 조절일 수 있다.",
+      "u9": "겉모습이 같아도 기능적·문화적·비성적 해석이 성립할 수 있으며, 매력의 개인차를 단일 점수로 정규화하지 않는다."
+    },
+    "provenance": [
+      {
+        "sha256": "383e513821d92bd1c60ca953d8a824b7fed1a0092c1d87fe4c90e4a7b516c2f3",
+        "source": "slot:action:ctx_forearm_release"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_b5c22862adf95b1c880ed7e917fc15ad",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_contract": "profile",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "activation": {
+          "context_disambiguation": {
+            "any_terms": [
+              "platform train interface",
+              "door clearance",
+              "dispatch corridor",
+              "ready-to-start signal",
+              "radio dispatch",
+              "플랫폼 열차 접점",
+              "출입문 안전 확인",
+              "발차 확인 구간",
+              "출발 신호",
+              "발차 무전"
+            ],
+            "exclude_if_any_terms": [
+              "farewell ticket",
+              "romantic platform",
+              "train driver cab",
+              "작별 표",
+              "낭만적 플랫폼",
+              "열차 운전실"
+            ],
+            "required_with_authorial_core": true
+          },
+          "exact_terms": [
+            "rail platform dispatch staff",
+            "train dispatch staff on platform",
+            "platform dispatcher",
+            "철도 플랫폼 발차 요원",
+            "열차 발차 업무 역무원",
+            "플랫폼 역무원"
+          ],
+          "exclude_if_any_terms": [
+            "station staff costume",
+            "train farewell",
+            "역무원 코스튬",
+            "열차 작별 장면"
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "door clearance check",
+                  "scans every door",
+                  "checks door clearance",
+                  "dispatch signal",
+                  "ready-to-start signal",
+                  "dispatches the train",
+                  "출입문 안전 확인",
+                  "발차 신호",
+                  "출발 신호",
+                  "발차 무전",
+                  "발차 확인"
+                ],
+                "id": "requested_operational_action"
+              }
+            ]
+          },
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "platform_dispatch_identity",
+              "match_terms": [
+                "adult dispatch staff in a coherent rail uniform at the platform edge",
+                "radio high-visibility marker and station attire form one system",
+                "플랫폼 가장자리의 일관된 철도 발차 근무복"
+              ]
+            },
+            {
+              "id": "clearance_and_signal_action",
+              "match_terms": [
+                "scans every door and passenger gap before signaling",
+                "uses radio or hand signal only after the dispatch corridor is clear",
+                "모든 출입문과 승객 간격을 확인한 뒤 발차 신호"
+              ]
+            },
+            {
+              "id": "safe_departure_consequence",
+              "match_terms": [
+                "doors are closed and hazard indicators are clear as the train starts",
+                "the dispatcher continues watching the train leave the platform",
+                "출입문 표시가 정상이고 열차가 플랫폼을 안전하게 떠남"
+              ]
+            },
+            {
+              "id": "platform_train_interface",
+              "match_terms": [
+                "dispatcher sightline spans platform edge doors and train side",
+                "passenger zone door line and departure direction stay readable",
+                "발차 요원의 시선이 플랫폼 출입문 열차 측면을 연결"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "platform_dispatch_identity",
+              "clearance_and_signal_action",
+              "safe_departure_consequence"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "platform_dispatch_identity",
+                "clearance_and_signal_action",
+                "safe_departure_consequence",
+                "platform_train_interface"
+              ],
+              "evidence": [
+                {
+                  "field": "rail_dispatch_uniform_phrase",
+                  "requirement": {
+                    "min_content_words": 4,
+                    "must_mention_any": [
+                      "adult dispatch staff in a coherent rail uniform",
+                      "adult platform dispatcher wears matched station duty attire"
+                    ]
+                  }
+                },
+                {
+                  "field": "door_passenger_clearance_phrase",
+                  "requirement": {
+                    "min_content_words": 4,
+                    "must_mention_any": [
+                      "scans every door and passenger gap before signaling",
+                      "confirms the dispatch corridor is clear of passengers"
+                    ]
+                  }
+                },
+                {
+                  "field": "dispatch_signal_phrase",
+                  "requirement": {
+                    "min_content_words": 4,
+                    "must_mention_any": [
+                      "gives the authorized ready-to-start hand signal",
+                      "uses the dispatch radio only after clearance"
+                    ]
+                  }
+                },
+                {
+                  "field": "platform_train_sightline_phrase",
+                  "requirement": {
+                    "min_content_words": 4,
+                    "must_mention_any": [
+                      "dispatcher sightline spans platform edge doors and train side",
+                      "platform edge door line and departure direction stay visible"
+                    ]
+                  }
+                },
+                {
+                  "field": "safe_departure_phrase",
+                  "requirement": {
+                    "min_content_words": 4,
+                    "must_mention_any": [
+                      "doors are closed and hazard indicators are clear as the train starts",
+                      "dispatcher continues watching the train leave safely"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Show the adult dispatcher, rail staff uniform, complete platform-edge sightline, closed-door and passenger-clearance check, authorized radio or hand signal, and safe departure consequence together. Keep romance and ticket handoff outside the role proof.",
+              "render_gates": [
+                {
+                  "description": "The adult subject first reads as platform dispatch staff responsible for train departure rather than a traveler conductor or farewell character.",
+                  "id": "vo_rail_dispatch_role_identity",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "Door line passenger gap and dispatch corridor are visibly scanned before the signal is given.",
+                  "id": "vo_rail_dispatch_clearance_check",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "A radio hand signal baton or indicator action visibly communicates ready-to-start status.",
+                  "id": "vo_rail_dispatch_authorized_signal",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "Closed doors clear indicators and the watched departing train visibly show the safe consequence.",
+                  "id": "vo_rail_dispatch_safe_departure",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "A ticket punch farewell gesture station uniform or driver-cab setting alone does not establish platform dispatch.",
+                  "id": "vo_rail_dispatch_not_ticket_farewell_or_driver",
+                  "review_scale": "thumbnail"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "professional_role",
+        "composition_instruction": "Show the adult dispatcher, rail staff uniform, complete platform-edge sightline, closed-door and passenger-clearance check, authorized radio or hand signal, and safe departure consequence together. Keep romance and ticket handoff outside the role proof.",
+        "concept_candidate": {
+          "concept_terms": [
+            "adult rail dispatch worker",
+            "coherent platform staff uniform",
+            "door and passenger clearance scan",
+            "authorized radio or hand signal",
+            "platform-train interface sightline",
+            "safe departure consequence"
+          ]
+        },
+        "evidence_requirements": {
+          "dispatch_signal_phrase": {
+            "min_content_words": 4,
+            "must_mention_any": [
+              "gives the authorized ready-to-start hand signal",
+              "uses the dispatch radio only after clearance"
+            ]
+          },
+          "door_passenger_clearance_phrase": {
+            "min_content_words": 4,
+            "must_mention_any": [
+              "scans every door and passenger gap before signaling",
+              "confirms the dispatch corridor is clear of passengers"
+            ]
+          },
+          "platform_train_sightline_phrase": {
+            "min_content_words": 4,
+            "must_mention_any": [
+              "dispatcher sightline spans platform edge doors and train side",
+              "platform edge door line and departure direction stay visible"
+            ]
+          },
+          "rail_dispatch_uniform_phrase": {
+            "min_content_words": 4,
+            "must_mention_any": [
+              "adult dispatch staff in a coherent rail uniform",
+              "adult platform dispatcher wears matched station duty attire"
+            ]
+          },
+          "safe_departure_phrase": {
+            "min_content_words": 4,
+            "must_mention_any": [
+              "doors are closed and hazard indicators are clear as the train starts",
+              "dispatcher continues watching the train leave safely"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "ticket_farewell_or_romance",
+          "station_uniform_portrait_only",
+          "train_driver_inside_cab",
+          "ticket_punch_without_clearance",
+          "signal_without_visible_safe_departure"
+        ],
+        "render_gates": [
+          {
+            "description": "The adult subject first reads as platform dispatch staff responsible for train departure rather than a traveler conductor or farewell character.",
+            "id": "vo_rail_dispatch_role_identity",
+            "review_scale": "thumbnail"
+          },
+          {
+            "description": "Door line passenger gap and dispatch corridor are visibly scanned before the signal is given.",
+            "id": "vo_rail_dispatch_clearance_check",
+            "review_scale": "both"
+          },
+          {
+            "description": "A radio hand signal baton or indicator action visibly communicates ready-to-start status.",
+            "id": "vo_rail_dispatch_authorized_signal",
+            "review_scale": "both"
+          },
+          {
+            "description": "Closed doors clear indicators and the watched departing train visibly show the safe consequence.",
+            "id": "vo_rail_dispatch_safe_departure",
+            "review_scale": "both"
+          },
+          {
+            "description": "A ticket punch farewell gesture station uniform or driver-cab setting alone does not establish platform dispatch.",
+            "id": "vo_rail_dispatch_not_ticket_farewell_or_driver",
+            "review_scale": "thumbnail"
+          }
+        ],
+        "required_evidence_fields": [
+          "rail_dispatch_uniform_phrase",
+          "door_passenger_clearance_phrase",
+          "dispatch_signal_phrase",
+          "platform_train_sightline_phrase",
+          "safe_departure_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [
+            "rail platform dispatcher"
+          ],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "adult dispatch staff in a coherent rail uniform at the platform edge",
+                  "radio high-visibility marker and station attire form one system",
+                  "플랫폼 가장자리의 일관된 철도 발차 근무복"
+                ],
+                "id": "platform_dispatch_identity"
+              },
+              {
+                "any_terms": [
+                  "scans every door and passenger gap before signaling",
+                  "uses radio or hand signal only after the dispatch corridor is clear",
+                  "모든 출입문과 승객 간격을 확인한 뒤 발차 신호"
+                ],
+                "id": "clearance_and_signal_action"
+              },
+              {
+                "any_terms": [
+                  "doors are closed and hazard indicators are clear as the train starts",
+                  "the dispatcher continues watching the train leave the platform",
+                  "출입문 표시가 정상이고 열차가 플랫폼을 안전하게 떠남"
+                ],
+                "id": "safe_departure_consequence"
+              },
+              {
+                "any_terms": [
+                  "dispatcher sightline spans platform edge doors and train side",
+                  "passenger zone door line and departure direction stay readable",
+                  "발차 요원의 시선이 플랫폼 출입문 열차 측면을 연결"
+                ],
+                "id": "platform_train_interface"
+              }
+            ],
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "platform_dispatch_identity",
+              "clearance_and_signal_action",
+              "safe_departure_consequence"
+            ]
+          },
+          "contrast_examples": [
+            "a romantic conductor offering a saved ticket",
+            "a station portrait holding a punch tool with no door-clearance task",
+            "a train driver inside the cab or a generic traveler on the platform"
+          ],
+          "definition": "An adult rail dispatch worker whose role is visible at the platform-train interface through coherent staff uniform, a full door and passenger-clearance check, one authorized dispatch signal or radio action, and a safe departure consequence.",
+          "paraphrase_examples": [
+            "플랫폼에서 출입문과 승객 간격을 확인한 뒤 출발 신호를 보내고 열차가 안전하게 움직이는 것을 감시하는 성인 발차 요원",
+            "an adult dispatcher whose sightline clearance signal and departing train remain causally linked"
+          ]
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "platform train interface",
+      "u1": "door clearance",
+      "u10": "farewell ticket",
+      "u11": "romantic platform",
+      "u12": "train driver cab",
+      "u13": "작별 표",
+      "u14": "낭만적 플랫폼",
+      "u15": "열차 운전실",
+      "u16": "rail platform dispatch staff",
+      "u17": "train dispatch staff on platform",
+      "u18": "platform dispatcher",
+      "u19": "철도 플랫폼 발차 요원",
+      "u2": "dispatch corridor",
+      "u20": "열차 발차 업무 역무원",
+      "u21": "플랫폼 역무원",
+      "u22": "station staff costume",
+      "u23": "train farewell",
+      "u24": "역무원 코스튬",
+      "u25": "열차 작별 장면",
+      "u26": "photo-visual-hard-activation/v1",
+      "u27": "door clearance check",
+      "u28": "scans every door",
+      "u29": "checks door clearance",
+      "u3": "ready-to-start signal",
+      "u30": "dispatch signal",
+      "u31": "dispatches the train",
+      "u32": "발차 신호",
+      "u33": "발차 확인",
+      "u34": "requested_operational_action",
+      "u35": "platform_dispatch_identity",
+      "u36": "adult dispatch staff in a coherent rail uniform at the platform edge",
+      "u37": "radio high-visibility marker and station attire form one system",
+      "u38": "플랫폼 가장자리의 일관된 철도 발차 근무복",
+      "u39": "clearance_and_signal_action",
+      "u4": "radio dispatch",
+      "u40": "scans every door and passenger gap before signaling",
+      "u41": "uses radio or hand signal only after the dispatch corridor is clear",
+      "u42": "모든 출입문과 승객 간격을 확인한 뒤 발차 신호",
+      "u43": "safe_departure_consequence",
+      "u44": "doors are closed and hazard indicators are clear as the train starts",
+      "u45": "the dispatcher continues watching the train leave the platform",
+      "u46": "출입문 표시가 정상이고 열차가 플랫폼을 안전하게 떠남",
+      "u47": "platform_train_interface",
+      "u48": "dispatcher sightline spans platform edge doors and train side",
+      "u49": "passenger zone door line and departure direction stay readable",
+      "u5": "플랫폼 열차 접점",
+      "u50": "발차 요원의 시선이 플랫폼 출입문 열차 측면을 연결",
+      "u51": "photo-authored-visual-components/v2",
+      "u52": "rail_dispatch_uniform_phrase",
+      "u53": "adult dispatch staff in a coherent rail uniform",
+      "u54": "adult platform dispatcher wears matched station duty attire",
+      "u55": "door_passenger_clearance_phrase",
+      "u56": "confirms the dispatch corridor is clear of passengers",
+      "u57": "dispatch_signal_phrase",
+      "u58": "gives the authorized ready-to-start hand signal",
+      "u59": "uses the dispatch radio only after clearance",
+      "u6": "출입문 안전 확인",
+      "u60": "platform_train_sightline_phrase",
+      "u61": "platform edge door line and departure direction stay visible",
+      "u62": "safe_departure_phrase",
+      "u63": "dispatcher continues watching the train leave safely",
+      "u64": "Show the adult dispatcher, rail staff uniform, complete platform-edge sightline, closed-door and passenger-clearance check, authorized radio or hand signal, and safe departure consequence together. Keep romance and ticket handoff outside the role proof.",
+      "u65": "The adult subject first reads as platform dispatch staff responsible for train departure rather than a traveler conductor or farewell character.",
+      "u66": "vo_rail_dispatch_role_identity",
+      "u67": "thumbnail",
+      "u68": "Door line passenger gap and dispatch corridor are visibly scanned before the signal is given.",
+      "u69": "vo_rail_dispatch_clearance_check",
+      "u7": "발차 확인 구간",
+      "u70": "both",
+      "u71": "A radio hand signal baton or indicator action visibly communicates ready-to-start status.",
+      "u72": "vo_rail_dispatch_authorized_signal",
+      "u73": "Closed doors clear indicators and the watched departing train visibly show the safe consequence.",
+      "u74": "vo_rail_dispatch_safe_departure",
+      "u75": "A ticket punch farewell gesture station uniform or driver-cab setting alone does not establish platform dispatch.",
+      "u76": "vo_rail_dispatch_not_ticket_farewell_or_driver",
+      "u77": "professional_role",
+      "u78": "adult rail dispatch worker",
+      "u79": "coherent platform staff uniform",
+      "u8": "출발 신호",
+      "u80": "door and passenger clearance scan",
+      "u81": "authorized radio or hand signal",
+      "u82": "platform-train interface sightline",
+      "u83": "safe departure consequence",
+      "u84": "ticket_farewell_or_romance",
+      "u85": "station_uniform_portrait_only",
+      "u86": "train_driver_inside_cab",
+      "u87": "ticket_punch_without_clearance",
+      "u88": "signal_without_visible_safe_departure",
+      "u89": "definition_with_optional_label",
+      "u9": "발차 무전",
+      "u90": "rail platform dispatcher",
+      "u91": "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected.",
+      "u92": "a romantic conductor offering a saved ticket",
+      "u93": "a station portrait holding a punch tool with no door-clearance task",
+      "u94": "a train driver inside the cab or a generic traveler on the platform",
+      "u95": "An adult rail dispatch worker whose role is visible at the platform-train interface through coherent staff uniform, a full door and passenger-clearance check, one authorized dispatch signal or radio action, and a safe departure consequence.",
+      "u96": "플랫폼에서 출입문과 승객 간격을 확인한 뒤 출발 신호를 보내고 열차가 안전하게 움직이는 것을 감시하는 성인 발차 요원",
+      "u97": "an adult dispatcher whose sightline clearance signal and departing train remain causally linked"
+    },
+    "provenance": [
+      {
+        "sha256": "7897c6a6284901ed359649637ca87e481b86788bfada85875dc6ff84620949fd",
+        "source": "visual_profile:rail_platform_dispatch_operation"
+      }
+    ],
+    "record_kind": "visual_profile"
+  },
+  {
+    "cid": "cand_d859d6ea633b57fa980abb03c0eb8c5b",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "pose"
+      ],
+      "properties": [
+        {
+          "dimension": "pose",
+          "property": "body.support_and_configuration",
+          "target": "main_subject"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "한 다리 주 지지",
+          "Weight on one leg"
+        ],
+        "concept_units": [
+          "one planted leg supplies the principal visible support",
+          "the free leg has a different relaxed or lightly contacting role",
+          "the pelvis and torso remain connected over the support base"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "application_conditions": [
+                "Equivalent meaning only; retain the original owner, prerequisites, all effects and guards."
+              ],
+              "id": "cute_equivalent_pv_single_support",
+              "limits": [
+                "No emotion, age, universal cuteness or extra actor inferred from this local form."
+              ]
+            },
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "단순 지지 관계와 고전 contrapposto의 전체 구성을 구별한다."
+              ],
+              "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+              "id": "visual_grammar_g11_pv_single_support",
+              "observable_interpretation": "body configuration responds to the declared support leg"
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "한 다리 주 지지; Weight on one leg; one planted leg supplies the principal visible support; the free leg has a different relaxed or lightly contacting role; the pelvis and torso remain connected over the support base",
+        "en": "one planted leg supplies the principal visible support; the free leg has a different relaxed or lightly contacting role; the pelvis and torso remain connected over the support base",
+        "keywords": [
+          "한 다리 주 지지",
+          "Weight on one leg"
+        ],
+        "ko": "한 다리 주 지지",
+        "paraphrases": [
+          "One leg carries the main body weight and the other stays comparatively unloaded.",
+          "한 다리가 몸의 주된 하중을 받고 반대 다리는 상대적으로 하중이 작다.",
+          "한쪽 다리가 주로 몸을 받치고 반대 다리는 다른 접지 역할을 가진다",
+          "One planted leg supports the body while the other has a distinct relaxed contact role.",
+          "one planted leg carries the main support while the other rests more lightly, with the connected torso above the base",
+          "한쪽 다리가 주된 지지를 맡고 다른 다리는 가볍게 놓이며 몸통이 지지 기반 위로 연결된다"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "pose_vocabulary",
+          "body_pose"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "한 다리 주 지지",
+      "u1": "Weight on one leg",
+      "u10": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+      "u11": "visual_grammar_g11_pv_single_support",
+      "u12": "body configuration responds to the declared support leg",
+      "u13": "한 다리 주 지지; Weight on one leg; one planted leg supplies the principal visible support; the free leg has a different relaxed or lightly contacting role; the pelvis and torso remain connected over the support base",
+      "u14": "one planted leg supplies the principal visible support; the free leg has a different relaxed or lightly contacting role; the pelvis and torso remain connected over the support base",
+      "u15": "One leg carries the main body weight and the other stays comparatively unloaded.",
+      "u16": "한 다리가 몸의 주된 하중을 받고 반대 다리는 상대적으로 하중이 작다.",
+      "u17": "한쪽 다리가 주로 몸을 받치고 반대 다리는 다른 접지 역할을 가진다",
+      "u18": "One planted leg supports the body while the other has a distinct relaxed contact role.",
+      "u19": "one planted leg carries the main support while the other rests more lightly, with the connected torso above the base",
+      "u2": "one planted leg supplies the principal visible support",
+      "u20": "한쪽 다리가 주된 지지를 맡고 다른 다리는 가볍게 놓이며 몸통이 지지 기반 위로 연결된다",
+      "u21": "owner_scope",
+      "u22": "the body parts, support surfaces and contact targets stated in this configuration",
+      "u23": "main_subject",
+      "u24": "declared_owner_scope",
+      "u25": "human",
+      "u26": "pose_vocabulary",
+      "u27": "body_pose",
+      "u28": "main_subject declared_owner_scope the body parts, support surfaces and contact targets stated in this configuration",
+      "u3": "the free leg has a different relaxed or lightly contacting role",
+      "u4": "the pelvis and torso remain connected over the support base",
+      "u5": "Equivalent meaning only; retain the original owner, prerequisites, all effects and guards.",
+      "u6": "cute_equivalent_pv_single_support",
+      "u7": "No emotion, age, universal cuteness or extra actor inferred from this local form.",
+      "u8": "interpretation_only_not_a_required_visual_recipe",
+      "u9": "단순 지지 관계와 고전 contrapposto의 전체 구성을 구별한다."
+    },
+    "provenance": [
+      {
+        "sha256": "451ca196217e1725adde16bd768069bf3c784e3b7543dd8d7197b7286be9da73",
+        "source": "slot:body_pose:pv_single_support"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_21692b3bf9615d61855e0392a8ef5707",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "action",
+        "setting",
+        "pose"
+      ],
+      "properties": [
+        {
+          "dimension": "action",
+          "property": "reach_and_prop_contact",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "setting",
+          "property": "props.support",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "pose",
+          "property": "posture.limb_contact",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "setting",
+          "property": "spatial_support_and_props",
+          "target": "scene"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "지지된 발과 열린 높은 찬장으로 뻗은 손",
+          "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+        ],
+        "concept_terms": [
+          "지지된 발과 열린 높은 찬장으로 뻗은 손",
+          "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+        ],
+        "concept_units": [
+          "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "activation_authority": "interpretation_only_not_required",
+              "claim_limits": [
+                "Every named actor, garment, body part and support must already exist or be developed within the declared open effects. A candidate does not add an undeclared person or species.",
+                "One still image establishes visible geometry and local surface appearance, not fiber chemistry, force, chronology, identity or private motive.",
+                "This is one optional realization; neighboring variants remain independent choices."
+              ],
+              "id": "selected_owner_relation",
+              "observable_interpretation": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+        "en": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+        "keywords": [
+          "지지된 발과 열린 높은 찬장으로 뻗은 손",
+          "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+        ],
+        "ko": "지지된 발과 열린 높은 찬장으로 뻗은 손",
+        "paraphrases": [
+          "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet."
+        ],
+        "relations": [
+          {
+            "id": "wkr_wk094_selected_relation_relation_1",
+            "object": "same person two feet",
+            "subject": "floor",
+            "type": "supports"
+          },
+          {
+            "id": "wkr_wk094_selected_relation_relation_2",
+            "object": "open upper cabinet",
+            "subject": "same person connected arm",
+            "type": "reaches_toward"
+          }
+        ],
+        "tags": [
+          "photography"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "지지된 발과 열린 높은 찬장으로 뻗은 손",
+      "u1": "The same person stands with both feet on the floor and reaches one connected arm toward an open upper cabinet.",
+      "u10": "supports",
+      "u11": "wkr_wk094_selected_relation_relation_2",
+      "u12": "open upper cabinet",
+      "u13": "same person connected arm",
+      "u14": "reaches_toward",
+      "u15": "photography",
+      "u16": "floor supports same person two feet",
+      "u17": "same person connected arm reaches_toward open upper cabinet",
+      "u2": "interpretation_only_not_required",
+      "u3": "Every named actor, garment, body part and support must already exist or be developed within the declared open effects. A candidate does not add an undeclared person or species.",
+      "u4": "One still image establishes visible geometry and local surface appearance, not fiber chemistry, force, chronology, identity or private motive.",
+      "u5": "This is one optional realization; neighboring variants remain independent choices.",
+      "u6": "selected_owner_relation",
+      "u7": "wkr_wk094_selected_relation_relation_1",
+      "u8": "same person two feet",
+      "u9": "floor"
+    },
+    "provenance": [
+      {
+        "sha256": "596736940d8e969b0672f42f1148b866d7f147546f9837617a3bb00f3d255136",
+        "source": "slot:action:wkr_wk094_selected_relation_candidate"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_6d87e5685ec7578e8c7d6936e2048863",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "subject"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "quadruped utility robot",
+          "robot",
+          "zoomorphic nonhumanoid"
+        ],
+        "embedding_text": "four-legged utility robot with articulated legs, sensor head, rugged casing, and practical inspection behavior",
+        "en": "a quadruped utility robot",
+        "facets": {
+          "robot_degree": [
+            "full_machine"
+          ],
+          "robot_form": [
+            "zoomorphic_nonhumanoid"
+          ],
+          "robot_metaphor": [
+            "tool"
+          ],
+          "subject_kind": [
+            "robot"
+          ]
+        },
+        "keywords": [
+          "robot",
+          "android",
+          "machine",
+          "zoomorphic nonhumanoid",
+          "full machine"
+        ],
+        "kind": [
+          "robot",
+          "object"
+        ],
+        "ko": "네 발 보행 유틸리티 로봇",
+        "tags": [
+          "robot",
+          "object",
+          "industrial",
+          "technology"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "quadruped utility robot",
+      "u1": "robot",
+      "u10": "full machine",
+      "u11": "object",
+      "u12": "네 발 보행 유틸리티 로봇",
+      "u13": "industrial",
+      "u14": "technology",
+      "u2": "zoomorphic nonhumanoid",
+      "u3": "four-legged utility robot with articulated legs, sensor head, rugged casing, and practical inspection behavior",
+      "u4": "a quadruped utility robot",
+      "u5": "full_machine",
+      "u6": "zoomorphic_nonhumanoid",
+      "u7": "tool",
+      "u8": "android",
+      "u9": "machine"
+    },
+    "provenance": [
+      {
+        "sha256": "1191075eb69350c2d3ef323a6e90b20702037a4cdcd155cb13080e0ad1c2ecc6",
+        "source": "slot:subject:quadruped_utility_robot"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_ddb32fff91b650009fb736b9616bd8df",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "color"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "en": "seasonal pastel hanbok palette",
+        "ko": "한복에 어울리는 계절 파스텔 팔레트",
+        "tags": [
+          "hanbok",
+          "pastel",
+          "traditional"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "seasonal pastel hanbok palette",
+      "u1": "한복에 어울리는 계절 파스텔 팔레트",
+      "u2": "hanbok",
+      "u3": "pastel",
+      "u4": "traditional"
+    },
+    "provenance": [
+      {
+        "sha256": "ab8b04f9bed9c27e40447bae1e8b4453334b2e0a0071c44d84ef905fdcd994df",
+        "source": "slot:color:hanbok_pastel_seasonal"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_01a84ab8e29c5280a21f768af26965ef",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "composition"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "embedding_text": "real subject and mismatched mirror image in the same frame",
+        "en": "real subject and mismatched mirror image in the same frame",
+        "ko": "실물과 어긋난 거울상이 같은 프레임에 있는 구도",
+        "tags": [
+          "portrait",
+          "composition"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "real subject and mismatched mirror image in the same frame",
+      "u1": "실물과 어긋난 거울상이 같은 프레임에 있는 구도",
+      "u2": "portrait",
+      "u3": "composition"
+    },
+    "provenance": [
+      {
+        "sha256": "b92d03a397729e4dd504a11dc55b2be55aef96e0e054426126eaad100fce7b84",
+        "source": "slot:composition:mirror_mismatch_same_frame"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_b3ea445c44d55984ab7028c613b0f49f",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "composition",
+        "concept"
+      ],
+      "properties": [
+        {
+          "dimension": "composition",
+          "property": "composition.cosmic_realization",
+          "target": "subject"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.cosmic_realization",
+          "target": "mirror"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.cosmic_realization",
+          "target": "image"
+        },
+        {
+          "dimension": "concept",
+          "property": "concept.cosmic_realization",
+          "target": "subject"
+        },
+        {
+          "dimension": "concept",
+          "property": "concept.cosmic_realization",
+          "target": "mirror"
+        },
+        {
+          "dimension": "concept",
+          "property": "concept.cosmic_realization",
+          "target": "image"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "a physical object and its bounded mirror reflection disagree at a readable structural feature",
+          "실물과 경계가 보이는 거울 반사에서 구조 일부가 서로 다르다"
+        ],
+        "application_contract": "Use only this complete compatible realization when it fits the independently frozen scene. Preserve every stated owner and connection; alternative cards do not become simultaneous requirements. Hidden required endpoints are unobservable, not passed. Confusion boundaries: perspective difference; another subject beyond glass. Claim limit: 같은 대상을 등록할 근거와 정상 반사 영역 필요; 시간차는 미입증",
+        "definition": "One optional visual realization of Unreliable reflection has these distinct owners and visible components: subject: one readable physical object; mirror: a bounded reflective surface; image: corresponding reflected object with one changed appendage. The directed visible relations are subject corresponds to image; image contained in mirror.",
+        "en": "One optional visual realization of Unreliable reflection has these distinct owners and visible components: subject: one readable physical object; mirror: a bounded reflective surface; image: corresponding reflected object with one changed appendage. The directed visible relations are subject corresponds to image; image contained in mirror.",
+        "ko": "반사 대상과 상의 불일치의 선택형 가시 실현. 배신하는 반사 ◇ — Unreliable reflection. 같은 대상을 등록할 근거와 정상 반사 영역 필요; 시간차는 미입증",
+        "research_semantics": {
+          "activation": "post_core_optional_material; genre_label_does_not_activate_all_components",
+          "card_id": "C136",
+          "claim_limit": "같은 대상을 등록할 근거와 정상 반사 영역 필요; 시간차는 미입증",
+          "components": [
+            {
+              "owner": "subject",
+              "visible_description_en": "one readable physical object"
+            },
+            {
+              "owner": "mirror",
+              "visible_description_en": "a bounded reflective surface"
+            },
+            {
+              "owner": "image",
+              "visible_description_en": "corresponding reflected object with one changed appendage"
+            }
+          ],
+          "confusion_boundaries": [
+            "perspective difference",
+            "another subject beyond glass"
+          ],
+          "evidence_mode": "still",
+          "relations": [
+            {
+              "id": "r1",
+              "object": "image",
+              "predicate": "corresponds_to",
+              "subject": "subject"
+            },
+            {
+              "id": "r2",
+              "object": "mirror",
+              "predicate": "contained_in",
+              "subject": "image"
+            }
+          ],
+          "render_gates": [
+            {
+              "description": "one readable physical object",
+              "owner": "subject",
+              "unobservable": "UNOBSERVABLE_NOT_PASS"
+            },
+            {
+              "description": "a bounded reflective surface",
+              "owner": "mirror",
+              "unobservable": "UNOBSERVABLE_NOT_PASS"
+            },
+            {
+              "description": "corresponding reflected object with one changed appendage",
+              "owner": "image",
+              "unobservable": "UNOBSERVABLE_NOT_PASS"
+            }
+          ],
+          "schema": "photo-cosmic-visual-semantics/v1",
+          "seed_terms": [
+            "배신하는 반사 ◇ — Unreliable reflection"
+          ],
+          "source_refs": [
+            {
+              "current_review": "focused_body_or_definition_read",
+              "id": "S01",
+              "locator": "Introduction paragraphs on atmosphere and laws",
+              "title": "Supernatural Horror in Literature",
+              "url": "https://www.hplovecraft.com/writings/texts/essays/shil.aspx"
+            },
+            {
+              "current_review": "focused_body_or_definition_read",
+              "id": "S41",
+              "locator": "25.2 paragraphs on reflection and roughness",
+              "title": "The Law of Reflection",
+              "url": "https://openstax.org/books/college-physics-2e/pages/25-2-the-law-of-reflection"
+            }
+          ],
+          "source_review": "definition/passage and proposed realization reviewed; no native whole-source qualification",
+          "title_ko": "반사 대상과 상의 불일치",
+          "whole_case_policy": "partial_is_fail"
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "a physical object and its bounded mirror reflection disagree at a readable structural feature",
+      "u1": "실물과 경계가 보이는 거울 반사에서 구조 일부가 서로 다르다",
+      "u10": "mirror",
+      "u11": "a bounded reflective surface",
+      "u12": "image",
+      "u13": "corresponding reflected object with one changed appendage",
+      "u14": "perspective difference",
+      "u15": "another subject beyond glass",
+      "u16": "still",
+      "u17": "r1",
+      "u18": "corresponds_to",
+      "u19": "r2",
+      "u2": "Use only this complete compatible realization when it fits the independently frozen scene. Preserve every stated owner and connection; alternative cards do not become simultaneous requirements. Hidden required endpoints are unobservable, not passed. Confusion boundaries: perspective difference; another subject beyond glass. Claim limit: 같은 대상을 등록할 근거와 정상 반사 영역 필요; 시간차는 미입증",
+      "u20": "contained_in",
+      "u21": "UNOBSERVABLE_NOT_PASS",
+      "u22": "photo-cosmic-visual-semantics/v1",
+      "u23": "배신하는 반사 ◇ — Unreliable reflection",
+      "u24": "focused_body_or_definition_read",
+      "u25": "S01",
+      "u26": "Introduction paragraphs on atmosphere and laws",
+      "u27": "Supernatural Horror in Literature",
+      "u28": "https://www.hplovecraft.com/writings/texts/essays/shil.aspx",
+      "u29": "S41",
+      "u3": "One optional visual realization of Unreliable reflection has these distinct owners and visible components: subject: one readable physical object; mirror: a bounded reflective surface; image: corresponding reflected object with one changed appendage. The directed visible relations are subject corresponds to image; image contained in mirror.",
+      "u30": "25.2 paragraphs on reflection and roughness",
+      "u31": "The Law of Reflection",
+      "u32": "https://openstax.org/books/college-physics-2e/pages/25-2-the-law-of-reflection",
+      "u33": "definition/passage and proposed realization reviewed; no native whole-source qualification",
+      "u34": "반사 대상과 상의 불일치",
+      "u35": "partial_is_fail",
+      "u4": "반사 대상과 상의 불일치의 선택형 가시 실현. 배신하는 반사 ◇ — Unreliable reflection. 같은 대상을 등록할 근거와 정상 반사 영역 필요; 시간차는 미입증",
+      "u5": "post_core_optional_material; genre_label_does_not_activate_all_components",
+      "u6": "C136",
+      "u7": "같은 대상을 등록할 근거와 정상 반사 영역 필요; 시간차는 미입증",
+      "u8": "subject",
+      "u9": "one readable physical object"
+    },
+    "provenance": [
+      {
+        "sha256": "c67dc56f4ab1cc801448b1f0b65cec1c385b07116ce147762fb94ed7ad89c6f2",
+        "source": "https://www.hplovecraft.com/writings/texts/essays/shil.aspx"
+      },
+      {
+        "sha256": "c67dc56f4ab1cc801448b1f0b65cec1c385b07116ce147762fb94ed7ad89c6f2",
+        "source": "https://openstax.org/books/college-physics-2e/pages/25-2-the-law-of-reflection"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_2ae9ee547be95b9bb665ab5cb23aac3b",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "action",
+        "appearance",
+        "composition",
+        "count",
+        "pose",
+        "relationship",
+        "setting",
+        "subject"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "거울 속 대응 불일치"
+        ],
+        "application_contract": "One complete optional authored school-life realization. Retain the complete English and Korean propositions, stated owners, object and person counts, garment layers, physical supports, directed connections and depicted-media boundaries together. Apply only within independently frozen requester meaning and allowed changes. Research graphs and citations are review metadata, not native facts, owner selections, qualification or effect permission. Student roles and school clothing do not establish age, identity, nationality, consent, personality, popularity, academic ability, repetition, causation, diagnosis, sound or temporal history. Selected distinguishing components and both relation endpoints must be observable together; partial or hidden required evidence cannot pass the full relation.",
+        "definition": "Complete optional school-life visual realization: One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+        "en": "One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+        "ko": "한 사람이 두 팔을 내린 채 거울을 향하지만 같은 반사 프레임의 대응 인물은 한 팔을 든다.",
+        "research_semantics": {
+          "activation": "requester_selection_and_native_review_required",
+          "bilingual_review": "Complete English and Korean propositions reviewed with same owners and endpoints; no substitution from short label.",
+          "candidate_id": "cand_2ae9ee547be95b9bb665ab5cb23aac3b",
+          "card_id": "H05",
+          "confusion_boundary": "유령 정체·원한·장소에 묶임은 불일치로 입증하지 않음",
+          "effects_review": "Review every introduced or changed person/object/count/wardrobe/pose/contact/setting/light/text/media property before adoption.",
+          "evidence_status": "authored_optional_realization_with_context_sources_not_source_proven_geometry",
+          "graph_scope": "Review metadata only. No typed native facts, owner choices, guards or effect permissions.",
+          "id": "H05",
+          "mode": "visible",
+          "name_ko": "거울 속 대응 불일치",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "not_provable_from_still": "유령 정체·원한·장소에 묶임은 불일치로 입증하지 않음",
+          "observable_gate": "원인 몸·반사 프레임·대응 팔이 동시에 가시; 두 실제 인물 실패",
+          "owner_policy": "Bind to independently declared requester owners; graph node labels create no entity or permission.",
+          "pixel_status": "NOT_RUN",
+          "positive_en": "One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+          "positive_ko": "한 사람이 두 팔을 내린 채 거울을 향하지만 같은 반사 프레임의 대응 인물은 한 팔을 든다.",
+          "priority": "P1",
+          "provenance_boundary": "Research-file SHA, not remote webpage content hash. Scene geometry is authored proposal.",
+          "registration_status": "authored_optional_source",
+          "research_owner_nodes": [
+            "actual_arm",
+            "mirror",
+            "person",
+            "reflected_arm",
+            "reflected_person"
+          ],
+          "research_relations": [
+            {
+              "from": "person",
+              "relation": "faces",
+              "to": "mirror"
+            },
+            {
+              "from": "reflected_person",
+              "relation": "within",
+              "to": "mirror"
+            },
+            {
+              "from": "reflected_arm",
+              "relation": "differs_from",
+              "to": "actual_arm"
+            }
+          ],
+          "runtime_importable": true,
+          "schema": "photo-school-life-visual-semantics/v1",
+          "scope": "original supernatural image",
+          "source_details": [
+            {
+              "access": "search_index_only_after_fetch_timeout",
+              "access_date": "2026-10-23",
+              "id": "S23",
+              "limits": "본문 접근 실패; 전편 감상·장면별 분석·현재 학교 제도의 근거로 쓰지 않음",
+              "media_pixels_reviewed": false,
+              "publisher": "KOFIC",
+              "read_scope": "공식 페이지의 검색 색인",
+              "supports": "학교 제도·체벌 등 사회적 공포와의 연결",
+              "title": "The Social Horrors of WHISPERING CORRIDORS",
+              "url": "https://www.koreanfilm.or.kr/eng/news/features.jsp?blbdComCd=601013&mode=FEATURES_VIEW&seq=512"
+            }
+          ],
+          "source_ids": [
+            "S23"
+          ],
+          "source_keyword_ids": [
+            182,
+            183
+          ],
+          "source_status": "research_only",
+          "suggested_slots": [
+            "reflection_logic",
+            "composition"
+          ]
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+      "u1": "한 사람이 두 팔을 내린 채 거울을 향하지만 같은 반사 프레임의 대응 인물은 한 팔을 든다.",
+      "u10": "composition",
+      "u11": "original supernatural image",
+      "u12": "authored_optional_realization_with_context_sources_not_source_proven_geometry",
+      "u13": "actual_arm",
+      "u14": "mirror",
+      "u15": "person",
+      "u16": "reflected_arm",
+      "u17": "reflected_person",
+      "u18": "faces",
+      "u19": "within",
+      "u2": "Complete optional school-life visual realization: One person faces a mirror with both arms down, while the corresponding mirror figure has one arm raised in the same reflection frame.",
+      "u20": "differs_from",
+      "u21": "유령 정체·원한·장소에 묶임은 불일치로 입증하지 않음",
+      "u22": "원인 몸·반사 프레임·대응 팔이 동시에 가시; 두 실제 인물 실패",
+      "u23": "requester_selection_and_native_review_required",
+      "u24": "research_only",
+      "u25": "NOT_RUN",
+      "u26": "Bind to independently declared requester owners; graph node labels create no entity or permission.",
+      "u27": "Review every introduced or changed person/object/count/wardrobe/pose/contact/setting/light/text/media property before adoption.",
+      "u28": "photo-school-life-visual-semantics/v1",
+      "u29": "cand_2ae9ee547be95b9bb665ab5cb23aac3b",
+      "u3": "거울 속 대응 불일치",
+      "u30": "authored_optional_source",
+      "u31": "not_qualified",
+      "u32": "KOFIC",
+      "u33": "The Social Horrors of WHISPERING CORRIDORS",
+      "u34": "https://www.koreanfilm.or.kr/eng/news/features.jsp?blbdComCd=601013&mode=FEATURES_VIEW&seq=512",
+      "u35": "search_index_only_after_fetch_timeout",
+      "u36": "공식 페이지의 검색 색인",
+      "u37": "학교 제도·체벌 등 사회적 공포와의 연결",
+      "u38": "본문 접근 실패; 전편 감상·장면별 분석·현재 학교 제도의 근거로 쓰지 않음",
+      "u39": "2026-10-23",
+      "u4": "One complete optional authored school-life realization. Retain the complete English and Korean propositions, stated owners, object and person counts, garment layers, physical supports, directed connections and depicted-media boundaries together. Apply only within independently frozen requester meaning and allowed changes. Research graphs and citations are review metadata, not native facts, owner selections, qualification or effect permission. Student roles and school clothing do not establish age, identity, nationality, consent, personality, popularity, academic ability, repetition, causation, diagnosis, sound or temporal history. Selected distinguishing components and both relation endpoints must be observable together; partial or hidden required evidence cannot pass the full relation.",
+      "u40": "Research-file SHA, not remote webpage content hash. Scene geometry is authored proposal.",
+      "u41": "Review metadata only. No typed native facts, owner choices, guards or effect permissions.",
+      "u42": "Complete English and Korean propositions reviewed with same owners and endpoints; no substitution from short label.",
+      "u5": "H05",
+      "u6": "visible",
+      "u7": "P1",
+      "u8": "S23",
+      "u9": "reflection_logic"
+    },
+    "provenance": [
+      {
+        "sha256": "e9311303b29b39160a3dbd7437d826da0478871c735c9c0bf8f48f8269833921",
+        "source": "https://www.koreanfilm.or.kr/eng/news/features.jsp?blbdComCd=601013&mode=FEATURES_VIEW&seq=512"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_f0a91c41dcb85e719b988cd8f2f701c6",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "composition",
+        "pose",
+        "relationship",
+        "text"
+      ],
+      "properties": [
+        {
+          "dimension": "appearance",
+          "property": "appearance.genre_fusion_realization",
+          "target": "box"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.genre_fusion_realization",
+          "target": "seed"
+        },
+        {
+          "dimension": "appearance",
+          "property": "appearance.genre_fusion_realization",
+          "target": "label"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.genre_fusion_realization",
+          "target": "box"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.genre_fusion_realization",
+          "target": "seed"
+        },
+        {
+          "dimension": "composition",
+          "property": "composition.genre_fusion_realization",
+          "target": "label"
+        },
+        {
+          "dimension": "pose",
+          "property": "pose.genre_fusion_realization",
+          "target": "box"
+        },
+        {
+          "dimension": "pose",
+          "property": "pose.genre_fusion_realization",
+          "target": "seed"
+        },
+        {
+          "dimension": "pose",
+          "property": "pose.genre_fusion_realization",
+          "target": "label"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.genre_fusion_realization",
+          "target": "box"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.genre_fusion_realization",
+          "target": "seed"
+        },
+        {
+          "dimension": "relationship",
+          "property": "relationship.genre_fusion_realization",
+          "target": "label"
+        },
+        {
+          "dimension": "text",
+          "property": "text.genre_fusion_realization",
+          "target": "box"
+        },
+        {
+          "dimension": "text",
+          "property": "text.genre_fusion_realization",
+          "target": "seed"
+        },
+        {
+          "dimension": "text",
+          "property": "text.genre_fusion_realization",
+          "target": "label"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "Last of Their Kind — 마지막 생존자〔소재〕",
+          "The Carrier Bag Theory of Fiction — 이야기의 운반용 가방 이론",
+          "구획된 씨앗 보존 상자"
+        ],
+        "application_contract": "One complete optional fictional visual realization. Preserve the entire positive English and Korean meaning, each owner, part, cardinality, material, action and directed connection. Use only within independently frozen requester meaning and every affected dimension/property. All distinguishing endpoints must be visible together; partial, cropped or hidden evidence does not pass the complete case. Research graphs and citations supply no native facts, existing-owner permission or native qualification. Visible arrangements alone do not prove historical age, scientific mechanism, identity, consciousness, consent, kinship, rights, coercion, fairness, supernatural efficacy, emotion or narrative sequence.",
+        "definition": "Optional complete fictional visual realization: Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+        "en": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+        "ko": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다.",
+        "research_semantics": {
+          "activation": "genre label never activates this card; explicit compatible post-core selection only",
+          "adoption_mode": "optional_complete_realization",
+          "candidate_id": "cand_f0a91c41dcb85e719b988cd8f2f701c6",
+          "card_id": "A09",
+          "claim_limit_ko": "멸종 위기·마지막 종·발아 가능성은 외관만으로 확정하지 않는다.",
+          "context_scope": null,
+          "directed_relations": [
+            {
+              "from": "seed",
+              "predicate": "inside",
+              "to": "box"
+            },
+            {
+              "from": "label",
+              "predicate": "attached_to",
+              "to": "box"
+            }
+          ],
+          "family": "소진되는 세계·시간·자원",
+          "gates": [
+            {
+              "both_endpoints_required": true,
+              "gate_id": "A09-R1",
+              "partial_is_fail": true,
+              "pixel_status": "NOT_RUN",
+              "required_relation": {
+                "from": "seed",
+                "predicate": "inside",
+                "to": "box"
+              },
+              "unobservable_is_pass": false
+            },
+            {
+              "both_endpoints_required": true,
+              "gate_id": "A09-R2",
+              "partial_is_fail": true,
+              "pixel_status": "NOT_RUN",
+              "required_relation": {
+                "from": "label",
+                "predicate": "attached_to",
+                "to": "box"
+              },
+              "unobservable_is_pass": false
+            }
+          ],
+          "graph_scope": "review metadata; no typed native facts, owner permission or whole-source qualification",
+          "language_review": "authored bilingual draft; independent translator review pending",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "nearest_confusion_ko": "장식 구슬 상자, 씨앗과 무관한 라벨",
+          "observability": "proxy",
+          "owners": {
+            "box": "partitioned seed box",
+            "label": "legible accession labels",
+            "seed": "distinct seeds"
+          },
+          "pixel_status": "not_rendered",
+          "positive_en": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+          "positive_ko": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다.",
+          "priority": "P1",
+          "proposal_en": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+          "proposal_ko": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다.",
+          "proposed_role_descriptors": {
+            "object_structure": {
+              "dimensions": [
+                "appearance"
+              ],
+              "property_prefixes": [
+                "object.structure",
+                "object.geometry",
+                "object.connection"
+              ],
+              "semantic_role": "direct"
+            },
+            "prop_placement": {
+              "dimensions": [
+                "composition",
+                "pose"
+              ],
+              "property_prefixes": [
+                "props.placement",
+                "prop.position",
+                "prop.orientation",
+                "objects.position"
+              ],
+              "semantic_role": "direct"
+            }
+          },
+          "proposed_slots": [
+            "object_structure",
+            "prop_placement"
+          ],
+          "provenance_digest_scope": "research specification bytes, not downloaded source webpage bytes",
+          "registration_status": "authored_source_module",
+          "requester_acceptance": "pending",
+          "requester_judgment": "not_yet_received",
+          "role_descriptor_limit": "Current slot vocabulary only; no approved role fit, owner selector, effect declaration, source guard, or runtime registration.",
+          "routed_seed_ids": [
+            12,
+            28
+          ],
+          "schema": "photo-genre-fusion-visual-semantics/v1",
+          "seed_ids": [
+            28,
+            142
+          ],
+          "seed_terms": [
+            "Last of Their Kind — 마지막 생존자〔소재〕",
+            "The Carrier Bag Theory of Fiction — 이야기의 운반용 가방 이론"
+          ],
+          "source_ids": [
+            "S05",
+            "S18"
+          ],
+          "source_refs": [
+            {
+              "concrete_geometry": "authored_optional_realization_not_a_source_quote",
+              "read_scope": "official book overview lines 25-32; full essay not read",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S05",
+              "supported_scope_and_limit_ko": "운반·수집·담기 중심의 이야기 관점. 이번에는 저자 사이트의 소개를 읽었으며 에세이 전체의 논증을 검증했다고 하지 않는다.",
+              "title": "Ursula K. Le Guin: The Carrier Bag Theory of Fiction",
+              "url": "https://www.ursulakleguin.com/the-carrier-bag-theory-of-fiction"
+            },
+            {
+              "concrete_geometry": "authored_optional_realization_not_a_source_quote",
+              "read_scope": "publisher description and contents; full book not read",
+              "reviewed_date_kst": "2026-10-22",
+              "source_id": "S18",
+              "supported_scope_and_limit_ko": "함께 살아가는 관계·making kin·sympoiesis의 개념 위치. Chthulucene을 러브크래프트의 Cthulhu와 동의어로 쓰지 않는다.",
+              "title": "Duke University Press: Staying with the Trouble",
+              "url": "https://www.dukeupress.edu/staying-with-the-trouble"
+            }
+          ],
+          "source_support": "meaning/context/analogy only; concrete geometry independently authored",
+          "title_ko": "구획된 씨앗 보존 상자",
+          "translation_review": "bilingual source authored with explicit owner/relation boundaries; independent translator review remains pending"
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+      "u1": "작은 칸으로 나뉜 상자에 서로 다른 씨앗이 놓이고 각 칸에 읽을 수 있는 수집표가 붙어 있다.",
+      "u10": "prop_placement",
+      "u11": "S05",
+      "u12": "S18",
+      "u13": "proxy",
+      "u14": "partitioned seed box",
+      "u15": "distinct seeds",
+      "u16": "legible accession labels",
+      "u17": "seed",
+      "u18": "inside",
+      "u19": "box",
+      "u2": "Optional complete fictional visual realization: Distinct seeds occupy the compartments of a small box, each compartment bearing a legible accession label.",
+      "u20": "label",
+      "u21": "attached_to",
+      "u22": "장식 구슬 상자, 씨앗과 무관한 라벨",
+      "u23": "멸종 위기·마지막 종·발아 가능성은 외관만으로 확정하지 않는다.",
+      "u24": "P1",
+      "u25": "optional_complete_realization",
+      "u26": "meaning/context/analogy only; concrete geometry independently authored",
+      "u27": "genre label never activates this card; explicit compatible post-core selection only",
+      "u28": "not_yet_received",
+      "u29": "A09-R1",
+      "u3": "Last of Their Kind — 마지막 생존자〔소재〕",
+      "u30": "NOT_RUN",
+      "u31": "A09-R2",
+      "u32": "authored bilingual draft; independent translator review pending",
+      "u33": "direct",
+      "u34": "appearance",
+      "u35": "object.structure",
+      "u36": "object.geometry",
+      "u37": "object.connection",
+      "u38": "composition",
+      "u39": "pose",
+      "u4": "The Carrier Bag Theory of Fiction — 이야기의 운반용 가방 이론",
+      "u40": "props.placement",
+      "u41": "prop.position",
+      "u42": "prop.orientation",
+      "u43": "objects.position",
+      "u44": "Current slot vocabulary only; no approved role fit, owner selector, effect declaration, source guard, or runtime registration.",
+      "u45": "photo-genre-fusion-visual-semantics/v1",
+      "u46": "cand_f0a91c41dcb85e719b988cd8f2f701c6",
+      "u47": "authored_source_module",
+      "u48": "Ursula K. Le Guin: The Carrier Bag Theory of Fiction",
+      "u49": "https://www.ursulakleguin.com/the-carrier-bag-theory-of-fiction",
+      "u5": "구획된 씨앗 보존 상자",
+      "u50": "official book overview lines 25-32; full essay not read",
+      "u51": "운반·수집·담기 중심의 이야기 관점. 이번에는 저자 사이트의 소개를 읽었으며 에세이 전체의 논증을 검증했다고 하지 않는다.",
+      "u52": "2026-10-22",
+      "u53": "authored_optional_realization_not_a_source_quote",
+      "u54": "Duke University Press: Staying with the Trouble",
+      "u55": "https://www.dukeupress.edu/staying-with-the-trouble",
+      "u56": "publisher description and contents; full book not read",
+      "u57": "함께 살아가는 관계·making kin·sympoiesis의 개념 위치. Chthulucene을 러브크래프트의 Cthulhu와 동의어로 쓰지 않는다.",
+      "u58": "not_qualified",
+      "u59": "review metadata; no typed native facts, owner permission or whole-source qualification",
+      "u6": "One complete optional fictional visual realization. Preserve the entire positive English and Korean meaning, each owner, part, cardinality, material, action and directed connection. Use only within independently frozen requester meaning and every affected dimension/property. All distinguishing endpoints must be visible together; partial, cropped or hidden evidence does not pass the complete case. Research graphs and citations supply no native facts, existing-owner permission or native qualification. Visible arrangements alone do not prove historical age, scientific mechanism, identity, consciousness, consent, kinship, rights, coercion, fairness, supernatural efficacy, emotion or narrative sequence.",
+      "u60": "not_rendered",
+      "u61": "pending",
+      "u62": "research specification bytes, not downloaded source webpage bytes",
+      "u63": "bilingual source authored with explicit owner/relation boundaries; independent translator review remains pending",
+      "u7": "A09",
+      "u8": "소진되는 세계·시간·자원",
+      "u9": "object_structure"
+    },
+    "provenance": [
+      {
+        "sha256": "1996c4335b5dba76db41d3b4c0ce4012d7dc4ed5e8c8a441085d32279ad17ef4",
+        "source": "https://www.ursulakleguin.com/the-carrier-bag-theory-of-fiction"
+      },
+      {
+        "sha256": "1996c4335b5dba76db41d3b4c0ce4012d7dc4ed5e8c8a441085d32279ad17ef4",
+        "source": "https://www.dukeupress.edu/staying-with-the-trouble"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_10355f068a37536987be9febe2d4fdb5",
+    "conditions": {
+      "requires_adult_context": true
+    },
+    "effects": {
+      "dimensions": [
+        "age",
+        "appearance",
+        "composition",
+        "relationship",
+        "subject",
+        "text"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "The Unreliable Chart",
+          "Hospital Gown / Identification Band",
+          "서로 다른 코드가 보이는 팔찌와 차트",
+          "환자복·환자 확인 팔찌",
+          "믿을 수 없는 차트"
+        ],
+        "application_contract": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+        "definition": "Optional medical-horror visual realization: 서로 다른 코드가 보이는 팔찌와 차트",
+        "en": "An adult’s wristband reads \"AB12\" while the adjacent chart header reads \"AB21\"; both short codes are large and legible in the same frame.",
+        "ko": "성인의 손목 팔찌에는 \"AB12\", 옆 차트 머리글에는 \"AB21\"이 적혀 있으며, 두 짧은 코드가 같은 화면에서 크게 읽힌다.",
+        "research_semantics": {
+          "activation": "optional_post_core; genre labels never activate all source obligations",
+          "adoption_decision": "pending_full_source_comparison",
+          "basis": "project_authored_visual_proposal",
+          "candidate_id": "cand_10355f068a37536987be9febe2d4fdb5",
+          "claim_limit_ko": "문자 불일치만 평가한다. 두 문서가 같은 환자를 가리킴·오진·은폐·시간 역전은 서사 주장이다.",
+          "confusion_boundaries": [
+            "동일 글자",
+            "그럴듯한 가짜 문자",
+            "오진 자동 확정"
+          ],
+          "evidence_mode": "proxy",
+          "evidence_required": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+          "graph_scope": "research metadata only; not native facts or guard evidence",
+          "id": "D11",
+          "native_approval": false,
+          "native_qualification": "not_qualified",
+          "observable_components": [
+            "An adult’s wristband reads \"AB12\" while the adjacent chart header reads \"AB21\"; both short codes are large and legible in the same frame."
+          ],
+          "phrase_en": "An adult’s wristband reads \"AB12\" while the adjacent chart header reads \"AB21\"; both short codes are large and legible in the same frame.",
+          "phrase_ko": "성인의 손목 팔찌에는 \"AB12\", 옆 차트 머리글에는 \"AB21\"이 적혀 있으며, 두 짧은 코드가 같은 화면에서 크게 읽힌다.",
+          "positive_ko": "성인의 손목 팔찌에는 \"AB12\", 옆 차트 머리글에는 \"AB21\"이 적혀 있으며, 두 짧은 코드가 같은 화면에서 크게 읽힌다.",
+          "priority": "P0",
+          "proposed_slots": [
+            "visible_text",
+            "narrative_clue",
+            "composition"
+          ],
+          "provenance_digest_scope": "research specification bytes, not downloaded source page bytes",
+          "registration_status": "authored_visual_source",
+          "relations": [
+            {
+              "object": "chart.code",
+              "predicate": "differs_from",
+              "subject": "band.code"
+            }
+          ],
+          "render_gates": [
+            {
+              "description": "An adult’s wristband reads \"AB12\" while the adjacent chart header reads \"AB21\"; both short codes are large and legible in the same frame.",
+              "kind": "complete_visual_proposition"
+            },
+            {
+              "description": "band.code differs_from chart.code",
+              "kind": "directed_relation"
+            }
+          ],
+          "runtime_registration": true,
+          "schema": "photo-medical-horror-visual-semantics/v1",
+          "seed_terms": [
+            "The Unreliable Chart",
+            "Hospital Gown / Identification Band"
+          ],
+          "source_refs": [
+            {
+              "access_status": "primer_body_read",
+              "claim_limit_ko": "검사 수치·차트 불일치만으로 오진·과실·악의 확정 불가",
+              "id": "S45",
+              "quotation_used": false,
+              "reviewed_date_kst": "2026-10-22",
+              "supported_claim_ko": "진단 지연·누락, 인지 편향과 시스템 문제",
+              "title": "AHRQ PSNet Diagnostic Errors",
+              "url": "https://psnet.ahrq.gov/primer/diagnostic-errors"
+            }
+          ],
+          "source_support_scope": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+          "title_ko": "서로 다른 코드가 보이는 팔찌와 차트",
+          "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+          "whole_case_policy": "partial_is_fail"
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "An adult’s wristband reads \"AB12\" while the adjacent chart header reads \"AB21\"; both short codes are large and legible in the same frame.",
+      "u1": "성인의 손목 팔찌에는 \"AB12\", 옆 차트 머리글에는 \"AB21\"이 적혀 있으며, 두 짧은 코드가 같은 화면에서 크게 읽힌다.",
+      "u10": "band.code",
+      "u11": "differs_from",
+      "u12": "chart.code",
+      "u13": "visible_text",
+      "u14": "narrative_clue",
+      "u15": "composition",
+      "u16": "S45",
+      "u17": "AHRQ PSNet Diagnostic Errors",
+      "u18": "https://psnet.ahrq.gov/primer/diagnostic-errors",
+      "u19": "primer_body_read",
+      "u2": "Optional medical-horror visual realization: 서로 다른 코드가 보이는 팔찌와 차트",
+      "u20": "진단 지연·누락, 인지 편향과 시스템 문제",
+      "u21": "검사 수치·차트 불일치만으로 오진·과실·악의 확정 불가",
+      "u22": "2026-10-22",
+      "u23": "동일 글자",
+      "u24": "그럴듯한 가짜 문자",
+      "u25": "오진 자동 확정",
+      "u26": "문자 불일치만 평가한다. 두 문서가 같은 환자를 가리킴·오진·은폐·시간 역전은 서사 주장이다.",
+      "u27": "proxy",
+      "u28": "P0",
+      "u29": "photo-medical-horror-visual-semantics/v1",
+      "u3": "The Unreliable Chart",
+      "u30": "project_authored_visual_proposal",
+      "u31": "definition or boundary only; geometry/composition is authored, not an observed clinical photograph",
+      "u32": "complete_visual_proposition",
+      "u33": "directed_relation",
+      "u34": "band.code differs_from chart.code",
+      "u35": "all specified owners, counts, boundaries and contact endpoints visible together at useful scale",
+      "u36": "UNOBSERVABLE_NOT_PASS",
+      "u37": "partial_is_fail",
+      "u38": "pending_full_source_comparison",
+      "u39": "cand_10355f068a37536987be9febe2d4fdb5",
+      "u4": "Hospital Gown / Identification Band",
+      "u40": "authored_visual_source",
+      "u41": "not_qualified",
+      "u42": "optional_post_core; genre labels never activate all source obligations",
+      "u43": "research metadata only; not native facts or guard evidence",
+      "u44": "research specification bytes, not downloaded source page bytes",
+      "u5": "서로 다른 코드가 보이는 팔찌와 차트",
+      "u6": "환자복·환자 확인 팔찌",
+      "u7": "믿을 수 없는 차트",
+      "u8": "One complete optional authored visual realization. Preserve every English and Korean positive clause, owner, count, part, endpoint, relation, visible state and explicit fictional, illustrative or staged mode. Adopt only if the independently frozen requester meaning and all affected dimensions and properties permit the complete source. All distinguishing components and endpoints must be legible together in the actual selected image; hidden, cropped, ambiguous or partial required evidence does not pass. A proxy depicts only its stated visible structure, not a diagnosis, consciousness, pain, consent, function, genetic origin, life state, history, sound or causation. Research relation graphs, aliases and citations create no typed native facts, guard support, owner permissions or whole-source native qualification.",
+      "u9": "D11"
+    },
+    "provenance": [
+      {
+        "sha256": "136ccc58d1eacc978ebe434820f92feee359a2b8d676043c8cf8354eb7ae58ac",
+        "source": "https://psnet.ahrq.gov/primer/diagnostic-errors"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_c84d2dd09e5b5a4f869917721ddd2fca",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "material"
+      ],
+      "properties": [
+        {
+          "dimension": "appearance",
+          "property": "wardrobe",
+          "target": "main_subject"
+        }
+      ]
+    },
+    "native_contract": "bundle",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "adoption": "optional",
+        "associated_profile_ids": [],
+        "components": [
+          {
+            "concept_units": [
+              "한 바탕 위 서로 다른 밀도와 재질의 모티프"
+            ],
+            "id": "part_1",
+            "minimum_realizations": 1
+          }
+        ],
+        "confusion_boundaries": [
+          "모티프 주변을 원단 없는 피부로 자동 판단"
+        ],
+        "member_candidates": [
+          {
+            "adoption": "optional",
+            "binding_id": "bind_78abdff2ba23541aac0b84b2c1e7093a",
+            "candidate_id": "cand_78abdff2ba23541aac0b84b2c1e7093a",
+            "requirements": {}
+          }
+        ],
+        "profile_activation": "independent_request_evidence_only",
+        "relations": [
+          {
+            "id": "sff_relation_pro_r50_same_owner",
+            "object": "한 바탕 위 서로 다른 밀도와 재질의 모티프",
+            "subject": "튤 위 조밀한 장식 패널",
+            "type": "co_realized_with_same_subject_and_garment"
+          }
+        ],
+        "source_sha256": "7d89cd906dd90f8497133b329fb1eb32deb4f6ef7ad00e34d2db1d71ef71adbe"
+      }
+    },
+    "all_source_literals": {
+      "u0": "optional",
+      "u1": "한 바탕 위 서로 다른 밀도와 재질의 모티프",
+      "u10": "7d89cd906dd90f8497133b329fb1eb32deb4f6ef7ad00e34d2db1d71ef71adbe",
+      "u11": "튤 위 조밀한 장식 패널 co_realized_with_same_subject_and_garment 한 바탕 위 서로 다른 밀도와 재질의 모티프",
+      "u2": "part_1",
+      "u3": "모티프 주변을 원단 없는 피부로 자동 판단",
+      "u4": "bind_78abdff2ba23541aac0b84b2c1e7093a",
+      "u5": "cand_78abdff2ba23541aac0b84b2c1e7093a",
+      "u6": "independent_request_evidence_only",
+      "u7": "sff_relation_pro_r50_same_owner",
+      "u8": "튤 위 조밀한 장식 패널",
+      "u9": "co_realized_with_same_subject_and_garment"
+    },
+    "provenance": [
+      {
+        "sha256": "cf5e4541edb915bf17603cc329a4a24ddb20fafe980ebdc68f18834b96db6881",
+        "source": "bundle:sff_relation_pro_r50"
+      }
+    ],
+    "record_kind": "visual_bundle"
+  },
+  {
+    "cid": "cand_564ee719d63f5899909f03532490e2b1",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "subject"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "adult school uniform cosplay",
+          "성인 교복",
+          "학생 컨셉"
+        ],
+        "embedding_text": "adult performer wearing clearly adult-coded school-uniform cosplay in a reference portrait",
+        "en": "an adult school-uniform cosplay model",
+        "keywords": [
+          "adult only",
+          "school uniform cosplay",
+          "reference studio"
+        ],
+        "kind": [
+          "human"
+        ],
+        "ko": "성인 교복 코스프레 모델",
+        "tags": [
+          "human",
+          "cosplay",
+          "uniform",
+          "adult"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "adult school uniform cosplay",
+      "u1": "성인 교복",
+      "u10": "cosplay",
+      "u11": "uniform",
+      "u12": "adult",
+      "u2": "학생 컨셉",
+      "u3": "adult performer wearing clearly adult-coded school-uniform cosplay in a reference portrait",
+      "u4": "an adult school-uniform cosplay model",
+      "u5": "adult only",
+      "u6": "school uniform cosplay",
+      "u7": "reference studio",
+      "u8": "human",
+      "u9": "성인 교복 코스프레 모델"
+    },
+    "provenance": [
+      {
+        "sha256": "e5690b833f53adcf188a0e2af53776c9412fd08a5ac1b2fac9b9236e1f35f1c3",
+        "source": "slot:subject:adult_school_uniform_cosplay_model"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_e91f29f4f1b150df9c9d875d45bb53b1",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_contract": "profile",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "activation": {
+          "exact_terms": [
+            "body-bounded negative space",
+            "body bounded negative space",
+            "figure-bounded negative space",
+            "신체 경계 네거티브 스페이스",
+            "몸 윤곽 사이 여백",
+            "신체 윤곽으로 둘러싸인 빈 공간"
+          ],
+          "requires_adult_character": false
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "body_contour_boundaries",
+              "match_terms": [
+                "two or more real body contours bound the opening",
+                "arm waist elbow hand or face boundaries",
+                "두 개 이상의 실제 신체 윤곽"
+              ]
+            },
+            {
+              "id": "continuous_background",
+              "match_terms": [
+                "continuous background visible through the opening",
+                "unbroken backdrop patch",
+                "공간 안으로 이어지는 실제 배경"
+              ]
+            },
+            {
+              "id": "readable_void_shape",
+              "match_terms": [
+                "readable triangular oval or curved void",
+                "intentional enclosed negative-space shape",
+                "식별 가능한 삼각형 타원형 곡선형 여백"
+              ]
+            },
+            {
+              "id": "region_identity",
+              "match_terms": [
+                "named arm-waist hand-face or elbow-torso region",
+                "body region stays identifiable",
+                "팔-허리 손-얼굴 팔꿈치-몸통 영역"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "body_contour_boundaries",
+              "continuous_background",
+              "readable_void_shape"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "body_contour_boundaries",
+                "continuous_background",
+                "readable_void_shape",
+                "region_identity"
+              ],
+              "evidence": [
+                {
+                  "field": "body_boundaries_phrase",
+                  "requirement": {
+                    "min_content_words": 4,
+                    "must_mention_any": [
+                      "two or more real body contours bound the opening",
+                      "arm and torso contours enclose the opening"
+                    ]
+                  }
+                },
+                {
+                  "field": "continuous_background_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "continuous background visible through the opening",
+                      "unbroken backdrop patch"
+                    ]
+                  }
+                },
+                {
+                  "field": "void_shape_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "readable triangular oval or curved void",
+                      "intentional enclosed negative-space shape"
+                    ]
+                  }
+                },
+                {
+                  "field": "body_region_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "arm-waist region",
+                      "hand-face region",
+                      "elbow-torso region",
+                      "named body region"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Name one body region, arrange at least two real body contours around a continuous patch of background, and give that void a clear shape that survives thumbnail review; do not silently reinterpret a generic arm, hand, or elbow opening as an inner-thigh gap.",
+              "render_gates": [
+                {
+                  "description": "Two or more anatomically coherent body contours visibly form the opening's boundary.",
+                  "id": "vo_body_negative_space_real_boundaries",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "The opening contains continuous scene background rather than shadow, fabric, or deleted anatomy.",
+                  "id": "vo_body_negative_space_continuous_background",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "The void has a deliberate recognizable shape and remains legible at thumbnail scale.",
+                  "id": "vo_body_negative_space_shape_legible",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "The named body region remains identifiable and is not silently replaced by inner-thigh geometry.",
+                  "id": "vo_body_negative_space_region_specific",
+                  "review_scale": "both"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "body_composition_geometry",
+        "composition_instruction": "Name one body region, arrange at least two real body contours around a continuous patch of background, and give that void a clear shape that survives thumbnail review; do not silently reinterpret a generic arm, hand, or elbow opening as an inner-thigh gap.",
+        "concept_candidate": {
+          "concept_terms": [
+            "real body-contour enclosure",
+            "continuous visible background",
+            "arm-waist triangle",
+            "bent-elbow torso opening",
+            "hand-face opening",
+            "readable void shape",
+            "region-specific negative space"
+          ]
+        },
+        "evidence_requirements": {
+          "body_boundaries_phrase": {
+            "min_content_words": 4,
+            "must_mention_any": [
+              "two or more real body contours bound the opening",
+              "arm and torso contours enclose the opening"
+            ]
+          },
+          "body_region_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "arm-waist region",
+              "hand-face region",
+              "elbow-torso region",
+              "named body region"
+            ]
+          },
+          "continuous_background_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "continuous background visible through the opening",
+              "unbroken backdrop patch"
+            ]
+          },
+          "void_shape_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "readable triangular oval or curved void",
+              "intentional enclosed negative-space shape"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "unrelated_object_gap",
+          "garment_cutout_or_shadow",
+          "generic_empty_margin",
+          "deleted_body_part",
+          "inner_thigh_gap_without_thigh_request"
+        ],
+        "render_gates": [
+          {
+            "description": "Two or more anatomically coherent body contours visibly form the opening's boundary.",
+            "id": "vo_body_negative_space_real_boundaries",
+            "review_scale": "native"
+          },
+          {
+            "description": "The opening contains continuous scene background rather than shadow, fabric, or deleted anatomy.",
+            "id": "vo_body_negative_space_continuous_background",
+            "review_scale": "both"
+          },
+          {
+            "description": "The void has a deliberate recognizable shape and remains legible at thumbnail scale.",
+            "id": "vo_body_negative_space_shape_legible",
+            "review_scale": "thumbnail"
+          },
+          {
+            "description": "The named body region remains identifiable and is not silently replaced by inner-thigh geometry.",
+            "id": "vo_body_negative_space_region_specific",
+            "review_scale": "both"
+          }
+        ],
+        "required_evidence_fields": [
+          "body_boundaries_phrase",
+          "continuous_background_phrase",
+          "void_shape_phrase",
+          "body_region_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "label_plus_definition",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [
+            "body-bounded negative space"
+          ],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "two or more real body contours bound the opening",
+                  "arm waist elbow hand or face boundaries",
+                  "두 개 이상의 실제 신체 윤곽"
+                ],
+                "id": "body_contour_boundaries"
+              },
+              {
+                "any_terms": [
+                  "continuous background visible through the opening",
+                  "unbroken backdrop patch",
+                  "공간 안으로 이어지는 실제 배경"
+                ],
+                "id": "continuous_background"
+              },
+              {
+                "any_terms": [
+                  "readable triangular oval or curved void",
+                  "intentional enclosed negative-space shape",
+                  "식별 가능한 삼각형 타원형 곡선형 여백"
+                ],
+                "id": "readable_void_shape"
+              },
+              {
+                "any_terms": [
+                  "named arm-waist hand-face or elbow-torso region",
+                  "body region stays identifiable",
+                  "팔-허리 손-얼굴 팔꿈치-몸통 영역"
+                ],
+                "id": "region_identity"
+              }
+            ],
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "body_contour_boundaries",
+              "continuous_background",
+              "readable_void_shape"
+            ]
+          },
+          "contrast_examples": [
+            "a gap between unrelated objects",
+            "a garment cutout or shadow mistaken for background",
+            "generic negative space with no body boundary",
+            "an upper-inner-thigh gap selected without thigh-specific geometry"
+          ],
+          "definition": "An enclosed or strongly bounded patch of continuous background whose recognizable shape is created by two or more real body contours, such as an arm-waist triangle, bent-elbow torso opening, or hand-face opening.",
+          "paraphrase_examples": [
+            "팔과 허리 윤곽이 삼각형 배경 여백을 만드는 인체 구도",
+            "a continuous background opening enclosed by arm and torso contours",
+            "a hand and face forming a readable body-bounded void rather than an object hole"
+          ]
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "body-bounded negative space",
+      "u1": "body bounded negative space",
+      "u10": "continuous_background",
+      "u11": "continuous background visible through the opening",
+      "u12": "unbroken backdrop patch",
+      "u13": "공간 안으로 이어지는 실제 배경",
+      "u14": "readable_void_shape",
+      "u15": "readable triangular oval or curved void",
+      "u16": "intentional enclosed negative-space shape",
+      "u17": "식별 가능한 삼각형 타원형 곡선형 여백",
+      "u18": "region_identity",
+      "u19": "named arm-waist hand-face or elbow-torso region",
+      "u2": "figure-bounded negative space",
+      "u20": "body region stays identifiable",
+      "u21": "팔-허리 손-얼굴 팔꿈치-몸통 영역",
+      "u22": "photo-authored-visual-components/v2",
+      "u23": "body_boundaries_phrase",
+      "u24": "arm and torso contours enclose the opening",
+      "u25": "continuous_background_phrase",
+      "u26": "void_shape_phrase",
+      "u27": "body_region_phrase",
+      "u28": "arm-waist region",
+      "u29": "hand-face region",
+      "u3": "신체 경계 네거티브 스페이스",
+      "u30": "elbow-torso region",
+      "u31": "named body region",
+      "u32": "Name one body region, arrange at least two real body contours around a continuous patch of background, and give that void a clear shape that survives thumbnail review; do not silently reinterpret a generic arm, hand, or elbow opening as an inner-thigh gap.",
+      "u33": "Two or more anatomically coherent body contours visibly form the opening's boundary.",
+      "u34": "vo_body_negative_space_real_boundaries",
+      "u35": "native",
+      "u36": "The opening contains continuous scene background rather than shadow, fabric, or deleted anatomy.",
+      "u37": "vo_body_negative_space_continuous_background",
+      "u38": "both",
+      "u39": "The void has a deliberate recognizable shape and remains legible at thumbnail scale.",
+      "u4": "몸 윤곽 사이 여백",
+      "u40": "vo_body_negative_space_shape_legible",
+      "u41": "thumbnail",
+      "u42": "The named body region remains identifiable and is not silently replaced by inner-thigh geometry.",
+      "u43": "vo_body_negative_space_region_specific",
+      "u44": "body_composition_geometry",
+      "u45": "real body-contour enclosure",
+      "u46": "continuous visible background",
+      "u47": "arm-waist triangle",
+      "u48": "bent-elbow torso opening",
+      "u49": "hand-face opening",
+      "u5": "신체 윤곽으로 둘러싸인 빈 공간",
+      "u50": "readable void shape",
+      "u51": "region-specific negative space",
+      "u52": "unrelated_object_gap",
+      "u53": "garment_cutout_or_shadow",
+      "u54": "generic_empty_margin",
+      "u55": "deleted_body_part",
+      "u56": "inner_thigh_gap_without_thigh_request",
+      "u57": "label_plus_definition",
+      "u58": "a gap between unrelated objects",
+      "u59": "a garment cutout or shadow mistaken for background",
+      "u6": "body_contour_boundaries",
+      "u60": "generic negative space with no body boundary",
+      "u61": "an upper-inner-thigh gap selected without thigh-specific geometry",
+      "u62": "An enclosed or strongly bounded patch of continuous background whose recognizable shape is created by two or more real body contours, such as an arm-waist triangle, bent-elbow torso opening, or hand-face opening.",
+      "u63": "팔과 허리 윤곽이 삼각형 배경 여백을 만드는 인체 구도",
+      "u64": "a continuous background opening enclosed by arm and torso contours",
+      "u65": "a hand and face forming a readable body-bounded void rather than an object hole",
+      "u7": "two or more real body contours bound the opening",
+      "u8": "arm waist elbow hand or face boundaries",
+      "u9": "두 개 이상의 실제 신체 윤곽"
+    },
+    "provenance": [
+      {
+        "sha256": "7c9464941a96329394f448f1da080bffd1a607b7ada22953f6c90ce151e197db",
+        "source": "visual_profile:body_bounded_negative_space"
+      }
+    ],
+    "record_kind": "visual_profile"
+  },
+  {
+    "cid": "cand_90cec1a3e8bf554892cf1121aed31f17",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "appearance",
+        "pose",
+        "material"
+      ],
+      "properties": [
+        {
+          "dimension": "appearance",
+          "property": "wardrobe.layering_and_coverage",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "pose",
+          "property": "hands.grip",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "material",
+          "property": "fabric.tension_and_drape",
+          "target": "existing_towel"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "같은 타월을 양손에 든 전면 가림"
+        ],
+        "concept_units": [
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist."
+              ],
+              "definition": "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist.",
+              "id": "vel_held_towel_continuous_front_boundary"
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "같은 타월을 양손에 든 전면 가림; both hands grip separate points on the upper edge of the same towel; the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis; the separately worn swimsuit remains behind the towel with only a small strap region visible; 양손이 같은 타월 윗단의 다른 점을 잡고 위는 팽팽한 반면 중앙은 몸통과 골반 앞에 연속해서 늘어지며 뒤 수영복은 작은 끈 영역만 보인다; two hands hold one towel upper edge taut as its central panel drapes continuously across the torso and pelvis, leaving a small strap window of the separate swimsuit behind it",
+        "en": "both hands grip separate points on the upper edge of the same towel; the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis; the separately worn swimsuit remains behind the towel with only a small strap region visible",
+        "keywords": [
+          "같은 타월을 양손에 든 전면 가림",
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "ko": "같은 타월을 양손에 든 전면 가림",
+        "paraphrases": [
+          "양손이 같은 타월 윗단의 다른 점을 잡고 위는 팽팽한 반면 중앙은 몸통과 골반 앞에 연속해서 늘어지며 뒤 수영복은 작은 끈 영역만 보인다",
+          "two hands hold one towel upper edge taut as its central panel drapes continuously across the torso and pelvis, leaving a small strap window of the separate swimsuit behind it"
+        ],
+        "relations": [
+          {
+            "id": "vel_held_towel_continuous_front_r1",
+            "object": "same_towel_upper_edge",
+            "subject": "left_hand",
+            "type": "grips"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r2",
+            "object": "same_towel_upper_edge",
+            "subject": "right_hand",
+            "type": "grips"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r3",
+            "object": "front_torso_and_pelvis",
+            "subject": "towel_center",
+            "type": "occludes"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r4",
+            "object": "held_towel",
+            "subject": "swimsuit",
+            "type": "lies_behind"
+          }
+        ],
+        "tags": [
+          "observable_relation"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "같은 타월을 양손에 든 전면 가림",
+      "u1": "both hands grip separate points on the upper edge of the same towel",
+      "u10": "two hands hold one towel upper edge taut as its central panel drapes continuously across the torso and pelvis, leaving a small strap window of the separate swimsuit behind it",
+      "u11": "vel_held_towel_continuous_front_r1",
+      "u12": "same_towel_upper_edge",
+      "u13": "left_hand",
+      "u14": "grips",
+      "u15": "vel_held_towel_continuous_front_r2",
+      "u16": "right_hand",
+      "u17": "vel_held_towel_continuous_front_r3",
+      "u18": "front_torso_and_pelvis",
+      "u19": "towel_center",
+      "u2": "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+      "u20": "occludes",
+      "u21": "vel_held_towel_continuous_front_r4",
+      "u22": "held_towel",
+      "u23": "swimsuit",
+      "u24": "lies_behind",
+      "u25": "observable_relation",
+      "u26": "left_hand grips same_towel_upper_edge",
+      "u27": "right_hand grips same_towel_upper_edge",
+      "u28": "towel_center occludes front_torso_and_pelvis",
+      "u29": "swimsuit lies_behind held_towel",
+      "u3": "the separately worn swimsuit remains behind the towel with only a small strap region visible",
+      "u4": "interpretation_only_not_a_required_visual_recipe",
+      "u5": "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist.",
+      "u6": "vel_held_towel_continuous_front_boundary",
+      "u7": "같은 타월을 양손에 든 전면 가림; both hands grip separate points on the upper edge of the same towel; the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis; the separately worn swimsuit remains behind the towel with only a small strap region visible; 양손이 같은 타월 윗단의 다른 점을 잡고 위는 팽팽한 반면 중앙은 몸통과 골반 앞에 연속해서 늘어지며 뒤 수영복은 작은 끈 영역만 보인다; two hands hold one towel upper edge taut as its central panel drapes continuously across the torso and pelvis, leaving a small strap window of the separate swimsuit behind it",
+      "u8": "both hands grip separate points on the upper edge of the same towel; the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis; the separately worn swimsuit remains behind the towel with only a small strap region visible",
+      "u9": "양손이 같은 타월 윗단의 다른 점을 잡고 위는 팽팽한 반면 중앙은 몸통과 골반 앞에 연속해서 늘어지며 뒤 수영복은 작은 끈 영역만 보인다"
+    },
+    "provenance": [
+      {
+        "sha256": "ce778ae9481b804f483b817daa3d11e0796c255ad7f029f753fffa3f4d7a3952",
+        "source": "slot:garment_detail:vel_held_towel_continuous_front"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_a5562a62b5e750c4aba90aabee698d0d",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "composition"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "embedding_text": "full exposed-endoskeleton composition as robot concept proof or scene anchor",
+        "en": "full exposed-endoskeleton composition",
+        "keywords": [
+          "full",
+          "exposed",
+          "endoskeleton",
+          "composition"
+        ],
+        "ko": "노출 엔도스켈레톤 전신 구도"
+      }
+    },
+    "all_source_literals": {
+      "u0": "full exposed-endoskeleton composition as robot concept proof or scene anchor",
+      "u1": "full exposed-endoskeleton composition",
+      "u2": "full",
+      "u3": "exposed",
+      "u4": "endoskeleton",
+      "u5": "composition",
+      "u6": "노출 엔도스켈레톤 전신 구도"
+    },
+    "provenance": [
+      {
+        "sha256": "4ffd0da6a066fcd07eaa1bb453db4a5915b6df785afaac48b45580b725111d50",
+        "source": "slot:composition:exposed_endoskeleton_full"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_020b0a231d5a544bbad83aaffebd37e5",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "appearance"
+      ],
+      "properties": []
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "잔머리의 부착과 움직임 원인",
+          "hair strand owner and cause relation"
+        ],
+        "concept_units": [
+          "잔머리의 부착과 움직임 원인",
+          "wind pushes loose hair",
+          "hairline-attached strands",
+          "hair moves with the breeze",
+          "flyaway strands connect to the hairline or tie point",
+          "local strands agree with the main hair direction",
+          "their movement agrees with the stated breeze dampness or action",
+          "hair and facial contours remain separate without penetration"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "바람 없는 고정 장면에는 바람을 새로 넣지 않는다."
+              ],
+              "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+              "id": "visual_grammar_g31_pr_hair_strand_owner_and_cause_candidate",
+              "observable_interpretation": "owned strands respond to an established breeze or movement and source direction"
+            }
+          ]
+        },
+        "embedding_text": "잔머리의 부착과 움직임 원인; Keep a few flyaway hairs attached to the hairline, with their direction explained by the scene's motion or air.; wind pushes loose hair; hairline-attached strands; hair moves with the breeze; flyaway strands connect to the hairline or tie point; local strands agree with the main hair direction; their movement agrees with the stated breeze dampness or action; hair and facial contours remain separate without penetration",
+        "en": "Keep a few flyaway hairs attached to the hairline, with their direction explained by the scene's motion or air.",
+        "keywords": [
+          "wind pushes loose hair",
+          "hairline-attached strands",
+          "hair moves with the breeze"
+        ],
+        "ko": "잔머리의 부착과 움직임 원인",
+        "paraphrases": [
+          "loose strands keep visible roots and follow a locally readable light or airflow cause",
+          "잔머리가 보이는 뿌리를 유지하고 국소 빛이나 공기 흐름에 따른 형태를 보인다"
+        ],
+        "relations": [
+          {
+            "id": "pr_hair_strand_owner_and_cause_owner_relation",
+            "object": "the selected visible subject and its directly related scene surfaces",
+            "subject": "인물의 두피·묶임점·머리끝",
+            "type": "scene_bound_owner_relation"
+          }
+        ],
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "hair_style"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "잔머리의 부착과 움직임 원인",
+      "u1": "hair strand owner and cause relation",
+      "u10": "바람 없는 고정 장면에는 바람을 새로 넣지 않는다.",
+      "u11": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+      "u12": "visual_grammar_g31_pr_hair_strand_owner_and_cause_candidate",
+      "u13": "owned strands respond to an established breeze or movement and source direction",
+      "u14": "잔머리의 부착과 움직임 원인; Keep a few flyaway hairs attached to the hairline, with their direction explained by the scene's motion or air.; wind pushes loose hair; hairline-attached strands; hair moves with the breeze; flyaway strands connect to the hairline or tie point; local strands agree with the main hair direction; their movement agrees with the stated breeze dampness or action; hair and facial contours remain separate without penetration",
+      "u15": "Keep a few flyaway hairs attached to the hairline, with their direction explained by the scene's motion or air.",
+      "u16": "loose strands keep visible roots and follow a locally readable light or airflow cause",
+      "u17": "잔머리가 보이는 뿌리를 유지하고 국소 빛이나 공기 흐름에 따른 형태를 보인다",
+      "u18": "pr_hair_strand_owner_and_cause_owner_relation",
+      "u19": "the selected visible subject and its directly related scene surfaces",
+      "u2": "wind pushes loose hair",
+      "u20": "인물의 두피·묶임점·머리끝",
+      "u21": "scene_bound_owner_relation",
+      "u22": "photographic_scene",
+      "u23": "photorealism_elements",
+      "u24": "hair_style",
+      "u25": "인물의 두피·묶임점·머리끝 scene_bound_owner_relation the selected visible subject and its directly related scene surfaces",
+      "u3": "hairline-attached strands",
+      "u4": "hair moves with the breeze",
+      "u5": "flyaway strands connect to the hairline or tie point",
+      "u6": "local strands agree with the main hair direction",
+      "u7": "their movement agrees with the stated breeze dampness or action",
+      "u8": "hair and facial contours remain separate without penetration",
+      "u9": "interpretation_only_not_a_required_visual_recipe"
+    },
+    "provenance": [
+      {
+        "sha256": "f3cc888f95e5d079a15327712bdc7f1a23f42441e994e3ef2f8f9bd08309f069",
+        "source": "slot:hair_style:pr_hair_strand_owner_and_cause_candidate"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_1545933413635b4ca0372869952c760f",
+    "conditions": {
+      "for_any": [
+        "human"
+      ]
+    },
+    "effects": {
+      "dimensions": [
+        "pose"
+      ],
+      "properties": [
+        {
+          "dimension": "pose",
+          "property": "body.segment_orientation",
+          "target": "main_subject"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "카메라 깊이 방향으로 뻗은 팔",
+          "Foreshortening",
+          "Forward reach",
+          "단축법"
+        ],
+        "concept_units": [
+          "arm extends toward the camera in depth",
+          "hand/forearm scale and overlap reflect that direction",
+          "shoulder-elbow-wrist continuity remains coherent",
+          "this changes a viewpoint relation without claiming a focal length"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "application_conditions": [
+                "Equivalent meaning only; retain the original owner, prerequisites, all effects and guards."
+              ],
+              "id": "cute_equivalent_pv_foreshortened_reach",
+              "limits": [
+                "No emotion, age, universal cuteness or extra actor inferred from this local form."
+              ]
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "카메라 깊이 방향으로 뻗은 팔; Foreshortening; Forward reach; 단축법; arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+        "en": "arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+        "keywords": [
+          "카메라 깊이 방향으로 뻗은 팔",
+          "Foreshortening",
+          "Forward reach",
+          "단축법"
+        ],
+        "ko": "카메라 깊이 방향으로 뻗은 팔",
+        "paraphrases": [
+          "손과 팔이 촬영 렌즈 쪽 깊이 방향으로 뻗는다",
+          "The arm extends toward the capture lens with depth foreshortening."
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "pose_vocabulary",
+          "body_orientation"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "카메라 깊이 방향으로 뻗은 팔",
+      "u1": "Foreshortening",
+      "u10": "No emotion, age, universal cuteness or extra actor inferred from this local form.",
+      "u11": "카메라 깊이 방향으로 뻗은 팔; Foreshortening; Forward reach; 단축법; arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+      "u12": "arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+      "u13": "손과 팔이 촬영 렌즈 쪽 깊이 방향으로 뻗는다",
+      "u14": "The arm extends toward the capture lens with depth foreshortening.",
+      "u15": "owner_scope",
+      "u16": "the body parts, support surfaces and contact targets stated in this configuration",
+      "u17": "main_subject",
+      "u18": "declared_owner_scope",
+      "u19": "human",
+      "u2": "Forward reach",
+      "u20": "pose_vocabulary",
+      "u21": "body_orientation",
+      "u22": "main_subject declared_owner_scope the body parts, support surfaces and contact targets stated in this configuration",
+      "u3": "단축법",
+      "u4": "arm extends toward the camera in depth",
+      "u5": "hand/forearm scale and overlap reflect that direction",
+      "u6": "shoulder-elbow-wrist continuity remains coherent",
+      "u7": "this changes a viewpoint relation without claiming a focal length",
+      "u8": "Equivalent meaning only; retain the original owner, prerequisites, all effects and guards.",
+      "u9": "cute_equivalent_pv_foreshortened_reach"
+    },
+    "provenance": [
+      {
+        "sha256": "d4f0f3469f24227fa04129c9aad3d0e0e0eccbef4d74ddb1710dfd596f513e98",
+        "source": "slot:body_orientation:pv_foreshortened_reach"
+      }
+    ],
+    "record_kind": "visual_option"
+  },
+  {
+    "cid": "cand_8cef791f33cc5f8eb2b589a3cd51b6cb",
+    "conditions": {},
+    "effects": {
+      "dimensions": [],
+      "properties": []
+    },
+    "native_contract": "profile",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "activation": {
+          "exact_terms": [
+            "controlled languid movement display",
+            "controlled languid movement",
+            "통제된 나른한 움직임",
+            "느리고 통제된 움직임 표현"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "unfinished_motion_phase",
+              "match_terms": [
+                "start position and unfinished destination remain visible",
+                "mid-turn mid-step or mid-reach transition has not settled",
+                "시작점과 도착점 사이의 미완 동작 단계",
+                "the departure position and not-yet-reached destination can both be read",
+                "출발 위치와 아직 도달하지 않은 목표 위치가 함께 읽힌다"
+              ]
+            },
+            {
+              "id": "stable_support_control",
+              "match_terms": [
+                "one planted support path carries the body through the transition",
+                "balance and joint continuity remain controlled",
+                "지지 발과 관절 연속성이 안정적으로 보임",
+                "a planted support chain holds the body during the partial transition",
+                "동작 중간에도 고정된 한 지지 경로가 몸을 받친다"
+              ]
+            },
+            {
+              "id": "alert_task_attention",
+              "match_terms": [
+                "awake eyes remain tied to the chosen destination or task",
+                "head and hand trajectory show deliberate control",
+                "깨어 있는 시선이 동작의 목표와 연결됨",
+                "open attentive eyes point toward the movement goal or current task",
+                "열린 주의 시선이 이동 목표나 현재 과제에 향한다"
+              ]
+            },
+            {
+              "id": "coherent_motion_lag",
+              "match_terms": [
+                "fabric hair hand or carried object trails the same movement direction",
+                "small directional lag makes low tempo visible",
+                "직물 머리카락 손 또는 물건의 지연이 같은 동작 방향을 따름",
+                "cloth hair or a held item follows behind the same directional movement",
+                "옷감이나 모발 또는 든 물건이 같은 이동 방향의 뒤를 따른다"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "unfinished_motion_phase",
+              "stable_support_control",
+              "alert_task_attention",
+              "coherent_motion_lag"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "unfinished_motion_phase",
+                "stable_support_control",
+                "alert_task_attention",
+                "coherent_motion_lag"
+              ],
+              "evidence": [
+                {
+                  "field": "unfinished_motion_phrase",
+                  "requirement": {
+                    "min_content_words": 6,
+                    "must_mention_any": [
+                      "start position and unfinished destination remain visible",
+                      "mid-turn transition has not yet settled",
+                      "mid-step path remains visibly unfinished",
+                      "the departure position and not-yet-reached destination can both be read",
+                      "출발 위치와 아직 도달하지 않은 목표 위치가 함께 읽힌다"
+                    ]
+                  }
+                },
+                {
+                  "field": "stable_support_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "one planted support path carries the body",
+                      "one planted foot preserves controlled balance",
+                      "stable support and joint continuity remain visible",
+                      "a planted support chain holds the body during the partial transition",
+                      "동작 중간에도 고정된 한 지지 경로가 몸을 받친다"
+                    ]
+                  }
+                },
+                {
+                  "field": "alert_attention_phrase",
+                  "requirement": {
+                    "min_content_words": 5,
+                    "must_mention_any": [
+                      "awake eyes remain tied to the chosen destination",
+                      "alert gaze follows the controlled hand trajectory",
+                      "awake task-linked attention remains visible",
+                      "open attentive eyes point toward the movement goal or current task",
+                      "열린 주의 시선이 이동 목표나 현재 과제에 향한다"
+                    ]
+                  }
+                },
+                {
+                  "field": "motion_lag_phrase",
+                  "requirement": {
+                    "min_content_words": 6,
+                    "must_mention_any": [
+                      "fabric trails the same movement direction",
+                      "hair and carried object show coherent directional lag",
+                      "hand and fabric lag make the low tempo visible",
+                      "cloth hair or a held item follows behind the same directional movement",
+                      "옷감이나 모발 또는 든 물건이 같은 이동 방향의 뒤를 따른다"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Freeze one unmistakably adult subject between a readable start and unfinished destination. Keep one planted support path, awake task-linked eyes, coherent joint and hand trajectory, and fabric, hair, or object lag moving in the same direction. A finished pose, generic blur, sleepy lids, sway, intoxication, illness, or collapse cannot stand in for deliberate low-tempo control, and the profile alone adds no sexual meaning.",
+              "render_gates": [
+                {
+                  "description": "The start and unfinished destination of one turn, step, or reach remain spatially legible rather than settling into a static pose.",
+                  "id": "vo_languid_motion_unfinished_phase",
+                  "review_scale": "thumbnail"
+                },
+                {
+                  "description": "A planted support path and coherent joints visibly control the transition without sway or collapse.",
+                  "id": "vo_languid_motion_stable_support",
+                  "review_scale": "both"
+                },
+                {
+                  "description": "Awake eyes and head or hand direction remain linked to the chosen task or destination rather than sleep, illness, or intoxication.",
+                  "id": "vo_languid_motion_alert_attention",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "Fabric, hair, hand, or a carried object trails the same movement direction and provides a coherent low-tempo cue instead of generic blur.",
+                  "id": "vo_languid_motion_directional_lag",
+                  "review_scale": "both"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "adult_motion_display",
+        "composition_instruction": "Freeze one unmistakably adult subject between a readable start and unfinished destination. Keep one planted support path, awake task-linked eyes, coherent joint and hand trajectory, and fabric, hair, or object lag moving in the same direction. A finished pose, generic blur, sleepy lids, sway, intoxication, illness, or collapse cannot stand in for deliberate low-tempo control, and the profile alone adds no sexual meaning.",
+        "concept_candidate": {
+          "concept_terms": [
+            "unmistakably adult moving subject",
+            "unfinished turn step or reach",
+            "visible start and destination",
+            "one planted support path",
+            "awake task-linked gaze",
+            "controlled hand trajectory",
+            "fabric or hair directional lag",
+            "low-tempo transition",
+            "joint continuity",
+            "not sexual by default",
+            "An alert actor is partway through a controlled movement, supported at a planted point while fabric or a carried object lags in the same direction.",
+            "깨어 있는 인물이 한 지지 경로를 유지한 채 동작의 중간에 있고 옷감이나 든 물건이 같은 방향으로 뒤따른다.",
+            "the departure position and not-yet-reached destination can both be read",
+            "출발 위치와 아직 도달하지 않은 목표 위치가 함께 읽힌다",
+            "a planted support chain holds the body during the partial transition",
+            "동작 중간에도 고정된 한 지지 경로가 몸을 받친다",
+            "open attentive eyes point toward the movement goal or current task",
+            "열린 주의 시선이 이동 목표나 현재 과제에 향한다",
+            "cloth hair or a held item follows behind the same directional movement",
+            "옷감이나 모발 또는 든 물건이 같은 이동 방향의 뒤를 따른다"
+          ]
+        },
+        "evidence_requirements": {
+          "alert_attention_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "awake eyes remain tied to the chosen destination",
+              "alert gaze follows the controlled hand trajectory",
+              "awake task-linked attention remains visible",
+              "open attentive eyes point toward the movement goal or current task",
+              "열린 주의 시선이 이동 목표나 현재 과제에 향한다"
+            ]
+          },
+          "motion_lag_phrase": {
+            "min_content_words": 6,
+            "must_mention_any": [
+              "fabric trails the same movement direction",
+              "hair and carried object show coherent directional lag",
+              "hand and fabric lag make the low tempo visible",
+              "cloth hair or a held item follows behind the same directional movement",
+              "옷감이나 모발 또는 든 물건이 같은 이동 방향의 뒤를 따른다"
+            ]
+          },
+          "stable_support_phrase": {
+            "min_content_words": 5,
+            "must_mention_any": [
+              "one planted support path carries the body",
+              "one planted foot preserves controlled balance",
+              "stable support and joint continuity remain visible",
+              "a planted support chain holds the body during the partial transition",
+              "동작 중간에도 고정된 한 지지 경로가 몸을 받친다"
+            ]
+          },
+          "unfinished_motion_phrase": {
+            "min_content_words": 6,
+            "must_mention_any": [
+              "start position and unfinished destination remain visible",
+              "mid-turn transition has not yet settled",
+              "mid-step path remains visibly unfinished",
+              "the departure position and not-yet-reached destination can both be read",
+              "출발 위치와 아직 도달하지 않은 목표 위치가 함께 읽힌다"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "sleepy_half_lidded_eyes_only",
+          "intoxicated_sway",
+          "illness_or_collapse",
+          "finished_over_shoulder_pose",
+          "generic_motion_blur",
+          "movement_without_support_or_destination",
+          "automatic_sexual_meaning"
+        ],
+        "render_gates": [
+          {
+            "description": "The start and unfinished destination of one turn, step, or reach remain spatially legible rather than settling into a static pose.",
+            "id": "vo_languid_motion_unfinished_phase",
+            "review_scale": "thumbnail"
+          },
+          {
+            "description": "A planted support path and coherent joints visibly control the transition without sway or collapse.",
+            "id": "vo_languid_motion_stable_support",
+            "review_scale": "both"
+          },
+          {
+            "description": "Awake eyes and head or hand direction remain linked to the chosen task or destination rather than sleep, illness, or intoxication.",
+            "id": "vo_languid_motion_alert_attention",
+            "review_scale": "native"
+          },
+          {
+            "description": "Fabric, hair, hand, or a carried object trails the same movement direction and provides a coherent low-tempo cue instead of generic blur.",
+            "id": "vo_languid_motion_directional_lag",
+            "review_scale": "both"
+          }
+        ],
+        "required_evidence_fields": [
+          "unfinished_motion_phrase",
+          "stable_support_phrase",
+          "alert_attention_phrase",
+          "motion_lag_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_only",
+          "forbidden_prompt_terms": [
+            "controlled languid movement display",
+            "controlled languid movement",
+            "통제된 나른한 움직임",
+            "느리고 통제된 움직임 표현",
+            "drugged sensuality",
+            "intoxicated allure"
+          ],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": [
+            "controlled languid movement display",
+            "controlled languid movement",
+            "통제된 나른한 움직임",
+            "느리고 통제된 움직임 표현"
+          ]
+        },
+        "semantics": {
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "start position and unfinished destination remain visible",
+                  "mid-turn mid-step or mid-reach transition has not settled",
+                  "시작점과 도착점 사이의 미완 동작 단계",
+                  "the departure position and not-yet-reached destination can both be read",
+                  "출발 위치와 아직 도달하지 않은 목표 위치가 함께 읽힌다"
+                ],
+                "id": "unfinished_motion_phase"
+              },
+              {
+                "any_terms": [
+                  "one planted support path carries the body through the transition",
+                  "balance and joint continuity remain controlled",
+                  "지지 발과 관절 연속성이 안정적으로 보임",
+                  "a planted support chain holds the body during the partial transition",
+                  "동작 중간에도 고정된 한 지지 경로가 몸을 받친다"
+                ],
+                "id": "stable_support_control"
+              },
+              {
+                "any_terms": [
+                  "awake eyes remain tied to the chosen destination or task",
+                  "head and hand trajectory show deliberate control",
+                  "깨어 있는 시선이 동작의 목표와 연결됨",
+                  "open attentive eyes point toward the movement goal or current task",
+                  "열린 주의 시선이 이동 목표나 현재 과제에 향한다"
+                ],
+                "id": "alert_task_attention"
+              },
+              {
+                "any_terms": [
+                  "fabric hair hand or carried object trails the same movement direction",
+                  "small directional lag makes low tempo visible",
+                  "직물 머리카락 손 또는 물건의 지연이 같은 동작 방향을 따름",
+                  "cloth hair or a held item follows behind the same directional movement",
+                  "옷감이나 모발 또는 든 물건이 같은 이동 방향의 뒤를 따른다"
+                ],
+                "id": "coherent_motion_lag"
+              }
+            ],
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "unfinished_motion_phase",
+              "stable_support_control",
+              "alert_task_attention",
+              "coherent_motion_lag"
+            ]
+          },
+          "contrast_examples": [
+            "sleepy half-lidded eyes with no movement phase",
+            "intoxicated sway or collapse",
+            "a generic over-shoulder pose after the turn has finished",
+            "motion blur without a readable support path or destination"
+          ],
+          "definition": "An unmistakably adult subject is captured in one deliberate low-tempo transition whose start and destination remain spatially readable, while stable support, alert task-linked attention, and coherent fabric, hair, hand, or object lag distinguish controlled pacing from sleep, intoxication, illness, collapse, or a settled static pose; the movement is not sexual by default.",
+          "paraphrase_examples": [
+            "성인 인물이 회전이나 걸음을 천천히 이어가는 중간 단계에서 지지 발과 도착 방향, 뒤따르는 직물의 지연이 함께 보이는 장면",
+            "an adult pauses mid-turn with one planted support path, an unfinished destination, and fabric lag showing deliberate low tempo",
+            "alert eyes and a controlled hand trajectory keep the slow movement distinct from fatigue or intoxication",
+            "An alert actor is partway through a controlled movement, supported at a planted point while fabric or a carried object lags in the same direction.",
+            "깨어 있는 인물이 한 지지 경로를 유지한 채 동작의 중간에 있고 옷감이나 든 물건이 같은 방향으로 뒤따른다."
+          ]
+        }
+      }
+    },
+    "all_source_literals": {
+      "u0": "controlled languid movement display",
+      "u1": "controlled languid movement",
+      "u10": "stable_support_control",
+      "u11": "one planted support path carries the body through the transition",
+      "u12": "balance and joint continuity remain controlled",
+      "u13": "지지 발과 관절 연속성이 안정적으로 보임",
+      "u14": "a planted support chain holds the body during the partial transition",
+      "u15": "동작 중간에도 고정된 한 지지 경로가 몸을 받친다",
+      "u16": "alert_task_attention",
+      "u17": "awake eyes remain tied to the chosen destination or task",
+      "u18": "head and hand trajectory show deliberate control",
+      "u19": "깨어 있는 시선이 동작의 목표와 연결됨",
+      "u2": "통제된 나른한 움직임",
+      "u20": "open attentive eyes point toward the movement goal or current task",
+      "u21": "열린 주의 시선이 이동 목표나 현재 과제에 향한다",
+      "u22": "coherent_motion_lag",
+      "u23": "fabric hair hand or carried object trails the same movement direction",
+      "u24": "small directional lag makes low tempo visible",
+      "u25": "직물 머리카락 손 또는 물건의 지연이 같은 동작 방향을 따름",
+      "u26": "cloth hair or a held item follows behind the same directional movement",
+      "u27": "옷감이나 모발 또는 든 물건이 같은 이동 방향의 뒤를 따른다",
+      "u28": "photo-authored-visual-components/v2",
+      "u29": "unfinished_motion_phrase",
+      "u3": "느리고 통제된 움직임 표현",
+      "u30": "mid-turn transition has not yet settled",
+      "u31": "mid-step path remains visibly unfinished",
+      "u32": "stable_support_phrase",
+      "u33": "one planted support path carries the body",
+      "u34": "one planted foot preserves controlled balance",
+      "u35": "stable support and joint continuity remain visible",
+      "u36": "alert_attention_phrase",
+      "u37": "awake eyes remain tied to the chosen destination",
+      "u38": "alert gaze follows the controlled hand trajectory",
+      "u39": "awake task-linked attention remains visible",
+      "u4": "unfinished_motion_phase",
+      "u40": "motion_lag_phrase",
+      "u41": "fabric trails the same movement direction",
+      "u42": "hair and carried object show coherent directional lag",
+      "u43": "hand and fabric lag make the low tempo visible",
+      "u44": "Freeze one unmistakably adult subject between a readable start and unfinished destination. Keep one planted support path, awake task-linked eyes, coherent joint and hand trajectory, and fabric, hair, or object lag moving in the same direction. A finished pose, generic blur, sleepy lids, sway, intoxication, illness, or collapse cannot stand in for deliberate low-tempo control, and the profile alone adds no sexual meaning.",
+      "u45": "The start and unfinished destination of one turn, step, or reach remain spatially legible rather than settling into a static pose.",
+      "u46": "vo_languid_motion_unfinished_phase",
+      "u47": "thumbnail",
+      "u48": "A planted support path and coherent joints visibly control the transition without sway or collapse.",
+      "u49": "vo_languid_motion_stable_support",
+      "u5": "start position and unfinished destination remain visible",
+      "u50": "both",
+      "u51": "Awake eyes and head or hand direction remain linked to the chosen task or destination rather than sleep, illness, or intoxication.",
+      "u52": "vo_languid_motion_alert_attention",
+      "u53": "native",
+      "u54": "Fabric, hair, hand, or a carried object trails the same movement direction and provides a coherent low-tempo cue instead of generic blur.",
+      "u55": "vo_languid_motion_directional_lag",
+      "u56": "adult_motion_display",
+      "u57": "unmistakably adult moving subject",
+      "u58": "unfinished turn step or reach",
+      "u59": "visible start and destination",
+      "u6": "mid-turn mid-step or mid-reach transition has not settled",
+      "u60": "one planted support path",
+      "u61": "awake task-linked gaze",
+      "u62": "controlled hand trajectory",
+      "u63": "fabric or hair directional lag",
+      "u64": "low-tempo transition",
+      "u65": "joint continuity",
+      "u66": "not sexual by default",
+      "u67": "An alert actor is partway through a controlled movement, supported at a planted point while fabric or a carried object lags in the same direction.",
+      "u68": "깨어 있는 인물이 한 지지 경로를 유지한 채 동작의 중간에 있고 옷감이나 든 물건이 같은 방향으로 뒤따른다.",
+      "u69": "sleepy_half_lidded_eyes_only",
+      "u7": "시작점과 도착점 사이의 미완 동작 단계",
+      "u70": "intoxicated_sway",
+      "u71": "illness_or_collapse",
+      "u72": "finished_over_shoulder_pose",
+      "u73": "generic_motion_blur",
+      "u74": "movement_without_support_or_destination",
+      "u75": "automatic_sexual_meaning",
+      "u76": "definition_only",
+      "u77": "drugged sensuality",
+      "u78": "intoxicated allure",
+      "u79": "sleepy half-lidded eyes with no movement phase",
+      "u8": "the departure position and not-yet-reached destination can both be read",
+      "u80": "intoxicated sway or collapse",
+      "u81": "a generic over-shoulder pose after the turn has finished",
+      "u82": "motion blur without a readable support path or destination",
+      "u83": "An unmistakably adult subject is captured in one deliberate low-tempo transition whose start and destination remain spatially readable, while stable support, alert task-linked attention, and coherent fabric, hair, hand, or object lag distinguish controlled pacing from sleep, intoxication, illness, collapse, or a settled static pose; the movement is not sexual by default.",
+      "u84": "성인 인물이 회전이나 걸음을 천천히 이어가는 중간 단계에서 지지 발과 도착 방향, 뒤따르는 직물의 지연이 함께 보이는 장면",
+      "u85": "an adult pauses mid-turn with one planted support path, an unfinished destination, and fabric lag showing deliberate low tempo",
+      "u86": "alert eyes and a controlled hand trajectory keep the slow movement distinct from fatigue or intoxication",
+      "u9": "출발 위치와 아직 도달하지 않은 목표 위치가 함께 읽힌다"
+    },
+    "provenance": [
+      {
+        "sha256": "cb354d3d2c058c908c5728f935deaba59c0c750a3425b0d69da107f1e1d83710",
+        "source": "visual_profile:controlled_languid_movement_display"
+      }
+    ],
+    "record_kind": "visual_profile"
+  },
+  {
+    "cid": "cand_ec2ce988a6b4520391379c5c22b38a64",
+    "conditions": {},
+    "effects": {
+      "dimensions": [
+        "style"
+      ],
+      "properties": [
+        {
+          "dimension": "style",
+          "property": "image.detail",
+          "target": "image_plane"
+        }
+      ]
+    },
+    "native_contract": "option",
+    "meaning_graphs": {},
+    "native": {
+      "schema": "photo-native-literal-tree/v1",
+      "tree": {
+        "aliases": [
+          "condition fidelity",
+          "use marks realism"
+        ],
+        "embedding_text": "scene-condition fidelity preserving use marks, weather, object contact, surface wear, and documentary material evidence",
+        "en": "scene-condition fidelity preserving use marks, wear, weather, and object contact",
+        "keywords": [
+          "wear",
+          "weather",
+          "object contact",
+          "use marks"
+        ],
+        "ko": "장면의 실제 상태와 사용 흔적을 유지하는 사실감",
+        "tags": [
+          "quality",
+          "fidelity",
+          "documentary",
+          "texture"
+        ]
+      }
+    },
+    "all_source_literals": {
+      "u0": "condition fidelity",
+      "u1": "use marks realism",
+      "u10": "fidelity",
+      "u11": "documentary",
+      "u12": "texture",
+      "u2": "scene-condition fidelity preserving use marks, weather, object contact, surface wear, and documentary material evidence",
+      "u3": "scene-condition fidelity preserving use marks, wear, weather, and object contact",
+      "u4": "wear",
+      "u5": "weather",
+      "u6": "object contact",
+      "u7": "use marks",
+      "u8": "장면의 실제 상태와 사용 흔적을 유지하는 사실감",
+      "u9": "quality"
+    },
+    "provenance": [
+      {
+        "sha256": "27307feb0597fb8be198bdcf476e01d604c5d9a12e09f3ccf2252190ea4bd451",
+        "source": "slot:quality:scene_condition_fidelity"
+      }
+    ],
+    "record_kind": "visual_option"
+  }
+]

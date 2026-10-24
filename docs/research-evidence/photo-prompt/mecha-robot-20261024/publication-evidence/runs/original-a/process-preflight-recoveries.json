@@ -1,0 +1,36 @@
+{
+  "scope": "Arm A only",
+  "image_calls_so_far": 0,
+  "preflight_recoveries": [
+    {
+      "stage": "controls",
+      "issue": "String hexadecimal seed was rejected by an integer-only CLI argument.",
+      "resolution": "Used integer seed for saved-control snapshot; independently randomized concept retains original string seed.",
+      "image_calls": 0
+    },
+    {
+      "stage": "slot-plan",
+      "issue": "The sealed release omits build_photo_slot_intents.py.",
+      "resolution": "Called sealed photo_slot_expression.create with already authored rows, then managed seal-slot-intents. No source overlay.",
+      "image_calls": 0
+    },
+    {
+      "stage": "slot-plan-review",
+      "issue": "Review author must be exactly Codex.",
+      "resolution": "Changed authored review label from Codex arm A to Codex before successful plan seal.",
+      "image_calls": 0
+    },
+    {
+      "stage": "retrieve-prebinding",
+      "issue": "Staged-store source code could not find its local model member 1_Pooling/config.json.",
+      "resolution": "Confirmed no source binding or operations, then used the coordinator-approved exact installed immutable copy; the release identities are unchanged.",
+      "image_calls": 0
+    },
+    {
+      "stage": "material-view",
+      "issue": "Page 1 showed zero sources because material pages are zero-based.",
+      "resolution": "Saved managed page 0 with all 28 unique returned sources. Additional searches zero.",
+      "image_calls": 0
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "mecha-image-testcase/v1",
+  "arm": "c",
+  "testcase_id": "ferry-terminal-service-robot-repair",
+  "phase": "pre_generation",
+  "concept_provenance": "independent agent decision within coordinator lane; not requester wording",
+  "reference_scope": "visible face and hair only",
+  "failure_policy": {
+    "partial_is_fail": true,
+    "unobservable_not_pass": true,
+    "user_acceptance": "pending until direct requester judgment"
+  },
+  "tests": [
+    {
+      "id": "reference_transport",
+      "layer": "runtime",
+      "criterion": "Exact inspected portrait path and SHA are attached by the native reference mechanism."
+    },
+    {
+      "id": "reference_appearance",
+      "layer": "pixels",
+      "criterion": "Visible face and hair plausibly preserve the supplied portrait features at the chosen medium scale; no claim of actual identity."
+    },
+    {
+      "id": "constructed_machine",
+      "layer": "pixels",
+      "criterion": "Robot head/body and open forearm visibly read as constructed machinery, not only a humanoid silhouette."
+    },
+    {
+      "id": "repair_contact",
+      "layer": "pixels",
+      "criterion": "The woman working hand, driver grip, tool-to-target contact, robot forearm boundary, and supporting bench are simultaneously visible and coherently connected."
+    },
+    {
+      "id": "robot_owner_continuity",
+      "layer": "pixels",
+      "criterion": "The empty shoulder socket visibly belongs to the pictured robot torso; the detached arm remains one coherent mechanical assembly with connected elbow/wrist and is distinct from the woman limbs. The authored pairing is visually consistent; actual historical ownership is not proven by pixels."
+    },
+    {
+      "id": "new_source_exposure",
+      "layer": "retrieval",
+      "criterion": "At least one newly registered mecha source actually appears in the issued material, with exact CID/RID and source SHA."
+    },
+    {
+      "id": "new_source_prompt_effect",
+      "layer": "prompt",
+      "criterion": "A reviewed new-source contribution produces an identifiable literal effect in the audited final prompt, recorded as inspiration_only; source registration alone cannot pass."
+    },
+    {
+      "id": "new_source_pixel_relation",
+      "layer": "pixels",
+      "criterion": "Every source-specific J01 component and directed relation in source_specific_gates must be visible together in the same original saved image."
+    }
+  ],
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "source_specific_gates": [
+    {
+      "id": "J01-C0",
+      "criterion": "One detached mechanical arm lies beside the same machine empty shoulder socket, with frayed cables at BOTH separated ends; every component simultaneously visible."
+    },
+    {
+      "id": "J01-R1",
+      "criterion": "Empty shoulder socket visibly belongs to the pictured machine body."
+    },
+    {
+      "id": "J01-R2",
+      "criterion": "Detached arm proximal end is visibly separated by an air gap from that machine shoulder socket."
+    },
+    {
+      "id": "J01-R3",
+      "criterion": "Frayed arm cable ends visibly emerge from the detached arm proximal end and are not loose unrelated wire."
+    },
+    {
+      "id": "J01-R4",
+      "criterion": "Frayed body cable ends are separately visible inside the empty shoulder socket."
+    }
+  ],
+  "source_gate_policy": "Each gate is supplementary source-informed qualification, not automatic native contract adoption. All five required for the complete J01 visual testcase; partial_is_fail; UNOBSERVABLE_NOT_PASS.",
+  "pre_generation_testcase_revision_reason": "Candidate-informed C1 changed optional baseline attached-arm staging to a detached arm. Original pre-retrieval testcase is preserved. This pre-generation revision updates the authorial ownership criterion to the selected separation state before any image call; requester locks are unchanged."
+}

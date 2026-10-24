@@ -100,3 +100,31 @@ are in publication-evidence/final-integration.json and sealed-code-qualification
 The three-image round-2 scenario result remains 0/3 complete passes. Publication
 does not promote partial or unobservable image evidence, approve new native
 candidates, or switch the shared runtime.
+
+## Latest main integration including mecha source and sampling repair
+
+The latest integration merge includes main `fa016968ef86084afb416c2f2b2af6633a39e1dd` and source
+merge `c383268c8f550a5158a59c62d34c0cb63df31cf5`. Complete source corpora, catalog and policy from
+both parents reconstruct exactly. The final corpus contains 22,338 candidates,
+17,322 bindings and 21,036 positive search records. Layout
+`f6bcc9572c1f0637f128a8298cd7abc4df585b71e1f9bc4014c3ee4f6b602659`
+reuses 20,931 vectors and 105 cached local embeddings. Complete native layout
+verification and dictionary validation pass.
+
+The final scoped verification totals 110 passing tests: 85 source/retry/campus/mecha/sampling,
+19 query/ownership tests in a fresh verified sealed-runtime process, and six
+transport-recovery cases. The first combined invocation mixed source-only and
+sealed test contexts and produced two import errors; its log is retained.
+No production module was transplanted to conceal that harness boundary. Seven
+changed modules are byte-identical to the tested closure; the three edited
+functions in the two legacy modules match its definitions exactly, with the
+other top-level declarations unchanged relative to the repository base.
+The incoming generic rank-anchor policy is preserved byte-for-byte from main and
+its nine source tests pass. Historical image runs retain their tested sampler.
+This qualifies those edited definitions in their required closure, not whole
+legacy-module identity or a new final-main image end-to-end run. Full receipts
+are in publication-evidence/final-integration.json and sealed-code-qualification.json.
+
+The three-image round-2 scenario result remains 0/3 complete passes. Publication
+does not promote partial or unobservable image evidence, approve new native
+candidates, or switch the shared runtime.

@@ -1,0 +1,50 @@
+{
+  "contract_version": "photo-embodiment-review/v1",
+  "provenance": "agent_prepack",
+  "prompt_sha256": "e522bc1133f51c291bf53081bbcae7f37ac3cbf567aa7605bbfe453e64073f70",
+  "scope": "body_action",
+  "summary": "One human worker uses a near-side external arm support while her palm holds a fixed bench-clamp lever down. The support route, body-side ownership and local pressure contact must all remain visible together.",
+  "checks": {
+    "body_ownership": {
+      "status": "supported",
+      "reason": "The single worker owns the near anatomical left arm on image-right; the other hand is separately visible on image-left. The support is an external device, not another limb.",
+      "prompt_evidence": [
+        "Her anatomical left arm is the near arm on image-right.",
+        "Her other hand hangs freely on image-left."
+      ]
+    },
+    "joint_chain_and_reach": {
+      "status": "supported",
+      "reason": "The external yoke root begins on the front outer left shoulder, then follows the visible shoulder/upper-arm/elbow/forearm/wrist chain. Mild elbow flexion reaches the waist-height lever without twisting the limb behind the torso.",
+      "prompt_evidence": [
+        "From that root a continuous external support runs visibly through the shoulder pivot, upper-arm rail, elbow hinge, forearm rail and wrist cuff.",
+        "Her left elbow is mildly bent and held clear of her ribs"
+      ]
+    },
+    "support_and_balance": {
+      "status": "supported",
+      "reason": "The worker is standing at a fixed bench clamp; her ordinary lower-leg standing support is outside the head-to-mid-thigh crop. The arm assistance routes the modest downward palm load to the shoulder yoke; no floating seated or foot contact is claimed.",
+      "prompt_evidence": [
+        "She has paused at a bench clamp, holding its lever against the lower stop with her left palm",
+        "framed from head to mid-thigh"
+      ]
+    },
+    "contact_and_space": {
+      "status": "supported",
+      "reason": "The palm bears on the broad top of the lever with its near edge visible; the thumb remains beside the handle, and the handle continues into the clamp. The rail is spaced from clothing and ribs rather than intersecting them.",
+      "prompt_evidence": [
+        "the palm edge touching its top surface, thumb beside the handle and handle entering the clamp are visible together",
+        "leaving daylight gaps between metal and torso"
+      ]
+    },
+    "visibility_and_projection": {
+      "status": "supported",
+      "reason": "A front-left camera sees the anatomical left mechanism on image-right. The front outer shoulder root, offset rail, elbow hinge, wrist cuff and palm/handle contact are on the same exposed near-side plane with space around the entire route. The crop gives the chain a large diagonal footprint, rather than asking tiny rearward hardware to read behind the shoulder. Every promised joint and route segment will be checked together at native scale; partial visibility will fail.",
+      "prompt_evidence": [
+        "An open shoulder yoke has its exposed root at the front outer edge of her left shoulder.",
+        "with the whole support route facing the camera",
+        "with space around the entire shoulder-to-handle route"
+      ]
+    }
+  }
+}

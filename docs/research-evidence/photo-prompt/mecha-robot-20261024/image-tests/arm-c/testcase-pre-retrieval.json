@@ -1,0 +1,59 @@
+{
+  "schema": "mecha-image-testcase/v1",
+  "arm": "c",
+  "testcase_id": "ferry-terminal-service-robot-repair",
+  "phase": "pre_retrieval",
+  "concept_provenance": "independent agent decision within coordinator lane; not requester wording",
+  "reference_scope": "visible face and hair only",
+  "failure_policy": {
+    "partial_is_fail": true,
+    "unobservable_not_pass": true,
+    "user_acceptance": "pending until direct requester judgment"
+  },
+  "tests": [
+    {
+      "id": "reference_transport",
+      "layer": "runtime",
+      "criterion": "Exact inspected portrait path and SHA are attached by the native reference mechanism."
+    },
+    {
+      "id": "reference_appearance",
+      "layer": "pixels",
+      "criterion": "Visible face and hair plausibly preserve the supplied portrait features at the chosen medium scale; no claim of actual identity."
+    },
+    {
+      "id": "constructed_machine",
+      "layer": "pixels",
+      "criterion": "Robot head/body and open forearm visibly read as constructed machinery, not only a humanoid silhouette."
+    },
+    {
+      "id": "repair_contact",
+      "layer": "pixels",
+      "criterion": "The woman working hand, driver grip, tool-to-target contact, robot forearm boundary, and supporting bench are simultaneously visible and coherently connected."
+    },
+    {
+      "id": "robot_owner_continuity",
+      "layer": "pixels",
+      "criterion": "The opened forearm can be traced continuously to the same robot shoulder/arm; detached cover remains distinct."
+    },
+    {
+      "id": "new_source_exposure",
+      "layer": "retrieval",
+      "criterion": "At least one newly registered mecha source actually appears in the issued material, with exact CID/RID and source SHA."
+    },
+    {
+      "id": "new_source_prompt_effect",
+      "layer": "prompt",
+      "criterion": "A reviewed new-source contribution produces an identifiable literal effect in the audited final prompt, recorded as inspiration_only; source registration alone cannot pass."
+    },
+    {
+      "id": "new_source_pixel_relation",
+      "layer": "pixels",
+      "criterion": "To be authored only after full returned source review and before generation, using every component and endpoint of the retained source-informed relation."
+    }
+  ],
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

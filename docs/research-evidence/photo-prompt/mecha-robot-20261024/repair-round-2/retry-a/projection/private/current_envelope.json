@@ -1,0 +1,66 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "request-e1adbf3985e545e8a19f5840eaab1a5d",
+  "request_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘. 같은 첨부 이미지를 활용해 독립 서브에이전트 3개에서 다시 프롬프트 작성과 이미지 생성을 진행하고 실제 픽셀까지 검증해줘.",
+  "request_sha256": "47af5c1dce5a8f8bac0d3fc39a0d861b1d50e1daa6064a73d6ae079ea3a171ed",
+  "active_spans": [
+    {
+      "span_id": "repair",
+      "start": 0,
+      "end": 52,
+      "text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘."
+    },
+    {
+      "span_id": "reference",
+      "start": 53,
+      "end": 66,
+      "text": "같은 첨부 이미지를 활용"
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "47af5c1dce5a8f8bac0d3fc39a0d861b1d50e1daa6064a73d6ae079ea3a171ed"
+      },
+      {
+        "id": "reference_portrait",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "mecha_repair_antecedent",
+        "active_span_id": "repair",
+        "request_quote": {
+          "start": 0,
+          "end": 3,
+          "text": "확인된"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "current-chat:previous-user-research-request",
+          "text": "[메카물 용어 외형 조사](chatgpt-conversation://6adb6fc3-d278-83ec-815b-82886efe83ae) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘. 대화 내용을 도구로 조회했을 때 전체 내용을 모두 볼 수 없었다면 크롬으로 보면 돼. 로그인해놨어.",
+          "sha256": "a525ffb0254c34e88c9ccc6619a4015c79519900a530817c7bdf6a8d45e2fb6a"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 13,
+          "text": "메카물 용어 외형 조사"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "The current repair request concerns the mecha data and image tests from this conversation; quote only the exact prior-user mecha topic for discovery, not authorial staging or contracts."
+        }
+      }
+    ]
+  }
+}

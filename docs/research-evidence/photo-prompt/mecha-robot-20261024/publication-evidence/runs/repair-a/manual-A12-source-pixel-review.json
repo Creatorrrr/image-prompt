@@ -1,0 +1,211 @@
+{
+  "schema": "photo-complete-source-pixel-review/v1",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-transport-a/mecha-repair2-a.png",
+  "image_sha256": "5f5023fe76c7bb6059b9ee035affede53665abb64b40bb497ef35659d0e1b85e",
+  "native_size": [
+    1237,
+    1272
+  ],
+  "image_call_count": 1,
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-transport-a/preimage-testcase.v3.json",
+  "testcase_sha256": "31d4173ef3dd51529cd7952e5005e1d8ba3c434b1b47e1af53507a59577e4f0f",
+  "reviewer": "arm-a direct original-image and unresampled-crop inspection",
+  "fixed_owner_mapping": {
+    "human_arm": "worker anatomical left arm, on image-right",
+    "frame": "separate device outside that clothed arm",
+    "harness": "same frame front outer left shoulder root",
+    "bracket": "rigid exposed harness-to-upper-cuff connector",
+    "upper_arm_cuff": "bounded cuff on same worker upper arm",
+    "elbow_hinge": "external joint joining the two same-frame cuffs",
+    "forearm_cuff": "bounded cuff on same worker forearm",
+    "human_wrist": "same worker biological wrist, visible beyond forearm cuff into the left hand"
+  },
+  "source_candidate_id": "cand_9b87661850ec52c998e202554775318b",
+  "source_sha256": "e59ab2eab2d390e7609b1e50e6e2f9289b553548286e9a26980c770ef6c20f55",
+  "source_card": "A12",
+  "native_approval": false,
+  "source_qualification_claim": "No typed native qualification; this is independent manual whole-source fidelity review.",
+  "gates": {
+    "A12-C0": {
+      "status": "fail",
+      "observability": "partial",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "id": "A12-C0",
+        "kind": "complete_realization",
+        "partial_is_fail": true,
+        "required_en": "A person wears an external support along one arm over clothing. A shoulder harness joins an exposed rigid bracket fixed to an upper-arm cuff; an external elbow hinge links that cuff to a forearm cuff, with the human wrist visibly distinct beyond the cuff.",
+        "required_ko": "인물이 옷 바깥으로 한쪽 팔을 따라 외부 지지 구조를 착용한다. 어깨 하네스는 위팔 커프에 고정된 노출된 단단한 브래킷과 이어지고, 외부 팔꿈치 경첩이 위팔 커프와 아래팔 커프를 연결하며 사람의 손목은 커프 끝 너머에서 구분되어 보인다.",
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "The whole frame does not remain on one human arm. Root/upper cuff/elbow lie on the worker anatomical left on image-right, while the large foreground forearm cuff is on the right forearm emerging from the image-left sleeve and crossing the body. The intended left wrist and hand are not jointly traceable beyond the left-side mechanism."
+    },
+    "A12-R1": {
+      "status": "fail",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "both_endpoints_required": true,
+        "id": "A12-R1",
+        "partial_is_fail": true,
+        "relation": {
+          "from": "frame",
+          "predicate": "outside",
+          "to": "human_arm"
+        },
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "The external structure visibly spans the left upper-arm region and the opposite right forearm. Under the fixed human_arm=worker anatomical left mapping, the whole frame is not outside one same arm. Exterior hardware alone is insufficient."
+    },
+    "A12-R2": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "both_endpoints_required": true,
+        "id": "A12-R2",
+        "partial_is_fail": true,
+        "relation": {
+          "from": "harness",
+          "predicate": "joins",
+          "to": "bracket"
+        },
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "The black shoulder harness at the anatomical-left/image-right shoulder meets the exposed metal root/pivot and long rigid bracket in the same native view. The local root/bracket boundary is visible."
+    },
+    "A12-R3": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "both_endpoints_required": true,
+        "id": "A12-R3",
+        "partial_is_fail": true,
+        "relation": {
+          "from": "bracket",
+          "predicate": "fixed_to",
+          "to": "upper_arm_cuff"
+        },
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "The exposed long bracket follows the anatomical-left upper arm and is secured along its bounded black upper-arm cuff; the bracket/cuff boundary and local fastenings are visible together."
+    },
+    "A12-R4": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "both_endpoints_required": true,
+        "id": "A12-R4",
+        "partial_is_fail": true,
+        "relation": {
+          "from": "upper_arm_cuff",
+          "predicate": "joins",
+          "to": "elbow_hinge"
+        },
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "The same anatomical-left upper cuff/outer rail continues to the circular external elbow hinge on image-right. This local upper link is visible without remapping the arm."
+    },
+    "A12-R5": {
+      "status": "fail",
+      "observability": "partial",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "both_endpoints_required": true,
+        "id": "A12-R5",
+        "partial_is_fail": true,
+        "relation": {
+          "from": "elbow_hinge",
+          "predicate": "joins",
+          "to": "forearm_cuff"
+        },
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "The left-side hinge and short lower metal link descend toward the large foreground cuff, whose human carrier is the crossing right forearm. The actual lower meeting is partly hidden by that foreground cuff/arm. It does not establish the required same-left-arm forearm-cuff endpoint."
+    },
+    "A12-R6": {
+      "status": "fail",
+      "observability": "unobservable",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "both_endpoints_required": true,
+        "id": "A12-R6",
+        "partial_is_fail": true,
+        "relation": {
+          "from": "human_wrist",
+          "predicate": "part_of",
+          "to": "human_arm"
+        },
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "The bare wrist visible beyond the foreground cuff belongs to the right arm traced from the image-left rolled sleeve. The required anatomical-left wrist is not visible on a continuous left-arm path. The right wrist cannot be relabeled human_wrist for this gate."
+    },
+    "A12-R7": {
+      "status": "fail",
+      "observability": "partial",
+      "reviewed_scales": [
+        "native"
+      ],
+      "expected": {
+        "both_endpoints_required": true,
+        "id": "A12-R7",
+        "partial_is_fail": true,
+        "relation": {
+          "from": "human_wrist",
+          "predicate": "beyond",
+          "to": "forearm_cuff"
+        },
+        "status": "NOT_RUN",
+        "unobservable_policy": "UNOBSERVABLE_NOT_PASS"
+      },
+      "evidence": "A bare right wrist is visible past the foreground cuff, but fixed-owner A12 requires the same anatomical-left wrist beyond its forearm cuff. Correct ownership of that distal relation is absent; a nearby different wrist does not pass."
+    }
+  },
+  "whole_source_verdict": "fail",
+  "aggregation": "C0 and every required relation must pass together on the same fixed owners. No endpoint remapping or averaging; partial/unobservable fail.",
+  "crop_evidence": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-transport-a/native-arm-route.crop.png",
+      "source_box_xyxy": [
+        210,
+        340,
+        950,
+        1010
+      ],
+      "resampled": false
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-transport-a/native-wrist-handle.crop.png",
+      "source_box_xyxy": [
+        600,
+        690,
+        1237,
+        1220
+      ],
+      "resampled": false
+    }
+  ]
+}

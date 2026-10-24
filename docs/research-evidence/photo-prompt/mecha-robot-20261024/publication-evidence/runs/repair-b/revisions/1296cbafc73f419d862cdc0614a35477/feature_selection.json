@@ -1,0 +1,187 @@
+{
+  "selected": [
+    {
+      "category_id": "feature.situation",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Repair a coherent interaction instead of an isolated geometry demonstration.",
+      "baseline_evidence": "pausing over a folded route map before setting off"
+    },
+    {
+      "category_id": "feature.subject",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "reference"
+      ],
+      "source_text": null,
+      "derivation": "The supplied portrait supports the visible pilot appearance.",
+      "reason": "Keep the reference appearance readable within the machine scene.",
+      "baseline_evidence": "Use the supplied portrait as the pilot's facial and hair appearance reference."
+    },
+    {
+      "category_id": "feature.hand_gesture",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "repair"
+      ],
+      "source_text": null,
+      "derivation": "Correct the reported actor-relative contact assignment.",
+      "reason": "Make left and right hand duties visually traceable.",
+      "baseline_evidence": "The pilot rests her anatomical LEFT forearm along the left cockpit sill; her anatomical RIGHT hand lies flat on the paper route map."
+    },
+    {
+      "category_id": "feature.pose",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "repair"
+      ],
+      "source_text": null,
+      "derivation": "The reported support failure requires a visibly supported seated pilot.",
+      "reason": "Expose meaningful boot support in the same scene.",
+      "baseline_evidence": "both boot soles are planted on the shallow open-front cockpit floor"
+    },
+    {
+      "category_id": "feature.primary_object",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "repair"
+      ],
+      "source_text": null,
+      "derivation": "The repair preserves the mechanical subject and exposes its support.",
+      "reason": "Relate the weight-bearing machine to the seated human.",
+      "baseline_evidence": "a mechanical structure"
+    },
+    {
+      "category_id": "feature.location",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "A quiet yard isolates the supported machine without visual clutter.",
+      "baseline_evidence": "parked in a quiet outdoor proving yard"
+    },
+    {
+      "category_id": "feature.lighting_source",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Daylight reveals separated limbs and paper edges.",
+      "baseline_evidence": "clear midtone daylight"
+    },
+    {
+      "category_id": "feature.framing",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "A compact full view permits contact and ground-endpoint review together.",
+      "baseline_evidence": "with a small margin of ground below the feet"
+    }
+  ],
+  "contract_version": "photo-precore-feature-selection/v1",
+  "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+  "catalog_schema_version": "photo-precore-feature-catalog/v2",
+  "catalog_sha256": "98ba6156f5a06398cae2bd5131730a52173a0ea6a6b4bdce459d1ab33ed77a20",
+  "request_id": "request-617bef4bca37418fb2ef1f95c0af9e6d",
+  "request_sha256": "47af5c1dce5a8f8bac0d3fc39a0d861b1d50e1daa6064a73d6ae079ea3a171ed",
+  "active_span_ids": [
+    "repair",
+    "reference"
+  ],
+  "baseline_prompt_sha256": "b89a36ba1b3e959b878fbdbb6b1b861c934706d6eeffe2e42d6a541d613e8f67",
+  "ownership_review": {
+    "contract_version": "photo-requester-ownership-review/v1",
+    "request_sha256": "47af5c1dce5a8f8bac0d3fc39a0d861b1d50e1daa6064a73d6ae079ea3a171ed",
+    "baseline_prompt_sha256": "b89a36ba1b3e959b878fbdbb6b1b861c934706d6eeffe2e42d6a541d613e8f67",
+    "anchors": [
+      {
+        "anchor_id": "mecha_concept",
+        "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+        "prompt_evidence": "A photograph of a mecha subject",
+        "requester_meaning": "Preserve the projected mecha topic.",
+        "reason": "This minimal concept phrase contains no chosen setting, scale, stance or styling."
+      },
+      {
+        "anchor_id": "mechanical_subject",
+        "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+        "prompt_evidence": "a mechanical structure",
+        "requester_meaning": "Preserve an observable mechanical subject.",
+        "reason": "The minimal subject phrase leaves proportions, limbs and cockpit realization authorial."
+      },
+      {
+        "anchor_id": "visible_event",
+        "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+        "prompt_evidence": "the mechanical subject is visibly present",
+        "requester_meaning": "Keep the mechanical subject visibly present.",
+        "reason": "Only presence is inherited, not the authored pause or test yard."
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "같은 첨부 이미지를 활용",
+        "prompt_evidence": "Use the supplied portrait as the pilot's facial and hair appearance reference.",
+        "requester_meaning": "Reuse the supplied portrait for face and hair appearance.",
+        "reason": "This explicitly limits reference scope to visible appearance without inferred identity or story."
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "같은 첨부 이미지를 활용",
+        "prompt_evidence": "brown eyes and softly rounded facial contours",
+        "requester_meaning": "Preserve the projected brown eyes and soft facial contours.",
+        "reason": "Only face appearance is protected on the pilot; costume and framing remain authorial."
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "같은 첨부 이미지를 활용",
+        "prompt_evidence": "a short dark brown bob, wispy separated bangs",
+        "requester_meaning": "Preserve the projected short dark bob and separated bangs.",
+        "reason": "Only hair appearance is protected; no personality or setting follows from the portrait."
+      },
+      {
+        "anchor_id": "contact_assignment",
+        "source_text": "좌우 반전·연결·접점 가림 문제",
+        "prompt_evidence": "The pilot rests her anatomical LEFT forearm along the left cockpit sill; her anatomical RIGHT hand lies flat on the paper route map.",
+        "requester_meaning": "Repair the intended pilot-relative left forearm sill and right hand map contacts.",
+        "reason": "The latest repair complaint corrects reversed and hidden contact realization; the sentence omits chosen thigh placement, map fold, machine scale and yard."
+      }
+    ],
+    "authorial_details": [
+      {
+        "category_id": "feature.situation",
+        "literals": [
+          "pausing",
+          "folded",
+          "before setting off"
+        ],
+        "reason": "The pause, folded treatment and impending departure are replaceable authorial circumstances, outside all hard evidence."
+      },
+      {
+        "category_id": "feature.location",
+        "literals": [
+          "quiet",
+          "outdoor",
+          "proving yard"
+        ],
+        "reason": "The yard and its quiet outdoor register are staging choices, not meaning inherited from the request."
+      },
+      {
+        "category_id": "feature.lighting_source",
+        "literals": [
+          "clear",
+          "midtone",
+          "daylight"
+        ],
+        "reason": "The light choice improves contact visibility but remains replaceable within lighting."
+      },
+      {
+        "category_id": "feature.framing",
+        "literals": [
+          "small margin of ground below the feet"
+        ],
+        "reason": "The exact margin is an authorial framing tool; support observability is the duty, not this margin."
+      }
+    ]
+  }
+}

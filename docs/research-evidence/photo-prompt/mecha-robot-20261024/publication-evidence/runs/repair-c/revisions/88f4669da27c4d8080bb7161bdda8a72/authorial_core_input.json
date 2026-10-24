@@ -1,0 +1,314 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘. 같은 첨부 이미지를 활용해 독립 서브에이전트 3개에서 다시 프롬프트 작성과 이미지 생성을 진행하고 실제 픽셀까지 검증해줘.",
+  "creative_controls_sha256": "2514e28b392fc9d5c75e422dbf37066f6147284ccde42945d8f0a483da1b8376",
+  "interpreted_intent": "A concentrated workshop encounter between the reference woman and a constructed service machine. Preserve the closed retry projection's mecha subject and face/hair scope while correcting the intended driver/wrist and other-hand/exposed-frame contact. A tabletop arrangement is an authorial choice: it spreads the detached arm and its distinct joints over enough frame area for simultaneous observation. The supporting fingertips and driver tip have separate clear approach lanes. Face, action and machine share a quiet photographic hierarchy; natural presence supplies only subtle supporting appeal. Only the minimal repaired relation and reference evidence are mandatory; workshop staging, cradle, exact articulation shape, shirt, lighting and viewpoint remain authorial within the projected open scope.",
+  "subject": "The reference woman and a constructed service robot whose detached arm she repairs",
+  "setting": "An author-chosen small workshop workbench",
+  "event": "A constructed body receives a detached-arm repair with distinct articulation and visible tool and supporting contact",
+  "visual_priorities": [
+    "Woman and constructed service machine share a legible repair moment",
+    "Distinct connected elbow, forearm frame and wrist are large enough to read together",
+    "Driver tip meets the wrist fastener while the other hand contacts the exposed forearm frame",
+    "Reference face and hair remain recognizable above the work"
+  ],
+  "baseline_prompt_en": "Make a photographic mecha scene in a small repair workshop: a mechanical subject, a service robot with a constructed body, sits beside a workbench while a short-haired woman repairs its detached arm. Use the supplied portrait for the woman's face and hair appearance; preserve the visible facial proportions, dark eyes, short dark bob and wispy separated fringe. Her absorbed, unforced presence and the soft sheen of her hair keep the human encounter warm within the precise mechanical work. The woman uses a driver on the detached robot arm's wrist fastener while her other hand grips its exposed forearm frame between elbow and wrist. The detached robot arm shows a distinct elbow joint connected through the exposed forearm frame to a separate wrist joint. The arm rests on a shallow padded workbench cradle. Its upper-arm segment angles away from the broad circular elbow hinge, while the long open forearm frame runs across the front of the bench toward the narrower wrist swivel and mechanical hand. The supporting fingertips curl around the lower edge of the near bare frame rail, their skin-to-metal contact visible against the open space within the frame. The driver shaft extends clearly beyond the tool-holding fingers to its tip seated in the upper-facing wrist fastener. Her two forearms approach these separate work points with space between them, each visibly continuous back to its own sleeve. Compose a landscape photograph from a shallow oblique viewpoint above the bench, keeping her face, both hands, the entire detached arm and the robot chassis together. Let the arm occupy the broad lower half of the image so the elbow, supporting contact, driver tip and wrist have distinct readable silhouettes. The robot chassis sits behind the elbow end, separated in depth from the working hands. Broad window light and a quiet neutral workshop background give the exposed metal edges clear contrast; subtle wear, natural skin texture and a plain blue work shirt make this feel like a concentrated, ordinary repair moment.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완",
+      "source_text": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘.",
+      "basis": "request_context",
+      "resolution": "Repair the antecedent mecha image workflow and its confirmed contact/articulation observability defects using only the closed retry projection. The mecha meaning and narrow reference appearance survive; previous optional staging is not inherited.",
+      "sources": []
+    },
+    {
+      "term": "같은 첨부 이미지를 활용",
+      "source_text": "같은 첨부 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "Use the same supplied portrait for face and hair appearance as preserved in the closed retry projection; the reference does not prescribe shirt, pose, body shape or workshop composition.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "확인된",
+        "dimension": "concept",
+        "prompt_evidence": "photographic mecha scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "확인된",
+        "dimension": "subject",
+        "prompt_evidence": "a mechanical subject"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "확인된",
+        "dimension": "event",
+        "prompt_evidence": "constructed body"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied portrait for the woman's face and hair appearance"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "appearance",
+        "prompt_evidence": "preserve the visible facial proportions, dark eyes, short dark bob and wispy separated fringe",
+        "target": "woman",
+        "property": "reference_appearance.face_and_hair"
+      },
+      {
+        "anchor_id": "repair_action",
+        "source_text": "연결·접점 가림 문제를 보완",
+        "dimension": "action",
+        "prompt_evidence": "The woman uses a driver on the detached robot arm's wrist fastener while her other hand grips its exposed forearm frame between elbow and wrist"
+      },
+      {
+        "anchor_id": "repair_joints",
+        "source_text": "연결·접점 가림 문제를 보완",
+        "dimension": "body_geometry",
+        "prompt_evidence": "The detached robot arm shows a distinct elbow joint connected through the exposed forearm frame to a separate wrist joint",
+        "target": "robot_arm",
+        "property": "joints.configuration"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "action"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "atmosphere",
+      "body_geometry",
+      "camera",
+      "color",
+      "composition",
+      "count",
+      "expression",
+      "framing",
+      "lighting",
+      "material",
+      "pose",
+      "relationship",
+      "role",
+      "setting",
+      "sexual_tone",
+      "style",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "woman_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "woman",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a short-haired woman"
+      }
+    },
+    {
+      "assertion_id": "woman_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "woman"
+      },
+      "evidence": {
+        "subject_phrase": "a short-haired woman"
+      }
+    },
+    {
+      "assertion_id": "reference_face_hair",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "woman",
+        "property": "reference_appearance.face_and_hair",
+        "value_type": "reference-appearance/v1",
+        "value": "visible facial proportions, dark eyes, short dark bob and wispy separated fringe",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "reference_phrase": "preserve the visible facial proportions, dark eyes, short dark bob and wispy separated fringe"
+      }
+    },
+    {
+      "assertion_id": "reference_scope",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "woman",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"5040de252f19c5b147bd403a65a25360a339d7261c7506a2fa31e1842c3794e4\",\"request_envelope_sha256\":\"6214000e77df3c6ef9a839539ec89292227395504b3abf8744ae0842c8e93784\",\"request_sha256\":\"47af5c1dce5a8f8bac0d3fc39a0d861b1d50e1daa6064a73d6ae079ea3a171ed\"},\"items\":[{\"assertion_id\":\"reference_face_hair\",\"dimension\":\"appearance\",\"property\":\"reference_appearance.face_and_hair\",\"target\":\"woman\",\"value\":{\"type\":\"reference-appearance/v1\",\"value\":\"visible facial proportions, dark eyes, short dark bob and wispy separated fringe\"}}],\"reviewed_input_ids\":[\"request\",\"reference_portrait\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "subject_phrase": "a short-haired woman"
+      }
+    },
+    {
+      "assertion_id": "repair_contact",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "interaction_state": "used",
+        "contact": "driver_tip_to_wrist_fastener_and_support_hand_to_exposed_forearm_frame",
+        "articulation": "distinct_connected_elbow_forearm_wrist"
+      },
+      "evidence": {
+        "interaction_phrase": "The woman uses a driver on the detached robot arm's wrist fastener while her other hand grips its exposed forearm frame between elbow and wrist",
+        "recognition_phrase": "The detached robot arm shows a distinct elbow joint connected through the exposed forearm frame to a separate wrist joint"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": {
+    "contract_version": "photo-request-lineage/v2",
+    "parent_request_id": "request-8309c9c12fcf4cf6a4367261d89e5413",
+    "parent_core_sha256": "f743e84a7979995c8598ba07241b1a2dbdc714a52579a3148fc8ae6fd46136ac",
+    "preserved_dimensions": [
+      "appearance",
+      "concept",
+      "event",
+      "reference_use",
+      "subject"
+    ],
+    "allowed_changes": [
+      "action",
+      "atmosphere",
+      "body_geometry",
+      "camera",
+      "color",
+      "composition",
+      "count",
+      "expression",
+      "framing",
+      "lighting",
+      "material",
+      "pose",
+      "relationship",
+      "role",
+      "setting",
+      "sexual_tone",
+      "style",
+      "timing"
+    ],
+    "repair_targets": [
+      {
+        "repair_id": "arm_contact_topology",
+        "source_span_ids": [
+          "repair"
+        ],
+        "importance": "primary",
+        "relation_origin": "requester_corrected",
+        "actor_phrase": "The woman",
+        "object_phrase": "detached robot arm",
+        "interaction_state": "used",
+        "actor_object_contact": "required",
+        "protected_dimensions": [
+          "action"
+        ],
+        "allowed_repair_axes": [
+          "object_geometry",
+          "contact_geometry",
+          "local_pose",
+          "camera",
+          "framing",
+          "lighting",
+          "occlusion"
+        ],
+        "interaction_phrase": "The woman uses a driver on the detached robot arm's wrist fastener while her other hand grips its exposed forearm frame between elbow and wrist",
+        "recognition_phrase": "The detached robot arm shows a distinct elbow joint connected through the exposed forearm frame to a separate wrist joint"
+      }
+    ]
+  },
+  "style": {
+    "domain": "photorealistic workshop portrait",
+    "family": "observational repair photography",
+    "evidence": [
+      "natural skin texture",
+      "subtle wear"
+    ]
+  },
+  "variation_key": "repair2-c-tabletop"
+}

@@ -1,0 +1,276 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "b5e8a401682b0868386123d1d1892b018629ad2050136407ce8d53cc0e4ef038",
+  "interpreted_intent": "The requester asks for independent random mecha/robot qualification concepts with the supplied portrait. Mecha means visibly articulated robotic equipment rather than general futuristic styling. At saved creativity 1 I compared an isolated equipment demonstration with an inhabited repair moment; I chose a rooftop greenhouse worker controlling a storm-bent cabinet door just as its load settles onto a trestle. The wind, incomplete hinge alignment and supported door make her effort understandable. This task, location, ochre coverall, pose, camera and mechanical arrangement are replaceable authorial staging, not requester-owned anchors. Sensual 1 supports a quiet personal warmth in her concentration; fetish 0, surreal 0 and trend off add no treatment. The supplied image governs visible facial/hair appearance only; its clothing/background and any inferred personality are not reference requirements. A right-side articulated support and handle contact are planned at enough scale to review together without inventing a required mechanical contract before retrieval.",
+  "subject": "A woman using wearable robotic field equipment, with face and hair guided by the supplied portrait.",
+  "setting": "Wind-battered rooftop greenhouse service deck after a storm.",
+  "event": "The cabinet door load has settled onto a trestle while the worker steadies it and checks the hinge.",
+  "visual_priorities": [
+    "The woman, exoskeleton arm and storm-bent cabinet door form one readable working relationship.",
+    "The arm follows a plausible shoulder-to-cuff chain while her hand remains connected to the handle.",
+    "The face and dark bob preserve the supplied appearance in a concentrated working portrait.",
+    "Wet glass, bowed plants and supported door make the pause after a gust visible."
+  ],
+  "baseline_prompt_en": "A cinematic documentary photograph of a woman wearing wearable robotic equipment, caught in field work with robotic equipment on the service deck of a wind-battered rooftop greenhouse. Use the supplied reference for her visible facial appearance and dark bob haircut. Her face keeps the reference's soft oval shape, dark eyes and fine wispy fringe; wind lifts a few short strands across one cheek. Her quiet concentration and relaxed mouth give the working portrait a subtle personal warmth. A heavy relay-cabinet door has been bent by the storm. Its lower edge has just settled onto a low maintenance trestle while she holds its outer handle steady, keeping a wind-blown door from swinging back across her work. The open cabinet and its displaced hinge bracket remain immediately behind the door; one loose fastener and a short wrench rest on the trestle beside the lower corner. She is checking the upper hinge alignment, with her left fingertips placed on the cabinet-side hinge bracket. Her right hand encloses the door handle, her right elbow bent naturally. An articulated utility exoskeleton follows the outside of that right arm, with a padded upper-arm cuff, an elbow pivot, a forearm cuff and a shoulder support attached to a fitted torso harness. The right-arm assembly and her human wrist remain visually distinct. Her boots are planted apart on the wet nonslip deck, and the trestle carries the door's lower edge. She wears a weathered ochre work coverall, its functional waist and rolled cuffs following her movement. Broken cloud gives soft directional daylight, a warmer sunbreak briefly touching her cheek and the pale aluminum links. Wet greenhouse glass and rows of bowed green plants give the gust a visible consequence in the background. A close full-length vertical photograph from her front-right, with enough depth of field to keep her face, the complete arm support, the handle and both door hinges readable together. Real skin and work-worn mechanical surfaces, restrained color, a particular task caught in progress.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+      "basis": "request_context",
+      "resolution": "The reviewed prior-user topic in the envelope is mecha terminology and appearance; the independent concept makes robotic equipment visible in practical work. The particular equipment and situation are authorial choices.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait for visible face and hair appearance. It does not establish personal identity, personality, wardrobe or background requirements.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "mecha_concept",
+        "source_text": "서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "wearable robotic equipment"
+      },
+      {
+        "anchor_id": "ref_subject",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "subject",
+        "prompt_evidence": "her visible facial appearance"
+      },
+      {
+        "anchor_id": "theme_event",
+        "source_text": "서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "field work with robotic equipment"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied reference for her visible facial appearance and dark bob haircut."
+      },
+      {
+        "anchor_id": "face_reference",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "appearance",
+        "target": "worker",
+        "property": "appearance.face.reference",
+        "prompt_evidence": "her visible facial appearance"
+      },
+      {
+        "anchor_id": "hair_reference",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "appearance",
+        "target": "worker",
+        "property": "appearance.hair.reference",
+        "prompt_evidence": "dark bob haircut"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "role",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "worker_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "worker",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "baseline_phrase": "her visible facial appearance"
+      }
+    },
+    {
+      "assertion_id": "worker_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "worker"
+      },
+      "evidence": {
+        "baseline_phrase": "her visible facial appearance"
+      }
+    },
+    {
+      "assertion_id": "face_from_reference",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "worker",
+        "property": "appearance.face.reference",
+        "value_type": "reference_appearance/v1",
+        "value": "reference_portrait_visible_face",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "baseline_phrase": "her visible facial appearance"
+      }
+    },
+    {
+      "assertion_id": "hair_from_reference",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "worker",
+        "property": "appearance.hair.reference",
+        "value_type": "reference_appearance/v1",
+        "value": "reference_portrait_dark_bob",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "baseline_phrase": "dark bob haircut"
+      }
+    },
+    {
+      "assertion_id": "reference_appearance_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "worker",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"d527559cc9a80f050231f8f129f1cfb282dbf42fea9c278e0348122c77d447b2\",\"request_envelope_sha256\":\"88338ec9d0a0b7252a45f9255dcc8b9ba507319018e09e19bdd2bf5baab45155\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"face_from_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.face.reference\",\"target\":\"worker\",\"value\":{\"type\":\"reference_appearance/v1\",\"value\":\"reference_portrait_visible_face\"}},{\"assertion_id\":\"hair_from_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.hair.reference\",\"target\":\"worker\",\"value\":{\"type\":\"reference_appearance/v1\",\"value\":\"reference_portrait_dark_bob\"}}],\"reviewed_input_ids\":[\"request\",\"reference_portrait\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "baseline_phrase": "Use the supplied reference for her visible facial appearance and dark bob haircut."
+      }
+    },
+    {
+      "assertion_id": "requester_identity_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "worker",
+        "scope_kind": "requester_identity",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"d527559cc9a80f050231f8f129f1cfb282dbf42fea9c278e0348122c77d447b2\",\"request_envelope_sha256\":\"88338ec9d0a0b7252a45f9255dcc8b9ba507319018e09e19bdd2bf5baab45155\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[],\"reviewed_input_ids\":[\"request\",\"reference_portrait\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_absent\"}"
+      },
+      "evidence": {
+        "baseline_phrase": "Use the supplied reference for her visible facial appearance and dark bob haircut."
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "documentary environmental working portrait",
+    "family": "restrained cinematic field photography",
+    "evidence": [
+      "soft directional daylight through broken cloud",
+      "work-worn aluminum and wet greenhouse glass"
+    ]
+  },
+  "variation_key": "mecha-arm-a-41ca8a5e5e26bf3515fe6ced64bd0e62"
+}

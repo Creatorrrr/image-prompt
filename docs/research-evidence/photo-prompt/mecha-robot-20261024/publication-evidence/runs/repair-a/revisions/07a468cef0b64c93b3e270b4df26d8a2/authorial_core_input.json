@@ -1,0 +1,303 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "확인된 신규 후보 미노출, 작성 조건 과다 지정, 좌우 반전·연결·접점 가림 문제를 보완해줘. 같은 첨부 이미지를 활용해 독립 서브에이전트 3개에서 다시 프롬프트 작성과 이미지 생성을 진행하고 실제 픽셀까지 검증해줘.",
+  "creative_controls_sha256": "16bb4695addcfe99ef90eaf5135a3d72c504c5b532bbce41df5f73269ab0aa30",
+  "interpreted_intent": "Requester meaning is a repaired mecha image test with the same face/hair reference and legible side ownership, connections and contact. The prior broad concept/event staging has been explicitly released by the retry correction. My authorial scene is a quiet workshop pause while a wearable arm support helps maintain pressure on a bench-clamp lever. I compared a lifting-loop scene with the lever scene independently; the broad palm-to-handle contact and low horizontal working height make the visible support chain easier to read without sacrificing the subject. The workshop, shirt, arm side, lever task, stance, framing and light are replaceable artistic choices, not requester definitions. I want a person inhabiting useful equipment, with subtle presence at sensual 1 and an unbroken shoulder-to-hand visual rhythm.",
+  "subject": "A woman with the supplied visible face and dark bob appearance, using external arm assistance.",
+  "setting": "A small fabrication workshop, chosen by the author.",
+  "event": "Body-side ownership and mechanical connections/contact are readable during a static working pause.",
+  "visual_priorities": [
+    "The supplied face and dark bob retain individual presence.",
+    "The exposed shoulder root and continuous arm support are readable together in the same plane.",
+    "The acting left hand, lever surface and clamp connection share a clear contact region."
+  ],
+  "baseline_prompt_en": "A natural photographic scene of a woman using wearable mechanical assistance in a small fabrication workshop, with readable mechanical connections and visible body-side ownership and contact. Use the supplied reference for her visible facial appearance and dark bob haircut. She has paused at a bench clamp, holding its lever against the lower stop with her left palm; her steady attention and relaxed mouth give the working moment a quiet personal presence. Her anatomical left arm is the near arm on image-right. An open shoulder yoke has its exposed root at the front outer edge of her left shoulder. From that root a continuous external support runs visibly through the shoulder pivot, upper-arm rail, elbow hinge, forearm rail and wrist cuff. The rail stands away from the plain charcoal work shirt, leaving daylight gaps between metal and torso. Her left elbow is mildly bent and held clear of her ribs, with the whole support route facing the camera. The left palm lies across the broad lever handle; the palm edge touching its top surface, thumb beside the handle and handle entering the clamp are visible together. Her other hand hangs freely on image-left. The camera sees her from slightly in front of her left side, framed from head to mid-thigh with space around the entire shoulder-to-handle route. Broad window light models her face and gives each metal connection an edged highlight against a subdued workshop background. The face, linked arm support and hand contact carry the photograph together, with natural skin texture and restrained metallic reflections.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "connection and contact repair",
+      "source_text": "좌우 반전·연결·접점 가림 문제",
+      "basis": "request_context",
+      "resolution": "Repair side attribution and the legibility of mechanical connections and contact; setting, outfit and the particular operating task remain authorial choices.",
+      "sources": []
+    },
+    {
+      "term": "reference reuse",
+      "source_text": "같은 첨부 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "Preserve the supplied visible facial appearance and dark bob hairstyle within the exact closed retry scope.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "연결·접점 가림 문제",
+        "dimension": "concept",
+        "prompt_evidence": "readable mechanical connections"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "subject",
+        "prompt_evidence": "her visible facial appearance"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "좌우 반전·연결·접점 가림 문제",
+        "dimension": "event",
+        "prompt_evidence": "visible body-side ownership and contact"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied reference for her visible facial appearance and dark bob haircut."
+      },
+      {
+        "anchor_id": "face_appearance",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "appearance",
+        "target": "worker",
+        "property": "appearance.face.reference",
+        "prompt_evidence": "her visible facial appearance"
+      },
+      {
+        "anchor_id": "hair_appearance",
+        "source_text": "같은 첨부 이미지를 활용",
+        "dimension": "appearance",
+        "target": "worker",
+        "property": "appearance.hair.reference",
+        "prompt_evidence": "dark bob haircut"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "action",
+      "atmosphere",
+      "body_geometry",
+      "camera",
+      "color",
+      "composition",
+      "expression",
+      "framing",
+      "lighting",
+      "material",
+      "pose",
+      "relationship",
+      "role",
+      "setting",
+      "style",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "worker",
+        "owner_kind": "human"
+      },
+      "dimension": "subject",
+      "affected_dimensions": [
+        "subject"
+      ],
+      "evidence": {
+        "baseline_phrase": "her visible facial appearance"
+      },
+      "polarity": "required",
+      "assertion_id": "worker_owner",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "worker"
+      },
+      "dimension": "subject",
+      "affected_dimensions": [
+        "subject"
+      ],
+      "evidence": {
+        "baseline_phrase": "her visible facial appearance"
+      },
+      "polarity": "required",
+      "assertion_id": "main_subject_role",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "worker",
+        "property": "appearance.face.reference",
+        "value_type": "reference_appearance/v1",
+        "value": "reference_portrait_visible_face",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "dimension": "appearance",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "evidence": {
+        "baseline_phrase": "her visible facial appearance"
+      },
+      "polarity": "required",
+      "assertion_id": "face_from_reference",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "worker",
+        "property": "appearance.hair.reference",
+        "value_type": "reference_appearance/v1",
+        "value": "reference_portrait_dark_bob",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "dimension": "appearance",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "evidence": {
+        "baseline_phrase": "dark bob haircut"
+      },
+      "polarity": "required",
+      "assertion_id": "hair_from_reference",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "assertion_id": "reference_appearance_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "worker",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"5040de252f19c5b147bd403a65a25360a339d7261c7506a2fa31e1842c3794e4\",\"request_envelope_sha256\":\"f464ceecc8b05dc435b5a593d52ed8696a1ae8c076aee768739b76520083268c\",\"request_sha256\":\"47af5c1dce5a8f8bac0d3fc39a0d861b1d50e1daa6064a73d6ae079ea3a171ed\"},\"items\":[{\"assertion_id\":\"face_from_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.face.reference\",\"target\":\"worker\",\"value\":{\"type\":\"reference_appearance/v1\",\"value\":\"reference_portrait_visible_face\"}},{\"assertion_id\":\"hair_from_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.hair.reference\",\"target\":\"worker\",\"value\":{\"type\":\"reference_appearance/v1\",\"value\":\"reference_portrait_dark_bob\"}}],\"reviewed_input_ids\":[\"request\",\"reference_portrait\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "baseline_phrase": "Use the supplied reference for her visible facial appearance and dark bob haircut."
+      }
+    },
+    {
+      "assertion_id": "requester_identity_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "worker",
+        "scope_kind": "requester_identity",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"5040de252f19c5b147bd403a65a25360a339d7261c7506a2fa31e1842c3794e4\",\"request_envelope_sha256\":\"f464ceecc8b05dc435b5a593d52ed8696a1ae8c076aee768739b76520083268c\",\"request_sha256\":\"47af5c1dce5a8f8bac0d3fc39a0d861b1d50e1daa6064a73d6ae079ea3a171ed\"},\"items\":[],\"reviewed_input_ids\":[\"request\",\"reference_portrait\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_absent\"}"
+      },
+      "evidence": {
+        "baseline_phrase": "Use the supplied reference for her visible facial appearance and dark bob haircut."
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": {
+    "parent_request_id": "request-ade9531b812f43b0a33513920a86352c",
+    "parent_core_sha256": "b67a126fbb3fa7c159428f6ac7c8092048fc57ec6d677c68d6b0ab9bdb0172f6",
+    "preserved_dimensions": [
+      "appearance",
+      "reference_use",
+      "subject"
+    ],
+    "allowed_changes": [
+      "action",
+      "atmosphere",
+      "body_geometry",
+      "camera",
+      "color",
+      "composition",
+      "concept",
+      "event",
+      "expression",
+      "framing",
+      "lighting",
+      "material",
+      "pose",
+      "relationship",
+      "role",
+      "setting",
+      "style",
+      "timing"
+    ]
+  },
+  "style": {
+    "domain": "photographic",
+    "family": "observational industrial portrait",
+    "evidence": [
+      "natural skin texture",
+      "restrained metallic reflections"
+    ]
+  },
+  "variation_key": "repair2-a-exposed-arm-route"
+}
