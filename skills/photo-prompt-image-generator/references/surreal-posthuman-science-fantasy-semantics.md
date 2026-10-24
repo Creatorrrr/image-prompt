@@ -37,3 +37,7 @@ visual recipes, or that new source records are globally semantically novel.
 Original records, bindings, policies and catalog definitions are preserved.
 Index/build integrity, bilingual retrieval, final prompt, actual reference
 transport, saved native pixels and requester acceptance retain separate evidence.
+
+## Related observable-control expansion
+
+For the separately authored 2026-10-24 relationship variants, diagnostic boundaries and unchanged-source reuse decisions, read [surreal-control-expansion-semantics.md](surreal-control-expansion-semantics.md) after independent core freeze. This adds no genre-triggered obligations or native qualification.
