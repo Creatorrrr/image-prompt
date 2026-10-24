@@ -246,4 +246,14 @@ access relations remain distinct from legal rights, title and chronology.
 Source registration, installed retrieval, audited prompt use and saved pixels
 are separate evidence; unresolved historical details remain held.
 
+
+The [marine literature extension](marine-literature-semantics.md) retains 96 research
+cards and 247 term rows, registers 87 optional bilingual visual sources,
+247 excluded diagnostics and 166 optional bindings, and preserves three reused
+complete sources. Short English discovery names and advisory visibility plans
+retain the original propositions, conditions and pixel gates. Three independent
+retest images establish one generic attribute transfer but no complete new-card
+or whole-scene pixel qualification. Research, installed exposure, prompt use
+and original pixels remain separate evidence layers.
+
 The [campus-life extension](campus-life-semantics.md) registers 100 complete optional bilingual visual sources and 23 excluded diagnostics, with 124 semantic cards, 356 advisory routes and 220 bindings. Requester topic scope, agent-owned staging, complete source conditions and saved-pixel qualification remain separate.
