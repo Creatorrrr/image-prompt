@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import photo_request_ownership
 from pathlib import Path
 from typing import Any
 from photo_authoring_wire import clean_spaces
@@ -234,6 +235,7 @@ def validate_selection(
             "request_sha256",
             "baseline_prompt_sha256",
             "selected",
+            "ownership_review",
         },
         "selection",
     )
@@ -370,6 +372,10 @@ def validate_selection(
         evidence_phrases.append(normalized_evidence)
         evidence_pairs.append((normalized_reason, normalized_evidence))
 
+    ownership = None
+    if "ownership_review" in record:
+        ownership = photo_request_ownership.validate(record["ownership_review"], authorial_core,
+                                                      record, request_envelope, required_evidence)
     warnings: list[str] = []
     if len(set(reasons)) != len(reasons):
         warnings.append("repeated_reason")
@@ -386,4 +392,5 @@ def validate_selection(
         "selected_category_ids": selected_ids,
         "selected_count": len(selected_ids),
         "warnings": warnings,
+        **({"ownership_review": ownership} if ownership is not None else {}),
     }
