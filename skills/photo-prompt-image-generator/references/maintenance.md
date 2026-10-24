@@ -227,3 +227,13 @@ retain branch, rank, billet, legal, clinical and narrative boundaries. People,
 garments, supports, straps, devices and represented figures keep separate owners
 and connection endpoints. Registration, sealed exposure, actual prompt use and
 saved pixels are separate evidence; research metadata grants no native approval.
+
+
+The [marine literature extension](marine-literature-semantics.md) retains 96 research
+cards and 247 term rows, registers 87 optional bilingual visual sources,
+247 excluded diagnostics and 166 optional bindings, and preserves three reused
+complete sources. Short English discovery names and advisory visibility plans
+retain the original propositions, conditions and pixel gates. Three independent
+retest images establish one generic attribute transfer but no complete new-card
+or whole-scene pixel qualification. Research, installed exposure, prompt use
+and original pixels remain separate evidence layers.
