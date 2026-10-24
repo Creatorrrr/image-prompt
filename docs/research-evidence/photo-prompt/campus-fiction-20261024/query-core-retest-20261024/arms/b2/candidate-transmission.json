@@ -1,0 +1,93 @@
+{
+  "schema": "campus-candidate-transmission/v1",
+  "run": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/campus-query-core-20261024-b2",
+  "generation_id": "4a05dd82d952b3df246e9d0375a2e4c91a4e7a3cca6a7d3e15fbfb4d3ffc2878",
+  "queries": 3,
+  "returned_occurrences": 24,
+  "unique_sources_read": 24,
+  "new_campus_sources_exposed": [
+    "cand_221a98cf7db95b79872804c577db2b25",
+    "cand_2ce06b8d8cbb5d77aca03a1fc5def759",
+    "cand_6ca2cafe37485166ab079d5f75367a5a",
+    "cand_9abd05979fac5bada5f9ad49a3ee94b3"
+  ],
+  "material_inspiration": [
+    {
+      "candidate_id": "cand_6ca2cafe37485166ab079d5f75367a5a",
+      "realization_id": "base",
+      "source_sha256": "b8e81687bf4e51247bd1872cca58d1bea3b1ce75b0544b83ec76e4d602e4f08c",
+      "source_card_id": "S11",
+      "native_chosen": false,
+      "native_approval_claimed": false,
+      "conditions": {},
+      "effects": {
+        "dimensions": [
+          "composition",
+          "count",
+          "relationship",
+          "setting"
+        ],
+        "properties": []
+      },
+      "full_effects_review": "All declared dimensions composition/count/relationship/setting are open; no property effects overlap reference-person appearance anchors. The complete count and adjacency remain literal in final.",
+      "new_literal": "one room with exactly two beds and two personal desks in separate zones",
+      "complete_literal": "the left bed is beside the left desk with its own bedside storage, and the right bed is beside the right desk with a separate bedside storage unit",
+      "baseline_contains_literal": false,
+      "effect": "One same room now visibly contains two separate counted bed/desk/storage zones, absent from the baseline walkway.",
+      "pixel_gates": [
+        {
+          "id": "campus_S11_two_beds",
+          "requirement": "Exactly two complete bed shapes visible in the same room.",
+          "review_scale": "both",
+          "status": "fail",
+          "observability": "partial",
+          "scales_checked": [
+            "thumbnail_384px",
+            "native_1237x1272"
+          ],
+          "evidence": "Two beds are recognizable on the left and right inside one room, but the left edge and right foreground end are masked by the doorway/person. The pre-call test required two complete bed shapes visible together; that complete shape visibility is partial, so it cannot pass."
+        },
+        {
+          "id": "campus_S11_two_desks",
+          "requirement": "Exactly two personal desk worktops visible in that same room.",
+          "review_scale": "both",
+          "status": "pass",
+          "observability": "visible",
+          "scales_checked": [
+            "thumbnail_384px",
+            "native_1237x1272"
+          ],
+          "evidence": "Two distinct worktops are visible at the back of the same room, one left under the left lamp and one right under the right lamp, with separate chairs and working zones."
+        },
+        {
+          "id": "campus_S11_separate_zones",
+          "requirement": "Each bed has separate bedside storage next to its corresponding desk zone, with all endpoints and division visible together.",
+          "review_scale": "native",
+          "status": "fail",
+          "observability": "partial",
+          "scales_checked": [
+            "native_1237x1272"
+          ],
+          "evidence": "A drawer unit is visible near the right desk and both beds have under-bed drawers, but two distinct bedside storage units with each unit visibly linked to its corresponding bed and desk zone are not established. Under-bed drawers and a single central drawer pedestal cannot be substituted for the complete two-unit bedside relation."
+        }
+      ],
+      "partial_policy": "partial_is_fail",
+      "unobservable_policy": "UNOBSERVABLE_NOT_PASS",
+      "prompt_transmission": "audit_pass",
+      "pixel_transmission": "fail",
+      "pixel_partial_evidence": "Two beds and two desks visibly differ from the baseline walkway, but the full counted storage/adjacency contract is not proved.",
+      "whole_source_pixel_pass": false
+    }
+  ],
+  "native_chosen_candidate_ids": [],
+  "whole_source_native_qualification": "not_claimed",
+  "image_call_count": 1,
+  "user_acceptance": "pending",
+  "composed_audit_status": "pass",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/campus-query-core-20261024-b2/image.png",
+  "image_sha256": "75666cd95093397efa48c23f0a7e4aa8a1c21afba7045deacd171808d0be6565",
+  "observed_image_model": null,
+  "render_result": "returned_and_recorded",
+  "strict_new_campus_source_pixel_pass_count": 0,
+  "retained_new_campus_source_prompt_count": 1
+}

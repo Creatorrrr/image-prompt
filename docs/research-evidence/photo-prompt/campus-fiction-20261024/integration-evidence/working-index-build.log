@@ -1,0 +1,50 @@
+Loading weights:   0%|          | 0/413 [00:00<?, ?it/s]Loading weights: 100%|██████████| 413/413 [00:00<00:00, 19551.99it/s]
+{"complete": 20764, "records": 21245, "elapsed_seconds": 17.88}
+{"complete": 20780, "records": 21245, "elapsed_seconds": 18.2}
+{"complete": 20796, "records": 21245, "elapsed_seconds": 18.55}
+{"complete": 20812, "records": 21245, "elapsed_seconds": 18.92}
+{"complete": 20828, "records": 21245, "elapsed_seconds": 19.33}
+{"complete": 20844, "records": 21245, "elapsed_seconds": 19.81}
+{"complete": 20860, "records": 21245, "elapsed_seconds": 20.42}
+{"complete": 20876, "records": 21245, "elapsed_seconds": 21.13}
+{"complete": 20892, "records": 21245, "elapsed_seconds": 22.35}
+{"complete": 20908, "records": 21245, "elapsed_seconds": 22.93}
+{"complete": 20924, "records": 21245, "elapsed_seconds": 23.55}
+{"complete": 20940, "records": 21245, "elapsed_seconds": 24.21}
+{"complete": 20956, "records": 21245, "elapsed_seconds": 24.84}
+{"complete": 20972, "records": 21245, "elapsed_seconds": 25.51}
+{"complete": 20988, "records": 21245, "elapsed_seconds": 26.24}
+{"complete": 21004, "records": 21245, "elapsed_seconds": 26.94}
+{"complete": 21020, "records": 21245, "elapsed_seconds": 27.59}
+{"complete": 21036, "records": 21245, "elapsed_seconds": 28.28}
+{"complete": 21052, "records": 21245, "elapsed_seconds": 29.0}
+{"complete": 21068, "records": 21245, "elapsed_seconds": 29.77}
+{"complete": 21084, "records": 21245, "elapsed_seconds": 30.38}
+{"complete": 21100, "records": 21245, "elapsed_seconds": 31.12}
+{"complete": 21116, "records": 21245, "elapsed_seconds": 31.8}
+{"complete": 21132, "records": 21245, "elapsed_seconds": 32.53}
+{"complete": 21148, "records": 21245, "elapsed_seconds": 33.7}
+{"complete": 21164, "records": 21245, "elapsed_seconds": 35.07}
+{"complete": 21180, "records": 21245, "elapsed_seconds": 35.76}
+{"complete": 21196, "records": 21245, "elapsed_seconds": 36.45}
+{"complete": 21212, "records": 21245, "elapsed_seconds": 37.2}
+{"complete": 21228, "records": 21245, "elapsed_seconds": 38.24}
+{"complete": 21244, "records": 21245, "elapsed_seconds": 39.15}
+{"complete": 21245, "records": 21245, "elapsed_seconds": 41.19}
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import gc,runpy,sys; gc.disable(); sys.path.insert(0,"skills/photo-prompt-image-generator/scripts"); runpy.run_path("skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py",run_name="__main__")
+                                                                                                         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 115, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 110, in main
+    with source_update(root,a.runtime_store):result=build(a.assets,a.cache or Path.home()/'.cache/image-prompt/shared-embedding-build',a.workers,a.repair_unknown,space=space,batch_size=a.batch_size)
+                                                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 74, in build
+    if c.digest(c.load(assets))!=c.digest(corpus):raise ValueError('source changed before layout activation')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: source changed before layout activation

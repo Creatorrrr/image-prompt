@@ -54,6 +54,10 @@ def init(args):
                 "request_sha256": digest(raw), "active_spans": spans}
     if getattr(args,"input_inventory",None) is not None:
         envelope["input_inventory"] = read_json(args.input_inventory)
+    if getattr(args,"topic_context",None) is not None:
+        envelope["topic_context"] = read_json(args.topic_context)
+    if getattr(args,"query_scope",None) is not None:
+        envelope["query_scope"] = read_json(args.query_scope)
     wire.normalize_request_envelope(envelope)
     with locked_state(args.run) as state:
         if state is not None:
@@ -111,6 +115,8 @@ def freeze(args):
         declared = "camera" in set(core["intent_lock"]["open_dimensions"]) | set(core["intent_lock"]["locked_dimensions"])
         camera.camera_authoring_declaration(core, required=declared)
         selection = read_json(args.selection)
+        if "ownership_review" not in selection:
+            raise WorkflowError("requester_ownership_review_required_for_new_freeze")
         catalog = Path(__file__).with_name("visual_feature_catalog.json").read_bytes()
         for key, expected in {"contract_version": features.SELECTION_VERSION, "catalog_path": features.CATALOG_PATH,
             "catalog_schema_version": features.CATALOG_VERSION, "catalog_sha256": digest(catalog),
@@ -156,6 +162,8 @@ def main(argv=None):
     p = sub.add_parser("init"); p.add_argument("--run", type=Path, required=True)
     p.add_argument("--request", type=Path, required=True); p.add_argument("--request-id")
     p.add_argument("--input-inventory", type=Path, help="explicit complete/partial caller input inventory; never inferred")
+    p.add_argument("--topic-context", type=Path, help="reviewed exact prior-user quotes linked to active current spans; discovery only")
+    p.add_argument("--query-scope", type=Path, help="exact reviewed visual/topic/reference/workflow segments; discovery only")
     group = p.add_mutually_exclusive_group(required=True)
     group.add_argument("--whole-request", action="store_true"); group.add_argument("--spans", type=Path)
     p.add_argument("--mode", choices=("prompt_only", "image"), required=True)
