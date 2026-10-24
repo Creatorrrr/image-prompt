@@ -10,8 +10,10 @@ V10 runs keep their original sealed implementation and records.
 
 Each query still ranks the whole positive corpus once with BM25F and local
 cosine. Apply the existing phase/literal/primary-source scope projection first,
-then take a CID-deduplicated rank window and draw a uniform sample without
-replacement. Creativity never relaxes requester locks or source conditions.
+then take a CID-deduplicated rank window. Retain its first eligible source and
+draw the remaining positions uniformly without replacement. The rank anchor
+counts toward the same total sample limit; it never depends on source identity,
+recency or topic. Creativity never relaxes requester locks or source conditions.
 
 | creativity | rank window per query | sample limit per query |
 | --- | ---: | ---: |
