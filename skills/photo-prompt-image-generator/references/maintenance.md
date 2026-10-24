@@ -227,3 +227,6 @@ retain branch, rank, billet, legal, clinical and narrative boundaries. People,
 garments, supports, straps, devices and represented figures keep separate owners
 and connection endpoints. Registration, sealed exposure, actual prompt use and
 saved pixels are separate evidence; research metadata grants no native approval.
+
+
+The [campus-life extension](campus-life-semantics.md) registers 100 complete optional bilingual visual sources and 23 excluded diagnostics, with 124 semantic cards, 356 advisory routes and 220 bindings. Requester topic scope, agent-owned staging, complete source conditions and saved-pixel qualification remain separate.
