@@ -1,0 +1,75 @@
+{
+  "schema": "campus-arm-independent-freeze-proof/v1",
+  "created_at": "2026-10-23T16:34:08.374549+00:00",
+  "skill_path": "skills/photo-prompt-image-generator/SKILL.md",
+  "skill_sha256": "f1b6e6356e76ad22abcdcbdf4ca0aa6543a65f50ed2692f57c45f24b6286a089",
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+      "request_envelope_input": "d2eebbfb168dc441ebeb7d0722a903c15f8c0ef3dedc852d9f1b1fc7274c61ca",
+      "creative_controls": "c960843a5904c454e42594768c27dd5f1e36401639a48eb759646b2660817d8c",
+      "authorial_core_input": "fb2faeec692ce9425fba9886a51acfd9bad9402723304ee3acdf530d9d6ef3d2",
+      "authorial_core_normalized": "dd34a9596b999024552987be3f4e3694f3c6bdd10228118be1bd83eb7c532272",
+      "request_envelope_normalized": "428b1acec8a914529b7ce5a007b72c383332b953e4ba7329b769746edde4fe4f",
+      "embodiment_review": "8c83be43252ae85fc304d9571bc5abc799344f600c7a64dbb74816b58d800bd7",
+      "feature_selection": "edc4050a34b4742d63cac8c369907b5dfce979a8729d6525d26dd7777c5b35ec",
+      "feature_selection_audit": "d249b5aba64d8153ed445b3ea80597023f2d199f717c6661852ffb1b0e3a8b7c",
+      "catalog": "98ba6156f5a06398cae2bd5131730a52173a0ea6a6b4bdce459d1ab33ed77a20",
+      "baseline": "4270dcfcd06f494c52fd4f723ac49c23c7abbaf8ce9a831f0c533abcff5225f8",
+      "freeze_author_input_hashes": "425a8d445360744eb429df0521f8736a6e32c3c674d5a27514a2913bf31d25d5"
+    },
+    "contracts": {
+      "envelope": "8518f10c0a412fad97f73abf6060b98c3379858af54201c97692497881634d33",
+      "core": "94cde77d961caa93dd205bfa7c7bd940af5a869a1caad8b05c44edd53297b219",
+      "intent_lock": "659a2ddb74bc946bb5c238f2c73797492b7be0f329fe1d44c528ea6a0cbe45a2",
+      "controls": "22b648b86ab5a3ebdf7659c5c1ee7fdc7655bca3dedc75ece1d46df741984dc0"
+    }
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "campus-20261024-a",
+    "selected_category_ids": [
+      "feature.situation",
+      "feature.location",
+      "feature.interaction",
+      "feature.action",
+      "feature.props",
+      "feature.environmental_details",
+      "feature.subject",
+      "feature.lighting_source"
+    ],
+    "selected_count": 8,
+    "warnings": []
+  },
+  "independence": {
+    "opened_other_arms": false,
+    "opened_candidate_or_assets_before_freeze": false,
+    "opened_research_before_freeze": false,
+    "opened_past_prompts_or_tests": false,
+    "authoring_inputs": "Current requesting-user envelope and exact topic antecedent supplied by coordinator, canonical SKILL, exact permitted neutral precore files and attached reference.",
+    "timing_note": "Neutral catalog was read during initial prep before random draw; it contains category names only. Baseline was written only after controls authoring_brief and principle were read."
+  },
+  "data_update_signal_received": true,
+  "ready_signal": {
+    "received_at": "2026-10-23T16:51:18.265661+00:00",
+    "h_f2_generation": "8490ccab7b23d1bf8f79d58eb422cc19c68a5163d131b970f69fb7158dd29024",
+    "native_generation": "61d9a80aeb4311da49c609bb799970e35eb74919718a4c755420c0ab2c6f5a43",
+    "store": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed",
+    "source": "Coordinator READY message after full validation and recorder checks"
+  },
+  "operational_cache_side_effect": {
+    "path": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed/h-f2-query-cache",
+    "per_query_cache_hit": {
+      "participant_role": false,
+      "situation_context": false,
+      "__request_topic__": false,
+      "__baseline_prompt__": false
+    },
+    "cause": "Managed retrieve default query-cache because caller did not pass --query-cache.",
+    "sealed_source_generation_modified": false,
+    "cleanup": "Not deleted; shared operation cache retained.",
+    "coordinator_review": "Record separately from creative independence. Same-input/binding embedding proof cache is not another arm creative material; no concept-independence failure inferred."
+  }
+}

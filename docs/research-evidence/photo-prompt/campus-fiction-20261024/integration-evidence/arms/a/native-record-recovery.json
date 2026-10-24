@@ -1,0 +1,8 @@
+{
+  "schema": "campus-a-recorder-recovery/v1",
+  "actual_image_call_count": 1,
+  "route": "recovery_only",
+  "preparation_issue": "The first metadata helper attempted to import PIL from the project venv and failed before copying/writing the observation. A following native-result command consequently returned invalid_workflow_input.",
+  "repair": "Use Python stdlib struct to read the actual PNG IHDR, copy the already returned original unchanged, write the concrete observation and replay native-result with the same actual generation.",
+  "additional_image_calls": 0
+}

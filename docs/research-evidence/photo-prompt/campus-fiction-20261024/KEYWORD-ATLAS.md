@@ -1,0 +1,362 @@
+# 원 대화 키워드 연결
+
+26개 표의 364개 데이터 행 중 용어 행 356개와 창작 조합 8개를 구분한다. 표 밖 17장의 혼동 경계 6개는 RESEARCH.md에서 별도 다룬다. 원 설명은 참조 대화 데이터이며 외부 검증 완료의 표지가 아니다.
+
+모든 연결은 관련 실현/경계이다. 동의어·정의 일치나 전 항목의 시각 완전성을 의미하지 않는다.
+
+- **K001 캠퍼스물 / Campus fiction** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K002 캠퍼스 로맨스 / College romance** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K003 청춘물 / Youth drama** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K004 성장물 / Coming-of-age** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K005 청춘 군상극 / Ensemble drama** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K006 캠퍼스 일상물 / Slice of life** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K007 뉴 어덜트 / New Adult, NA** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K008 아카데믹 노블 / Academic novel** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K009 대학원물** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K010 대학 스포츠 로맨스 / College sports romance** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K011 캠퍼스 BL·GL** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K012 캠퍼스 미스터리·스릴러** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K013 캠퍼스 호러** (1. 장르와 작품의 방향을 나타내는 용어) → C01; context_or_temporal_boundary_only
+- **K014 다크 아카데미아 / Dark academia** (1. 장르와 작품의 방향을 나타내는 용어) → C01, C21; context_or_temporal_boundary_only
+- **K015 학번** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K016 새내기** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K017 헌내기** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K018 고학번** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K019 화석** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K020 동기** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K021 선배·후배** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K022 휴학생·복학생** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K023 군휴학·군필 복학생** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K024 편입생** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K025 만학도·성인학습자** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K026 유학생·교환학생** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K027 통학생·기숙사생·자취생** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K028 취준생** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K029 졸업유예생·수료생** (2-1. 학생 신분과 선후배 관계) → C02; context_or_temporal_boundary_only
+- **K030 단과대학·단대** (2-2. 대학 조직과 역할) → C03; context_or_temporal_boundary_only
+- **K031 학부·학과·전공** (2-2. 대학 조직과 역할) → C03; context_or_temporal_boundary_only
+- **K032 과대** (2-2. 대학 조직과 역할) → C03; context_or_temporal_boundary_only
+- **K033 학생회·총학생회** (2-2. 대학 조직과 역할) → C03; context_or_temporal_boundary_only
+- **K034 동아리연합회·동연** (2-2. 대학 조직과 역할) → C03; context_or_temporal_boundary_only
+- **K035 조교 / TA·RA** (2-2. 대학 조직과 역할) → C03, C20; context_or_temporal_boundary_only
+- **K036 학부연구생** (2-2. 대학 조직과 역할) → C03; context_or_temporal_boundary_only
+- **K037 지도교수** (2-2. 대학 조직과 역할) → C03, C15; context_or_temporal_boundary_only
+- **K038 PI / Principal Investigator** (2-2. 대학 조직과 역할) → C03, C15; context_or_temporal_boundary_only
+- **K039 수강신청** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K040 수강정정·드랍** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K041 증원·정원 외 수강** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K042 강의계획서 / Syllabus** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K043 전필·전선** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K044 교필·교선** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K045 복전·부전** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K046 전과** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K047 학점·평점 / GPA** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K048 공강** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K049 우주공강** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K050 연강** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K051 분반** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K052 청강** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K053 재수강** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K054 계절학기·계절수업** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K055 학사경고·학고** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K056 휴강·보강** (3-1. 학사와 시간표) → C04; context_or_temporal_boundary_only
+- **K057 팀플·조별과제** (3-2. 과제와 대학생활 속어) → S07, A13, C05; related_optional_realization_and_boundary
+- **K058 조장·팀장** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K059 프리라이더·무임승차** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K060 잠수** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K061 리포트·레포트** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K062 족보** (3-2. 과제와 대학생활 속어) → P03, C05; related_optional_realization_and_boundary
+- **K063 꿀강·헬강** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K064 출튀·대출** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K065 벼락치기·밤샘** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K066 장학금·근로장학생** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K067 공모전·대외활동** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K068 인턴·현장실습** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K069 스펙·취업스터디** (3-2. 과제와 대학생활 속어) → C05; context_or_temporal_boundary_only
+- **K070 졸업사정** (3-2. 과제와 대학생활 속어) → C04, C05; context_or_temporal_boundary_only
+- **K071 세미나** (3-3. 전공별로 분위기를 바꾸는 요소) → A16, C03; related_optional_realization_and_boundary
+- **K072 랩미팅** (3-3. 전공별로 분위기를 바꾸는 요소) → C03; context_or_temporal_boundary_only
+- **K073 캡스톤디자인** (3-3. 전공별로 분위기를 바꾸는 요소) → C03; context_or_temporal_boundary_only
+- **K074 졸업논문·졸업작품·졸업전시** (3-3. 전공별로 분위기를 바꾸는 요소) → C03; context_or_temporal_boundary_only
+- **K075 핀업 / Pin-up review** (3-3. 전공별로 분위기를 바꾸는 요소) → C03; context_or_temporal_boundary_only
+- **K076 크리틱 / Critique** (3-3. 전공별로 분위기를 바꾸는 요소) → C03; context_or_temporal_boundary_only
+- **K077 포트폴리오** (3-3. 전공별로 분위기를 바꾸는 요소) → P04, C03; related_optional_realization_and_boundary
+- **K078 오디션·리허설·합주** (3-3. 전공별로 분위기를 바꾸는 요소) → S10, C03; related_optional_realization_and_boundary
+- **K079 논문 심사·디펜스 / Defense** (3-3. 전공별로 분위기를 바꾸는 요소) → C03; context_or_temporal_boundary_only
+- **K080 OT / Orientation** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K081 새터 / 새내기새로배움터** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K082 MT / Membership Training** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K083 개총·종총** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K084 뒤풀이** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K085 밥약** (4. 동아리·행사·친목 문화) → S05, C06; related_optional_realization_and_boundary
+- **K086 짝선·짝후 / 뻔선·뻔후** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K087 미팅** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K088 소개팅** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K089 과팅** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K090 자만추** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K091 중앙동아리·과동아리** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K092 연합동아리** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K093 학회·스터디** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K094 동아리박람회** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K095 대동제** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K096 축제 부스·주점** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K097 정기공연·정기전시** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K098 체육대회·과대항전·정기전** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K099 농활·봉사활동** (4. 동아리·행사·친목 문화) → C06; context_or_temporal_boundary_only
+- **K100 단톡방·익명 커뮤니티** (4. 동아리·행사·친목 문화) → P07, C17, C06; related_optional_realization_and_boundary
+- **K101 강의실·대형 강의실** (5. 공간과 생활 배경) → S01, F06, C02; related_optional_realization_and_boundary
+- **K102 과방** (5. 공간과 생활 배경) → S02, C02; related_optional_realization_and_boundary
+- **K103 과사** (5. 공간과 생활 배경) → S03, C02; related_optional_realization_and_boundary
+- **K104 동방** (5. 공간과 생활 배경) → S04, C02; related_optional_realization_and_boundary
+- **K105 학식·학생식당** (5. 공간과 생활 배경) → S05, C02; related_optional_realization_and_boundary
+- **K106 도서관·열람실** (5. 공간과 생활 배경) → S06, C02; related_optional_realization_and_boundary
+- **K107 스터디룸·세미나실** (5. 공간과 생활 배경) → S07, C02; related_optional_realization_and_boundary
+- **K108 실험실·랩·랩실** (5. 공간과 생활 배경) → S08, C02; related_optional_realization_and_boundary
+- **K109 설계실·작업실·스튜디오** (5. 공간과 생활 배경) → S09, F06, C02; related_optional_realization_and_boundary
+- **K110 연습실·합주실** (5. 공간과 생활 배경) → S10, C02; related_optional_realization_and_boundary
+- **K111 기숙사·생활관** (5. 공간과 생활 배경) → S11, C02; related_optional_realization_and_boundary
+- **K112 자취방·원룸** (5. 공간과 생활 배경) → S12, C02; related_optional_realization_and_boundary
+- **K113 하숙집·셰어하우스** (5. 공간과 생활 배경) → S12, C02; related_optional_realization_and_boundary
+- **K114 학생회관·학생회실** (5. 공간과 생활 배경) → S13, C02; related_optional_realization_and_boundary
+- **K115 잔디광장·중정·벤치** (5. 공간과 생활 배경) → S14, C02; related_optional_realization_and_boundary
+- **K116 정문·후문·쪽문·통학버스 정류장** (5. 공간과 생활 배경) → S14, C02; related_optional_realization_and_boundary
+- **K117 대학가·복사집·편의점** (5. 공간과 생활 배경) → C02; context_or_temporal_boundary_only
+- **K118 본관·교수연구실** (5. 공간과 생활 배경) → C02; context_or_temporal_boundary_only
+- **K119 과탑** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K120 모범생형** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K121 장학생형** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K122 생계형 대학생** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K123 인싸** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K124 아싸·아웃사이더** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K125 과여신·과남신·퀸카·킹카** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K126 너드 / Nerd** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K127 다정한 선배·멘토형** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K128 능글맞은 선배** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K129 직진 후배·연하 직진형** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K130 라이벌·수석 경쟁자** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K131 팀플 빌런** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K132 부잣집 학생·상속자형** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K133 예술 천재형** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K134 겉과 속이 다른 모범생** (6. 인물 유형과 캐릭터 표현) → C07; context_or_temporal_boundary_only
+- **K135 CC / Campus Couple** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K136 과CC** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K137 썸** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K138 짝사랑** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K139 쌍방삽질** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K140 선후배 로맨스** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K141 비밀연애·공개연애** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K142 친구에서 연인으로 / Friends to lovers** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K143 라이벌에서 연인으로 / Rivals to lovers** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K144 혐관·앙숙에서 연인으로 / Enemies to lovers** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K145 계약연애** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K146 가짜 연애 / Fake dating** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K147 강제 근접 / Forced proximity** (7. 연애·관계의 전개를 나타내는 용어) → C13, C08; context_or_temporal_boundary_only
+- **K148 룸메이트 로맨스** (7. 연애·관계의 전개를 나타내는 용어) → S11, C08; related_optional_realization_and_boundary
+- **K149 튜터·과외 로맨스** (7. 연애·관계의 전개를 나타내는 용어) → C08, C15; context_or_temporal_boundary_only
+- **K150 슬로 번 / Slow burn** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K151 상반된 성격의 끌림 / Opposites attract** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K152 그럼피×선샤인 / Grumpy × sunshine** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K153 재회물 / Second-chance romance** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K154 삼각관계·다각관계** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K155 하렘·역하렘** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K156 금지된 사랑 / Forbidden romance** (7. 연애·관계의 전개를 나타내는 용어) → C08, C15; context_or_temporal_boundary_only
+- **K157 장거리 연애** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K158 헤어진 CC** (7. 연애·관계의 전개를 나타내는 용어) → C08; context_or_temporal_boundary_only
+- **K159 침대가 하나뿐 / Only one bed** (7. 연애·관계의 전개를 나타내는 용어) → C13, C08; context_or_temporal_boundary_only
+- **K160 성인 캠퍼스물·19금 캠퍼스물** (8. 성인 관계·성적 표현·묘사 강도) → C01, C09; context_or_temporal_boundary_only
+- **K161 성적 긴장 / Sexual tension** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K162 스킨십** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K163 첫 경험·성적 탐색** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K164 훅업 / Hookup** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K165 원나잇 / One-night stand** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K166 FWB / Friends with benefits** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K167 시추에이션십 / Situationship** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K168 동거** (8. 성인 관계·성적 표현·묘사 강도) → C11, C09; context_or_temporal_boundary_only
+- **K169 비독점 관계 / Consensual non-monogamy** (8. 성인 관계·성적 표현·묘사 강도) → C11, C09; context_or_temporal_boundary_only
+- **K170 폴리아모리 / Polyamory** (8. 성인 관계·성적 표현·묘사 강도) → C11, C09; context_or_temporal_boundary_only
+- **K171 바람·양다리 / Infidelity** (8. 성인 관계·성적 표현·묘사 강도) → C11, C09; context_or_temporal_boundary_only
+- **K172 NTR·네토라레** (8. 성인 관계·성적 표현·묘사 강도) → C11, C09; context_or_temporal_boundary_only
+- **K173 스파이시·고수위 / Spicy, High heat** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K174 오픈 도어 / Open door** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K175 클로즈드 도어·페이드 투 블랙** (8. 성인 관계·성적 표현·묘사 강도) → C09; context_or_temporal_boundary_only
+- **K176 페티시 / Fetish** (8. 성인 관계·성적 표현·묘사 강도) → C12, C09; context_or_temporal_boundary_only
+- **K177 BDSM·D/s** (8. 성인 관계·성적 표현·묘사 강도) → C12, C09; context_or_temporal_boundary_only
+- **K178 스폰서·대가성 관계** (8. 성인 관계·성적 표현·묘사 강도) → C12, C09; context_or_temporal_boundary_only
+- **K179 커밍아웃·아우팅** (8. 성인 관계·성적 표현·묘사 강도) → C11, C09; context_or_temporal_boundary_only
+- **K180 계층 갈등** (9-1. 현실적인 갈등과 대학 조직의 문제) → C22; context_or_temporal_boundary_only
+- **K181 문화자본** (9-1. 현실적인 갈등과 대학 조직의 문제) → C22; context_or_temporal_boundary_only
+- **K182 학벌주의·학력주의** (9-1. 현실적인 갈등과 대학 조직의 문제) → C22; context_or_temporal_boundary_only
+- **K183 장학금·기회 경쟁** (9-1. 현실적인 갈등과 대학 조직의 문제) → C22; context_or_temporal_boundary_only
+- **K184 가족의 기대와 통제** (9-1. 현실적인 갈등과 대학 조직의 문제) → C22; context_or_temporal_boundary_only
+- **K185 학업 소진·번아웃 소재** (9-1. 현실적인 갈등과 대학 조직의 문제) → C18, C22; context_or_temporal_boundary_only
+- **K186 가면이 벗겨질 것 같은 불안 / Impostor feelings** (9-1. 현실적인 갈등과 대학 조직의 문제) → C18, C22; context_or_temporal_boundary_only
+- **K187 학생회 정치·회계 비리** (9-1. 현실적인 갈등과 대학 조직의 문제) → C22; context_or_temporal_boundary_only
+- **K188 연구실 갑질** (9-1. 현실적인 갈등과 대학 조직의 문제) → C14, C22; context_or_temporal_boundary_only
+- **K189 표절 / Plagiarism** (9-1. 현실적인 갈등과 대학 조직의 문제) → C14, C22; context_or_temporal_boundary_only
+- **K190 데이터 위조·변조** (9-1. 현실적인 갈등과 대학 조직의 문제) → C14, C22; context_or_temporal_boundary_only
+- **K191 부당한 저자 표시** (9-1. 현실적인 갈등과 대학 조직의 문제) → C14, C22; context_or_temporal_boundary_only
+- **K192 내부고발** (9-1. 현실적인 갈등과 대학 조직의 문제) → C14, C22; context_or_temporal_boundary_only
+- **K193 학생운동·대자보·학내 시위** (9-1. 현실적인 갈등과 대학 조직의 문제) → S13, C22; related_optional_realization_and_boundary
+- **K194 성적 동의 / Consent** (9-2. 성적 강압과 대인 폭력) → C10; context_or_temporal_boundary_only
+- **K195 권력 불균형 / Power imbalance** (9-2. 성적 강압과 대인 폭력) → C15, C10; context_or_temporal_boundary_only
+- **K196 성희롱** (9-2. 성적 강압과 대인 폭력) → C10; context_or_temporal_boundary_only
+- **K197 성폭력·강간·성적 강압** (9-2. 성적 강압과 대인 폭력) → C10; context_or_temporal_boundary_only
+- **K198 약물 이용 성폭력** (9-2. 성적 강압과 대인 폭력) → C10; context_or_temporal_boundary_only
+- **K199 이미지 기반 성적 학대** (9-2. 성적 강압과 대인 폭력) → C10; context_or_temporal_boundary_only
+- **K200 스토킹** (9-2. 성적 강압과 대인 폭력) → C17, C10; context_or_temporal_boundary_only
+- **K201 교제폭력** (9-2. 성적 강압과 대인 폭력) → C17, C10; context_or_temporal_boundary_only
+- **K202 가스라이팅** (9-2. 성적 강압과 대인 폭력) → C17, C10; context_or_temporal_boundary_only
+- **K203 따돌림·사이버불링** (9-2. 성적 강압과 대인 폭력) → P07, A39, C17, C10; related_optional_realization_and_boundary
+- **K204 2차 가해·보복** (9-2. 성적 강압과 대인 폭력) → C16, C10; context_or_temporal_boundary_only
+- **K205 헤이징 / Hazing** (9-2. 성적 강압과 대인 폭력) → C16, C10; context_or_temporal_boundary_only
+- **K206 군기·얼차려·집단 기합** (9-2. 성적 강압과 대인 폭력) → C16, C10; context_or_temporal_boundary_only
+- **K207 음주 강요** (9-2. 성적 강압과 대인 폭력) → C16, C10; context_or_temporal_boundary_only
+- **K208 집단폭행·린치** (9-2. 성적 강압과 대인 폭력) → C16, C10; context_or_temporal_boundary_only
+- **K209 실종·살인·사건 은폐** (9-3. 스릴러·호러로 확장하는 요소) → C19; context_or_temporal_boundary_only
+- **K210 비밀결사·폐쇄적 학회** (9-3. 스릴러·호러로 확장하는 요소) → C19; context_or_temporal_boundary_only
+- **K211 학내 괴담·기숙사 괴담** (9-3. 스릴러·호러로 확장하는 요소) → C19; context_or_temporal_boundary_only
+- **K212 오컬트 동아리·금지된 연구** (9-3. 스릴러·호러로 확장하는 요소) → C19; context_or_temporal_boundary_only
+- **K213 캠퍼스 슬래셔** (9-3. 스릴러·호러로 확장하는 요소) → C19; context_or_temporal_boundary_only
+- **K214 고어·스플래터** (9-3. 스릴러·호러로 확장하는 요소) → C19; context_or_temporal_boundary_only
+- **K215 피폐물** (9-3. 스릴러·호러로 확장하는 요소) → C18, C19; context_or_temporal_boundary_only
+- **K216 자해·자살 위기·회복 서사** (9-3. 스릴러·호러로 확장하는 요소) → C18, C19; context_or_temporal_boundary_only
+- **K217 생존·봉쇄 캠퍼스** (9-3. 스릴러·호러로 확장하는 요소) → C19; context_or_temporal_boundary_only
+- **K218 Freshman·Sophomore·Junior·Senior** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K219 Freshers** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K220 Fraternity·Sorority** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K221 Greek life** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K222 Chapter** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K223 Rush·Recruitment** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K224 Bid** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K225 Pledge·New member** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K226 RA / Resident Assistant** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K227 Varsity** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → W02, C20; related_optional_realization_and_boundary
+- **K228 Homecoming** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K229 Formal** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C20; context_or_temporal_boundary_only
+- **K230 Quad / Quadrangle** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → S14, C20; related_optional_realization_and_boundary
+- **K231 Office hours** (10. 해외 캠퍼스물에서 알아두면 좋은 용어) → C03, C20; context_or_temporal_boundary_only
+- **K232 캠퍼스룩 / Campus look** (11. 캠퍼스물에 어울리는 패션·미학) → C21; context_or_temporal_boundary_only
+- **K233 프레피 / Preppy** (11. 캠퍼스물에 어울리는 패션·미학) → W06, C21; related_optional_realization_and_boundary
+- **K234 아이비 스타일 / Ivy style** (11. 캠퍼스물에 어울리는 패션·미학) → W06, C21; related_optional_realization_and_boundary
+- **K235 칼리지에이트 / Collegiate** (11. 캠퍼스물에 어울리는 패션·미학) → C21; context_or_temporal_boundary_only
+- **K236 바시티 스타일 / Varsity style** (11. 캠퍼스물에 어울리는 패션·미학) → W02, C20, C21; related_optional_realization_and_boundary
+- **K237 다크 아카데미아** (11. 캠퍼스물에 어울리는 패션·미학) → C01, C21; context_or_temporal_boundary_only
+- **K238 라이트 아카데미아** (11. 캠퍼스물에 어울리는 패션·미학) → W30, C21; related_optional_realization_and_boundary
+- **K239 긱 시크 / Geek chic** (11. 캠퍼스물에 어울리는 패션·미학) → W30, C21; related_optional_realization_and_boundary
+- **K240 놈코어 / Normcore** (11. 캠퍼스물에 어울리는 패션·미학) → W10, C21; related_optional_realization_and_boundary
+- **K241 애슬레저 / Athleisure** (11. 캠퍼스물에 어울리는 패션·미학) → W10, C21; related_optional_realization_and_boundary
+- **K242 스트리트웨어 / Streetwear** (11. 캠퍼스물에 어울리는 패션·미학) → W10, C21; related_optional_realization_and_boundary
+- **K243 코케트 / Coquette** (11. 캠퍼스물에 어울리는 패션·미학) → W30, C21; related_optional_realization_and_boundary
+- **K244 발레코어 / Balletcore** (11. 캠퍼스물에 어울리는 패션·미학) → W30, C21; related_optional_realization_and_boundary
+- **K245 스마트 캐주얼 / Smart casual** (11. 캠퍼스물에 어울리는 패션·미학) → W26, C21; related_optional_realization_and_boundary
+- **K246 과잠** (12-1. 일상복과 대학을 드러내는 옷) → W01, C21; related_optional_realization_and_boundary
+- **K247 바시티 재킷·레터맨 재킷** (12-1. 일상복과 대학을 드러내는 옷) → W01, C21; related_optional_realization_and_boundary
+- **K248 레터 스웨터** (12-1. 일상복과 대학을 드러내는 옷) → W02, C21; related_optional_realization_and_boundary
+- **K249 후디·집업 후디** (12-1. 일상복과 대학을 드러내는 옷) → W03, C21; related_optional_realization_and_boundary
+- **K250 크루넥 스웨트셔츠·맨투맨** (12-1. 일상복과 대학을 드러내는 옷) → W03, C21; related_optional_realization_and_boundary
+- **K251 옥스퍼드 버튼다운 셔츠 / OCBD** (12-1. 일상복과 대학을 드러내는 옷) → W04, C21; related_optional_realization_and_boundary
+- **K252 폴로 셔츠·럭비 셔츠** (12-1. 일상복과 대학을 드러내는 옷) → W05, C21; related_optional_realization_and_boundary
+- **K253 블레이저·트위드 재킷** (12-1. 일상복과 대학을 드러내는 옷) → W06, C21; related_optional_realization_and_boundary
+- **K254 카디건·니트 베스트** (12-1. 일상복과 대학을 드러내는 옷) → W07, C21; related_optional_realization_and_boundary
+- **K255 케이블 니트·아가일 니트** (12-1. 일상복과 대학을 드러내는 옷) → W07, C21; related_optional_realization_and_boundary
+- **K256 치노·슬랙스** (12-1. 일상복과 대학을 드러내는 옷) → W08, C21; related_optional_realization_and_boundary
+- **K257 스트레이트·와이드 데님** (12-1. 일상복과 대학을 드러내는 옷) → W08, C21; related_optional_realization_and_boundary
+- **K258 플리츠 스커트·테니스 스커트** (12-1. 일상복과 대학을 드러내는 옷) → W09, C21; related_optional_realization_and_boundary
+- **K259 미니·미디·맥시** (12-1. 일상복과 대학을 드러내는 옷) → W09, C21; related_optional_realization_and_boundary
+- **K260 오버사이즈·레이어링** (12-1. 일상복과 대학을 드러내는 옷) → W10, C21; related_optional_realization_and_boundary
+- **K261 로퍼·메리제인** (12-1. 일상복과 대학을 드러내는 옷) → W22, C21; related_optional_realization_and_boundary
+- **K262 스니커즈·캔버스화** (12-1. 일상복과 대학을 드러내는 옷) → W22, C21; related_optional_realization_and_boundary
+- **K263 볼캡·비니** (12-1. 일상복과 대학을 드러내는 옷) → C21; context_or_temporal_boundary_only
+- **K264 크롭트 톱·크롭톱** (12-2. 축제·데이트·성인 파티 장면의 의상) → W11, C09; related_optional_realization_and_boundary
+- **K265 베이비 티 / Baby tee** (12-2. 축제·데이트·성인 파티 장면의 의상) → W12, C09; related_optional_realization_and_boundary
+- **K266 오프숄더** (12-2. 축제·데이트·성인 파티 장면의 의상) → W13, C09; related_optional_realization_and_boundary
+- **K267 홀터넥** (12-2. 축제·데이트·성인 파티 장면의 의상) → W14, C09; related_optional_realization_and_boundary
+- **K268 시어·시스루** (12-2. 축제·데이트·성인 파티 장면의 의상) → W15, C09; related_optional_realization_and_boundary
+- **K269 레이스** (12-2. 축제·데이트·성인 파티 장면의 의상) → W16, C09; related_optional_realization_and_boundary
+- **K270 캐미솔** (12-2. 축제·데이트·성인 파티 장면의 의상) → W17, C09; related_optional_realization_and_boundary
+- **K271 슬립 드레스** (12-2. 축제·데이트·성인 파티 장면의 의상) → W18, C09; related_optional_realization_and_boundary
+- **K272 뷔스티에** (12-2. 축제·데이트·성인 파티 장면의 의상) → W19, C09; related_optional_realization_and_boundary
+- **K273 보디콘 / Bodycon** (12-2. 축제·데이트·성인 파티 장면의 의상) → W20, C09; related_optional_realization_and_boundary
+- **K274 타이츠·스타킹** (12-2. 축제·데이트·성인 파티 장면의 의상) → W21, C09; related_optional_realization_and_boundary
+- **K275 니삭스·오버니** (12-2. 축제·데이트·성인 파티 장면의 의상) → W21, C09; related_optional_realization_and_boundary
+- **K276 피시넷·망사** (12-2. 축제·데이트·성인 파티 장면의 의상) → W16, C09; related_optional_realization_and_boundary
+- **K277 란제리 룩** (12-2. 축제·데이트·성인 파티 장면의 의상) → W18, C09; related_optional_realization_and_boundary
+- **K278 실험복·보호안경·장갑** (12-3. 전공·활동·의례에 따른 복식) → W23, C03; related_optional_realization_and_boundary
+- **K279 스크럽 / Scrubs** (12-3. 전공·활동·의례에 따른 복식) → W24, C03; related_optional_realization_and_boundary
+- **K280 작업 앞치마·커버올** (12-3. 전공·활동·의례에 따른 복식) → W24, C03; related_optional_realization_and_boundary
+- **K281 트레이닝웨어·팀 유니폼** (12-3. 전공·활동·의례에 따른 복식) → W25, C03; related_optional_realization_and_boundary
+- **K282 응원복·무대 의상** (12-3. 전공·활동·의례에 따른 복식) → W25, C03; related_optional_realization_and_boundary
+- **K283 발표복·면접복** (12-3. 전공·활동·의례에 따른 복식) → W26, C03; related_optional_realization_and_boundary
+- **K284 학위복·아카데믹 가운** (12-3. 전공·활동·의례에 따른 복식) → W27, C03; related_optional_realization_and_boundary
+- **K285 학위 후드·학사모** (12-3. 전공·활동·의례에 따른 복식) → W27, C03; related_optional_realization_and_boundary
+- **K286 서브 푸스크 / Sub fusc** (12-3. 전공·활동·의례에 따른 복식) → W28, C03; related_optional_realization_and_boundary
+- **K287 라운지웨어·파자마** (12-3. 전공·활동·의례에 따른 복식) → W29, C03; related_optional_realization_and_boundary
+- **K288 포니테일·하프업** (13. 헤어·메이크업·소품) → P08, C02; related_optional_realization_and_boundary
+- **K289 메시 번 / Messy bun** (13. 헤어·메이크업·소품) → P08, C02; related_optional_realization_and_boundary
+- **K290 베드헤드·언던 헤어** (13. 헤어·메이크업·소품) → W29, C02; related_optional_realization_and_boundary
+- **K291 내추럴 메이크업** (13. 헤어·메이크업·소품) → P08, C02; related_optional_realization_and_boundary
+- **K292 다크서클·번진 메이크업** (13. 헤어·메이크업·소품) → P08, C02; related_optional_realization_and_boundary
+- **K293 뿔테·메탈테·반무테 안경** (13. 헤어·메이크업·소품) → C02; context_or_temporal_boundary_only
+- **K294 학생증·랜야드 / Lanyard** (13. 헤어·메이크업·소품) → P01, C02; related_optional_realization_and_boundary
+- **K295 백팩·토트백·메신저백** (13. 헤어·메이크업·소품) → P02, C02; related_optional_realization_and_boundary
+- **K296 전공책·제본 자료·포스트잇** (13. 헤어·메이크업·소품) → P03, C02; related_optional_realization_and_boundary
+- **K297 노트북·태블릿·헤드폰** (13. 헤어·메이크업·소품) → C02; context_or_temporal_boundary_only
+- **K298 텀블러·테이크아웃 컵·야식** (13. 헤어·메이크업·소품) → P06, C02; related_optional_realization_and_boundary
+- **K299 도면통·포트폴리오 케이스** (13. 헤어·메이크업·소품) → P04, C02; related_optional_realization_and_boundary
+- **K300 악기 케이스·악보·대본** (13. 헤어·메이크업·소품) → P05, C02; related_optional_realization_and_boundary
+- **K301 커플룩·시밀러 룩** (13. 헤어·메이크업·소품) → P09, C02; related_optional_realization_and_boundary
+- **K302 빌린 과잠·후디** (13. 헤어·메이크업·소품) → W03, P09, A23, C02; related_optional_realization_and_boundary
+- **K303 가방끈을 잡고 걷기** (14-1. 공부·통학·휴식 포즈) → A01, C05; related_optional_realization_and_boundary
+- **K304 달리다가 뒤돌아보기** (14-1. 공부·통학·휴식 포즈) → A02, C05; related_optional_realization_and_boundary
+- **K305 턱 괴고 강의 듣기** (14-1. 공부·통학·휴식 포즈) → A03, C05; related_optional_realization_and_boundary
+- **K306 필기하며 옆눈질하기** (14-1. 공부·통학·휴식 포즈) → A04, C05; related_optional_realization_and_boundary
+- **K307 책상에 엎드리기** (14-1. 공부·통학·휴식 포즈) → A05, C05; related_optional_realization_and_boundary
+- **K308 기지개·목과 어깨 풀기** (14-1. 공부·통학·휴식 포즈) → A06, C05; related_optional_realization_and_boundary
+- **K309 서가의 책에 손 뻗기** (14-1. 공부·통학·휴식 포즈) → A07, C05; related_optional_realization_and_boundary
+- **K310 책을 가슴 앞에 안기** (14-1. 공부·통학·휴식 포즈) → A08, C05; related_optional_realization_and_boundary
+- **K311 잔디밭에 앉거나 눕기** (14-1. 공부·통학·휴식 포즈) → A09, C05; related_optional_realization_and_boundary
+- **K312 벤치 끝에 걸터앉기** (14-1. 공부·통학·휴식 포즈) → A10, C05; related_optional_realization_and_boundary
+- **K313 이어폰·헤드폰 한쪽 벗기** (14-1. 공부·통학·휴식 포즈) → A11, C05; related_optional_realization_and_boundary
+- **K314 휴대전화를 보다가 고개 들기** (14-1. 공부·통학·휴식 포즈) → A12, C05; related_optional_realization_and_boundary
+- **K315 한 노트북 화면을 함께 보기** (14-2. 협업·발표·전공 활동 포즈) → A13, C03; related_optional_realization_and_boundary
+- **K316 도면 위로 상체 기울이기** (14-2. 협업·발표·전공 활동 포즈) → A14, C03; related_optional_realization_and_boundary
+- **K317 작업물의 한 부분을 손가락으로 짚기** (14-2. 협업·발표·전공 활동 포즈) → A15, C03; related_optional_realization_and_boundary
+- **K318 화이트보드 앞에서 설명하기** (14-2. 협업·발표·전공 활동 포즈) → A16, C03; related_optional_realization_and_boundary
+- **K319 열린 손바닥으로 발표하기** (14-2. 협업·발표·전공 활동 포즈) → A17, C03; related_optional_realization_and_boundary
+- **K320 악보·대본 함께 들여다보기** (14-2. 협업·발표·전공 활동 포즈) → P05, A18, C03; related_optional_realization_and_boundary
+- **K321 바닥에 앉아 모형·소품 만들기** (14-2. 협업·발표·전공 활동 포즈) → A19, C03; related_optional_realization_and_boundary
+- **K322 무대 뒤에서 차례 기다리기** (14-2. 협업·발표·전공 활동 포즈) → A20, C03; related_optional_realization_and_boundary
+- **K323 졸업사진에서 가운·학사모 정리하기** (14-2. 협업·발표·전공 활동 포즈) → A21, C03; related_optional_realization_and_boundary
+- **K324 우산 함께 쓰기** (14-3. 성인 로맨스와 친밀감의 포즈) → A22, C08; related_optional_realization_and_boundary
+- **K325 겉옷을 어깨에 걸쳐 주기** (14-3. 성인 로맨스와 친밀감의 포즈) → A23, C08; related_optional_realization_and_boundary
+- **K326 컵·노트·필기구 건네기** (14-3. 성인 로맨스와 친밀감의 포즈) → A24, C08; related_optional_realization_and_boundary
+- **K327 손끝이 닿기·손잡기·깍지 끼기** (14-3. 성인 로맨스와 친밀감의 포즈) → A25, C08; related_optional_realization_and_boundary
+- **K328 어깨에 기대기** (14-3. 성인 로맨스와 친밀감의 포즈) → A26, C08; related_optional_realization_and_boundary
+- **K329 무릎베개** (14-3. 성인 로맨스와 친밀감의 포즈) → A27, C08; related_optional_realization_and_boundary
+- **K330 이마 맞대기** (14-3. 성인 로맨스와 친밀감의 포즈) → A28, C08; related_optional_realization_and_boundary
+- **K331 백허그** (14-3. 성인 로맨스와 친밀감의 포즈) → A29, C08; related_optional_realization_and_boundary
+- **K332 무릎에 앉기** (14-3. 성인 로맨스와 친밀감의 포즈) → A30, C08; related_optional_realization_and_boundary
+- **K333 입맞춤·키스 직전의 멈춤** (14-3. 성인 로맨스와 친밀감의 포즈) → A31, C08; related_optional_realization_and_boundary
+- **K334 벽짚기·벽쿵·카베돈 / Kabedon** (14-3. 성인 로맨스와 친밀감의 포즈) → A32, C08; related_optional_realization_and_boundary
+- **K335 멀어지다 돌아보기** (14-3. 성인 로맨스와 친밀감의 포즈) → A33, C08; related_optional_realization_and_boundary
+- **K336 팔짱·소품을 몸 앞에 두기** (14-4. 갈등·위압·사건 이후의 자세) → A34, C16; related_optional_realization_and_boundary
+- **K337 책상 양편에서 대치하기** (14-4. 갈등·위압·사건 이후의 자세) → A35, C16; related_optional_realization_and_boundary
+- **K338 앉은 사람을 서서 내려다보기** (14-4. 갈등·위압·사건 이후의 자세) → A36, C16; related_optional_realization_and_boundary
+- **K339 출입문을 막아 서기** (14-4. 갈등·위압·사건 이후의 자세) → A37, C16; related_optional_realization_and_boundary
+- **K340 손목을 붙잡아 멈추게 하기** (14-4. 갈등·위압·사건 이후의 자세) → A38, C16; related_optional_realization_and_boundary
+- **K341 한 사람을 여럿이 둘러싸기** (14-4. 갈등·위압·사건 이후의 자세) → A39, C16; related_optional_realization_and_boundary
+- **K342 몸을 움츠리거나 팔로 보호하기** (14-4. 갈등·위압·사건 이후의 자세) → A40, C16; related_optional_realization_and_boundary
+- **K343 떨어진 물건을 혼자 줍기** (14-4. 갈등·위압·사건 이후의 자세) → A41, C16; related_optional_realization_and_boundary
+- **K344 멍·붕대·찢어진 소매·피 묻은 옷** (14-4. 갈등·위압·사건 이후의 자세) → A42, C16; related_optional_realization_and_boundary
+- **K345 설정숏 / Establishing shot** (15. 구도·조명·공간 연출 용어) → F01, C01; related_optional_realization_and_boundary
+- **K346 투숏 / Two-shot** (15. 구도·조명·공간 연출 용어) → F02, C01; related_optional_realization_and_boundary
+- **K347 오버더숄더 / Over-the-shoulder** (15. 구도·조명·공간 연출 용어) → F03, C01; related_optional_realization_and_boundary
+- **K348 인서트 / Insert shot** (15. 구도·조명·공간 연출 용어) → F04, C01; related_optional_realization_and_boundary
+- **K349 프레임 속 프레임** (15. 구도·조명·공간 연출 용어) → F05, C01; related_optional_realization_and_boundary
+- **K350 네거티브 스페이스 / Negative space** (15. 구도·조명·공간 연출 용어) → F05, C01; related_optional_realization_and_boundary
+- **K351 선택적 초점·얕은 심도** (15. 구도·조명·공간 연출 용어) → F04, C01; related_optional_realization_and_boundary
+- **K352 시선 연결** (15. 구도·조명·공간 연출 용어) → F07, C01; context_or_temporal_boundary_only
+- **K353 반복 구도** (15. 구도·조명·공간 연출 용어) → F07, C01; context_or_temporal_boundary_only
+- **K354 계절 대비** (15. 구도·조명·공간 연출 용어) → F07, C01; context_or_temporal_boundary_only
+- **K355 공간별 조명 대비** (15. 구도·조명·공간 연출 용어) → F06, C01; related_optional_realization_and_boundary
+- **K356 생활 흔적을 이용한 연출** (15. 구도·조명·공간 연출 용어) → P06, C01; related_optional_realization_and_boundary
