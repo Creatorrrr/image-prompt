@@ -27,13 +27,18 @@ are not established by a label, costume or generic institutional satire.
 
 A task-bearing conversation title must not automatically become the entire
 visual topic. The explicit tested release used an exact topical substring with
-the complete prior user message retained for provenance. The regression and
-its runtime-dependent source snapshot remain in the research evidence. That
-newer kernel and independent unpublished neutral-authoring code are not part of
-this data-only publication; the selected runtime configuration is preserved.
+the complete prior user message retained for provenance. The regression and its original snapshot remain in the research evidence.
+The upstream requester-query implementation is preserved in this merge; the
+canonical topic regression follows the existing explicit sealed-kernel test
+convention. The selected runtime configuration is preserved.
 
 The [published originals](../../../docs/research-evidence/photo-prompt/marine-literature-20261024/publication-evidence/published-originals.json)
 map six byte-identical PNG copies to the earlier original paths and hashes.
 `partial_is_fail`, `UNOBSERVABLE_NOT_PASS` and the distinction between source
 registration, installed exposure, authored use, exact transport, original
 pixels and requester acceptance continue to apply.
+
+Post-upstream publication: requester-query source fixes from main are preserved.
+The canonical topic regression uses the same explicit sealed-kernel convention
+as the upstream query/ownership tests; actual pixels remain the previous three
+recorded image calls. No source-tree facade execution is claimed.
