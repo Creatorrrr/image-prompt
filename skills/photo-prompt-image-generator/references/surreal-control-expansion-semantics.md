@@ -1,0 +1,15 @@
+# Surreal control: observable relationships and competing interpretations
+
+Post-core maintenance/reference material. Do not read this file to supply initial requester meaning or baseline inspiration before independent core freeze.
+
+The 2026-10-24 expansion registers 19 complete optional authored arrangements, 16 excluded diagnostics, 38 bindings, 6 references to unchanged existing sources, and one held proposal. The semantic registry is `assets/photo_surreal_control_expansion_semantics_20261024.json`; source candidates and bindings are in the corresponding `photo_candidate_surreal_control_expansion*` modules declared in the corpus manifest. Registry mechanisms, discovery expressions, graphs and citations are review metadata, not typed native owner facts, guard permission or automatic obligations.
+
+Read the entire candidate, including English/Korean propositions, conditions and effects. The same-frame comparison, ownership, contact, continuous transition and normal reference in each proposition remain part of its complete meaning. A short motif extracted for inspiration is not whole-source fulfillment. Review claim limits and normal competing explanations in `research_semantics`; a hidden, cropped or unreadable endpoint does not pass. Preserve `partial_is_fail` and `UNOBSERVABLE_NOT_PASS` in evaluation.
+
+The new arrangements cover selective reflection, stone-looking softness, unusual object-directed care, internal cup topology, an indoor cloud, sky/street illumination discrepancy, load-looking balance, shared-depth scale, wall-as-floor orientation, umbrella/shadow shape discrepancy, concavity and its separate convex counterpart, sewn architecture, printed/physical medium transition, comb/root continuity, wet/dry contrast, bounded frost, momentary unsupported-looking balance, a liquid arch and canvas/background correspondence.
+
+A still image does not verify actual hardness, mass, temperature, absence of hidden support, sustained levitation, autonomous action, chronology, emotion, identity, supernatural causation or physical impossibility. Ordinary multiple shadows, tape peeling, installations, perspective and exposure remain competing explanations. The lifted road-stripe proposal C07 is held and has no positive source/binding. Diagnostics D01–D16 are excluded from positive retrieval.
+
+`surreal=0` adds no agent treatment and preserves explicitly requested fantasy/surreal meaning. Values 1–3 describe artistic prominence of coherent reality departure, not a candidate ID, a required number of strange objects, a measured image property, or a fixed source level. No control-name or intensity aliases were added. An ordinary visually plausible relationship may create poetic/perceptual strangeness; that does not prove a broken physical law.
+
+Full evidence and implementation qualification: `docs/research-evidence/photo-prompt/surreal-control-expansion-20261024/`. Source pages support principles or counterexamples within recorded access limits; they do not attest the exact newly authored geometry. Image tests are per-render evidence, never automatic corpus-wide native approval.

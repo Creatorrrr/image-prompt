@@ -1,0 +1,36 @@
+{
+  "schema": "photo-surreal-control-test/v1",
+  "registered_before_invocation": true,
+  "control_under_test": {
+    "surreal": 3,
+    "others": "saved defaults retained"
+  },
+  "criteria": [
+    {
+      "id": "surreal_dominance",
+      "question": "Does one impossible standing/support relationship lead the first-glance impression of the whole photograph rather than appear as an incidental prop?",
+      "pass_rule": "The inverted person, overhead contact and upright-world contrast read together at thumbnail and native scale."
+    },
+    {
+      "id": "support_boundary",
+      "question": "Are both shoe soles visibly attached to overhead masonry with a coherent continuous human body below them?",
+      "pass_rule": "Both contact boundaries and connected body must be assessable at native scale; a nearby shoe or inferred support is insufficient."
+    },
+    {
+      "id": "upright_world_contrast",
+      "question": "Do lamppost, curb or building markers establish the normal street direction separately from the inverted body?",
+      "pass_rule": "At least two clear ordinary-world direction cues coexist with the overhead figure in one image."
+    },
+    {
+      "id": "reference_appearance",
+      "question": "Do the supplied portrait visible face proportions, dark eyes, short dark bob and wispy fringe survive?",
+      "pass_rule": "Hair and face remain visibly comparable at native scale; similarity does not establish real identity or age."
+    }
+  ],
+  "observability_policy": {
+    "partial": "fail",
+    "unobservable": "fail"
+  },
+  "strict_qualification": "all test criteria plus every managed hard gate pass; user judgment remains pending",
+  "baseline_image_available": false
+}

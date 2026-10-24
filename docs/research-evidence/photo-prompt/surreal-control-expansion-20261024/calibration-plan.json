@@ -1,0 +1,631 @@
+{
+  "schema": "surreal-control-calibration-research/v1",
+  "groups": [
+    {
+      "id": "I01",
+      "title_ko": "현관 화분 돌봄: 반사에서만 피어난 꽃",
+      "core_user_request_ko": "평범한 집 현관에서 성인이 작은 화분을 돌보는 온화한 사진.",
+      "user_invariants": [
+        "같은 성인이 같은 화분에 물을 주며 돌보는 행동을 유지한다.",
+        "장소는 생활 흔적이 있는 평범한 집 현관이고, 정서는 온화하다.",
+        "화분 자체의 현실 크기와 성인의 신체 크기를 유지한다.",
+        "작은 거울은 모든 단계의 기본 공간에 존재하는 정상적인 소품이다."
+      ],
+      "single_added_relation_ko": "실제 화분은 꽃 없는 잎과 줄기만 보이지만, 같은 화분의 거울상에는 흰 꽃 한 송이가 보인다. 꽃 이외의 화분 모양, 잎 배치와 주변 반사는 서로 대응한다.",
+      "fixed_across_1_2_3": [
+        "추가 관계는 실제 식물과 거울상 사이의 선택적인 꽃 유무 불일치 하나뿐이다.",
+        "흰 꽃은 한 송이이며 크기, 꽃잎 형태와 줄기에 붙은 위치를 고정한다.",
+        "실제 식물에는 꽃이 없고, 잎과 줄기 및 화분의 상대 크기는 같다.",
+        "같은 성인의 물주기 행동, 주간 조명, 장소와 온화한 정서를 유지한다.",
+        "단계에 따라 카메라 위치, 화면 내 배치와 시선의 우선순위만 조절한다. 꽃이나 거울의 수를 늘리지 않는다."
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "평범한 집 현관에서 성인이 벤치 위 작은 화분에 물을 준다. 화분 옆 거울에는 실제 식물과 같은 꽃 없는 잎과 줄기가 반영된다. 인물의 편안한 자세와 일상적인 돌봄이 중심인 사진.",
+          "scene_en": "An adult waters a small potted plant on a bench in an ordinary home entryway. The nearby mirror reflects the same flowerless leaves and stems as the real plant. The photograph centers on a relaxed posture and an everyday act of care.",
+          "expected_main_impression": "평범하고 온화한 화분 돌봄.",
+          "observation_criteria": [
+            "실제 화분과 거울상이 정상적으로 대응한다.",
+            "사용자가 요구한 장소와 돌봄 행동을 유지한다.",
+            "초현실 효과를 만들기 위한 꽃이나 반사 불일치를 추가하지 않는다."
+          ],
+          "adjacent_ambiguity": [
+            "거울의 각도 때문에 가려진 잎이 다르게 보이는 정상 현상과 생성된 반사 오류를 구별해야 한다.",
+            "사용자가 원래 요청하지 않은 꽃을 실제 화분에도 추가하면 비교의 기준 장면이 달라진다."
+          ]
+        },
+        {
+          "level": 1,
+          "scene_ko": "같은 현관에서 성인이 같은 화분에 물을 주는 모습을 넉넉한 구도로 담는다. 인물의 자세와 돌봄 행동이 먼저 읽힌다. 화면 옆쪽 거울에는 실제 식물에 없는 흰 꽃 한 송이가 작지만 판독 가능한 크기로 보이고, 꽃 이외의 화분과 잎은 실제 모습과 대응한다.",
+          "scene_en": "In the same entryway, an adult waters the same potted plant in a spacious composition led by the person's relaxed act of care. A mirror near the side of the frame shows one small but legible white flower absent from the real plant; the pot and leaves otherwise correspond to their real counterparts.",
+          "expected_main_impression": "익숙한 돌봄 장면에 서정적인 낯섦이 보조적으로 스며듦.",
+          "observation_criteria": [
+            "첫 자유 묘사에서는 화분 돌봄이 주된 내용으로 나오는지 확인한다.",
+            "화면을 살펴보면 설명 없이 실제 식물과 반사 속 꽃의 차이를 찾을 수 있어야 한다.",
+            "불일치를 알아본 뒤에도 인물의 일상이 사진의 중심으로 남는지 평가한다."
+          ],
+          "adjacent_ambiguity": [
+            "꽃이 너무 작거나 흐려 읽히지 않으면 은근한 성공이 아니라 관계 구현 실패일 수 있다.",
+            "작은 꽃이라도 관찰자가 장면의 핵심 상징으로 읽으면 2 또는 3으로 평가할 수 있다."
+          ]
+        },
+        {
+          "level": 2,
+          "scene_ko": "같은 성인의 물주기와 실제 화분, 옆 거울을 함께 비교하기 쉬운 사선 구도로 촬영한다. 실제 줄기에는 꽃이 없고, 대응되는 거울상에는 같은 위치에 흰 꽃 한 송이가 분명히 보인다. 돌봄 행동과 반사 불일치가 모두 쉽게 읽히며 현관의 일상적인 크기와 조명은 유지된다.",
+          "scene_en": "An oblique view makes the adult watering the plant, the real pot, and the nearby mirror easy to compare. The real stem has no flower, while its corresponding reflection clearly bears one white flower. Both the act of care and the reflection mismatch remain readily legible within the ordinary scale and lighting of the entryway.",
+          "expected_main_impression": "화분 돌봄과 분명한 반사 불일치가 함께 읽히는 온화한 초현실 사진.",
+          "observation_criteria": [
+            "관찰자가 꽃이 거울 속에만 있다는 관계를 독립적으로 설명할 수 있는지 확인한다.",
+            "실제 화분과 반사 속 화분이 같은 대상이라는 연결이 명확해야 한다.",
+            "돌봄 행동이 사라지지 않으면서 초현실성이 명시적인 특징이 되는지 평가한다."
+          ],
+          "adjacent_ambiguity": [
+            "꽃과 인물 사이의 상징적 관계가 강하게 읽히면 이미 3에 가까울 수 있다.",
+            "거울과 실제 식물의 소유 관계가 불분명하면 별개의 화분 두 개로 읽힐 수 있다."
+          ]
+        },
+        {
+          "level": 3,
+          "scene_ko": "같은 현관과 같은 물주기 장면에서 실제 식물과 꽃이 있는 거울상의 대조가 구도를 이끌도록 촬영한다. 성인의 손과 물주기, 실제 꽃 없는 줄기, 대응되는 거울 속 흰 꽃을 한 프레임에서 유지한다. 꽃은 더 커지거나 늘어나지 않으며, 돌봄이 반사 속 다른 가능성과 만나는 관계가 사진의 주된 인상을 만든다.",
+          "scene_en": "In the same entryway and watering scene, the composition is led by the contrast between the real flowerless plant and its flowering reflection. Keep the adult's hands and watering action, the real bare stem, and the corresponding white flower in the mirror visible together. The flower does not grow or multiply; the relationship between everyday care and a different reflected possibility leads the photograph.",
+          "expected_main_impression": "돌봄의 일상이 반사 속 다른 가능성과 만나는 관계가 사진 해석을 이끎.",
+          "observation_criteria": [
+            "첫 자유 묘사에서 반사 속 다른 상태가 사진의 핵심으로 언급되는지 확인한다.",
+            "반사를 정상화했을 때 사진의 주된 의미가 달라지는지 묻는다.",
+            "화분을 돌보는 원래 행동과 온화한 정서는 계속 확인되어야 한다."
+          ],
+          "adjacent_ambiguity": [
+            "거울의 화면 면적이 커졌다는 사실만으로 3으로 판정하지 않는다.",
+            "대조가 분명하더라도 관찰자가 여전히 인물의 돌봄만을 중심으로 읽으면 2에 머물 수 있다."
+          ]
+        }
+      ],
+      "common_evidence": [
+        "실제 화분과 거울상, 꽃이 붙을 줄기 부분을 한 프레임에 보여 준다.",
+        "화분의 고유한 형태나 작은 흠집, 대응되는 잎 배치로 같은 대상임을 연결한다.",
+        "거울 테두리와 주변의 정상 반사로 그림이나 별도 식물이 아니라 반사로 읽히게 한다.",
+        "꽃이 실제 식물 뒤에 가려져 있을 뿐이라는 설명이 쉽게 생기지 않도록 주요 줄기와 잎 배치를 드러낸다.",
+        "정지 이미지가 확인하는 것은 상태 불일치이며, 미래의 개화나 시간 지연은 확인하지 못한다."
+      ],
+      "invalid_success_cases": [
+        "실제 식물과 반사 양쪽에 꽃이 생김.",
+        "거울 속 화분 전체가 다른 식물로 바뀌어 선택적 불일치가 아닌 일반 반사 오류처럼 보임.",
+        "1에서 꽃이 판독되지 않는 결과를 은근함의 성공으로 집계함.",
+        "3에서 실제 화분이나 물주기 행동을 잘라 내어 사용자 의미와 비교 증거를 잃음."
+      ],
+      "is_tested": false,
+      "source_principle_ids": [
+        "C01"
+      ],
+      "origin": "pro_original_preserved",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "I02",
+      "title_ko": "주말 독서: 실내의 작은 구름",
+      "core_user_request_ko": "성인이 평범한 집에서 주말에 조용히 책을 읽는 편안한 사진.",
+      "user_invariants": [
+        "같은 성인이 같은 집의 의자에 앉아 책을 읽는다.",
+        "책과 읽는 자세를 판독할 수 있고, 편안한 정서를 유지한다.",
+        "실내 구조, 가구와 인물의 크기는 정상적인 생활 공간을 이룬다.",
+        "주말이라는 맥락은 사용자 요구이며 정지 이미지 자체로 확인되는 시간 정보로 주장하지 않는다."
+      ],
+      "single_added_relation_ko": "가구나 사람에 닿지 않는 작은 구름 하나가 실내의 빈 공간에 국소적으로 존재한다.",
+      "fixed_across_1_2_3": [
+        "구름은 하나이고 형태와 밀도 및 방과의 상대 크기를 고정한다.",
+        "구름의 너비는 작은 쿠션 정도이며 인물이나 방을 덮을 만큼 확대하지 않는다.",
+        "비, 번개, 떠 있는 책이나 사물 등 다른 이상 관계를 추가하지 않는다.",
+        "주간의 자연스러운 조명, 같은 읽는 자세와 같은 생활 공간을 유지한다.",
+        "구름과 천장·벽·가구 사이의 분리된 위치를 유지하고, 화면 내 위치와 주목의 우선순위를 조절한다."
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "성인이 평범한 집의 의자에 편안히 앉아 책을 읽는다. 창으로 들어오는 자연광과 정상적인 실내 공기, 생활 가구가 보인다. 별도의 구름이나 안개를 더하지 않은 조용한 독서 사진.",
+          "scene_en": "An adult sits comfortably in a chair and reads a book in an ordinary home. Natural window light, clear indoor air, and everyday furniture define a quiet reading photograph with no added cloud or mist.",
+          "expected_main_impression": "편안하고 현실적인 일상의 독서.",
+          "observation_criteria": [
+            "책을 읽는 사람과 생활 공간이 요구대로 유지된다.",
+            "구름이나 실내 안개 등 추가 초현실 처리가 없어야 한다."
+          ],
+          "adjacent_ambiguity": [
+            "창밖 구름이나 햇빛에 드러난 먼지는 실내에 구름을 추가한 것과 다르다.",
+            "옅은 안개 효과가 의도치 않게 생기면 촬영 분위기와 추가 관계를 구별해야 한다."
+          ]
+        },
+        {
+          "level": 1,
+          "scene_ko": "같은 성인이 같은 의자에서 책을 읽는 모습을 넉넉한 구도로 담는다. 인물과 책이 먼저 읽히고, 옆쪽의 빈 실내 공간에는 작은 구름 하나가 벽과 가구에서 떨어진 상태로 보인다. 구름은 작지만 형태와 위치를 알아볼 수 있으며 방 전체에 안개가 퍼지지는 않는다.",
+          "scene_en": "A spacious view shows the same adult reading in the same chair, with the person and book leading attention. One small cloud occupies an empty part of the room to the side, visibly separate from the wall and furniture. Its shape and indoor location remain legible without filling the room with fog.",
+          "expected_main_impression": "평온한 독서에 가볍게 스며든 꿈같음.",
+          "observation_criteria": [
+            "주된 묘사가 독서와 휴식으로 시작하는지 확인한다.",
+            "관찰 후 작은 구름이 실내에 있다는 관계를 설명할 수 있어야 한다.",
+            "구름이 사람의 행동을 대체하거나 위협하는 인상으로 바뀌지 않아야 한다."
+          ],
+          "adjacent_ambiguity": [
+            "작은 구름이 흰 쿠션·솜 장식·창밖 구름으로 읽히면 관계 구현을 다시 확인해야 한다.",
+            "구름의 존재가 관찰자에게 매우 특이하게 느껴지면 크기가 작아도 2로 읽힐 수 있다."
+          ]
+        },
+        {
+          "level": 2,
+          "scene_ko": "같은 크기와 모양의 구름, 책을 읽는 성인, 정상적인 방의 벽과 가구를 서로 비교하기 쉬운 중간 거리 구도로 담는다. 구름 아래와 옆의 빈 공간이 드러나 실내에 독립된 구름이 있다는 사실이 분명하고, 독서 행동도 계속 읽힌다.",
+          "scene_en": "A medium-distance composition makes the cloud of unchanged size and shape, the reading adult, and the ordinary walls and furniture easy to compare. Clear space beneath and beside the cloud makes its independent indoor presence evident while the act of reading remains visible.",
+          "expected_main_impression": "편안한 독서 장면 안의 실내 구름이 명확하게 읽힘.",
+          "observation_criteria": [
+            "설명 없이 실내 구름을 식별하고 독서 장면과 함께 말할 수 있는지 확인한다.",
+            "구름과 주변 면 사이의 공간 관계가 판독되어야 한다.",
+            "구름을 크게 만들거나 새로운 이상 현상을 더하지 않고 명시성을 높였는지 확인한다."
+          ],
+          "adjacent_ambiguity": [
+            "명확한 구름이 장면의 유일하게 특이한 요소라서 곧바로 주된 인상을 차지할 수 있다.",
+            "흰 물체가 구름인지 장식인지의 혼동은 강도 문제와 별도로 기록해야 한다."
+          ]
+        },
+        {
+          "level": 3,
+          "scene_ko": "같은 방과 같은 독서 장면에서 작은 구름과 그 주위의 빈 공간이 구도의 중심이 되도록 촬영한다. 구름의 크기와 형태는 유지하고, 성인과 펼친 책은 같은 프레임에서 명확히 읽힌다. 평범한 방 안에 하늘의 일부가 들어온 듯한 관계가 사진의 주된 방향을 이끈다.",
+          "scene_en": "In the same room and reading scene, compose around the small cloud and the empty space surrounding it. Keep the cloud's size and shape unchanged, and retain a clearly readable adult and open book in the same frame. The presence of a fragment of sky within an ordinary room leads the photograph.",
+          "expected_main_impression": "실내와 하늘의 경계가 느슨해진 공간 속에서 이어지는 고요한 독서.",
+          "observation_criteria": [
+            "구름의 실내 존재가 사진의 주된 관계로 서술되는지 확인한다.",
+            "구름을 제거하면 사진의 중심 인상이 달라지는지 묻는다.",
+            "독서라는 원래 사용자 행동과 편안한 정서를 유지해야 한다."
+          ],
+          "adjacent_ambiguity": [
+            "중앙 배치만으로 사진의 의미가 구름 중심이 되지는 않는다.",
+            "구름이 장식으로 소비되고 인물의 독서가 계속 지배적이면 2 또는 1로 읽힐 수 있다."
+          ]
+        }
+      ],
+      "common_evidence": [
+        "실내임을 알려 주는 벽·천장·가구와 구름의 분리된 위치를 함께 보여 준다.",
+        "구름의 불규칙한 가장자리와 부피감을 유지하되 단순한 흰 소품과 혼동되는지 평가한다.",
+        "구름 주변의 정상적인 공기와 독서 행동이 유지되어 국소적인 관계로 읽혀야 한다.",
+        "정지 이미지로 실내의 구름 같은 형상은 확인할 수 있지만 지속 시간이나 발생 원인, 자연 발생 여부는 확인하지 못한다.",
+        "실제 제작에 기술 장치가 쓰일 가능성과 사진 안에서 기술 장치가 의미상 필요하다는 것은 구별한다."
+      ],
+      "invalid_success_cases": [
+        "1에서 구름이 너무 흐려 보이지 않는 결과를 약한 초현실의 성공으로 집계함.",
+        "2 또는 3에서 구름을 방 전체 안개로 바꾸거나 비와 번개를 추가함.",
+        "구름의 상대 크기를 단계마다 키워 강도를 대신함.",
+        "3에서 사람이나 책을 판독할 수 없게 만들어 독서 주제를 잃음."
+      ],
+      "is_tested": false,
+      "source_principle_ids": [
+        "C05"
+      ],
+      "origin": "pro_original_preserved",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "I03",
+      "title_ko": "부엌 정리: 허리 높이의 찻잔 청소",
+      "core_user_request_ko": "성인이 평범한 부엌을 정리하며 찻잔을 닦는 친근한 일상 사진.",
+      "user_invariants": [
+        "같은 성인이 부엌에서 스펀지로 찻잔을 닦는다.",
+        "찻잔은 하나이며, 같은 색·손잡이·유약 표면을 가진 열린 용기로 유지한다.",
+        "인물, 조리대와 부엌의 구조는 정상 크기를 유지한다.",
+        "행동의 의미는 청소이며 목욕·놀이·찻잔 속 생활로 바꾸지 않는다.",
+        "0에서는 정상 크기 잔을 손으로 잡을 수 있지만 1·2·3에서는 바닥에 놓인 큰 잔을 닦는다. 물리적으로 필요한 자세 변화는 허용하며 동일한 손동작을 강제하지 않는다."
+      ],
+      "single_added_relation_ko": "익숙한 찻잔 하나가 정상 크기의 성인 허리 높이로 커져 있고, 성인은 그것을 일상적인 청소 대상으로 다룬다.",
+      "fixed_across_1_2_3": [
+        "큰 찻잔은 하나이고 높이 약 85cm의 허리 높이, 너비와 손잡이의 비율, 색과 형태를 고정한다.",
+        "성인의 키와 부엌의 실제 크기는 고정하며 인물을 축소하지 않는다.",
+        "큰 찻잔은 부엌 바닥에 안정적으로 놓이고 성인이 스펀지로 안쪽 벽을 닦는다.",
+        "성인의 한 손은 잔 가장자리에 가볍게 기대고 다른 손은 스펀지를 사용한다. 잔을 한 손으로 들어 올리지 않는다.",
+        "구도와 주목의 중심만 조절하고 찻잔을 단계마다 더 키우거나 여러 개로 늘리지 않는다.",
+        "정상적인 생활 조명과 친근한 청소 분위기를 유지한다."
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "성인이 평범한 부엌 싱크대에서 정상 크기의 찻잔 하나를 한 손으로 잡고 다른 손의 스펀지로 안쪽을 닦는다. 인물과 조리대, 찻잔의 크기가 일상적인 비율을 이룬다.",
+          "scene_en": "An adult holds one normally sized teacup at an ordinary kitchen sink and wipes its interior with a sponge in the other hand. The person, counter, and cup retain everyday proportions.",
+          "expected_main_impression": "익숙한 부엌 정리와 찻잔 청소.",
+          "observation_criteria": [
+            "찻잔을 닦는 행동과 정상적인 크기 관계가 읽힌다.",
+            "거대화나 인물 축소를 추가하지 않는다."
+          ],
+          "adjacent_ambiguity": [
+            "카메라 가까이 있는 정상 찻잔이 커 보이는 원근 효과와 실제 크기 관계의 변경을 구별해야 한다.",
+            "0과 1 사이의 손동작 및 잔의 지지 위치 변화는 크기 변경에 따른 물리적 조정이며 사용자 행동의 변경으로 보지 않는다."
+          ]
+        },
+        {
+          "level": 1,
+          "scene_ko": "성인이 평범한 부엌 바닥에 놓인 허리 높이 찻잔 하나의 안쪽을 스펀지로 닦는다. 넉넉한 구도에서는 성인의 익숙한 청소 동작과 생활 공간이 먼저 읽힌다. 찻잔의 손잡이와 바닥 접촉, 정상 크기의 조리대가 함께 보여 큰 잔이라는 사실은 판독 가능하다.",
+          "scene_en": "An adult wipes the interior of one waist-high teacup resting on an ordinary kitchen floor. In a spacious composition, the familiar cleaning action and domestic setting lead attention. The cup's handle, contact with the floor, and a normally sized counter remain visible so its enlarged scale can still be read.",
+          "expected_main_impression": "일상적인 청소에 스며든 부드러운 규모의 농담.",
+          "observation_criteria": [
+            "성인의 청소 행동이 첫 설명의 중심인지 확인한다.",
+            "관찰자가 찻잔과 인물의 크기 관계를 설명할 수 있어야 한다.",
+            "거대 찻잔이 있어도 일상의 느낌이 주도하는지 검토한다."
+          ],
+          "adjacent_ambiguity": [
+            "허리 높이 찻잔은 매우 눈에 띌 수 있어 이 단계가 곧바로 2 또는 3으로 읽힐 위험이 있다.",
+            "잔을 작게 보이게 하려고 원근을 과하게 사용하면 고정한 크기 관계의 증거를 잃는다.",
+            "큰 장식 화분이나 통으로 읽히면 찻잔 정체성의 구현부터 다시 확인해야 한다."
+          ]
+        },
+        {
+          "level": 2,
+          "scene_ko": "같은 성인과 같은 허리 높이 찻잔을 가까운 깊이에 두고, 정상적인 조리대와 바닥을 함께 보여 준다. 성인은 가장자리에 손을 기대고 스펀지로 잔 안쪽을 닦는다. 찻잔의 열린 입구와 손잡이, 인물의 허리 높이가 쉽게 비교되어 규모 불일치가 명확하다.",
+          "scene_en": "Show the same adult and unchanged waist-high teacup at comparable depth, together with the normal counter and floor. The adult rests a hand on the rim while wiping the interior with a sponge. The open rim, handle, and the person's waist make the unusual scale easy to compare.",
+          "expected_main_impression": "거대한 찻잔을 닦는 평범한 행동이 분명한 유머로 읽힘.",
+          "observation_criteria": [
+            "관찰자가 인물이 축소된 것이 아니라 찻잔이 커졌다고 읽는지 확인한다.",
+            "청소 행동과 거대 찻잔이라는 관계를 동시에 설명할 수 있어야 한다.",
+            "1과 같은 크기·같은 한 개의 잔을 사용했는지 확인한다."
+          ],
+          "adjacent_ambiguity": [
+            "규모 관계가 사진의 핵심 농담으로 곧바로 읽히면 3에 가까울 수 있다.",
+            "미니어처 세트나 대형 광고 소품의 청소로 해석할 가능성은 강도와 별도로 기록한다."
+          ]
+        },
+        {
+          "level": 3,
+          "scene_ko": "같은 크기의 찻잔이 부엌 작업 공간을 차지하는 방식과 성인의 청소 행동 사이의 불균형이 구도를 이끈다. 찻잔의 전체 형태와 바닥 접촉, 정상 크기의 성인과 조리대를 한 프레임에 유지한다. 성인은 같은 방식으로 잔 안쪽을 닦으며, 거대한 일상용품을 돌보는 생활이라는 인상이 중심이 된다.",
+          "scene_en": "Let the composition be led by the mismatch between the unchanged teacup's occupation of the kitchen workspace and the adult's routine cleaning action. Retain the cup's full form and floor contact, the normally sized adult, and the counter in one frame. The adult continues wiping the interior in the same way, while life organized around an oversized everyday object becomes the leading impression.",
+          "expected_main_impression": "거대한 일상용품에 맞추어 계속되는 생활이 사진의 중심 해석이 됨.",
+          "observation_criteria": [
+            "사진의 첫 설명이 크기 관계와 일상의 결합을 중심으로 나오는지 확인한다.",
+            "찻잔을 정상 크기로 바꾸면 사진의 주요 의미가 사라지는지 묻는다.",
+            "청소 동작을 보존하고 과장된 근력이나 새로운 물리 위반을 추가하지 않았는지 확인한다."
+          ],
+          "adjacent_ambiguity": [
+            "화면에서 찻잔이 차지하는 면적만으로 3을 판정하지 않는다.",
+            "관찰자가 단순한 소품 관리 사진으로 읽으면 2와의 경계가 흐려진다.",
+            "찻잔을 더 크게 만드는 방식으로 강도를 보완하면 동일 관계 비교 조건을 어긴다."
+          ]
+        }
+      ],
+      "common_evidence": [
+        "찻잔의 열린 용기 형태, 특징적인 손잡이와 유약 표면을 유지한다.",
+        "정상 크기의 성인과 조리대, 같은 바닥면과 접촉 단서로 규모를 비교한다.",
+        "청소에 실제로 필요한 손·스펀지·용기 안쪽의 관계를 보여 준다.",
+        "1·2·3에서는 잔을 바닥이 지지하며 한 손으로 들어 올리는 새로운 힘의 이상을 만들지 않는다.",
+        "실제 대형 조형물일 가능성과 의도한 시각적 규모 관계는 구별한다. 한 장으로 제작 재료나 물리적 불가능성을 증명하지 않는다."
+      ],
+      "invalid_success_cases": [
+        "단계마다 찻잔이 더 커지거나 수가 늘어남.",
+        "성인이나 부엌을 축소하여 거대 찻잔이라는 관계의 소유 대상을 바꿈.",
+        "성인이 큰 찻잔을 한 손으로 들어 초인적 힘이라는 별도 관계를 추가함.",
+        "청소를 목욕이나 찻잔 안에 앉아 있는 장면으로 바꿈.",
+        "과도한 원근 때문에 크기 관계를 판독하지 못하는 결과를 1로 집계함."
+      ],
+      "is_tested": false,
+      "source_principle_ids": [
+        "C09"
+      ],
+      "origin": "pro_original_preserved",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "I04",
+      "title_ko": "사용자 지정 판타지 보존: 작은 용과 아침 식사, 접힌 대리석",
+      "core_user_request_ko": "성인과 작은 용이 평범한 집 식탁에서 함께 아침을 먹는 친밀하고 평온한 사진.",
+      "user_invariants": [
+        "작은 용은 사용자가 명시한 존재이므로 0을 포함한 모든 단계에 실제 장면의 구성원으로 유지한다.",
+        "작은 용을 삭제하거나 장난감·그림·장식으로 치환하지 않는다.",
+        "성인과 용이 같은 식탁에서 아침을 함께 먹는 행동과 친밀한 정서를 유지한다.",
+        "인물, 용, 식탁과 음식의 상대 크기는 고정한다.",
+        "용의 존재 자체에 대해 에이전트가 추가한 초현실 처리라고 집계하지 않는다."
+      ],
+      "single_added_relation_ko": "대리석으로 보이는 식탁 상판의 한쪽 모서리만 천처럼 아래로 접혀 늘어지며, 상판의 석재 무늬와 표면이 접힌 부분까지 연속된다.",
+      "fixed_across_1_2_3": [
+        "접힌 모서리는 하나이고 접힌 면적, 곡률, 두께의 외관과 식탁에 대한 상대 크기를 고정한다.",
+        "대리석 무늬와 상판의 표면은 정상 부분에서 접힌 부분까지 하나로 이어진다.",
+        "성인과 작은 용의 존재, 크기, 식사 행동과 친밀한 분위기는 같다.",
+        "용의 불꽃, 공중에 뜬 음식, 추가 변형이나 복수의 접힌 모서리를 만들지 않는다.",
+        "주목과 구도를 바꾸되 상판의 변형 정도를 늘리지 않는다.",
+        "실제 물성이 부드러워졌다고 증명하는 대신, 석재 외관과 천 같은 형태의 충돌을 시각 목표로 삼는다."
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "성인과 작은 용이 평범한 집의 대리석 식탁에서 함께 아침을 먹는다. 용은 장난감이나 그림이 아닌 장면의 실제 구성원으로 보인다. 식탁 상판은 평평하고 단단한 일반적인 형태이며, 사용자 요구 밖의 추가 초현실 처리를 하지 않는다.",
+          "scene_en": "An adult and a small dragon share breakfast at a marble table in an ordinary home. The dragon appears as a real participant in the scene, not a toy or picture. The tabletop has an ordinary flat, rigid form, with no additional surreal treatment beyond the user's requested dragon.",
+          "expected_main_impression": "사용자가 요구한 작은 용과의 친밀한 판타지 일상.",
+          "observation_criteria": [
+            "작은 용과 아침 식사라는 사용자 의미가 그대로 보존된다.",
+            "대리석 접힘이나 다른 추가 이상 관계가 없어야 한다.",
+            "전체 이미지가 비현실적으로 보인다는 이유만으로 0 실패로 판정하지 않는다."
+          ],
+          "adjacent_ambiguity": [
+            "사용자 지정 판타지가 이미 강하므로 전체 비현실감 점수는 1보다 낮지 않을 수 있다.",
+            "용을 현실적인 반려동물이나 장난감으로 바꾸면 추가 처리를 끈 것이 아니라 사용자 요구를 훼손한 것이다."
+          ]
+        },
+        {
+          "level": 1,
+          "scene_ko": "같은 성인과 작은 용이 같은 식탁에서 아침을 먹는다. 두 존재의 평온한 식사가 먼저 읽히고, 화면 아래쪽 식탁 모서리 하나가 천처럼 접혀 있는 모습은 작지만 알아볼 수 있다. 상판의 대리석 무늬는 접힌 부분까지 이어지며 다른 부분은 정상이다.",
+          "scene_en": "The same adult and small dragon share breakfast at the same table. Their peaceful meal leads the image, while one tabletop corner near the lower edge of the frame is small but legibly folded like cloth. Marble veining continues into the fold, and the rest of the table remains ordinary.",
+          "expected_main_impression": "친밀한 판타지 아침 식사에 물성의 작은 낯섦이 덧붙음.",
+          "observation_criteria": [
+            "주된 인상이 성인과 용의 식사 관계로 남는지 확인한다.",
+            "접힌 부분을 살펴보면 상판과 이어진 형태임을 판독할 수 있어야 한다.",
+            "용이 이미 비현실적이라는 사실과 추가한 접힘의 역할을 별도로 평가한다."
+          ],
+          "adjacent_ambiguity": [
+            "접힌 부분이 너무 작으면 상판 변형인지 식탁보인지 읽히지 않을 수 있다.",
+            "용이 주목을 독점해 추가 관계가 전혀 판독되지 않는 경우를 1 성공으로 집계하지 않는다."
+          ]
+        },
+        {
+          "level": 2,
+          "scene_ko": "같은 식사 장면을 사선 구도로 담아 평평한 대리석 상판과 하나의 천 같은 접힘이 이어지는 모습을 분명히 보여 준다. 성인과 작은 용의 아침 식사는 계속 읽히며, 접힘의 크기와 곡률은 1과 같다. 두 존재의 일상과 물성 충돌이 함께 사진의 명확한 특징이 된다.",
+          "scene_en": "An oblique view of the same breakfast clearly shows the flat marble tabletop continuing into one cloth-like fold. The adult and small dragon remain visibly engaged in breakfast, and the fold retains the same size and curvature as in level 1. Their domestic interaction and the material-form conflict are both explicit features of the photograph.",
+          "expected_main_impression": "용과의 일상에 더해 대리석 외관과 천 같은 형태의 충돌이 분명히 읽힘.",
+          "observation_criteria": [
+            "관찰자가 식탁 상판 자체가 천처럼 접힌 것으로 읽는지 확인한다.",
+            "성인과 용의 식사 및 접힘을 동시에 설명할 수 있어야 한다.",
+            "실제 재질이 바뀌었다는 서사를 설명에 강제하지 않는다."
+          ],
+          "adjacent_ambiguity": [
+            "용의 존재가 매우 강한 중심이면 접힘은 여전히 1의 보조 역할로 읽힐 수 있다.",
+            "접힘이 사진의 핵심 의미가 되면 3에 가까울 수 있다.",
+            "대리석 무늬의 천을 덮은 것으로 읽히면 재질과 형태 관계의 구현을 먼저 검토한다."
+          ]
+        },
+        {
+          "level": 3,
+          "scene_ko": "같은 식탁의 한 모서리가 천처럼 이어져 접힌 형태가 구도를 이끌도록 촬영한다. 접힘의 크기와 형태는 그대로이고, 성인과 작은 용이 함께 아침을 먹는 모습도 같은 프레임에서 명확히 읽힌다. 단단한 집의 표면이 유연하게 읽히는 관계가 주된 인상을 만들면서 두 존재의 친밀한 일상은 계속된다.",
+          "scene_en": "Let the unchanged cloth-like fold of one marble tabletop corner lead the composition. Keep its size and shape fixed, and retain a clearly readable adult and small dragon sharing breakfast in the same frame. The flexible reading of an apparently rigid domestic surface becomes the leading impression while their intimate routine continues.",
+          "expected_main_impression": "재질과 형태의 질서가 달라진 집 안에서 친밀한 일상이 지속됨.",
+          "observation_criteria": [
+            "추가한 접힘 관계가 사진의 주된 해석을 이끄는지 확인한다.",
+            "이를 강조하면서 성인과 용의 식사를 잃지 않았는지 함께 평가한다.",
+            "접힘을 정상화하는 가정이 사진의 주요 의미를 바꾸는지 묻는다.",
+            "전체 비현실감이 아니라 추가 처리의 역할을 기준으로 2와 구별한다."
+          ],
+          "adjacent_ambiguity": [
+            "사용자가 요구한 용이 계속 의미 중심으로 남을 수 있어 모든 관찰자에게 3으로 읽힌다고 보장할 수 없다.",
+            "접힘의 화면 면적만 커지고 의미 중심성은 달라지지 않으면 2와 구별되지 않을 수 있다.",
+            "식사 장면을 잘라 내거나 용을 주변 장식으로 바꾸어 얻은 주목은 사용자 의미를 보존한 3 성공이 아니다."
+          ]
+        }
+      ],
+      "common_evidence": [
+        "평평한 상판에서 접힌 모서리로 이어지는 표면과 무늬를 한 프레임에 보여 준다.",
+        "식탁 다리와 정상 부분은 생활 공간의 현실 기준으로 유지한다.",
+        "성인, 작은 용과 식사 행동을 판독할 수 있게 유지한다.",
+        "정지 이미지로는 석재 같은 외관과 유연한 형태의 충돌을 확인할 수 있다. 실제 촉감, 재질 변화의 과정이나 이전 상태는 확인하지 못한다.",
+        "0은 사용자 판타지를 보존하므로 전체 비현실감의 최솟값을 뜻하지 않는다."
+      ],
+      "invalid_success_cases": [
+        "0에서 용을 제거하거나 장난감으로 바꿈.",
+        "1·2·3에서 접힌 모서리 수나 변형 정도를 늘림.",
+        "상판의 연속성이 없어져 대리석 무늬 식탁보로만 읽힘.",
+        "3을 만들기 위해 성인과 용의 식사라는 핵심 사용자 의미를 제거함.",
+        "사용자 지정 용 때문에 높은 전체 비현실감 점수가 나온 것을 추가 처리 3의 성공으로 집계함."
+      ],
+      "is_tested": false,
+      "source_principle_ids": [
+        "C02"
+      ],
+      "origin": "pro_original_preserved",
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "I05",
+      "title_ko": "도자 커튼의 재질·형태",
+      "origin": "additional_domain_comparison",
+      "core_user_request_ko": "창가 정물과 커튼",
+      "candidate_ref": "cand_b294c59558ce5b2483da3b0d26fc1fea",
+      "user_invariants": [
+        "창가 정물과 커튼",
+        "명시 주제·대상 관계 보존"
+      ],
+      "single_added_relation_ko": "접힌 도자 판 커튼 하나",
+      "fixed_across_1_2_3": [
+        "선택한 관계의 대상·개수·핵심 형태",
+        "비교에 필요한 같은 소유자와 경계"
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "천 커튼",
+          "expected_main_impression": "명시된 주제를 보존하고 추가 관계를 넣지 않음"
+        },
+        {
+          "level": 1,
+          "scene_ko": "재질 경계와 고리/봉을 함께 보이되 창가 장면을 보조",
+          "expected_main_impression": "판독 가능한 보조"
+        },
+        {
+          "level": 2,
+          "scene_ko": "도자 판과 커튼 기능의 충돌이 명백",
+          "expected_main_impression": "명확한 표현"
+        },
+        {
+          "level": 3,
+          "scene_ko": "같은 커튼의 물성이 공간을 읽는 주된 관계가 됨",
+          "expected_main_impression": "주된 해석과 방향"
+        }
+      ],
+      "common_evidence": [
+        "각 단계의 실제 이미지에서 관계 구현·판독·역할을 별도로 기록",
+        "면적·발견 시간·요소 수 하나로 수준을 결정하지 않음"
+      ],
+      "invalid_success_cases": [
+        "핵심 관계 가리기",
+        "불완전한 렌더를 1로 분류",
+        "사용자 의미 삭제",
+        "명시한 환상 요소를 0에서 제거"
+      ],
+      "is_tested": false,
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "I06",
+      "title_ko": "닫힌 우산과 펼쳐진 그림자",
+      "origin": "additional_domain_comparison",
+      "core_user_request_ko": "현관의 우산 정물",
+      "candidate_ref": "R11",
+      "user_invariants": [
+        "현관의 우산 정물",
+        "명시 주제·대상 관계 보존"
+      ],
+      "single_added_relation_ko": "같은 닫힌 우산과 펼쳐진 그림자 하나",
+      "fixed_across_1_2_3": [
+        "선택한 관계의 대상·개수·핵심 형태",
+        "비교에 필요한 같은 소유자와 경계"
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "닫힌 우산과 정상 그림자",
+          "expected_main_impression": "명시된 주제를 보존하고 추가 관계를 넣지 않음"
+        },
+        {
+          "level": 1,
+          "scene_ko": "닫힌 실물과 펼쳐진 그림자 연결은 읽히며 현관 사용 맥락이 먼저 읽힘",
+          "expected_main_impression": "판독 가능한 보조"
+        },
+        {
+          "level": 2,
+          "scene_ko": "실물과 그림자의 상태 차이가 명확",
+          "expected_main_impression": "명확한 표현"
+        },
+        {
+          "level": 3,
+          "scene_ko": "같은 상태 불일치가 사진 전체의 의미를 이끎",
+          "expected_main_impression": "주된 해석과 방향"
+        }
+      ],
+      "common_evidence": [
+        "각 단계의 실제 이미지에서 관계 구현·판독·역할을 별도로 기록",
+        "면적·발견 시간·요소 수 하나로 수준을 결정하지 않음"
+      ],
+      "invalid_success_cases": [
+        "핵심 관계 가리기",
+        "불완전한 렌더를 1로 분류",
+        "사용자 의미 삭제",
+        "명시한 환상 요소를 0에서 제거"
+      ],
+      "is_tested": false,
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "I07",
+      "title_ko": "서리 경계가 있는 자연물",
+      "origin": "additional_domain_comparison",
+      "core_user_request_ko": "정원 벤치의 잎 달린 가지",
+      "candidate_ref": "R17",
+      "user_invariants": [
+        "정원 벤치의 잎 달린 가지",
+        "명시 주제·대상 관계 보존"
+      ],
+      "single_added_relation_ko": "같은 가지의 같은 서리 구간",
+      "fixed_across_1_2_3": [
+        "선택한 관계의 대상·개수·핵심 형태",
+        "비교에 필요한 같은 소유자와 경계"
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "정상 녹색 가지",
+          "expected_main_impression": "명시된 주제를 보존하고 추가 관계를 넣지 않음"
+        },
+        {
+          "level": 1,
+          "scene_ko": "연속된 가지와 서리 경계가 읽히며 정원 정물을 보조",
+          "expected_main_impression": "판독 가능한 보조"
+        },
+        {
+          "level": 2,
+          "scene_ko": "국소 결정과 양쪽 녹색 구간을 명확히 비교",
+          "expected_main_impression": "명확한 표현"
+        },
+        {
+          "level": 3,
+          "scene_ko": "경계 양쪽의 자연 상태 충돌이 사진의 주된 인상이 됨",
+          "expected_main_impression": "주된 해석과 방향"
+        }
+      ],
+      "common_evidence": [
+        "각 단계의 실제 이미지에서 관계 구현·판독·역할을 별도로 기록",
+        "면적·발견 시간·요소 수 하나로 수준을 결정하지 않음"
+      ],
+      "invalid_success_cases": [
+        "핵심 관계 가리기",
+        "불완전한 렌더를 1로 분류",
+        "사용자 의미 삭제",
+        "명시한 환상 요소를 0에서 제거"
+      ],
+      "is_tested": false,
+      "execution_status": "NOT_RUN"
+    },
+    {
+      "id": "I08",
+      "title_ko": "봉제 문틀의 건축 외피",
+      "origin": "additional_domain_comparison",
+      "core_user_request_ko": "복도와 두 문틀",
+      "candidate_ref": "R13",
+      "user_invariants": [
+        "복도와 두 문틀",
+        "명시 주제·대상 관계 보존"
+      ],
+      "single_added_relation_ko": "같은 봉제 문틀과 같은 접힌 모서리",
+      "fixed_across_1_2_3": [
+        "선택한 관계의 대상·개수·핵심 형태",
+        "비교에 필요한 같은 소유자와 경계"
+      ],
+      "levels": [
+        {
+          "level": 0,
+          "scene_ko": "두 정상 나무 문틀",
+          "expected_main_impression": "명시된 주제를 보존하고 추가 관계를 넣지 않음"
+        },
+        {
+          "level": 1,
+          "scene_ko": "봉제선과 접힘은 읽히며 복도 생활 공간의 인상을 보조",
+          "expected_main_impression": "판독 가능한 보조"
+        },
+        {
+          "level": 2,
+          "scene_ko": "나무와 천 문틀의 물성 차이가 명확",
+          "expected_main_impression": "명확한 표현"
+        },
+        {
+          "level": 3,
+          "scene_ko": "같은 문틀의 접힘과 건축 외피 관계가 사진의 공간 해석을 이끎",
+          "expected_main_impression": "주된 해석과 방향"
+        }
+      ],
+      "common_evidence": [
+        "각 단계의 실제 이미지에서 관계 구현·판독·역할을 별도로 기록",
+        "면적·발견 시간·요소 수 하나로 수준을 결정하지 않음"
+      ],
+      "invalid_success_cases": [
+        "핵심 관계 가리기",
+        "불완전한 렌더를 1로 분류",
+        "사용자 의미 삭제",
+        "명시한 환상 요소를 0에서 제거"
+      ],
+      "is_tested": false,
+      "execution_status": "NOT_RUN"
+    }
+  ],
+  "comparison_count": 8,
+  "scene_count": 32,
+  "generation_calls_executed": 0,
+  "global_unreality_monotonicity_required": false,
+  "review_order": [
+    "labels_hidden_free_description",
+    "request_and_relation_fidelity",
+    "prominence_and_preference_separately"
+  ],
+  "failure_categories": [
+    "relation_not_implemented",
+    "relation_unobservable",
+    "ordinary_alternative_dominates",
+    "wrong_prominence",
+    "request_meaning_lost"
+  ],
+  "execution_staging": "16-image smoke subset before expanding to the Pro 48-image pilot; all image execution is future work requiring an image-test request."
+}

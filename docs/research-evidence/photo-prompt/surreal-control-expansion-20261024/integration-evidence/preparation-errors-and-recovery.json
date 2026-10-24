@@ -1,0 +1,17 @@
+[
+  {
+    "phase": "source_registration",
+    "error": "source provenance required",
+    "record": "D14",
+    "cause": "Control-semantics diagnostic has no web source_ids; empty provenance rejected.",
+    "repair": "Added exact local creative_controls.json path/hash as the diagnostic provenance. Only newly created module files and their manifest entries were rolled back.",
+    "image_calls": 0
+  },
+  {
+    "phase": "source_registration_retry",
+    "error": "source_revision_pending",
+    "cause": "Own aborted source_update intentionally left an editing revision pending.",
+    "repair": "Verified the original whole corpus digest after scoped rollback, then explicitly completed that own failed revision. Retried registration successfully.",
+    "image_calls": 0
+  }
+]
