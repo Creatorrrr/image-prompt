@@ -1,0 +1,39 @@
+{
+  "schema": "mecha-arm-execution-notes/v1",
+  "pre_image_calls": 0,
+  "retrieval_attempts": [
+    {
+      "route": "sealed_native_default",
+      "observed_status": "retrieve_failed_no_pair_admitted",
+      "observed_child_stderr": "Error: [Errno 2] No such file or directory",
+      "cause": "Caller omitted explicit --retrieval-policy h-f2; preserved native transaction and no pack pair admitted.",
+      "evidence": "generated/photo-runs/mecha-20261024-arm-c/.staging/retrieve/private-error.json"
+    },
+    {
+      "route": "explicit_h-f2",
+      "observed_status": "exception_before_search_packet",
+      "observed_error": "RuntimeError: local_model_missing_or_unsafe: 1_Pooling/config.json",
+      "cause": "Native validation loads sealed root embedding-runtime lock, but model package file is absent at that root; --local-embedding-skill was supplied for the query encoder.",
+      "pack_created": false,
+      "h_f2_transaction_created": false,
+      "source_binding_created": false
+    }
+  ],
+  "pending": null,
+  "resolution": {
+    "store": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/h-f2-installed",
+    "native_generation": "e51d43e44abad75550a4213b3de14028697c1470dc1c42a31b895029886b32ea",
+    "h_f2_generation": "e1a3d0cb7623488dfbfff9f0b8337200cef8c0142248414c0a0f4b890faecc71",
+    "local_embedding_skill": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "explicit_retrieval_policy": "h-f2",
+    "retrieval_status": "pass",
+    "searched_queries": 4,
+    "resampling": false
+  },
+  "actual_native_calls": 1,
+  "final_managed_review": {
+    "record_valid": true,
+    "technical_qualification": "fail",
+    "user_judgment": "pending"
+  }
+}

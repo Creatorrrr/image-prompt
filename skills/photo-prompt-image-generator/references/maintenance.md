@@ -227,3 +227,12 @@ retain branch, rank, billet, legal, clinical and narrative boundaries. People,
 garments, supports, straps, devices and represented figures keep separate owners
 and connection endpoints. Registration, sealed exposure, actual prompt use and
 saved pixels are separate evidence; research metadata grants no native approval.
+
+
+The [mecha and robot extension](mecha-robot-visual-semantics.md) retains 109
+visual cards, 323 advisory term routes, 107 complete optional bilingual visual
+sources, 34 excluded diagnostics and 231 optional bindings. Its 420 directed
+relations preserve human/device owners and visible paths. Sampling v2 retains
+the first eligible source before drawing diversity within the existing budget.
+Six reference-guided images and the second repair round retain their strict
+failures; registration, exposure, prompt use and whole pixels remain separate.

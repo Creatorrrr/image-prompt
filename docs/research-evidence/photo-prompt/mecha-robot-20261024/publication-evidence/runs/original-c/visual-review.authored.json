@@ -1,0 +1,57 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "d9c80345c0edc508",
+  "contract_version": "photo-embodiment-preflight/v1",
+  "reviewer": "Codex independent arm C, with separate coordinator source-endpoint inspection",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-arm-c/result.png",
+  "result_sha256": "abbaba304f82719d4299289bb27826b379b9c7789e5bdd4bc8d030582f13ddc3",
+  "hard_gates": {
+    "embodiment_body_ownership": {
+      "status": "pass",
+      "evidence": "The human working hands remain visibly continuous with human wrists/sleeves and distinct from the metal hand. The empty socket belongs to the robot torso; the detached arm is a separate manufactured assembly. No human/machine part merger is visible at the critical source endpoints.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "fail",
+      "evidence": "The driver-hand reach and metal wrist connection are coherent, but the declared distinct elbow-to-wrist topology cannot be fully certified in this projection. A compact covered proximal section is visible; naming an unseen elbow would exceed the pixel evidence. This is an observability failure, not a diagnosis of hidden deformation.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "partial"
+    },
+    "embodiment_support_and_balance": {
+      "status": "pass",
+      "evidence": "The detached arm and cloth visibly rest on the workbench, and the human forearms have a plausible supported working reach. Lower bodies and seats are outside the frame; ordinary off-frame support is permitted by the contract and is not claimed as visible seated-state proof.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "visible"
+    },
+    "embodiment_contact_and_space": {
+      "status": "fail",
+      "evidence": "The driver tip visibly meets a wrist fastener and the skin/tool/metal boundaries are coherent. The supporting hand is visible on the distal wrist/palm region, rather than clearly on the exposed forearm frame specified in the reviewed prompt. That contact subcomponent cannot pass the complete intended-contact gate.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "partial"
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "fail",
+      "evidence": "The robot head/body, human face/hands, empty socket, detached arm and both separated frayed cable endpoints are visible together. However, the exact elbow topology and support-hand-to-exposed-frame contact remain insufficiently observable; the complete whole-prompt gate therefore fails despite J01 endpoints passing.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observability": "partial"
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

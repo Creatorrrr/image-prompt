@@ -1,0 +1,147 @@
+{
+  "schema": "mecha-c-pixel-observations/v1",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-anchored-c/output/mecha-repair2-c.png",
+  "image_sha256": "d9290ae4b637e694a8382bfcfc177499425e00b8ae12d62d9834cb36a4d617b8",
+  "image_size": [
+    1536,
+    1024
+  ],
+  "whole_original_inspected": true,
+  "native_crops": {
+    "support_hand": [
+      410,
+      505,
+      1030,
+      835
+    ],
+    "driver_wrist": [
+      1070,
+      390,
+      1515,
+      930
+    ],
+    "elbow": [
+      15,
+      360,
+      510,
+      800
+    ]
+  },
+  "thumbnail_review": [
+    384,
+    256
+  ],
+  "hard_gates": {
+    "embodiment_body_ownership": {
+      "status": "fail",
+      "observability": "partial",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The tool hand is visibly continuous through its wrist and forearm into the screen-right sleeve, and the detached assembly is clearly robot-owned. The support fingers/palm at approximately x570-774,y681-816 and thumb x660-727,y590-633 contact the bare mid-frame. The support sleeve/skin patch at x491-592,y550-590 disappears behind the top rail and internal actuator; the complete support wrist-to-forearm contour is not traceable together. This required route is unobservable, not evidence of a hidden deformity."
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "fail",
+      "observability": "partial",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The robot upper segment, large circular elbow at x192-425,y509-744, open frame x408-1009,y573-787 and separate wrist near x1006-1119,y692-830 form a distinct connected mechanical chain. The driver reach is clear. However the frozen complete human support-hand wrist/forearm route is partly behind the frame, so the complete combined joint/reach check cannot pass despite the robot-specific chain passing."
+    },
+    "embodiment_support_and_balance": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The detached mechanical arm rests on two dark padded cradle blocks, approximately x170-499,y727-850 under the elbow and x748-1012,y780-867 under the distal frame, over a towel on the workbench. The support hand stabilizes the frame; it is not portrayed as carrying the whole limb. These consequential support contacts are visible. Human lower-body support is ordinary off-frame context, not an added test."
+    },
+    "embodiment_contact_and_space": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The screen-right tool fingers grip a single driver; its shaft extends visibly to a seated tip in the circular fastener at the proximal wrist/hand mounting area around x1148,y707. The other hand curls fingers under the near bare forearm rail between the elbow and wrist, with the thumb over the rail and open internal space framing the contact. It contacts the mid-frame, not the robot palm or distal wrist. The visible skin/tool/metal contact boundaries are distinct; this local contact pass does not establish the hidden support wrist route."
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "fail",
+      "observability": "partial",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The face/hair, robot chassis, two work hands, whole detached robot arm, separate elbow/frame/wrist and driver endpoint all share the original frame, and the repaired machine/contact details are readable. The support wrist-to-forearm route required by the explicit continuity clause remains partly behind the mechanical rail/actuator. Whole-scene visibility therefore fails even though the targeted robot and contact components are visible."
+    },
+    "rr_arm_contact_topology_object_class_legible": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "evidence": "At full-frame thumbnail and native scale the separate assembly reads as a manufactured robot arm with upper segment, large elbow, open metal forearm, wrist and mechanical hand beside a distinct robot chassis. It is not merely scattered metal or a human arm covering."
+    },
+    "rr_arm_contact_topology_gross_structure_coherent": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The upper shell joins a large round elbow, its open forearm rail/cylinder assembly continues to a distinct wrist collar and articulated hand. The major mechanical structure is connected and coherent; surface wear and bolt differences are incidental."
+    },
+    "rr_arm_contact_topology_intended_interaction_matches": {
+      "status": "pass",
+      "observability": "visible",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "evidence": "The woman holds a driver whose visible tip meets the wrist-region fastener while the other hand stabilizes the exposed mid-forearm frame on bench supports. Both repair targets remain present and active in the same image; contact was not transferred to the robot palm or removed. This interaction match does not waive the separate full human-chain requirement."
+    },
+    "rr_arm_contact_topology_contact_anatomy_coherent": {
+      "status": "fail",
+      "observability": "partial",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The visible driver grip, seated tip and supporting fingers on the bare rail are coherent with distinct boundaries. The complete support-hand wrist/forearm connection is hidden behind the frame between the sleeve patch and the visible palm/fingers, so the testcase requirement for both principal human hand/arm chains is not fully observable. This is an observability failure, not a diagnosis of impossible unseen anatomy."
+    }
+  },
+  "technical_qualification": "fail",
+  "failed_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_visibility_and_projection",
+    "rr_arm_contact_topology_contact_anatomy_coherent"
+  ],
+  "local_repair_results": {
+    "robot_elbow_frame_wrist_topology": "pass",
+    "support_hand_on_exposed_mid_frame": "pass",
+    "driver_tip_fastener_contact": "pass",
+    "cradle_bench_support": "pass",
+    "complete_support_hand_chain": "UNOBSERVABLE_NOT_PASS"
+  },
+  "reference_appearance": {
+    "status": "supported_visible_resemblance",
+    "observability": "visible",
+    "evidence": "Dark eyes, short dark bob, separated wispy fringe and the portrait facial proportions remain recognizable in the working scene. Lighting, angle and expression differ; visible resemblance is an appearance observation, not identity proof or requester acceptance."
+  },
+  "whole_image_impression_before_control_labels": "A warmly lit workshop portrait of a woman working on a large detached industrial robot arm, with the robot chassis behind her work. The open frame, round elbow and tool point make the activity understandable. The gaze faces partly toward the viewer rather than demonstrating a precise procedural focus; the picture supports a quiet repair moment but does not prove successful repair or a prior incident.",
+  "artistic_observations": "The plain blue work shirt and subdued workshop keep face and machinery as the visual hierarchy. Human presence is warm and unforced; the weathered manufactured surfaces and visible tool contact make the scene feel inhabited. The hidden support wrist weakens full instruction fidelity despite strong local repair legibility.",
+  "control_calibration": {
+    "frozen_sensual": 1,
+    "observed": "Subtle warmth and portrait appeal support the repair; there is no added overt emphasis. This is a qualitative impression, not a numeric perceptual proof.",
+    "frozen_fetish": 0,
+    "observed_fetish": "No new fetish-directed treatment is added or inferred from machinery.",
+    "frozen_surreal": 0,
+    "observed_surreal": "The fictional robot belongs to requested mecha context; no separate surreal relationship is added."
+  },
+  "source_specific_native_qualification": 0,
+  "new_mecha_source_specific_pixel_status": "C08 and A12 were fully reviewed but not selected; no pixel qualification claimed for them.",
+  "requester_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "no_rerender": true,
+  "testcase_sha256": "be37fd9f2a2155b4e78ff332b31840370b978b956b9d2c0edc34d661b8cc704e"
+}

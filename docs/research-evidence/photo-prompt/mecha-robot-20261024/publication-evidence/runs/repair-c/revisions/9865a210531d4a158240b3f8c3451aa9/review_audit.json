@@ -1,0 +1,62 @@
+{
+  "generic": {
+    "schema_version": "photo-image-render-review-audit/v1",
+    "pack_id": "a9278e5f00019ade",
+    "status": "pass",
+    "qualification_status": "fail",
+    "technical_qualified": false,
+    "source_render_repair_contract_sha256": "0a4423061cefc55f159183158658664c7447716ceacc83726dee1bf0051d4415",
+    "reviewed_result_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/mecha-20261024-repair2-anchored-c/output/mecha-repair2-c.png",
+    "reviewed_result_sha256": "d9290ae4b637e694a8382bfcfc177499425e00b8ae12d62d9834cb36a4d617b8",
+    "failed_gate_ids": [
+      "rr_arm_contact_topology_contact_anatomy_coherent"
+    ],
+    "failures": [],
+    "boundary": "This audit validates a named review record and its exact generic hard-gate set. The reviewer supplies pixel judgments; the audit does not infer pixels or user preference."
+  },
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "a9278e5f00019ade",
+    "contract_version": "photo-embodiment-preflight/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "required_hard_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_body_ownership",
+        "status": "fail",
+        "evidence": "The tool hand is visibly continuous through its wrist and forearm into the screen-right sleeve, and the detached assembly is clearly robot-owned. The support fingers/palm at approximately x570-774,y681-816 and thumb x660-727,y590-633 contact the bare mid-frame. The support sleeve/skin patch at x491-592,y550-590 disappears behind the top rail and internal actuator; the complete support wrist-to-forearm contour is not traceable together. This required route is unobservable, not evidence of a hidden deformity."
+      },
+      {
+        "gate": "embodiment_joint_chain_and_reach",
+        "status": "fail",
+        "evidence": "The robot upper segment, large circular elbow at x192-425,y509-744, open frame x408-1009,y573-787 and separate wrist near x1006-1119,y692-830 form a distinct connected mechanical chain. The driver reach is clear. However the frozen complete human support-hand wrist/forearm route is partly behind the frame, so the complete combined joint/reach check cannot pass despite the robot-specific chain passing."
+      },
+      {
+        "gate": "embodiment_visibility_and_projection",
+        "status": "fail",
+        "evidence": "The face/hair, robot chassis, two work hands, whole detached robot arm, separate elbow/frame/wrist and driver endpoint all share the original frame, and the repaired machine/contact details are readable. The support wrist-to-forearm route required by the explicit continuity clause remains partly behind the mechanical rail/actuator. Whole-scene visibility therefore fails even though the targeted robot and contact components are visible."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "not_applicable",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user judgment has been received."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}

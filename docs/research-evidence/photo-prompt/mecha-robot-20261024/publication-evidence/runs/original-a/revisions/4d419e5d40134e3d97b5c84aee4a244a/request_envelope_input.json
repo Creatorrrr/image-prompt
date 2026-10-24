@@ -1,0 +1,66 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "request-ade9531b812f43b0a33513920a86352c",
+  "request_text": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+  "active_spans": [
+    {
+      "span_id": "topic",
+      "start": 65,
+      "end": 130,
+      "text": "서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉"
+    },
+    {
+      "span_id": "reference",
+      "start": 149,
+      "end": 160,
+      "text": "첨부한 이미지를 활용"
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c"
+      },
+      {
+        "id": "reference_portrait",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "mecha_antecedent",
+        "active_span_id": "topic",
+        "request_quote": {
+          "start": 76,
+          "end": 86,
+          "text": "이번에 반영한 주제"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "current-chat:previous-user-research-request",
+          "text": "[메카물 용어 외형 조사](chatgpt-conversation://6adb6fc3-d278-83ec-815b-82886efe83ae) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘. 대화 내용을 도구로 조회했을 때 전체 내용을 모두 볼 수 없었다면 크롬으로 보면 돼. 로그인해놨어.",
+          "sha256": "a525ffb0254c34e88c9ccc6619a4015c79519900a530817c7bdf6a8d45e2fb6a"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 13,
+          "text": "메카물 용어 외형 조사"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "The current elliptical topic refers to the mecha research requested in the immediately preceding user message. This is discovery context only."
+        }
+      }
+    ]
+  }
+}
