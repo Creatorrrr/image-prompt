@@ -62,3 +62,15 @@ private build/model/store copies may be removed after push verification. Saved
 pre-cleanup receipts retain exact original/copy hash checks; historical helpers
 that require removed temporary paths are archival procedures, not new live
 attestations after cleanup.
+
+## origin/main source union
+
+Pulled origin/main at `a7a71087ce2e49bc0296c7a7663397bc4f6fed5e` after the scoped source commit
+`e900a458c9ce3cd57977c821bacfa12a84f85378`. The module registration is a filename/kind union;
+all estate-management source additions and all romantic-comedy additions remain.
+Both complete parent corpora, catalog and policy reconstruct exactly. The merged
+corpus has 22,074 candidates, 16,871 bindings and 20,829 positive search records.
+The merged index reuses 20,724 vectors and adds 105 local document embeddings;
+full layout verification passed. The merged 53 source/retry tests pass; the six
+unchanged transport-recovery tests remain bound to identical helper bytes.
+The final dictionary and source-union receipts are in publication-evidence/.

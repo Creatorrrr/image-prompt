@@ -1,0 +1,82 @@
+{
+  "staged_tests": {
+    "evidence": "runtime-release/install.json",
+    "activated": false,
+    "reason": "Use a fixed reviewed release for all three arms while preserving concurrent default publications."
+  },
+  "stale_activation_rejected": {
+    "target": "runtime-release/successor.json",
+    "guard": "Installed default advanced; must rebase rather than overwrite it",
+    "CURRENT_writes": 0,
+    "default_selection_writes": 0
+  },
+  "second_data_build": {
+    "evidence": "runtime-default-release/successor.json",
+    "activated": false,
+    "reason": "Current default source later gained concurrent romcom source/binding updates."
+  },
+  "code_only_merge_rejected": {
+    "guard": "Concurrent data changed; merge sources before publishing",
+    "CURRENT_writes": 0,
+    "default_selection_writes": 0
+  },
+  "current_target": "runtime-r04-hold-rebased",
+  "rule": "All active unrelated source, binding, code and model data must survive unchanged; activate only after full validators and exact current-config compare.",
+  "final_result": {
+    "status": "installed_and_selected",
+    "verified_utc": "2026-10-24T00:37:58.057841+00:00",
+    "test_release": "runtime-release/successor.json",
+    "final_release": "runtime-r04-hold-rebased/successor.json",
+    "config": {
+      "schema": "photo-installed-h-f2/v1",
+      "policy": "photo-h-f2/v1",
+      "store_subdirectory": "h-f2-installed",
+      "generation_id": "7d6ced82dd73dbab01fc84770319b583a20a4e893bfe9c102c5bb82341eafeb5",
+      "native_generation_id": "0e0b1295bab55f295f9c7e58f865b612b8f24c57a665350ded7aab03850d9ff0",
+      "code_sha256": "d5d1e66c30d4569764d501637f6122dfa92a5c7f49b57be89a434891fa839ecf"
+    },
+    "full_install_validation": "runtime-r04-hold-rebased/install-active.json",
+    "runtime_check": "runtime-r04-hold-rebased/runtime-check.json",
+    "source_preservation": "runtime-r04-hold-rebased/final-source-preservation.json",
+    "maintenance_probes": "runtime-r04-hold-rebased/runtime-probes.json",
+    "prior_current_source_and_code_preserved": true,
+    "unchanged_kernel_from_prior_current": true,
+    "reviewed_R04_positive_to_diagnostic_changes": 1,
+    "final_positive_optional_records": 7,
+    "held_diagnostics": 1,
+    "binding_rows": 21,
+    "CURRENT_writes": 0
+  },
+  "previous_final_result": {
+    "status": "installed_and_selected",
+    "test_release": "runtime-release/successor.json",
+    "final_release": "runtime-final-release/successor.json",
+    "config": {
+      "schema": "photo-installed-h-f2/v1",
+      "policy": "photo-h-f2/v1",
+      "store_subdirectory": "h-f2-installed",
+      "generation_id": "ba9fcdc839a29e99ca3dab3ac83aba713665ed6ede9122f60af649042234f5e4",
+      "native_generation_id": "d99b7dc2af4eecadd1b25892cb3331144fcce88c997865cf0e3aa38ab787481c",
+      "code_sha256": "bb2643eb189138a6c89abd688ca5d4e2fe032b750550e464130cb2218a2ce639"
+    },
+    "full_install_validation": "runtime-final-release/install-active.json",
+    "prior_current_source_and_code_preserved": true,
+    "unchanged_kernel_from_prior_current": true,
+    "CURRENT_writes": 0
+  },
+  "post_retest_R04_hold": {
+    "first_hold_release": "runtime-r04-hold/successor.json",
+    "activation_rejected": true,
+    "reason": "Default advanced to concurrent mecha source and rank-anchor sampling kernel; stale activation guard preserved it.",
+    "rebase_baseline": {
+      "schema": "photo-installed-h-f2/v1",
+      "policy": "photo-h-f2/v1",
+      "store_subdirectory": "h-f2-installed",
+      "generation_id": "eeaa196d71346337f4c038dfe6b8165350bc6e7ae0e5392f0115cc6eed510471",
+      "native_generation_id": "90f52be44445da19263f9d2cc1b26001b1b4196d5fc330e1b89dd4df0307aded",
+      "code_sha256": "d5d1e66c30d4569764d501637f6122dfa92a5c7f49b57be89a434891fa839ecf"
+    },
+    "rebased_release": "runtime-r04-hold-rebased/successor.json",
+    "all_107_other_source_modules_and_prior_code_preserved": true
+  }
+}
