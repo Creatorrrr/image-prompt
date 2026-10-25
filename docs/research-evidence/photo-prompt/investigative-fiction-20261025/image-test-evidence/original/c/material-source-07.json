@@ -1,0 +1,122 @@
+{
+  "candidate_id": "cand_fce20fab2a86599eaec3311d8e45a8e8",
+  "realization_id": "base",
+  "source_sha256": "e6ee8aa769545fa45b31d96c79fbdf12d768b3c2295c2b3aaf0c39004a25797e",
+  "conditions": {},
+  "effects": {
+    "dimensions": [
+      "action",
+      "expression",
+      "pose",
+      "relationship"
+    ],
+    "properties": [
+      {
+        "dimension": "action",
+        "property": "body.action_configuration",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "pose",
+        "property": "body",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "relationship",
+        "property": "work_reference",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "expression",
+        "property": "eyes.gaze_direction",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "relationship",
+        "property": "interaction",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "pose",
+        "property": "body",
+        "target": "partner"
+      },
+      {
+        "dimension": "expression",
+        "property": "eyes.gaze_direction",
+        "target": "partner"
+      }
+    ]
+  },
+  "native_approval": false,
+  "native": {
+    "adoption": "optional",
+    "associated_profile_ids": [
+      "cand_f640de94272d50bcb83e10d93a943523"
+    ],
+    "components": [
+      {
+        "concept_units": [
+          "listener's pen is lowered without writing"
+        ],
+        "id": "component_1",
+        "minimum_realizations": 1
+      },
+      {
+        "concept_units": [
+          "listener's torso or face turns toward the declared speaker"
+        ],
+        "id": "component_2",
+        "minimum_realizations": 1
+      },
+      {
+        "concept_units": [
+          "shared material retains one anchor"
+        ],
+        "id": "component_3",
+        "minimum_realizations": 1
+      },
+      {
+        "concept_units": [
+          "each hand has one role"
+        ],
+        "id": "component_4",
+        "minimum_realizations": 1
+      }
+    ],
+    "confusion_boundaries": [
+      "partial or hidden contact",
+      "unrelated document anchors"
+    ],
+    "member_candidates": [
+      {
+        "adoption": "optional",
+        "binding_id": "bind_44135ace34e857e6af25d223c05a3fb0",
+        "candidate_id": "cand_44135ace34e857e6af25d223c05a3fb0",
+        "requirements": {}
+      }
+    ],
+    "profile_activation": "independent_request_evidence_only",
+    "relations": [
+      {
+        "id": "ia_listening_reference_r1",
+        "object": "speaker",
+        "subject": "listener",
+        "type": "oriented_toward"
+      },
+      {
+        "id": "ia_listening_reference_r2",
+        "object": "lowered_pen",
+        "subject": "listener_hand",
+        "type": "holds"
+      },
+      {
+        "id": "ia_listening_reference_r3",
+        "object": "shared_anchor",
+        "subject": "speaker",
+        "type": "refers_to"
+      }
+    ],
+    "source_sha256": "aece670aae31c5d5fc54694b671ed9e5524e8044867955e70350b97ff48cd3a7"
+  }
+}

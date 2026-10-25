@@ -1,0 +1,61 @@
+{
+  "schema": "independent-photo-pixel-testcase-review/v1",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/investigative-fiction-retest-20261025-c/result.png",
+  "image_sha256": "31cf4fe32bad7a3893a1cd62653f5ec664084723b1635ac81a8a81bea9938c12",
+  "prospective_testcase_sha256": "d0f33d06a42781aafb1fbdbb9654149b02fbc29ef7d4ca7b7aa81aadcadbfa3c",
+  "reviewer": "Codex Arm C",
+  "reviewed_scales": [
+    "thumbnail",
+    "native"
+  ],
+  "inspection_manifest": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/investigative-fiction-retest-20261025-c/review-crop-manifest.json",
+  "criteria": [
+    {
+      "id": "separate_prop_roles",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The investigator holds a printed person portrait upright toward the attendant, an open notebook lies under the pen, and a separate map fills the answering side of the counter. These remain three recognizable carriers with distinct roles."
+    },
+    {
+      "id": "actor_relative_hand_roles",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "With the investigator torso facing the capture view, the photograph is in her anatomical left hand at image-right and the pen is in her anatomical right hand at image-left. Both hands connect through their own visible wrists/cuffs; the pointing hand belongs to the attendant."
+    },
+    {
+      "id": "paused_pen_gap",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The held fountain-pen nib projects above the notebook with a visible separated shadow/air relation in pen-tip-native-crop.png; its nib makes no continuous ink stroke into the page at the shutter. The writing hand rests in a paused grip."
+    },
+    {
+      "id": "exact_pier_contact",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The attendant index fingertip meets the square terminal landing at the outer end of a narrow pier extending from the mapped shoreline into blue water. The pier neck and terminal outline are visible together, rather than a nearby route fork."
+    },
+    {
+      "id": "gaze_to_same_target",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The eyes are visibly lowered toward the counter rather than the attendant face, but the pupil/eye orientation in gaze-crop.png does not resolve a unique line to the fingertip on the distant terminal landing. Looking down generally is insufficient for the unchanged exact same-target criterion."
+    },
+    {
+      "id": "waterfront_last_ferry_context",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "A ticket-booth counter, empty boarding walkway and water/landing are visible at dusk. A closure notice supports the end-of-service impression; no claim about an actual ferry schedule is inferred."
+    },
+    {
+      "id": "reference_face_hair",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The investigator retains a dark jaw-length bob with separated wispy fringe, rounded/soft facial outline, large dark eyes, fine brows and soft lips consistent with the supplied appearance. This is visible appearance continuity only."
+    }
+  ],
+  "strict_result": "fail",
+  "passed": 6,
+  "total": 7,
+  "failure_policy": "The exact gaze-to-contacted-pier criterion stays fail when only general downward direction is supported. No quality regeneration is authorized or performed.",
+  "user_acceptance": "pending"
+}

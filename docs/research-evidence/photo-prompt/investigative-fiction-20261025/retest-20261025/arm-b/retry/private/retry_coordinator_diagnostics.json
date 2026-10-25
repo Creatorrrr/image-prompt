@@ -1,0 +1,109 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "93b9f2294b713619",
+      "validation_context_version": "photo-validation-context/v1",
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": null,
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "An investigative-fiction photograph"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "examining physical evidence"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a human investigator"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "Use the supplied portrait as the visible face and hair appearance reference for the investigator"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "preserving the rounded face, dark brown eyes and chin-length dark bob with a wispy fringe"
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "93b9f2294b713619",
+      "status": "pass",
+      "runtime_prompt_id": "3961856ba17d6ae9",
+      "source_intent_lock_sha256": "7e6b5bbdf29b259334d67215df8db78bdd5b6f8f27539cc1fe1673f87599a88c",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": null,
+    "contract_failures": [],
+    "repair": null,
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "93b9f2294b713619",
+      "contract_version": "photo-embodiment-preflight/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 5,
+      "required_hard_gates": [
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_support_and_balance",
+          "status": "fail",
+          "evidence": "A caster and a short platform corner are visible, while the crate base and most of the platform are cropped. Both actors lower legs/feet are outside the frame. The complete reviewed support arrangement is not assessable together; this is a visibility limitation, not a diagnosis of implausible hidden anatomy."
+        },
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "Face, camera ownership, left-hand scale contact and clerk handle relation are readable together. The planned two severed seal endpoints and clear gap remain ambiguous, and the full support endpoints are cropped, so the entire consequential relation set cannot pass."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": "No requesting-user judgment has been received."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

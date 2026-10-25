@@ -257,3 +257,14 @@ or whole-scene pixel qualification. Research, installed exposure, prompt use
 and original pixels remain separate evidence layers.
 
 The [campus-life extension](campus-life-semantics.md) registers 100 complete optional bilingual visual sources and 23 excluded diagnostics, with 124 semantic cards, 356 advisory routes and 220 bindings. Requester topic scope, agent-owned staging, complete source conditions and saved-pixel qualification remain separate.
+
+
+The [investigative-fiction extension](investigative-fiction-visual-semantics.md)
+retains 339 advisory routes, adds 66 complete optional bilingual visual sources,
+47 excluded context/held/diagram diagnostics and 132 optional bindings, and
+reuses three adjacent sources with explicit scope limits. Five wording fixes
+preserve existing guards, effects and provenance. People, document marks,
+traces, camera targets, scales, contacts and represented images keep distinct
+owners and endpoints. Registration, installed exposure, prompt adoption and
+saved pixels remain separate evidence; visual proxies do not establish legal,
+scientific or narrative conclusions.

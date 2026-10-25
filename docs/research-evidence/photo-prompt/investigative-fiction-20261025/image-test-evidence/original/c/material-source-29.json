@@ -1,0 +1,218 @@
+{
+  "candidate_id": "cand_c7c43e4955a25d02a113d21d1f65e467",
+  "realization_id": "base",
+  "source_sha256": "1202a1244a37de1a6aa8cdf638d8e5bd20826bde1fce8c048e7dd083ff4a9c22",
+  "conditions": {},
+  "effects": {
+    "dimensions": [],
+    "properties": []
+  },
+  "native_approval": false,
+  "native": {
+    "activation": {
+      "exact_terms": [
+        "small tables create a shared cafe seating area; a paper magazine lies partly closed on the table; the subject pauses reading and raises the gaze from the open page; an environmental portrait keeps the subject table and another seating area visible",
+        "작은 다방 테이블; 접힌 잡지; 페이지에서 시선 들기; 공간 속 인물"
+      ],
+      "requires_adult_character": false,
+      "semantic_discovery_requires_component_evidence": true
+    },
+    "authored_components": {
+      "components": [
+        {
+          "evidence_field": "component_1_phrase",
+          "evidence_terms": [
+            "small tables create a shared cafe seating area"
+          ],
+          "id": "component_1",
+          "instruction": "Keep this relation visible: small tables create a shared cafe seating area",
+          "match_terms": [
+            "small tables create a shared cafe seating area"
+          ],
+          "min_content_words": 3,
+          "render_gate": {
+            "description": "The same saved image visibly shows: small tables create a shared cafe seating area",
+            "id": "vo_opening_later_cafe_reading_1",
+            "review_scale": "thumbnail"
+          }
+        },
+        {
+          "evidence_field": "component_2_phrase",
+          "evidence_terms": [
+            "a paper magazine lies partly closed on the table"
+          ],
+          "id": "component_2",
+          "instruction": "Keep this relation visible: a paper magazine lies partly closed on the table",
+          "match_terms": [
+            "a paper magazine lies partly closed on the table"
+          ],
+          "min_content_words": 3,
+          "render_gate": {
+            "description": "The same saved image visibly shows: a paper magazine lies partly closed on the table",
+            "id": "vo_opening_later_cafe_reading_2",
+            "review_scale": "native"
+          }
+        },
+        {
+          "evidence_field": "component_3_phrase",
+          "evidence_terms": [
+            "the subject pauses reading and raises the gaze from the open page"
+          ],
+          "id": "component_3",
+          "instruction": "Keep this relation visible: the subject pauses reading and raises the gaze from the open page",
+          "match_terms": [
+            "the subject pauses reading and raises the gaze from the open page"
+          ],
+          "min_content_words": 3,
+          "render_gate": {
+            "description": "The same saved image visibly shows: the subject pauses reading and raises the gaze from the open page",
+            "id": "vo_opening_later_cafe_reading_3",
+            "review_scale": "native"
+          }
+        },
+        {
+          "evidence_field": "component_4_phrase",
+          "evidence_terms": [
+            "an environmental portrait keeps the subject table and another seating area visible"
+          ],
+          "id": "component_4",
+          "instruction": "Keep this relation visible: an environmental portrait keeps the subject table and another seating area visible",
+          "match_terms": [
+            "an environmental portrait keeps the subject table and another seating area visible"
+          ],
+          "min_content_words": 3,
+          "render_gate": {
+            "description": "The same saved image visibly shows: an environmental portrait keeps the subject table and another seating area visible",
+            "id": "vo_opening_later_cafe_reading_4",
+            "review_scale": "native"
+          }
+        }
+      ],
+      "contract_version": "photo-authored-visual-components/v1"
+    },
+    "category": "opening_era_visible_form_relation",
+    "composition_instruction": "Keep this relation visible: small tables create a shared cafe seating area Keep this relation visible: a paper magazine lies partly closed on the table Keep this relation visible: the subject pauses reading and raises the gaze from the open page Keep this relation visible: an environmental portrait keeps the subject table and another seating area visible",
+    "concept_candidate": {
+      "concept_terms": [
+        "small tables create a shared cafe seating area",
+        "a paper magazine lies partly closed on the table",
+        "the subject pauses reading and raises the gaze from the open page",
+        "an environmental portrait keeps the subject table and another seating area visible"
+      ]
+    },
+    "evidence_requirements": {
+      "component_1_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "small tables create a shared cafe seating area"
+        ]
+      },
+      "component_2_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "a paper magazine lies partly closed on the table"
+        ]
+      },
+      "component_3_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "the subject pauses reading and raises the gaze from the open page"
+        ]
+      },
+      "component_4_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "an environmental portrait keeps the subject table and another seating area visible"
+        ]
+      }
+    },
+    "reject_substitutes": [
+      "모던걸=도덕적 성격",
+      "에스프레소 머신 기본값",
+      "모든 실내를 아르데코로"
+    ],
+    "render_gates": [
+      {
+        "description": "The same saved image visibly shows: small tables create a shared cafe seating area",
+        "id": "vo_opening_later_cafe_reading_1",
+        "review_scale": "thumbnail"
+      },
+      {
+        "description": "The same saved image visibly shows: a paper magazine lies partly closed on the table",
+        "id": "vo_opening_later_cafe_reading_2",
+        "review_scale": "native"
+      },
+      {
+        "description": "The same saved image visibly shows: the subject pauses reading and raises the gaze from the open page",
+        "id": "vo_opening_later_cafe_reading_3",
+        "review_scale": "native"
+      },
+      {
+        "description": "The same saved image visibly shows: an environmental portrait keeps the subject table and another seating area visible",
+        "id": "vo_opening_later_cafe_reading_4",
+        "review_scale": "native"
+      }
+    ],
+    "required_evidence_fields": [
+      "component_1_phrase",
+      "component_2_phrase",
+      "component_3_phrase",
+      "component_4_phrase"
+    ],
+    "runtime_expression": {
+      "default_mode": "definition_with_optional_label",
+      "forbidden_prompt_terms": [],
+      "prompt_label_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "semantics": {
+      "claim_limits": [
+        "Visible components do not authenticate an event date, local adoption, building original state, person identity or social role."
+      ],
+      "component_semantics": {
+        "groups": [
+          {
+            "any_terms": [
+              "small tables create a shared cafe seating area"
+            ],
+            "id": "component_1"
+          },
+          {
+            "any_terms": [
+              "a paper magazine lies partly closed on the table"
+            ],
+            "id": "component_2"
+          },
+          {
+            "any_terms": [
+              "the subject pauses reading and raises the gaze from the open page"
+            ],
+            "id": "component_3"
+          },
+          {
+            "any_terms": [
+              "an environmental portrait keeps the subject table and another seating area visible"
+            ],
+            "id": "component_4"
+          }
+        ],
+        "minimum_component_groups": 4,
+        "required_group_ids": [
+          "component_1",
+          "component_2",
+          "component_3",
+          "component_4"
+        ]
+      },
+      "contrast_examples": [
+        "모던걸=도덕적 성격",
+        "에스프레소 머신 기본값",
+        "모든 실내를 아르데코로"
+      ],
+      "definition": "One photographic composition connects small tables create a shared cafe seating area, a paper magazine lies partly closed on the table, the subject pauses reading and raises the gaze from the open page, an environmental portrait keeps the subject table and another seating area visible.",
+      "paraphrase_examples": [
+        "Compose a coherent scene in which small tables create a shared cafe seating area, while a paper magazine lies partly closed on the table, while the subject pauses reading and raises the gaze from the open page, while an environmental portrait keeps the subject table and another seating area visible."
+      ]
+    }
+  }
+}

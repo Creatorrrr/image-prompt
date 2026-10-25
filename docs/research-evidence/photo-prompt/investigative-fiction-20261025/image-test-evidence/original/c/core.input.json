@@ -1,0 +1,290 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "0deddf27303cf213f7e4ead760239a2f722b5257f3f1ac88a4617f2cb966681d",
+  "interpreted_intent": "Requester asks for an independently randomized investigative-fiction concept, a photographic prompt using the supplied image, generation and a test of topic realization. The reviewed prior-user topic is investigative fiction. Random seed 6170608447312376456 selected ferry-attendant canvassing from four independently authored interpersonal-investigation concepts. The entire ferry case, professional role, two-person staging, search portrait, diagram and interrupted note are authorial choices, not facts about the reference person or requester locks. Compared with a bare interview desk, the ferry booth makes this witness's opportunity to observe readable; compared with a generic directions exchange, the inquiry portrait and case note make the question concrete. The viewer should feel the significance of a specific lead just being understood. Sensual 1 subtly supports the investigator's personal presence through natural face light and a relaxed collar; fetish 0 and surreal 0 add no treatment, creativity 1 keeps the scenario grounded and locally variable. The printed portrait identifies a separate fictional inquiry target; no real identity, age, temperament or biography is inferred from the reference. Camera mechanics serve the shared information route and its contact visibility.",
+  "subject": "An investigator guided by the reference's visible facial appearance and hair, interviewing a fictional ferry attendant.",
+  "setting": "Closed riverside ferry ticket booth at dusk; invented and replaceable.",
+  "event": "An investigator seeks case information while an attendant indicates a route and she pauses her note to follow it.",
+  "visual_priorities": [
+    "A purposeful inquiry links a shown portrait, attentive investigator and responding witness.",
+    "The attendant's continuous arm ends in a fingertip touching one precise diagram branch, with the investigator following it.",
+    "Both distinct participants, their faces, held portrait and shared counter materials remain visible together.",
+    "The ferry booth and gangway give the witness's explanation a concrete local basis."
+  ],
+  "baseline_prompt_en": "A photographic scene of an active investigation, caught at the quiet turn when a witness finally gives useful directions. Inside a modest riverside ferry ticket booth after the final crossing, an investigator is seeking information about a case. She interviews the ferry attendant across a narrow scuffed wooden counter. The investigator's visible facial appearance follows the supplied reference: its rounded facial outline, large dark eyes, fine straight brows and soft lips; her hair follows the reference's dark chin-length bob with wispy separated fringe. The fictional role, clothing and circumstances belong to this scene. She wears a plain charcoal jacket over an ivory shirt, her short hair tucked loosely behind one ear, with soft window light bringing a restrained warmth to her face and the small gap at her collar. She is fully engaged in the answer, her lips slightly parted and her brow concentrated. Her left hand holds a large printed portrait photograph upright by its lower corner, turned toward the attendant and obliquely visible to us. Her right hand has paused a pen just above a small open case notebook. The photograph is a clear head-and-shoulders image of a different person, the subject of her inquiry. Beside the notebook lies a simple ferry-landing diagram, its few bold black lines showing a river, one dock and a forked footpath. The attendant, in a worn navy work sweater, leans forward from the opposite side of the counter. His right index fingertip touches the outer branch of that diagram while his other fingers curl clear of the page; his forearm runs continuously back to his own sleeve. He is in mid-explanation, mouth open, eyes on the investigator. Her gaze drops toward the exact place he indicates, and the poised pen shows that his correction has interrupted her earlier note. Their separate hands, the portrait surface, notebook and fingertip contact remain legible together. Through the side window just beyond the attendant, an empty gangway and its shut gate lead down to the river, visibly tying his workplace to the route he describes. Faded ticket slots and a small stack of unused tickets identify the booth. The photograph's emotional center is the investigator absorbing a specific lead from someone who knows this place. A horizontal medium two-shot from the near corner of the counter keeps both faces in three-quarter view and the shared documents large in the lower center. Natural dusk light from the river window mixes with a modest warm desk lamp, giving skin, paper and worn wood tangible texture. Measured depth of field holds both participants and their joined point of attention clear, while the far water softens. The scene feels observed, personal and quietly urgent.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The exact preceding human topic quote identifies investigative fiction; active case information seeking is its broad visible realization, with the ferry interview staged independently.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 컨셉",
+      "source_text": "주제에 어울리는 랜덤한 컨셉",
+      "basis": "request_context",
+      "resolution": "Choose a fitting concept by a recorded random draw; its particular staging remains agent-owned.",
+      "sources": []
+    },
+    {
+      "term": "첨부 이미지 활용",
+      "source_text": "첨부한 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "Use the supplied image only for observed face and hair cues on the independently invented protagonist; it establishes no real identity, age, occupation, personality or biography.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "investigation_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "active investigation"
+      },
+      {
+        "anchor_id": "information_seeker",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "subject",
+        "prompt_evidence": "an investigator is seeking information"
+      },
+      {
+        "anchor_id": "active_case_inquiry",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "event",
+        "prompt_evidence": "seeking information about a case"
+      },
+      {
+        "anchor_id": "randomized_concept",
+        "source_text": "주제에 어울리는 랜덤한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "photographic scene"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "The investigator's visible facial appearance follows the supplied reference"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "appearance",
+        "target": "protagonist",
+        "property": "appearance.face.reference_visual_cues",
+        "prompt_evidence": "its rounded facial outline, large dark eyes, fine straight brows and soft lips"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "appearance",
+        "target": "protagonist",
+        "property": "appearance.hair.reference_visual_cues",
+        "prompt_evidence": "her hair follows the reference's dark chin-length bob with wispy separated fringe"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "count",
+      "role",
+      "age",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    },
+    {
+      "assertion_id": "subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "an investigator is seeking information"
+      }
+    },
+    {
+      "assertion_id": "protagonist_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "protagonist",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "owner_phrase": "The investigator's visible facial appearance follows the supplied reference"
+      }
+    },
+    {
+      "assertion_id": "protagonist_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "protagonist"
+      },
+      "evidence": {
+        "owner_phrase": "The investigator's visible facial appearance follows the supplied reference"
+      }
+    },
+    {
+      "assertion_id": "face_reference",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "appearance.face.reference_visual_cues",
+        "value_type": "reference_visual_cues/v1",
+        "value": "rounded facial outline, large dark eyes, fine straight brows and soft lips",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "its rounded facial outline, large dark eyes, fine straight brows and soft lips"
+      }
+    },
+    {
+      "assertion_id": "hair_reference",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "appearance.hair.reference_visual_cues",
+        "value_type": "reference_visual_cues/v1",
+        "value": "dark chin-length bob with wispy separated fringe",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "her hair follows the reference's dark chin-length bob with wispy separated fringe"
+      }
+    },
+    {
+      "assertion_id": "reference_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "protagonist",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"14b32208b5de2d203b59bc642afcd63ab0b66efd0c8c8efe2b432b21c3b594cf\",\"request_envelope_sha256\":\"3f4e01d9d0b11ed0be5cbebe75aff1f930461f08158132d454d11b610e27ed96\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"face_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.face.reference_visual_cues\",\"target\":\"protagonist\",\"value\":{\"type\":\"reference_visual_cues/v1\",\"value\":\"rounded facial outline, large dark eyes, fine straight brows and soft lips\"}},{\"assertion_id\":\"hair_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.hair.reference_visual_cues\",\"target\":\"protagonist\",\"value\":{\"type\":\"reference_visual_cues/v1\",\"value\":\"dark chin-length bob with wispy separated fringe\"}}],\"reviewed_input_ids\":[\"request\",\"reference\",\"prior_topic_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "scope_phrase": "The investigator's visible facial appearance follows the supplied reference"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic fiction",
+    "family": "observational dusk investigative drama",
+    "evidence": [
+      "skin, paper and worn wood tangible texture",
+      "Natural dusk light from the river window mixes with a modest warm desk lamp"
+    ]
+  },
+  "variation_key": "C-ferry-6170608447312376456"
+}

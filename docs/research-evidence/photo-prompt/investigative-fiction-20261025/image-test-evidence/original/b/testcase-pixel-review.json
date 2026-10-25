@@ -1,0 +1,93 @@
+{
+  "schema": "investigative-fiction-pixel-test/v1",
+  "arm": "b",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/investigative-fiction-20261025-b/archive-loading-bay.png",
+  "image_sha256": "7487ca66e9774e7b32c5009523980de8d395133277c50c4e9c4cebc55a798d74",
+  "reviewer": "Codex arm B",
+  "direct_inspection": "Actual saved PNG inspected using view_image; no cross-arm input.",
+  "prospective_testcase_sha256": "e9a4ff7f06365545333c6b2529e60c8e4a074c1b79682e8eaa8520d2d694ecde",
+  "gates": [
+    {
+      "id": "topic_realization",
+      "criterion": "An inhabited scene of active investigation is readable from evidence documentation, the damaged closure and stopped delivery; warehouse handling alone fails.",
+      "kind": "strict_scene",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The primary subject holds a camera and a scale against the crate closure while a separate clerk pauses the trolley; evidence marker and controlled loading bay make active investigative documentation readable."
+    },
+    {
+      "id": "reference_face_hair",
+      "criterion": "The primary investigator retains the supplied portrait visible face shape, dark eyes and dark bob/fringe at a usable review scale; this is appearance correspondence, not identity.",
+      "kind": "reference",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The investigator retains the supplied rounded cheek/face impression, dark eyes, chin-length dark bob and wispy fringe in a clear three-quarter face view. This supports appearance guidance, not real identity."
+    },
+    {
+      "id": "camera_owner_target",
+      "criterion": "The investigator owns the compact camera in the right hand and aims it toward the same broken seal being inspected.",
+      "kind": "relationship",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Her upper right hand visibly owns the compact camera; her arm chain is continuous and the camera points toward the crate-closure work area below it, shared with the scale."
+    },
+    {
+      "id": "scale_contact",
+      "criterion": "The investigator left hand places a measuring scale flat on the crate directly below the seal break without hiding the gap.",
+      "kind": "relationship",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The lower left gloved hand visibly grips the short checker scale and lays its long edge against the crate just below the red seal/hasp area; the glove does not cover the seal."
+    },
+    {
+      "id": "broken_seal_state",
+      "criterion": "Both severed red security-seal ends and their gap are visible together at the crate hasp; a continuous loop or a merely loose strip fails.",
+      "kind": "relationship",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "Red seal pieces and a ragged-looking left end are visible at the hasp, but a matched pair of severed tips with a distinct gap between them cannot be established. The red strip near the hasp may remain connected; a loose/bent strap is a competing reading."
+    },
+    {
+      "id": "clerk_stabilization",
+      "criterion": "A distinct receiving clerk has both hands on the trolley handle and waits while the investigator documents the crate.",
+      "kind": "relationship",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "A separate receiving clerk behind the crate has both gloved hands around the same metal trolley handle and looks toward the work area."
+    },
+    {
+      "id": "support_visibility",
+      "criterion": "Crate rests on trolley platform and trolley wheels contact floor; both actors have plausible standing support and connected arm ownership.",
+      "kind": "embodiment",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "A trolley caster and platform corner are visible, but the crate base/platform relation is largely cropped and both actors feet are outside the saved frame. The testcase requires these support endpoints to be assessable together; no bodily defect is diagnosed."
+    },
+    {
+      "id": "single_frame_observability",
+      "criterion": "Reference-guided face, camera ownership, scale-to-crate contact, seal ends and clerk handle relation can all be judged in the saved frame.",
+      "kind": "visibility",
+      "pass_requires": "Every described component and connection visible together. Partial or unobservable evidence fails the full gate.",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The face, camera grip, scale contact and clerk handle are readable in this frame; the required two cut tips and clear gap remain ambiguous, so the complete gate does not pass."
+    }
+  ],
+  "pass_count": 5,
+  "fail_count": 3,
+  "strict_whole_scene": "fail",
+  "topic_visibility": "pass",
+  "retained_material_inspiration": 0,
+  "new_source_native_selection": 0,
+  "comparison_baseline_available": false,
+  "user_acceptance": "pending",
+  "quality_regeneration_calls": 0,
+  "causal_improvement_claim": "Not established: one after-integration realization, no before/after image baseline and no newly selected source."
+}

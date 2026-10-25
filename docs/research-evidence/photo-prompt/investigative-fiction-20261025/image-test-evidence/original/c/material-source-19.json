@@ -1,0 +1,166 @@
+{
+  "candidate_id": "cand_7c02c4bb2ed35cf285d35ff34f339ae9",
+  "realization_id": "base",
+  "source_sha256": "7ac8c293d82a94c1db0abbe3f1fa41da7dc077a894e749385ef5fb81ef97fe75",
+  "conditions": {},
+  "effects": {
+    "dimensions": [],
+    "properties": []
+  },
+  "native_approval": false,
+  "native": {
+    "activation": {
+      "exact_terms": [
+        "texture-preserving local skin-tone evening",
+        "피부결 보존 국부 피부 톤 정리"
+      ],
+      "requires_adult_character": false,
+      "semantic_discovery_requires_component_evidence": false
+    },
+    "authored_components": {
+      "components": [
+        {
+          "evidence_field": "component_1_phrase",
+          "evidence_terms": [
+            "skin color transitions remain locally even"
+          ],
+          "id": "component_1",
+          "instruction": "Realize this visible property on its declared owner: skin color transitions remain locally even",
+          "match_terms": [
+            "skin color transitions remain locally even"
+          ],
+          "min_content_words": 3,
+          "render_gate": {
+            "description": "skin color transitions remain locally even. Inspect its declared owner in the native image; partial or substituted evidence fails.",
+            "id": "vo_pe_texture_preserving_tone_evening_relation_1",
+            "review_scale": "native"
+          }
+        },
+        {
+          "evidence_field": "component_2_phrase",
+          "evidence_terms": [
+            "fine skin texture remains visible without facial-geometry alteration"
+          ],
+          "id": "component_2",
+          "instruction": "Realize this visible property on its declared owner: fine skin texture remains visible without facial-geometry alteration",
+          "match_terms": [
+            "fine skin texture remains visible without facial-geometry alteration"
+          ],
+          "min_content_words": 3,
+          "render_gate": {
+            "description": "fine skin texture remains visible without facial-geometry alteration. Inspect its declared owner in the native image; partial or substituted evidence fails.",
+            "id": "vo_pe_texture_preserving_tone_evening_relation_2",
+            "review_scale": "native"
+          }
+        }
+      ],
+      "contract_version": "photo-authored-visual-components/v1"
+    },
+    "category": "scoped_photographic_editing_effect",
+    "composition_instruction": "Realize this visible property on its declared owner: skin color transitions remain locally even Realize this visible property on its declared owner: fine skin texture remains visible without facial-geometry alteration",
+    "concept_candidate": {
+      "affected_dimensions": [
+        "appearance",
+        "color"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "skin.texture",
+          "target": "main_subject"
+        },
+        {
+          "dimension": "color",
+          "property": "skin.color",
+          "target": "main_subject"
+        }
+      ],
+      "concept_terms": [
+        "texture-preserving local skin-tone evening",
+        "피부결 보존 국부 피부 톤 정리",
+        "skin color transitions remain locally even",
+        "fine skin texture remains visible without facial-geometry alteration"
+      ],
+      "core_assertion_discovery": true
+    },
+    "evidence_requirements": {
+      "component_1_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "skin color transitions remain locally even"
+        ]
+      },
+      "component_2_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "fine skin texture remains visible without facial-geometry alteration"
+        ]
+      }
+    },
+    "reject_substitutes": [
+      "피부색 교체·얼굴 형상 변경·균일 플라스틱 피부·화장품 도포로 대체하지 않음"
+    ],
+    "render_gates": [
+      {
+        "description": "skin color transitions remain locally even. Inspect its declared owner in the native image; partial or substituted evidence fails.",
+        "id": "vo_pe_texture_preserving_tone_evening_relation_1",
+        "review_scale": "native"
+      },
+      {
+        "description": "fine skin texture remains visible without facial-geometry alteration. Inspect its declared owner in the native image; partial or substituted evidence fails.",
+        "id": "vo_pe_texture_preserving_tone_evening_relation_2",
+        "review_scale": "native"
+      }
+    ],
+    "required_evidence_fields": [
+      "component_1_phrase",
+      "component_2_phrase"
+    ],
+    "runtime_expression": {
+      "default_mode": "definition_with_optional_label",
+      "forbidden_prompt_terms": [],
+      "prompt_label_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "semantics": {
+      "claim_limits": [
+        "This is a depicted effect; it does not establish capture hardware, editing software, source layers or processing history.",
+        "Every component belongs to the declared owner and must pass independently; partial evidence fails.",
+        "피부색 교체·얼굴 형상 변경·균일 플라스틱 피부·화장품 도포로 대체하지 않음"
+      ],
+      "component_semantics": {
+        "groups": [
+          {
+            "any_terms": [
+              "skin color transitions remain locally even"
+            ],
+            "id": "component_1"
+          },
+          {
+            "any_terms": [
+              "fine skin texture remains visible without facial-geometry alteration"
+            ],
+            "id": "component_2"
+          }
+        ],
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ]
+      },
+      "contrast_examples": [
+        "피부색 교체·얼굴 형상 변경·균일 플라스틱 피부·화장품 도포로 대체하지 않음"
+      ],
+      "definition": "skin color transitions remain locally even; fine skin texture remains visible without facial-geometry alteration",
+      "paraphrase_examples": [
+        "local skin-tone evening with readable fine skin texture",
+        "미세 피부결을 남긴 국부 톤 정리"
+      ],
+      "visual_components": [
+        "skin color transitions remain locally even",
+        "fine skin texture remains visible without facial-geometry alteration"
+      ]
+    }
+  }
+}
