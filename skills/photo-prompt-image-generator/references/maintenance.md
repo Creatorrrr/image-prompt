@@ -268,4 +268,3 @@ traces, camera targets, scales, contacts and represented images keep distinct
 owners and endpoints. Registration, installed exposure, prompt adoption and
 saved pixels remain separate evidence; visual proxies do not establish legal,
 scientific or narrative conclusions.
-

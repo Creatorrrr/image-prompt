@@ -241,4 +241,3 @@ Exploitation can occur without smuggling or crossing borders; records/control ma
 한계: 제244조의3 현행 전문을 이 URL로 확인한 것이 아님. 권리 고지 전문·절차·양식은 구현 관할 확정 후 확인.
 
 접근 수준: primary legal search excerpt for Article 244; Article 244-3 full current text not verified
-
