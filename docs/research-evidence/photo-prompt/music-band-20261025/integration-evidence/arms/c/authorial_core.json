@@ -1,0 +1,155 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "11c866e8afca56485eb70c938d6dd422ae1c91aac8b8c7ecf492f151361dccaf",
+  "interpreted_intent": "The requester asks for an independently chosen random concept that visibly tests the current music topic and uses the attached portrait. The topic antecedent is the exact prior human quote 음악물. Agent-owned random draw 0 selected a home electronic-music producer capturing a small synthesizer loop before dawn. This is fictional staging; the portrait establishes no identity, age or biography. WHO: one person attending to a musical phrase, WHERE: a modest recording desk whose connected devices explain the action, HOW: a nearby observer sees face and actual controls together, WHY NOW: held keys and a turned filter meet an already-visible audio arrangement. I compared a screen-centered editing scene with a tactile keys-and-knob scene; the latter gives the body an understandable purpose and preserves the portrait presence while making music-making legible. Saved sensual 1 supports quiet human attraction through ease, warmth and absorbed presence; fetish 0, surreal 0 and creativity 1 retain an ordinary, restrained scene. The specific synthesizer, desk, time, sleeves and hands are replaceable authorial choices, not requester locks.",
+  "subject": "A person using the supplied portrait as visible face-and-hair guidance.",
+  "setting": "An agent-chosen compact home recording room at dawn.",
+  "event": "A music-making moment, authored as holding synth keys while turning a filter.",
+  "visual_priorities": [
+    "The portrait-guided face remains readable in the same inhabited frame as active music creation.",
+    "Each hand belongs to the same seated person and makes distinct visible contact with the keys or knob.",
+    "Synthesizer, audio interface and laptop form a legible recording arrangement with traceable cable endpoints.",
+    "The warm face and cool room support absorbed intimacy rather than a demonstration pose."
+  ],
+  "baseline_prompt_en": "A photographic music-making scene in a compact home recording room at the blue edge of dawn. The person guided by the supplied reference portrait is seated at a wooden production desk, actively creating music. Her visible facial features and short dark bob with fine parted fringe follow the supplied portrait. She wears a soft charcoal knit top with loosely pushed sleeves; the warm pool from a desk lamp reveals a calm, absorbed face and the small inward smile of hearing a phrase settle into place. Her left fingertips hold down two adjacent white keys on a compact hardware synthesizer, while her right thumb and index finger turn one round filter knob on its top panel. Each wrist continues clearly to her own forearm; her elbows stay comfortably bent above the desk edge and she sits balanced on a low stool. The synthesizer sits directly in front of her. One audio cable runs across the clear tabletop from its output socket into the input socket of a small audio interface on the right, and a USB cable connects that interface to an open laptop behind it. The laptop display faces the musician and shows a multitrack audio arrangement with waveform lanes and a level meter, giving the held notes a visible recording context. A single small monitor speaker sits beside the laptop. Use a medium-wide three-quarter view from the open front corner of the desk, the camera just above seated eye level: her face, both hands, the played keys, the operated knob, both cable routes and their endpoints share readable space. Cool window light meets amber lamplight, with gentle skin texture, worn key edges and quiet room shadows. The mood is intimate concentration, a modest musical idea becoming tangible through connected hands and equipment.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The exact supplied prior human topic quote 음악물 refers to music-centered scenes. Random concrete staging is authored independently and not attributed to the requester.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the actual attached portrait as guidance for visible face and short dark bob; it supplies no identity, age, biography, clothing or new scene facts.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "A photographic music-making scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "The person guided by the supplied reference portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "actively creating music"
+      },
+      {
+        "anchor_id": "ref_face",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "face.visible_features",
+        "prompt_evidence": "Her visible facial features"
+      },
+      {
+        "anchor_id": "ref_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "hair.visible_style",
+        "prompt_evidence": "short dark bob with fine parted fringe"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "role",
+      "count",
+      "age",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "sexual_tone",
+      "relationship"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "human_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference_prompt_image"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "The person guided by the supplied reference portrait"
+      }
+    },
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "music_test_concept"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "quiet environmental music portrait",
+    "evidence": [
+      "Cool window light meets amber lamplight",
+      "gentle skin texture, worn key edges and quiet room shadows"
+    ]
+  },
+  "variation_key": "music-band-20261025-arm-c-home-synth-dawn"
+}

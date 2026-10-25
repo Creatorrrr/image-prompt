@@ -1,0 +1,93 @@
+{
+  "schema_version": "photo-repair-decision/v1",
+  "current_source_span_ids": [
+    "repair_and_retest"
+  ],
+  "source_text": "신규 후보가 채택되지 않은 이유와 이미지 테스트 실패 원인을 분석해서 개선하고, 같은 참고 이미지와 독립 서브에이전트 3개로 다시 테스트해줘.",
+  "preserved_dimensions": [
+    "appearance",
+    "concept",
+    "count",
+    "event",
+    "reference_use",
+    "relationship",
+    "role",
+    "setting",
+    "subject",
+    "timing"
+  ],
+  "allowed_changes": [
+    "pose",
+    "body_geometry",
+    "action",
+    "framing",
+    "composition",
+    "camera",
+    "lighting"
+  ],
+  "requester_corrected_dimensions": [],
+  "allowed_properties": [
+    {
+      "dimension": "camera",
+      "target": "capture",
+      "property": "viewpoint.direction"
+    },
+    {
+      "dimension": "camera",
+      "target": "capture",
+      "property": "viewpoint.height"
+    },
+    {
+      "dimension": "framing",
+      "target": "frame",
+      "property": "extent"
+    },
+    {
+      "dimension": "composition",
+      "target": "musical_equipment",
+      "property": "arrangement"
+    },
+    {
+      "dimension": "composition",
+      "target": "scene",
+      "property": "visibility"
+    },
+    {
+      "dimension": "pose",
+      "target": "performer",
+      "property": "limb_alignment"
+    },
+    {
+      "dimension": "action",
+      "target": "performer",
+      "property": "contact_geometry"
+    },
+    {
+      "dimension": "body_geometry",
+      "target": "performer",
+      "property": "joint_chain"
+    },
+    {
+      "dimension": "lighting",
+      "target": "scene",
+      "property": "illumination"
+    }
+  ],
+  "local_axes": [
+    "camera",
+    "framing",
+    "occlusion",
+    "contact_geometry",
+    "local_pose",
+    "object_geometry",
+    "lighting"
+  ],
+  "failed_gate_ids": [
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "failure_class": "unobservable_required_scale",
+  "additional_invocation_limit": 1,
+  "obligation_dimensions": {}
+}

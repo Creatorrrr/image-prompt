@@ -1,0 +1,34 @@
+{
+  "preparation_only_failures": [
+    {
+      "stage": "first_freeze",
+      "code": "requester ownership anchor review fields are invalid",
+      "repair": "Removed extra dimension field from ownership-review rows; baseline, semantic anchors and physical review unchanged."
+    },
+    {
+      "stage": "attempted_explicit_slot_scope",
+      "code": "slot_intent_requested_slots_changed",
+      "repair": "Kept initial neutral coverage of 48 slots, explicitly authored all rows. No material had been issued; no sampling seed was changed."
+    },
+    {
+      "stage": "view_page_1",
+      "result": "displayed_unique_materials=0 because page indices are zero based",
+      "repair": "Read issued page0 containing all54 unique sources; additional_search_calls=0."
+    },
+    {
+      "stage": "first_compose_audit",
+      "code": "semantic_clarification_decisions",
+      "repair": "Inspected the sealed validator and changed the wire key to clarification_id. The initial id and subsequent candidate_id guesses are both preserved as failed audits; prompt, source decisions and all eight criteria stayed unchanged."
+    }
+  ],
+  "image_call_count_at_this_record": 0,
+  "source_material_searches": "one issued frozen transaction, no reroll",
+  "post_return_recording_recovery": {
+    "outcome": "same observed returned image retained",
+    "error": "ledger record failed: Error: --failed-repair-gate-id requires --render-repair-contract-sha256",
+    "cause": "Generic embodiment gate IDs were incorrectly passed using an option reserved for an active render_repair contract. This run has no render_repair contract.",
+    "repair": "Omit that unsupported recorder option, retain failed generic gate IDs in immutable retry context and pixel comparisons, and replay native-result for the same operation and actual returned file.",
+    "image_call_count": 1,
+    "additional_image_calls_for_recovery": 0
+  }
+}

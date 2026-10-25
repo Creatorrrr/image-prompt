@@ -1,0 +1,109 @@
+{
+  "contract_version": "photo-request-envelope/v1",
+  "provenance": "requesting_user",
+  "request_id": "music-band-repair-20261025",
+  "request_text": "신규 후보가 채택되지 않은 이유와 이미지 테스트 실패 원인을 분석해서 개선하고, 같은 참고 이미지와 독립 서브에이전트 3개로 다시 테스트해줘.",
+  "request_sha256": "45fc93fecb71c40734ee0264269a477b07ae8be4b92c55cdcf080a643356853c",
+  "active_spans": [
+    {
+      "span_id": "repair_and_retest",
+      "start": 0,
+      "end": 79,
+      "text": "신규 후보가 채택되지 않은 이유와 이미지 테스트 실패 원인을 분석해서 개선하고, 같은 참고 이미지와 독립 서브에이전트 3개로 다시 테스트해줘."
+    }
+  ],
+  "input_inventory": {
+    "schema": "photo-request-input-inventory/v1",
+    "complete": true,
+    "items": [
+      {
+        "id": "request",
+        "kind": "request_text",
+        "sha256": "45fc93fecb71c40734ee0264269a477b07ae8be4b92c55cdcf080a643356853c"
+      },
+      {
+        "id": "reference",
+        "kind": "reference_image",
+        "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+      }
+    ]
+  },
+  "topic_context": {
+    "contract_version": "photo-request-topic-context/v1",
+    "links": [
+      {
+        "context_id": "music_retest_context",
+        "active_span_id": "repair_and_retest",
+        "request_quote": {
+          "start": 70,
+          "end": 72,
+          "text": "다시"
+        },
+        "source_message": {
+          "provenance": "requesting_user",
+          "locator": "this_chat/prior_request/research_music_conversation_6adc0815-34c4-83ec-86c5-1f374795dad0",
+          "text": "[음악물 용어와 외형 조사](chatgpt-conversation://6adc0815-34c4-83ec-86c5-1f374795dad0) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘. 대화 내용을 도구로 조회했을 때 전체 내용을 모두 볼 수 없었다면 크롬으로 보면 돼. 로그인해놨어.",
+          "sha256": "df7b79fefbd25a021fdc482149ecc7ea4b4b591d07e5c6bf19d7a6d10651046b"
+        },
+        "topic_quote": {
+          "start": 1,
+          "end": 4,
+          "text": "음악물"
+        },
+        "review": {
+          "polarity": "positive_topic",
+          "rationale": "The current human request repeats the same music-image tests; use the exact original positive human topic, not previous candidate or assistant prose."
+        }
+      }
+    ],
+    "canonical_sha256": "37493b68657178598f38ee5a20029dc3ac11d2f267d0c630b6641a479f222dc8"
+  },
+  "query_scope": {
+    "contract_version": "photo-request-query-scope/v1",
+    "segments": [
+      {
+        "active_span_id": "repair_and_retest",
+        "start": 0,
+        "end": 45,
+        "text": "신규 후보가 채택되지 않은 이유와 이미지 테스트 실패 원인을 분석해서 개선하고, ",
+        "purpose": "workflow",
+        "reason": "Analyze source selection and repair previous image failures."
+      },
+      {
+        "active_span_id": "repair_and_retest",
+        "start": 45,
+        "end": 54,
+        "text": "같은 참고 이미지",
+        "purpose": "reference_use",
+        "reason": "Preserve the same supplied reference image."
+      },
+      {
+        "active_span_id": "repair_and_retest",
+        "start": 54,
+        "end": 70,
+        "text": "와 독립 서브에이전트 3개로 ",
+        "purpose": "workflow",
+        "reason": "Three independent subagents are execution scope, not actor count."
+      },
+      {
+        "active_span_id": "repair_and_retest",
+        "start": 70,
+        "end": 72,
+        "text": "다시",
+        "purpose": "topic_reference",
+        "reason": "Exact music retest anaphor linked to original positive human music topic."
+      },
+      {
+        "active_span_id": "repair_and_retest",
+        "start": 72,
+        "end": 79,
+        "text": " 테스트해줘.",
+        "purpose": "workflow",
+        "reason": "Repeat the image tests."
+      }
+    ],
+    "canonical_sha256": "fa46668a30778cd0558684cc894a31bc73a76a11eb193e9b36c52cc01a423c91"
+  },
+  "canonical_sha256": "bb33dd540781bb4ceeddc5d1baca14bc6a4f8064404473baadc0ff0770867207",
+  "envelope_id": "bb33dd540781bb4c"
+}

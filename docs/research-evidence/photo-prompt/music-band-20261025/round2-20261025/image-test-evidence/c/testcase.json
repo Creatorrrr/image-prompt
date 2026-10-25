@@ -1,0 +1,47 @@
+{
+  "schema": "music-band-prospective-pixel-test/v1",
+  "arm": "c",
+  "frozen_before_retrieval": true,
+  "reference_scope": "Only directly visible facial features and short bob/fringe. No identity, age, biography or garment claim.",
+  "baseline_prompt_sha256": "1863384200df500835647db5a960313a95d858179763a169dcf334e613bd6653",
+  "testcase": "Home electronic-music producer capturing a small synth loop before dawn",
+  "gates": [
+    {
+      "id": "reference_appearance",
+      "required_observation": "Recognizable portrait-guided facial proportions, short dark bob and fine fringe visible together.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate."
+    },
+    {
+      "id": "music_topic",
+      "required_observation": "Active human operation of recognizable music equipment with recording context.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate."
+    },
+    {
+      "id": "hand_owner_and_contacts",
+      "required_observation": "Exactly two coherent acting hands of one seated person; left fingertips meet depressed white keys; right thumb/index meet one knob.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate."
+    },
+    {
+      "id": "keys_and_control_geometry",
+      "required_observation": "Plausible repeated black/white key geometry and separate round knob; contacts meet actual operated surfaces.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate."
+    },
+    {
+      "id": "signal_routes",
+      "required_observation": "One synth output-to-interface-input audio cable and interface-to-laptop USB cable; both paths and every endpoint simultaneously visible.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate."
+    },
+    {
+      "id": "screen_and_person_owner",
+      "required_observation": "Laptop display faces the same musician and shows a plausible multitrack waveform audio arrangement; no inference about real sound or synchronization.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate."
+    },
+    {
+      "id": "count_occlusion",
+      "required_observation": "One actor, one synth, one interface, one laptop, one speaker; all consequential contacts and required parts not hidden by hand, desk or crop.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate."
+    }
+  ],
+  "strict_scene_rule": "Every gate must be visible and pass. Partial/unobservable means strict whole-scene fail; prompt/audit success does not establish pixels.",
+  "artistic_review": "Describe unlabelled impression first, then assess subject presence, hierarchy, inhabited musical purpose and quiet intimacy. User acceptance remains pending."
+}

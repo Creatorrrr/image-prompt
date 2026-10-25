@@ -1,0 +1,74 @@
+{
+  "schema": "music-band-prospective-test-review/v1",
+  "arm": "a",
+  "reviewer": "round2 independent arm A",
+  "direct_whole_image_inspection": true,
+  "native_crops_inspected": [
+    "inspection-guitar-plug.png",
+    "inspection-snare-seat.png",
+    "inspection-lead-hands.png"
+  ],
+  "image_path": "/Users/chasoik/.codex/generated_images/01a1729a-21bd-7031-825f-d05883fcbb40/exec-0e290dce-6e66-475e-bacf-bb01db1c07ec.png",
+  "image_sha256": "2497ed8d56233623b62a37b992ac574bb0bb958a680c2c7224e45c2a47939f5b",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/a/testcase.original.json",
+  "testcase_sha256": "72e18f14a159c3536dc8647f2df594b24eca2cf8c5c1562a6e911bc912719031",
+  "criteria_changed": false,
+  "required_review_scale": "whole saved image plus direct crops only if needed; primary face at approximately 13 percent frame height and primary full body about 70 percent planned. No inferred off-frame endpoints.",
+  "gates": [
+    {
+      "id": "reference_face_hair",
+      "criterion": "Primary visible facial proportions/features and chin-length dark bob/wispy fringe resemble the supplied reference within the specified appearance-only scope.",
+      "scope": "reference_appearance",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The saved image preserves a softly tapered oval face, dark rounded eyes, natural pink lips and a chin-length dark bob with forehead wisps. The face is three-quarter and downward, so this is visible appearance guidance rather than an identity claim."
+    },
+    {
+      "id": "music_theme",
+      "criterion": "The image visibly reads as musicians sharing a working-stage cue and musical action, with guitar and at least two bandmates; decorative instruments alone fail.",
+      "scope": "theme",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Three separate performers actively operate electric guitar, bass and drums on one working stage. Their attention converges around the lead and the visible snare stroke; the instruments are not decorative."
+    },
+    {
+      "id": "primary_hands_instrument",
+      "criterion": "One lead performer owns both hands, left fingertips contact fretboard strings and right pick contacts strings over pickups; full wrist chains, instrument neck/body and targets are distinguishable together.",
+      "scope": "technical_relation",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The lead owns both full wrist/arm chains. Left fingertips depress the fretboard strings, and a small pale/yellow pick held between the right thumb and forefinger meets the string area over the bridge pickup. Neck, body and targets coexist in the saved frame and direct native crop."
+    },
+    {
+      "id": "cable_route",
+      "criterion": "Lead guitar output plug, continuous visible cable route, and amplifier input plug are all visible together and connected; partial route or implied endpoint fails.",
+      "scope": "technical_relation",
+      "observability": "partial",
+      "status": "fail",
+      "evidence": "The amber floor route from the amplifier input stays clear of shoes and can be followed almost entirely to a visible plug below the guitar. At that guitar/strap region, a short extra amber loop converges with the descending segment beside the plug; the same single cable cannot be traced unambiguously through this local junction. The complete route criterion therefore remains failed rather than inferring the hidden/merged continuation."
+    },
+    {
+      "id": "support",
+      "criterion": "Lead has both shoes on stage and a readable strap carrying the guitar; drummer seated support is coherent.",
+      "scope": "technical_relation",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Both lead shoes meet the stage and the broad strap visibly carries the guitar. The drummer stool seat is beneath the hips, and its central support and splayed floor contacts are jointly readable through the open right-side gap alongside the snare. The seated load path is coherent."
+    },
+    {
+      "id": "shared_first_beat",
+      "criterion": "Lead head cue and drummer response/snare contact are connected by attention in one frame rather than isolated poses.",
+      "scope": "scene_relation",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The lead inclines the head down and toward the drummer; the drummer looks across at that head while the near stick tip visibly touches the snare membrane. These visible attention/contact cues connect the trio in one frame. The competing reading of the lead checking the fret hand remains possible, and actual musical synchrony or first-beat timing is not independently proven by a still image."
+    }
+  ],
+  "passed_gates": 5,
+  "total_gates": 6,
+  "strict_whole_scene": "fail",
+  "official_before_passed": 3,
+  "official_before_strict": "fail",
+  "user_acceptance": "pending",
+  "comparison_limit": "One revised child image. Improved visibility cannot isolate the causal contribution of source data, generic inspiration or baseline staging repair."
+}

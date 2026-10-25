@@ -1,0 +1,88 @@
+{
+  "schema": "music-band-prospective-pixel-result/v1",
+  "arm": "c",
+  "round": 2,
+  "reviewed_utc": "2026-10-25T11:11:42.530887+00:00",
+  "reviewer": "Codex independent round2 C",
+  "actual_native_returned_image": "/Users/chasoik/.codex/generated_images/01a1729a-ab41-7b50-92ac-a3aa56c1d9e8/exec-372f30f4-8749-4b95-bb74-0270a131d83d.png",
+  "image_sha256": "9df2a0dd53192cf01084c97b59dde25f7d0f4d15e01877b437bfa6cdf0962df0",
+  "image_size": [
+    1536,
+    1024
+  ],
+  "actual_calls": 1,
+  "frozen_testcase_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/c/testcase.snapshot.json",
+  "frozen_testcase_sha256": "1cd45b6d60400486019c656fbfca5343088de7884514ce075dfe1ad47c848651",
+  "baseline_image_available": true,
+  "direct_inspection": "Actual native returned PNG via view_image detail=original, plus two unresampled native-size inspection crops. No pixel editing or reconstructed result.",
+  "gates": [
+    {
+      "id": "reference_appearance",
+      "required_observation": "Recognizable portrait-guided facial proportions, short dark bob and fine fringe visible together.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The face, short dark bob and fine parted fringe are simultaneously visible in the frontal view. Facial proportions, dark eyes, small nose and full lips follow the permitted portrait guidance. This establishes visible resemblance only, with no identity or age inference."
+    },
+    {
+      "id": "music_topic",
+      "required_observation": "Active human operation of recognizable music equipment with recording context.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "One seated person contacts keys and a knob on recognizable synthesizer equipment beside an interface, nearfield speaker and a laptop with multiple waveform lanes and meters. Active operation and recording context are visible; sound or working electronics is not inferred."
+    },
+    {
+      "id": "hand_owner_and_contacts",
+      "required_observation": "Exactly two coherent acting hands of one seated person; left fingertips meet depressed white keys; right thumb/index meet one knob.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate.",
+      "observability": "partial",
+      "status": "fail",
+      "evidence": "Exactly two coherent hands connect to the same person. Anatomical left now operates the keys at image right and anatomical right operates the knob at image left, correcting the previous reversal. Left fingertips meet the white-key area, but the white keys actual depressed state is not fully observable at native scale; thus the original depressed-white-key contact requirement remains partial. A fingertip also overlaps a black key, which is an additional observation, not a newly prohibited contact."
+    },
+    {
+      "id": "keys_and_control_geometry",
+      "required_observation": "Plausible repeated black/white key geometry and separate round knob; contacts meet actual operated surfaces.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Repeated separated black and white keys and independent round top-panel knobs remain recognizable. Fingers meet actual key/control surfaces with plausible boundaries. This shape-level observation does not certify the exact two-white-key depression state."
+    },
+    {
+      "id": "signal_routes",
+      "required_observation": "One synth output-to-interface-input audio cable and interface-to-laptop USB cable; both paths and every endpoint simultaneously visible.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The full black route runs continuously from the synthesizer front round jack to a visible inserted round audio-style connector on the interface side. The full blue route runs continuously from the interface front USB socket to the laptop side USB socket. All four inserted endpoints and both whole paths are visible together. The depicted hookup is plausible. The original criterion does not require printed labels, a particular interface model or a front-only input; actual electrical input direction and successful audio transmission are not inferred from still pixels. A separate front lead leaves the frame, but it does not interrupt either required depicted path."
+    },
+    {
+      "id": "screen_and_person_owner",
+      "required_observation": "Laptop display faces the same musician and shows a plausible multitrack waveform audio arrangement; no inference about real sound or synchronization.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "The single laptop display lies almost face-up toward the same seated musician and remains readable from the camera. Three plausible waveform lanes and meter graphics are visible. The screen belongs to this setup; actual synchronization or sound is not claimed."
+    },
+    {
+      "id": "count_occlusion",
+      "required_observation": "One actor, one synth, one interface, one laptop, one speaker; all consequential contacts and required parts not hidden by hand, desk or crop.",
+      "pass_rule": "Every component and connection must be visible and plausible together. Partial or unobservable evidence fails this full gate.",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "One foreground actor, one synth, one interface, one laptop and one speaker are recognizable. Although the interface body meets the left crop, its two required connection points are visible on its front/right side, and the synth/laptop endpoints, acting hands and target surfaces are all in frame. The cropped unused body edge and separate extra lead do not hide a required endpoint or add a count duty. Exact two-white-key state fidelity is separately failed under hand_owner_and_contacts, not counted again as missing equipment."
+    }
+  ],
+  "topic_visible": true,
+  "strict_whole_scene": "fail",
+  "strict_reason": "Both required cable routes, their four visible inserted endpoints, count and screen relationship pass the original seven-gate plausible-depiction rule. The original hand gate remains partial because depressed white-key state is not fully observable. The gate does not prescribe a particular finger pair, exact key count, adjacency or a ban on black-key contact.",
+  "user_acceptance": "pending",
+  "user_acceptance_source": "not_yet_received",
+  "new_music_effect": "New music exposure 1 unique/1 occurrence, retained new music inspiration 0/native 0. The one retained generic lighting source is preexisting. This attempt does not establish causal improvement from new music data.",
+  "review_clarification": "Initial conservative draft withheld the interface side connector as unidentified. Direct native crop shows a plausible round audio-style inserted endpoint with complete continuity. Re-reading the exact existing rule removed an unsupported label/front-port assumption; the gate text and pass rule remain byte-identical.",
+  "child_prompt_realization_observations": {
+    "target": "The child independently authored a more specific left index/middle on two adjacent depressed white keys and right thumb/index knob state.",
+    "observation": "The exact two-adjacent-white-key child target is not demonstrated; several fingertips span the keyboard and one overlaps a black key.",
+    "authority": "This is prompt-realization evidence and the final embodiment contract, not an expansion of the unchanged prospective seven-gate criterion."
+  }
+}

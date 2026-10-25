@@ -1,0 +1,150 @@
+{
+  "schema": "arm-independent-pixel-review/v1",
+  "arm": "b",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-arm-b/prospective-testcase.json",
+  "testcase_sha256": "cf05975784121ef5f8990ad0f92f4f208522f5628e327dbcbba7d8912d9a3627",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-arm-b/piano-rehearsal.png",
+  "result_sha256": "1a27a4a7506c95d113dac84df5daafb8592f63395e223889bc98a01b70d12dcf",
+  "inspection": "Direct view_image of exact copied native result at native 1536x1024 scale; no image modification or reconstruction.",
+  "gates": [
+    {
+      "id": "reference_appearance",
+      "criterion": "Visible face/hair are recognizably guided by reference: short dark chin-length bob with airy fringe and comparable soft oval face; no identity or age assertion.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The generated person retains a dark chin-length bob and airy separated fringe, soft oval facial outline, dark eyes and small natural pink lips consistent with permitted reference face/hair guidance. This is resemblance of visible features, not identity or age verification.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "music_scene",
+      "criterion": "A musician actively performing at a recognizable piano in a music-rehearsal/small-recital context, not only an attractive portrait near a prop.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "A single pianist sits at an open grand piano with both hands on recognizable keys; a supported open score and empty recital chairs make a quiet rehearsal/small-recital situation legible. Repetition, passage difficulty and future audience are not proven.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "count_ownership",
+      "criterion": "One main person, one piano, two hands; each hand continuously traces through wrist and forearm to that person, with no competing owner or extra limb.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "One physical person and one piano are visible. Two physical hands trace to separate arms of that person. Reflected hands on the polished piano panel belong to that depiction and do not add a person or arm.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "left_hand_keys",
+      "criterion": "Left fingertips visibly meet actual lower-register piano-key surfaces with key structure readable, not an adjacent rim/support or floating contact.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The nearer left hand reaches the lower keyboard region, with curved fingertips meeting actual white/black piano-key surfaces. Key fronts and neighboring black-key groups distinguish the target from the piano rim.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "right_hand_keys",
+      "criterion": "Right fingertips visibly meet actual higher-register piano-key surfaces with key structure readable; hand and contact separately visible from left.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The farther right hand meets a separately readable higher keyboard position; its fingertips and neighboring key groups remain visible independently of the left-hand contact.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "seat_support",
+      "criterion": "Seated pelvis visibly supported by bench; bench and torso/leg chain remain physically coherent.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The seated body rests on the upholstered black piano bench, and bench seat/legs and floor are readable. Skirt fabric covers ordinary anatomy without changing the visible support relation.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "feet_pedal_support",
+      "criterion": "Both lower legs and shoes trace to person; left shoe meets floor and right shoe contacts rightmost sustain pedal, with full pedal assembly and floor simultaneously visible.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "Both shoes and lower-leg directions belong to the seated pianist, and the left shoe meets the floor. The right shoe extends toward/over the far pedal, but it hides part of that pedal and its exact contact interface; all required pedal components and rightmost contact are not unambiguously visible together.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "occlusion_projection",
+      "criterion": "Face, both hand-key contacts and consequential seated/pedal support are assessable together in saved frame; a partial or off-frame endpoint cannot pass full relation.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The frame preserves face, both key contacts and bench support. The far pedal is partly occluded by the right shoe, so the complete intended under-keyboard contact conjunction cannot receive strict pass.",
+      "reviewed_scales": [
+        "native"
+      ]
+    }
+  ],
+  "topic_visibility": "pass",
+  "strict_whole_scene": "fail",
+  "strict_pass_count": 6,
+  "strict_gate_count": 8,
+  "user_acceptance": "pending",
+  "artistic_review_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-arm-b/artistic-review.json",
+  "limitations": [
+    "The strict failure is the partly hidden pedal/contact conjunction; no anatomical defect is diagnosed.",
+    "Audio, chord pitch, repeated passage, exact score correctness, future audience, identity and age are not established by this still.",
+    "There is no rendered independent baseline/control arm, so no causal data improvement or comparative image preference is established."
+  ]
+}

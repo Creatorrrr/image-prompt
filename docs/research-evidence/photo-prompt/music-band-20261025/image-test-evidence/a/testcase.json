@@ -1,0 +1,48 @@
+{
+  "schema": "music-band-prospective-testcase/v1",
+  "arm": "a",
+  "frozen_before_retrieval": true,
+  "concept": "quiet_countin",
+  "baseline_sha256": "3753c60c012757d49e813a439882c2140b7e52c4be7579e1e7996afe5f24d79d",
+  "required_review_scale": "whole saved image plus direct crops only if needed; primary face at approximately 13 percent frame height and primary full body about 70 percent planned. No inferred off-frame endpoints.",
+  "gates": [
+    {
+      "id": "reference_face_hair",
+      "criterion": "Primary visible facial proportions/features and chin-length dark bob/wispy fringe resemble the supplied reference within the specified appearance-only scope.",
+      "scope": "reference_appearance"
+    },
+    {
+      "id": "music_theme",
+      "criterion": "The image visibly reads as musicians sharing a working-stage cue and musical action, with guitar and at least two bandmates; decorative instruments alone fail.",
+      "scope": "theme"
+    },
+    {
+      "id": "primary_hands_instrument",
+      "criterion": "One lead performer owns both hands, left fingertips contact fretboard strings and right pick contacts strings over pickups; full wrist chains, instrument neck/body and targets are distinguishable together.",
+      "scope": "technical_relation"
+    },
+    {
+      "id": "cable_route",
+      "criterion": "Lead guitar output plug, continuous visible cable route, and amplifier input plug are all visible together and connected; partial route or implied endpoint fails.",
+      "scope": "technical_relation"
+    },
+    {
+      "id": "support",
+      "criterion": "Lead has both shoes on stage and a readable strap carrying the guitar; drummer seated support is coherent.",
+      "scope": "technical_relation"
+    },
+    {
+      "id": "shared_first_beat",
+      "criterion": "Lead head cue and drummer response/snare contact are connected by attention in one frame rather than isolated poses.",
+      "scope": "scene_relation"
+    }
+  ],
+  "strict_success": "All six gates must be visible and pass; partial/unobservable is fail for strict whole-scene success. Do not treat prompt-audit PASS as pixels.",
+  "separate_judgments": [
+    "control expression",
+    "artistic/whole-scene preference",
+    "causal data improvement unproven",
+    "requester acceptance pending"
+  ],
+  "reference_observation": "Visible portrait only: softly tapered oval face, dark rounded almond eyes, gently arched brows, small softly rounded nose, natural pink lips, chin-length straight dark bob and fine wispy forehead strands. Identity, age and biography not inferred."
+}

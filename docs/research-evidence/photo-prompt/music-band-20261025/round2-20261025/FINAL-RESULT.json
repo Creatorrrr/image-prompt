@@ -1,0 +1,427 @@
+{
+  "schema": "music-band-repair-retest-result/v1",
+  "task_status": "completed_retest_with_remaining_pixel_failures",
+  "completed_utc": "2026-10-25T11:26:51.700508+00:00",
+  "request": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "music-band-repair-20261025",
+    "request_text": "신규 후보가 채택되지 않은 이유와 이미지 테스트 실패 원인을 분석해서 개선하고, 같은 참고 이미지와 독립 서브에이전트 3개로 다시 테스트해줘.",
+    "request_sha256": "45fc93fecb71c40734ee0264269a477b07ae8be4b92c55cdcf080a643356853c",
+    "active_spans": [
+      {
+        "span_id": "repair_and_retest",
+        "start": 0,
+        "end": 79,
+        "text": "신규 후보가 채택되지 않은 이유와 이미지 테스트 실패 원인을 분석해서 개선하고, 같은 참고 이미지와 독립 서브에이전트 3개로 다시 테스트해줘."
+      }
+    ]
+  },
+  "latest_skill_sha256": "d666eb93c9335508f0e5db27efa90b8915e9638eeda694703de05df8a0446957",
+  "minimal_policy_patch": {
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/skill-policy-clarification.patch",
+    "sha256": "355106f7007655d4fe0acad665854db67b56177c3d5c3d21ba365fce75830949"
+  },
+  "source_completion": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md",
+      "start_sha256": "d666eb93c9335508f0e5db27efa90b8915e9638eeda694703de05df8a0446957",
+      "completion_sha256": "d666eb93c9335508f0e5db27efa90b8915e9638eeda694703de05df8a0446957",
+      "unchanged": true,
+      "selector_drift_record": null
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/references/composition-contract.md",
+      "start_sha256": "af7046d7e2ca58178747949806ec92953b4222a68338029fd9371c76c85ffca9",
+      "completion_sha256": "af7046d7e2ca58178747949806ec92953b4222a68338029fd9371c76c85ffca9",
+      "unchanged": true,
+      "selector_drift_record": null
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_candidate_music_band_20261025.json",
+      "start_sha256": "0151818fd4145302bb96f9cd6982278382606704e0827df3953f0786537386b3",
+      "completion_sha256": "0151818fd4145302bb96f9cd6982278382606704e0827df3953f0786537386b3",
+      "unchanged": true,
+      "selector_drift_record": null
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_candidate_music_band_bindings_20261025.json",
+      "start_sha256": "bb51366dbdf1e57586d2ff903c3539e1860ffd63ecb45bc63be6079e6219cda6",
+      "completion_sha256": "bb51366dbdf1e57586d2ff903c3539e1860ffd63ecb45bc63be6079e6219cda6",
+      "unchanged": true,
+      "selector_drift_record": null
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_music_band_semantics_20261025.json",
+      "start_sha256": "af7f71e9c79abd7afb12736a66ebf213ec7853f6b3fe68e3dad7a75f082b1699",
+      "completion_sha256": "af7f71e9c79abd7afb12736a66ebf213ec7853f6b3fe68e3dad7a75f082b1699",
+      "unchanged": true,
+      "selector_drift_record": null
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/retrieval-runtime.json",
+      "start_sha256": "fbdba3df56c3ab0a4fd3e9aa1e5951f09765458d6895eb656e5d5d6be5d9417e",
+      "completion_sha256": "41086405d036f4ec373f15c326b10864dd6eb9d190961a87e47552fc3871ceb3",
+      "unchanged": false,
+      "selector_drift_record": "selector-drift.json"
+    }
+  ],
+  "concurrent_selector_drift": {
+    "schema": "music-band-r2-concurrent-selector-drift/v1",
+    "observed_utc": "2026-10-25T11:26:16.826335+00:00",
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/retrieval-runtime.json",
+    "start_sha256": "fbdba3df56c3ab0a4fd3e9aa1e5951f09765458d6895eb656e5d5d6be5d9417e",
+    "completion_sha256": "41086405d036f4ec373f15c326b10864dd6eb9d190961a87e47552fc3871ceb3",
+    "completion_selector": {
+      "schema": "photo-installed-h-f2/v1",
+      "policy": "photo-h-f2/v1",
+      "store_subdirectory": "h-f2-installed",
+      "generation_id": "0c489235e02de580bfca1a76fdf1ea35b6fa070748c9ee13b301a61c65ee4c21",
+      "native_generation_id": "409e65bb548578f4b995b530a8ea4ba906120b3102c57f89c8e455d4e165a544",
+      "code_sha256": "9fae54abf63e20b5cd9e542fead3f6ac03572297d27821830066b794174cc8e6"
+    },
+    "changed_by_this_task": false,
+    "action": "Preserved current shared selector; did not overwrite or reset it. Retest remains bound to each issued immutable receipt.",
+    "retest_search_generation_id": "d75d1546f9bdb3537d1316c0e14a5a04903fd29b1cedcfc63caefa328b690cd1",
+    "retest_native_generation_id": "f3e06322413adee3264fb44778c3264cee5491f9672236896497edd246707da7",
+    "canonical_skill_and_music_source_hashes_unchanged": true,
+    "new_default_pixel_qualification_claimed": false
+  },
+  "actual_native_calls": 3,
+  "additional_native_retries": 0,
+  "same_reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+  },
+  "independent_fresh_agents": [
+    "/root/music_r2_a",
+    "/root/music_r2_b",
+    "/root/music_r2_c"
+  ],
+  "parent_pixel_summary": {
+    "actual_new_images_directly_inspected": 3,
+    "reference_appearance_passes": 3,
+    "music_theme_passes": 3,
+    "prior_passed_gates": 13,
+    "passed_gates": 16,
+    "total_unchanged_gates": 21,
+    "prior_strict_whole_scene_passes": 0,
+    "strict_whole_scene_passes": 0,
+    "historical_pass_regressions": 0,
+    "new_complete_gate_passes": [
+      "a/support",
+      "c/signal_routes",
+      "c/count_occlusion"
+    ],
+    "partial_repairs_do_not_count_as_new_complete_gate_passes": true,
+    "gate_counts_describe_these_cases_only": true,
+    "independent_agent_passed_gates": 17
+  },
+  "reviewer_disagreement": {
+    "arm": "a",
+    "gate": "shared_first_beat",
+    "parent": "partial/fail",
+    "independent_agent": "visible/pass",
+    "reason": "Head tilt can read as cue or fretting-hand attention. Both reviewers agree cable fails and strict scene fails."
+  },
+  "review_clarification": {
+    "initial_draft": "parent-pixel-review.initial-draft.json",
+    "initial_parent_total": 14,
+    "final_parent_total": 16,
+    "case": "c",
+    "unchanged_testcase_sha256": "1cd45b6d60400486019c656fbfca5343088de7884514ce075dfe1ad47c848651",
+    "removed_extra_assumptions": [
+      "printed label or specific front-port required for generic depicted audio input",
+      "entire nonessential interface outline and unrequired extra lead must be in-frame"
+    ],
+    "still_failed": "hand_owner_and_contacts",
+    "new_render_or_testcase_change": false
+  },
+  "new_music_read_unique": 14,
+  "new_music_read_occurrences": 22,
+  "retained_new_music": 0,
+  "retained_existing_generic_unique": 3,
+  "native_contractual_selections": 0,
+  "causal_improvement": "not isolated or proven",
+  "user_acceptance": "pending",
+  "arms": [
+    {
+      "arm": "a",
+      "task_status": "complete_with_remaining_pixel_failures",
+      "native_calls": 1,
+      "extra_native_retries": 0,
+      "image": {
+        "arm": "a",
+        "native_returned_path": "/Users/chasoik/.codex/generated_images/01a1729a-21bd-7031-825f-d05883fcbb40/exec-0e290dce-6e66-475e-bacf-bb01db1c07ec.png",
+        "archive_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/a/image.png",
+        "sha256": "2497ed8d56233623b62a37b992ac574bb0bb958a680c2c7224e45c2a47939f5b",
+        "copy_operation": "byte-identical copy; no crop, resize, re-encoding or retouching of the delivered image",
+        "testcase_sha256": "72e18f14a159c3536dc8647f2df594b24eca2cf8c5c1562a6e911bc912719031",
+        "direct_parent_native_image_inspection": true
+      },
+      "prompt": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/a/prompt.txt",
+        "sha256": "bd6ccab1b473b9066b34e6c312f8f0321fbabd65ed874fcd758167250e330ea5"
+      },
+      "unchanged_testcase": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/a/testcase.json",
+        "sha256": "72e18f14a159c3536dc8647f2df594b24eca2cf8c5c1562a6e911bc912719031"
+      },
+      "parent_passed": 4,
+      "independent_agent_passed": 5,
+      "total_gates": 6,
+      "strict_whole_scene": "fail",
+      "material_use": {
+        "arm": "a",
+        "actually_read_unique": 36,
+        "actually_read_occurrences": 40,
+        "new_music_unique": 11,
+        "new_music_occurrences": 12,
+        "new_music_ids": [
+          "cand_26dff1e4e15b524790108e2e79c3461d",
+          "cand_3a367e519b8f5bc882f0d655b5a723b4",
+          "cand_476d8099409d5a12a550526b4bfa0b47",
+          "cand_4a1f76ffa50358fcbde6ea9caa5aa1e6",
+          "cand_674f2a5f20e25c22b593a49fc93966ae",
+          "cand_7f90c44d247c5cfb98b6c1f622f282b9",
+          "cand_92144393f59e57fd91ab8a85545ffb93",
+          "cand_a9946f98015456cea3d0aa4da968aa94",
+          "cand_b5640448e38453c49378f8173740632c",
+          "cand_bece021de0eb5fe78a4cc34e277dffed",
+          "cand_dffb4056444c59f087691cdcc88daef0"
+        ],
+        "retained_generic_unique": 1,
+        "retained_generic_occurrences": 1,
+        "retained_generic_ids": [
+          "cand_eb097857fb0b54ddb21161d19ae1803e"
+        ],
+        "retained_new_music_unique": 0,
+        "retained_new_music_occurrences": 0,
+        "native_chosen_count": 0,
+        "coverage_and_source_hashes": "pass",
+        "retained_decisions": [
+          {
+            "slot": "composition",
+            "candidate_id": "cand_eb097857fb0b54ddb21161d19ae1803e",
+            "realization_id": "base",
+            "source_sha256": "9b41f84441b578dcaed04a3ccb866410b3aab9cd424de36e6a8203136b7fb9e6",
+            "use": "inspiration_only",
+            "rationale": "U14 in source-reviews.json and composition-comparison.md: The whole source uses a soft cushion, localized load depression and fabric folds following the seat contact. That cushion/material realization is unselected and is not asserted or natively adopted. Its ordinary support-localization guidance motivates a lighting-only refinement on the existing drummer/stool: A thin side fill makes the existing trouser folds and the hip-to-seat contact shadow legible at the stool edge. This differs from the baseline generic fill by revealing the actual hip/seat boundary, without adding a cushion, depression, owner or material. Complete alternatives A0 and A1 compare this exact change; A1 is selected."
+          }
+        ],
+        "input_view": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/a/material-view-page0.json",
+        "input_composed": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/a/composed.json",
+        "input_view_sha256": "50540722d80ef75a10ee924d59045b7c26b401d5e708525da0875be36c2c96e3",
+        "input_composed_sha256": "c123fa956e60f90fc8960f35964059efcd77b02c1262796758516d8a4e0dc908"
+      },
+      "workflow_phase": "review_record_validated",
+      "review_record_valid": true,
+      "technical_qualified": false,
+      "ledger": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/a/image_runs.ndjson",
+        "sha256": "03af54cd66bd8b85af4f30b5a18e780b53a307033380521efb3f3280c2e5bdbe",
+        "run_id": "e64ac8b4d5544297",
+        "retry_of": "43c3c910b7c7628a"
+      },
+      "agent_result": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/a/FINAL-RESULT.json",
+        "sha256": "c66765caaab52d205ed473baa7829ae473b32d853b8bd0736de7fffffee91dc1"
+      },
+      "managed_review_audit": {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-r2-a/revisions/b8787c9f17ea450dae60a06138ccb670/review_audit.json",
+        "sha256": "bb5fa74302357a361578f339ac0ecf25fa7dc0765509da5218d88c9ec85598a2"
+      },
+      "observed_image_model": "unknown",
+      "user_acceptance": "pending"
+    },
+    {
+      "arm": "b",
+      "task_status": "complete_with_remaining_pixel_failures",
+      "native_calls": 1,
+      "extra_native_retries": 0,
+      "image": {
+        "arm": "b",
+        "native_returned_path": "/Users/chasoik/.codex/generated_images/01a1729a-6541-7e70-8c7f-2a5eef22ff39/exec-8ec9df9a-9cc6-410c-bc26-1428e2aff7e9.png",
+        "archive_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/b/image.png",
+        "sha256": "505a35090b4245281c77a9231da79769ba9b9e1de93545d56783d1bb515c426b",
+        "copy_operation": "byte-identical copy; no crop, resize, re-encoding or retouching of the delivered image",
+        "testcase_sha256": "cf05975784121ef5f8990ad0f92f4f208522f5628e327dbcbba7d8912d9a3627",
+        "direct_parent_native_image_inspection": true
+      },
+      "prompt": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/b/prompt.txt",
+        "sha256": "77eb9f78944da0642e213312368ae778ad7efe6d61f40eda1a8918e42b894142"
+      },
+      "unchanged_testcase": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/b/testcase.json",
+        "sha256": "cf05975784121ef5f8990ad0f92f4f208522f5628e327dbcbba7d8912d9a3627"
+      },
+      "parent_passed": 6,
+      "independent_agent_passed": 6,
+      "total_gates": 8,
+      "strict_whole_scene": "fail",
+      "material_use": {
+        "arm": "b",
+        "actually_read_unique": 54,
+        "actually_read_occurrences": 72,
+        "new_music_unique": 2,
+        "new_music_occurrences": 9,
+        "new_music_ids": [
+          "cand_f4ff2384a8f6541da87cdcc1ef80034e",
+          "cand_f713ba66ae6450bf81dd9cc22e329095"
+        ],
+        "retained_generic_unique": 1,
+        "retained_generic_occurrences": 1,
+        "retained_generic_ids": [
+          "cand_8a1a77d2fa6659eb975540b131791255"
+        ],
+        "retained_new_music_unique": 0,
+        "retained_new_music_occurrences": 0,
+        "native_chosen_count": 0,
+        "coverage_and_source_hashes": "pass",
+        "retained_decisions": [
+          {
+            "slot": "lighting",
+            "candidate_id": "cand_8a1a77d2fa6659eb975540b131791255",
+            "realization_id": "base",
+            "source_sha256": "50bc9e2755613575cf0d3f6b31cbbd7a19832726417211fcf7acd1238f6e54a0",
+            "use": "inspiration_only",
+            "rationale": "Source review #34 in source-reviews.json and composition-comparison.md. The complete native source describes a shoe on paving in overcast light. I do not select that native source or import paving. Its ordinary diffuse support-contact shadow principle is independently applicable to the existing wood floor under broad soft window/reflected light: option A adds the exact final phrase \"Soft contact shadows stay immediately beneath the planted left sole and grounded right heel.\". This changes lighting only, introduces no owner, pose, material or setting change, and does not use a compound event or waive a selected obligation."
+          }
+        ],
+        "input_view": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/b/material-view-page0.json",
+        "input_composed": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/b/composed.json",
+        "input_view_sha256": "3ddb5a2f1d32eb0760ed418f5fc1df6ed8ff363efa8a419765bde2a836553e78",
+        "input_composed_sha256": "668f9d43d7bb2876051a37a13b8a70865d6c961658788f35e147354a1e428e2e"
+      },
+      "workflow_phase": "review_record_validated",
+      "review_record_valid": true,
+      "technical_qualified": false,
+      "ledger": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/b/image_runs.ndjson",
+        "sha256": "7ae86540e9218b0afdc1fbb47556d7a2d5dccde40067f88ce94639a4c285fd91",
+        "run_id": "e72512c1c833e5ef",
+        "retry_of": "aab03888c0f1e092"
+      },
+      "agent_result": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/b/FINAL-RESULT.json",
+        "sha256": "8d299aa29b20fd5f94e5f52c6894d9517ed1b33fd448bc58421d3fc1e522e56a"
+      },
+      "managed_review_audit": {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-r2-b/revisions/615483f1b328400098d81748b5ae499d/review_audit.json",
+        "sha256": "5096634518c4a8592166f6fc8562424ea1f851dcea5252f5439c997aaaa62eff"
+      },
+      "observed_image_model": "unknown",
+      "user_acceptance": "pending"
+    },
+    {
+      "arm": "c",
+      "task_status": "complete_with_remaining_pixel_failures",
+      "native_calls": 1,
+      "extra_native_retries": 0,
+      "image": {
+        "arm": "c",
+        "native_returned_path": "/Users/chasoik/.codex/generated_images/01a1729a-ab41-7b50-92ac-a3aa56c1d9e8/exec-372f30f4-8749-4b95-bb74-0270a131d83d.png",
+        "archive_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/c/image.png",
+        "sha256": "9df2a0dd53192cf01084c97b59dde25f7d0f4d15e01877b437bfa6cdf0962df0",
+        "copy_operation": "byte-identical copy; no crop, resize, re-encoding or retouching of the delivered image",
+        "testcase_sha256": "1cd45b6d60400486019c656fbfca5343088de7884514ce075dfe1ad47c848651",
+        "direct_parent_native_image_inspection": true
+      },
+      "prompt": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/c/prompt.txt",
+        "sha256": "a27e45d75018386e5a367f1958422e69df4c0ceb672b6cf5f4565d286583ea09"
+      },
+      "unchanged_testcase": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/image-test-evidence/c/testcase.json",
+        "sha256": "1cd45b6d60400486019c656fbfca5343088de7884514ce075dfe1ad47c848651"
+      },
+      "parent_passed": 6,
+      "independent_agent_passed": 6,
+      "total_gates": 7,
+      "strict_whole_scene": "fail",
+      "material_use": {
+        "arm": "c",
+        "actually_read_unique": 30,
+        "actually_read_occurrences": 32,
+        "new_music_unique": 1,
+        "new_music_occurrences": 1,
+        "new_music_ids": [
+          "cand_4fc31334ecbb58e1b5c7fd1f1dbfe261"
+        ],
+        "retained_generic_unique": 1,
+        "retained_generic_occurrences": 1,
+        "retained_generic_ids": [
+          "cand_15803691d70a524d9874b43400143855"
+        ],
+        "retained_new_music_unique": 0,
+        "retained_new_music_occurrences": 0,
+        "native_chosen_count": 0,
+        "coverage_and_source_hashes": "pass",
+        "retained_decisions": [
+          {
+            "slot": "__baseline_prompt__",
+            "candidate_id": "cand_15803691d70a524d9874b43400143855",
+            "realization_id": "base",
+            "source_sha256": "95587d18e629ec4bb0358ddc3e714cd0dcf7713b77b4e9aa94cea0526dbeb833",
+            "use": "inspiration_only",
+            "rationale": "composition-comparison.md source 24: The casting/digitals source combines frontal readable facial planes, soft frontal daylight and restrained surface treatment, with human/portrait-type context conditions. Whole-source casting framing and its adult-face relation are not adopted and no age is inferred. Its ordinary photographic light reasoning supports one independent local refinement: A adds \"A broad soft bounce of the existing window daylight from the pale wall behind the camera gently fills her facial planes\" in open lighting. Baseline only motivated side-window/task light and separation of hands/ports, so this facial fill is a real new effect. It preserves the same face/hair and physical room light."
+          }
+        ],
+        "input_view": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/c/material-view.json",
+        "input_composed": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/c/composed_prompt.json",
+        "input_view_sha256": "5f0c5f3326927335a50cbfc3953ef154c17ae91450c6bdd889dbc43ee70f9127",
+        "input_composed_sha256": "c4db6c5bd1abd4ce9dc4fef42f7212abb8804e604e06f6fb54209b6d430ba278"
+      },
+      "workflow_phase": "review_record_validated",
+      "review_record_valid": true,
+      "technical_qualified": false,
+      "ledger": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/c/image_runs.ndjson",
+        "sha256": "4ec8ff75ac6a3a4988a554e24d7f4f402c432683dc6c7a9b140477d84ff5d626",
+        "run_id": "5a200ceecbc42365",
+        "retry_of": "452712038d6f35fb"
+      },
+      "agent_result": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/arms/c/FINAL-RESULT.json",
+        "sha256": "2eb3d369cd9fc1a82c779a8b5dc13a268199a8e2819e87c66d7535779d98d226"
+      },
+      "managed_review_audit": {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-r2-c/revisions/2ced9c6cb7ec4401bbeb13d415346403/review_audit.json",
+        "sha256": "5a2327d940c39729bc2412dcbdb59e084b545a912276e5d5b9ef6676d216373f"
+      },
+      "observed_image_model": "unknown",
+      "user_acceptance": "pending"
+    }
+  ],
+  "report": {
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/RETEST-RESULTS.md",
+    "sha256": "3f06f407ebe6933b6343219433218a774bc352d00edfe37d3cc6a15bf6fbd49e"
+  },
+  "final_integrity": {
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/final-integrity-validation.json",
+    "sha256": "6f0da3592465aedf91a56e4deed7f11af525053288d30ad24a651db982725aa5",
+    "status": "pass",
+    "checks_passed": 102
+  },
+  "request_provenance": {
+    "complete_original_request_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/music-band-20261025/round2-20261025/request.txt",
+    "complete_original_request_sha256": "45fc93fecb71c40734ee0264269a477b07ae8be4b92c55cdcf080a643356853c",
+    "root_request_envelope_is_source_record_not_child_wire_envelope": true,
+    "actual_bound_child_request_envelope_sha256": "e0e685ae87e4581ce0a6503ec0a290b3956fbbdddc825050ea8cfc7ce6c0c011",
+    "actual_child_envelopes": [
+      {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-r2-a/revisions/b46539b8d4f9498983cea79cf89431ba/request_envelope_input.json",
+        "sha256": "e0e685ae87e4581ce0a6503ec0a290b3956fbbdddc825050ea8cfc7ce6c0c011"
+      },
+      {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-r2-b/revisions/ec48bd3f4fd64373aa3ce149f470d147/request_envelope_input.json",
+        "sha256": "e0e685ae87e4581ce0a6503ec0a290b3956fbbdddc825050ea8cfc7ce6c0c011"
+      },
+      {
+        "path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-r2-c/revisions/4031d5b4beb14c1d9a31ffbe60f4126b/request_envelope_input.json",
+        "sha256": "e0e685ae87e4581ce0a6503ec0a290b3956fbbdddc825050ea8cfc7ce6c0c011"
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "arm-independent-prospective-pixel-test/v1",
+  "arm": "b",
+  "concept": "solo piano rehearsal in a recital room",
+  "frozen_before_retrieval": true,
+  "baseline_comparison_available": false,
+  "ownership": "agent-authored test targets do not become requester requirements",
+  "gates": [
+    {
+      "id": "reference_appearance",
+      "criterion": "Visible face/hair are recognizably guided by reference: short dark chin-length bob with airy fringe and comparable soft oval face; no identity or age assertion.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    },
+    {
+      "id": "music_scene",
+      "criterion": "A musician actively performing at a recognizable piano in a music-rehearsal/small-recital context, not only an attractive portrait near a prop.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    },
+    {
+      "id": "count_ownership",
+      "criterion": "One main person, one piano, two hands; each hand continuously traces through wrist and forearm to that person, with no competing owner or extra limb.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    },
+    {
+      "id": "left_hand_keys",
+      "criterion": "Left fingertips visibly meet actual lower-register piano-key surfaces with key structure readable, not an adjacent rim/support or floating contact.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    },
+    {
+      "id": "right_hand_keys",
+      "criterion": "Right fingertips visibly meet actual higher-register piano-key surfaces with key structure readable; hand and contact separately visible from left.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    },
+    {
+      "id": "seat_support",
+      "criterion": "Seated pelvis visibly supported by bench; bench and torso/leg chain remain physically coherent.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    },
+    {
+      "id": "feet_pedal_support",
+      "criterion": "Both lower legs and shoes trace to person; left shoe meets floor and right shoe contacts rightmost sustain pedal, with full pedal assembly and floor simultaneously visible.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    },
+    {
+      "id": "occlusion_projection",
+      "criterion": "Face, both hand-key contacts and consequential seated/pedal support are assessable together in saved frame; a partial or off-frame endpoint cannot pass full relation.",
+      "allowed_observability": [
+        "visible",
+        "partial",
+        "unobservable"
+      ],
+      "strict_pass_requires": "visible and full criterion satisfied"
+    }
+  ],
+  "strict_overall_rule": "All gates pass and visible; partial/unobservable never counts as strict whole-scene pass. Audio timing, musical correctness of chord voicing, future audience, identity and age cannot be established from still image."
+}

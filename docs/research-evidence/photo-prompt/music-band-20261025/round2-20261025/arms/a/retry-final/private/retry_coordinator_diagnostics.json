@@ -1,0 +1,119 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "1dfec616ea2f0db6",
+      "validation_context_version": "photo-validation-context/v1",
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": null,
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a small live band"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "making music together"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "The reference-guided lead musician"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "use the supplied image for visible face and hair guidance"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a softly tapered oval face, dark rounded almond eyes, gently arched straight brows, a small softly rounded nose, and softly full natural pink lips"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a chin-length straight dark bob with a loose central part and fine wispy strands over the forehead"
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "1dfec616ea2f0db6",
+      "status": "pass",
+      "runtime_prompt_id": "3753c60c012757d4",
+      "source_intent_lock_sha256": "38c74ab29ddadf46f07cdfc7580be4a3c02aff900b33782ef9321e6986114c64",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": null,
+    "contract_failures": [],
+    "repair": null,
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "1dfec616ea2f0db6",
+      "contract_version": "photo-embodiment-preflight/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 5,
+      "required_hard_gates": [
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_support_and_balance",
+          "status": "fail",
+          "evidence": "Both lead shoes are grounded and a broad shoulder strap visibly supports the guitar. The drummer is visibly seated with one knee visible, but the stool and complete supporting relation planned in the reviewed prompt are hidden by drums/amp; that component cannot be assessed."
+        },
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "Lead fret/string and yellow pick/string contacts are readable, with separate hand ownership. The complete guitar-to-amplifier cable route cannot be traced continuously around the shoes and overlapping lower amp cable/connector, and the drummer stick tip appears above the snare head without definitive head contact. The full reviewed contact set therefore fails."
+        },
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "Face, primary body, neck/headstock and primary hands have useful native area. Drummer stool support and definitive snare target contact are not jointly visible, while floor cable crossings and shoe occlusion prevent full-route verification. The whole planned relation set is not assessable in this projection."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": "No requesting-user judgment has been received."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

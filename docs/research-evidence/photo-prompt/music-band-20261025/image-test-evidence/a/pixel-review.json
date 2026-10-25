@@ -1,0 +1,108 @@
+{
+  "schema": "music-band-prospective-pixel-review/v1",
+  "arm": "a",
+  "testcase_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/music-band-20261025-arm-a/authoring/prospective-testcase.json",
+  "testcase_sha256": "72e18f14a159c3536dc8647f2df594b24eca2cf8c5c1562a6e911bc912719031",
+  "baseline_prompt_sha256": "3753c60c012757d49e813a439882c2140b7e52c4be7579e1e7996afe5f24d79d",
+  "result_image": "/Users/chasoik/.codex/generated_images/01a17261-7907-7883-8d5f-cbbead72f170/exec-c187dbec-d17a-46c0-b071-412e275e4edf.png",
+  "result_sha256": "8f15fd7623b6885d6d477e8b6351a92e15c810beb362a60fa2f5cb1f8360a3d3",
+  "reviewer": "Codex independent arm A; direct whole saved image and unresampled native crops",
+  "review_utc": "2026-10-25T10:02:09.277909+00:00",
+  "review_inputs": [
+    "whole original 1536x1024 image",
+    "unresampled guitar_hands crop",
+    "unresampled cable_floor crop",
+    "unresampled drummer_support crop",
+    "unresampled reference_face crop",
+    "original supplied reference viewed directly pre-core"
+  ],
+  "gates": [
+    {
+      "id": "reference_face_hair",
+      "criterion": "Primary visible facial proportions/features and chin-length dark bob/wispy fringe resemble the supplied reference within the specified appearance-only scope.",
+      "scope": "reference_appearance",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "At native scale, the lead retains a tapered oval face, dark rounded almond eyes, small rounded nose, natural pink lips and a straight dark chin-length bob with wispy forehead strands. Visible guidance is recognizable at the changed pose; this is not an identity judgment."
+    },
+    {
+      "id": "music_theme",
+      "criterion": "The image visibly reads as musicians sharing a working-stage cue and musical action, with guitar and at least two bandmates; decorative instruments alone fail.",
+      "scope": "theme",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Three distinct musicians occupy a working venue stage: lead electric guitar, bassist and seated drum kit. Lead and bassist hands engage their instruments and drummer holds sticks; reciprocal attention supports shared musical activity rather than prop decoration."
+    },
+    {
+      "id": "primary_hands_instrument",
+      "criterion": "One lead performer owns both hands, left fingertips contact fretboard strings and right pick contacts strings over pickups; full wrist chains, instrument neck/body and targets are distinguishable together.",
+      "scope": "technical_relation",
+      "observability": "visible",
+      "status": "pass",
+      "evidence": "Both wrists/arms belong to the lead. Left fingertips curve onto distinct fretboard string positions; right thumb/index hold a visible yellow pick at the strings above the pickup region. Neck, headstock, body and bridge are present in one frame."
+    },
+    {
+      "id": "cable_route",
+      "criterion": "Lead guitar output plug, continuous visible cable route, and amplifier input plug are all visible together and connected; partial route or implied endpoint fails.",
+      "scope": "technical_relation",
+      "observability": "partial",
+      "status": "fail",
+      "evidence": "Output plug and top/front amplifier input plug are visible, but the floor route goes behind/under the lead shoes and overlaps an additional connector/line near the amplifier lower left. A single complete continuously visible route between the specified endpoints cannot be established."
+    },
+    {
+      "id": "support",
+      "criterion": "Lead has both shoes on stage and a readable strap carrying the guitar; drummer seated support is coherent.",
+      "scope": "technical_relation",
+      "observability": "partial",
+      "status": "fail",
+      "evidence": "Lead shoes contact the stage and shoulder strap carries the guitar. Drummer knee is visible but stool/seat support is hidden by the kit and amplifier; the complete prospective support relation is not visible together."
+    },
+    {
+      "id": "shared_first_beat",
+      "criterion": "Lead head cue and drummer response/snare contact are connected by attention in one frame rather than isolated poses.",
+      "scope": "scene_relation",
+      "observability": "partial",
+      "status": "fail",
+      "evidence": "Lead and drummer look toward one another and the head cue is plausible, but the horizontal stick tip is not visibly contacting the snare head. A still frame also cannot prove a first audible or simultaneous beat; only the directed cue/response posture is supported."
+    }
+  ],
+  "theme_visibility": {
+    "status": "pass",
+    "observability": "visible"
+  },
+  "strict_whole_scene": {
+    "status": "fail",
+    "passed_gates": 3,
+    "total_gates": 6,
+    "partial_is_fail": true,
+    "reason": "Cable route, drummer support and definitive snare contact do not all survive in one view."
+  },
+  "controls_calibration": {
+    "unlabeled_impression": "Warm, attentive, relaxed trio rehearsal with a prominent face and red guitar, softly lit by windows; the interpersonal exchange feels gentle and ordinary.",
+    "intended_controls": {
+      "sensual": 1,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "perceived_expression": "Subtle warmth and unguarded smile are compatible with sensual1; no added fetish or surreal treatment is apparent. Ordinal intensity is a reviewer impression, not a measured score or requester preference."
+  },
+  "artistic_review": {
+    "strengths": [
+      "The warm window/stage mix and central red guitar produce clear hierarchy and a specific working-band situation.",
+      "Eyelines connect the lead and two bandmates and give the photograph social presence.",
+      "Primary hands and instrument silhouette remain readable with the supplied appearance guidance."
+    ],
+    "weaknesses": [
+      "Technical route/support evidence is weaker than the complete authorial plan.",
+      "Still pixels support mutual attention and playing posture more strongly than the story of the very first shared beat."
+    ],
+    "overall": "A convincing warm band-rehearsal photograph, with incomplete strict relation fidelity.",
+    "preference": "pending; no comparison render exists"
+  },
+  "causal_data_improvement": "unproven; no candidate-derived effect retained and no paired pre-data render exists",
+  "requester_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

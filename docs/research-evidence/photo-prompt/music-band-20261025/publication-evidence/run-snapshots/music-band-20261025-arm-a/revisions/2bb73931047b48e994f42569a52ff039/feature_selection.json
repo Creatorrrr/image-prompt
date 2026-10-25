@@ -1,0 +1,231 @@
+{
+  "contract_version": "photo-precore-feature-selection/v1",
+  "ownership_review": {
+    "contract_version": "photo-requester-ownership-review/v1",
+    "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+    "baseline_prompt_sha256": "3753c60c012757d49e813a439882c2140b7e52c4be7579e1e7996afe5f24d79d",
+    "anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "prompt_evidence": "a small live band",
+        "requester_meaning": "Music theme from exact antecedent; appearance guidance from supplied reference, at the narrowest useful scope.",
+        "reason": "Only the shared music meaning or reference use is locked; instrument, pose, scene timing and camera remain authorial."
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용",
+        "prompt_evidence": "The reference-guided lead musician",
+        "requester_meaning": "Music theme from exact antecedent; appearance guidance from supplied reference, at the narrowest useful scope.",
+        "reason": "Only the shared music meaning or reference use is locked; instrument, pose, scene timing and camera remain authorial."
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제",
+        "prompt_evidence": "making music together",
+        "requester_meaning": "Music theme from exact antecedent; appearance guidance from supplied reference, at the narrowest useful scope.",
+        "reason": "Only the shared music meaning or reference use is locked; instrument, pose, scene timing and camera remain authorial."
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용",
+        "prompt_evidence": "use the supplied image for visible face and hair guidance",
+        "requester_meaning": "Music theme from exact antecedent; appearance guidance from supplied reference, at the narrowest useful scope.",
+        "reason": "Only the shared music meaning or reference use is locked; instrument, pose, scene timing and camera remain authorial."
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용",
+        "prompt_evidence": "a softly tapered oval face, dark rounded almond eyes, gently arched straight brows, a small softly rounded nose, and softly full natural pink lips",
+        "requester_meaning": "Music theme from exact antecedent; appearance guidance from supplied reference, at the narrowest useful scope.",
+        "reason": "Only the shared music meaning or reference use is locked; instrument, pose, scene timing and camera remain authorial."
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용",
+        "prompt_evidence": "a chin-length straight dark bob with a loose central part and fine wispy strands over the forehead",
+        "requester_meaning": "Music theme from exact antecedent; appearance guidance from supplied reference, at the narrowest useful scope.",
+        "reason": "Only the shared music meaning or reference use is locked; instrument, pose, scene timing and camera remain authorial."
+      }
+    ],
+    "authorial_details": [
+      {
+        "category_id": "feature.situation",
+        "literals": [
+          "first quiet downbeat",
+          "afternoon stage rehearsal"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.narrative_context",
+        "literals": [
+          "downward head nod",
+          "drummer",
+          "count-in"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.interaction",
+        "literals": [
+          "converging attention",
+          "first beat"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.action",
+        "literals": [
+          "one stick",
+          "snare head",
+          "other stays raised"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.hand_gesture",
+        "literals": [
+          "left fingertips",
+          "separate strings",
+          "middle of the neck"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.props",
+        "literals": [
+          "single cable",
+          "guitar's visible output jack"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.lighting_source",
+        "literals": [
+          "broad high window",
+          "late-afternoon side light"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.composition",
+        "literals": [
+          "center-left"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      },
+      {
+        "category_id": "feature.shot_size",
+        "literals": [
+          "seventy percent"
+        ],
+        "reason": "These atomic staging details were independently selected and can change without replacing the user's music or reference requirement."
+      }
+    ]
+  },
+  "selected": [
+    {
+      "category_id": "feature.situation",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "The random concept becomes a particular moment whose active music can be judged.",
+      "baseline_evidence": "the first quiet downbeat of an afternoon stage rehearsal"
+    },
+    {
+      "category_id": "feature.narrative_context",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "The visible cue links the preparatory moment to the shared beat.",
+      "baseline_evidence": "Her small downward head nod toward the drummer carries the count-in"
+    },
+    {
+      "category_id": "feature.subject",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "reference_prompt_image"
+      ],
+      "source_text": null,
+      "derivation": "Visible facial reference cues are retained from the supplied image within its appearance-only scope.",
+      "reason": "The lead must provide enough face detail to judge use of the supplied reference.",
+      "baseline_evidence": "a softly tapered oval face, dark rounded almond eyes, gently arched straight brows, a small softly rounded nose, and softly full natural pink lips"
+    },
+    {
+      "category_id": "feature.interaction",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Reciprocal attention differentiates collaboration from separate portraits.",
+      "baseline_evidence": "Their converging attention makes the first beat feel shared"
+    },
+    {
+      "category_id": "feature.action",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "The drummer response gives the cue an already-visible consequence.",
+      "baseline_evidence": "one stick meeting the snare head while the other stays raised separately"
+    },
+    {
+      "category_id": "feature.hand_gesture",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Actual fretting establishes an operated instrument relation at a readable scale.",
+      "baseline_evidence": "Her left fingertips press separate strings onto the frets at the middle of the neck"
+    },
+    {
+      "category_id": "feature.props",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Connection mechanics tie the instrument to the working rehearsal setting.",
+      "baseline_evidence": "A single cable plugs into the lead guitar's visible output jack"
+    },
+    {
+      "category_id": "feature.lighting_source",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Window light keeps the face and hand targets readable with a quiet atmosphere.",
+      "baseline_evidence": "A broad high window sends soft late-afternoon side light"
+    },
+    {
+      "category_id": "feature.composition",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Lateral hierarchy gives the primary face and guitar room beside the drummer.",
+      "baseline_evidence": "The lead stands center-left"
+    },
+    {
+      "category_id": "feature.shot_size",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "The primary support and operated hands share enough image area for assessment.",
+      "baseline_evidence": "her whole body occupying roughly seventy percent of the image height"
+    }
+  ],
+  "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+  "catalog_schema_version": "photo-precore-feature-catalog/v2",
+  "catalog_sha256": "98ba6156f5a06398cae2bd5131730a52173a0ea6a6b4bdce459d1ab33ed77a20",
+  "request_id": "music-band-independent-3-20261025",
+  "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+  "active_span_ids": [
+    "music_test_concept",
+    "reference_prompt_image"
+  ],
+  "baseline_prompt_sha256": "3753c60c012757d49e813a439882c2140b7e52c4be7579e1e7996afe5f24d79d"
+}

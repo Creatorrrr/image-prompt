@@ -1,0 +1,22 @@
+Loading weights:   0%|          | 0/413 [00:00<?, ?it/s]Loading weights: 100%|██████████| 413/413 [00:00<00:00, 5653.64it/s]
+{"complete": 21327, "records": 21588, "elapsed_seconds": 15.79}
+{"complete": 21359, "records": 21588, "elapsed_seconds": 16.6}
+{"complete": 21391, "records": 21588, "elapsed_seconds": 17.52}
+{"complete": 21423, "records": 21588, "elapsed_seconds": 18.51}
+{"complete": 21455, "records": 21588, "elapsed_seconds": 19.44}
+{"complete": 21487, "records": 21588, "elapsed_seconds": 20.46}
+{"complete": 21519, "records": 21588, "elapsed_seconds": 21.59}
+{"complete": 21551, "records": 21588, "elapsed_seconds": 22.69}
+{"complete": 21583, "records": 21588, "elapsed_seconds": 24.03}
+{"complete": 21588, "records": 21588, "elapsed_seconds": 24.31}
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 115, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 110, in main
+    with source_update(root,a.runtime_store):result=build(a.assets,a.cache or Path.home()/'.cache/image-prompt/shared-embedding-build',a.workers,a.repair_unknown,space=space,batch_size=a.batch_size)
+                                                    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py", line 74, in build
+    if c.digest(c.load(assets))!=c.digest(corpus):raise ValueError('source changed before layout activation')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: source changed before layout activation
