@@ -300,7 +300,18 @@ def _preserved_assertion_matches(expected, actual, parent_core, child_core):
         for item in old_inventory["items"]:
             fact = facts[item["assertion_id"]]
             for source_id in fact["axes"].get("source_input_ids", []):
-                if source_id not in old_by_id or new_by_id.get(source_id) != old_by_id[source_id]:
+                old_source = old_by_id.get(source_id)
+                new_source = new_by_id.get(source_id)
+                # A preserved fact can cite both the reference and the request
+                # that selected it. The semantic item is already exact above;
+                # only that request's provenance rebinds to the child request.
+                # Other text and reference bytes must still remain identical.
+                if old_source and new_source and old_source["kind"] == new_source["kind"] == "request_text":
+                    if (old_source["sha256"] != parent_binding["request_sha256"]
+                            or new_source["sha256"] != child_binding["request_sha256"]):
+                        return False
+                    continue
+                if old_source is None or new_source != old_source:
                     return False
         return True
     except (KeyError, TypeError, ValueError):
