@@ -1,0 +1,401 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "신규 후보가 채택되지 않은 원인과 세 장면의 관계 구현 실패를 분석해서 개선해줘. 같은 세 컨셉과 첨부 이미지로 독립 서브에이전트 3개에서 다시 테스트하고, 신규 데이터가 실제 프롬프트와 이미지에 반영됐는지까지 검증해줘.",
+  "creative_controls_sha256": "626fffadcb50ef58c3eced56ec4802b8bd14bdbed946c6f72865400f546ea8e4",
+  "interpreted_intent": "Preserve the Arm C waterfront ticket-booth inquiry after the last ferry and the reference face/hair. The local repair makes recognition turn into a spatial answer: the left-held portrait remains displayed, the right-held pen pauses above notes, the attendant touches the pier endpoint, and the investigator follows that exact map point with her eyes. The interior diagonal view, separated planes and simplified pier geometry are independent agent choices for simultaneous readability, not requester-owned facts. Compare exterior profile staging with interior frontal-torso staging; the latter better exposes both actor-relative hand chains and the downward attention line at creativity 1. Viewer experience is quiet urgency as a remaining witness supplies a concrete direction.",
+  "subject": "A fictional investigator seeking information from a waterfront ticket attendant; visible investigator face/hair follow the supplied reference only.",
+  "setting": "The waterfront ticket booth and empty boarding approach after the last ferry departure.",
+  "event": "The investigator shows a person portrait; the attendant gives a concrete map answer while recording pauses and attention follows the exact pointed pier.",
+  "visual_priorities": [
+    "The portrait, notebook and map have distinct visible functions within a connected inquiry.",
+    "The anatomical left hand supports the photograph while the right hand grips a pen with its nib visibly separated from the paper.",
+    "The attendant fingertip contacts the terminal pier landing and the investigator eye direction reaches that same point.",
+    "The supplied face and hair remain readable while the empty waterfront approach gives the encounter its narrowing opportunity."
+  ],
+  "baseline_prompt_en": "A photographic scene of active investigation at the waterfront ticket booth after the last ferry has departed: an investigator is seeking information, seeking information about a case from the remaining ticket attendant. The empty boarding approach and the quiet water beyond the booth give the encounter its late, narrowing opportunity. The investigator's visible facial appearance follows the supplied reference, including its rounded facial outline, large dark eyes, fine straight brows and soft lips; her hair follows the reference's dark chin-length bob with wispy separated fringe. Her attentive presence is quietly compelling, absorbed in the answer. The photograph catches the precise instant when recognition turns into a usable location. Her anatomical left hand supports the portrait photograph upright for the attendant to see. The portrait presents one person's face. Her anatomical right hand holds the pen over an open notebook. The investigator grips the pen in her anatomical right hand with its nib suspended above the notebook page. A clear strip of air separates the nib from the paper as her recording pauses. The pen has a continuous narrow barrel and a clearly visible pointed nib. The notebook already contains a few short handwritten lines, while the held photograph remains upright and separate from both notebook and map. The attendant answers by pointing to a local map. The attendant's index fingertip touches the printed pier endpoint. The investigator's eyes are directed down to that same fingertip and pier endpoint. Her chin tilts toward the map, making the downward eye direction readable. The local map depicts a single narrow pier projecting from a curved shoreline into blue water, ending in a small square landing; the fingertip is planted on this outer landing. The map's broad shoreline, narrow pier neck and terminal landing remain visible around the contact. The attendant's face and slight speaking mouth support the explanation. The investigator occupies frame left, her torso nearly frontal: her left-hand photograph appears at screen-right beside her chest, and her right-hand pen and notebook appear at screen-left below it. Her separate forearms stay traceable to their corresponding shoulders. The attendant occupies frame right and reaches toward the map in the central foreground. The notebook rests on the near counter ledge, and the map is inclined on a shallow board beyond it, separating their planes. View from inside the booth, slightly above counter height and diagonally across the counter, with both faces, the two investigator hands, pen gap and map contact readable together. A diffused work lamp lights the faces, hands and pale paper against the cooler harbor dusk. Moderately deep focus joins the investigator's lowered eyes to the decisive counter details while the empty boarding approach remains recognizable behind her.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "same concept",
+      "source_text": "같은 세 컨셉",
+      "basis": "request_context",
+      "resolution": "The current same-concept instruction preserves the assigned last-ferry waterfront inquiry; preserved concept, subject and event literal evidence are supplied only by the closed retry projection. Local layout is independent.",
+      "sources": []
+    },
+    {
+      "term": "relationship repair",
+      "source_text": "관계 구현 실패를 분석해서 개선해줘",
+      "basis": "request_context",
+      "resolution": "A local realization repair preserves the information-seeking event and corrects the reported pen contact/hand roles and exact map-point attention/contact. It does not create authority to remove the props or weaken the criterion.",
+      "sources": []
+    },
+    {
+      "term": "supplied reference",
+      "source_text": "첨부 이미지",
+      "basis": "request_context",
+      "resolution": "Use only directly visible facial and hair cues for the fictional investigator. Identity, age, occupation and personality are not established by appearance.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "같은 세 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "active investigation"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "같은 세 컨셉",
+        "dimension": "subject",
+        "prompt_evidence": "an investigator is seeking information"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "같은 세 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "seeking information about a case"
+      },
+      {
+        "anchor_id": "photographic_scene",
+        "source_text": "같은 세 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "photographic scene"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부 이미지",
+        "dimension": "reference_use",
+        "prompt_evidence": "The investigator's visible facial appearance follows the supplied reference"
+      },
+      {
+        "anchor_id": "face_reference",
+        "source_text": "첨부 이미지",
+        "dimension": "appearance",
+        "prompt_evidence": "its rounded facial outline, large dark eyes, fine straight brows and soft lips",
+        "target": "protagonist",
+        "property": "appearance.face.reference_visual_cues"
+      },
+      {
+        "anchor_id": "hair_reference",
+        "source_text": "첨부 이미지",
+        "dimension": "appearance",
+        "prompt_evidence": "her hair follows the reference's dark chin-length bob with wispy separated fringe",
+        "target": "protagonist",
+        "property": "appearance.hair.reference_visual_cues"
+      },
+      {
+        "anchor_id": "left_photo",
+        "source_text": "관계 구현 실패를 분석해서 개선해줘",
+        "dimension": "action",
+        "prompt_evidence": "Her anatomical left hand supports the portrait photograph upright for the attendant to see"
+      },
+      {
+        "anchor_id": "right_pen_gap",
+        "source_text": "관계 구현 실패를 분석해서 개선해줘",
+        "dimension": "action",
+        "prompt_evidence": "The investigator grips the pen in her anatomical right hand with its nib suspended above the notebook page"
+      },
+      {
+        "anchor_id": "map_target",
+        "source_text": "관계 구현 실패를 분석해서 개선해줘",
+        "dimension": "action",
+        "prompt_evidence": "The attendant's index fingertip touches the printed pier endpoint"
+      },
+      {
+        "anchor_id": "gaze_target",
+        "source_text": "관계 구현 실패를 분석해서 개선해줘",
+        "dimension": "relationship",
+        "prompt_evidence": "The investigator's eyes are directed down to that same fingertip and pier endpoint",
+        "target": "investigator",
+        "property": "gaze.map_point"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "action"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "relationship",
+      "pose",
+      "body_geometry",
+      "composition",
+      "framing",
+      "lighting",
+      "camera",
+      "material",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "evidence": {
+        "subject_phrase": "an investigator is seeking information"
+      },
+      "axes": {
+        "subject_category": "human"
+      },
+      "polarity": "required",
+      "affected_dimensions": [
+        "subject"
+      ],
+      "dimension": "subject",
+      "assertion_id": "subject_category",
+      "source_span_ids": [
+        "concept"
+      ]
+    },
+    {
+      "evidence": {
+        "owner_phrase": "The investigator's visible facial appearance follows the supplied reference"
+      },
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "protagonist",
+        "owner_kind": "human"
+      },
+      "polarity": "required",
+      "affected_dimensions": [
+        "subject"
+      ],
+      "dimension": "subject",
+      "assertion_id": "owner_protagonist",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "evidence": {
+        "owner_phrase": "The investigator's visible facial appearance follows the supplied reference"
+      },
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "protagonist"
+      },
+      "polarity": "required",
+      "affected_dimensions": [
+        "subject"
+      ],
+      "dimension": "subject",
+      "assertion_id": "role_main_subject",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "evidence": {
+        "appearance_phrase": "its rounded facial outline, large dark eyes, fine straight brows and soft lips"
+      },
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "appearance.face.reference_visual_cues",
+        "value_type": "reference_visual_cues/v1",
+        "value": "rounded facial outline, large dark eyes, fine straight brows and soft lips",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference"
+        ]
+      },
+      "polarity": "required",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "dimension": "appearance",
+      "assertion_id": "face_reference",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "evidence": {
+        "appearance_phrase": "her hair follows the reference's dark chin-length bob with wispy separated fringe"
+      },
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "appearance.hair.reference_visual_cues",
+        "value_type": "reference_visual_cues/v1",
+        "value": "dark chin-length bob with wispy separated fringe",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference"
+        ]
+      },
+      "polarity": "required",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "dimension": "appearance",
+      "assertion_id": "hair_reference",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "evidence": {
+        "scope_phrase": "The investigator's visible facial appearance follows the supplied reference"
+      },
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "protagonist",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"778c528c9446f94c65720c8fb2aaec221e8633d386305ad0352947e339916838\",\"request_envelope_sha256\":\"b75a70ffa0ff1c123a84ec7a4801a69c6db463a30a16000d6b2c86fa98ef403a\",\"request_sha256\":\"1b8048a43eb2080cade5524d1b90faa170b821275f7f3457b7b92dca87b66411\"},\"items\":[{\"assertion_id\":\"face_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.face.reference_visual_cues\",\"target\":\"protagonist\",\"value\":{\"type\":\"reference_visual_cues/v1\",\"value\":\"rounded facial outline, large dark eyes, fine straight brows and soft lips\"}},{\"assertion_id\":\"hair_reference\",\"dimension\":\"appearance\",\"property\":\"appearance.hair.reference_visual_cues\",\"target\":\"protagonist\",\"value\":{\"type\":\"reference_visual_cues/v1\",\"value\":\"dark chin-length bob with wispy separated fringe\"}}],\"reviewed_input_ids\":[\"request\",\"reference\",\"prior_topic_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "polarity": "required",
+      "affected_dimensions": [
+        "subject"
+      ],
+      "dimension": "subject",
+      "assertion_id": "reference_inventory",
+      "source_span_ids": [
+        "reference"
+      ]
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    },
+    {
+      "assertion_id": "pen_photo_repair",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "actor": "investigator",
+        "object": "pen",
+        "left_hand_role": "portrait_support",
+        "right_hand_role": "pen_grip",
+        "recording_state": "paused",
+        "pen_page_relation": "separated"
+      },
+      "evidence": {
+        "interaction_phrase": "The investigator grips the pen in her anatomical right hand with its nib suspended above the notebook page",
+        "recognition_phrase": "The pen has a continuous narrow barrel and a clearly visible pointed nib",
+        "left_hand_phrase": "Her anatomical left hand supports the portrait photograph upright for the attendant to see",
+        "paused_gap_phrase": "A clear strip of air separates the nib from the paper as her recording pauses"
+      }
+    },
+    {
+      "assertion_id": "map_answer_contact",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "repair"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "actor": "attendant",
+        "target": "printed_pier_endpoint",
+        "contact": "index_fingertip_touch"
+      },
+      "evidence": {
+        "contact_phrase": "The attendant's index fingertip touches the printed pier endpoint"
+      }
+    }
+  ],
+  "request_lineage": {
+    "contract_version": "photo-request-lineage/v2",
+    "parent_request_id": "investigative-fiction-integration-20261025",
+    "parent_core_sha256": "1386917afcb2412d3b262b7ea293d224cdfd5d6c9011b042df4f10e133b1fd96",
+    "preserved_dimensions": [
+      "appearance",
+      "concept",
+      "event",
+      "reference_use",
+      "subject"
+    ],
+    "allowed_changes": [
+      "action",
+      "body_geometry",
+      "camera",
+      "composition",
+      "framing",
+      "lighting",
+      "material",
+      "pose",
+      "relationship",
+      "timing"
+    ],
+    "repair_targets": [
+      {
+        "repair_id": "paused_pen_contact",
+        "source_span_ids": [
+          "repair"
+        ],
+        "importance": "primary",
+        "relation_origin": "requester_corrected",
+        "actor_phrase": "investigator",
+        "object_phrase": "pen",
+        "interaction_state": "held",
+        "actor_object_contact": "required",
+        "protected_dimensions": [
+          "action"
+        ],
+        "allowed_repair_axes": [
+          "camera",
+          "contact_geometry",
+          "framing",
+          "lighting",
+          "local_pose",
+          "material",
+          "object_geometry",
+          "occlusion"
+        ],
+        "interaction_phrase": "The investigator grips the pen in her anatomical right hand with its nib suspended above the notebook page",
+        "recognition_phrase": "The pen has a continuous narrow barrel and a clearly visible pointed nib"
+      }
+    ]
+  },
+  "style": {
+    "domain": "photography",
+    "family": "observational investigative-fiction still",
+    "evidence": [
+      "quiet water and empty boarding approach",
+      "a speaking witness and interrupted note taking"
+    ]
+  },
+  "variation_key": "independent-retest-c"
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "prospective-testcase-pixel-review/v1",
+  "reviewer": "Codex independent arm C",
+  "image": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/investigative-fiction-20261025-c/generated-image.png",
+  "sha256": "ab2d0c0c66feff169716c2f5307a7c637333881aa75877929e3b9440df9fb002",
+  "native_dimensions": [
+    1536,
+    1024
+  ],
+  "reviewed_scales": [
+    "native",
+    "thumbnail"
+  ],
+  "evidence_files": [
+    "review-thumbnail.png",
+    "review-pen-contact-crop.png",
+    "review-map-contact-crop.png",
+    "review-gaze-crop.png",
+    "review-investigator-arm-ownership-crop.png"
+  ],
+  "gates": [
+    {
+      "id": "C1_active_inquiry",
+      "status": "fail",
+      "observability": "visible",
+      "supported_components": [
+        "clear portrait inquiry material",
+        "notebook and owned pen",
+        "attentive reciprocal conversation"
+      ],
+      "failed_components": [
+        "investigator gaze follows the indicated map point"
+      ],
+      "evidence": "The investigator holds a recognizable portrait and writes or touches a notebook while looking directly at the attendant. This supports active information inquiry, but her eyes aim to the speaker at the right rather than the lower route branch required by the prospective attention chain. The full multi-component gate fails."
+    },
+    {
+      "id": "C2_witness_response",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The attendant's index fingertip touches the upper forked path on the route sheet. Finger, wrist, forearm and sleeve are connected; his open mouth and face toward the investigator make an engaged response legible. This depicts an explanation, not proof of truthful or accurate testimony."
+    },
+    {
+      "id": "C3_case_target",
+      "status": "fail",
+      "observability": "visible",
+      "supported_components": [
+        "recognizable separate person on printed portrait",
+        "paper surface and holder contact visible",
+        "investigator owns held photo"
+      ],
+      "failed_components": [
+        "prospective contact assignment to investigator left hand"
+      ],
+      "evidence": "The portrait clearly depicts a separate man on a bordered paper print and is visibly held for the encounter. Tracing the sleeve-to-hand relation shows the print in the investigator's anatomical right hand and pen in her left, reversing the authored left-photo/right-pen assignment. Object-recognition and display subconditions pass; the complete strict contact gate fails."
+    },
+    {
+      "id": "C4_role_and_place",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Ticket racks, a timetable, counter fixtures, the river and a gated empty gangway appear together. The local ticket worker points to a map of a river/dock/fork, making his workplace relevant to the question. Exact country, credential validity, witness truth and who crossed cannot be established from these pixels."
+    },
+    {
+      "id": "C5_reference_scope",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "At the intended medium scale the investigator tracks the reference's dark short bob, wispy fringe, dark large eyes, fine brows and softly defined lips. Her face is visible at a three-quarter angle. This is a qualitative visible-appearance comparison, not a claim of real identity, chronological age, occupation or personality."
+    },
+    {
+      "id": "C6_whole_scene",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "The picture reads as a purposeful portrait-and-route inquiry at a ferry workplace rather than an isolated posed portrait. Nevertheless C1's exact gaze chain and C3's assigned contact hand fail, and the pen is in page contact rather than the authored pause. All C1–C4 components are required by the prospective full gate, so broad genre legibility does not promote the strict whole scene to pass."
+    }
+  ],
+  "strict_whole_scene": "fail",
+  "topic_realization": {
+    "broad_visible_investigative_inquiry": "supported",
+    "scope": "Visible exchange concerning a portrait, recorded notes and a pointed route. No actual crime, legal status, solved case, truthful statement or successful identification is proven."
+  },
+  "reference_appearance": "qualitatively_supported_at_scene_scale",
+  "retrieval_and_adoption": {
+    "queries": 4,
+    "occurrences": 32,
+    "distinct_read_sources": 31,
+    "new_investigative_source_exposure": 0,
+    "retained_existing_material_generic_inspiration": 1,
+    "native_whole_source_adoptions": 0,
+    "new_source_adoptions": 0,
+    "new_data_effect_in_pixels": "not_tested_no_new_source_exposure",
+    "generic_support_in_pixels": "forearm support visible; pen-hover compound still fails",
+    "causal_improvement": "unestablished_no_image_baseline"
+  },
+  "image_call_count": 1,
+  "user_acceptance": "pending_not_yet_received"
+}

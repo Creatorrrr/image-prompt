@@ -1,0 +1,268 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "8d590cc60e56990060cc245673d8aeffc10a6928e24d01658eb9004ac55cdae7",
+  "interpreted_intent": "Requester asks for an independent random concept testing the investigative-fiction topic with the attached portrait. Arm A independently randomized within coordinator-assigned digital/financial investigation: tracing diverted donations to a terminal receiving account. The financial circumstances, one investigator, charity office, paper/screen matching action, notation, wardrobe and camera are authorial staging, not requester facts. Compared a dense multi-screen operations room with a close desk-level reconciliation; choose the latter for a single visible evidence connection and a human moment of recognition. At saved creativity 1 use restrained local refinements later. Sensual 1 supports quiet personal appeal through concentrated presence, shirt and soft cheek light; fetish 0 and surreal 0 add no treatment. Face/hair reference use preserves visible appearance only and establishes no real identity, age, biography or profession. Viewer should recognize active evidence testing first, then the financial lead. The decisive contrast is the same receiver on screen and paper; competing reading is ordinary bookkeeping. Pencil contact with the circled receiver and connected transfer tiles aim to make investigation legible. These are authorial test expectations rather than extra user locks.",
+  "subject": "A fictional investigator using the supplied portrait for visible face/hair appearance",
+  "setting": "A quiet charity-fraud investigation desk",
+  "event": "Examining records to test a suspected connection; authorial specific action is matching a terminal receiving account across screen and bank statement",
+  "visual_priorities": [
+    "The reference-guided face remains recognizable while attention is directed to the record comparison.",
+    "A present pencil-to-paper annotation is visibly owned by the investigator and tied to the matching receiving account.",
+    "The terminal transfer tile and paper entry show the same account and amount together, making the connection inspectable.",
+    "One calm diagonal connects face, hands and records with restrained warm/cool light."
+  ],
+  "baseline_prompt_en": "A cinematic photographic investigative-fiction scene centers on a person engaged in an investigation, examining records to test a suspected connection. Use the supplied portrait as the face and hair appearance reference. Preserve the visible facial appearance from the supplied portrait. Preserve the visible short dark bob and wispy fringe from the supplied portrait. The subject is a fictional character. At a quiet charity-fraud investigation desk near closing time, the investigator has found the same receiving account at the end of a diverted-donation trail. A single monitor angled toward the viewer shows three large account tiles connected by successive transfer arrows, ending at a clearly legible A-17 tile with the amount 9,800,000 beneath it. A printed bank statement lies directly below that terminal tile and repeats A-17 and 9,800,000 in large clear type. The investigator's right hand guides a graphite pencil, its point physically touching a freshly drawn circle around A-17 on the printed bank statement; the left fingertips hold the paper's near corner flat. Both hands visibly connect to their own forearms. Their eyes move from the circled entry toward the terminal screen tile, lips slightly parted in concentrated recognition, as the once-disconnected records become one traceable lead. A soft ivory shirt with the sleeves casually turned back and a gentle glow on the cheek lend the subject a quiet personal appeal. Photograph from across the desk at a slightly elevated three-quarter angle, keeping the recognizable face, both hand-to-paper contacts, printed entry and terminal screen tile simultaneously readable. The near paper and monitor occupy a clean shared diagonal; a modest stack of closed case folders recedes into soft shadow. Restrained warm desk light meets cool screen light, with natural skin texture and sufficient depth of field for the investigation to read as a purposeful present action.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The exact prior human topic supplied in topic_context is 수사물 용어 정리: investigative fiction. Only that topic meaning is carried; the digital/financial scene is an independent authorial choice.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 컨셉",
+      "source_text": "주제에 어울리는 랜덤한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "Choose a coherent investigator and purposeful evidence-examination event suitable for investigative fiction; randomization method and specific concept are separately recorded and are not requester facts.",
+      "sources": []
+    },
+    {
+      "term": "첨부 이미지 활용",
+      "source_text": "첨부한 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait for visible face and hair appearance, with fictional scene and role independently authored; no real identity, age, biography or profession is inferred.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "investigative-fiction scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "주제에 어울리는 랜덤한 컨셉",
+        "dimension": "subject",
+        "prompt_evidence": "a person engaged in an investigation"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "주제에 어울리는 랜덤한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "examining records to test a suspected connection"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied portrait as the face and hair appearance reference"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "appearance",
+        "target": "protagonist",
+        "property": "face.reference_appearance",
+        "prompt_evidence": "Preserve the visible facial appearance from the supplied portrait"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "appearance",
+        "target": "protagonist",
+        "property": "hair.reference_appearance",
+        "prompt_evidence": "Preserve the visible short dark bob and wispy fringe from the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "age",
+      "role",
+      "count",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "reference_subject_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "protagonist",
+        "owner_kind": "person"
+      },
+      "evidence": {
+        "owner_phrase": "a person engaged in an investigation"
+      }
+    },
+    {
+      "assertion_id": "main_subject_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "protagonist"
+      },
+      "evidence": {
+        "owner_phrase": "a person engaged in an investigation"
+      }
+    },
+    {
+      "assertion_id": "reference_face_match",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "face.reference_appearance",
+        "value_type": "reference.appearance/v1",
+        "value": "visible facial appearance from supplied portrait",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "Preserve the visible facial appearance from the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "reference_hair_match",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "protagonist",
+        "property": "hair.reference_appearance",
+        "value_type": "reference.appearance/v1",
+        "value": "visible short dark bob and wispy fringe from supplied portrait",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference"
+        ]
+      },
+      "evidence": {
+        "appearance_phrase": "Preserve the visible short dark bob and wispy fringe from the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "reference_appearance_scope",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "protagonist",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"14b32208b5de2d203b59bc642afcd63ab0b66efd0c8c8efe2b432b21c3b594cf\",\"request_envelope_sha256\":\"3f4e01d9d0b11ed0be5cbebe75aff1f930461f08158132d454d11b610e27ed96\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"reference_face_match\",\"dimension\":\"appearance\",\"property\":\"face.reference_appearance\",\"target\":\"protagonist\",\"value\":{\"type\":\"reference.appearance/v1\",\"value\":\"visible facial appearance from supplied portrait\"}},{\"assertion_id\":\"reference_hair_match\",\"dimension\":\"appearance\",\"property\":\"hair.reference_appearance\",\"target\":\"protagonist\",\"value\":{\"type\":\"reference.appearance/v1\",\"value\":\"visible short dark bob and wispy fringe from supplied portrait\"}}],\"reviewed_input_ids\":[\"request\",\"reference\",\"prior_topic_request\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "scope_phrase": "Use the supplied portrait as the face and hair appearance reference"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "random_concept"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic narrative photography",
+    "family": "restrained contemporary investigative drama",
+    "evidence": [
+      "warm desk light meets cool screen light",
+      "clean shared diagonal"
+    ]
+  },
+  "variation_key": "investigative-fiction-a-10213464332213277679"
+}
