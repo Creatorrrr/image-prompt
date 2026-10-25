@@ -352,4 +352,3 @@ summary={'conversation_rows':len(routes),'tables':len(tables),'semantic_cards':l
  'runtime_integration':'NOT_PERFORMED','native_images':'NOT_RUN','candidate_pack_retrieval':'NOT_RUN','user_acceptance':'NOT_REQUESTED'}
 save('summary.json',summary)
 print(json.dumps(summary,ensure_ascii=False,indent=2))
-

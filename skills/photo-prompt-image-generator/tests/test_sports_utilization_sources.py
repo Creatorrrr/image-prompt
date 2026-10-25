@@ -3,6 +3,7 @@ import json,sys,unittest
 from pathlib import Path
 S=Path(__file__).resolve().parents[1];A=S/'assets';sys.path.insert(0,str(S/'scripts'))
 import photo_global_index as index
+from photo_candidate_semantics import validate_relations
 read=lambda n:json.loads((A/n).read_text())
 class SportsUtilizationSources(unittest.TestCase):
  @classmethod
@@ -22,7 +23,12 @@ class SportsUtilizationSources(unittest.TestCase):
    if cid not in self.records:continue
    owners={x['id']:x['description'] for x in c['owners']}
    expected=[{'subject':owners[r['subject']],'type':r['predicate'].replace('_',' '),'object':owners[r['object']]} for r in c['relations']]
-   self.assertEqual(self.records[cid]['content']['relations'],expected)
+   actual=[{k:r[k] for k in ('subject','type','object')} for r in self.records[cid]['content']['relations']]
+   self.assertEqual(actual,expected)
+ def test_all_visual_relations_satisfy_operating_dictionary_schema(self):
+  for cid,r in self.records.items():
+   if r['record_kind']=='visual_option':
+    with self.subTest(candidate_id=cid):validate_relations(r['content']['relations'],cid)
  def test_lookup_names_do_not_activate_or_claim_native_approval(self):
   self.assertFalse(self.side['utilization_enrichment']['native_approval'])
   self.assertEqual(self.side['utilization_enrichment']['rank_policy_changes'],0)
