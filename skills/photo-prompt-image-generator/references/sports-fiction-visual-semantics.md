@@ -1,0 +1,9 @@
+# Sports fiction visual semantics
+
+The sports-fiction source retains 102 researched semantic cards, 330 scoped keyword routes, 70 technique atoms and 39 original sources. It registers 106 optional bilingual visual alternatives (100 original plus six local equipment refinements), 330 positive-retrieval-excluded diagnostic records and 210 bindings. W01 reuses an existing training-bib source; the illustration-only X02 remains deferred.
+
+Observable component groups and owned contact/attachment relations are separate from narrative outcomes, consent, identity, chronology, diagnosis, legality and athletic performance. All sources retain whole constraints; lookup names do not activate a sport or grant native approval. The new equipment variants distinguish cycling hoods/levers and bottle cages, skate boot/mount/runner contacts and lace paths, feathered shuttle parts and one continuous racket.
+
+The first independent tests used no new material. After actual search-field enrichment, three independent retests retained 2/1/3 source-bound inspirations with literal prompt deltas. Each made one native image call with the provided reference. Only the figure-skating arm fully passed its strict pixels. Cycling retains cropped support/finger-contact failures; badminton retains toward-net/near-net and open-shuttle-end visibility failures. `partial_is_fail` and `UNOBSERVABLE_NOT_PASS` remain in force; requester judgment is pending. This is source-use feasibility evidence, not a controlled estimate of aesthetic improvement.
+
+Research, sources, regression cases, exact prompt/source/image hashes and original images are archived under `docs/research-evidence/photo-prompt/sports-fiction-20261025/`. The two `photo_sports_fiction_*evidence_20261025.json` registries remain non-indexed evidence, with no native qualification. Historical paths resolve through `artifact-relocations.json`.
