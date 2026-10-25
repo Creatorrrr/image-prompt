@@ -1,0 +1,95 @@
+{
+  "schema": "independent-prospective-image-test-result/v1",
+  "arm": "A",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/investigative-fiction-20261025-a/investigative-fiction-a.png",
+  "image_sha256": "e447f5c4cde0d3f39e8b9becad3b902cf9cc7c32b04048dffb6cb946b53989f4",
+  "image_dimensions": [
+    1237,
+    1272
+  ],
+  "reviewer": "Codex independent arm A",
+  "reviewed_with": [
+    "native built-in output display",
+    "view_image on saved original with original detail"
+  ],
+  "prospective_testcase": "testcase.prospective.json",
+  "gates": [
+    {
+      "id": "investigative_action",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The subject looks toward the monitor while holding a pencil over the bank statement; the monitor shows a directed donation-payment chain and the foreground paper isolates the same terminal account. This reads as purposeful record comparison rather than a camera-facing pose.",
+      "component_results": {
+        "investigator attention to records": "pass",
+        "present annotation or comparison": "pass",
+        "meaningful evidence connection": "pass"
+      },
+      "limit": "Active comparison is visible. Actual tracing history, guilt and completed verification are not established."
+    },
+    {
+      "id": "contact_owner",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "Both forearms connect coherently to their own hands. The right hand grips the pencil and the left fingertips hold the sheet. The pencil tip is around x503,y1042 in the 1237x1272 original, above and left of the circled A-17/9,800,000 row; it touches a different table area. The nearest red circle starts around x577,y1060. The required tip-to-circled-receiver contact is visibly absent.",
+      "component_results": {
+        "right hand and forearm ownership": "pass",
+        "pencil grip": "pass",
+        "tip contact on circled row": "fail",
+        "left hand at separate paper corner": "pass"
+      },
+      "limit": "A plausible nearby pencil touch does not pass the exact contact target."
+    },
+    {
+      "id": "screen_document_relation",
+      "status": "fail",
+      "observability": "visible",
+      "evidence": "Three large monitor tiles are connected by arrows. The final tile reads A-17 and 9,800,000. The foreground bank statement visibly repeats A-17 and 9,800,000 inside a red circle. However the pencil is directed to the row above/left, rather than that matched entry, so the required action-to-match component fails even though the data match is legible.",
+      "component_results": {
+        "connected screen account tiles": "pass",
+        "terminal A-17 and amount": "pass",
+        "matching printed A-17 and amount": "pass",
+        "action targets matched row": "fail"
+      },
+      "limit": "Readable matching text alone cannot pass the complete screen-document-action relation."
+    },
+    {
+      "id": "reference_appearance",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The face remains recognizable from the supplied portrait at useful size, with the same visible eye/nose/lip proportions and short dark bob plus wispy fringe. The head angle and fictional expression changed with the scene.",
+      "component_results": {
+        "visible face": "pass",
+        "recognizable hair silhouette and fringe": "pass",
+        "no stronger reference-scope inference": "pass"
+      },
+      "limit": "Appearance comparison only; no real identity, age, biography or profession conclusion."
+    },
+    {
+      "id": "whole_scene",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "Donation Flow Analysis on the monitor, a shared terminal account/amount on the bank statement, an occupied desk, and the subject actively attending to those records establish financial investigative-fiction as the main readable scene. Face, hands and the two evidence carriers coexist coherently.",
+      "component_results": {
+        "financial-record context": "pass",
+        "purposeful evidence testing": "pass",
+        "coherent spatial and attention hierarchy": "pass"
+      },
+      "limit": "Genre-level legibility passes. The complete prospective testcase still fails because the exact contact and action-target relation fail; charity fraud remains fictional context rather than a proven fact."
+    }
+  ],
+  "strict_case_status": "fail",
+  "passed_gates": 3,
+  "failed_gates": 2,
+  "whole_impression_topic_status": "pass",
+  "source_exposure_status": "new N03 exposed and completely reviewed",
+  "new_source_retained_inspiration": 0,
+  "native_contractual_selections": 0,
+  "prompt_effect": "Final prompt equals independently frozen baseline; no data-derived addition retained.",
+  "causal_data_improvement": "not_established",
+  "image_call_count": 1,
+  "quality_rerender_performed": false,
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

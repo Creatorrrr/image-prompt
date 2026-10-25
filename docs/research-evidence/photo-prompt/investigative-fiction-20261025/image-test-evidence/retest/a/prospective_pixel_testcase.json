@@ -1,0 +1,40 @@
+{
+  "schema": "investigative-retest-prospective-pixel-test/v1",
+  "arm": "a",
+  "status": "frozen_before_retrieval",
+  "baseline_sha256": "9f63820a7f98db8172d4971ca71714feb8b483c23239deabb677217b163e8d34",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "hard_criteria": [
+    {
+      "id": "matching_records",
+      "pass": "The final recipient on the screen and circled paper row both visibly read A-17 and 9,800,000. Every component must be readable together.",
+      "fail": "Either account or amount mismatches, is missing, belongs to another row, or is not readable."
+    },
+    {
+      "id": "exact_pencil_target_contact",
+      "pass": "Trace the investigator’s right hand to the held pencil and its sharpened graphite point. That actual point visibly touches the paper at the circled A-17 / 9,800,000 target entry.",
+      "fail": "Point touches a different row or nearby paper, hovers, is hidden, or only the shaft crosses the circle. Mere proximity fails. This preserves the previous failed criterion."
+    },
+    {
+      "id": "separate_left_support",
+      "pass": "The distinct left hand visibly supports the paper and can be traced to its own forearm while the right hand actuates the pencil.",
+      "fail": "Support is absent, ambiguous, transferred to the right hand, or off-frame."
+    },
+    {
+      "id": "reference_appearance",
+      "pass": "Visible face and short dark bob with wispy fringe match the reference appearance at the saved scale.",
+      "fail": "Appearance is materially different or too obscured to evaluate."
+    },
+    {
+      "id": "whole_scene_financial_investigation",
+      "pass": "The screen funds-flow route and deposit statement are jointly understandable as an investigator comparing records.",
+      "fail": "Generic office portrait, decorative numbers, or disconnected props fail."
+    }
+  ],
+  "review_rule": "Review the actual saved image at native scale and whole-frame scale. Record observability visible/partial/unobservable separately. Partial or unobservable components cannot pass a complete gate. Metadata, prompt audit, retrieval exposure, source credit and user acceptance remain separate.",
+  "artistic_observations": [
+    "Assess whether the exact contact and matching fields dominate enough to explain the moment.",
+    "Describe the face’s presence and the overall visual impression before referring to control labels."
+  ],
+  "source_credit_rule": "A feature already present in this frozen baseline gets no new-source credit; later source credit requires an actual literal final-prompt delta and image-grounded material evidence."
+}

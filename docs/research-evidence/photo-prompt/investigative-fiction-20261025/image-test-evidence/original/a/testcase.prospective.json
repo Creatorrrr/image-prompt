@@ -1,0 +1,64 @@
+{
+  "schema": "independent-prospective-image-test/v1",
+  "arm": "A",
+  "authored_before_retrieval": true,
+  "concept": "기부금 유출의 마지막 수취계좌를 입금 명세서와 연결하는 순간",
+  "concept_authorship": "Independent agent; randomized before local retrieval. Domain assignment and expectations are not additional user facts.",
+  "random_seed": 10213464332213277679,
+  "reference_scope": "Visible face and hair appearance only; identity, age, biography and profession remain unestablished.",
+  "gates": [
+    {
+      "id": "investigative_action",
+      "expected": "The subject purposefully compares evidence rather than posing at a desk; attention, annotation and records form one coherent investigation.",
+      "components": [
+        "investigator attention to records",
+        "present annotation or comparison",
+        "meaningful evidence connection"
+      ],
+      "pass_rule": "All components and causal connection visible together."
+    },
+    {
+      "id": "contact_owner",
+      "expected": "The right hand holding the pencil visibly belongs to the investigator, and its tip touches the circle around the printed receiving-account row; left fingertips separately stabilize the paper.",
+      "components": [
+        "right hand and forearm ownership",
+        "pencil grip",
+        "tip contact on circled row",
+        "left hand at separate paper corner"
+      ],
+      "pass_rule": "Every endpoint visible; nearby pointing or hidden tip fails."
+    },
+    {
+      "id": "screen_document_relation",
+      "expected": "A screen transfer chain ends at A-17 with 9,800,000, and the foreground bank statement visibly repeats A-17 and 9,800,000; subject action targets that entry.",
+      "components": [
+        "connected screen account tiles",
+        "terminal A-17 and amount",
+        "matching printed A-17 and amount",
+        "action targets matched row"
+      ],
+      "pass_rule": "All record components readable and jointly connected; approximate bookkeeping impression alone fails."
+    },
+    {
+      "id": "reference_appearance",
+      "expected": "Visible facial shape and short dark bob with wispy fringe correspond to the supplied portrait at a usable viewing scale.",
+      "components": [
+        "visible face",
+        "recognizable hair silhouette and fringe",
+        "no stronger reference-scope inference"
+      ],
+      "pass_rule": "Assess appearance only; no identity or age assertion."
+    },
+    {
+      "id": "whole_scene",
+      "expected": "Investigative-fiction financial evidence work is the main impression, with a traceable connection that exceeds generic office work.",
+      "components": [
+        "financial-record context",
+        "purposeful evidence testing",
+        "coherent spatial and attention hierarchy"
+      ],
+      "pass_rule": "Strict conjunction; genre atmosphere alone is insufficient."
+    }
+  ],
+  "review_protocol": "After one saved image, inspect actual pixels. For each gate record visible/partial/unobservable, pass/fail/unknown, evidence and limits. Source exposure, adoption, audit validity, pixels and user acceptance are distinct. User acceptance stays pending."
+}

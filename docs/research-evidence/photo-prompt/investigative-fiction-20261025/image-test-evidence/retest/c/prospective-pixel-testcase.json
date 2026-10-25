@@ -1,0 +1,55 @@
+{
+  "schema": "independent-photo-pixel-testcase/v1",
+  "status": "prospective_frozen_before_retrieval",
+  "arm": "c",
+  "baseline_prompt_sha256": "812992d330dfaba800432da57f759579c45b56bbe79a4f7cfa287f3f5fed928d",
+  "reference": {
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "scope": "visible face and hair appearance only"
+  },
+  "criteria": [
+    {
+      "id": "separate_prop_roles",
+      "pass_requires": "A held portrait photograph used to ask recognition, an open notebook used for recording, and an independently readable map used for a spatial answer, together in the scene."
+    },
+    {
+      "id": "actor_relative_hand_roles",
+      "pass_requires": "The investigator's anatomical left hand visibly supports the photograph and anatomical right hand visibly grips the pen; trace each from its own shoulder through forearm. Screen placement alone is insufficient."
+    },
+    {
+      "id": "paused_pen_gap",
+      "pass_requires": "The gripped pen nib and notebook paper are both visible with an actual visible air gap; contact, uncertain overlap, occluded nib or cropped paper fails. Recording visibly pauses."
+    },
+    {
+      "id": "exact_pier_contact",
+      "pass_requires": "The attendant index fingertip visibly contacts the terminal pier landing on the map. The pier connects to a shoreline and projects into water; touch on shoreline, another branch or an unidentifiable patch fails."
+    },
+    {
+      "id": "gaze_to_same_target",
+      "pass_requires": "The investigator's actual eye direction is toward that same contacted pier endpoint. Looking at the attendant face, portrait or notebook fails; head direction alone is partial evidence."
+    },
+    {
+      "id": "waterfront_last_ferry_context",
+      "pass_requires": "The ticket-booth inquiry is recognizable with empty boarding approach and harbor context consistent with the last departure."
+    },
+    {
+      "id": "reference_face_hair",
+      "pass_requires": "Visible facial outline, large dark eyes, fine brows and soft lips plus dark chin-length bob and separated fringe remain consistent with the supplied appearance at the rendered scale."
+    }
+  ],
+  "scales": [
+    "whole_image",
+    "native_resolution",
+    "unresampled_detail_crops_if_needed"
+  ],
+  "strict_result": "All criteria pass together; partial or unobservable evidence cannot pass a complete criterion.",
+  "separate_judgments": [
+    "technical_audit",
+    "source_exposure",
+    "actual_material_contribution",
+    "final_literal_change",
+    "pixel_fidelity",
+    "overall_scene_preference",
+    "requester_acceptance"
+  ]
+}

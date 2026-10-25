@@ -1,0 +1,55 @@
+{
+  "generic": {
+    "schema_version": "photo-image-render-review-audit/v1",
+    "pack_id": "ace6655e4d8ecb21",
+    "status": "pass",
+    "qualification_status": "pass",
+    "technical_qualified": true,
+    "source_render_repair_contract_sha256": "5221bacf2d13548777ed4abbec933a5aaf7f23d743133663d190be72498d11dd",
+    "reviewed_result_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/investigative-fiction-retest-20261025-b-recovered/results/arm-b-native-1.png",
+    "reviewed_result_sha256": "f327a6e5aead914703219408a7b84c9d6aa67b27a85da0602ef04519ab4bf5dc",
+    "failed_gate_ids": [],
+    "failures": [],
+    "boundary": "This audit validates a named review record and its exact generic hard-gate set. The reviewer supplies pixel judgments; the audit does not infer pixels or user preference."
+  },
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "ace6655e4d8ecb21",
+    "contract_version": "photo-embodiment-preflight/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "required_hard_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_support_and_balance",
+        "status": "fail",
+        "evidence": "The full crate base, platform and four caster-floor contacts are visible, as are both investigator shoes and one clerk shoe. The clerk other lower leg/foot is hidden behind the trolley/crate assembly. The required complete support arrangement and all four human feet cannot be assessed together; this is visibility failure, not a diagnosis of hidden anatomy."
+      },
+      {
+        "gate": "embodiment_visibility_and_projection",
+        "status": "fail",
+        "evidence": "Face/hair, camera and scale ownership, same-seal target, ruler-crate contact, the two cut edges/open gap and both clerk handle grips are readable together. All trolley wheel contacts are visible, but one clerk foot is hidden, so the complete frozen set including both actors feet does not pass."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "not_applicable",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user judgment has been received."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}

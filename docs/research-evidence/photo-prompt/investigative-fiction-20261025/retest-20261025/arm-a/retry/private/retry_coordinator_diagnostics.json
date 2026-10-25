@@ -1,0 +1,109 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "9b1231e3d153a96c",
+      "validation_context_version": "photo-validation-context/v1",
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": null,
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "investigative-fiction scene"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "a person engaged in an investigation"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "examining records to test a suspected connection"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "Use the supplied portrait as the face and hair appearance reference"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "Preserve the visible facial appearance from the supplied portrait"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered intent preserved by authored evidence",
+          "intent": "Preserve the visible short dark bob and wispy fringe from the supplied portrait"
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "9b1231e3d153a96c",
+      "status": "pass",
+      "runtime_prompt_id": "6788c7c7a8b6cf7e",
+      "source_intent_lock_sha256": "2997f5c03b7569bb595365e344353949c486a11d923dc30ea2a68fe3158a6ed3",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": null,
+    "contract_failures": [],
+    "repair": null,
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "9b1231e3d153a96c",
+      "contract_version": "photo-embodiment-preflight/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 5,
+      "required_hard_gates": [
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "The pencil point visibly touches the paper around x503,y1042 in the 1237x1272 image, above-left of the red circle around A-17/9,800,000 (roughly x577-774,y1060-1124). The final reviewed prompt requires the tip physically touching that circle. Nearby paper contact is present, but the intended tip-to-circle boundary is visibly wrong."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": "No requesting-user judgment has been received."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "candidate_id": "cand_35a5dc9bc1ec54f4839cc7aa224d6bcb",
+  "realization_id": "base",
+  "source_sha256": "8776d43047a3b09c4cad984ef94b6933eda2848c59c1b56bf106dc9da4cfc9e0",
+  "conditions": {
+    "for_any": [
+      "human"
+    ]
+  },
+  "effects": {
+    "dimensions": [
+      "action",
+      "pose",
+      "relationship",
+      "setting",
+      "text",
+      "expression"
+    ],
+    "properties": [
+      {
+        "dimension": "action",
+        "property": "body.action_configuration",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "pose",
+        "property": "body",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "relationship",
+        "property": "work_reference",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "setting",
+        "property": "props",
+        "target": "scene"
+      },
+      {
+        "dimension": "text",
+        "property": "text",
+        "target": "scene"
+      },
+      {
+        "dimension": "relationship",
+        "property": "interaction",
+        "target": "main_subject"
+      },
+      {
+        "dimension": "pose",
+        "property": "body",
+        "target": "partner"
+      },
+      {
+        "dimension": "expression",
+        "property": "eyes.gaze_direction",
+        "target": "partner"
+      }
+    ]
+  },
+  "native_approval": false,
+  "native": {
+    "aliases": [
+      "보드 항목·설명 손·청자의 연결",
+      "보드 A 개념을 가리켜 설명",
+      "explain a board node"
+    ],
+    "concept_units": [
+      "board has one declared concept anchor",
+      "speaker's pointer targets it",
+      "already-requested listener turns toward the intended referent"
+    ],
+    "contextual_usage": {
+      "contexts": [
+        {
+          "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+          "claim_limits": [
+            "중년 남성·트위드·안경·엘보 패치를 필수로 만들지 않는다."
+          ],
+          "definition": "교수풍이라는 유사성 표현과 실제 교수를 나눈다.",
+          "id": "intellectual_term_015",
+          "observable_interpretation": "공유 자료를 가리키는 설명 자세를 선택할 수 있다.",
+          "source_keyword": "교수풍의 — Professorial"
+        },
+        {
+          "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+          "claim_limits": [
+            "teaching_at_blackboard만으로 논점 대응·실제 교직을 보장하지 않는다."
+          ],
+          "definition": "설명은 손·보드·듣는 대상의 참조 연결이다.",
+          "id": "intellectual_term_117",
+          "observable_interpretation": "손 또는 펜이 가리키는 보드 노드와 요청된 청자의 방향.",
+          "source_keyword": "개념 설명 — Teaching/explanation"
+        }
+      ]
+    },
+    "core_assertion_discovery": true,
+    "en": "board has one declared concept anchor; speaker's pointer targets it; already-requested listener turns toward the intended referent",
+    "keywords": [
+      "보드 항목·설명 손·청자의 연결",
+      "보드 A 개념을 가리켜 설명",
+      "explain a board node"
+    ],
+    "ko": "보드 항목·설명 손·청자의 연결",
+    "paraphrases": [
+      "보드에 하나의 지정 개념 앵커가 있다; 화자의 포인터가 그 항목을 향한다; 이미 요청된 청자가 의도한 참조 대상을 향한다",
+      "board has one declared concept anchor; speaker's pointer targets it; already-requested listener turns toward the intended referent",
+      "장면 안에서 보드에 하나의 지정 개념 앵커가 있다; 화자의 포인터가 그 항목을 향한다; 이미 요청된 청자가 의도한 참조 대상을 향한다",
+      "In the photographed scene, board has one declared concept anchor; speaker's pointer targets it; already-requested listener turns toward the intended referent",
+      "The identified concept is visibly anchored on the board; The speaking person's pointer indicates that board item; The listener already present in the scene directs attention toward the intended reference",
+      "해당 개념이 보드에 보이는 앵커로 표시된다; 말하는 인물의 포인터가 그 보드 항목을 가리킨다; 이미 장면에 있는 청자가 의도한 참조 대상을 향해 주의를 둔다"
+    ],
+    "relations": [
+      {
+        "id": "ia_teaching_reference_r1",
+        "object": "board_anchor",
+        "subject": "speaker_pointer",
+        "type": "points_to"
+      },
+      {
+        "id": "ia_teaching_reference_r2",
+        "object": "declared_referent",
+        "subject": "listener",
+        "type": "looks_toward"
+      }
+    ],
+    "tags": [
+      "human",
+      "work_reference"
+    ]
+  }
+}
