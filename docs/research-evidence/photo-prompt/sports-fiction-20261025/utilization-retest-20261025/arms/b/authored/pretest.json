@@ -1,0 +1,41 @@
+{
+  "schema": "sports-utilization-independent-test/v1",
+  "authored_before_candidate_access": true,
+  "request_hard_meaning": [
+    "sports photograph",
+    "reference image actually transmitted"
+  ],
+  "agent_domain": "figure skating",
+  "agent_domain_is_requester_lock": false,
+  "baseline_prompt_sha256": "7986e49d7af18b4f2666d23390095180adb0cad88d6cfa7ef1f6472e80a9c5ee",
+  "observations": [
+    {
+      "id": "sports_readability",
+      "scope": "request",
+      "test": "Athlete and actual sporting action are observable in a photographic image."
+    },
+    {
+      "id": "reference_transport",
+      "scope": "request",
+      "test": "Native invocation includes the exact supplied image bytes/path; broad appearance resemblance assessed separately."
+    },
+    {
+      "id": "blade_ice_balance",
+      "scope": "authorial_expectation",
+      "test": "Supporting blade contacts ice, free skate is separate and the body can plausibly balance."
+    },
+    {
+      "id": "scene_connection",
+      "scope": "authorial_expectation",
+      "test": "The body direction, gaze and ice trace point to a coherent movement path."
+    },
+    {
+      "id": "candidate_delta",
+      "scope": "utilization",
+      "test": "Every used new source must have CID/RID/hash, exact final prompt change and expected visible evidence; exposure alone is not use."
+    }
+  ],
+  "partial_is_fail": true,
+  "unobservable_not_pass": true,
+  "requester_judgment": "pending"
+}

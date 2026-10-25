@@ -1,0 +1,9 @@
+수영 출발 독립 테스트 B: **BLOCKED_UNSCORED**
+
+참조 얼굴·머리를 사용한 출발대 트랙 스타트 코어를 후보 열람 전에 고정했습니다. 코어/feature selection/embodiment 검증과 최종 프롬프트·네이티브 입력 감사는 통과했습니다.
+
+새 런타임 4개 질의에서 32개 항목(31개 서로 다른 소스)을 직접 검토했습니다. 새 스포츠 소스 S01은 자세·접촉 질의 양쪽, S03은 자세, S04는 접촉 질의에 실제 제시됐습니다. S01의 주요 지지 관계는 독립 baseline에 이미 있었으며, 완성형 대안 2개와 비교 후 baseline을 유지했습니다. 신규 영감 반영 및 native 계약 채택은 각각 0입니다. 데이터가 생성 품질을 개선했다고 주장하지 않습니다.
+
+감사된 프롬프트와 원본 참조 경로를 실제 native image_gen 인자로 전달해 **1회** 호출했습니다. 출력 단계에서 moderation_blocked가 반환됐고, provider category는 sexual, request ID는 50c1e018-41aa-419e-bba3-05838004072b입니다. 이미지/픽셀이 반환되지 않아 원본 저장·view_image·픽셀/예술성 채점은 수행할 수 없었습니다. 6개 testcase gate와 5개 embodiment gate, S01의 3개 보조 gate는 모두 BLOCKED_UNSCORED이며 pass가 없습니다. 우회·재시도·API 전환을 하지 않았습니다. 사용자 판단은 pending입니다.
+
+증거: [최종 프롬프트](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/sports-fiction-20261025/initial-tests/b/final-prompt.txt), [대안과 소스별 비교](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/sports-fiction-20261025/archived-generated/photo-runs/sports-20261025-independent-b/composition-comparison.md), [실제 스포츠 노출](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/sports-fiction-20261025/archived-generated/photo-runs/sports-20261025-independent-b/sports-data-exposure.json), [원본 오류 증거](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/sports-fiction-20261025/initial-tests/b/native-attempt-1-error.json), [평가 기록](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/sports-fiction-20261025/initial-tests/b/pixel-evaluation.json), [ledger](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/sports-fiction-20261025/initial-tests/b/image_runs.ndjson), [manifest](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/sports-fiction-20261025/initial-tests/b/run_manifest.json).

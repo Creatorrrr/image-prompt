@@ -1,0 +1,367 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 주제에 어울리는 랜덤한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Requester meaning is a sports image test using the attached image. The reviewed prior-user antecedent is 스포츠물. Recurve archery, full draw, the outdoor practice range, clothing, time and framing are agent-owned choices, not requester locks. I compared a bow-lowering interval after a shot with the instant at full draw; the latter gives the sports theme a complete visible load and object relationship while letting the reference face remain legible. A quiet held breath and the small wind ribbon make a short-distance practice moment specific; success, score, biography and personality are not claimed. Sensual=1 subtly supports composed bodily presence; fetish=0 and surreal=0 add no treatment. Creativity=1 allows restrained later alternatives. The viewer should feel poised tension rather than infer a medal or victory. The photograph must let face/hair, both working hands, the nock, full bowstring route and both feet remain inspectable together.",
+  "subject": "A woman athlete using the supplied face-and-hair visual reference",
+  "setting": "An outdoor short-distance archery practice range with grass, shooting line and a circular target on a straw backstop",
+  "event": "The athlete holds a recurve bow at full draw during practice",
+  "visual_priorities": [
+    "The extended bow arm and anchored drawing hand visibly transmit a single loaded string through the arrow nock.",
+    "The reference face and bob remain recognizable within concentrated sporting action.",
+    "Both feet and both bow tips stay inside the frame so the held state reads as one supported body-and-equipment relationship.",
+    "The target and lifted wind ribbon make the line of attention and the quiet interval understandable."
+  ],
+  "baseline_prompt_en": "A sports photograph of a woman athlete actively practicing a sport. Use the attached image as a face-and-hair visual reference: her facial features follow the attached image, and her dark chin-length bob with fine center-parted bangs follows the attached image. Photograph her at full draw with a recurve bow during a quiet short-distance practice session at an outdoor archery range. The held breath before release is the moment: her gaze follows the arrow toward a circular target on a straw backstop downrange, while the tip of a small wind ribbon beside the lane lifts in the afternoon breeze. Her left arm reaches toward the target with the left palm bearing on the bow's central grip, and the bow riser stands vertically. The right elbow extends backward at shoulder height; her right fingers hook the taut string with a leather finger tab, and the draw hand anchors beneath her jaw. A single arrow rests on the arrow rest through the bow window, its nock connected to the string beside the drawing fingers. The bent upper and lower recurve limbs and the two taut string segments from their tips to the arrow nock form one connected mechanism. Her feet stand apart on the grass behind the shooting line, both shoe soles meeting the ground, with her torso balanced over them. She wears a fitted ivory sleeveless training top, forest-green athletic trousers, flat training shoes and a slim forearm guard on the extended left arm. The restrained attraction lies in her concentrated eyes, relaxed lips and the assured line of the shoulders, supported by softly lit skin and natural hair texture. Use a wide horizontal, full-body composition with generous space around both shoes and both bow tips; the camera sees her from the drawing-hand side at a slight frontal oblique, keeping the face, drawing fingertips, arrow nock, bow-hand contact and complete string route individually readable together. The nearby target remains a secondary visible destination in the left depth of the image. Late afternoon side light gives the bowstring a fine bright edge against a shaded green background. A natural 50 mm photographic perspective and a moderately deep focus keep the athlete and working equipment sharp, letting the farther lane soften. Make the image feel like a quiet, closely observed practice moment whose tension comes from a real held load rather than a performance for the camera.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제",
+      "basis": "request_context",
+      "resolution": "The exact reviewed prior-user topic is 스포츠물, interpreted as sport-centered visual subject matter rather than a generic athletic costume. Recurve archery is independently selected authorial staging.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied image as face-and-hair appearance guidance, preserving visible facial structure, dark chin-length bob and fine center-parted bangs. Clothing, body, setting and camera are agent-owned; actual age, identity, consent and personality are not inferred.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "style": {
+    "domain": "sports photography",
+    "family": "quiet observational practice",
+    "evidence": [
+      "full-body held action with readable equipment contact",
+      "afternoon edge light and natural spatial context"
+    ]
+  },
+  "variation_key": "independent-a-recurve-full-draw",
+  "request_binding": {
+    "contract_version": "photo-request-binding/v1",
+    "request_id": "request-e64bb5efe05d43ff86b44936aab96672",
+    "request_sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c",
+    "request_envelope_sha256": "0e8a2a8c3ed5dca49682a21698f3cf6149becc19623e74cc37a6e9947bfb0255",
+    "active_spans": [
+      {
+        "span_id": "topic",
+        "start": 76,
+        "end": 86,
+        "text": "이번에 반영한 주제"
+      },
+      {
+        "span_id": "reference",
+        "start": 149,
+        "end": 162,
+        "text": "첨부한 이미지를 활용하여"
+      }
+    ],
+    "input_inventory": {
+      "schema": "photo-request-input-inventory/v1",
+      "complete": true,
+      "items": [
+        {
+          "id": "request",
+          "kind": "request_text",
+          "sha256": "ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c"
+        },
+        {
+          "id": "reference_photo",
+          "kind": "reference_image",
+          "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+        }
+      ]
+    },
+    "topic_context": {
+      "contract_version": "photo-request-topic-context/v1",
+      "links": [
+        {
+          "context_id": "sports_antecedent",
+          "active_span_id": "topic",
+          "request_quote": {
+            "start": 76,
+            "end": 86,
+            "text": "이번에 반영한 주제"
+          },
+          "source_message": {
+            "provenance": "requesting_user",
+            "locator": "current-chat:prior-user-message:sports-research-request",
+            "text": "[스포츠물 용어 정리](chatgpt-conversation://6adc0773-1cb0-83ee-b4b5-18e4481cde33) 에서 조사한 키워드를 바탕으로 시각 의미 데이터, 후보 데이터를 충분히 강화하기 위한 상세한 리서치를 진행해줘. 리서치 결과를 어떻게 반영할지 계획까지 세워줘. 대화 내용을 도구로 조회했을 때 전체 내용을 모두 볼 수 없었다면 크롬으로 보면 돼. 로그인해놨어.",
+            "sha256": "6bf5eb9204c62c4658b083bd8324fa1edfb3032c615ad143ee3bf875e895d5c6"
+          },
+          "topic_quote": {
+            "start": 1,
+            "end": 5,
+            "text": "스포츠물"
+          },
+          "review": {
+            "polarity": "positive_topic",
+            "rationale": "The current user explicitly refers to the sports topic from the immediately preceding research request; only the exact positive topic is selected."
+          }
+        }
+      ],
+      "canonical_sha256": "3daba93f833599bfb1442f38665fd07c38baf172bc4d58511e450e2623236413"
+    },
+    "query_scope": {
+      "contract_version": "photo-request-query-scope/v1",
+      "segments": [
+        {
+          "active_span_id": "topic",
+          "start": 76,
+          "end": 86,
+          "text": "이번에 반영한 주제",
+          "purpose": "topic_reference",
+          "reason": "Positive topic antecedent"
+        },
+        {
+          "active_span_id": "reference",
+          "start": 149,
+          "end": 162,
+          "text": "첨부한 이미지를 활용하여",
+          "purpose": "reference_use",
+          "reason": "Use attached image as visual reference; generation/delegation workflow remains outside visual active spans."
+        }
+      ],
+      "canonical_sha256": "9f413abf5771f0f18114751d47d2e81b78d9c756d7fd43d9fe8d371c0ff31535"
+    }
+  },
+  "runtime_forbidden_labels": [],
+  "creative_controls_sha256": "5718ac96ec2a4b9224051ee13bfe06c10cda122197a9892e7dca0a34c5652024",
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "A sports photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a woman athlete"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "event",
+        "prompt_evidence": "actively practicing a sport"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached image as a face-and-hair visual reference"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "her facial features follow the attached image",
+        "target": "main_person",
+        "property": "reference.face"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "her dark chin-length bob with fine center-parted bangs follows the attached image",
+        "target": "main_person",
+        "property": "reference.hair"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "style",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ],
+    "augmentation_policy": "open_dimensions_only_and_subordinate",
+    "material_change_policy": "rebuild_core_after_requester_input",
+    "candidate_revision_policy": "forbidden",
+    "canonical_sha256": "d2c187255f24b2292bf7bfa15c11062b340ef296c21672f398632c539af360d9",
+    "lock_id": "d2c187255f24b229"
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_human",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a woman athlete"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "owner_main_person",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "main_person",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "owner_phrase": "a woman athlete"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "role_main_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "main_person"
+      },
+      "evidence": {
+        "owner_phrase": "a woman athlete"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "reference_face_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "main_person",
+        "property": "reference.face",
+        "value_type": "reference.face/v1",
+        "value": "facial_features_from_attached_image",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_photo"
+        ]
+      },
+      "evidence": {
+        "fact_phrase": "her facial features follow the attached image"
+      },
+      "affected_dimensions": [
+        "appearance"
+      ]
+    },
+    {
+      "assertion_id": "reference_hair_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "main_person",
+        "property": "reference.hair",
+        "value_type": "reference.hair/v1",
+        "value": "dark_chin_length_bob_with_fine_center_parted_bangs_from_attached_image",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_photo"
+        ]
+      },
+      "evidence": {
+        "fact_phrase": "her dark chin-length bob with fine center-parted bangs follows the attached image"
+      },
+      "affected_dimensions": [
+        "appearance"
+      ]
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {},
+      "affected_dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "assertion_id": "reference_appearance_inventory",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "main_person",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"57b92d8927c7bccfbc33a0ac679e6cd97ef2866f850f77aa92cec23596906726\",\"request_envelope_sha256\":\"0e8a2a8c3ed5dca49682a21698f3cf6149becc19623e74cc37a6e9947bfb0255\",\"request_sha256\":\"ef01678169a4816a323caa19f5d1bf2e95d34ae928cc2b99047a6616fd20b44c\"},\"items\":[{\"assertion_id\":\"reference_face_fact\",\"dimension\":\"appearance\",\"property\":\"reference.face\",\"target\":\"main_person\",\"value\":{\"type\":\"reference.face/v1\",\"value\":\"facial_features_from_attached_image\"}},{\"assertion_id\":\"reference_hair_fact\",\"dimension\":\"appearance\",\"property\":\"reference.hair\",\"target\":\"main_person\",\"value\":{\"type\":\"reference.hair/v1\",\"value\":\"dark_chin_length_bob_with_fine_center_parted_bangs_from_attached_image\"}}],\"reviewed_input_ids\":[\"request\",\"reference_photo\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "scope_phrase": "Use the attached image as a face-and-hair visual reference"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    }
+  ],
+  "request_lineage": null,
+  "canonical_sha256": "e360d023d10b968cdbdb2d9c089465552984d9d06a9359b14ac1c4cfd6121985",
+  "core_id": "e360d023d10b968c"
+}

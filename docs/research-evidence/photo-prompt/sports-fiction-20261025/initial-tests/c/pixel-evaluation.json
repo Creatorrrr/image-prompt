@@ -1,0 +1,103 @@
+{
+  "schema": "sports-independent-pixel-evaluation/v1",
+  "arm_id": "c",
+  "image_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/sports-20261025-independent-c/relay-native.png",
+  "image_sha256": "61bdd88d55693aedd2320674a78c19a19163ec8ebc3dadef7863dbb438b480d4",
+  "image_size": [
+    1536,
+    1024
+  ],
+  "tool": "image_gen",
+  "generation_environment": "native_imagegen",
+  "image_call_count": 1,
+  "source_generation": "d75d1546f9bdb3537d1316c0e14a5a04903fd29b1cedcfc63caefa328b690cd1",
+  "precore_testcase": "testcase.precore.json",
+  "selected_scene_observations": [
+    {
+      "gate_id": "sports_scene",
+      "expected": "An active athletics-track sporting scene",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The same original image shows two runners in matching burgundy racing kit, numbered bibs, running shoes, a blue baton, white lane/exchange lines and a stadium. Their strides and connected exchange make athletics the focal action."
+    },
+    {
+      "gate_id": "shared_baton",
+      "expected": "One baton with both separately owned grip boundaries and exposed middle",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "A single blue cylinder runs from the rear runner's forward hand at approximately x565-635,y330-395 to the front runner's backward hand at x695-780,y350-420. An exposed blue middle separates the hands; both boundaries are visible in this one 1536x1024 frame."
+    },
+    {
+      "gate_id": "ownership",
+      "expected": "Each connecting arm visibly continuous to its own runner",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The left/rear runner's shoulder and arm extend toward her forward grip; the right/front runner's opposite arm reaches backward from her shoulder to the other grip. The forearms do not merge, and both shoulder-to-hand routes can be traced."
+    },
+    {
+      "gate_id": "support",
+      "expected": "Both runners head to toe, one grounded spike contact per runner and recovering other leg, with track space beyond all shoes",
+      "status": "fail",
+      "observability": "partial",
+      "evidence": "The rear runner's shoes and track contact are visible, and one trailing shoe of the front runner is in frame. The front runner's foreground lower leg runs to the bottom image boundary; its shoe sole and ground contact are cut off around x880-970,y995-1024. Complete required support and open space beyond every shoe cannot be observed. No hidden support is presumed."
+    },
+    {
+      "gate_id": "reference_appearance",
+      "expected": "Primary face and dark bob/bangs visibly correspond to supplied portrait at actual output scale",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The front/right runner has a jaw-length dark bob, separated fine bangs, large dark eyes and a softly tapered face. The source's facial/hair appearance is visibly used within a new athletic scene; this is feature correspondence, not proof of personal identity or actual age."
+    },
+    {
+      "gate_id": "whole_scene",
+      "expected": "Handover, acceleration posture and incoming effort form an understandable connected situation",
+      "status": "pass",
+      "observability": "visible",
+      "evidence": "The front runner twists her face back and leans into the forward path while sharing the baton with the approaching teammate. The teammate's open mouth, lowered brows and perspiring skin convey effort. The viewer can read an exchange without a keyword explanation; actual exhaustion, race distance, final-leg status, speed and successful completion are not proven."
+    }
+  ],
+  "sports_card_comparison": {
+    "card_id": "A04",
+    "candidate_id": "cand_10cb0e26423f5b7abee098b3ea90cead",
+    "source_file": "skills/photo-prompt-image-generator/assets/photo_sports_fiction_semantics_20261025.json",
+    "comparison_provenance": "Post-core evaluation of shared visual meaning; this new CID was not in the issued shown sources and was not adopted or retained inspiration. Independent baseline already described the shared handover before candidate access.",
+    "component_observations": [
+      {
+        "gate_id": "A04-G1",
+        "status": "pass",
+        "observability": "visible",
+        "evidence": "Both runners' bodies and strides face the same general lane direction; the reference-guided runner occupies the forward/right position and the other follows behind/left. This judges visible alignment and ordering in a snapshot, not measured motion or zone legality."
+      },
+      {
+        "gate_id": "A04-G2",
+        "status": "pass",
+        "observability": "visible",
+        "evidence": "The rear runner's forward-reaching owned hand visibly grips the left/rear end of the single blue baton."
+      },
+      {
+        "gate_id": "A04-G3",
+        "status": "pass",
+        "observability": "visible",
+        "evidence": "The forward runner reaches backward with her owned arm and grips a separate portion of that same blue baton; the blue middle between both grips is unobstructed."
+      }
+    ],
+    "component_group_status": "pass"
+  },
+  "overall_complete_test_status": "fail",
+  "failure_reason": "Primary foreground shoe sole/ground endpoint and open surrounding track are outside the saved image. partial_is_fail; UNOBSERVABLE_NOT_PASS.",
+  "genre_visual_result": "sports/relay visibly reflected",
+  "new_sports_material_exposed": 0,
+  "new_sports_material_retained": 0,
+  "native_candidate_adoptions": [],
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "comparison_to_baseline": "not_applicable"
+  },
+  "supplemental_artistic_observations": {
+    "unlabelled_impression": "A vivid sunlit relay exchange, with a clear blue bridge between two athletes and strong bodily effort.",
+    "whole_image": "The baton connects both faces and opposing arm reaches; clean stadium depth keeps attention on the exchange. The forward runner's presence and reference hair are strong at this scale.",
+    "limitations": "The composition spends too much vertical space on the forward figure to keep her foreground foot; the handover remains clear but complete support verification fails.",
+    "control_calibration": "The alert face, flushed skin and athletic movement can support subtle attraction. This is a perceived reading after the unlabelled impression, not a numeric aesthetic proof or user preference. No added fetish or surreal direction is apparent."
+  }
+}

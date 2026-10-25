@@ -1,0 +1,186 @@
+{
+  "schema": "independent-sports-blocked-pixel-evaluation/v1",
+  "arm": "B",
+  "preflight_status": "PASS",
+  "native_status": "safety_block",
+  "runtime_classification": "moderation_blocked",
+  "image_call_count": 1,
+  "pixel_status": "BLOCKED_UNSCORED",
+  "image_path": null,
+  "image_sha256": null,
+  "actual_image_saved": false,
+  "native_result_viewed": false,
+  "reason": "Native output moderation block returned no image; no pixel or artistic score is possible.",
+  "provider_observation": {
+    "status": "safety_block",
+    "display_message": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 50c1e018-41aa-419e-bba3-05838004072b. safety_violat",
+    "http_status": 400,
+    "error_code": "moderation_blocked",
+    "error_type": "image_generation_user_error",
+    "request_id": "50c1e018-41aa-419e-bba3-05838004072b",
+    "request_id_source": "error.message",
+    "moderation_stage": "output",
+    "categories": [
+      "sexual"
+    ],
+    "classification_source": "structured_error_code"
+  },
+  "native_evidence_path": "/Users/chasoik/Projects/image-prompt/generated/photo-runs/sports-20261025-independent-b/native-attempt-1-error.json",
+  "native_evidence_sha256": "03be3e85fd51e1e10196d9ba99357a5ece0b955e6492513b3698a1e48b0406f7",
+  "testcase_gates": [
+    {
+      "gate_id": "sports_start",
+      "pass_criterion": "Same source image visibly shows swimmer, lane water, starting block and a held start directed toward that lane.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "reference_appearance",
+      "pass_criterion": "Face structure and short dark bob remain visibly compatible with the provided reference at the review scale; real identity or age is not asserted.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "both_hand_grips",
+      "pass_criterion": "Both hands have visible ownership routes and actual front-corner lip contacts on the same block.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "forward_foot_support",
+      "pass_criterion": "Forward forefoot and toes visibly meet the front top platform/edge, connected to its own leg.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "rear_foot_support",
+      "pass_criterion": "Rear forefoot visibly meets the raised rear wedge, connected to its own distinct leg.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "complete_support_visibility",
+      "pass_criterion": "Both hands, both feet, all required contacts and body routes coexist visibly in the same uncropped original image.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    }
+  ],
+  "derived_embodiment_gates": [
+    {
+      "gate_id": "embodiment_body_ownership",
+      "pass_criterion": "Important hands and feet visibly belong to the single swimmer.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "embodiment_joint_chain_and_reach",
+      "pass_criterion": "Shoulder-arm-hand and hip-knee-foot chains connect coherently to their contacts.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "embodiment_support_and_balance",
+      "pass_criterion": "Forward platform and rear wedge supports agree with the loaded still-start state.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "embodiment_contact_and_space",
+      "pass_criterion": "Both front hand grips and both foot support contacts have coherent boundaries.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    },
+    {
+      "gate_id": "embodiment_visibility_and_projection",
+      "pass_criterion": "All critical endpoints and owner paths are assessable together in the original image.",
+      "status": "BLOCKED_UNSCORED",
+      "observability": "unobservable",
+      "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+      "pass": null,
+      "scored": false
+    }
+  ],
+  "supplemental_sports_card_evaluation": {
+    "card_id": "S01",
+    "native_selected": false,
+    "reason": "Actually exposed optional source closely matches the independent start mechanics. Its three component relations are recorded as a supplemental sports-data test, not an adopted native hard contract.",
+    "gates": [
+      {
+        "gate_id": "S01-G1",
+        "pass_criterion": "Feet front and back on the same start platform",
+        "status": "BLOCKED_UNSCORED",
+        "observability": "unobservable",
+        "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+        "pass": null,
+        "scored": false
+      },
+      {
+        "gate_id": "S01-G2",
+        "pass_criterion": "Both hands hold the front edge beneath lowered shoulders",
+        "status": "BLOCKED_UNSCORED",
+        "observability": "unobservable",
+        "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+        "pass": null,
+        "scored": false
+      },
+      {
+        "gate_id": "S01-G3",
+        "pass_criterion": "Pool surface below and ahead of the platform",
+        "status": "BLOCKED_UNSCORED",
+        "observability": "unobservable",
+        "actual_observation": "No generated image or pixels were returned by the native tool. The reference portrait is an input, not an output observation.",
+        "pass": null,
+        "scored": false
+      }
+    ]
+  },
+  "strict_policy": {
+    "partial_is_fail": true,
+    "unobservable_not_pass": true,
+    "split_image_components_forbidden": true,
+    "no_pixels": "BLOCKED_UNSCORED"
+  },
+  "artistic_observation": {
+    "impression_without_control_labels": "Unavailable: no rendered pixels",
+    "perceived_controls": "Unscored",
+    "whole_image_situation": "Unscored",
+    "reference_appearance_preservation": "Unscored"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "comparison_preference": "not_applicable"
+  },
+  "retry_performed": false,
+  "fallback_performed": false
+}

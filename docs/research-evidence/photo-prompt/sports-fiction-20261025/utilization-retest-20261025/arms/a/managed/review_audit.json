@@ -1,0 +1,52 @@
+{
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "ae0cec194ac59db8",
+    "contract_version": "photo-embodiment-preflight/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "required_hard_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_joint_chain_and_reach",
+        "status": "fail",
+        "evidence": "Shoulder-elbow-wrist reach and the opposed raised-far-knee/lowered-near-leg phase look coherent. The lower image edge removes the near shoe bottom, crank/pedal endpoints and parts of the wheel system, so the reviewed complete shoe-to-own-pedal reach cannot be established."
+      },
+      {
+        "gate": "embodiment_support_and_balance",
+        "status": "fail",
+        "evidence": "The pelvis is positioned above the saddle/seatpost and the torso reaches the bars, but both tire-to-road contacts lie below the image. The complete saddle/pedal/two-tire support set required by the authored review is not visible together; no unsupported bodily diagnosis is inferred."
+      },
+      {
+        "gate": "embodiment_contact_and_space",
+        "status": "fail",
+        "evidence": "Hands visibly wrap distinct controls and the bottle sits inside a frame-mounted cage with its neck/cap above. However the near index-finger-to-separate-lever relation is not individually traceable with confidence, and both shoe-to-pedal contact surfaces are absent or occluded at the lower edge. The complete reviewed contact set cannot pass."
+      },
+      {
+        "gate": "embodiment_visibility_and_projection",
+        "status": "fail",
+        "evidence": "The result prioritizes face and torso. The helmet top, wheel bottoms, near shoe bottom and pedal endpoints are cropped, despite the prompt asking for the entire bicycle and both road contacts with margins. Local bottle structure is readable, but the complete planned riding relation is not assessable."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "not_applicable",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user judgment has been received."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}
