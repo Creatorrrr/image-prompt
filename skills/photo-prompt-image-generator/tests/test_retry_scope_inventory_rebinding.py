@@ -45,6 +45,29 @@ class ScopeRebindingTests(unittest.TestCase):
         inv=json.loads(self.actual['axes']['inventory']);inv[key]=value;self.actual['axes']['inventory']=canonical(inv)
 
     def test_current_binding_preserves_identical_scope(self): self.assertTrue(self.matches())
+    def test_preserved_reference_fact_can_also_cite_rebound_request(self):
+        self.fact['axes']['source_input_ids'] = ['request', 'portrait']
+        self.child['semantic_assertions'][0]['axes']['source_input_ids'] = ['request', 'portrait']
+        self.assertTrue(self.matches())
+    def test_rebound_request_cannot_replace_a_reference_source(self):
+        self.fact['axes']['source_input_ids'] = ['request', 'portrait']
+        self.child['request_binding']['input_inventory']['items'][1]['kind'] = 'request_text'
+        self.child['request_binding']['input_inventory']['items'][1]['sha256'] = 'd'*64
+        with self.assertRaises(ValueError):
+            witnesses.input_binding(self.child['request_binding'])
+        self.assertFalse(self.matches())
+    def test_changed_nonrequest_text_used_by_preserved_fact_is_rejected(self):
+        self.fact['axes']['source_input_ids'] = ['request', 'portrait', 'description']
+        for core, value in [(self.parent, '1'*64), (self.child, '2'*64)]:
+            core['request_binding']['input_inventory']['items'].append(
+                {'id': 'description', 'kind': 'text', 'sha256': value})
+        self.change_inventory('input_binding', witnesses.input_binding(self.child['request_binding']))
+        self.change_inventory('reviewed_input_ids', ['request','portrait','description'])
+        expected_inventory = json.loads(self.expected['axes']['inventory'])
+        expected_inventory['input_binding'] = witnesses.input_binding(self.parent['request_binding'])
+        expected_inventory['reviewed_input_ids'] = ['request','portrait','description']
+        self.expected['axes']['inventory'] = canonical(expected_inventory)
+        self.assertFalse(self.matches())
     def test_stale_parent_binding_is_rejected(self):
         self.actual=copy.deepcopy(self.expected);self.assertFalse(self.matches())
     def test_wrong_current_envelope_is_rejected(self):
