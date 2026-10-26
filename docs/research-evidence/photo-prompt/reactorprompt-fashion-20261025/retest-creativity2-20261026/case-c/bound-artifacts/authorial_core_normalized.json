@@ -1,0 +1,442 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "보강한 8개 후보가 검색되지 않는 원인을 분석해서 검색·선택 과정을 추가로 개선해줘. 같은 사진으로 Luna max 독립 서브에이전트 3개에서 다시 생성하고 신규 데이터가 실제로 반영되는지 검증해줘. 이번엔 creativity=2로 테스트해줘.",
+  "interpreted_intent": "Make an editorial fashion portrait that carries the established clothing and fashion topic into the captured look of one visible person.",
+  "subject": "One visible person, with the supplied portrait guiding visible face and hair cues only.",
+  "setting": "A wet city transit shelter at dusk just after rain, with a bus pulling away.",
+  "event": "The photograph captures the person's fashion look during a brief pause as a bus pulls away after rain.",
+  "visual_priorities": [
+    "the person's fashion look",
+    "visible face and hair cues",
+    "full-length figure and both shoes",
+    "reflection aligned with the person",
+    "stillness against receding bus motion"
+  ],
+  "baseline_prompt_en": "An editorial fashion photograph gives a new portrait frame to one visible person in a quiet city pause just after rain. The photograph captures the person's fashion look at the glass end of a transit shelter as the bus they were waiting for pulls away through the wet dusk. The supplied portrait guides the visible face and hair: large dark eyes, straight brows, a softly rounded nose, and full lips; a dark straight chin-length bob with a center part and airy fringe. The new composition places the person in a full-length urban scene. Their three-quarter turn follows the receding bus lights, leaving a small choice in the frame: stay for the next route or walk on. A long, sharply tailored cobalt-blue raincoat hangs open over a muted plum knit and charcoal wide-leg trousers, with dark leather shoes planted on the rain-polished pavement. A small draft from the bus lifts one side of the coat hem without breaking the person's steady stance. Amber shop light brushes one lapel and one cheek, then repeats as a slender stripe in the shelter glass; the glass also holds a broken reflection of the cobalt silhouette. The reflected figure and real figure stay aligned as the bus windows smear horizontally behind them, setting stillness against continued motion. A vertical eye-level view from across the lane keeps face, outfit, both shoes, reflection, shelter edge and a ribbon of wet curb together, with natural proportions. Focus holds on the person and the double silhouette while the bus and traffic recede softly into blue-gray dusk.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "same photo",
+      "source_text": "같은 사진으로",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait only to guide visible face and hair cues, without inferring identity, age, body, or personality.",
+      "sources": []
+    },
+    {
+      "term": "new data",
+      "source_text": "신규 데이터",
+      "basis": "request_context",
+      "resolution": "The linked earlier topic establishes clothing and fashion as the requested visual concept, without specifying a garment or scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "style": null,
+  "variation_key": "",
+  "request_binding": {
+    "contract_version": "photo-request-binding/v1",
+    "request_id": "reactorprompt-fashion-creativity2-case-c",
+    "request_sha256": "260fccec0a04540362647ca6e5f164e390b2ec5664c4941d7714ead9c14cc708",
+    "request_envelope_sha256": "80bb46a16dc74e42fed36445dec43d72b88997e1c743b86963e06b9b6b32b7de",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 136,
+        "text": "보강한 8개 후보가 검색되지 않는 원인을 분석해서 검색·선택 과정을 추가로 개선해줘. 같은 사진으로 Luna max 독립 서브에이전트 3개에서 다시 생성하고 신규 데이터가 실제로 반영되는지 검증해줘. 이번엔 creativity=2로 테스트해줘."
+      }
+    ],
+    "input_inventory": {
+      "schema": "photo-request-input-inventory/v1",
+      "complete": true,
+      "items": [
+        {
+          "id": "request_text",
+          "kind": "request_text",
+          "sha256": "260fccec0a04540362647ca6e5f164e390b2ec5664c4941d7714ead9c14cc708"
+        },
+        {
+          "id": "request_spans",
+          "kind": "text",
+          "sha256": "6f9e6d0091b805e8751cce0c98d17b0876a1751ecbf39765a2ca0be44eae9ecb"
+        },
+        {
+          "id": "query_scope",
+          "kind": "text",
+          "sha256": "604a60f1f3564ffc17145f1db8534ea64802db5db06df822df572963d3078d15"
+        },
+        {
+          "id": "topic_context",
+          "kind": "text",
+          "sha256": "baf4de07c03b08ecf7e82f026ac70fa06fd99a365b36a5979d85be959eb9ce0a"
+        },
+        {
+          "id": "creative_context",
+          "kind": "text",
+          "sha256": "e0ab8eb64b5fefb30ae4ed0047a73a1ced9efe0c85e700b3e2aeb250f2c96bc8"
+        },
+        {
+          "id": "creative_overrides",
+          "kind": "text",
+          "sha256": "3ac0ec351ddd0cb061502b7b05751f88bddff159c72e8fa58297f13f3923dad4"
+        },
+        {
+          "id": "reference_portrait",
+          "kind": "reference_image",
+          "sha256": "048adbd3e4343a3725fec6aa0455aa1f367878560bc15d4493a18fde1ce8604c"
+        }
+      ]
+    },
+    "topic_context": {
+      "contract_version": "photo-request-topic-context/v1",
+      "links": [
+        {
+          "context_id": "fashion-topic",
+          "active_span_id": "request",
+          "request_quote": {
+            "start": 88,
+            "end": 94,
+            "text": "신규 데이터"
+          },
+          "source_message": {
+            "provenance": "requesting_user",
+            "locator": "conversation:earlier-user-fashion-keyword-extraction",
+            "text": "수집된 전체 프롬프트에서 의상, 패션 관련된 키워드를 모두 추출해서 모아줘. Luna max 서브에이전트로 분담하여 진행하게 해줘. 그리고 그걸로 시각 의미 데이터와 후보 데이터 보강해줘.",
+            "sha256": "3314a279b77a496d74fe509e3e75626c80f8b58bffc5cf0b6bc9d11be724ec0a"
+          },
+          "topic_quote": {
+            "start": 14,
+            "end": 20,
+            "text": "의상, 패션"
+          },
+          "review": {
+            "polarity": "positive_topic",
+            "rationale": "Exact prior requester topic; collection/delegation instructions are not image content."
+          }
+        }
+      ],
+      "canonical_sha256": "33c2159325a4aba96bbadea2f75f034e6c46c77bd419c7ed9976586fa68488c6"
+    },
+    "query_scope": {
+      "contract_version": "photo-request-query-scope/v1",
+      "segments": [
+        {
+          "active_span_id": "request",
+          "start": 0,
+          "end": 48,
+          "text": "보강한 8개 후보가 검색되지 않는 원인을 분석해서 검색·선택 과정을 추가로 개선해줘. ",
+          "purpose": "workflow",
+          "reason": "Analysis and improvement execution instruction."
+        },
+        {
+          "active_span_id": "request",
+          "start": 48,
+          "end": 55,
+          "text": "같은 사진으로",
+          "purpose": "reference_use",
+          "reason": "Use the same user-supplied portrait."
+        },
+        {
+          "active_span_id": "request",
+          "start": 55,
+          "end": 88,
+          "text": " Luna max 독립 서브에이전트 3개에서 다시 생성하고 ",
+          "purpose": "workflow",
+          "reason": "Independent agent and image-generation execution instruction."
+        },
+        {
+          "active_span_id": "request",
+          "start": 88,
+          "end": 94,
+          "text": "신규 데이터",
+          "purpose": "topic_reference",
+          "reason": "New data refers to the previously requested clothing/fashion topic."
+        },
+        {
+          "active_span_id": "request",
+          "start": 94,
+          "end": 136,
+          "text": "가 실제로 반영되는지 검증해줘. 이번엔 creativity=2로 테스트해줘.",
+          "purpose": "workflow",
+          "reason": "Verification and explicit creativity control setting."
+        }
+      ],
+      "canonical_sha256": "74d463102f81298f506bac1211de6540a6d7d995673c0258ecabc61b4f96c044"
+    }
+  },
+  "runtime_forbidden_labels": [],
+  "creative_controls_sha256": "0631e5edd726b42e981a4525e9881282d114272e996508e6d87cf0e384b9b496",
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "신규 데이터",
+        "dimension": "concept",
+        "prompt_evidence": "editorial fashion photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "같은 사진으로",
+        "dimension": "subject",
+        "prompt_evidence": "one visible person"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "신규 데이터",
+        "dimension": "event",
+        "prompt_evidence": "The photograph captures the person's fashion look"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "같은 사진으로",
+        "dimension": "reference_use",
+        "prompt_evidence": "the supplied portrait guides the visible face and hair"
+      },
+      {
+        "anchor_id": "face_reference_cues",
+        "source_text": "같은 사진으로",
+        "dimension": "appearance",
+        "prompt_evidence": "large dark eyes, straight brows, a softly rounded nose, and full lips",
+        "target": "main_subject",
+        "property": "face.visible_cues"
+      },
+      {
+        "anchor_id": "hair_reference_cues",
+        "source_text": "같은 사진으로",
+        "dimension": "appearance",
+        "prompt_evidence": "dark straight chin-length bob with a center part and airy fringe",
+        "target": "main_subject",
+        "property": "hair.visible_cues"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "action",
+      "setting",
+      "pose",
+      "material",
+      "style",
+      "camera",
+      "composition",
+      "lighting",
+      "color",
+      "atmosphere",
+      "timing",
+      "framing",
+      "relationship",
+      "format"
+    ],
+    "augmentation_policy": "open_dimensions_only_and_subordinate",
+    "material_change_policy": "rebuild_core_after_requester_input",
+    "candidate_revision_policy": "forbidden",
+    "canonical_sha256": "43d0898180eae5fe43e5325de7268b1d4930b42ed8c77c2832b5229ceaac6410",
+    "lock_id": "43d0898180eae5fe"
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "fashion_concept",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "kind": "editorial_fashion_portrait"
+      },
+      "evidence": {
+        "concept_phrase": "editorial fashion photograph"
+      },
+      "affected_dimensions": [
+        "concept"
+      ]
+    },
+    {
+      "assertion_id": "portrait_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "entity": "visible_person",
+        "count": "one"
+      },
+      "evidence": {
+        "subject_phrase": "one visible person"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "fashion_event",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "capture": "fashion_look"
+      },
+      "evidence": {
+        "event_phrase": "The photograph captures the person's fashion look"
+      },
+      "affected_dimensions": [
+        "event"
+      ]
+    },
+    {
+      "assertion_id": "portrait_guidance",
+      "dimension": "reference_use",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "use": "visible_face_and_hair_guidance"
+      },
+      "evidence": {
+        "reference_phrase": "the supplied portrait guides the visible face and hair"
+      },
+      "affected_dimensions": [
+        "reference_use"
+      ]
+    },
+    {
+      "assertion_id": "subject_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "subject_main",
+        "owner_kind": "person"
+      },
+      "evidence": {
+        "presence_phrase": "one visible person"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "main_subject_role",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "role",
+        "role": "main_subject",
+        "owner": "subject_main"
+      },
+      "evidence": {
+        "presence_phrase": "one visible person"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "face_reference_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "subject_main",
+        "property": "face.visible_cues",
+        "value_type": "visible_cue_list/v1",
+        "value": [
+          "large dark eyes",
+          "straight brows",
+          "a softly rounded nose",
+          "full lips"
+        ],
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "reference_evidence": "large dark eyes, straight brows, a softly rounded nose, and full lips"
+      },
+      "affected_dimensions": [
+        "appearance"
+      ]
+    },
+    {
+      "assertion_id": "hair_reference_fact",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "subject_main",
+        "property": "hair.visible_cues",
+        "value_type": "visible_cue_list/v1",
+        "value": [
+          "dark straight chin-length bob",
+          "center part",
+          "airy fringe"
+        ],
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "reference_evidence": "dark straight chin-length bob with a center part and airy fringe"
+      },
+      "affected_dimensions": [
+        "appearance"
+      ]
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {},
+      "affected_dimensions": [
+        "camera"
+      ]
+    }
+  ],
+  "request_lineage": null,
+  "canonical_sha256": "1f83a2b606bf0240f9b1405cf87c102d3adc1949289c9625fee227cf2a9f5155",
+  "core_id": "1f83a2b606bf0240"
+}
