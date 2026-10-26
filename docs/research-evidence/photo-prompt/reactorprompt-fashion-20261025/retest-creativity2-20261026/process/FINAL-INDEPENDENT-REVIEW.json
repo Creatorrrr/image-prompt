@@ -1,0 +1,41 @@
+{
+  "schema": "fashion-creativity2-process-independent-review/v1",
+  "status": "pass",
+  "reviewer": "fashion_coverage_review",
+  "proposal": {
+    "path": "generated/trend-scout/raw/reactorprompt-fashion-creativity2-20261026/process/PROPOSAL.json",
+    "sha256": "caeef531e85b059db97deb42c6696984ff6841f5b7d82fea86c6ec9bda72e61b"
+  },
+  "change_manifest": {
+    "path": "generated/trend-scout/raw/reactorprompt-fashion-creativity2-20261026/process/CHANGE.json",
+    "sha256": "a36ff9356efaa9f6518b801aed45e2581049cd09f49e182caf426331d4a5ee80"
+  },
+  "files": [
+    {
+      "path": "skills/photo-prompt-image-generator/SKILL.md",
+      "before_sha256": "77145606ecdbebd93949d9f01849f0da4752c610dc641c595f0745bee1c97207",
+      "after_sha256": "4909b6de42f50151d63e997bcdf9644ac5cb1ebd6c30b05f995680fb511d8de2",
+      "after_snapshot_matches": true,
+      "change": "One post-core retrieval-query guidance paragraph."
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/composition-contract.md",
+      "before_sha256": "af7046d7e2ca58178747949806ec92953b4222a68338029fd9371c76c85ffca9",
+      "after_sha256": "afbf97b13850b1f302354395764c25daa464a72c0c818f4d456bac5dadfb45e7",
+      "after_snapshot_matches": true,
+      "change": "One post-core complete-alternative comparison paragraph."
+    }
+  ],
+  "checks": [
+    "Diff contains only the two documented prose additions; no executable, data, index, rank, sampler, or guard change was present.",
+    "Role-query wording asks for concise, role-relevant baseline context in authored natural language before candidate access, prohibits copying the full baseline or retrofitting from candidates, and does not create locks or source preferences.",
+    "The applied correction explicitly preserves requester-owned properties and required evidence under existing frozen locks and guards; only unbound authorial details are called editable.",
+    "The comparison wording treats changes to unbound garment, palette, material, setting, or action as alternatives rather than automatic conflicts, while preserving source conditions, requester-owned properties, native contracts, and guarded compound meaning.",
+    "No proposal example names or targets any of the eight enriched candidates."
+  ],
+  "limitations": [
+    "This is a process-text review and does not establish query ranking, sampled exposure, candidate adoption, prompt contribution, or rendered-image quality.",
+    "Complete-option comparison at creativity 2–3 is already substantially required by the preceding SKILL and composition-contract sections; the new sentence is a focused clarification about baseline palette and garment changes, not a new comparison framework."
+  ],
+  "remaining_findings": []
+}

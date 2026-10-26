@@ -6,6 +6,8 @@ automatic anatomy, age, material, or ownership inference. Author only facts
 grounded in the active requester spans and already expressed in the independent
 baseline. An open authorial choice is not a required frozen fact.
 
+Bind required owner, role, subject-category and presence evidence to a literal phrase that establishes only the requester-grounded owner, role, category or presence. Use that minimal phrase as the row's required evidence; the complete requester span remains provenance. Do not include an unbound authorial pose, action, costume, location or temporal state in that identifying phrase. Preserve every genuinely requester-prescribed action, relation and property in its appropriate governing anchor or assertion with its complete meaning. This guidance does not shorten protected fact values or relational duties. If an already frozen row includes incidental staging, preserve that record and use the existing rebuild or scoped retry path to correct it before changing required evidence. Never silently narrow its interpretation or edit its frozen fields. Apply this scope review to every required evidence field before freeze, not only to semantic anchors.
+
 Use the normal assertion fields with `polarity: required`, active
 `source_span_ids`, literal baseline `evidence`, and these exact `axes` shapes:
 

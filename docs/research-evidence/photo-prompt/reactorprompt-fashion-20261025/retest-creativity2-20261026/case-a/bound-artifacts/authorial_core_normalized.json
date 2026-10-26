@@ -1,0 +1,404 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "보강한 8개 후보가 검색되지 않는 원인을 분석해서 검색·선택 과정을 추가로 개선해줘. 같은 사진으로 Luna max 독립 서브에이전트 3개에서 다시 생성하고 신규 데이터가 실제로 반영되는지 검증해줘. 이번엔 creativity=2로 테스트해줘.",
+  "interpreted_intent": "The current phrase 'new data' refers to the earlier user topic of clothing and fashion, so the image's broad topic is fashion. The same supplied portrait guides only the visible face and dark, straight hair with a soft fringe. For this independent baseline, I choose a quiet ferry departure as an ordinary travel setting for a person-centered fashion portrait. The ferry, timing, layered outfit, colors, full-length framing, light, and expression are replaceable authorial choices; no specific garment or prior scene is carried forward.",
+  "subject": "A person whose visible face and dark straight hair are guided by the supplied portrait.",
+  "setting": "The passenger deck of a ferry just after it leaves the harbor, with glass windbreaks, a receding pier, and open shoreline.",
+  "event": "A fashion portrait presents clothing as its main visible focus.",
+  "visual_priorities": [
+    "Clothing carries the fashion meaning through a clear silhouette and natural movement in the ferry breeze.",
+    "The supplied portrait guides the visible face and hair within the newly staged outfit.",
+    "The receding pier and open shoreline make the ferry departure legible in one frame.",
+    "Cool sea light and a warm cabin reflection support a subtle, composed human appeal."
+  ],
+  "baseline_prompt_en": "Create an editorial fashion photograph in which a person is visible on the passenger deck of a ferry just after it leaves the harbor. The person stands in an unhurried pause beside the glass windbreak; the receding pier appears behind in the glass while a pale stretch of shoreline opens ahead, making the crossing feel newly real. The same supplied portrait guides the person's visible face and dark, straight hair with a soft fringe. The person's thoughtfully layered outfit has clean lines and one muted accent, its fabric shifting gently in the deck breeze so clothing remains the image's clear visual focus. A generous full-length frame keeps the person's face, hair and layered silhouette readable while showing both shoe soles resting flat on the ferry deck, the legs relaxed and the person's weight balanced over both feet; the deck remains visible around the shoes, with the pier and open water still legible behind. Cool sky light washes the glass, crossed by a narrow warm cabin reflection that echoes the person's profile. An almost-smile and steady, easy bearing bring subtle human appeal; the photograph feels observed, poised at the instant between leaving and arriving.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "new data",
+      "source_text": "신규 데이터",
+      "basis": "request_context",
+      "resolution": "The current anaphor refers to the earlier requester topic about clothing and fashion; it sets the broad visual topic while garment and scene details remain open.",
+      "sources": []
+    },
+    {
+      "term": "same photo",
+      "source_text": "같은 사진으로",
+      "basis": "request_context",
+      "resolution": "In context this means reusing the supplied portrait as a visual reference for its visible face and hair, without inferring identity or other traits.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "style": {
+    "domain": "fashion editorial photography",
+    "family": "observational ferry-departure portrait",
+    "evidence": [
+      "editorial fashion photograph",
+      "the photograph feels observed"
+    ]
+  },
+  "variation_key": "case-a-travel-pause",
+  "request_binding": {
+    "contract_version": "photo-request-binding/v1",
+    "request_id": "request-04f71ded206c4764818e5e7a434821e0",
+    "request_sha256": "260fccec0a04540362647ca6e5f164e390b2ec5664c4941d7714ead9c14cc708",
+    "request_envelope_sha256": "b750c3164ef4407fda0ba95281caa2dee003e513259a97424fcfc3e72ec06f8b",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 136,
+        "text": "보강한 8개 후보가 검색되지 않는 원인을 분석해서 검색·선택 과정을 추가로 개선해줘. 같은 사진으로 Luna max 독립 서브에이전트 3개에서 다시 생성하고 신규 데이터가 실제로 반영되는지 검증해줘. 이번엔 creativity=2로 테스트해줘."
+      }
+    ],
+    "input_inventory": {
+      "schema": "photo-request-input-inventory/v1",
+      "complete": true,
+      "items": [
+        {
+          "id": "request_text",
+          "kind": "request_text",
+          "sha256": "260fccec0a04540362647ca6e5f164e390b2ec5664c4941d7714ead9c14cc708"
+        },
+        {
+          "id": "request_spans",
+          "kind": "other",
+          "sha256": "6f9e6d0091b805e8751cce0c98d17b0876a1751ecbf39765a2ca0be44eae9ecb"
+        },
+        {
+          "id": "query_scope",
+          "kind": "other",
+          "sha256": "604a60f1f3564ffc17145f1db8534ea64802db5db06df822df572963d3078d15"
+        },
+        {
+          "id": "topic_context",
+          "kind": "other",
+          "sha256": "baf4de07c03b08ecf7e82f026ac70fa06fd99a365b36a5979d85be959eb9ce0a"
+        },
+        {
+          "id": "creative_context",
+          "kind": "other",
+          "sha256": "e0ab8eb64b5fefb30ae4ed0047a73a1ced9efe0c85e700b3e2aeb250f2c96bc8"
+        },
+        {
+          "id": "creative_overrides",
+          "kind": "other",
+          "sha256": "3ac0ec351ddd0cb061502b7b05751f88bddff159c72e8fa58297f13f3923dad4"
+        },
+        {
+          "id": "reference_portrait",
+          "kind": "reference_image",
+          "sha256": "048adbd3e4343a3725fec6aa0455aa1f367878560bc15d4493a18fde1ce8604c"
+        }
+      ]
+    },
+    "topic_context": {
+      "contract_version": "photo-request-topic-context/v1",
+      "links": [
+        {
+          "context_id": "fashion-topic",
+          "active_span_id": "request",
+          "request_quote": {
+            "start": 88,
+            "end": 94,
+            "text": "신규 데이터"
+          },
+          "source_message": {
+            "provenance": "requesting_user",
+            "locator": "conversation:earlier-user-fashion-keyword-extraction",
+            "text": "수집된 전체 프롬프트에서 의상, 패션 관련된 키워드를 모두 추출해서 모아줘. Luna max 서브에이전트로 분담하여 진행하게 해줘. 그리고 그걸로 시각 의미 데이터와 후보 데이터 보강해줘.",
+            "sha256": "3314a279b77a496d74fe509e3e75626c80f8b58bffc5cf0b6bc9d11be724ec0a"
+          },
+          "topic_quote": {
+            "start": 14,
+            "end": 20,
+            "text": "의상, 패션"
+          },
+          "review": {
+            "polarity": "positive_topic",
+            "rationale": "Exact prior requester topic; collection/delegation instructions are not image content."
+          }
+        }
+      ],
+      "canonical_sha256": "33c2159325a4aba96bbadea2f75f034e6c46c77bd419c7ed9976586fa68488c6"
+    },
+    "query_scope": {
+      "contract_version": "photo-request-query-scope/v1",
+      "segments": [
+        {
+          "active_span_id": "request",
+          "start": 0,
+          "end": 48,
+          "text": "보강한 8개 후보가 검색되지 않는 원인을 분석해서 검색·선택 과정을 추가로 개선해줘. ",
+          "purpose": "workflow",
+          "reason": "Analysis and improvement execution instruction."
+        },
+        {
+          "active_span_id": "request",
+          "start": 48,
+          "end": 55,
+          "text": "같은 사진으로",
+          "purpose": "reference_use",
+          "reason": "Use the same user-supplied portrait."
+        },
+        {
+          "active_span_id": "request",
+          "start": 55,
+          "end": 88,
+          "text": " Luna max 독립 서브에이전트 3개에서 다시 생성하고 ",
+          "purpose": "workflow",
+          "reason": "Independent agent and image-generation execution instruction."
+        },
+        {
+          "active_span_id": "request",
+          "start": 88,
+          "end": 94,
+          "text": "신규 데이터",
+          "purpose": "topic_reference",
+          "reason": "New data refers to the previously requested clothing/fashion topic."
+        },
+        {
+          "active_span_id": "request",
+          "start": 94,
+          "end": 136,
+          "text": "가 실제로 반영되는지 검증해줘. 이번엔 creativity=2로 테스트해줘.",
+          "purpose": "workflow",
+          "reason": "Verification and explicit creativity control setting."
+        }
+      ],
+      "canonical_sha256": "74d463102f81298f506bac1211de6540a6d7d995673c0258ecabc61b4f96c044"
+    }
+  },
+  "runtime_forbidden_labels": [],
+  "creative_controls_sha256": "09b8caa947e7c2a38ec8684907266d3c213681b3384fdd77c262a74b937cc4d8",
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "신규 데이터",
+        "dimension": "concept",
+        "prompt_evidence": "editorial fashion photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "같은 사진으로",
+        "dimension": "subject",
+        "prompt_evidence": "person is visible"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "신규 데이터",
+        "dimension": "event",
+        "prompt_evidence": "clothing remains the image's clear visual focus"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "같은 사진으로",
+        "dimension": "reference_use",
+        "prompt_evidence": "same supplied portrait guides"
+      },
+      {
+        "anchor_id": "reference_face_features",
+        "source_text": "같은 사진으로",
+        "dimension": "appearance",
+        "prompt_evidence": "person's visible face",
+        "target": "main_subject",
+        "property": "appearance.face.features"
+      },
+      {
+        "anchor_id": "reference_hair_color",
+        "source_text": "같은 사진으로",
+        "dimension": "appearance",
+        "prompt_evidence": "dark, straight hair",
+        "target": "main_subject",
+        "property": "appearance.hair.color"
+      },
+      {
+        "anchor_id": "reference_hair_style",
+        "source_text": "같은 사진으로",
+        "dimension": "appearance",
+        "prompt_evidence": "straight hair with a soft fringe",
+        "target": "main_subject",
+        "property": "appearance.hair.style"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "setting",
+      "action",
+      "pose",
+      "count",
+      "framing",
+      "composition",
+      "lighting",
+      "color",
+      "material",
+      "timing",
+      "style",
+      "sexual_tone"
+    ],
+    "augmentation_policy": "open_dimensions_only_and_subordinate",
+    "material_change_policy": "rebuild_core_after_requester_input",
+    "candidate_revision_policy": "forbidden",
+    "canonical_sha256": "aa10e4d4c9cb802596e327aef005b6e59078470bc61b99fc5395f51a36fa8891",
+    "lock_id": "aa10e4d4c9cb8025"
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "main_subject_owner",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "owner",
+        "owner": "main_subject",
+        "owner_kind": "human"
+      },
+      "evidence": {
+        "owner_phrase": "person is visible"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "subject-category-human",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "person is visible"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "assertion_id": "reference_face_features",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "main_subject",
+        "property": "appearance.face.features",
+        "value_type": "reference_appearance/v1",
+        "value": "visible face",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "face_phrase": "person's visible face"
+      },
+      "affected_dimensions": [
+        "appearance"
+      ]
+    },
+    {
+      "assertion_id": "reference_hair_color",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "main_subject",
+        "property": "appearance.hair.color",
+        "value_type": "reference_appearance/v1",
+        "value": "dark",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "hair_color_phrase": "dark, straight hair"
+      },
+      "affected_dimensions": [
+        "appearance"
+      ]
+    },
+    {
+      "assertion_id": "reference_hair_style",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "fact",
+        "owner": "main_subject",
+        "property": "appearance.hair.style",
+        "value_type": "reference_appearance/v1",
+        "value": "straight hair with a soft fringe",
+        "scope_kinds": [
+          "reference_appearance"
+        ],
+        "source_input_ids": [
+          "reference_portrait"
+        ]
+      },
+      "evidence": {
+        "hair_style_phrase": "straight hair with a soft fringe"
+      },
+      "affected_dimensions": [
+        "appearance"
+      ]
+    },
+    {
+      "assertion_id": "reference_appearance_scope",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "axes": {
+        "native_schema": "photo-frozen-semantics/v1",
+        "kind": "scope_inventory",
+        "owner": "main_subject",
+        "scope_kind": "reference_appearance",
+        "inventory": "{\"complete\":true,\"input_binding\":{\"input_inventory_sha256\":\"22d4c022e3eca0f79f4c9e62c257be4cbe8ddb8b6eb35478219523d14da25e07\",\"request_envelope_sha256\":\"b750c3164ef4407fda0ba95281caa2dee003e513259a97424fcfc3e72ec06f8b\",\"request_sha256\":\"260fccec0a04540362647ca6e5f164e390b2ec5664c4941d7714ead9c14cc708\"},\"items\":[{\"assertion_id\":\"reference_face_features\",\"dimension\":\"appearance\",\"property\":\"appearance.face.features\",\"target\":\"main_subject\",\"value\":{\"type\":\"reference_appearance/v1\",\"value\":\"visible face\"}},{\"assertion_id\":\"reference_hair_color\",\"dimension\":\"appearance\",\"property\":\"appearance.hair.color\",\"target\":\"main_subject\",\"value\":{\"type\":\"reference_appearance/v1\",\"value\":\"dark\"}},{\"assertion_id\":\"reference_hair_style\",\"dimension\":\"appearance\",\"property\":\"appearance.hair.style\",\"target\":\"main_subject\",\"value\":{\"type\":\"reference_appearance/v1\",\"value\":\"straight hair with a soft fringe\"}}],\"reviewed_input_ids\":[\"request_text\",\"request_spans\",\"query_scope\",\"topic_context\",\"creative_context\",\"creative_overrides\",\"reference_portrait\"],\"schema\":\"photo-frozen-scope-inventory/v1\",\"state\":\"known_present\"}"
+      },
+      "evidence": {
+        "scope_phrase": "same supplied portrait guides"
+      },
+      "affected_dimensions": [
+        "subject"
+      ]
+    }
+  ],
+  "request_lineage": null,
+  "canonical_sha256": "85d480eda8f0f2858f548fe6877b96f2fd124d9359dfa1aa4e9c596174b84f8f",
+  "core_id": "85d480eda8f0f285"
+}
