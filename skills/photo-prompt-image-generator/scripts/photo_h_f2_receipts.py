@@ -11,6 +11,8 @@ from photo_h_f2_query_scope import analyze, correct, compile_focus_contracts, or
 from photo_h_f2_search import fuse, known_row_contributions, present_material
 from photo_h_f2_literal_text import compile_contracts, order_literal
 from photo_h_f2_event_phase import compile_contracts as phase_contracts, order_phase
+from photo_h_f2_source_relevance import compile_profiles as source_relevance_profiles
+from photo_h_f2_source_relevance import verify_source_relevance_trace
 
 def issue(generation,packet,raw,native_pack,native_receipt):
  rf.require(packet['generation_id']==generation.id,'wrong material generation')
@@ -66,6 +68,7 @@ def audit_packet(generation,packet,raw):
  contracts=compile_contracts(documents,rf.tokens,source_units=generation.primary_units)
  phases=phase_contracts(documents,rf.tokens,source_units=generation.primary_units)
  focuses=compile_focus_contracts(documents,source_units=generation.primary_units,source_effects=generation.effect_footprint,source_constraints=generation.focus_constraints)
+ source_profiles=source_relevance_profiles(documents,source_units=generation.primary_units,source_effects=generation.effect_footprint)
  for slot,goal in packet['goals'].items():
   q=packet['query_set']['slots'][slot];row=packet['queries'][slot]['row']
   rf.check_embedding(row,generation.binding,q['text'],'query')
@@ -94,11 +97,21 @@ def audit_packet(generation,packet,raw):
    for i in expected:
     d=generation.metadata[i]
     full.append({'id':d['id'],'cid':d['cid'],'rid':d['rid'],'bm25':float(sparse[i]),'cosine':float(dense[i]),'bm25_rank':lr.get(i),'dense_rank':dr[i],'rrf':scores[i]})
+   source_trace=goal.get('query_scope',{}).get('source_relevance')
+   rf.require(isinstance(source_trace,dict),'source relevance trace missing from material goal')
+   relevance_policy=generation.manifest['policy']['natural_source_relevance']
+   rf.require(source_trace.get('policy')==relevance_policy['scoring_policy'] and
+       source_trace.get('lane_weights')=={'relation':relevance_policy['relation_weight'],
+                                          'attribute':relevance_policy['attribute_weight']} and
+       source_trace.get('single_property_lane',{}).get('policy')==relevance_policy['single_property_ordering'],
+       'source relevance scoring policy changed')
+   full,source_trace=verify_source_relevance_trace(full,q['text'],source_profiles,source_trace,
+       structured=bool(analysis.get('format_spans')))
    full,focus=order_focus(full,q['text'],focuses)
    full,literal=order_literal(full,q['text'],analysis,contracts,rf.tokens)
    full,phase=order_phase(full,q['text'],analysis,phases,rf.tokens)
    rf.require([ids[i] for i in order]==[row['id'] for row in full],'saved full order is not witnessed phase/literal/RRF10 order')
-   rf.require(goal.get('query_scope')=={'analysis':analysis,'correction':correction,'literal_text':literal,'primary_focus':focus,'event_phase':phase},'lexical, literal or event-phase scope changed')
+   rf.require(goal.get('query_scope')=={'analysis':analysis,'correction':correction,'source_relevance':source_trace,'literal_text':literal,'primary_focus':focus,'event_phase':phase},'lexical, source relevance, literal or event-phase scope changed')
    rf.require(c.digest(full)==goal['full_order_sha256'],'full order trace changed')
    presented,projection=present_material(full,phase,literal=literal,focus=focus,maximum=settings['rank_window'] if modern else 8)
    if modern:
