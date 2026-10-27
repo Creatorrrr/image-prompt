@@ -116,7 +116,7 @@ identical text: `Photographic role: {role_focus}` followed, when nonempty, by
 evaluation and one full local cosine evaluation per searched slot. A fresh text
 uses one proof-bound local query embedding; an exact existing proof may be
 reused. These slot query texts and bindings remain unchanged by the additional
-whole-scene searches below. No reranker, Gemini or remote fallback is available.
+whole-scene searches below. Deterministic primary-source ordering follows the two original score lanes; its applicability is described below.
 
 Every new retrieval also issues two independent queries after core freeze:
 
@@ -149,7 +149,7 @@ than searching another arm or substituting an invented query.
 
 F2 keeps original lookup cues and meaning fields, with frozen weights, global
 document frequencies and nonempty normalization on its designated fields. The
-two complete ranks combine by RRF10 on the same CID/RID, followed by CID dedup. New runs then apply the sampling policy above. No relevance threshold or native eligibility pruning removes material
+two complete ranks combine by RRF10 on the same CID/RID, followed by CID dedup. New runs apply the advisory source ordering below, then the sampling policy above. No relevance threshold or native eligibility pruning removes material
 before retrieval. Payloads remain lazy; exact full-pool cosine can read all
 vector extents. This is a recall-oriented material search, not a claim that
 every result fits or that every useful candidate is recovered.
@@ -168,6 +168,67 @@ preserve requester locks. The core validation context carries hard duties and pe
 or treat `native_approval: false` as a whole-source adoption permission.
 
 For new compositions, follow [candidate-informed alternatives and comparison](composition-contract.md#candidate-informed-alternatives-and-comparison). Review every distinct returned source across the material pages and record each returned query/CID/RID occurrence. Repeated sources may refer to one candidate-specific review. Put the concrete source finding, alternative comparison reference, and retained final effect or reason for non-use in `rationale`; a slot-wide sufficiency statement is not a candidate-specific review. Compare concrete compatible alternatives with the baseline before selecting the final prompt. Final use of every candidate remains optional. The material decision fields, requester locks and audit commands are unchanged; archived decision lists retain their original validation contract.
+
+## Natural property questions
+
+The sealed source-ordering policy preserves the original query text, embedding
+binding, raw BM25F/cosine arrays and full positive population. Multi-property
+questions can receive a bounded RRF contribution when every recognized feature
+has witnesses in one selected-RID primary field. Color or numeric contributions
+also require all requested values and explicit paired query/source owners in
+one field. Unknown owners and unmodeled finish or pattern constraints abstain.
+This alignment is lexical discovery evidence, with semantic approval false.
+
+Two narrow open question classes additionally use a stable positive-witness
+partition: reflection identity, and head tilt versus frame/horizon roll. A
+source needs direct positive primary text and corroborating effects from the
+same selected RID. Quoted, attributed, uncertain or negated claims abstain;
+source disagreement also abstains. Query alternatives remain unbound rather
+than supplying an expected answer. Lookup aliases and labels cannot establish
+these witnesses.
+
+The v7 property-answer partition additionally handles bounded placement/open-space,
+viewpoint/stair-line, foreground-hand scale/occupancy, focus-distribution and
+ingredient-layout questions. It separates requested properties from explicit
+scene contexts; every requested property and context must share an original
+positive primary field in the same selected RID. Focus and seated context need
+their corresponding effect support. Owner-to-value bindings, negation,
+uncertainty and quotation remain significant. A floor or seated context cannot
+substitute for a knee-to-camera or focus relation.
+
+The v8 owned-support partition handles an open bench-support question paired
+with an explicitly owned arm question. One positive primary field must show
+the bench, support relation and the requested person’s arm position; the same
+selected RID must corroborate both relations in its effects. An arm belonging
+to the other person cannot supply that evidence. Explicitly bound support
+directions, additional unmodeled requests and arm-side or action constraints
+abstain from this partition. It neither invents a support direction nor creates
+semantic or native approval.
+
+This partition applies only to unstructured property questions. It abstains
+when recognized relations or bound values are outside its coverage, or when
+attributes, alternatives, page layout or unmodeled modifiers need another
+route. It leaves raw ranks, RRF contributions, query text and embedding input
+unchanged. Its stable positive-source partition adds no ranking vote and
+filters no candidate. Legacy lexical discovery keeps first-option source
+selection; complete multi-field option unions do not broaden that weaker lane.
+Up to twelve direct matches per primary field retain later bilingual witnesses.
+The compiled source options are reused across questions; source parsing adds
+cold index-initialization work and is not repeated per query.
+
+The trace exposes promoted sources even when they were outside the earlier
+top eight: exact pointer/literal/hash metadata, property and context witnesses,
+ordering digests and zero extra contribution. Receipt replay reconstructs
+these values and rejects source-metadata, pointer and scoring tampering. This
+is advisory discovery evidence and does not authorize native adoption or prove
+rendered pixels. See the [authored gap supplement](relational-gap-supplement.md).
+
+The new ordering precedes existing primary-focus, literal and event-phase
+rules. Structured slot queries retain those routes. The receipt records the
+literal source pointers, hashes, Unicode quote spans, ordering digests and
+sealed weights (relation 1.0, attributes 0.2). Its auditor reconstructs the
+same order and rejects receipt-supplied policy changes. Existing creativity
+windows, seed replay and whole-source adoption requirements remain binding.
 
 ## Installation and freshness
 
@@ -294,3 +355,8 @@ images. The selected installed config remains the runtime authority; source
 registration alone does not change search. See the topic integration evidence
 for the scoped successor, qualification and independent three-arm image tests.
 
+
+The [ReactorPrompt pose/composition data](reactorprompt-pose-composition.md) retains
+source-grounded expression routes and sealed exact-expression lookup. The
+[authored relational supplement](relational-gap-supplement.md) keeps manual
+provenance separate from the collected source corpus.

@@ -6,6 +6,7 @@ working source corpus remain independent. No research checkout is consulted.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -15,6 +16,13 @@ import sys
 SCHEMA = "photo-installed-h-f2/v1"
 SKILL_ROOT = Path(__file__).resolve().parents[1]
 CONFIG = "retrieval-runtime.json"
+
+
+class ExpressionDispatchError(ValueError):
+    def __init__(self, code, **details):
+        self.code = code
+        self.details = details
+        super().__init__(code)
 
 
 def digest(value):
@@ -83,6 +91,235 @@ def option(arguments, name):
     return values[0] if values else None
 
 
+def _flag(arguments, name):
+    count = sum(item == name for item in arguments)
+    require(count <= 1, "duplicate option: " + name)
+    return count == 1
+
+
+def _neutral_run_files(skill_root):
+    """Load only the named neutral freeze verifier before any release read."""
+    from importlib.util import module_from_spec, spec_from_file_location
+    path = Path(skill_root) / "precore/photo_run_files.py"
+    require(path.is_file() and not path.is_symlink(), "neutral_run_file_verifier_unavailable")
+    directory = str(path.parent.resolve())
+    added = directory not in sys.path
+    if added:
+        sys.path.insert(0, directory)
+    try:
+        spec = spec_from_file_location("_photo_expression_neutral_run_files", path)
+        require(spec is not None and spec.loader is not None, "neutral_run_file_verifier_unavailable")
+        module = module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    finally:
+        if added:
+            sys.path.remove(directory)
+
+
+def _expression_config(skill_root):
+    config = read(Path(skill_root) / CONFIG)
+    require(config["schema"] == SCHEMA and config["policy"] == "photo-h-f2/v1"
+            and config["store_subdirectory"] == "h-f2-installed", "invalid installed search configuration")
+    return config
+
+
+def _dispatch_expression_view(arguments, *, skill_root):
+    """Verify a frozen authoring run before config, release, or candidate access."""
+    run = option(arguments, "--run")
+    maintenance = _flag(arguments, "--maintenance")
+    explicit_store = option(arguments, "--runtime-store")
+    explicit_id = option(arguments, "--generation-id")
+    require(option(arguments, "--_resolved-runtime-store") is None
+            and option(arguments, "--_resolved-generation-id") is None
+            and option(arguments, "--_resolved-lookup-source") is None,
+            "reserved_expression_view_option")
+
+    state = None
+    if maintenance:
+        require(run is None, "maintenance_and_authoring_run_are_mutually_exclusive")
+        require(bool(explicit_store) == bool(explicit_id),
+                "maintenance_requires_store_and_generation_together")
+        if explicit_store:
+            store = Path(explicit_store).expanduser().resolve()
+            generation_id = explicit_id
+            resolution = "maintenance_explicit_override"
+        else:
+            config = _expression_config(skill_root)
+            store = Path(default_store()).resolve()
+            generation_id = config["generation_id"]
+            resolution = "maintenance_current_configuration"
+    else:
+        require(run is not None, "authoring_requires_valid_frozen_run")
+        require(explicit_store is None and explicit_id is None,
+                "runtime_overrides_require_explicit_maintenance_mode")
+        verifier = _neutral_run_files(skill_root)
+        state = verifier.load_state(Path(run))
+        if state.get("phase") in {"request_prepared", "controls_bound"} or "freeze_receipt" not in state.get("artifacts", {}):
+            raise ValueError("pre_core_expression_lookup_blocked")
+        if state.get("mode") not in {"prompt_only", "image"}:
+            raise ValueError("authoring_requires_valid_frozen_run")
+        if verifier.status(state).get("phase") == "stale":
+            raise ValueError("stale_frozen_run")
+        verifier.verify_freeze(state)
+        if "retry_proof" in state.get("artifacts", {}):
+            retry_path = Path(skill_root) / "scripts/prepare_retry_context.py"
+            spec = importlib.util.spec_from_file_location("_photo_expression_retry_context", retry_path)
+            require(spec is not None and spec.loader is not None, "retry_context_verifier_unavailable")
+            retry_context = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(retry_context)
+            retry_context.verify_child(state)
+        bound = state.get("h_f2_binding") or {}
+        if "pack" in state.get("artifacts", {}) and not bound:
+            raise ValueError("legacy_run_has_no_h_f2_generation_binding")
+        if bound:
+            require(isinstance(bound, dict) and bound.get("store") and bound.get("generation_id"),
+                    "invalid_run_h_f2_binding")
+            store = Path(bound["store"]).resolve()
+            generation_id = bound["generation_id"]
+            resolution = "run_bound_generation"
+        else:
+            config = _expression_config(skill_root)
+            store = Path(default_store()).resolve()
+            generation_id = config["generation_id"]
+            resolution = "current_installed_configuration"
+
+    run_bound_generation_id = (state.get("h_f2_binding") or {}).get("generation_id") if state else None
+    try:
+        native, manifest, native_manifest = release(store, generation_id)
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        raise ExpressionDispatchError("sealed_h2_generation_unavailable",
+                                      lookup_generation_id=generation_id,
+                                      run_bound_generation_id=run_bound_generation_id) from error
+    if "scripts/photo_expression_view.py" not in native_manifest.get("source", {}).get("code", {}):
+        raise ExpressionDispatchError("expression_view_not_in_bound_generation",
+                                      lookup_generation_id=generation_id,
+                                      run_bound_generation_id=run_bound_generation_id)
+    if resolution in {"current_installed_configuration", "maintenance_current_configuration"}:
+        config = _expression_config(skill_root)
+        require(manifest["native_generation_id"] == config["native_generation_id"]
+                and digest(native_manifest["source"]["code"]) == config["code_sha256"],
+                "installed release binding changed")
+    runtime_python(skill_root, manifest)
+
+    # The native workflow validates this binding again before it reads the
+    # module. These arguments carry the resolver's actual choice into its view.
+    forwarded = list(arguments) + [
+        "--_resolved-runtime-store", str(store),
+        "--_resolved-generation-id", generation_id,
+        "--_resolved-lookup-source", resolution,
+    ]
+    env = dict(os.environ, HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1",
+               HF_HUB_DISABLE_TELEMETRY="1", PYTHONNOUSERSITE="1")
+    env["PHOTO_EXPRESSION_SKILL_ROOT"] = str(Path(skill_root).resolve())
+    env.pop("PYTHONPATH", None)
+    for key in ("GEMINI_API_KEY", "GOOGLE_API_KEY", "ANTHROPIC_API_KEY", "OPENAI_API_KEY"):
+        env.pop(key, None)
+    launcher = ("import sys,runpy;from pathlib import Path;"
+                "entry=sys.argv.pop(1);sys.argv=[entry,*sys.argv[1:]];"
+                "sys.path.insert(0,str(Path(entry).parent));"
+                "runpy.run_path(entry,run_name='__main__')")
+    return subprocess.run([str(runtime_python(skill_root, manifest)), "-I", "-c", launcher,
+                           str(native / "scripts/photo_workflow.py"), *forwarded], env=env).returncode
+
+
+def _validate_forwarded_expression_view(arguments, *, skill_root, workflow_entrypoint):
+    """Accept internal flags only inside the exact sealed native code that issued them."""
+    resolved_store = option(arguments, "--_resolved-runtime-store")
+    resolved_id = option(arguments, "--_resolved-generation-id")
+    resolved_source = option(arguments, "--_resolved-lookup-source")
+    require(resolved_store and resolved_id and resolved_source,
+            "reserved_expression_view_options_require_sealed_dispatch")
+    run = option(arguments, "--run")
+    maintenance = _flag(arguments, "--maintenance")
+    explicit_store = option(arguments, "--runtime-store")
+    explicit_id = option(arguments, "--generation-id")
+    require(bool(explicit_store) == bool(explicit_id),
+            "maintenance_requires_store_and_generation_together")
+    state = None
+    if maintenance:
+        require(run is None, "maintenance_and_authoring_run_are_mutually_exclusive")
+        if explicit_store:
+            expected_store = Path(explicit_store).expanduser().resolve()
+            expected_id = explicit_id
+            expected_source = "maintenance_explicit_override"
+        else:
+            config_root = Path(os.environ.get("PHOTO_EXPRESSION_SKILL_ROOT") or skill_root).resolve()
+            config = _expression_config(config_root)
+            expected_store = Path(default_store()).resolve()
+            expected_id = config["generation_id"]
+            expected_source = "maintenance_current_configuration"
+    else:
+        require(run is not None, "authoring_requires_valid_frozen_run")
+        require(explicit_store is None and explicit_id is None,
+                "runtime_overrides_require_explicit_maintenance_mode")
+        verifier = _neutral_run_files(skill_root)
+        state = verifier.load_state(Path(run))
+        if state.get("phase") in {"request_prepared", "controls_bound"} or "freeze_receipt" not in state.get("artifacts", {}):
+            raise ValueError("pre_core_expression_lookup_blocked")
+        if state.get("mode") not in {"prompt_only", "image"}:
+            raise ValueError("authoring_requires_valid_frozen_run")
+        if verifier.status(state).get("phase") == "stale":
+            raise ValueError("stale_frozen_run")
+        verifier.verify_freeze(state)
+        if "retry_proof" in state.get("artifacts", {}):
+            retry_path = Path(skill_root) / "scripts/prepare_retry_context.py"
+            spec = importlib.util.spec_from_file_location("_photo_expression_retry_context", retry_path)
+            require(spec is not None and spec.loader is not None, "retry_context_verifier_unavailable")
+            retry_context = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(retry_context)
+            retry_context.verify_child(state)
+        bound = state.get("h_f2_binding") or {}
+        if "pack" in state.get("artifacts", {}) and not bound:
+            raise ValueError("legacy_run_has_no_h_f2_generation_binding")
+        if bound:
+            require(isinstance(bound, dict) and bound.get("store") and bound.get("generation_id"),
+                    "invalid_run_h_f2_binding")
+            expected_store = Path(bound["store"]).resolve()
+            expected_id = bound["generation_id"]
+            expected_source = "run_bound_generation"
+        else:
+            config_root = Path(os.environ.get("PHOTO_EXPRESSION_SKILL_ROOT") or skill_root).resolve()
+            config = _expression_config(config_root)
+            expected_store = Path(default_store()).resolve()
+            expected_id = config["generation_id"]
+            expected_source = "current_installed_configuration"
+
+    run_bound_id = (state.get("h_f2_binding") or {}).get("generation_id") if state else None
+    require(Path(resolved_store).expanduser().resolve() == expected_store
+            and resolved_id == expected_id and resolved_source == expected_source,
+            "forwarded_expression_view_binding_mismatch")
+    try:
+        native, manifest, native_manifest = release(expected_store, expected_id)
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        raise ExpressionDispatchError("sealed_h2_generation_unavailable",
+                                      lookup_generation_id=expected_id,
+                                      run_bound_generation_id=run_bound_id) from error
+    code = native_manifest.get("source", {}).get("code", {})
+    if "scripts/photo_expression_view.py" not in code:
+        raise ExpressionDispatchError("expression_view_not_in_bound_generation",
+                                      lookup_generation_id=expected_id,
+                                      run_bound_generation_id=run_bound_id)
+    if expected_source in {"current_installed_configuration", "maintenance_current_configuration"}:
+        config_root = Path(os.environ.get("PHOTO_EXPRESSION_SKILL_ROOT") or skill_root).resolve()
+        config = _expression_config(config_root)
+        require(manifest["native_generation_id"] == config["native_generation_id"]
+                and digest(code) == config["code_sha256"], "installed release binding changed")
+
+    expected_dispatcher = (native / "scripts/photo_installed_h_f2.py").resolve()
+    expected_workflow = (native / "scripts/photo_workflow.py").resolve()
+    actual_dispatcher = Path(__file__).resolve()
+    actual_workflow = Path(workflow_entrypoint).resolve() if workflow_entrypoint else None
+    dispatcher_sha = code.get("scripts/photo_installed_h_f2.py")
+    workflow_sha = code.get("scripts/photo_workflow.py")
+    if (actual_dispatcher != expected_dispatcher or actual_workflow != expected_workflow
+            or not dispatcher_sha or file_sha(actual_dispatcher) != dispatcher_sha
+            or not workflow_sha or file_sha(actual_workflow) != workflow_sha):
+        raise ExpressionDispatchError("reserved_expression_view_options_require_sealed_dispatch",
+                                      lookup_generation_id=expected_id,
+                                      run_bound_generation_id=run_bound_id)
+
+
 def runtime_python(skill_root, manifest):
     """Use the skill-owned, proof-bound local runtime, including NumPy."""
     skill_root = Path(skill_root).resolve()
@@ -98,10 +335,47 @@ def runtime_python(skill_root, manifest):
     return python
 
 
-def dispatch(argv=None, *, skill_root=SKILL_ROOT):
+def dispatch(argv=None, *, skill_root=SKILL_ROOT, workflow_entrypoint=None):
     """Return a CLI exit code, or None for an already bound native run."""
     arguments = list(sys.argv[1:] if argv is None else argv)
+    # The installed H2 entrypoint always performs the neutral freeze check
+    # before resolving the release used by an expression view. The private
+    # resolved flags are only consumed by the already-dispatched workflow.
     try:
+        is_expression_view = bool(arguments and arguments[0] == "view"
+                                  and option(arguments, "--expression") is not None)
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        print(json.dumps({"status": "error", "code": str(error),
+                          "native_approval": False, "lookup_authority": False}, ensure_ascii=False),
+              file=sys.stderr)
+        return 2
+    if is_expression_view:
+        if any(item in {"--_resolved-runtime-store", "--_resolved-generation-id",
+                        "--_resolved-lookup-source"} for item in arguments):
+            try:
+                _validate_forwarded_expression_view(arguments, skill_root=skill_root,
+                                                    workflow_entrypoint=workflow_entrypoint)
+                return None
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                code = getattr(error, "code", None) or str(error) or "expression_view_unavailable"
+                payload = {"status": "error", "code": code,
+                           "native_approval": False, "lookup_authority": False}
+                payload.update(getattr(error, "details", {}))
+                print(json.dumps(payload, ensure_ascii=False), file=sys.stderr)
+                return 2
+        try:
+            return _dispatch_expression_view(arguments, skill_root=skill_root)
+        except (ValueError, OSError, KeyError, TypeError) as error:
+            code = getattr(error, "code", None) or str(error) or "expression_view_unavailable"
+            payload = {"status": "error", "code": code,
+                       "native_approval": False, "lookup_authority": False}
+            payload.update(getattr(error, "details", {}))
+            print(json.dumps(payload, ensure_ascii=False), file=sys.stderr)
+            return 2
+    try:
+        if any(item in {"--_resolved-runtime-store", "--_resolved-generation-id",
+                        "--_resolved-lookup-source"} for item in arguments):
+            raise ValueError("reserved_expression_view_options_require_sealed_dispatch")
         config = read(Path(skill_root) / CONFIG)
         require(config["schema"] == SCHEMA and config["policy"] == "photo-h-f2/v1"
                 and config["store_subdirectory"] == "h-f2-installed", "invalid installed search configuration")
