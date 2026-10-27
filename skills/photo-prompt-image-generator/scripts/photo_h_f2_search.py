@@ -1,11 +1,13 @@
 """Production H/F2 kernel: full positive RID pool; one invocation per lane."""
 import math
+import time
 import numpy as np
 import photo_recall_first as rf
 from photo_recall_first import require
 from photo_h_f2_query_scope import analyze, correct, compile_focus_contracts, order_focus
 from photo_h_f2_literal_text import compile_contracts, order_literal
 from photo_h_f2_event_phase import compile_contracts as phase_contracts, order_phase
+from photo_h_f2_source_relevance import compile_profiles, order_source_relevance
 
 def fuse(metadata,sparse,dense,k):
     require(type(k) is int and k in (10,30),'only frozen RRF10/30 admitted')
@@ -72,7 +74,21 @@ class Index:
         require(set(self.documents)=={d['id'] for d in metadata},'document witness coverage changed')
         self.literal_contracts=compile_contracts(self.documents,rf.tokens,source_units=source_units)
         self.phase_contracts=phase_contracts(self.documents,rf.tokens,source_units=source_units)
-        self.focus_contracts=compile_focus_contracts(self.documents,source_units=source_units,source_effects=source_effects,source_constraints=source_constraints)
+        unit_cache={};effect_cache={};constraint_cache={}
+        def units(identity):
+            if identity not in unit_cache:unit_cache[identity]=source_units(identity)
+            return unit_cache[identity]
+        def effects(identity):
+            if identity not in effect_cache:effect_cache[identity]=source_effects(identity) if source_effects else {}
+            return effect_cache[identity]
+        def constraints(identity):
+            if identity not in constraint_cache:constraint_cache[identity]=source_constraints(identity) if source_constraints else {}
+            return constraint_cache[identity]
+        self.focus_contracts=compile_focus_contracts(self.documents,source_units=units,source_effects=effects,source_constraints=constraints)
+        profile_compile_started=time.perf_counter()
+        self.source_relevance_profiles=compile_profiles(self.documents,source_units=units,source_effects=effects)
+        self.source_relevance_profile_compile_seconds=time.perf_counter()-profile_compile_started
+        unit_cache.clear();effect_cache.clear();constraint_cache.clear()
         self.norms=np.linalg.norm(matrix,axis=1)
         require(np.isfinite(matrix).all() and (self.norms>0).all(),'invalid document vectors')
     def search(self,text,row,binding,*,chunk_size=1024):
@@ -91,12 +107,22 @@ class Index:
         corrected,order,correction=correct(self.metadata,sparse,dense,scope,rf.tokens,fuse,
             lambda i:{term:rows[i] for term,rows in contributions.items() if i in rows},
             lambda i:self.documents[self.metadata[i]['id']],lambda term:len(self.fields['postings'].get(term,())))
+        source_relevance_input_order=order
+        source_relevance_started=time.perf_counter()
+        order,source_relevance=order_source_relevance(order,text,self.source_relevance_profiles,
+            structured=bool(scope.get('format_spans')))
+        source_relevance_elapsed=time.perf_counter()-source_relevance_started
         order,focus=order_focus(order,text,self.focus_contracts)
         order,literal=order_literal(order,text,scope,self.literal_contracts,rf.tokens)
         order,phase=order_phase(order,text,scope,self.phase_contracts,rf.tokens)
-        return {'bm25':corrected,'bm25_raw':sparse,'cosine':dense,'order':order,'lane_calls':{'BM25F':1,'local_cosine':1},
+        return {'bm25':corrected,'bm25_raw':sparse,'cosine':dense,'order':order,
+                'source_relevance_input_order':source_relevance_input_order,
+                'source_relevance_elapsed_seconds':source_relevance_elapsed,
+                'source_relevance_profile_compile_seconds':self.source_relevance_profile_compile_seconds,
+                'lane_calls':{'BM25F':1,'local_cosine':1},
                 'considered_RIDs':len(self.metadata),'considered_CIDs':len({d['cid'] for d in self.metadata}),
-                'query_scope':{'analysis':scope,'correction':correction,'literal_text':literal,'primary_focus':focus,'event_phase':phase}}
+                'query_scope':{'analysis':scope,'correction':correction,'source_relevance':source_relevance,
+                    'literal_text':literal,'primary_focus':focus,'event_phase':phase}}
 
 
 def present_material(rows,phase,*,literal=None,focus=None,maximum=8):
