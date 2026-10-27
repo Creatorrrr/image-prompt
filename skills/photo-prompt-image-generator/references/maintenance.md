@@ -268,3 +268,10 @@ traces, camera targets, scales, contacts and represented images keep distinct
 owners and endpoints. Registration, installed exposure, prompt adoption and
 saved pixels remain separate evidence; visual proxies do not establish legal,
 scientific or narrative conclusions.
+
+The [ReactorPrompt pose/composition extension](reactorprompt-pose-composition.md)
+records complete expression-route coverage, positive versus diagnostic meanings,
+and the read-only sealed expression view. The [authored relational supplement](relational-gap-supplement.md)
+records ten manually authored sources, their bilingual semantics and review
+boundaries. Use frozen semantic criteria and actual installed-generation replay
+when qualifying source-ordering changes; preserve historical failures and holds.

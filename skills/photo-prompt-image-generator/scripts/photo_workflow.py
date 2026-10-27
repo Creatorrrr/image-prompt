@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import secrets
 import subprocess
@@ -33,6 +34,20 @@ def ensure(state):
     if "retry_proof" in state["artifacts"]:
         from prepare_retry_context import verify_child
         verify_child(state)
+
+
+def expression_view_current_config():
+    """Read current installation config only after the neutral freeze check."""
+    from photo_installed_h_f2 import CONFIG, default_store, read
+    from photo_installed_h_f2 import SCHEMA as INSTALLED_SCHEMA
+    root = os.environ.get("PHOTO_EXPRESSION_SKILL_ROOT")
+    if not root:
+        raise WorkflowError("expression_view_requires_installed_dispatch")
+    config = read(Path(root) / CONFIG)
+    if (config.get("schema") != INSTALLED_SCHEMA or config.get("policy") != "photo-h-f2/v1"
+            or config.get("store_subdirectory") != "h-f2-installed"):
+        raise WorkflowError("invalid_installed_search_configuration")
+    return Path(default_store()).resolve(), config
 
 
 def retrieve(args):
@@ -578,20 +593,28 @@ def resume(args):
 
 def main(argv=None):
     from photo_installed_h_f2 import dispatch
-    routed = dispatch(argv)
+    routed = dispatch(argv, workflow_entrypoint=__file__)
     if routed is not None:
         return routed
     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     sub = parser.add_subparsers(dest="command", required=True)
     for command in ("status", "retrieve", "resume", "view", "compose-audit", "prepare-render", "authorize", "render-api", "native-plan", "native-started", "native-result", "review-shape", "review-audit", "retry-prepare", "attach-retry", "deliver"):
-        p = sub.add_parser(command, allow_abbrev=False); p.add_argument("--run", type=Path, required=True)
+        p = sub.add_parser(command, allow_abbrev=False); p.add_argument("--run", type=Path, required=command != "view")
         if command in {"retrieve", "resume"}:
             p.add_argument("--seed", type=int); p.add_argument("--runtime-store", type=Path)
             p.add_argument("--source-mode", choices=("local_current", "remote_before_retrieval"), default="local_current")
             p.add_argument("--source-remote"); p.add_argument("--source-ref", default="main"); p.add_argument("--visual-intent", type=Path)
             p.add_argument("--retrieval-mode", choices=("hybrid_required","keyword_only"),default="hybrid_required")
             p.add_argument("--embedding-env-file",type=Path); p.add_argument("--query-cache",type=Path)
-        if command == "view": p.add_argument("--candidate-id", action="append")
+        if command == "view":
+            p.add_argument("--candidate-id", action="append")
+            p.add_argument("--expression", help="Exact expression lookup over sealed native V4 meanings.")
+            p.add_argument("--maintenance", action="store_true", help="Read-only lookup without authoring authority.")
+            p.add_argument("--runtime-store", type=Path, help="Sealed store override; maintenance mode only.")
+            p.add_argument("--generation-id", help="Sealed generation override; maintenance mode only.")
+            p.add_argument("--_resolved-runtime-store", type=Path, help=argparse.SUPPRESS)
+            p.add_argument("--_resolved-generation-id", help=argparse.SUPPRESS)
+            p.add_argument("--_resolved-lookup-source", help=argparse.SUPPRESS)
         if command == "compose-audit": p.add_argument("--composed", type=Path, required=True)
         if command == "prepare-render":
             p.add_argument("--parameters", type=Path, required=True); p.add_argument("--lane", choices=("api", "native"), required=True)
@@ -625,9 +648,122 @@ def main(argv=None):
             "render-api": render_api, "native-plan": native_plan, "native-started": native_started, "native-result": native_result, "resume": resume}
         if args.command == "status": result = status(load_state(args.run))
         elif args.command == "view":
-            state = load_state(args.run); ensure(state)
-            from compose_pack_view import build_view
-            result = build_view(value(state, "pack"), args.candidate_id)
+            if args.expression is not None:
+                if args.candidate_id:
+                    raise WorkflowError("expression_view_returns_all_exact_matches")
+                if args.maintenance:
+                    if args.run is not None:
+                        raise WorkflowError("maintenance_and_authoring_run_are_mutually_exclusive")
+                    if args.runtime_store is not None or args.generation_id is not None:
+                        if args.runtime_store is None or args.generation_id is None:
+                            raise WorkflowError("maintenance_requires_store_and_generation_together")
+                        expected_store = args.runtime_store.expanduser().resolve()
+                        expected_generation = args.generation_id
+                        expected_source = "maintenance_explicit_override"
+                    else:
+                        expected_store, config = expression_view_current_config()
+                        expected_generation = config["generation_id"]
+                        expected_source = "maintenance_current_configuration"
+                    execution = {
+                        "mode": "maintenance_read_only",
+                        "freeze_verified": False,
+                        "run_bound_generation_id": None,
+                        "purpose_boundary": "maintenance lookup only; not an authoring freeze or a new core",
+                    }
+                else:
+                    if args.run is None:
+                        raise WorkflowError("authoring_requires_valid_frozen_run")
+                    if args.runtime_store is not None or args.generation_id is not None:
+                        raise WorkflowError("runtime_overrides_require_explicit_maintenance_mode")
+                    state = load_state(args.run)
+                    ensure(state)
+                    if status(state).get("phase") == "stale":
+                        raise WorkflowError("stale_frozen_run")
+                    bound = state.get("h_f2_binding") or {}
+                    if "pack" in state.get("artifacts", {}) and not bound:
+                        raise WorkflowError("legacy_run_has_no_h_f2_generation_binding")
+                    if bound:
+                        expected_store = Path(bound["store"]).resolve()
+                        expected_generation = bound["generation_id"]
+                        expected_source = "run_bound_generation"
+                    else:
+                        expected_store, config = expression_view_current_config()
+                        expected_generation = config["generation_id"]
+                        expected_source = "current_installed_configuration"
+                    execution = {
+                        "mode": "frozen_authoring",
+                        "run": str(Path(args.run).resolve()),
+                        "run_id": state.get("run_id"),
+                        "phase": state.get("phase"),
+                        "freeze_verified": True,
+                        "run_bound_generation_id": (bound.get("generation_id") if bound else None),
+                    }
+                if (args._resolved_runtime_store is None or args._resolved_generation_id is None
+                        or args._resolved_lookup_source is None):
+                    raise WorkflowError("expression_view_requires_installed_dispatch")
+                if (args._resolved_runtime_store.resolve() != expected_store
+                        or args._resolved_generation_id != expected_generation
+                        or args._resolved_lookup_source != expected_source):
+                    raise WorkflowError("expression_view_release_binding_mismatch")
+                import photo_installed_h_f2 as installed_h_f2
+                run_bound_id = execution.get("run_bound_generation_id")
+                try:
+                    native_root, h2_manifest, native_manifest = installed_h_f2.release(
+                        expected_store, expected_generation)
+                except (ValueError, OSError, KeyError, TypeError) as error:
+                    failure = WorkflowError("sealed_h2_generation_unavailable")
+                    failure.details = {"lookup_generation_id": expected_generation,
+                                       "run_bound_generation_id": run_bound_id}
+                    raise failure from error
+                code_members = native_manifest.get("source", {}).get("code", {})
+                if "scripts/photo_expression_view.py" not in code_members:
+                    failure = WorkflowError("expression_view_not_in_bound_generation")
+                    failure.details = {"lookup_generation_id": expected_generation,
+                                       "run_bound_generation_id": run_bound_id}
+                    raise failure
+                if expected_source in {"current_installed_configuration", "maintenance_current_configuration"}:
+                    from photo_installed_h_f2 import CONFIG, SCHEMA as INSTALLED_SCHEMA, default_store, read
+                    config_root_value = os.environ.get("PHOTO_EXPRESSION_SKILL_ROOT")
+                    if not config_root_value:
+                        raise WorkflowError("expression_view_requires_installed_dispatch")
+                    config_root = Path(config_root_value).resolve()
+                    if not config_root.is_dir():
+                        raise WorkflowError("expression_view_requires_installed_dispatch")
+                    config = read(config_root / CONFIG)
+                    if (config.get("schema") != INSTALLED_SCHEMA or config.get("policy") != "photo-h-f2/v1"
+                            or config.get("store_subdirectory") != "h-f2-installed"
+                            or Path(default_store()).resolve() != expected_store
+                            or config.get("generation_id") != expected_generation
+                            or h2_manifest.get("native_generation_id") != config.get("native_generation_id")
+                            or installed_h_f2.digest(code_members) != config.get("code_sha256")):
+                        raise WorkflowError("installed_release_binding_changed")
+                expected_workflow = (native_root / "scripts/photo_workflow.py").resolve()
+                expected_dispatcher = (native_root / "scripts/photo_installed_h_f2.py").resolve()
+                actual_workflow = Path(__file__)
+                actual_dispatcher = Path(installed_h_f2.__file__)
+                if (actual_workflow.is_symlink() or actual_dispatcher.is_symlink()
+                        or actual_workflow.resolve() != expected_workflow
+                        or actual_dispatcher.resolve() != expected_dispatcher
+                        or installed_h_f2.file_sha(actual_workflow) != code_members.get("scripts/photo_workflow.py")
+                        or installed_h_f2.file_sha(actual_dispatcher) != code_members.get("scripts/photo_installed_h_f2.py")):
+                    failure = WorkflowError("expression_view_requires_sealed_native_entrypoints")
+                    failure.details = {"lookup_generation_id": expected_generation,
+                                       "run_bound_generation_id": run_bound_id}
+                    raise failure
+                execution["lookup_resolution"] = expected_source
+                from photo_expression_view import lookup_from_release
+                result = lookup_from_release(args.expression, api=installed_h_f2,
+                                             store=expected_store,
+                                             generation_id=expected_generation,
+                                             execution=execution)
+            else:
+                if args.run is None:
+                    raise WorkflowError("view_requires_run")
+                if args.maintenance or args.runtime_store is not None or args.generation_id is not None:
+                    raise WorkflowError("expression_view_flags_require_expression")
+                state = load_state(args.run); ensure(state)
+                from compose_pack_view import build_view
+                result = build_view(value(state, "pack"), args.candidate_id)
         elif args.command in {"review-shape", "review-audit"}:
             from photo_workflow_reviews import review_shape, review_audit
             result = (review_shape if args.command == "review-shape" else review_audit)(args)
@@ -645,7 +781,10 @@ def main(argv=None):
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 1 if result.get("status") in {"fail", "error"} else 0
     except (ValueError, OSError, KeyError, TypeError, StopIteration) as error:
-        print(json.dumps({"status": "error", "code": getattr(error, "code", "invalid_workflow_input")}), file=sys.stderr)
+        payload = {"status": "error", "code": getattr(error, "code", "invalid_workflow_input"),
+                   "native_approval": False, "lookup_authority": False}
+        payload.update(getattr(error, "details", {}))
+        print(json.dumps(payload), file=sys.stderr)
         return 2
 
 
