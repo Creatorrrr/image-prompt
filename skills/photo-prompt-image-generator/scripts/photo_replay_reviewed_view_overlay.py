@@ -79,6 +79,7 @@ def apply_registered(module, records, raw, expected_sha256, *, root=ROOT, manife
     decoded = [(overlay_sha256, json.loads(content)) for overlay_sha256, content in inputs]
     import photo_reviewed_source_evidence
     photo_reviewed_source_evidence.verify([content for _, content in decoded])
+    photo_reviewed_source_evidence.verify_git([content for _, content in decoded])
     result = module
     stages = []
     for overlay_sha256, content in decoded:
