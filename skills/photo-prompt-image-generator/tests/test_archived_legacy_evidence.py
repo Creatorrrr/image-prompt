@@ -41,7 +41,7 @@ class ArchivedLegacyEvidenceTest(unittest.TestCase):
                 subprocess.run(['zstd', '-q', '-c', str(tarpath)], stdout=out, check=True)
             registry = root / 'registry.json'
             registry.write_text(json.dumps({'schema': 'photo-legacy-evidence-registry/v1', 'archives': [{
-                'generation_id': generation, 'archive': str(archive), 'archive_sha256': evidence.file_sha(archive)}]}))
+                'generation_id': generation, 'archive': archive.name, 'archive_sha256': evidence.file_sha(archive)}]}))
             records = {cid: {'provenance': [{'source': f'installed-h-f2-canonical-candidate:{generation}/{cid}',
                                              'sha256': record_hash}]}}
             self.assertEqual(evidence.verify(records, registry), {'archives': 1, 'candidates': 1})

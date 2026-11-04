@@ -44,8 +44,17 @@ class SportsFictionSemantics(unittest.TestCase):
   self.assertIn('bare upper torso remains separate',self.cards['W09']['proposal_en'])
   self.assertIn('continuous swimsuit torso',self.cards['W14']['proposal_en'])
   self.assertNotEqual(self.s['card_candidate_map']['W09'],self.s['card_candidate_map']['W14'])
- def test_training_bib_reuses_source_and_graphic_aura_is_deferred(self):
-  self.assertEqual(self.s['card_candidate_map']['W01'],'cand_257e281178dd57ddbeb1902f74e619a9')
+ def test_training_bib_has_card_specific_candidate_and_graphic_aura_is_deferred(self):
+  cid=self.s['card_candidate_map']['W01'];card=self.cards['W01'];record=self.records[cid]
+  self.assertNotEqual(cid,'cand_257e281178dd57ddbeb1902f74e619a9')
+  self.assertEqual(record['content']['en'],card['proposal_en'])
+  self.assertEqual(record['content']['ko'],card['proposal_ko'])
+  self.assertFalse(card['runtime_registered'])
+  self.assertFalse(record['content']['research_semantics']['runtime_registered'])
+  self.assertIn('outside the bib armholes',record['content']['en'])
+  self.assertIn("lower edge stays distinct from the jersey hem",record['content']['en'])
+  old=read('photo_candidate_school_appearance_poses_20261023.json')['candidates']
+  self.assertIn('cand_257e281178dd57ddbeb1902f74e619a9',old)
   self.assertIn('X02',self.s['deferred_cards']);self.assertNotIn('X02',self.s['card_candidate_map'])
  def test_selected_source_requires_all_visible_groups_and_preserves_limits(self):
   for c in self.cards.values():

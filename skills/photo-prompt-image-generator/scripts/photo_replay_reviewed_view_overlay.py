@@ -76,10 +76,13 @@ def apply_registered(module, records, raw, expected_sha256, *, root=ROOT, manife
                 if hashlib.sha256(content).hexdigest() != entry['sha256']:
                     raise ValueError('registered overlay hash mismatch: ' + entry['path'])
                 inputs.append((entry['sha256'], content))
+    decoded = [(overlay_sha256, json.loads(content)) for overlay_sha256, content in inputs]
+    import photo_reviewed_source_evidence
+    photo_reviewed_source_evidence.verify([content for _, content in decoded])
     result = module
     stages = []
-    for overlay_sha256, content in inputs:
-        result, actions = apply(result, records, json.loads(content))
+    for overlay_sha256, content in decoded:
+        result, actions = apply(result, records, content)
         stages.append({'overlay_sha256': overlay_sha256, 'views': len(actions),
                        'added': sum(x['status'] == 'added' for x in actions),
                        'already_present': sum(x['status'] == 'already_present' for x in actions)})

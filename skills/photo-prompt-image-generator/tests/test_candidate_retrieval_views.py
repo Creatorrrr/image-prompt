@@ -24,6 +24,11 @@ class ViewContracts(unittest.TestCase):
         another=copy.deepcopy(self.record);another['id']='cand_b'
         with self.assertRaisesRegex(ValueError,'coverage'):views.validate(self.module,{'cand_a':self.record,'cand_b':another})
         views.validate(self.module,{'cand_a':self.record,'cand_b':another},require_complete=False)
+        with self.assertRaisesRegex(ValueError,'coverage'):
+            views.documents(self.module,{'cand_a':self.record,'cand_b':another},['cand_a|base','cand_b|base'])
+        rows=views.documents(self.module,{'cand_a':self.record,'cand_b':another},
+                             ['cand_a|base','cand_b|base'],require_complete=False)
+        self.assertEqual([row['document_id'] for row in rows],['cand_a|base'])
 
     def test_views_cannot_grant_native_authority_or_admit_unknown_source_kinds(self):
         with self.assertRaisesRegex(ValueError,'no native approval'):

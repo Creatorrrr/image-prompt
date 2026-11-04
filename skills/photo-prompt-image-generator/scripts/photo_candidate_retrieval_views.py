@@ -98,13 +98,13 @@ def validate(module,records,*,require_complete=True):
     return module
 
 
-def documents(module,records,document_ids):
+def documents(module,records,document_ids,*,require_complete=True):
     """Prepare dense inputs for one explicit RID population, without lexical rows.
 
     IDs and hashes are metadata, never embedding text. Callers still need actual
     provider execution proofs and a newly sealed generation before activation.
     """
-    validate(module,records)
+    validate(module,records,require_complete=require_complete)
     expected={cid+'|'+rid for cid,record in records.items()
               if record['record_kind']!='diagnostic' for rid in realization_ids(record)}
     if len(document_ids)!=len(set(document_ids)) or set(document_ids)!=expected:
@@ -120,7 +120,7 @@ def documents(module,records,document_ids):
     return rows
 
 
-def canonical_bindings(module,records,canonical_records,*,canonical_api):
+def canonical_bindings(module,records,canonical_records,*,canonical_api,require_complete=True):
     """Bind reviewed authored views to validated native literal owners.
 
     The caller supplies the canonical API from the generation's verified code
@@ -130,7 +130,7 @@ def canonical_bindings(module,records,canonical_records,*,canonical_api):
     Historical content locators are opaque keys in ``primary``, never paths
     walked in a canonical record.
     """
-    validate(module,records)
+    validate(module,records,require_complete=require_complete)
     positive={cid:record for cid,record in records.items()
               if record['record_kind']!='diagnostic'}
     if set(canonical_records)!=set(positive):
@@ -170,18 +170,18 @@ def canonical_bindings(module,records,canonical_records,*,canonical_api):
             'views':rows,'native_approval':False}
 
 
-def canonical_documents(compiled,module,records,canonical_records,document_ids,*,canonical_api):
+def canonical_documents(compiled,module,records,canonical_records,document_ids,*,canonical_api,require_complete=True):
     """Replay every source/literal binding before preparing dense inputs.
 
     This verifies compiled metadata, not provider execution, quality or release.
     The text recipe is identical to the authored-view recipe; source hashes are
     explicitly kept in their two separate hash domains.
     """
-    expected=canonical_bindings(module,records,canonical_records,canonical_api=canonical_api)
+    expected=canonical_bindings(module,records,canonical_records,canonical_api=canonical_api,require_complete=require_complete)
     if digest(compiled)!=digest(expected):
         raise ValueError('compiled canonical view binding changed')
     bindings={view['id']:view for view in compiled['views']}
-    rows=documents(module,records,document_ids)
+    rows=documents(module,records,document_ids,require_complete=require_complete)
     for row in rows:
         view=bindings[row['id']]
         row['authored_source_sha256']=row['source_record_sha256']

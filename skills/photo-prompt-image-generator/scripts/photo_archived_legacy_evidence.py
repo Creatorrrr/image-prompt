@@ -35,8 +35,10 @@ def file_sha(path):
     return h.hexdigest()
 
 
-def _check_archive(entry, expected):
+def _check_archive(entry, expected, *, registry_base):
     archive = Path(entry['archive']).expanduser()
+    if not archive.is_absolute():
+        archive = (Path(registry_base) / archive).resolve()
     override = os.environ.get('PHOTO_LEGACY_EVIDENCE_DIR')
     if override:
         archive = Path(override).expanduser() / archive.name
@@ -147,7 +149,7 @@ def verify(records, registry=REGISTRY):
     for generation, expected in groups.items():
         if generation not in by_generation:
             raise ValueError('legacy source archive is not registered: ' + generation)
-        count += _check_archive(by_generation[generation], expected)
+        count += _check_archive(by_generation[generation], expected, registry_base=Path(registry).resolve().parent)
     return {'archives': len(groups), 'candidates': count}
 
 
