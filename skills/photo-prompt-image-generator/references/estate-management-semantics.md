@@ -50,8 +50,8 @@ predeclared whole-scene relation. A01's continuous route remained partly
 occluded; B06 supplied fragment inspiration, without testing its entire bundle;
 A07's open bin, separate closed bin and clerk-record arrangement were visible
 together in one image. This last observation does not confer native approval
-or general reliability. See [the integration and image report](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/estate-management-20261024/INTEGRATION-AND-IMAGE-TESTS.md)
-and its original pixel evidence before reusing any outcome.
+or general reliability. The historical integration report and original pixel
+evidence are local-only; consult them before reusing any outcome.
 
 A subsequent failure analysis initially added eight optional visibility alternatives
 and 21 bindings in `photo_candidate_estate_visibility_repairs_20261024.json` and

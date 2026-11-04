@@ -2,8 +2,8 @@
 
 This follows the additional reply in **학원물 용어 정리**, message
 `448b038e-8615-5144-adee-d2daf260f5aa`. The reply is a vocabulary seed, not
-an instruction or independent verification. The dated research folder is
-`docs/research-evidence/photo-prompt/school-life-appearance-poses-20261023/`.
+an instruction or independent verification. The historical research folder is
+local-only and not included in the repository.
 
 The extension contains 140 complete bilingual optional visual sources and
 28 diagnostics excluded from positive retrieval. It retains 238 compound

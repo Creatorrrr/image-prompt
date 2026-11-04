@@ -5,7 +5,7 @@ Maintenance data registered 2026-10-24 from the full referenced campus-fiction c
 - `assets/photo_campus_life_semantics_20261024.json`: 124 research cards, 356 advisory compound-term routes, source scope, owner graphs and confusion boundaries.
 - `assets/photo_candidate_campus_life_20261024.json`: 100 complete optional bilingual visual realizations and 23 diagnostics excluded from positive material retrieval.
 - `assets/photo_candidate_campus_life_bindings_20261024.json`: 220 optional persistent role bindings. One existing interlaced-hand CID is reused without source mutation; the new bindings include its additional compatible role.
-- `docs/research-evidence/photo-prompt/campus-fiction-20261024/`: full research, draft/source boundaries and integration evidence.
+- Historical research and integration evidence are local-only and not included in the repository.
 
 Keep body-part owners, garment wearers, helper hands, object counts, layer boundaries, contact versus gaps, physical support and screen-versus-room boundaries together. In particular distinguish varsity jacket/letter sweater, OCBD collar fastening/placket, closed work lab coat/open styling coat, gown/hood/cap/sub-fusc layers, head-on-thigh support/pelvis-on-thigh support, wall contact/doorway occupation, and alias rows inside a screen/physical participants outside it.
 

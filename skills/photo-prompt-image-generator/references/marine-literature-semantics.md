@@ -16,7 +16,7 @@ effects. Advisory rendering notes distinguish actor-relative laterality from
 screen position and require visible support, complete paths and actual shadow
 receivers. They do not weaken any pixel gate.
 
-The [independent retest](../../../docs/research-evidence/photo-prompt/marine-literature-20261024/retest-20261024/RESULTS.md)
+The independent retest (historical evidence is local-only)
 used the same portrait and three independently frozen concepts, followed by one
 actual image call per arm. One generic text-within-carrier attribute transferred
 to prompt, actual input and original pixels. No complete new card was adopted;
@@ -31,8 +31,8 @@ The upstream requester-query implementation is preserved in this merge; the
 canonical topic regression follows the existing explicit sealed-kernel test
 convention. The selected runtime configuration is preserved.
 
-The [published originals](../../../docs/research-evidence/photo-prompt/marine-literature-20261024/publication-evidence/published-originals.json)
-map six byte-identical PNG copies to the earlier original paths and hashes.
+The historical published-originals record (local-only)
+maps six byte-identical PNG copies to the earlier original paths and hashes.
 `partial_is_fail`, `UNOBSERVABLE_NOT_PASS` and the distinction between source
 registration, installed exposure, authored use, exact transport, original
 pixels and requester acceptance continue to apply.

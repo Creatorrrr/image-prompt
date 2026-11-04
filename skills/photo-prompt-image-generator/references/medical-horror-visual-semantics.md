@@ -10,4 +10,4 @@ D16 and L01 reuse the existing generic seam and culture-vessel relations without
 
 Source requirements belong to the complete selected realization. Research graphs create no typed native facts, guard evidence, owner permission or native qualification. Every source remains native_approval=false; exposure, selection, literal prompt transport and saved-image gates are separate evidence. Hidden endpoints and partial requirements do not pass (UNOBSERVABLE_NOT_PASS; partial_is_fail).
 
-The research package is docs/research-evidence/photo-prompt/medical-horror-20261022. Its original research validation and NOT_RUN evaluation artifacts retain their historical meaning; integration evidence and actual three-arm results are separate.
+The historical research package is local-only and not included in the repository. Its original research validation and NOT_RUN evaluation artifacts retain their historical meaning; integration evidence and actual three-arm results are separate.

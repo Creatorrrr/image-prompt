@@ -51,9 +51,8 @@ queries are corpus probes, not independent held-out validation. The three
 independent scene experiments under `generated/photo-runs/dark-fantasy-*`
 provide only the individual source and pixel evidence recorded in their runs.
 
-The completed data/search/three-arm report is
-`docs/research-evidence/photo-prompt/dark-fantasy-grimdark-20261022/INTEGRATION-RESULTS.md`.
-Its `integration-evidence/image-test-summary.json` records the later observations
+The historical data/search/three-arm report is local-only and not included in
+the repository. Its image-test summary recorded the later observations
 against the immutable source hash. M08's five local source gates are visible in
 one image; the stronger full-doorway framing and complete authored scene remain
 partial. Other two scenes used no new source. These results do not qualify the

@@ -1,8 +1,7 @@
 # Espionage full-conversation supplement
 
-The logged-in Chrome completion is archived at
-`docs/research-evidence/photo-prompt/espionage-full-conversation-20261023/`.
-It covers all 500 reference rows: 480 individual terms, 8 distinctions and
+The historical Chrome completion record is local-only and not included in the
+repository. It covers all 500 reference rows: 480 individual terms, 8 distinctions and
 12 advisory scene combinations. The prior 340-row package and its image
 history remain unchanged.
 

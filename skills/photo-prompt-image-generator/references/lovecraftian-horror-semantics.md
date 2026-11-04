@@ -77,5 +77,4 @@ remain binding. The saved failed query and near-neighbor exclusions have
 separate regression tests; a successful presentation still grants no adoption
 permission. Source-to-prompt contribution and all simultaneous pixel gates are
 evaluated separately in new independently frozen authoring runs.
-Retest evidence is under
-`docs/research-evidence/photo-prompt/lovecraftian-horror-retest-20261022/`.
+Historical retest evidence is local-only and not included in the repository.

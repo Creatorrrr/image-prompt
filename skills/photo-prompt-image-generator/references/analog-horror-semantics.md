@@ -22,7 +22,7 @@ Diagnostic records stay outside positive retrieval. Whole-source adoption needs
 the actual source/native contract and frozen request permissions; exposure can
 remain inspiration_only or be skipped.
 
-[Research and integration evidence](../../../docs/research-evidence/photo-prompt/analog-horror-20261022/integration-evidence/INTEGRATION-RESULTS.md)
+Historical research and integration evidence (local-only)
 separates registration, installed retrieval, literal prompt use and saved pixels.
 Three independently frozen, reference-guided native calls returned three images.
 One complete testcase passed. Two failed exact contact or mouth-state gates,

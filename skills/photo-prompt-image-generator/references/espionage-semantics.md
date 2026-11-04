@@ -17,8 +17,7 @@ and represented versus physical people retain separate owners and endpoints.
 Restraint is not proof of torture; clothing is not proof of consent, identity or
 allegiance; devices do not establish recording or transmission performance.
 
-The evidence package is
-docs/research-evidence/photo-prompt/espionage-20261023/.
+The historical evidence package is local-only and not included in the repository.
 Source registration, sealed search exposure, whole-source adoption, exact
 reference transport, saved-image gates and requester acceptance are separate
 results. Read the integration report for actual observed status.
