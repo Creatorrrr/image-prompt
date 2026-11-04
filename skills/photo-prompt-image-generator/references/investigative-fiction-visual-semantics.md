@@ -3,7 +3,7 @@
 The 2026-10-25 extension routes the 321 terms researched in the requester’s
 conversation through 339 advisory routes (including ten confusion cases and
 eight scene examples). The research and integration evidence live in
-`docs/research-evidence/photo-prompt/investigative-fiction-20261025/`.
+the former research archive (originals no longer retained).
 
 The authored data adds 66 complete optional bilingual visual candidates, 47
 positive-retrieval-excluded diagnostics and 132 optional bindings. The latter
@@ -81,7 +81,7 @@ of an entire distinctive source contract. A feature already present in the
 independent baseline receives no new-source credit. Trace any additional final
 literal through actual native transport to the saved image; strict original
 relationship failures remain strict. The same-three-concept retest evidence is
-in `docs/research-evidence/photo-prompt/investigative-fiction-20261025/retest-20261025/`.
+in the former research archive (originals no longer retained).
 These are research-exposed development tests, with no holdout or causal
 attribution to a single data or prompt change.
 

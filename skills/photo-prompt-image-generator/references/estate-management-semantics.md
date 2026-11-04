@@ -41,7 +41,7 @@ Use `partial_is_fail`, `UNOBSERVABLE_NOT_PASS` and `BLOCKED_UNSCORED` when a
 test requires relations that the resulting pixels cannot establish.
 
 Research, source-access limits, deferred work and execution evidence are under
-`docs/research-evidence/photo-prompt/estate-management-20261024/`. The 192 cases
+the former research archive (originals no longer retained). The 192 cases
 in the original research plan are planned coverage, not executed test results.
 
 The subsequent three independent reference-guided image tests produced three
@@ -59,9 +59,8 @@ and 21 bindings in `photo_candidate_estate_visibility_repairs_20261024.json` and
 `photo_estate_management_repair_semantics_20261024.json` sidecar records actual
 carriers, unobstructed endpoints, hand contacts and confusion boundaries. These
 options address observed route, drain, gaze, map, register and loaf failures;
-their registration does not establish successful generation. Original estate
-sources remain unchanged. See [the repair analysis](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/estate-management-20261024/repair-20261024/CAUSE-ANALYSIS.md)
-and its linked retest evidence for actual use and pixel outcomes.
+their registration does not establish successful generation. Original estate sources remain unchanged. The historical repair analysis is no
+longer retained; retest evidence and images remain separate from candidate registration.
 
 The retry observations distinguish complete relations from nearby substitutes:
 a tally sheet does not show plan-to-scene correspondence; a different book or

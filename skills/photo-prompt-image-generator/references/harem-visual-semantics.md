@@ -33,4 +33,4 @@ No genre label automatically adds people, nudity, sexual acts, coercion,
 violence, historical authenticity or a required visual recipe.
 
 Research, explicit pending-definition/source-access limits and integration
-evidence are in `docs/research-evidence/photo-prompt/harem-20261023/`.
+evidence are in the former research archive (originals no longer retained).

@@ -42,4 +42,4 @@ actual saved pixels are separate evidence. A hidden or partial endpoint is
 authored source alone does not update its sealed corpus or vectors.
 
 Research and integration evidence:
-`docs/research-evidence/photo-prompt/gaslamp-fantasy-20261023/`.
+the former research archive (originals no longer retained).

@@ -3,7 +3,7 @@
 The 2026-10-23 extension registers 120 complete optional bilingual visual
 realizations, 45 context-only diagnostics excluded from positive retrieval,
 219 optional role bindings and 325 advisory keyword routes. Research evidence
-remains in `docs/research-evidence/photo-prompt/idol-fiction-20261023/`.
+remains in the former research archive (originals no longer retained).
 
 The canonical authored source modules are
 `assets/photo_candidate_idol_fiction_20261023.json` and

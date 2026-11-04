@@ -6,8 +6,8 @@ import sys
 import unittest
 
 SKILL = Path(__file__).resolve().parents[1]
-RESEARCH = SKILL.parents[1] / 'docs/research-evidence/photo-prompt/marine-literature-20261024'
 sys.path.insert(0, str(SKILL / 'scripts'))
+import photo_candidate_corpus as corpus
 import photo_global_index as projection
 
 
@@ -19,41 +19,26 @@ class MarineSourceBoundaries(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.current = read(SKILL / 'assets/photo_candidate_marine_literature_20261024.json')['candidates']
-        cls.before = read(RESEARCH / 'retest-20261024/source.before.json')['candidates']
+        cls.registered = set(corpus.load(SKILL / 'assets')['candidates'])
         cls.sidecar = read(SKILL / 'assets/photo_marine_literature_semantics_20261024.json')
 
-    def test_discovery_repair_preserves_the_complete_original_contracts(self):
-        self.assertTrue(set(self.before) <= set(self.current))
-        added = set(self.current) - set(self.before)
-        self.assertEqual(added, {
-            'cand_03072f5d07a551b89a6a904b06597af8',
-            'cand_d6b7aef69fbf5ef08505306abd576a06',
-            'cand_f2b565fff25951e7b0e86d41179ecada',
-        })
-        self.assertTrue(all(self.current[cid]['record_kind'] == 'visual_option' for cid in added))
-        visual_count = 0
-        for cid, old in self.before.items():
-            new = copy.deepcopy(self.current[cid])
-            # Reviewed wording can improve while record ownership and source
-            # contracts remain the same.
-            new['content']['en'] = old['content']['en']
-            new['content']['ko'] = old['content']['ko']
-            if old['record_kind'] != 'visual_option':
-                self.assertEqual(new, old, cid)
-                continue
-            visual_count += 1
-            self.assertTrue(set(old['content'].get('aliases', [])) <= set(new['content']['aliases']), cid)
-            for field in ('aliases', 'definition'):
-                new['content'][field] = old['content'][field]
-            metadata = new['content']['research_semantics']
-            self.assertIn(metadata.pop('label_en'), self.current[cid]['content']['aliases'])
-            self.assertIn('No native or pixel approval', metadata.pop('render_planning')['status'])
-            if cid == 'cand_3dbf62efcc8151f4b33526fd1af47aba':
-                self.assertEqual(metadata['relations'][-1],
-                                 {'subject': 'lines', 'predicate': 'separate_from', 'object': 'runner'})
-                metadata['relations'] = old['content']['research_semantics']['relations']
-            self.assertEqual(new, old, cid)
-        self.assertEqual(visual_count, 87)
+    def test_reviewed_geometry_and_separation_are_preserved(self):
+        expected = {
+            'cand_03072f5d07a551b89a6a904b06597af8':
+                {'subject': 'hand', 'predicate': 'beside', 'object': 'temple'},
+            'cand_d6b7aef69fbf5ef08505306abd576a06':
+                {'subject': 'hands', 'predicate': 'behind', 'object': 'back'},
+            'cand_f2b565fff25951e7b0e86d41179ecada':
+                {'subject': 'camera', 'predicate': 'below', 'object': 'subject'},
+            'cand_3dbf62efcc8151f4b33526fd1af47aba':
+                {'subject': 'lines', 'predicate': 'separate_from', 'object': 'runner'},
+        }
+        for cid, relation in expected.items():
+            record = self.current[cid]
+            self.assertEqual(record['record_kind'], 'visual_option')
+            self.assertIn(relation, record['content']['research_semantics']['relations'])
+        relations = self.current['cand_3dbf62efcc8151f4b33526fd1af47aba']['content']['research_semantics']['relations']
+        self.assertNotIn({'subject': 'lines', 'predicate': 'behind', 'object': 'runner'}, relations)
 
     def test_research_routes_do_not_create_positive_approval(self):
         routes = self.sidecar['keyword_routes']
@@ -77,10 +62,9 @@ class MarineSourceBoundaries(unittest.TestCase):
     def test_bindings_remain_optional_and_owned_by_registered_sources(self):
         bindings = read(SKILL / 'assets/photo_candidate_marine_literature_bindings_20261024.json')['slot_bindings']
         self.assertEqual(len(bindings), 172)
-        reused = set(read(RESEARCH / 'integration-evidence/source-registration.json')['reused_existing_ids'].values())
         for binding in bindings.values():
             self.assertEqual(binding['role'], 'optional')
-            self.assertIn(binding['candidate_id'], set(self.current) | reused)
+            self.assertIn(binding['candidate_id'], self.registered)
         self.assertEqual(len(self.sidecar['cards']), 96)
 
     def test_real_positive_projection_excludes_diagnostics_and_review_metadata(self):

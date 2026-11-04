@@ -26,6 +26,6 @@
 
 ## 근거와 유지보수
 
-연구 원문: `docs/research-evidence/photo-prompt/school-life-20261023/RESEARCH.md` 및 `IMPLEMENTATION-PLAN.md`. 반영·검색·생성 증거: 같은 폴더의 `integration-evidence/`. 출처 URL의 문장과 제안한 촬영 구도는 구분되어 있으며 provenance SHA는 연구 파일의 해시다. 외부 페이지 전체 바이트의 해시로 해석하지 않는다.
+연구 원문과 과거 통합 자료는 정리했다. 출처 URL의 문장과 제안한 촬영 구도는 구분하며, 과거 provenance SHA를 외부 페이지 전체 바이트의 해시로 해석하지 않는다.
 
 인덱스는 검증된 설치 세대의 전체 source union에 이번 자료를 더하여 만든다. 기존 vector는 CID/RID·본문·recipe·embedding space가 모두 일치할 때만 재사용하며 추가 본문은 동일한 local provider로 계산한다. 관련 없는 작업 중인 코드나 자료를 이번 설치에 섞지 않는다.

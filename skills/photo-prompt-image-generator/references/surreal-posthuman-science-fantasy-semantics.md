@@ -7,7 +7,7 @@ discrepancies, body/device interfaces, external cognition apparatus, organic
 architecture, ritual machinery, scale and contained spaces, recursion and
 layered traces, composite bodies, bodily boundaries, intimacy/care and ordinary
 posthuman services. The complete research specification and access limits are
-in `docs/research-evidence/photo-prompt/surreal-posthuman-science-fantasy-20261022/`.
+in the former research archive (originals no longer retained).
 
 Each visual option preserves its entire bilingual proposition: actual medium,
 material, cardinality, parts, same/different owners, contact, endpoints and

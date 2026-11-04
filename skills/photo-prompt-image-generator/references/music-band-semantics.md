@@ -39,7 +39,7 @@ retained inspiration, native selections, prompt transport and saved-image review
 are separate evidence stages.
 
 Full research and implementation evidence live under
-`docs/research-evidence/photo-prompt/music-band-20261025/`. Initial prompt authors
+the former research archive (originals no longer retained). Initial prompt authors
 must still follow the skill's neutral pre-core boundary; this reference is
 maintenance/post-core material, not an initial concept dictionary.
 

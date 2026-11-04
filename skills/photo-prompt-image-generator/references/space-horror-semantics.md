@@ -33,6 +33,6 @@ transport, actual saved pixels and requester acceptance require separate proof.
 `partial_is_fail` and `UNOBSERVABLE_NOT_PASS` apply to required visible relations.
 
 Full research and integration evidence are retained under
-`docs/research-evidence/photo-prompt/space-horror-20261022/`. The original research
+the former research archive (originals no longer retained). The original research
 files are historical evidence; later implementation and image results live in
 `integration-evidence/` and the three managed image runs.

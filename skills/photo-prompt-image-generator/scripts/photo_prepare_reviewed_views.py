@@ -69,6 +69,7 @@ def prepare(generated, baseline, records, *, root=replay.ROOT, manifest=replay.F
     return result, {'restored_reviewed_views': restored, 'views': len(result['views']),
                     'positive_realizations_without_view': len(positive - covered),
                     'overlay_stages': stages, 'legacy_evidence': legacy_result,
+                    'research_originals': 'not retained or revalidated',
                     'runtime_activation': 'unchanged'}
 
 

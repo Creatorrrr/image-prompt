@@ -43,7 +43,7 @@ transformation, infinity, subjective emotion, identity, consent, or a place's
 actual operating state.
 
 Research snapshot and implementation evidence are under
-`docs/research-evidence/photo-prompt/liminal-dreamcore-20261022/` and
+the former research archive (originals no longer retained) and
 `generated/maintenance/liminal-dreamcore-20261022/`; follow-up evidence is in
 `generated/maintenance/liminal-dreamcore-20261022-realization-gaps/`. The three fresh experiments
 under `generated/photo-runs/liminal-20261022-*-image/` are independent scene

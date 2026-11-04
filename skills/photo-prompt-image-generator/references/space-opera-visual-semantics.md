@@ -1,6 +1,6 @@
 # Space opera visual semantics and optional candidate sources
 
-Research source: `docs/research-evidence/photo-prompt/space-opera-20261023/`.
+Research source: the former research archive (originals no longer retained).
 The extension retains 72 authored semantic cards, 26 contextual distinctions
 and all 291 original keyword routes. It registers 62 complete bilingual visual
 alternatives and 33 positive-retrieval-excluded diagnostics, with 120 optional

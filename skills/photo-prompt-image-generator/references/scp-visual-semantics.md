@@ -72,10 +72,8 @@ the exact pre-image gates and parent review rather than treating a local pass
 as whole-scene or native qualification. Immutable candidate-embedded metadata
 remains a registration-time snapshot.
 
-The research, implementation scope, real query evidence and independent image
-tests are maintained under
-`docs/research-evidence/photo-prompt/scp-20261022/` and
-`generated/maintenance/scp-20261022/`.
+The original research records have been retired. Historical implementation and
+query evidence may remain under `generated/maintenance/scp-20261022/`.
 
 Standalone Git publication retains the two complete reused prerequisite
 sources and bindings in the SCP dependency modules when their original pending

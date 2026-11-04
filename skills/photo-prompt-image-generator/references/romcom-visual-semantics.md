@@ -30,7 +30,7 @@ request-local owner prerequisites and permitted effects still govern adoption.
 Source registration, sealed search exposure, actual selection, composed prompt,
 exact image transport, saved pixels and requester acceptance are separate
 evidence layers. The integration and independent image-test evidence is under
-`docs/research-evidence/photo-prompt/romcom-20261024/integration-evidence/`.
+the former research archive (originals no longer retained).
 `partial_is_fail`, `UNOBSERVABLE_NOT_PASS` and `BLOCKED_UNSCORED` remain in force.
 
 Round 2 preserves those 118 source propositions and 317 routes. Fifty interaction
@@ -47,4 +47,4 @@ Round-1 search windows contained relevant new sources that uniform sampling
 did not always expose. Rank-window presence, sampled exposure, retained generic
 inspiration and native contractual adoption must be measured separately. The
 retry evidence and unchanged-gate comparisons are in
-`docs/research-evidence/photo-prompt/romcom-20261024/round2-20261024/`.
+the former research archive (originals no longer retained).

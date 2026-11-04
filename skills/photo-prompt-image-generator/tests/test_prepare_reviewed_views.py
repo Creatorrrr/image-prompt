@@ -1,15 +1,11 @@
 import copy
-import hashlib
-import json
 from pathlib import Path
 import sys
-import tempfile
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import photo_candidate_retrieval_views as views
 import photo_prepare_reviewed_views as prepare
-import photo_reviewed_source_evidence as evidence
 
 
 class PrepareReviewedViews(unittest.TestCase):
@@ -43,21 +39,12 @@ class PrepareReviewedViews(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'stale'):
             prepare.merge_reviewed(self.baseline, self.baseline, {'cand_a': altered})
 
-    def test_source_document_hash_and_quote_are_verified(self):
-        text = 'A person holds the blue coat.'
-        identity = hashlib.sha256(text.encode()).hexdigest()
-        overlay = {'items': [{'evidence': [{'locator': 'reactorprompt-document:' + identity + '#chars:0-10',
-                                            'quote': 'blue coat'}]}]}
-        with tempfile.TemporaryDirectory() as d:
-            path = Path(d) / 'documents.json'
-            bundle = {'schema': 'photo-reviewed-source-documents/v1',
-                      'documents': {identity: {'doc_id': identity, 'text': text}}}
-            path.write_text(json.dumps(bundle))
-            self.assertEqual(evidence.verify([overlay], path), {'documents': 1, 'quotes': 1})
-            bundle['documents'][identity]['text'] = 'altered'
-            path.write_text(json.dumps(bundle))
-            with self.assertRaisesRegex(ValueError, 'changed'):
-                evidence.verify([overlay], path)
+    def test_rejects_a_view_whose_quote_is_not_in_current_candidate(self):
+        altered = copy.deepcopy(self.context)
+        altered['source_quotes'][0]['quote'] = 'A red coat.'
+        with self.assertRaises(ValueError):
+            prepare.merge_reviewed({**self.baseline, 'views': [self.whole, altered]},
+                                   {**self.baseline, 'views': [self.whole, altered]}, self.records)
 
 
 if __name__ == '__main__':

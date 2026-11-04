@@ -29,7 +29,7 @@ required endpoint that is hidden, partial or unobservable does not pass its
 visible-relation check. The ten diagnostics remain outside positive retrieval.
 
 The research and integration evidence live under
-`docs/research-evidence/photo-prompt/metafiction-existential-litrpg-20261022/`.
+the former research archive (originals no longer retained).
 Its original 124 research cases remain historical NOT_RUN plans. New executed
 retrieval and three independent reference-image runs have separate receipts and
 results; registration and retrieval exposure do not establish pixel quality or

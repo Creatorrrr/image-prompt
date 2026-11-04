@@ -28,6 +28,5 @@ sexual tone, violence or game-specific palette. All suggestions remain optional.
 
 `partial_is_fail` and `UNOBSERVABLE_NOT_PASS` retain their ordinary meanings.
 Source registration, index publication, installed exposure, actual prompt use,
-saved pixels and requester acceptance require separate evidence. See the research
-package at `docs/research-evidence/photo-prompt/litrpg-20261022/` for full terms,
-source access limitations, comparisons and evaluation cases.
+saved pixels and requester acceptance require separate evidence. The original research package, including its source-access limitations,
+comparisons and evaluation cases, is no longer retained.

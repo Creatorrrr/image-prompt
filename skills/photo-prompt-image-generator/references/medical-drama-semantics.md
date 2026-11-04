@@ -6,7 +6,7 @@ that can actually establish the scene in one photograph.
 
 Its registry is `assets/photo_medical_drama_semantics_20261023.json`: 172 research
 cards and 346 advisory keyword routes, retaining the source scopes and access
-limits in `docs/research-evidence/photo-prompt/medical-drama-20261023/`.
+limits in the former research archive (originals no longer retained).
 The candidate and binding modules register 99 complete bilingual optional
 visual sources, 51 positive-retrieval-excluded diagnostics and 198 bindings.
 Twenty-two existing complete sources are reused without changing their payloads.

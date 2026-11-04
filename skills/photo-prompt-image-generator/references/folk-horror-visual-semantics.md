@@ -57,7 +57,7 @@ web page bytes. Some individual terms and original regional sources remain
 deferred; grouped citations do not certify all 150 definitions independently.
 
 Research and integration evidence lives in
-`docs/research-evidence/photo-prompt/folk-horror-20261022/`.
+the former research archive (originals no longer retained).
 Registration, index integrity, natural retrieval exposure, selected prompt
 transport, original pixels and requesting-user acceptance are separate evidence
 levels. A partial/occluded required connection never passes a complete gate.

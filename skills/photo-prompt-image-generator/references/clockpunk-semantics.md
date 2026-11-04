@@ -28,7 +28,7 @@ realization requirements remain cumulative. Diagnostic and held cards have no
 positive visual phrase. A keyword route is a search aid, never an activation rule.
 
 Research, integration, sealed runtime evidence and independent image tests are
-kept in `docs/research-evidence/photo-prompt/clockpunk-20261023/`. Development
+kept in the former research archive (originals no longer retained). Development
 retrieval exposure, actual candidate use in a prompt, reference transport and
 saved-image compliance are separate findings. The three image studies freeze
 their independently authored concepts before candidate access. Their geometry

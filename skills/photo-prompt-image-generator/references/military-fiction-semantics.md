@@ -12,7 +12,7 @@ diagnostics and 203 optional role bindings. One complete trench-coat source is
 reused. Two existing records receive narrowly scoped Korean translation or
 aircraft-cockpit alias corrections, preserving their intrinsic conditions,
 effects and provenance. Research material is in
-`docs/research-evidence/photo-prompt/military-fiction-20261024/`.
+the former research archive (originals no longer retained).
 
 Military service, branch, specialty, rank, billet, legal status, experience,
 competence, consent, romance, clinical conditions, sound and event history are

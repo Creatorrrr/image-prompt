@@ -12,7 +12,7 @@ Source files are `assets/photo_mecha_robot_semantics_20261024.json`,
 `assets/photo_candidate_mecha_robot_bindings_20261024.json`. Detailed bounded
 citations, authored geometry, sources with failed access and the research
 adoption decisions live under
-`docs/research-evidence/photo-prompt/mecha-robot-20261024/`.
+the former research archive (originals no longer retained).
 
 The sources separate worn external supports from a piloted cockpit and from
 biological augmentation; links from joints, actuators and transmission; frame

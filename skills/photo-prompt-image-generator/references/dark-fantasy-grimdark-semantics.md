@@ -45,7 +45,7 @@ theme, selected-source realization, face-reference resemblance and requester
 acceptance in reviews.
 
 Research and implementation evidence live in
-`docs/research-evidence/photo-prompt/dark-fantasy-grimdark-20261022/` and
+the former research archive (originals no longer retained) and
 `generated/maintenance/dark-fantasy-grimdark-20261022/`. Development and boundary
 queries are corpus probes, not independent held-out validation. The three
 independent scene experiments under `generated/photo-runs/dark-fantasy-*`

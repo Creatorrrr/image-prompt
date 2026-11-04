@@ -38,7 +38,7 @@ connection must be visible together; `partial_is_fail` and
 `UNOBSERVABLE_NOT_PASS` remain in effect. User acceptance starts pending.
 
 Research originals stay under
-`docs/research-evidence/photo-prompt/atompunk-20261023/`.
+the former research archive (originals no longer retained).
 Implementation, release and three independent reference-guided image tests are
 recorded in its `integration-evidence/` subdirectory. The research originals are
 historical inputs and do not become precore authoring material.

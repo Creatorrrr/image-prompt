@@ -1,9 +1,8 @@
 # Marine literature semantics
 
-The [research and image evidence](../../../docs/research-evidence/photo-prompt/marine-literature-20261024/README.md)
-retains the referenced conversation's 23 tables and 247 term rows, 96 research
-cards, 20 bounded sources and 40 unexecuted evaluation cases. Research history
-remains immutable; later integration and retest results are separate records.
+The retired research dossier recorded the referenced conversation's 23 tables and
+247 term rows, 96 research cards, 20 bounded sources and 40 unexecuted evaluation
+cases. Later integration and retest results are separate records.
 
 The extension registers 87 optional bilingual visual sources, 247 excluded
 context diagnostics and 166 optional bindings. Three complete existing sources
@@ -27,7 +26,7 @@ are not established by a label, costume or generic institutional satire.
 
 A task-bearing conversation title must not automatically become the entire
 visual topic. The explicit tested release used an exact topical substring with
-the complete prior user message retained for provenance. The regression and its original snapshot remain in the research evidence.
+the complete prior user message retained for provenance. The historical regression snapshot is no longer retained.
 The upstream requester-query implementation is preserved in this merge; the
 canonical topic regression follows the existing explicit sealed-kernel test
 convention. The selected runtime configuration is preserved.

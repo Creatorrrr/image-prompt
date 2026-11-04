@@ -45,7 +45,8 @@ class ReviewedViewOverlayTest(unittest.TestCase):
                    'text_ko': '파란 코트', 'source_quotes': [{'pointer': '/content/en', 'quote': 'blue coat'}],
                    'native_approval': False}
             return json.dumps({'schema': 'photo-reviewed-view-overlay/v1', 'items': [
-                {'candidate_id': 'c1', 'source_record_sha256': views.digest(record), 'views': [row]}]}).encode()
+                {'candidate_id': 'c1', 'source_record_sha256': views.digest(record), 'views': [row],
+                 'evidence': [{'locator': 'reactorprompt-document:' + '0' * 64, 'quote': 'historical'}]}]}).encode()
 
         first, second = overlay('whole', 'whole'), overlay('context', 'context')
         hashes = [hashlib.sha256(x).hexdigest() for x in (first, second)]

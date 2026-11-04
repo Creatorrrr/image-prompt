@@ -53,7 +53,7 @@ Diagnostic records remain outside positive material retrieval. Partial or
 hidden required evidence cannot pass the whole case.
 
 Research and integration evidence is under
-`docs/research-evidence/photo-prompt/lovecraftian-horror-20261022/`.
+the former research archive (originals no longer retained).
 Source registration, staged/installed index integrity, natural exposure,
 compatible selection, prompt transport, actual pixels and user judgment remain
 separate evidence levels.

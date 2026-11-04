@@ -24,7 +24,7 @@ not grant whole-source adoption. `partial_is_fail`, `UNOBSERVABLE_NOT_PASS` and
 
 Research, source-access limits, bilingual cards, overlap decisions and the
 immutable successor release are recorded under
-`docs/research-evidence/photo-prompt/art-horror-20261023/`.
+the former research archive (originals no longer retained).
 
 ## Qualified runtime binding (post-core only)
 

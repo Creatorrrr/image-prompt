@@ -11,9 +11,9 @@ python3 skills/photo-prompt-image-generator/scripts/photo_prepare_reviewed_views
   --input /absolute/new-views.json --output /absolute/prepared-views.json
 ```
 
-기준본에 있던 뷰를 빠짐없이 복원하고 등록된 오버레이를 적용하며 출처 인용과 기존 근거를 확인한다. 같은 ID의 다른 내용, 바뀌거나 빠진 후보 원본은 검토 없이 덮어쓰지 않고 오류로 알린다. 입력이나 정식 자산을 덮어쓰거나 실행 중인 검색본을 전환하지 않는다. 새 후보나 원본 변경을 반영할 때는 오류를 검토해 기준본을 갱신한 후 다시 실행한다. 이 명령을 거치지 않는 저수준 뷰 생성 호출에 보강 내용이 자동 적용되는 것은 아니다.
+기준본에 있던 뷰를 빠짐없이 복원하고 등록된 오버레이를 적용하며 후보 해시, 뷰 연결과 후보에 실제로 있는 인용문을 확인한다. 같은 ID의 다른 내용, 바뀌거나 빠진 후보 원본은 검토 없이 덮어쓰지 않고 오류로 알린다. 입력이나 정식 자산을 덮어쓰거나 실행 중인 검색본을 전환하지 않는다. 새 후보나 원본 변경을 반영할 때는 오류를 검토해 기준본을 갱신한 후 다시 실행한다. 이 명령을 거치지 않는 저수준 뷰 생성 호출에 보강 내용이 자동 적용되는 것은 아니다.
 
-Git의 과거 커밋을 가리키는 인용도 `data/provenance/reviewed-git-sources.json.gz`에 원문과 원래 커밋·트리의 증명을 보존한다. 재생성 시 압축 파일과 원문의 해시, 원문이 해당 Git 커밋의 경로에 속했다는 증명, JSON 경로와 인용문을 확인하므로 해당 과거 커밋이 없는 환경에서도 검증할 수 있다.
+이미 검토하고 TO-BE에 반영한 연구 원문은 유지하지 않는다. 오버레이와 후보의 과거 출처 위치는 역사적 기록이며 현재 원문에 접근하거나 인용을 재검증한다는 뜻이 아니다. 원문 전체에서 후보 데이터를 처음부터 만드는 경로는 지원하지 않는다. 현재 TO-BE 후보를 정본으로 보존하고, 새 후보는 그 위에 추가한다. 이전 후보 기록의 해시를 확인하는 `data/provenance/legacy-candidate-evidence.tar.zst`는 유지한다.
 
 준비한 결과는 후속 다중 뷰 임베딩과 H-only+F2 검색본 생성 및 검증에 입력해야 한다. `build_shared_candidate_index.py`는 후보 원본의 별도 인덱스를 만들며 H-only+F2 다중 뷰 검색본 전체를 재생성하지 않는다. 현재 임의의 새 후보 원본에서 H-only+F2 검색본까지 한 번에 만드는 통합 명령은 제공하지 않는다.
 
@@ -23,7 +23,7 @@ Git의 과거 커밋을 가리키는 인용도 `data/provenance/reviewed-git-sou
 
 ```sh
 python3 skills/photo-prompt-image-generator/scripts/install_photo_tobe_bundle.py \
-  --bundle /absolute/tobe-data-and-runtime.tar.zst \
+  --bundle /absolute/tobe-runtime-only-20261104.tar.zst \
   --source-index /absolute/tobe-source-index.tar.zst
 ```
 

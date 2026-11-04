@@ -11,7 +11,7 @@
 
 모든 신규 대안은 optional이며 source의 전체 문구·조건·효과·역할 적합성과 실제 requester 잠금을 따로 검토해야 한다. 연구 그래프와 출처는 native typed-fact 승인이나 owner permission을 주지 않는다. 가림은 UNOBSERVABLE_NOT_PASS, 일부 충족은 partial_is_fail이다. 실제 source 반영·검색 노출·선택·literal prompt·생성 파일·픽셀·사용자 판단을 별도 증거로 기록한다.
 
-연구 원본: `docs/research-evidence/photo-prompt/court-palace-20261023/`. 후속 실제 실행과 제한은 그 폴더의 `INTEGRATION-AND-IMAGE-TESTS.md`를 따른다. 연구 단계의 README/VALIDATION은 당시 snapshot이며 운영 반영 증거로 덮어쓰지 않는다.
+연구 원문과 과거 통합 보고서는 정리했다. 이미지 결과와 그 주변의 실행 자료는 유지하며, 연구 당시의 기록은 현재 운영 승인으로 해석하지 않는다.
 
 
 ## Chrome 전체 재검토와 2차 보강
@@ -24,6 +24,6 @@
 
 신규 모듈: `photo_candidate_court_palace_full_review_20261023.json`, `photo_candidate_court_palace_full_review_bindings_20261023.json`. 보강 의미 데이터: `photo_court_palace_full_review_semantics_20261023.json`. 현재 원 경로 중 19개에는 수동 검토한 구성 요소 연결을 제공하며 모두 full_original_compound_coverage=false다. 나머지 항목의 보류/문맥 상태는 그대로 유지한다.
 
-후속 설치·검색·3개 새 장면 생성/픽셀 판독은 `docs/research-evidence/photo-prompt/court-palace-20261023/full-review-r2/REPORT.md`에 기록한다. 이전 3개 결과를 고치거나 새 결과로 덮어쓰지 않으며, 새 실행은 짝지어진 개선 실험이 아니다.
+후속 설치·검색·3개 새 장면 생성과 픽셀 판독의 과거 보고서는 정리했다. 이전 3개 결과를 고치거나 새 결과로 덮어쓰지 않으며, 새 실행은 짝지어진 개선 실험이 아니다.
 
 프렌치 후드 경로에는 게이블 쓰개와의 차이만 안내하는 contrast-only 연결 1개를 둔다. 프렌치 후드 검색어는 인접 대안 발견을 위한 lookup cue이며 각진 게이블을 동일 형태로 승인하지 않는다.

@@ -29,6 +29,5 @@ mending and pipe repair require the actual same object and visible contacts.
 
 All native approvals remain false. Research structure, runtime registration,
 retrieval exposure, source adoption and saved pixels are separate evidence.
-The research and implementation record live under
-`docs/research-evidence/photo-prompt/genre-fusion-20261022/`; these documents and
-test fixtures are not runtime prompt-composition sources.
+The original research and implementation records are no longer retained;
+they were not runtime prompt-composition sources.
