@@ -2290,7 +2290,7 @@ def candidate_pack_adult_appeal_metadata(
         "composition_requirements": {
             "explicit_adult_original_subject": adult_subject_phrase_required,
             "adult_subject_phrase_required": adult_subject_phrase_required,
-            "agency_phrase_required": True,
+            "agency_phrase_required": photo_contextual_appeal.agency_phrase_required(snapshot),
             "intensity_is_ordinal_not_exposure_or_detail_count": True,
             "baseline_expression_may_be_retained": True,
             "shared_styling_between_axes_allowed": True,
@@ -2389,7 +2389,9 @@ def candidate_pack_contextual_adult_appeal(
     for axis, axis_row in contract["axes"].items():
         allowed = set(scope["axis_allowed_dimensions"][axis])
         axis_row["intensity"] = intensities[axis] if allowed else 0
-        axis_row["active"] = bool(axis_row["intensity"] and constraints["adult_allowed"])
+        # The frozen controls and writable scope already determine this axis.
+        # Human/adult source prerequisites constrain candidates, not whether an
+        # explicitly requested expression exists when the inventory is empty.
         axis_row["intensity_meaning"] = snapshot["definitions"]["controls"][axis]["levels"][
             str(axis_row["intensity"])
         ]
@@ -2404,11 +2406,11 @@ def candidate_pack_contextual_adult_appeal(
                 if slot in excluded_identity_slots:
                     continue
                 source_key = entry["id"]
-                dimensions = sorted(
-                    set(entry.get("affected_dimensions") or [])
-                    | set((policy.get("entry_dimensions") or {}).get(source_key) or [])
-                )
-                dimensions = dimensions or list(data['slot_catalog'][slot]['dimensions'])
+                # Native source effects own the complete footprint. A role or
+                # an old policy hint cannot replace an unknown footprint or
+                # append dimensions to a known one. Unknown effects remain in
+                # global discovery, but cannot enter this writable-scope view.
+                dimensions = copy.deepcopy(entry.get("affected_dimensions") or [])
                 if (
                     not dimensions
                     or not set(dimensions).issubset(allowed)
@@ -7844,7 +7846,7 @@ def prepare_candidate_source(data: JsonDict, core: JsonDict, controls: JsonDict,
         raise ValueError("candidate retrieval requires a current v3 authorial core")
     values = creative_controls.runtime_values(controls)
     contract, _ = frozen_core_context(data, core, controls)
-    negative = ", ".join(sorted(AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS))
+    negative = ", ".join(sorted(AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS)) or None
     return {
         "prompt_en": core["baseline_prompt_en"],
         "negative_en": negative,

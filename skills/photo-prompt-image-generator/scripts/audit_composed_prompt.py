@@ -4810,6 +4810,11 @@ def audit_adult_appeal_dimension_scope(
             }
         ]
     failures = []
+    if (contract.get("composition_requirements") or {}).get("agency_phrase_required") != photo_contextual_appeal.agency_phrase_required(pack.get("creative_controls") or {}):
+        failures.append({
+            "check": "adult_appeal_agency_scope",
+            "reason": "agency applicability must match the frozen primary subject context without creating a human actor",
+        })
     axes = contract.get("axes") or {}
     if set(axes) != set(ADULT_APPEAL_AXIS_DIMENSIONS):
         failures.append(
@@ -4818,7 +4823,9 @@ def audit_adult_appeal_dimension_scope(
                 "reason": "both independent axis states must be recorded",
             }
         )
-    for axis_id, axis in axes.items():
+    for axis_id in axes:
+        # Index through the native view so nested candidate references resolve.
+        axis = axes[axis_id]
         allowed = set(expected["axis_allowed_dimensions"].get(axis_id, []))
         requested = axis.get("requested_intensity")
         if (
@@ -4912,7 +4919,8 @@ def audit_adult_appeal(
                 "reason": "adult_subject_phrase must be literal when supplied",
             }
         )
-    if not agency_phrase or not text_contains_term(prompt_en, agency_phrase):
+    agency_required = (contract.get("composition_requirements") or {}).get("agency_phrase_required", True)
+    if (agency_required and not agency_phrase) or (agency_phrase and not text_contains_term(prompt_en, agency_phrase)):
         failures.append(
             {
                 "check": "adult_appeal_agency",

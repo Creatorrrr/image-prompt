@@ -120,3 +120,9 @@ ownership and literal evidence binding. The composer owns the truth of the
 phrase-to-condition explanation, including primary relevance. It cannot prove
 the contextual reading, perceived strength, artistic success or final pixels.
 The contextual contract and its review are required by the current adult-appeal path.
+
+Axis activation follows the frozen effective controls and writable scope even
+when the candidate inventory is empty. Human/adult source prerequisites still
+govern individual candidates. An explicitly declared nonhuman primary subject
+requires no human agency phrase; human or unspecified subject context retains
+that requirement. An optional supplied agency phrase must still be literal.
