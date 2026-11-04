@@ -37,6 +37,25 @@ python skills/photo-prompt-image-generator/scripts/photo_workflow.py prepare-ren
 
 No policy/generation/store options are required. The installed release is independent of CURRENT and the research checkout. Missing files fail closed. New material retrieval accepts only local hybrid H-F2; keyword-only, precap, remote source and nonzero seed overrides are rejected. Repeated retrieve and resume reuse exact issued material evidence. The receipt pins the immutable generation for later views and audits. An incomplete material transaction requires reconciliation; it is never retried as a fresh search automatically.
 
+For releases with the recovery checkpoint, `status --run RUN` also reports the observational H-F2 progress sidecar: stage (including embedding, index preparation, composition audit and delivery audit), query counts, elapsed time, timestamps and PID. It does not prove liveness or an audit pass. The events sidecar records stage timestamps and elapsed time without request or candidate text. A long or stale stage alone is not a reason to terminate it. If a command was interrupted after all search material was durably saved, `resume --run RUN` rechecks the exact frozen inputs, generation, query set, preflight receipt, seed, material and raw score hashes; it then replays the full receipt audit and admits that same material without another search. Repeated recovery reuses the same issued material receipt. A partial search, missing checkpoint, changed binding or historical transaction without a preflight checkpoint remains blocked for reconciliation; do not delete the journal or start a replacement search to bypass it. The progress sidecar and events never authorize recovery or completion.
+
+The recovery release was staged from the installed source through `runtime-overlays/h-f2`, whose `BASE.json` pins its reviewed parents and exact replaced members. Those overlay files are the executable versions used for this release; the similarly named working-source files can be older. Future maintenance must compare against the installed closure and rebase the overlay deliberately when its pinned parent changes, rather than copying old modules into a newer release.
+
+On a fresh checkout, restore the separately archived release identified by `data/tobe-release-lock.json` first. To install this code-only recovery update on that reviewed base, stage the explicitly bound overlay and install the generation ID printed by the stage command:
+
+```bash
+python skills/photo-prompt-image-generator/scripts/stage_photo_h_f2_code.py \
+  --destination /absolute/path/to/staging-store \
+  --generation-id d3a51421392ff1859075222cb422b997c2a2f8f9e2767cd99d1fe48ce3f42f96 \
+  --overlay-root skills/photo-prompt-image-generator/runtime-overlays/h-f2 \
+  --member scripts/photo_h_f2_workflow.py --member scripts/photo_h_f2_receipts.py \
+  --member scripts/photo_workflow.py --member precore/photo_run_files.py
+python skills/photo-prompt-image-generator/scripts/install_photo_h_f2_runtime.py \
+  --source-store /absolute/path/to/staging-store --generation-id PRINTED_GENERATION_ID
+```
+
+The stage operation checks every base member hash and keeps the candidate data unchanged. Its resulting generation is local to that build; installing it changes the local `retrieval-runtime.json`. Keep the Git-tracked release pointer aligned with the separately distributed bundle lock unless a matching new bundle has also been prepared and made available.
+
 H-F2 materials and the directly compiled core validation context remain separate; new runs do not build an empty native pack or use the legacy creative-augmentation sampler. Native whole-source adoption requires its original contract; creative material decisions grant no native authority. Existing bound native runs continue through their original local implementation.
 
 Discovery and adoption have separate contracts. Before selecting a cue, read its

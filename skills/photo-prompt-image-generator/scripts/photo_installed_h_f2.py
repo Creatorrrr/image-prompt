@@ -91,6 +91,23 @@ def option(arguments, name):
     return values[0] if values else None
 
 
+def staged_generation(run, state):
+    """Keep an interrupted, unbound run on its original sealed generation."""
+    if not run or state.get('h_f2_binding') or state.get('phase') != 'slot_intents_authored':
+        return None
+    path = Path(run) / '.staging/h-f2/preflight.json'
+    if not path.is_file():
+        return None
+    preflight = read(path)
+    require(preflight.get('schema') == 'photo-h-f2-preflight/v1'
+            and preflight.get('run_id') == state.get('run_id'), 'staged_preflight_run_mismatch')
+    import re
+    generation = preflight.get('generation_id')
+    require(isinstance(generation, str) and re.fullmatch(r'[0-9a-f]{64}', generation),
+            'staged_preflight_generation_invalid')
+    return generation
+
+
 def _flag(arguments, name):
     count = sum(item == name for item in arguments)
     require(count <= 1, "duplicate option: " + name)
@@ -393,9 +410,11 @@ def dispatch(argv=None, *, skill_root=SKILL_ROOT, workflow_entrypoint=None):
         if bool(explicit_store) != bool(explicit_id):
             raise ValueError("supply both generation and store, or omit both for the installed default")
         store = Path(explicit_store or (bound or {}).get("store") or default_store())
-        generation_id = explicit_id or (bound or {}).get("generation_id") or config["generation_id"]
+        staged_id = (staged_generation(run, state)
+                     if arguments and arguments[0] in {"retrieve", "resume"} and not explicit_id else None)
+        generation_id = explicit_id or (bound or {}).get("generation_id") or staged_id or config["generation_id"]
         native, manifest, native_manifest = release(store, generation_id)
-        if not bound and not explicit_id:
+        if not bound and not explicit_id and not staged_id:
             require(manifest["native_generation_id"] == config["native_generation_id"]
                     and digest(native_manifest["source"]["code"]) == config["code_sha256"], "installed release binding changed")
         if arguments and arguments[0] in {"retrieve", "resume"}:

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+from datetime import datetime, timezone
 import fcntl
 import hashlib
 import json
@@ -149,6 +150,49 @@ def verify_freeze(state):
     return envelope, core, controls
 
 
+def _retrieval_progress(state):
+    """Read bounded, observational progress; never treat it as audit evidence."""
+    raw = state.get("artifacts", {}).get("request_raw", {}).get("path")
+    if not isinstance(raw, str):
+        return {"state": "unavailable"}
+    request = Path(raw)
+    if not request.is_absolute() or request.name != "request_raw.json" or request.parent.parent.name != "revisions":
+        return {"state": "unavailable"}
+    path = request.parent.parent.parent / ".staging" / "h-f2" / "progress.json"
+    try:
+        with path.open("rb") as handle:
+            data = handle.read(4097)
+        if len(data) > 4096:
+            raise ValueError("progress too large")
+        progress = json.loads(data)
+        expected = {"schema", "stage", "start_at", "updated_at", "completed_queries", "total_queries", "pid", "status"}
+        if not isinstance(progress, dict) or set(progress) != expected:
+            raise ValueError("invalid progress shape")
+        if (progress["schema"] != "photo-h-f2-progress/v1"
+                or progress["stage"] not in {"initializing", "embedding", "indexing", "searching", "material_saved", "receipt_audit", "committing", "complete", "composition_audit", "composition_audited", "delivery_audit", "delivery_complete", "failed"}
+                or progress["status"] not in {"running", "complete", "failed"}
+                or type(progress["pid"]) is not int or progress["pid"] <= 0
+                or type(progress["completed_queries"]) is not int or progress["completed_queries"] < 0
+                or type(progress["total_queries"]) is not int or progress["total_queries"] < progress["completed_queries"]):
+            raise ValueError("invalid progress value")
+        start = datetime.fromisoformat(progress["start_at"].replace("Z", "+00:00"))
+        updated = datetime.fromisoformat(progress["updated_at"].replace("Z", "+00:00"))
+        if start.tzinfo is None or updated.tzinfo is None or updated < start:
+            raise ValueError("invalid progress timestamp")
+        age = (datetime.now(timezone.utc) - updated.astimezone(timezone.utc)).total_seconds()
+        if age < -60:
+            raise ValueError("future progress timestamp")
+        # An old heartbeat does not prove the process has stopped or failed.
+        ended = datetime.now(timezone.utc) if progress["status"] == "running" else updated
+        return {"state": "stale" if progress["status"] == "running" and age > 120 else "observed",
+                "heartbeat_age_seconds": max(0, int(age)),
+                "elapsed_seconds": max(0, int((ended - start).total_seconds())), **progress}
+    except FileNotFoundError:
+        return {"state": "unavailable"}
+    except (OSError, UnicodeError, ValueError, TypeError, AttributeError, OverflowError, RecursionError):
+        return {"state": "invalid"}
+
+
 def status(state):
     # No candidate import, parsing of packs, or filesystem traversal.
     stale = []
@@ -170,4 +214,5 @@ def status(state):
                   for row in state.get("operations", [])]
     return {"schema_version": VERSION, "run_id": state["run_id"], "mode": state["mode"],
             "phase": "stale" if stale else state["phase"], "stale_roles": stale, "operations": operations,
-            "technical_qualification": state.get("technical_qualification"), "user_judgment": state.get("user_judgment")}
+            "technical_qualification": state.get("technical_qualification"), "user_judgment": state.get("user_judgment"),
+            "progress": _retrieval_progress(state)}

@@ -5,9 +5,16 @@ pack. Its source-bound sampled materials are reviewed through the candidate
 comparison procedure below and `h_f2_material_decisions`; do not add
 `creative_augmentation_brief` or put material IDs into native chosen lists.
 The validation context carries the existing core/controls/meaning/embodiment
-contracts. Historical native V10 fields described below apply only to native
-packs; old frozen records are never rewritten. See [installed H-F2](installed-h-f2.md)
-for the per-query creativity windows, limits and recorded sampling seed.
+contracts. It can also contain `creative_direction` and `viewer_experience`:
+when either is enabled, its existing conditional composition contract remains
+binding, including the distinct creative-direction proposal fields. Follow
+[creative direction](creative-direction-contract.md) and
+[viewer experience](viewer-experience-contract.md) when those blocks are active.
+These requirements are separate from the candidate-informed comparison below,
+which adds no proposal quota. Other historical native V10 candidate-inventory
+fields below apply only to native packs; old frozen records are never rewritten.
+See [installed H-F2](installed-h-f2.md) for the per-query creativity windows,
+limits and recorded sampling seed.
 
 For `adult_appeal.contextual_retrieval`, add the short conditional review and
 baseline/alternative comparison inside `adult_appeal_brief` as described in

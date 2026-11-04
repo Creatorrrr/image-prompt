@@ -33,6 +33,23 @@ def stage(destination, *, source_store=None, generation_id=None, skill_root=SKIL
     selected = list(members) if members is not None else ['scripts/' + n for n in MODULES]
     require(bool(selected) and len(set(selected)) == len(selected), 'nonempty distinct code member allowlist required')
     source_root = Path(overlay_root or skill_root).resolve()
+    # A review overlay may target an exact installed parent. Refuse to copy a
+    # full replacement module over a later release with unrelated changes.
+    overlay_binding = source_root / 'BASE.json'
+    if overlay_root is not None and overlay_binding.is_file():
+        base = read(overlay_binding)
+        if base.get('schema') == 'photo-h-f2-code-overlay/v1':
+            members_for_parent = base.get('members') if base.get('generation_id') == generation_id else None
+        elif base.get('schema') == 'photo-h-f2-code-overlay/v2':
+            parents = base.get('parents')
+            members_for_parent = parents.get(generation_id) if isinstance(parents, dict) else None
+        else:
+            members_for_parent = None
+        require(isinstance(members_for_parent, dict) and set(members_for_parent) == set(selected),
+                'overlay parent or member set changed')
+        for relative, expected_sha in members_for_parent.items():
+            require(native_manifest['members'].get(relative, {}).get('sha256') == expected_sha,
+                    'overlay parent member changed: ' + relative)
     for relative in selected:
         path = Path(relative)
         require(not path.is_absolute() and len(path.parts) == 2 and path.parts[0] in ('scripts','precore')
@@ -86,7 +103,19 @@ print(json.dumps({'code':r.LOADED_CODE,'environment':r.LOADED_ENVIRONMENT,
 
         h_manifest = copy.deepcopy(manifest)
         h_manifest['native_generation_id'] = native_id
-        h_manifest['code'] = {p.name: file_sha(p) for p in sorted((target / 'scripts').glob('photo_h_f2*.py'))}
+        # H-F2's loaded code binding is the full native closure, including
+        # non-H-F2 helpers and precore data. A glob of photo_h_f2*.py passes
+        # the outer seal check but fails at Generation() on multiview releases.
+        closure_files = {name: row['sha256'] for name, row in updated['members'].items()
+                         if (name.startswith('scripts/') and name.endswith('.py')) or name.startswith('precore/')}
+        closure = {'schema': 'photo-multiview-runtime-code-closure/v1', 'native_code_generation': native_id,
+                   'native_search_generation': None, 'files': closure_files, 'overlays': {},
+                   'native_approval': False, 'runtime_activation': 'unchanged'}
+        code = {Path(name).name: sha for name, sha in closure_files.items()}
+        require(len(code) == len(closure_files), 'ambiguous code closure module names')
+        h_manifest['code'] = code
+        if 'runtime_code_closure_sha256' in h_manifest:
+            h_manifest['runtime_code_closure_sha256'] = digest(closure)
         h_id = digest(h_manifest)
         h_staged = Path(temporary) / 'h-f2'
         h_staged.mkdir()
