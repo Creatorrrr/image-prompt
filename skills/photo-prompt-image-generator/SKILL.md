@@ -9,12 +9,30 @@ Understand the requester, resolve the current creative controls, then make the m
 
 Canonical skill path: `skills/photo-prompt-image-generator`.
 
-When the compact H-F2 release is installed, the material view is a single presentation:
+For a run still bound to the compact H-F2 v2 release, each result contains
+`candidate_id`, a selected source `meaning`, the source `conditions` and an
+`application_contract` when present; that older meaning may omit other source
+propositions. Preserve its issued release and do not claim complete coverage.
+
+When the complete-meaning H-F2 release is installed, the material view is a single presentation:
 each result contains `candidate_id`, source-grounded `meaning`, the complete source
 `conditions`, and, when present, the exact source `application_contract`. It does
 not display source `effects`. Reviewed research identifiers may use display-only
 aliases; projected relationship expressions are marked and are not literal
-source quotations or native selectors. Do not perform a second source lookup to expand these results.
+source quotations or native selectors. The meaning includes distinct selected-RID primary
+definitions, visual components and relationship endpoints, with structural
+labels; it preserves original languages and does not promote search-only
+paraphrases or keywords into mandatory scene facts. Relevant source research
+components and relations appear explicitly marked as optional research metadata,
+not as native qualification, source-owner permission or required visual duties.
+A selected realization is
+kept separate from sibling alternatives. Exact duplicate plain text can be
+collapsed; differing source wording is not paraphrased or judged equivalent.
+Do not perform a second source lookup to expand these results. If a material
+view may exceed the tool's output limit, save its exact output to a run-local
+file and read that same file in bounded chunks; a truncated tool response is
+not complete review. Use the existing material pages for additional returned
+sources when needed; paging reads the issued evidence and performs no search.
 Review the displayed text against the requester intent; do not claim to have
 reviewed undisplayed properties, effects or the complete source. This compact
 presentation overrides instructions below or in post-core references to read a
