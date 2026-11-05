@@ -10,9 +10,11 @@ Understand the requester, resolve the current creative controls, then make the m
 Canonical skill path: `skills/photo-prompt-image-generator`.
 
 When the compact H-F2 release is installed, the material view is a single presentation:
-each result contains `candidate_id`, exact source `meaning`, the complete source
+each result contains `candidate_id`, source-grounded `meaning`, the complete source
 `conditions`, and, when present, the exact source `application_contract`. It does
-not display source `effects`. Do not perform a second source lookup to expand these results.
+not display source `effects`. Reviewed research identifiers may use display-only
+aliases; projected relationship expressions are marked and are not literal
+source quotations or native selectors. Do not perform a second source lookup to expand these results.
 Review the displayed text against the requester intent; do not claim to have
 reviewed undisplayed properties, effects or the complete source. This compact
 presentation overrides instructions below or in post-core references to read a
