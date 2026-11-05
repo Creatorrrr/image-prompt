@@ -258,6 +258,11 @@ and original pixels remain separate evidence layers.
 
 The [campus-life extension](campus-life-semantics.md) registers 100 complete optional bilingual visual sources and 23 excluded diagnostics, with 124 semantic cards, 356 advisory routes and 220 bindings. Requester topic scope, agent-owned staging, complete source conditions and saved-pixel qualification remain separate.
 
+The [court and palace extension](court-palace-semantics.md) preserves optional
+bilingual visual sources and separates historical holds from positive material.
+Costume components, supports and physical contacts retain their distinct owners;
+source research, search exposure and generated-image observations are separate.
+
 
 The [investigative-fiction extension](investigative-fiction-visual-semantics.md)
 retains 339 advisory routes, adds 66 complete optional bilingual visual sources,

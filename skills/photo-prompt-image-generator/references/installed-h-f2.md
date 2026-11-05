@@ -360,3 +360,14 @@ The [ReactorPrompt pose/composition data](reactorprompt-pose-composition.md) ret
 source-grounded expression routes and sealed exact-expression lookup. The
 [authored relational supplement](relational-gap-supplement.md) keeps manual
 provenance separate from the collected source corpus.
+
+The [investigative-fiction extension](investigative-fiction-visual-semantics.md)
+provides optional bilingual visual sources and excluded diagnostic records.
+People, evidence objects and represented images retain distinct owners and
+endpoints. Search exposure does not itself qualify or approve a source.
+
+The [music and band extension](music-band-semantics.md) provides optional visual
+sources and separate context and research diagnostics. Hands, instruments,
+supports and cable endpoints retain their owners and visible relationships.
+Source registration, search exposure, prompt use and image results remain
+separate evidence stages.
