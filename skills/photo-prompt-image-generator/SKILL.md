@@ -9,6 +9,19 @@ Understand the requester, resolve the current creative controls, then make the m
 
 Canonical skill path: `skills/photo-prompt-image-generator`.
 
+When the compact H-F2 release is installed, the material view is a single presentation:
+each result contains `candidate_id`, exact source `meaning`, the complete source
+`conditions`, and, when present, the exact source `application_contract`. It does
+not display source `effects`. Do not perform a second source lookup to expand these results.
+Review the displayed text against the requester intent; do not claim to have
+reviewed undisplayed properties, effects or the complete source. This compact
+presentation overrides instructions below or in post-core references to read a
+full H-F2 source during composition. It does not itself approve a candidate, and
+the frozen requester contract and existing mechanical audits remain in force.
+In `h_f2_material_decisions`, author `slot`, `candidate_id`, `use`, and
+`rationale`; the managed audit supplies and verifies the issued realization ID
+and source hash. Existing fully populated decision rows remain valid.
+
 User instructions and existing session authorization take precedence over this skill's procedural defaults, subject to system, developer, and image-tool requirements. Continue work already authorized; do not ask the user to approve the same action or API cost again. Ask only when a required decision or authorization is actually missing.
 
 If a skill instruction causes a pause or a departure from the user's request, name and link this skill, quote the relevant instruction, and explain whether it is a requirement or your interpretation. Treat required bindings and audits as correctness checks; artistic guidance leaves room for judgment. Deliver the requested prompt or image with concise context, keeping internal schemas and checklists in the run artifacts unless requested.
