@@ -1,5 +1,11 @@
 # Shared candidate and lazy search maintenance
 
+The [nun-habit extension](nun-habit-semantics-20261106.md) separates
+observable religious clothing, accessories and poses from community-specific
+context and fictional reinterpretations. Its bilingual cards, optional
+candidates, diagnostics and source-grounded retrieval views do not by
+themselves establish native qualification or saved-image compliance.
+
 The [Lovecraftian horror extension](lovecraftian-horror-semantics.md) retains
 57 complete bilingual visual alternatives, 27 diagnostic/context records and
 185 advisory keyword routes. It distinguishes original objects and later

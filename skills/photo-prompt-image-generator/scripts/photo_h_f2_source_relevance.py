@@ -559,7 +559,30 @@ def compile_profiles(documents, *, source_units, source_effects):
             witness = _single_property_source_witness(kind, units, effects)
             if witness:
                 single_property[kind] = {**witness, 'selected_rid_identity': identity}
+        # A selected primary phrase and an effect on the anatomical scapular
+        # region must agree. A garment's "back panel" is not body anatomy.
+        anatomy_properties = [p for p in properties if isinstance(p, dict)
+            and p.get('dimension') == 'body_geometry'
+            and re.search(r'(?:^|\.)scapular(?:_|\.|$)|shoulder_blade|견갑골', str(p.get('property', '')), re.I)]
+        anatomy_units = [u for u in units if re.search(r'\bscapul(?:a|ae|ar)\b|\bshoulder blades?\b|견갑골', u['text'], re.I)]
+        anatomy_witness = None
+        if anatomy_properties and anatomy_units:
+            u = anatomy_units[0]
+            anatomy_witness = {'pointer': u['pointer'], 'literal_id': u.get('literal_id'),
+                'source_sha256': u.get('source_sha256'), 'quote': u['text'],
+                'effect_properties': anatomy_properties}
+        garment_witness = None
+        if isinstance(effects, dict) and 'appearance' in effects.get('dimensions', []) and not anatomy_witness:
+            for u in units:
+                if (re.search(r'\bscapular\b|스카풀라', u['text'], re.I)
+                        and re.search(r'\b(?:nun[- ]habit|monastic|tunic|garment|robe|apron|wearer)\b|수도복|의복|착용자', u['text'], re.I)):
+                    garment_witness = {'pointer': u['pointer'], 'literal_id': u.get('literal_id'),
+                        'source_sha256': u.get('source_sha256'), 'quote': u['text'],
+                        'effect_dimension': 'appearance'}
+                    break
         profile = {'relations': by_rule, 'attributes': attributes, 'single_property': single_property,
+                   'scapular_anatomy_witness': anatomy_witness,
+                   'scapular_garment_witness': garment_witness,
                    'primary_metadata': {unit['pointer']: {'literal_id': unit.get('literal_id'),
                        'source_sha256': unit.get('source_sha256')} for unit in units}}
         profile['property_answers'] = _property_answers.compile_property_answers(units, profile, effects)
@@ -1392,6 +1415,44 @@ def order_source_relevance(rows, text, profiles, *, structured=False,
             item['supported_features']=features
         updated.append(item)
     trace['top8_source_witnesses']=updated
+    # Disambiguate only explicit, positive anatomy requests. Mixed garments,
+    # alternatives, exclusions and quoted terms retain the prior order.
+    anatomical = (re.search(r'\bscapul(?:a|ae|ar)\b|\bshoulder blades?\b|견갑골', text, re.I)
+        and re.search(r'\banatom(?:y|ical)\b|\bshoulder blades?\b|\bbone\b|\bskeletal\b|해부|견갑골|뼈', text, re.I)
+        and not re.search(r'\b(?:habit|veil|robe|tunic|monastic|nun|sister|garment|clothing|apron|wears?|wearing|worn)\b|수녀|수도자|수도복|복장|의복|스카풀라|베일', text, re.I)
+        and not _NEGATIVE.search(text) and not re.search(r'\bno\b', text, re.I) and not _ALTERNATIVE.search(text)
+        and not re.search(r'["“”‘’]', text))
+    if anatomical:
+        before_anatomy = final
+        matches = {row['id']: profiles.get(row['id'], {}).get('scapular_anatomy_witness')
+                   for row in final if profiles.get(row['id'], {}).get('scapular_anatomy_witness')}
+        garments = {row['id']: profiles.get(row['id'], {}).get('scapular_garment_witness')
+                    for row in final if profiles.get(row['id'], {}).get('scapular_garment_witness')}
+        # Only reorder once a direct anatomical witness exists. Preserve the
+        # whole pool and stable order inside the three evidence partitions.
+        if matches:
+            final = ([row for row in final if row['id'] in matches]
+                + [row for row in final if row['id'] not in matches and row['id'] not in garments]
+                + [row for row in final if row['id'] in garments and row['id'] not in matches])
+        trace['scapular_anatomy_lane'] = {
+            'schema': 'photo-h-f2-scapular-anatomy/v1',
+            'policy': 'stable-direct-primary-and-body-geometry-effect',
+            'query_sha256': hashlib.sha256(text.encode('utf-8')).hexdigest(),
+            'candidate_order_before_sha256': _canonical_order_sha(before_anatomy),
+            'candidate_order_after_sha256': _canonical_order_sha(final),
+            'witness_count': len(matches),
+            'garment_witness_count': len(garments),
+            'top8_witnesses': [{'id': r['id'], 'witness': matches[r['id']]}
+                               for r in final[:8] if r['id'] in matches],
+            'garment_witnesses': [{'id': r['id'], 'witness': garments[r['id']]}
+                                  for r in before_anatomy[:8] if r['id'] in garments],
+            'candidate_filter': False, 'query_rewritten': False,
+            'native_approval': False, 'semantic_approval': False}
+        previous = {item['id']: item for item in trace.get('top8_source_witnesses', [])}
+        trace['top8_source_witnesses'] = [dict(previous.get(row['id'], {}), id=row['id'],
+            cid=row['cid'], rid=row['rid'], rank_before=original_rank[row['id']], rank_after=rank,
+            **({'scapular_anatomy_witness': matches[row['id']]} if row['id'] in matches else {}))
+            for rank, row in enumerate(final[:8], 1) if row['id'] in previous or row['id'] in matches]
     trace['applied'] = [r['id'] for r in rows] != [r['id'] for r in final]
     trace['candidate_order_before_sha256'] = _canonical_order_sha(rows)
     trace['candidate_order_after_sha256'] = _canonical_order_sha(final)

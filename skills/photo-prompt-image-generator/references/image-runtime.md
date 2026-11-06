@@ -28,6 +28,34 @@ Copy a native result into `generated/images/<concept>-<timestamp>/` only when th
 
 If no concrete path exists, finish as preview-only and say no worktree copy or ledger record was created.
 
+### Reconcile an already saved external reference edit
+
+For the `nun-reference-api-attempt/v1` external reference-edit evidence, an
+already-audited run may bind its existing result without another image call:
+
+```sh
+skills/photo-prompt-image-generator/.runtime/embedding-python/bin/python \
+  skills/photo-prompt-image-generator/scripts/photo_external_result.py \
+  --run RUN --started STARTED_JSON --outcome OUTCOME_JSON
+```
+
+The command rechecks the run's bound release and fresh audits, input artifact
+hashes, exact prompt and reference, saved image hash and successful result
+metadata. It records a distinct `external_api` operation and retains both
+evidence files and the prior state. It does not invoke a provider or claim a
+native-tool invocation. The external provider response is self-reported local
+evidence, not independently authenticated proof. An uncertain outcome or an
+existing different operation fails closed. With the exact saved image bound,
+run the normal `review-shape` and `review-audit` and report pixel failures,
+unobservable gates and user judgment separately. Other external evidence
+formats are unsupported until their own contract and validation are added.
+New releases recheck reconciled evidence during `review-audit`. Older runs keep
+their original sealed review code; for those, separately call
+`validate_external_operation(state, operation)` from the maintained
+`photo_workflow_reviews` before interpreting an audit, and record that this
+additional check is outside the historical sealed review. Never rewrite a
+historical receipt to make it look as though its original code performed it.
+
 ## Explicit API Path
 
 When API use is authorized, supply the original pack, its exact private runtime receipt, the composed object and the concrete `photo-image-render-request/v2`:

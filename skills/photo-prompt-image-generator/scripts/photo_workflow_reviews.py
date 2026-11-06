@@ -73,6 +73,29 @@ def input_failures(review, role):
     return failures
 
 
+def validate_external_operation(state, operation):
+    """Do not accept a reconciled result if its retained evidence changed."""
+    from photo_external_result import validate_evidence
+    from photo_workflow import one
+    started_path, outcome_path = bound_path(state, 'external_started'), bound_path(state, 'external_outcome')
+    record = read_json(bound_path(state, 'external_reconciliation'))
+    started_raw, outcome_raw = started_path.read_bytes(), outcome_path.read_bytes()
+    evidence_id = digest(started_raw + b'\0' + outcome_raw)
+    if (record.get('schema') != 'photo-external-result-reconciliation/v1'
+            or record.get('evidence_id') != evidence_id or operation.get('external_evidence_id') != evidence_id
+            or record.get('started_sha256') != digest(started_raw) or record.get('outcome_sha256') != digest(outcome_raw)
+            or operation.get('status') != 'complete'
+            or record.get('provenance') != 'self_reported_external_api_evidence_not_provider_authenticated'):
+        raise WorkflowError('external_result_evidence_mismatch')
+    try:
+        result = validate_evidence(state, value(state, 'render_request'), one(value(state, 'composed')),
+                                   read_json(started_path), read_json(outcome_path))
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        raise WorkflowError('external_result_evidence_mismatch') from error
+    if result != operation.get('result_binding') or result != record.get('result_binding'):
+        raise WorkflowError('external_result_evidence_mismatch')
+
+
 def review_shape(args):
     from photo_workflow import ensure, one
     baseline = getattr(args, "baseline_available", None)
@@ -138,8 +161,13 @@ def review_audit(args):
             path = Path(raw_path) if isinstance(raw_path, str) else None
             if path is None: raise WorkflowError("concrete_review_image_required")
             path = path if path.is_absolute() else bound_path(pending, role).parent / path
-            if not any(op.get("result_binding") == {"path": str(path.resolve()), "sha256": expected_sha} for op in state["operations"]):
+            matches = [op for op in state["operations"] if op.get("result_binding") == {"path": str(path.resolve()), "sha256": expected_sha}]
+            if not matches:
                 raise WorkflowError("review_result_not_bound_to_observed_attempt")
+            if len(matches) != 1:
+                raise WorkflowError("ambiguous_review_result_binding")
+            if matches[0].get('lane') == 'external_api':
+                validate_external_operation(state, matches[0])
         contracts = audit_bound(pending, runtime=True, reviews=True)
         if contracts["composed_audit"]["status"] != "pass" or contracts["runtime_audit"]["status"] != "pass":
             raise WorkflowError("review_requires_audited_inputs")
