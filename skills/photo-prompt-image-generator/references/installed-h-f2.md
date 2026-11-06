@@ -30,7 +30,7 @@ When fewer compatible sources exist, return only those sources without padding.
 Current goals store `candidates`; historical goals retain `top8`. Every returned
 query/CID/RID occurrence still needs its source-bound material decision. Compare
 candidate-informed alternatives with the frozen baseline; adoption is optional.
-Use the bound creativity level for [candidate-informed reconstruction](composition-contract.md#creativity-and-reconstruction), from necessary changes at 0 to active whole-photograph alternatives at 3. This authoring guidance does not change the sampling windows, return limits, source conditions or receipt replay above, and does not reactivate the historical creative-augmentation sampler.
+Use the bound creativity level for [candidate-informed reconstruction and creative re-creation](composition-contract.md#creativity-and-reconstruction), from necessary changes at 0 to whole-photograph alternatives and distinct organizing concepts at 3 where compatible material and open scope allow. This authoring guidance does not change the sampling windows, return limits, source conditions or receipt replay above, and does not reactivate the historical creative-augmentation sampler.
 `pack`/`pack_id` remain transport names for historical CLI compatibility, but the
 new artifact is a validation context with no native candidate inventory or
 creative-guide payload. Image records identify this format as `h-f2-v2`.
