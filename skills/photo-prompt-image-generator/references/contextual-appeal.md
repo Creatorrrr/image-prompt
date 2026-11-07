@@ -10,8 +10,9 @@ binding, including garment type, color and condition when specified.
 
 The two axes are independent, overlapping readings of a whole portrayal. Use
 the frozen definitions: `sensual` concerns broadly interpreted human attraction
-and desire; `fetish` concerns a distinctive focus across objects, bodies,
-clothing, materials, roles, situations, behaviors and sensory qualities. Neither
+and desire; `fetish` concerns distinctive sexual attraction or arousal associated
+with particular objects, bodily features, clothing, materials, roles, situations,
+behaviors and sensory qualities. Neither
 is limited to a fashion genre. An ordinary object, garment or behavior has no
 intrinsic axis flag. Consider its use and visible relationships in this scene.
 One choice may express both controls, including when both lead at level three.
