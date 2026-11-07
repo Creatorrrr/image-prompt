@@ -37,3 +37,23 @@
 - C 고딕 병동: `generated/photo-runs/nurse-supplement-20261107-c/nurse-gothic.png`, pixel `generated/nurse-supplement-prep-20261107-c/pixel-observation.md`, review `generated/nurse-supplement-prep-20261107-c/visual-review.json`. 초기 45개에 속한 N29 / `cand_9704d53ab6ea5c8fb6c7659fcfb4a63f`의 캡·어깨 뒤쪽 윤곽광을 일반 영감으로 적용했다. 어깨 윤곽광은 보이나 캡의 뒤쪽 광원 관계는 불명확하다. 리뷰 기록은 유효하나 랜턴과 손가락 접촉·가시성 두 게이트의 부분 관찰로 기술 판정은 실패다. 지지·균형 pass는 보이는 상체 범위에만 적용했고 발과 발-바닥 접촉은 관찰되지 않았다.
 
 A와 B의 recorder_failed는 반환된 동일 결과를 재호출 없이 복구해 operation complete가 됐다. 결과가 눈에 보인다는 사실은 완전한 후보 native 승인, 객관적 품질 개선, 또는 기여의 인과 증명이 아니다. 비교 baseline 이미지를 생성하지 않았고, 반복·블라인드 평가도 하지 않았다.
+
+## 2026-11-07 후속 362행 조사
+
+기존 부분 355행과 보류 7행을 모두 세 구간으로 나누어 원문과 이전 후보 근거 및 한계를 재추적했다. 82행에 직접적인 추가 외부 출처를 연결했으며 나머지 행의 외부 출처 검증은 여전히 미완료다. 각 파일은 `assets/photo_nurse_uniform_deep_review_{a,b,c}_20261107.json`, 연구 맥락은 `assets/photo_nurse_uniform_deep_context_views_20261107.json`에 있다. 둘은 양성 검색 결과나 native 선택 권한이 아니다.
+
+일본 간호화의 구체적 상품 유형은 [제조사 카탈로그](https://www.fg-nurse.co.jp/fgdata/wp-content/uploads/2023/12/fujigom-nurse-catalog-2024.pdf), 1911년 VAD는 [영국 적십자 자료](https://vad.redcross.org.uk/medical-care-during-ww1/nursing-during-the-first-world-war), 1905년 지역간호 사진은 [Victorian Collections 설명](https://victoriancollections.net.au/items/5c3ffb3321ea67129c5ff515), 1953년 케이프는 [National Army Museum 소장품](https://collection.nam.ac.uk/detail.php?acc=1996-06-7--1) 범위로 기록했다. 이 사례로 모든 일본 간호화나 모든 시대·국가의 군간호복을 정의하지 않는다. 인물·재질·역사·의료 용도는 그림만 보고 판정하지 않는다.
+
+별도 후보 75개, binding 75개, 양성 검색 뷰 150개를 등록해 대상 73행에 새 부분 사례를 추가하고 대상 밖 진단 행 테디에 전시용 예시 하나를 두었다. 보류 7행 중 6행은 제한된 예를 갖지만 전체 원문 의미가 자동 완결된 것은 아니다. 285행은 가려진 전신 의복 부재와 나이를 확인할 수 없어 보류를 유지한다. 영어 토큰 중복 탐색에서 높은 표면 중복은 나오지 않았지만 전체 코퍼스의 의미 중복 제거를 증명하지 않는다. 자동 테스트 17개 통과, 12개 건너뜀, 4개 하위검사 통과했다. 검색 릴리스 설치와 이미지 시험은 별도로 기록한다.
+
+후속 H-F2 세대 `af54730fa3a9806e1e1c5d4f2aec96f89a800fe7421e82245defe4fec45b2327`, native `ed575a01c0213c1270ed1eaea596620d28e32d1a928f9617295a50015b04ee9f`에 75개 문서와 150개 뷰를 더해 임베딩·전체 봉인·설치를 검증하고 기본 런타임으로 활성화했다. 이전 설정은 `generated/nurse-deep-hf2-20261107/pre-activation-retrieval-runtime.json`에 보존했고 CURRENT를 바꾸지 않았다. 작업 소스 후보 27,971개 및 binding 25,203개의 ID는 staged 소스와 일치했으며, 기존 설치본에만 있던 role_evidence 차이 1건을 보존했다. 개발 질의 6건은 목표가 모두 1위로 검색됐다. 이는 저자가 답을 아는 탐침이며 독립 회귀나 픽셀 적합의 증거는 아니다.
+
+### 362행 보강 후 독립 API 이미지 시험
+
+무작위로 서로 다른 콘셉트를 정하고 사용자 원문과 각 arm 설정을 별도 envelope에 보존했다. 스킬 기본값을 제외하고 각 arm의 sensual, fetish, creativity 중 하나만 3으로 설정했다. 각 run은 독립 baseline 동결 후 세대 `af54730fa3a9806e1e1c5d4f2aec96f89a800fe7421e82245defe4fec45b2327`에서 검색했다. 요청한 모델은 `gpt-image-2.6-sunburst`, 참조는 실제 첨부 JPEG와 일치하는 SHA-256 바이트다. 관능/페티시 arm은 나이를 확인할 수 없는 원본 인물의 외모를 성적 변형하지 않기 위해 참조의 빛·색만 사용하고 별도의 성인 인물로 설정했다. API 성공 응답에 관찰된 모델명을 기록할 수 없었으며 로컬 외부 결과 연결은 self-reported 근거다.
+
+- sensual=3, 다른 설정 기본값(페티시 0·창의성 1): 구성 및 참조 전송 감사와 dry-run은 통과했지만 API 1회가 `moderation_blocked` HTTP 400으로 거부되어 이미지·픽셀 검토 없음. 프롬프트를 바꾸거나 재호출하지 않았다. `generated/photo-runs/nurse-deep-20261107-sensual/test-report.json`, 오류 `generated/nurse-deep-research-20261107/api-results/97840a10ca8140e5ab4e5ff31808cf63/outcome.json`.
+- fetish=3, 다른 설정 기본값(관능 1·창의성 1): `generated/nurse-deep-research-20261107/api-results/bf8fde0f24034815a9ba4c9f89e0323b/result.png` 1회 생성. 새 deep 후보 `cand_241362295c715dee8d938e53d7a6b1fa`에서 선택적 일반 영감으로 가져온 낮은 대비의 의복 주름 음영은 보이나, 전체 밝은 배경 관계는 관찰되지 않았고 native 전체 후보 채택은 0이다. 전체 인상은 단정한 제복 화보로 강도 3이 주도한다고 보기 어렵다. 리뷰 기록은 유효하지만 발 지지 및 일부 팔 경로가 프레임 밖이라 기술 적합성은 fail이다. `generated/photo-runs/nurse-deep-20261107-fetish/pixel-review-observed.md` 및 `review-audit-result.json`.
+- creativity=3, 다른 설정 기본값: `generated/nurse-deep-research-20261107/api-results/4ec08e98a4fa43d98d890f02a6af3a3e/result.png` 1회 생성. 독립 baseline과 다른 전경 유리·커튼 동작의 전체 재구성을 작성했다. 새 후보 A-DEEP-014 `cand_f4704f6031b4578e9c84dfd446a23a3a`에서 영감을 받은 접힌 칼라는 보이지만 전체 source/native 채택은 0이다. 리뷰 기록은 유효하고 발과 바닥 접촉이 프레임 밖이어서 기술 적합성은 fail이다. `generated/photo-runs/nurse-deep-20261107-creativity/pixel-observation.md`, `visual-review.json`, `review-audit-output.json`.
+
+후보의 검색·부분 영감·픽셀 관찰과 전체 source/native 적용은 다르다. 세 실행 모두 원본 대조 이미지를 생성하지 않아 인과적 개선 및 사용자 선호는 판단하지 않았다.
