@@ -1,0 +1,34 @@
+from pathlib import Path
+import hashlib,json,sys,uuid
+R=Path('/Users/chasoik/Projects/image-prompt'); A=R/'skills/photo-prompt-image-generator/assets'; O=Path(__file__).parent
+config=json.loads((R/'skills/photo-prompt-image-generator/retrieval-runtime.json').read_text()); N=Path.home()/'.cache/image-prompt/photo-shared-runtime/h-f2-installed/generations'/config['native_generation_id']; sys.path.insert(0,str(N/'scripts'));import photo_candidate_retrieval_views as rv
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+base=A/'photo_cosplay_semantics_20261106.json'; registry=json.loads(base.read_text()); inventory={r['id']:r for r in registry['source_term_inventory']['rows']}
+terms='T4-012 T4-024 T5-012 T5-015 T5-016 T5-018 T7-2-002 T8-1-006 T8-1-007 T8-1-011 T8-2-003 T8-2-010 T8-2-012 T8-2-013 T9-003 T9-008 T9-004 T9-010 T9-018 T10-003 T10-006 T10-009 T10-010 T10-011 T10-014 T11-1-009 T11-2-005 T11-2-006 T11-2-011 T11-2-014 T2-014 T2-014 T9-002 T2-025 T12-009 T2-001 T2-002 T1-019 T13-2-004 T13-2-005 T13-2-007 T13-2-010 T13-1-012 T13-1-013 T13-1-015 T13-3-006 T13-3-007 T14-007 T14-010 T7-2-001 T6-001 T6-005 T5-006 T6-013 T8-1-008 T15-005 T15-011 T15-008 T15-010 T15-018'.split(); assert len(terms)==60
+ns=uuid.UUID('d7c905b6-50aa-44c3-b0fb-d054c5ffefc0'); ident=lambda prefix,s:prefix+uuid.uuid5(ns,s).hex
+rows=[line.split('\t') for line in (O/'supplement-visual.tsv').read_text().splitlines() if line.strip()]; assert len(rows)==60 and all(len(x)==6 for x in rows)
+contract='Apply only as a complete optional visual realization to independently identified owners and permitted changes. Preserve each stated owner, object, garment, count, contact and spatial relation. No age, identity, intent, consent, material composition, cause or event history follows solely from appearance. Research metadata and search views grant no native qualification or effect permission. Hidden required parts are unobservable, not a pass.'
+candidates={};bindings={};cards=[]
+for i,(code,name,alias,slot,en,ko) in enumerate(rows):
+ term='COS-'+terms[i]; assert term in inventory
+ if code in ('X038','X050'):continue
+ if code=='X048':en='Both eyes are opened widely and the eyebrows are raised high.';ko='양쪽 눈을 크게 뜨고 눈썹을 높이 올린다.'
+ cid=ident('cand_',code); dims={'contact_point':['appearance','pose','action','relationship','count'],'body_pose':['pose','relationship'],'hand_pose':['pose','relationship'],'expression':['expression'],'object_structure':['appearance'],'lighting':['lighting'],'camera_height':['camera'],'camera_direction':['camera'],'camera_distance':['camera']}.get(slot,['appearance'])
+ card={'id':code,'name_ko':name,'candidate_id':cid,'source_term_id':term,'source_term_label':inventory[term]['source_term_label'],'positive_en':en,'positive_ko':ko,'suggested_slot':slot,'source_evidence_scope':'Term and context in the referenced conversation are secondary-source evidence. This authored optional image is one possible realization, not an exhaustive definition or an assertion of material, identity, source version, intention, or cause.','observable_gate':en+' All stated parts and endpoints must be visible; hidden parts are unobservable.','native_approval':False,'pixel_status':'NOT_RUN'}
+ rec={'id':cid,'record_kind':'visual_option','content':{'en':en,'ko':ko,'definition':'Complete optional cosplay visual realization: '+en,'aliases':[name,alias],'application_contract':contract,'research_semantics':card},'conditions':{},'effects':{'dimensions':dims,'properties':[]},'provenance':[{'source':'authored-research:photo-prompt/cosplay-20261107/'+code,'sha256':registry['source_term_inventory']['source_snapshot_sha256']}]};candidates[cid]=rec
+ bid=ident('bind_',code+':'+slot);bindings[bid]={'id':bid,'candidate_id':cid,'slot_id':slot,'role':'optional','semantic_role':'direct','conditions':{'subject_applicability':{}},'weight':1.0};cards.append(card)
+ inventory[term].setdefault('supplement_example_ids',[]).append(code);inventory[term].setdefault('supplement_candidate_ids',[]).append(cid)
+inventory['COS-T7-2-001']['reuse_evidence']={'candidate_id':'cand_9755b4cff6fb5828bc7764254b376294','scope':'one-eye fringe realization; subject applicability in existing binding must still be respected; not a full definition of fringe'}
+registry['source_term_inventory']['supplement_note']='A term reference points to an optional example, not a claim of complete coverage, semantic deduplication, or full comparison.'
+def save(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+cf=A/'photo_candidate_cosplay_supplement_20261107.json'; bf=A/'photo_candidate_cosplay_supplement_bindings_20261107.json'; vf=A/'photo_candidate_retrieval_views_cosplay_supplement_20261107.json'; sf=A/'photo_cosplay_semantics_supplement_20261107.json'
+assert not any(p.exists() for p in (cf,bf,vf,sf));save(cf,{'schema':'photo-candidate-module/v3','candidates':candidates});save(bf,{'schema':'photo-candidate-slot-bindings/v3','slot_bindings':bindings});save(sf,{'schema':'photo-cosplay-semantic-registry/v1','cards':cards,'excluded':[{'id':'X038','reason':'source-version assertion is not reliably observable in a standalone picture'},{'id':'X050','reason':'similar existing candidate reused under its subject conditions','candidate_id':'cand_9755b4cff6fb5828bc7764254b376294'}],'native_approval':False,'pixel_qualification':'NOT_RUN','coverage_note':'Authored optional examples, not term-level exhaustive semantic comparison.'});save(base,registry)
+views=[]
+for cid,rec in sorted(candidates.items()):
+ en=rec['content']['en'];ko=rec['content']['ko'];rh=rv.digest(rec)
+ for kind in ['whole','context']:
+  key=cid+':base:'+kind;ctx=kind=='context';prefix='Complete optional cosplay visual realization: '
+  views.append({'id':rv.view_id(cid,'base',key),'candidate_id':cid,'realization_id':'base','key':key,'kind':kind,'source_record_sha256':rh,'text_en':('Cosplay visual option: ' if ctx else '')+en,'text_ko':('코스프레 시각 선택지: ' if ctx else '')+ko,'source_quotes':([{'pointer':'/content/definition','quote':prefix}] if ctx else [])+[{'pointer':'/content/en','quote':en},{'pointer':'/content/ko','quote':ko}],'context_ko':'원본에서 명시한 코스프레 맥락과 한영 명제만 보존한다.' if ctx else '원본 한영 전체 문장을 보존한다.','difference_ko':'코스프레 맥락의 전체 명제' if ctx else '한영 전체 의미 뷰','native_approval':False})
+module={'schema':rv.SCHEMA,'recipe':rv.RECIPE,'source_inventory_id':'cosplay-20261107-supplement','coverage':{'positive_realizations':len(candidates),'diagnostics_excluded':0,'source_module_sha256':sha(cf),'context_views':len(candidates)},'native_approval':False,'views':views};rv.validate(module,candidates);save(vf,module)
+mf=A/'photo_candidate_corpus_manifest.json';m=json.loads(mf.read_text());assert not any(x['file'] in (cf.name,bf.name) for x in m['modules']);m['modules'] += [{'file':cf.name,'kind':'candidates'},{'file':bf.name,'kind':'slot_bindings'}];save(mf,m)
+print(json.dumps({'positive':len(candidates),'bindings':len(bindings),'views':len(views)}))

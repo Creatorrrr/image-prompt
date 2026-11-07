@@ -11,7 +11,16 @@ from photo_workflow_state import WorkflowError, atomic_write, bound_path, digest
 # only fields actually returned by that tool; absent a concrete file, it returns
 # preview_only. No cache probing, download, or paid fallback is performed.
 BRIDGE_JAVASCRIPT = r'''
-async function runPhotoNative({tools, run, workflowScript, python, ledger, observe}) {
+function photoNativeObservation(result) {
+  // The image tool may return a concrete local path in output_hint as part of
+  // an explanatory sentence. Only use a unique absolute image path that is
+  // actually present in that returned field; never infer or search for one.
+  const hint = typeof result?.output_hint === "string" ? result.output_hint : "";
+  const matches = [...hint.matchAll(/(?<![\w:/])\/(?!\/)(?:[^\s"'<>]+\/)*[^\s"'<>]+\.(?:png|jpe?g|webp)\b/gi)].map(m => m[0]);
+  const paths = [...new Set(matches)];
+  return paths.length === 1 ? {outcome: "returned", image_path: paths[0]} : {outcome: "preview_only"};
+}
+async function runPhotoNative({tools, run, workflowScript, python, ledger, observe = photoNativeObservation}) {
   const quote = s => "'" + String(s).replaceAll("'", "'\\''") + "'";
   async function command(argv) {
     let answer = await tools.exec_command({cmd: argv.map(quote).join(" "), max_output_tokens: 8192});

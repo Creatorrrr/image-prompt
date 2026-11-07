@@ -182,7 +182,10 @@ reviews are not rewritten into successful results.
 `native-plan --run RUN` creates an audited exact payload and operation.
 `photo_native_bridge.py source` emits `runPhotoNative`, a small JavaScript
 function to execute in the Codex tools environment with `tools`, `python`,
-`workflowScript`, `run`, `ledger`, and an `observe(result)` callback. It calls
+`workflowScript`, `run`, and `ledger`. Its default observer extracts a unique
+absolute local image path explicitly present in the tool's `output_hint`, even
+when the hint is a sentence. An optional `observe(result)` callback can handle
+another documented return shape under the same evidence boundary. It calls
 `native-started`, then `tools.image_gen__imagegen` once using the returned payload.
 The observer reports only a concrete local path actually returned by the tool,
 or `{outcome: "preview_only"}` when no such file is available. Do not infer a
@@ -196,6 +199,15 @@ or `unknown`), and only applicable `image_path` or
 and never causes an extra API call. Conversation-only reference attachment is
 not reconstructible by this standalone bridge; attach the exact local reference
 and audit it instead. Existing manual native execution remains available.
+
+For an already recorded `preview_only` result with retained self-reported source
+path, image hash, saved image, and contemporaneous observation note, the
+maintenance tool `photo_native_preview_reconcile.py` can append a separate
+`native_reconciled` result after reauditing the frozen inputs and evidence. It
+retains the original operation and observation and makes no new image call. This
+is self-reported recovery evidence, not an authenticated provider receipt. Older
+sealed releases remain immutable; `photo_reconciled_review.py` uses their bound
+input auditor and the maintained evidence-aware review boundary for those runs.
 
 ## Pixel review
 

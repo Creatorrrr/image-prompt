@@ -1,0 +1,1912 @@
+{
+  "schema": "nurse-uniform-coverage-pass3/v1",
+  "scope": {
+    "source_rows": "previously held rows 1–136 only",
+    "source_inventory": "skills/photo-prompt-image-generator/assets/photo_nurse_uniform_semantics_20261107.json",
+    "source_sha256": "04789d9205bf5e33a32aa8257d25ada9c0ed1cb2d252990d98202c614a44f824",
+    "context_views": "skills/photo-prompt-image-generator/assets/photo_nurse_uniform_research_context_views_20261107.json",
+    "context_sha256": "54c9733a151ea34f397a3fc8b1182dc38f3e60eea0827aa160c4a05e7d831842",
+    "prior_review_sha256": "9159170cf86adbd5b5971f49f8a1cac118b163fef97ae053c23b514bb3717db0",
+    "prior_source_sha256": "ab93c5f974bf970955610c7c6b0cd9f061307111d2aadff0cfab68275c6afde2",
+    "source_text_unchanged": true,
+    "reviewed_unique_new_candidates": 13,
+    "reviewed_candidate_records": "generated/nurse-coverage-review-a-pass3-evidence.json",
+    "candidate_search_leads": "generated/nurse-coverage-review-a-pass3-leads.json"
+  },
+  "limits": [
+    "검토한 후보의 partial은 완전한 후보 한 사례가 원문 의미 일부에 대응한다는 뜻이며 후보의 나머지 조건을 잘라내 사용해도 된다는 뜻이 아니다.",
+    "어휘 검색은 제한적이며 내장 인덱스·임베딩 검색을 수행하지 않았다. 결과 부재는 기존 후보 부재가 아니다.",
+    "후속 구상은 원문에 기반한 미검증 제안으로, 실제 신규 후보 등록·승인·이미지 검증을 뜻하지 않는다.",
+    "출처 조사 대화와 역사적 사실은 이번 작업에서 독립 검증하지 않았다."
+  ],
+  "summary": {
+    "hold": 45,
+    "context_only": 2,
+    "partial": 7
+  },
+  "rows": [
+    {
+      "row_id": "NURSE-ROW-009",
+      "source_row_number_1based": 9,
+      "source_term_label": "스크럽 드레스 — Scrub dress",
+      "source_definition_ko": "스크럽 계열의 구조나 소재를 적용한 원피스형 의료복을 가리키는 상품 표현.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-009",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "scrub dress",
+          "medical dress"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "상의와 치마가 하나로 연결된 스크럽 계열 원피스의 봉제 경계와 의료복 맥락을 같은 의복에 표현하는 예를 조사한다.",
+      "unresolved_scope": "상품명 사용 범위와 스크럽 소재·구조의 필수성은 확인되지 않았다."
+    },
+    {
+      "row_id": "NURSE-ROW-010",
+      "source_row_number_1based": 10,
+      "source_term_label": "스마트 스크럽 — Smart scrubs",
+      "source_definition_ko": "단정한 유니폼 외형을 강조하는 스크럽 계열 표현. 기관이나 제조사마다 구체적인 디자인은 다르다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-010",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "smart scrubs",
+          "smart scrub"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "단정한 스크럽 차림의 여러 실제 상품 설명을 비교하고 공통 시각 요소와 상표·마케팅 표현을 분리한다.",
+      "unresolved_scope": "기관·제조사별 정의가 달라 단일 실루엣을 강제할 근거가 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-011",
+      "source_row_number_1based": 11,
+      "source_term_label": "풀오버 스크럽 — Pullover scrub",
+      "source_definition_ko": "앞 전체가 열리지 않아 머리 위로 입고 벗는 상의. 앞면이 단순하게 이어진다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-011",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "pullover scrub",
+          "pull-over",
+          "pullover top"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "전면이 전체 개방되지 않은 상의의 연속된 앞판과 착용 방식의 관찰 가능성을 구분한 예를 검토한다.",
+      "unresolved_scope": "정지 사진에서 머리로 입는 실제 절차를 증명할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-013",
+      "source_row_number_1based": 13,
+      "source_term_label": "모크 랩 스크럽 — Mock-wrap scrub",
+      "source_definition_ko": "앞섶이 겹친 것처럼 보이도록 고정한 상의. 실제로 풀어 여미는 랩 의상과 구조가 다르다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-013",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "mock wrap",
+          "mock-wrap"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "같은 상의 앞판이 겹쳐 보이되 고정된 경계인 구조와 실제로 풀리는 랩을 구별하는 소유자 연결 예를 설계한다.",
+      "unresolved_scope": "고정 여부는 숨은 봉제 없이 사진에서 증명 가능한지 추가 검증이 필요하다."
+    },
+    {
+      "row_id": "NURSE-ROW-014",
+      "source_row_number_1based": 14,
+      "source_term_label": "유니섹스 스크럽 — Unisex scrubs",
+      "source_definition_ko": "특정 성별의 체형에 강하게 맞추지 않은 공용 패턴의 제품. 여유 있는 직선적 실루엣이 흔하다.",
+      "classification": "hold",
+      "reason": "한 후보는 유니섹스라는 별칭이 있으나 실제 전체 명제는 앞지퍼와 패치포켓이 있는 일체형 점프수트다. 공용 스크럽 패턴을 입증하지 않는다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-014",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "unisex scrub",
+          "unisex uniform"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_e4f334cd7c035b3dad1bdc5922afb286",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_atompunk_20261023.json",
+          "record_kind": "visual_option",
+          "conditions": {},
+          "effects": {
+            "dimensions": [
+              "age",
+              "appearance",
+              "composition",
+              "count",
+              "material",
+              "relationship",
+              "setting",
+              "style",
+              "subject"
+            ],
+            "properties": []
+          },
+          "binding_ids": [
+            "bind_b70a60946d8b5092ac339b56ebc9e0d0",
+            "bind_93e961fbd2415beeb1cf8581ac4ba555"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_atompunk_bindings_20261023.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "동일 스크럽 상하의의 여유 있는 직선 패턴 예를 구상하되 성별 정체성을 외형에서 추론하지 않는다.",
+      "unresolved_scope": "공용 패턴이라는 설계·판매 속성은 한 장의 이미지로 검증할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-015",
+      "source_row_number_1based": 15,
+      "source_term_label": "임부용 스크럽 — Maternity scrubs",
+      "source_definition_ko": "임신 중 근무하는 착용자를 위해 복부 여유와 허리 구조를 조정한 의료복.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-015",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "maternity scrub",
+          "maternity uniform"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "복부에 여유 있는 의료 상의와 허리 조절 구조를 같은 착용자·의복에 표현하는 예를 검토한다.",
+      "unresolved_scope": "옷의 여유만으로 임신 여부를 판정하거나 강제할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-016",
+      "source_row_number_1based": 16,
+      "source_term_label": "프린트 스크럽 — Printed scrubs",
+      "source_definition_ko": "꽃, 동물, 캐릭터, 기하무늬 등을 넣은 스크럽. 특정 무늬만으로 진료과가 정해지는 것은 아니다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-016",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "printed scrub",
+          "print scrub",
+          "scrub top print"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "스크럽 원단에 반복되는 특정 무늬가 실제 의복 표면을 따라 이어지는 예와 무늬 종류별 변형을 분리한다.",
+      "unresolved_scope": "무늬만으로 진료과나 기관을 확정할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-017",
+      "source_row_number_1based": 17,
+      "source_term_label": "언더스크럽 — Underscrub",
+      "source_definition_ko": "스크럽 안에 입는 이너 상의. 목둘레와 소매 끝에 다른 색이 드러나기도 한다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-017",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "underscrub",
+          "under-scrub",
+          "under scrub"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "별도 이너 상의가 바깥 스크럽 안쪽에 있고 목선 또는 소매 끝에서 구별되는 층 관계를 설계한다.",
+      "unresolved_scope": "색 대비가 필수인지는 원문상 열려 있으며 이너 소유자·경계가 필요하다."
+    },
+    {
+      "row_id": "NURSE-ROW-018",
+      "source_row_number_1based": 18,
+      "source_term_label": "스크럽 재킷 — Scrub jacket / Warm-up jacket",
+      "source_definition_ko": "스크럽 위에 덧입는 짧은 겉옷. 지퍼·스냅·니트 소매끝 등이 사용된다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-018",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "scrub jacket",
+          "warm-up jacket",
+          "warm up jacket"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "스크럽 위 짧은 외투와 지퍼·스냅·니트 소매끝을 독립 대안으로 두고 두 의복의 경계를 확인한다.",
+      "unresolved_scope": "스포츠 워밍업 재킷 진단은 의료 재킷과 동등하지 않고 모든 잠금 장식은 선택사항이다."
+    },
+    {
+      "row_id": "NURSE-ROW-020",
+      "source_row_number_1based": 20,
+      "source_term_label": "실습복 — Student clinical uniform",
+      "source_definition_ko": "간호학생이 실습 때 입는 학교·기관 지정 의복. 스크럽·튜닉·원피스 등 형태가 다양하다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-020",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "student clinical uniform",
+          "nursing student uniform",
+          "nursing student"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "실습용 의복의 스크럽·튜닉·원피스 대안을 분리하고 소속·신분 표시는 별도 맥락으로 둔다.",
+      "unresolved_scope": "옷만으로 학생 신분·학교 지정 여부를 증명할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-021",
+      "source_row_number_1based": 21,
+      "source_term_label": "나스 웨어·나스복 — ナースウェア / ナース服",
+      "source_definition_ko": "일본어에서 간호복을 가리키는 일반적인 상품 표현.",
+      "classification": "context_only",
+      "reason": "일본어 용어의 의미·번역 맥락으로 보존할 수 있으나 원문의 외부 용례는 아직 검증하지 않았다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-021",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "ナースウェア",
+          "ナース服"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "일본어 ナースウェア / ナース服의 용어·번역 관계를 연구 맥락으로 유지하고 시각 구조는 별도 선택한다.",
+      "unresolved_scope": "실제 일본어 용례 및 각 상품군의 범위를 독립 출처에서 재확인해야 한다."
+    },
+    {
+      "row_id": "NURSE-ROW-022",
+      "source_row_number_1based": 22,
+      "source_term_label": "하쿠이 — 白衣",
+      "source_definition_ko": "문자 그대로는 백의. 일본 의료복 판매 문맥에서는 흰 코트뿐 아니라 여러 의료 유니폼을 포괄하기도 한다.",
+      "classification": "context_only",
+      "reason": "일본어 용어의 의미·번역 맥락으로 보존할 수 있으나 원문의 외부 용례는 아직 검증하지 않았다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-022",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "白衣",
+          "hakui"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "白衣의 문자적 백색 의복 의미와 일본 의료 판매 문맥의 넓은 사용 범위를 언어 맥락으로 분리한다.",
+      "unresolved_scope": "모든 흰옷이나 모든 의료복을 동의어로 취급할 근거는 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-025",
+      "source_row_number_1based": 25,
+      "source_term_label": "나스 슈즈 — ナースシューズ",
+      "source_definition_ko": "간호 업무용 신발의 상품군. 운동화형·슬립온형·샌들형 등이 포함된다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-025",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "nursing shoes",
+          "nurse shoes",
+          "nurse footwear"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "업무용 운동화·슬립온·샌들을 각각의 대안으로 검토하고 같은 착용자의 발과 신발 연결을 보존한다.",
+      "unresolved_scope": "신발 외형만으로 의료 종사나 성능을 입증할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-028",
+      "source_row_number_1based": 28,
+      "source_term_label": "일회용 앞치마 — Disposable apron",
+      "source_definition_ko": "가슴부터 다리 앞쪽까지 덮는 얇은 앞치마. 역사적 면 앞치마와 소재·목적이 다르다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-028",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "disposable apron",
+          "plastic apron"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "착용자 앞면의 가슴부터 다리까지 이어지는 별도 얇은 앞치마와 아래 옷의 경계를 제안한다.",
+      "unresolved_scope": "일회용 여부나 화학 조성·멸균은 이미지에서 확정할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-030",
+      "source_row_number_1based": 30,
+      "source_term_label": "슈 커버 — Shoe covers",
+      "source_definition_ko": "신발 위에 씌우는 덮개. 발목 주변의 고무밴드와 부풀어 오른 형태가 특징이다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-030",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "shoe cover",
+          "shoe covers",
+          "shoe-cover"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "같은 발의 신발 위에 별도 덮개가 씌워지고 발목 근처가 모이는 관계를 확인한다.",
+      "unresolved_scope": "보호 성능·재사용 여부와 덮개 재료는 별도 근거가 필요하다."
+    },
+    {
+      "row_id": "NURSE-ROW-033",
+      "source_row_number_1based": 33,
+      "source_term_label": "에드워드풍 간호복 — Edwardian-style nurse uniform",
+      "source_definition_ko": "20세기 초 분위기를 나타내는 검색·디자인 표현. 구체적인 병원과 연도를 함께 보면 고증이 정확해진다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-033",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "edwardian nurse",
+          "edwardian dress",
+          "edwardian uniform"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "20세기 초의 특정 기관·연도 출처를 먼저 확인한 뒤 의복·환경을 출처 한정 사례로 제안한다.",
+      "unresolved_scope": "시대 표지만으로 특정 치마·모자·국가를 확정할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-035",
+      "source_row_number_1based": 35,
+      "source_term_label": "워드 드레스 — Ward dress",
+      "source_definition_ko": "병동 근무용 드레스를 가리키는 역사적 명칭.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-035",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "ward dress"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "출처로 병동 근무용 드레스의 사용 맥락을 확인하고 의복 소유와 의류 구조는 따로 기록한다.",
+      "unresolved_scope": "ward dress라는 역할·시대가 하나의 고정 실루엣을 뜻하는지 미확정이다."
+    },
+    {
+      "row_id": "NURSE-ROW-038",
+      "source_row_number_1based": 38,
+      "source_term_label": "풀 먹인 제복 — Starched uniform / Starched whites",
+      "source_definition_ko": "풀먹임으로 모자·칼라·앞치마의 각과 주름을 단단하게 유지한 모습.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-038",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "starched",
+          "starch uniform"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "모자·칼라·앞치마의 단단한 가장자리와 주름 형태를 선택적 관찰 사례로 표현한다.",
+      "unresolved_scope": "빳빳한 외형만으로 풀 먹이는 제조·처리 공정을 증명할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-039",
+      "source_row_number_1based": 39,
+      "source_term_label": "군간호 제복 — Military nursing uniform",
+      "source_definition_ko": "군간호 인력의 복장. 병동 근무복, 야전복, 정복을 구분해야 한다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-039",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "military nursing",
+          "military nurse"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "군간호의 병동 근무복·야전복·정복을 출처와 함께 서로 다른 예로 조사한다.",
+      "unresolved_scope": "복장만으로 실제 군 소속·전문 자격·계급을 결론낼 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-040",
+      "source_row_number_1based": 40,
+      "source_term_label": "VAD 복장 — Voluntary Aid Detachment uniform",
+      "source_definition_ko": "역사적 자원 구호대의 복장. 해당 인원 모두를 전문 자격 간호사와 동일하게 보면 안 된다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-040",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "voluntary aid detachment",
+          "volunteer aid detachment",
+          "vad uniform"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "실제 확인된 VAD 사진·규정과 해당 인원의 역할 경계를 먼저 조사하고 개별 출처가 허용하는 복장 예만 작성한다.",
+      "unresolved_scope": "VAD 전원을 자격 간호사로 동일시할 수 없고 역사적 정확성은 미검증이다."
+    },
+    {
+      "row_id": "NURSE-ROW-043",
+      "source_row_number_1based": 43,
+      "source_term_label": "의례용 간호복 — Ceremonial nursing uniform",
+      "source_definition_ko": "선서식·졸업식 등 의례에 사용하는 복장. 실제 근무복과 구성이나 장식이 달라질 수 있다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-043",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "ceremonial nursing",
+          "graduation uniform"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "선서·졸업 등 의례 맥락과 해당 의복 구조를 분리해 여러 기관의 사례를 조사한다.",
+      "unresolved_scope": "의례 사실이나 자격은 옷만으로 판정할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-044",
+      "source_row_number_1based": 44,
+      "source_term_label": "간호 핀 — Nursing pin / Graduation pin",
+      "source_definition_ko": "학교, 교육 이수, 졸업 등의 의미를 담은 작은 금속 배지.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-044",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "nursing pin",
+          "graduation pin"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "동일 착용자의 의복에 부착된 작은 금속 핀의 위치와 형상을 시각 예로 검토한다.",
+      "unresolved_scope": "핀만으로 학교·졸업·교육 이수를 판정할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-047",
+      "source_row_number_1based": 47,
+      "source_term_label": "접이식 간호캡 — Folded nurse’s cap",
+      "source_definition_ko": "풀 먹인 천을 접어 각을 만든 형태. 정면과 측면에 평평한 면이 나타난다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-047",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "folded nurse cap",
+          "folded cap"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "접힌 천으로 생긴 평평한 면과 각진 경계를 한 캡의 정면·측면 관계로 표현한다.",
+      "unresolved_scope": "풀 먹임 공정은 형태만으로 입증할 수 없으며 특정 학교 양식은 별도 출처가 필요하다."
+    },
+    {
+      "row_id": "NURSE-ROW-049",
+      "source_row_number_1based": 49,
+      "source_term_label": "컵케이크형 캡 — Cupcake-style cap",
+      "source_definition_ko": "둥글고 주름진 외형을 컵케이크에 비유한 별칭. 형태 설명에 가깝다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-049",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "cupcake cap",
+          "cupcake-style cap"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "둥글고 모인 모자 상부와 주름 가장자리가 연결된 한 형태를 선택적으로 검토한다.",
+      "unresolved_scope": "별칭의 용례와 다른 둥근 캡과의 경계를 검증해야 한다."
+    },
+    {
+      "row_id": "NURSE-ROW-050",
+      "source_row_number_1based": 50,
+      "source_term_label": "몹캡 — Mob cap",
+      "source_definition_ko": "머리를 감싸는 둥근 천과 주름진 가장자리로 구성된 모자. 간호복 이외의 역사 복식에도 등장한다.",
+      "classification": "partial",
+      "reason": "둥근 천 모자가 머리카락 일부를 덮는 한 사례다. 원문에 있는 주름 가장자리는 후보에 없어 완전 동일하지 않다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-050",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "mob cap",
+          "mobcap"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_4e3cb23f4cf15df9afaaf8b2bc443791",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_maid_uniform_20261106.json",
+          "record_kind": "visual_option",
+          "conditions": {},
+          "effects": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "binding_ids": [
+            "bind_155a0552be805363a07e2bd00cee5383"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_maid_uniform_bindings_20261106.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "같은 캡의 둥근 천과 모인 주름 가장자리·착용자 머리의 관계를 명시한다.",
+      "unresolved_scope": "둥근 천 캡만으로 주름진 가장자리를 보장하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-053",
+      "source_row_number_1based": 53,
+      "source_term_label": "캡 띠 — Cap band",
+      "source_definition_ko": "캡에 두르는 검정 등의 띠. 일부 학교에서 졸업·학년·지위를 나타냈으나 의미가 통일되어 있지는 않았다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-053",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "nurse cap band",
+          "cap band"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "같은 간호캡 표면을 둘러가는 띠의 시작·끝과 모자 소유를 표현한다.",
+      "unresolved_scope": "띠 색으로 학교·학년·지위를 보편적으로 추론할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-054",
+      "source_row_number_1based": 54,
+      "source_term_label": "캡 핀 — Cap pins",
+      "source_definition_ko": "모자를 머리카락에 고정하는 핀. 옆이나 뒤쪽에서 보이기도 한다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-054",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "cap pins",
+          "cap pin"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "모자와 머리카락의 실제 부착 관계에 하나 이상의 핀을 배치하고 접점을 확인한다.",
+      "unresolved_scope": "숨겨진 고정 장치·핀 수는 보이는 증거 없이 단정할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-055",
+      "source_row_number_1based": 55,
+      "source_term_label": "스크럽 캡 — Scrub cap",
+      "source_definition_ko": "머리 형태를 따라가는 수술실 계열 모자. 전통적인 각진 간호캡과 다른 종류다.",
+      "classification": "partial",
+      "reason": "머리에 맞는 수술모가 머리카락을 덮는 한 사례다. 뒤쪽의 두 끈이 매듭되는 구체 조건이 추가된다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-055",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "scrub cap",
+          "surgical cap"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_1d664c8921485270bf5019c0b46fc311",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_medical_drama_20261023.json",
+          "record_kind": "visual_option",
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "target": "main_subject",
+                "property": "wardrobe"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_0a21f63e7af9535bb815275d3e99227b",
+            "bind_febde321571f542fbaa6c83cfff63a38"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_medical_drama_bindings_20261023.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "머리 형태를 따르는 별도 천 수술모와 뒤쪽 끈 한 실현을 대조 사례로 기록한다.",
+      "unresolved_scope": "뒤쪽 두 끈은 일반 스크럽 캡의 필수 조건이 아니다."
+    },
+    {
+      "row_id": "NURSE-ROW-057",
+      "source_row_number_1based": 57,
+      "source_term_label": "수술용 후드 — Surgical hood",
+      "source_definition_ko": "머리와 목 주변까지 이어지는 머리 덮개.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-057",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "surgical hood"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "머리 덮개가 목까지 같은 재료로 연속되는 관계와 노출된 경계를 검토한다.",
+      "unresolved_scope": "기관·멸균·보호 기능은 의복 외형으로 증명할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-058",
+      "source_row_number_1based": 58,
+      "source_term_label": "간호사 헤드밴드 — Nurse headband",
+      "source_definition_ko": "머리띠 위에 작은 캡이나 장식을 붙인 코스튬용 구성.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-058",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "nurse headband"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "별도 머리띠 위에 작은 캡 또는 장식이 실제 접합된 한 소유관계를 표현한다.",
+      "unresolved_scope": "일상 의료용 캡과 코스튬용 머리띠를 동의어로 만들지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-060",
+      "source_row_number_1based": 60,
+      "source_term_label": "헤어넷 — Hairnet",
+      "source_definition_ko": "머리카락이나 올림머리를 감싸는 망. 망의 색과 촘촘함에 따라 존재감이 달라진다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-060",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "hairnet",
+          "hair net"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "머리카락과 별도 망의 경계 및 열린 망 눈을 근접 관찰하는 예를 검토한다.",
+      "unresolved_scope": "색·망 눈 크기와 정확한 직물 성분은 선택 사항이다."
+    },
+    {
+      "row_id": "NURSE-ROW-068",
+      "source_row_number_1based": 68,
+      "source_term_label": "노치 넥 — Notch neckline",
+      "source_definition_ko": "목선 일부에 짧은 V자나 틈 모양의 절개를 넣은 형태.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-068",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "notch neckline",
+          "notched neckline",
+          "notch neck"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "같은 둥근 목선의 한 지점에 짧게 열린 V형 절개와 양 끝점을 표현한다.",
+      "unresolved_scope": "단순한 V넥 전체와 동일시하지 않도록 경계를 검토한다."
+    },
+    {
+      "row_id": "NURSE-ROW-074",
+      "source_row_number_1based": 74,
+      "source_term_label": "셋인 슬리브 — Set-in sleeve",
+      "source_definition_ko": "암홀 둘레에 소매를 별도로 달아 어깨선이 분명한 구조.",
+      "classification": "hold",
+      "reason": "확인한 컷온 소매는 표준 암홀 봉제 없이 몸판에서 이어져 원문의 셋인 소매와 반대다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-074",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "set-in sleeve",
+          "set in sleeve",
+          "sleeve joins the armhole",
+          "armhole seam"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_527ed9895f2256ef9fa52286c008699a",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_candidates_013.json",
+          "record_kind": "visual_option",
+          "conditions": {},
+          "effects": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.sleeves.dolman_kimono",
+                "target": "main_subject"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_527ed9895f2256ef9fa52286c008699a"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_slot_bindings_007.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "별도 소매가 암홀 전체를 따라 몸판에 봉제되어 만나는 동일 의복 관계를 표현한다.",
+      "unresolved_scope": "컷온 소매는 표준 암홀 봉제 없이 이어져 정반대 사례이므로 동등하지 않다."
+    },
+    {
+      "row_id": "NURSE-ROW-077",
+      "source_row_number_1based": 77,
+      "source_term_label": "탈착식 커프스 — Detachable cuffs",
+      "source_definition_ko": "별도로 붙였다 떼는 소매끝 부품. 역사적 제복에서 흰 손목선을 만든다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-077",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "detachable cuffs",
+          "detached cuffs"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "별도 흰 커프가 소매 끝과 분리되는 경계 및 같은 착용자 소유를 표현한다.",
+      "unresolved_scope": "탈착 가능성은 한 장의 부착 상태만으로 입증되지 않을 수 있다."
+    },
+    {
+      "row_id": "NURSE-ROW-080",
+      "source_row_number_1based": 80,
+      "source_term_label": "요크 — Yoke",
+      "source_definition_ko": "어깨나 등 위쪽 등에 별도 천 조각을 배치한 구조. 가로·곡선 절개가 드러난다.",
+      "classification": "partial",
+      "reason": "어깨 요크가 셔츠 뒷판에 연결되는 한 사례다. 원문상 다양한 위치와 가로·곡선 형태를 모두 포괄하지 않는다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-080",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "shirt yoke",
+          "back yoke",
+          "shoulder yoke",
+          "yoke panel"
+        ],
+        "candidate_hit_count": 5,
+        "displayed_lead_count": 5,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_4b610edbdc8c59298f4e2a1a49518d86",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_candidates_010.json",
+          "record_kind": "visual_option",
+          "conditions": {},
+          "effects": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.details.bodice_panels",
+                "target": "main_subject"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_4b610edbdc8c59298f4e2a1a49518d86"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_slot_bindings_012.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "어깨 또는 등 위쪽의 별도 천 조각과 같은 셔츠 몸판을 잇는 가로·곡선 경계를 검토한다.",
+      "unresolved_scope": "한 개의 어깨 요크 예를 모든 전·후면 형태로 일반화하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-082",
+      "source_row_number_1based": 82,
+      "source_term_label": "옆트임 — Side vents",
+      "source_definition_ko": "상의나 치마의 옆선 끝을 조금 열어 둔 구조.",
+      "classification": "partial",
+      "reason": "옆 솔기가 열리는 예이지만 긴 이브닝드레스와 노출 다리·단일 슬릿 조건이 있어 일반적인 짧은 밑단 트임과 동등하지 않다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-082",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "side vent",
+          "side slit hem",
+          "side seam opens"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_9243d02782a85a40874da3467d25168d",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_investigative_fiction_20261025.json",
+          "record_kind": "visual_option",
+          "conditions": {},
+          "effects": {
+            "dimensions": [
+              "subject",
+              "appearance",
+              "body_geometry",
+              "relationship"
+            ],
+            "properties": []
+          },
+          "binding_ids": [
+            "bind_c634dae79c815391b22c6e08f729f637",
+            "bind_c2bcc7153eef58258fb34cfaf6b2c76e"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_investigative_fiction_bindings_20261025.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "같은 옷의 옆 솔기 끝이 짧게 갈라지는 두 천 경계와 밑단의 연결을 표현한다.",
+      "unresolved_scope": "긴 이브닝드레스의 한쪽 슬릿과 노출 다리는 일반적인 짧은 옆트임 전체가 아니다."
+    },
+    {
+      "row_id": "NURSE-ROW-083",
+      "source_row_number_1based": 83,
+      "source_term_label": "액션 플리츠 — Action pleat",
+      "source_definition_ko": "움직임을 위해 등이나 옷의 일부에 넣은 여유 주름.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-083",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "action pleat",
+          "back pleat"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "같은 옷의 등이나 선택 부위에 접힌 여유 주름이 주변 패널과 연결된 구조를 제안한다.",
+      "unresolved_scope": "정적 주름만으로 운동 기능이나 실제 움직임 향상을 확정하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-086",
+      "source_row_number_1based": 86,
+      "source_term_label": "스냅 프런트 — Snap front",
+      "source_definition_ko": "눌러 잠그는 똑딱단추로 앞을 여미는 형태.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-086",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "snap front",
+          "snap fastening",
+          "snap closure"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "앞판의 똑딱단추와 같은 의복 양쪽 가장자리가 닫히는 관계를 검토한다.",
+      "unresolved_scope": "작은 장식 원형 점만으로 잠금 구조를 판정할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-088",
+      "source_row_number_1based": 88,
+      "source_term_label": "히든 플래킷 — Concealed placket",
+      "source_definition_ko": "여밈을 천으로 덮어 단추나 지퍼가 겉에서 잘 보이지 않게 만든 구조.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-088",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "concealed placket",
+          "hidden placket",
+          "concealed front fastening"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "직물 덮개가 동일 의복의 단추 또는 지퍼를 가린 앞단 관계를 표현한다.",
+      "unresolved_scope": "숨겨진 부품이 무엇인지 외형만으로 임의 추론하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-093",
+      "source_row_number_1based": 93,
+      "source_term_label": "와펜·패치 — Emblem patch",
+      "source_definition_ko": "로고나 문양을 별도 천으로 만들어 부착한 표식.",
+      "classification": "hold",
+      "reason": "확인한 후보는 닳은 교복을 천으로 수선하는 패치여서 문양·로고가 있는 엠블럼 패치와 동등하지 않다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-093",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "emblem patch",
+          "embroidered patch",
+          "uniform patch"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_75939431577c56f2a72b7a73e58571cb",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_school_uniform_20261106.json",
+          "record_kind": "visual_option",
+          "conditions": {},
+          "effects": {
+            "dimensions": [
+              "appearance"
+            ],
+            "properties": []
+          },
+          "binding_ids": [
+            "bind_b20c508a302556068a1df604dd31eff5"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_school_uniform_bindings_20261106.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "로고 또는 문양을 담은 별도 천 패치와 의복 표면의 부착 경계를 표현한다.",
+      "unresolved_scope": "닳은 부분을 덮는 수선 패치가 상징 문양이나 소속의 증거는 아니다."
+    },
+    {
+      "row_id": "NURSE-ROW-094",
+      "source_row_number_1based": 94,
+      "source_term_label": "자수 이름표 — Embroidered name",
+      "source_definition_ko": "가슴 등에 이름이나 기관명을 실로 새긴 형태.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-094",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "embroidered name",
+          "name embroidered"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "가슴 의복 표면에 실로 형성된 이름 또는 기관명을 보이게 하는 사례를 검토한다.",
+      "unresolved_scope": "실제 이름·기관·소속이나 특정 문자열은 별도 요청이 있어야 한다."
+    },
+    {
+      "row_id": "NURSE-ROW-097",
+      "source_row_number_1based": 97,
+      "source_term_label": "웰트 포켓 — Welt pocket",
+      "source_definition_ko": "좁고 정돈된 입구가 겉에 보이는 주머니.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-097",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "welt pocket"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "의복 표면에 좁은 입구 테두리와 동일 주머니의 경계를 표현한다.",
+      "unresolved_scope": "단순 절개선·패치 포켓과의 차이 및 숨은 주머니 내부는 추가 검토가 필요하다."
+    },
+    {
+      "row_id": "NURSE-ROW-101",
+      "source_row_number_1based": 101,
+      "source_term_label": "기구 고리 — Instrument loop",
+      "source_definition_ko": "작은 기구를 걸거나 고정하는 천 고리.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-101",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "instrument loop",
+          "tool loop"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "작은 기구를 거는 동일 의복의 천 고리와 고리·기구의 접점을 표현한다.",
+      "unresolved_scope": "기구 종류나 실제 고정 성능은 외형에서 단정하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-102",
+      "source_row_number_1based": 102,
+      "source_term_label": "배지 루프 — Badge loop",
+      "source_definition_ko": "신분증이나 배지 릴을 달기 위한 고리.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-102",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "badge loop"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "의복에 붙은 고리와 연결된 배지 또는 배지 릴의 소유·연결을 표현한다.",
+      "unresolved_scope": "배지 내용과 실제 소속은 별도로 판단하며 릴 자체를 고리와 혼동하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-105",
+      "source_row_number_1based": 105,
+      "source_term_label": "피나포어형 앞치마 — Pinafore apron",
+      "source_definition_ko": "어깨끈과 가슴판이 있는 덧입는 앞치마 계열.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-105",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "pinafore apron",
+          "pinafore-style apron"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "별도 앞치마의 가슴판과 어깨끈이 같은 앞판에 연결되는 구조를 검토한다.",
+      "unresolved_scope": "어깨끈 없는 비브 앞치마나 드레스 자체와 동일시하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-107",
+      "source_row_number_1based": 107,
+      "source_term_label": "미니 앞치마 — Mini apron",
+      "source_definition_ko": "면적과 길이를 줄인 장식형 앞치마. 성인 코스튬에서 자주 조합된다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-107",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "mini apron",
+          "short apron"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "작은 면적과 짧은 길이의 별도 장식 앞치마를 같은 의복 위에 제안한다.",
+      "unresolved_scope": "특정 연령·성적 맥락은 명시적 근거 없이 부여하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-109",
+      "source_row_number_1based": 109,
+      "source_term_label": "레귤러 핏 — Regular fit",
+      "source_definition_ko": "몸과 옷 사이에 기본적인 여유를 둔 재단.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-109",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "regular fit",
+          "regular-fit"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "의복과 착용자 사이 기본적인 여유를 같은 소유자와 옷의 경계에서 표현하는 예를 조사한다.",
+      "unresolved_scope": "정량 허용치나 착용자의 체형·건강은 제시되지 않았다."
+    },
+    {
+      "row_id": "NURSE-ROW-114",
+      "source_row_number_1based": 114,
+      "source_term_label": "시스 드레스 — Sheath dress",
+      "source_definition_ko": "몸의 윤곽을 따라 맞고 치마폭이 비교적 좁은 원피스.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-114",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "sheath dress"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "상체와 허리가 맞고 치마폭이 좁은 한 드레스의 연속된 몸판·치마 윤곽을 표현한다.",
+      "unresolved_scope": "일반 원피스 프로필이 시스 형태 전체를 자동 보장하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-119",
+      "source_row_number_1based": 119,
+      "source_term_label": "미니·미디·맥시 — Mini / Midi / Maxi",
+      "source_definition_ko": "짧은 길이, 종아리 부근 길이, 발목 가까운 긴 길이를 구분하는 표현.",
+      "classification": "hold",
+      "reason": "미니·미디·맥시 라벨을 가진 별도 의상 세 건은 확인했지만, 밑단과 무릎·종아리·발목의 실제 위치를 명시하지 않는다. 각 의상의 추가 조건을 벗겨 일반 랜드마크로 간주할 수 없다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-119",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "midi skirt",
+          "maxi skirt",
+          "mini skirt"
+        ],
+        "candidate_hit_count": 53,
+        "displayed_lead_count": 8,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_04ef3b5138205fffb048f4ae292f3651",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_expansion_20261025.json",
+          "record_kind": "visual_option",
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "appearance",
+              "color"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.style.garment_type",
+                "target": "skirt"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.detail.length",
+                "target": "skirt"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.fit.drape",
+                "target": "skirt"
+              },
+              {
+                "dimension": "color",
+                "property": "color.distribution",
+                "target": "skirt"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_01627b6f19d7501fa8c5d79441c29c22",
+            "bind_35b95f1b294a5c40aa09be8c6b02c189",
+            "bind_727e4f2de19f5928b850de460e5830dc",
+            "bind_9c713febb3cb53ce860a5d66c2c79d83"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_expansion_bindings_20261025.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        },
+        {
+          "candidate_id": "cand_0530958ee8954d7dd29398103414c514",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_20261025.json",
+          "record_kind": "visual_option",
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "appearance",
+              "color",
+              "material",
+              "relationship"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.fit_and_seated_drape",
+                "target": "skirt over thighs and crease where body meets seat, conditional on wearer already sitting"
+              },
+              {
+                "dimension": "color",
+                "property": "wardrobe.color.distribution",
+                "target": "white top, burgundy skirt and gold pendant"
+              },
+              {
+                "dimension": "material",
+                "property": "wardrobe.material.jersey_and_satin",
+                "target": "same wearer's top and skirt"
+              },
+              {
+                "dimension": "relationship",
+                "property": "accessory.wearer_relation",
+                "target": "pendant at same wearer's sternum"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_14e1393d5f76a25359e6b046fc04ea58"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_bindings_20261025.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        },
+        {
+          "candidate_id": "cand_1a7402816af152469aeea178d8dc9522",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_expansion_20261025.json",
+          "record_kind": "visual_option",
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "appearance",
+              "color"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.garment.type",
+                "target": "same skirt"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.garment.length",
+                "target": "same skirt"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.garment.detail",
+                "target": "same skirt"
+              },
+              {
+                "dimension": "color",
+                "property": "surface.color.distribution",
+                "target": "same skirt"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_2b57c96150255611a459715afff3cd9a",
+            "bind_975d348459845f728264e35a9ba2dc44"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_expansion_bindings_20261025.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "같은 소유자의 의복 밑단을 짧은 길이·종아리 부근·발목 가까이의 세 독립 대안으로 명시한다.",
+      "unresolved_scope": "mini/midi/maxi 라벨만으로 실제 랜드마크를 확인할 수 없고 변형을 한 옷에 동시에 요구하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-121",
+      "source_row_number_1based": 121,
+      "source_term_label": "테이퍼드 레그 — Tapered leg",
+      "source_definition_ko": "허벅지에서 발목으로 갈수록 바지통이 좁아지는 형태.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-121",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "tapered leg",
+          "tapered pants",
+          "tapered trousers"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "동일 바지의 허벅지와 발목 폭을 비교해 발목 방향으로 좁아지는 양쪽 바지통을 표현한다.",
+      "unresolved_scope": "같은 착용자·다리 경계와 카메라 원근이 필요하다."
+    },
+    {
+      "row_id": "NURSE-ROW-126",
+      "source_row_number_1based": 126,
+      "source_term_label": "면 — Cotton",
+      "source_definition_ko": "비교적 자연스럽고 부드러운 표면을 만드는 섬유. 짜임에 따라 외관은 달라진다.",
+      "classification": "partial",
+      "reason": "면 셔츠의 옥스퍼드 직조 한 사례다. 직조와 섬유 정체를 분리하므로 면의 모든 직물 조직·질감과는 다르다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-126",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "cotton fabric",
+          "cotton cloth",
+          "cotton garment"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_b85dbfe907309625001b225b9c362ca0",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_20261025.json",
+          "record_kind": "visual_option",
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "material"
+            ],
+            "properties": [
+              {
+                "dimension": "material",
+                "property": "wardrobe.material.visible_weave",
+                "target": "same cotton shirt cloth"
+              },
+              {
+                "dimension": "material",
+                "property": "wardrobe.material.fiber",
+                "target": "same shirt cloth"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_234c158a435e47e2ad5091c4b9ad3dd2"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_bindings_20261025.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "면 섬유라는 명시와 옥스퍼드 등 별도 직조 구조를 분리한 특정 의복 표면 사례를 비교한다.",
+      "unresolved_scope": "사진의 매끈함이나 질감만으로 섬유 성분을 확증하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-127",
+      "source_row_number_1based": 127,
+      "source_term_label": "폴리코튼 — Polycotton",
+      "source_definition_ko": "폴리에스터와 면의 혼방. 섬유 조성의 이름이다.",
+      "classification": "hold",
+      "reason": "이전에 대조한 단서와 이번 제한된 표현 검색만으로 해당 원문의 완전·부분 후보 동등성을 확인하지 못했다. 검색 미검출은 후보 부재가 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-127",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "polycotton",
+          "poly-cotton",
+          "polyester cotton blend"
+        ],
+        "candidate_hit_count": 0,
+        "displayed_lead_count": 0,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [],
+      "followup_candidate_idea": "면·폴리에스터 혼방은 성분 맥락으로 기록하고 시각적 질감은 별도 선택한다.",
+      "unresolved_scope": "혼방률·성분은 픽셀만으로 추정하지 않는다."
+    },
+    {
+      "row_id": "NURSE-ROW-132",
+      "source_row_number_1based": 132,
+      "source_term_label": "스트레치 — Stretch",
+      "source_definition_ko": "늘어나는 성질. 소재 조성과는 별도로 기록하는 것이 좋다.",
+      "classification": "partial",
+      "reason": "신축 원단을 명시한 예이나 검정 수영복·밴디지 구조·불투명성·착용자 조건이 함께 붙는다. 외관으로 탄성 성질을 입증한 것은 아니다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-132",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "fabric elasticity",
+          "elastic stretch",
+          "stretch fabric",
+          "stretchy fabric"
+        ],
+        "candidate_hit_count": 1,
+        "displayed_lead_count": 1,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_8da186563c04564184850142fe07d832",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_expansion_20261025.json",
+          "record_kind": "visual_option",
+          "conditions": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "appearance",
+              "color",
+              "material"
+            ],
+            "properties": [
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.style.garment_type",
+                "target": "one-piece swimsuit"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.detail.bandage_construction",
+                "target": "swimsuit"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.detail.clean_lines",
+                "target": "swimsuit"
+              },
+              {
+                "dimension": "color",
+                "property": "color.local",
+                "target": "swimsuit"
+              },
+              {
+                "dimension": "material",
+                "property": "material.mechanics.opacity",
+                "target": "swimsuit fabric"
+              },
+              {
+                "dimension": "material",
+                "property": "material.mechanics.stretch",
+                "target": "swimsuit fabric"
+              },
+              {
+                "dimension": "appearance",
+                "property": "wardrobe.detail.secure_construction",
+                "target": "swimsuit torso"
+              }
+            ]
+          },
+          "binding_ids": [
+            "bind_35016c6951bd5dd8b01bb8f6e6ad7f2b",
+            "bind_82e15b1be1035225854cc1a2c876a450",
+            "bind_96a4dc35f9325726be81c85435bdc02d",
+            "bind_e503e4faf9e85b0eb1a2f53b1f0d0455"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_reactorprompt_fashion_expansion_bindings_20261025.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "실제 당김 전후의 길이 변화 또는 명시된 신축성 재료와 동일 천을 추적하는 제한적 사례를 검토한다.",
+      "unresolved_scope": "정지 이미지 한 장의 주름이나 밀착만으로 탄성을 증명할 수 없다."
+    },
+    {
+      "row_id": "NURSE-ROW-136",
+      "source_row_number_1based": 136,
+      "source_term_label": "레이스 — Lace",
+      "source_definition_ko": "구멍과 문양이 반복되는 장식 직물. 코스튬의 칼라·소매끝·스타킹 등에 조합된다.",
+      "classification": "partial",
+      "reason": "실제 열린 망과 반복 실 모티프가 있는 레이스 표면 예다. 지정된 소유자·재료 효과와 바인딩 범위를 보존해야 한다.",
+      "prior_classification": "hold",
+      "prior_review": "generated/nurse-coverage-review-a.json",
+      "current_context_view_id": "nurse-context-NURSE-ROW-136",
+      "context_view_is_native_approval": false,
+      "search": {
+        "method": "source content en/ko/definition/aliases exact phrase scan; no embedding or index search",
+        "terms": [
+          "lace fabric",
+          "lace textile",
+          "lace trim"
+        ],
+        "candidate_hit_count": 23,
+        "displayed_lead_count": 8,
+        "all_hits_semantically_reviewed": false,
+        "leads_file": "generated/nurse-coverage-review-a-pass3-leads.json"
+      },
+      "reviewed_candidate_evidence": [
+        {
+          "candidate_id": "cand_5defd40dc0825c3f9134a1a766848b51",
+          "candidate_path": "skills/photo-prompt-image-generator/assets/photo_candidate_candidates_009.json",
+          "record_kind": "visual_option",
+          "conditions": {
+            "for_any": [
+              "human",
+              "object",
+              "product",
+              "food",
+              "plant",
+              "sign"
+            ]
+          },
+          "effects": {
+            "dimensions": [
+              "material"
+            ],
+            "properties": []
+          },
+          "binding_ids": [
+            "bind_5defd40dc0825c3f9134a1a766848b51"
+          ],
+          "binding_paths": [
+            "skills/photo-prompt-image-generator/assets/photo_candidate_slot_bindings_007.json"
+          ],
+          "review": "full_candidate_content_conditions_effects_bindings",
+          "complete_record_evidence": "generated/nurse-coverage-review-a-pass3-evidence.json"
+        }
+      ],
+      "followup_candidate_idea": "동일 직물의 반복되는 실 교차·실제 열린 구멍·모티프와 의복 경계를 표현한다.",
+      "unresolved_scope": "프린트된 레이스 무늬와 실제 구멍을 구별하고 소재 성분은 추정하지 않는다."
+    }
+  ]
+}

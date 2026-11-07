@@ -168,6 +168,12 @@ def review_audit(args):
                 raise WorkflowError("ambiguous_review_result_binding")
             if matches[0].get('lane') == 'external_api':
                 validate_external_operation(state, matches[0])
+            if matches[0].get('lane') == 'native_reconciled':
+                from photo_native_preview_reconcile import validate_reconciled_operation
+                try:
+                    validate_reconciled_operation(state, matches[0])
+                except (ValueError, OSError, KeyError, TypeError) as error:
+                    raise WorkflowError('native_reconciliation_evidence_mismatch') from error
         contracts = audit_bound(pending, runtime=True, reviews=True)
         if contracts["composed_audit"]["status"] != "pass" or contracts["runtime_audit"]["status"] != "pass":
             raise WorkflowError("review_requires_audited_inputs")
