@@ -1,0 +1,2095 @@
+{
+  "schema": "magical-girl-illustration-audit/v1",
+  "source_files": [
+    {
+      "path": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "sha256": "85154fd28af2d31094cab80c4b73fe1845e3d2dd7f2522f5414afb1c5399a6e5"
+    },
+    {
+      "path": "skills/subculture-illustration-image-generator/assets/illustration_moe_elements_v1.json",
+      "sha256": "29247cafc226055961ae6c7e70ea26f43c1cc3399ebd151ecb5b087758923b9b"
+    },
+    {
+      "path": "skills/subculture-illustration-image-generator/assets/research_evidence_moe_elements/moe_meaning_contracts_v2.json",
+      "sha256": "b9430c06872b0d68c9d961ebf447bfe45f7591524a6b43bb7226c2930f97860e"
+    }
+  ],
+  "element_id": "moe_stockings",
+  "entire_grammar_element": {
+    "id": "moe_stockings",
+    "ordinal": 18,
+    "category": "wardrobe",
+    "label_ko": "스타킹",
+    "aliases": [
+      "스타킹",
+      "thigh stockings",
+      "separate stockings",
+      "hold-up stockings"
+    ],
+    "research_questions": [
+      "Which upper-termination and foot-coverage evidence most reliably separates garter stockings, hold-ups, and tights?",
+      "How should broad Korean 스타킹 cues route when no support topology or waist coverage is stated?",
+      "Which view best proves garter hardware, self-supporting bands, or rear seams without sacrificing full-leg context?",
+      "How can opacity and pattern modifiers remain independent of the underlying support construction?"
+    ],
+    "definition_and_history": "스타킹은 좌우 다리에 각각 신는 발 포함 편직 의복이다. 전통 스타킹은 가터로 지지되고, 홀드업은 자체 밴드로 지지되며, 팬티스타킹은 허리까지 하나로 이어지는 별도 구조다.",
+    "semantic_subtypes": [
+      {
+        "id": "st_garter_stockings",
+        "label": "st_garter_stockings",
+        "distinction": "Two separate foot-to-thigh stockings with reinforced welts, held by garter or suspender clips."
+      },
+      {
+        "id": "st_hold_ups",
+        "label": "st_hold_ups",
+        "distinction": "Two separate thigh-high stockings held by integrated elastic or silicone top bands rather than garter straps."
+      },
+      {
+        "id": "st_tights_pantyhose",
+        "label": "st_tights_pantyhose",
+        "distinction": "One continuous footed garment covering both legs and extending to the waist."
+      },
+      {
+        "id": "st_surface_style",
+        "label": "st_surface_style",
+        "distinction": "A modifier family spanning sheer, opaque, fishnet, patterned, lace-welt, or back-seam treatments across compatible stocking/tight constructions."
+      },
+      {
+        "id": "self_supporting_sheer_holdups",
+        "label": "self supporting sheer holdups",
+        "distinction": "두 개의 독립 footed tubes를 사용한다; wide self-supporting top bands를 보인다; torso garment와 band 사이 skin gap을 유지한다"
+      },
+      {
+        "id": "garter_supported_seam_back",
+        "label": "garter supported seam back",
+        "distinction": "self-supporting hold-up 후보를 제외한다; garter belt와 네 strap의 visible support 후보를 선택한다; rear center seams와 heel-to-band continuity를 보인다"
+      }
+    ],
+    "appeal_mechanisms": [
+      {
+        "id": "moe_stockings_source_mechanism",
+        "description": "A thigh welt and skin gap create a clear boundary that segments the leg and reveals whether the garment is separate from the upper outfit.",
+        "basis": "source_supported",
+        "source_ids": [
+          "blog_452",
+          "v2_wardrobe_st_vam",
+          "v2_wardrobe_st_moma",
+          "v2_wardrobe_st_calzedonia",
+          "v2_wardrobe_st_wolford_report",
+          "v2_wardrobe_st_journelle"
+        ]
+      },
+      {
+        "id": "moe_stockings_design_mechanism",
+        "description": "A back seam or aligned pattern creates a long directional line useful for pose and silhouette legibility.",
+        "basis": "design_inference",
+        "source_ids": []
+      }
+    ],
+    "observable_or_narrative_evidence": [
+      "foot coverage",
+      "upper termination or waist continuity",
+      "support method when subtype-specific",
+      "paired left-right consistency",
+      "material opacity or pattern",
+      "include toes to separate stockings from leg warmers",
+      "include upper thigh or waist to distinguish stockings from tights",
+      "show garter clips in profile or three-quarter view",
+      "show silicone-style band as an integrated top rather than dangling straps",
+      "exact denier",
+      "fiber composition",
+      "comfort or stay-up reliability",
+      "historical date without corroborating context"
+    ],
+    "preference_axes": [
+      {
+        "id": "support_topology",
+        "description": "support_topology",
+        "values": [
+          {
+            "id": "garter",
+            "label": "garter",
+            "request_cues": [
+              "가터",
+              "서스펜더",
+              "클립",
+              "가터벨트"
+            ]
+          },
+          {
+            "id": "hold_up",
+            "label": "hold_up",
+            "request_cues": [
+              "밴드",
+              "홀드업",
+              "스테이업",
+              "실리콘 탑"
+            ]
+          },
+          {
+            "id": "tights",
+            "label": "tights",
+            "request_cues": [
+              "팬티스타킹",
+              "허리까지",
+              "올인원",
+              "타이츠"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "opacity",
+        "description": "opacity",
+        "values": [
+          {
+            "id": "sheer_low_denier",
+            "label": "sheer_low_denier",
+            "request_cues": [
+              "시스루",
+              "얇은",
+              "저데니어",
+              "투명한"
+            ]
+          },
+          {
+            "id": "opaque_high_denier",
+            "label": "opaque_high_denier",
+            "request_cues": [
+              "불투명",
+              "두꺼운",
+              "고데니어",
+              "보온"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "surface_pattern",
+        "description": "surface_pattern",
+        "values": [
+          {
+            "id": "plain",
+            "label": "plain",
+            "request_cues": [
+              "무지",
+              "플레인"
+            ]
+          },
+          {
+            "id": "back_seam",
+            "label": "back_seam",
+            "request_cues": [
+              "백심",
+              "시머",
+              "뒤 세로선"
+            ]
+          },
+          {
+            "id": "fishnet",
+            "label": "fishnet",
+            "request_cues": [
+              "망사",
+              "피시넷"
+            ]
+          },
+          {
+            "id": "lace_welt",
+            "label": "lace_welt",
+            "request_cues": [
+              "레이스 탑",
+              "레이스 밴드"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "color",
+        "description": "color",
+        "values": [
+          {
+            "id": "black",
+            "label": "black",
+            "request_cues": [
+              "검정",
+              "블랙"
+            ]
+          },
+          {
+            "id": "white",
+            "label": "white",
+            "request_cues": [
+              "흰색",
+              "화이트"
+            ]
+          },
+          {
+            "id": "skin_tone",
+            "label": "skin_tone",
+            "request_cues": [
+              "살색",
+              "스킨톤"
+            ]
+          },
+          {
+            "id": "accent_color",
+            "label": "accent_color",
+            "request_cues": [
+              "포인트 컬러",
+              "배색"
+            ]
+          }
+        ]
+      }
+    ],
+    "candidates": [
+      {
+        "id": "moe_candidate_moe_stockings_neutral",
+        "label_en": "Canonical researched separate thigh stockings",
+        "subtype_id": "self_supporting_sheer_holdups",
+        "novelty_level": 1,
+        "canonical_default": true,
+        "intent_keys": [
+          "stockings.sheer_self_supporting_holdups_wide_band"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "neutral canonical default"
+        ],
+        "preference_profile": {
+          "intent": "neutral"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_neutral_primary",
+          "prompt_fragment_en": "Use two separate footed thigh stockings with two visible top bands, a narrow skin gap between each band and the torso garment, and continuous fabric to both covered toes; if self-supporting, show a wider hold-up band instead of inventing hidden garter straps.",
+          "observable_evidence": [
+            "two separate footed thigh stockings",
+            "two visible top bands",
+            "skin gap"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_neutral_support_1",
+            "prompt_fragment_en": "Directly show two separate footed thigh stockings.",
+            "observable_evidence": [
+              "two separate footed thigh stockings"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_neutral_support_2",
+            "prompt_fragment_en": "Directly show two visible top bands.",
+            "observable_evidence": [
+              "two visible top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_neutral_support_3",
+            "prompt_fragment_en": "Directly show skin gap.",
+            "observable_evidence": [
+              "skin gap"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_preference",
+        "label_en": "Preference-developed separate thigh stockings",
+        "subtype_id": "garter_supported_seam_back",
+        "novelty_level": 2,
+        "canonical_default": false,
+        "intent_keys": [
+          "stockings.garter_supported_sheer_seam_back"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "가터벨트",
+          "seam-back",
+          "후면 3/4",
+          "네 개의 가터"
+        ],
+        "preference_profile": {
+          "support_type": "garter_supported",
+          "pattern": "seam_back",
+          "viewpoint": "rear_three_quarter"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_preference_primary",
+          "prompt_fragment_en": "Choose sheer seam-back stockings supported by a garter belt, shown rear three-quarter so four suspender straps connect to two top bands and each center-back seam continues down the leg.",
+          "observable_evidence": [
+            "four visible garter straps",
+            "two separate stocking top bands",
+            "continuous center-back seams"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_preference_support_1",
+            "prompt_fragment_en": "Directly show four visible garter straps.",
+            "observable_evidence": [
+              "four visible garter straps"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_preference_support_2",
+            "prompt_fragment_en": "Directly show two separate stocking top bands.",
+            "observable_evidence": [
+              "two separate stocking top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_preference_support_3",
+            "prompt_fragment_en": "Directly show continuous center-back seams.",
+            "observable_evidence": [
+              "continuous center-back seams"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_primary_garter",
+        "label_en": "st primary garter",
+        "subtype_id": "st_garter_stockings",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_primary_garter"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "가터",
+          "서스펜더",
+          "클립",
+          "가터벨트",
+          "검정",
+          "블랙"
+        ],
+        "preference_profile": {
+          "support_topology": "garter",
+          "color": "black"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_primary_garter_primary",
+          "prompt_fragment_en": "Replace vague thigh-high legwear with separately supported stockings and route each strap to a visible welt.",
+          "observable_evidence": [
+            "skin gap above welts",
+            "clips meet both stockings",
+            "toes are covered",
+            "no waist-to-toe pantyhose continuity"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_primary_garter_support_1",
+            "prompt_fragment_en": "Directly show skin gap above welts.",
+            "observable_evidence": [
+              "skin gap above welts"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_garter_support_2",
+            "prompt_fragment_en": "Directly show clips meet both stockings.",
+            "observable_evidence": [
+              "clips meet both stockings"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_garter_support_3",
+            "prompt_fragment_en": "Directly show toes are covered.",
+            "observable_evidence": [
+              "toes are covered"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_primary_holdup",
+        "label_en": "st primary holdup",
+        "subtype_id": "st_hold_ups",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_primary_holdup"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "밴드",
+          "홀드업",
+          "스테이업",
+          "실리콘 탑",
+          "무지",
+          "플레인",
+          "레이스 탑",
+          "레이스 밴드",
+          "검정",
+          "블랙",
+          "흰색",
+          "화이트"
+        ],
+        "preference_profile": {
+          "support_topology": "hold_up",
+          "surface_pattern": "lace_welt",
+          "color": "white"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_primary_holdup_primary",
+          "prompt_fragment_en": "Specify self-supporting hold-ups and keep the top bands exposed enough to distinguish them from tights.",
+          "observable_evidence": [
+            "two separate top bands",
+            "skin gap above each band",
+            "covered toes",
+            "no dangling clips"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_primary_holdup_support_1",
+            "prompt_fragment_en": "Directly show two separate top bands.",
+            "observable_evidence": [
+              "two separate top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_holdup_support_2",
+            "prompt_fragment_en": "Directly show skin gap above each band.",
+            "observable_evidence": [
+              "skin gap above each band"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_holdup_support_3",
+            "prompt_fragment_en": "Directly show covered toes.",
+            "observable_evidence": [
+              "covered toes"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_primary_tights",
+        "label_en": "st primary tights",
+        "subtype_id": "st_tights_pantyhose",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_primary_tights"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "팬티스타킹",
+          "허리까지",
+          "올인원",
+          "타이츠",
+          "살색",
+          "스킨톤"
+        ],
+        "preference_profile": {
+          "support_topology": "tights",
+          "color": "skin_tone"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_primary_tights_primary",
+          "prompt_fragment_en": "Route broad Korean '스타킹' cues here only when waist-to-toe continuity or pantyhose/tights wording is explicit.",
+          "observable_evidence": [
+            "waist section is visible or clearly covered by an overlaying garment",
+            "no thigh-top bands",
+            "continuous material to toes"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_primary_tights_support_1",
+            "prompt_fragment_en": "Directly show waist section is visible or clearly covered by an overlaying garment.",
+            "observable_evidence": [
+              "waist section is visible or clearly covered by an overlaying garment"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_tights_support_2",
+            "prompt_fragment_en": "Directly show no thigh-top bands.",
+            "observable_evidence": [
+              "no thigh-top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_tights_support_3",
+            "prompt_fragment_en": "Directly show continuous material to toes.",
+            "observable_evidence": [
+              "continuous material to toes"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_support_garter_hardware",
+        "label_en": "st support garter hardware",
+        "subtype_id": "st_garter_stockings",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_garter_hardware"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "가터",
+          "서스펜더",
+          "클립",
+          "가터벨트"
+        ],
+        "preference_profile": {
+          "support_topology": "garter"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_garter_hardware_primary",
+          "prompt_fragment_en": "Add physically routed support hardware and prevent straps from terminating in empty space.",
+          "observable_evidence": [
+            "each visible strap connects belt to welt",
+            "clip orientation follows tension"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_garter_hardware_support_1",
+            "prompt_fragment_en": "Directly show each visible strap connects belt to welt.",
+            "observable_evidence": [
+              "each visible strap connects belt to welt"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_garter_hardware_support_2",
+            "prompt_fragment_en": "Directly show clip orientation follows tension.",
+            "observable_evidence": [
+              "clip orientation follows tension"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_support_sheer",
+        "label_en": "st support sheer",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_sheer"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "시스루",
+          "얇은",
+          "저데니어",
+          "투명한"
+        ],
+        "preference_profile": {
+          "opacity": "sheer_low_denier"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_sheer_primary",
+          "prompt_fragment_en": "Lower opacity while preserving garment edges and paired density; avoid bare-looking legs with only a top band.",
+          "observable_evidence": [
+            "consistent sheer tone across both legs",
+            "toe and welt density changes remain legible"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_sheer_support_1",
+            "prompt_fragment_en": "Directly show consistent sheer tone across both legs.",
+            "observable_evidence": [
+              "consistent sheer tone across both legs"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_sheer_support_2",
+            "prompt_fragment_en": "Directly show toe and welt density changes remain legible.",
+            "observable_evidence": [
+              "toe and welt density changes remain legible"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_support_opaque",
+        "label_en": "st support opaque",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_opaque"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "불투명",
+          "두꺼운",
+          "고데니어",
+          "보온"
+        ],
+        "preference_profile": {
+          "opacity": "opaque_high_denier"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_opaque_primary",
+          "prompt_fragment_en": "Use high opacity and soft textile response; do not render as glossy latex.",
+          "observable_evidence": [
+            "skin is not visible through main knit",
+            "material still reads as flexible hosiery"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_opaque_support_1",
+            "prompt_fragment_en": "Directly show skin is not visible through main knit.",
+            "observable_evidence": [
+              "skin is not visible through main knit"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_opaque_support_2",
+            "prompt_fragment_en": "Directly show material still reads as flexible hosiery.",
+            "observable_evidence": [
+              "material still reads as flexible hosiery"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_support_back_seam",
+        "label_en": "st support back seam",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_back_seam"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "백심",
+          "시머",
+          "뒤 세로선"
+        ],
+        "preference_profile": {
+          "surface_pattern": "back_seam"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_back_seam_primary",
+          "prompt_fragment_en": "Add paired rear seams and choose a rear-three-quarter view; prevent seams from drifting around the calf.",
+          "observable_evidence": [
+            "two continuous centered lines",
+            "lines align from heel upward"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_back_seam_support_1",
+            "prompt_fragment_en": "Directly show two continuous centered lines.",
+            "observable_evidence": [
+              "two continuous centered lines"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_back_seam_support_2",
+            "prompt_fragment_en": "Directly show lines align from heel upward.",
+            "observable_evidence": [
+              "lines align from heel upward"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      {
+        "id": "moe_candidate_moe_stockings_st_support_pattern",
+        "label_en": "st support pattern",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_pattern"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "망사",
+          "피시넷",
+          "포인트 컬러",
+          "배색"
+        ],
+        "preference_profile": {
+          "surface_pattern": "fishnet",
+          "color": "accent_color"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_pattern_primary",
+          "prompt_fragment_en": "Apply one pattern system to both legs without allowing it to replace the welt, clips, or waist evidence.",
+          "observable_evidence": [
+            "pattern density is paired",
+            "mesh deforms coherently around knees and ankles"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_pattern_support_1",
+            "prompt_fragment_en": "Directly show pattern density is paired.",
+            "observable_evidence": [
+              "pattern density is paired"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_pattern_support_2",
+            "prompt_fragment_en": "Directly show mesh deforms coherently around knees and ankles.",
+            "observable_evidence": [
+              "mesh deforms coherently around knees and ankles"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      }
+    ],
+    "compatibility_and_conflicts": [
+      "moe_classic_bunny_costume, historically with layered hosiery",
+      "moe_reverse_bunny_costume as a limb-coverage anchor",
+      "moe_thermal_bodysuit in standalone styling",
+      "moe_virgin_killer_clothing when the skirt hem does not hide all support evidence",
+      "Dolphin shorts can layer over tights or reveal thigh-high bands, but the result becomes deliberate mixed styling rather than an inherent feature of the shorts.",
+      "garter stockings, hold-ups, and tights as simultaneous alternative support topologies on the same legs",
+      "footless leggings or over-knee socks when the requested evidence is stockings"
+    ],
+    "format_implications": [
+      "The frame must include toes and either upper thighs or waist to classify hosiery topology.",
+      "Rear-three-quarter views are mandatory for back-seam evidence.",
+      "Side or waist-inclusive views are best for garter hardware; close leg crops often hide the support method."
+    ],
+    "source_supported_claims": [
+      {
+        "id": "moe_claim_18_definition",
+        "claim": "Stockings are paired footed knitted garments extending above the knee, historically separate from a waist garment. Tights or pantyhose combine both legs and the waist in one garment; hold-ups use an integrated elastic or silicone top, while traditional stockings require garters or suspenders.",
+        "source_ids": [
+          "blog_452",
+          "v2_wardrobe_st_vam",
+          "v2_wardrobe_st_moma",
+          "v2_wardrobe_st_calzedonia",
+          "v2_wardrobe_st_wolford_report",
+          "v2_wardrobe_st_journelle"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "id": "moe_claim_18_evidence",
+        "claim": "The dossier separates the culture label from construction, action, relation, camera, or format evidence that can be requested explicitly.",
+        "source_ids": [
+          "ext_stockings_moma",
+          "v2_wardrobe_st_vam",
+          "v2_wardrobe_st_moma"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "cross_source_synthesis": "Museum sources establish the historical stocking-versus-tights distinction, while current manufacturer and fitter guides expose the practical support and denier axes. Because Korean '스타킹' can refer broadly to hosiery, routing must use support topology and visible upper termination rather than the noun alone.",
+    "design_inference": [
+      "Make support topology the first preference axis, then apply opacity and pattern as modifiers.",
+      "Require both upper termination and covered toes as observable subtype evidence."
+    ],
+    "limitations": [
+      "Retail terminology varies by region, particularly stockings versus hold-ups or stay-ups.",
+      "Exact denier and fiber content cannot be reliably inferred from a generated image.",
+      "The Korean origin blog's appeal claims are not treated as universal facts."
+    ],
+    "meaning_contract": {
+      "element_id": "moe_stockings",
+      "ordinal": 18,
+      "source_dossier": "body",
+      "canonical_definition_ko": "스타킹은 좌우 다리에 각각 신는 발 포함 편직 의복이다. 전통 스타킹은 가터로 지지되고, 홀드업은 자체 밴드로 지지되며, 팬티스타킹은 허리까지 하나로 이어지는 별도 구조다.",
+      "essential_semantics_ko": [
+        "좌우 두 개의 독립된 발 포함 의복",
+        "각 허벅지의 상단 밴드",
+        "발끝까지 이어지는 재질",
+        "선택한 지지 구조"
+      ],
+      "non_equivalents_ko": [
+        "허리까지 한 벌인 팬티스타킹",
+        "발이 없는 레깅스",
+        "니삭스",
+        "숨은 가터를 근거 없이 가정한 의상"
+      ],
+      "semantic_axes": [
+        "support_topology",
+        "opacity",
+        "surface_pattern",
+        "color",
+        "view"
+      ],
+      "runtime_label_policy": "allow",
+      "runtime_forbidden_labels": [],
+      "semantic_fidelity": "exact_componentized",
+      "component_groups": [
+        {
+          "id": "separate_footed_garments",
+          "minimum": 1,
+          "alternatives_en": [
+            "two separate footed thigh stockings",
+            "two separate stocking top bands",
+            "covered toes"
+          ]
+        },
+        {
+          "id": "support_topology",
+          "minimum": 1,
+          "alternatives_en": [
+            "visible top bands",
+            "garter straps",
+            "hold-up band",
+            "center-back seams"
+          ]
+        }
+      ],
+      "optional_components_en": [
+        "seam-back",
+        "sheer surface",
+        "opaque hold-ups"
+      ],
+      "false_substitutes_en": [
+        "pantyhose",
+        "leggings",
+        "thigh-high socks without feet",
+        "invented hidden garter"
+      ],
+      "do_not_infer_en": [
+        "wearer personality",
+        "occupation",
+        "sexual intent"
+      ],
+      "adult_requirement": "explicit_adult_for_body_focus",
+      "capability": {
+        "single_frame": "exact",
+        "sequence": "not_required",
+        "interaction": "not_required"
+      }
+    },
+    "meaning_contract_sha256": "984a5092d6dcbd4acefbac84ad021ad9b52220e6d82ddd9b54cea1674afb828c",
+    "visual_meaning_contract": {
+      "element_id": "moe_stockings",
+      "ordinal": 18,
+      "base_contract_sha256": "984a5092d6dcbd4acefbac84ad021ad9b52220e6d82ddd9b54cea1674afb828c",
+      "default_variant_id": "self_supporting_holdups",
+      "alias_bindings": [
+        {
+          "alias": "스타킹",
+          "relation": "exact",
+          "variant_id": null
+        },
+        {
+          "alias": "thigh stockings",
+          "relation": "exact",
+          "variant_id": null
+        },
+        {
+          "alias": "separate stockings",
+          "relation": "carrier",
+          "variant_id": null
+        },
+        {
+          "alias": "hold-up stockings",
+          "relation": "variant",
+          "variant_id": "self_supporting_holdups"
+        }
+      ],
+      "visual_variants": [
+        {
+          "id": "garter_supported",
+          "candidate_subtype_ids": [
+            "st_garter_stockings",
+            "garter_supported_seam_back"
+          ],
+          "required_component_group_ids": [
+            "separate_footed_garments",
+            "support_topology"
+          ],
+          "all_of_en": [
+            "two separate footed stockings",
+            "visible garter straps clipped to both upper stocking bands"
+          ],
+          "any_of": {
+            "minimum": 0,
+            "alternatives_en": []
+          },
+          "topology_edges_en": [
+            "fabric opacity seam and band continue consistently from thigh to foot"
+          ],
+          "camera_requirements_en": [
+            "full leg view including both top bands and both covered feet"
+          ],
+          "temporal_states_en": [],
+          "interaction_requirements_en": [],
+          "negative_visual_confounds_en": [
+            "pantyhose",
+            "leggings",
+            "thigh-high socks without feet",
+            "invented hidden garter"
+          ],
+          "supported_output_modes": [
+            "single_frame",
+            "paired_frame",
+            "sequence"
+          ]
+        },
+        {
+          "id": "self_supporting_holdups",
+          "candidate_subtype_ids": [
+            "st_hold_ups",
+            "self_supporting_sheer_holdups"
+          ],
+          "required_component_group_ids": [
+            "separate_footed_garments",
+            "support_topology"
+          ],
+          "all_of_en": [
+            "two separate footed stockings",
+            "self-supporting top bands without invented garter straps"
+          ],
+          "any_of": {
+            "minimum": 0,
+            "alternatives_en": []
+          },
+          "topology_edges_en": [
+            "fabric opacity seam and band continue consistently from thigh to foot"
+          ],
+          "camera_requirements_en": [
+            "full leg view including both top bands and both covered feet"
+          ],
+          "temporal_states_en": [],
+          "interaction_requirements_en": [],
+          "negative_visual_confounds_en": [
+            "pantyhose",
+            "leggings",
+            "thigh-high socks without feet",
+            "invented hidden garter"
+          ],
+          "supported_output_modes": [
+            "single_frame",
+            "paired_frame",
+            "sequence"
+          ]
+        },
+        {
+          "id": "surface_or_contrast_study",
+          "candidate_subtype_ids": [
+            "st_surface_style",
+            "st_tights_pantyhose"
+          ],
+          "required_component_group_ids": [
+            "separate_footed_garments",
+            "support_topology"
+          ],
+          "all_of_en": [
+            "explicit side-by-side distinction between separate stockings and one-piece pantyhose",
+            "feet and waist topology both visible for comparison"
+          ],
+          "any_of": {
+            "minimum": 0,
+            "alternatives_en": []
+          },
+          "topology_edges_en": [
+            "fabric opacity seam and band continue consistently from thigh to foot"
+          ],
+          "camera_requirements_en": [
+            "full leg view including both top bands and both covered feet"
+          ],
+          "temporal_states_en": [],
+          "interaction_requirements_en": [],
+          "negative_visual_confounds_en": [
+            "pantyhose",
+            "leggings",
+            "thigh-high socks without feet",
+            "invented hidden garter"
+          ],
+          "supported_output_modes": [
+            "paired_frame",
+            "sequence"
+          ]
+        }
+      ],
+      "image_evidence_id": "moe_image_evidence_18"
+    },
+    "visual_meaning_contract_sha256": "42008ad84c32e32cb505c1127dbc7062ad7fc4df6acef68de954d1f1475a98e8"
+  },
+  "entire_legacy_element": {
+    "id": "moe_stockings",
+    "ordinal": 18,
+    "category": "wardrobe",
+    "label_ko": "스타킹",
+    "label_en": "separate thigh stockings",
+    "aliases": [
+      "스타킹",
+      "thigh stockings",
+      "separate stockings",
+      "hold-up stockings"
+    ],
+    "mechanism_type": "wardrobe_construction",
+    "representation_mode": "single_frame",
+    "prompt_clause_en": "Use two separate footed thigh stockings with two visible top bands, a narrow skin gap between each band and the torso garment, and continuous fabric to both covered toes; if self-supporting, show a wider hold-up band instead of inventing hidden garter straps",
+    "evidence_groups_en": [
+      [
+        "two separate footed thigh stockings"
+      ],
+      [
+        "two visible top bands"
+      ],
+      [
+        "skin gap"
+      ],
+      [
+        "covered toes"
+      ],
+      [
+        "hold-up band"
+      ]
+    ],
+    "observable_evidence": [
+      "paired independent leg tubes",
+      "top-band boundary",
+      "skin gap",
+      "foot coverage"
+    ],
+    "incompatible_with": [],
+    "origin_source_ids": [
+      "blog_452"
+    ],
+    "independent_source_ids": [
+      "ext_stockings_moma"
+    ],
+    "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label.",
+    "design_inference": "The default chooses hold-ups so the support relation remains visible without adding an unseen garter."
+  },
+  "entire_visual_contract": {
+    "element_id": "moe_stockings",
+    "ordinal": 18,
+    "base_contract_sha256": "984a5092d6dcbd4acefbac84ad021ad9b52220e6d82ddd9b54cea1674afb828c",
+    "default_variant_id": "self_supporting_holdups",
+    "alias_bindings": [
+      {
+        "alias": "스타킹",
+        "relation": "exact",
+        "variant_id": null
+      },
+      {
+        "alias": "thigh stockings",
+        "relation": "exact",
+        "variant_id": null
+      },
+      {
+        "alias": "separate stockings",
+        "relation": "carrier",
+        "variant_id": null
+      },
+      {
+        "alias": "hold-up stockings",
+        "relation": "variant",
+        "variant_id": "self_supporting_holdups"
+      }
+    ],
+    "visual_variants": [
+      {
+        "id": "garter_supported",
+        "candidate_subtype_ids": [
+          "st_garter_stockings",
+          "garter_supported_seam_back"
+        ],
+        "required_component_group_ids": [
+          "separate_footed_garments",
+          "support_topology"
+        ],
+        "all_of_en": [
+          "two separate footed stockings",
+          "visible garter straps clipped to both upper stocking bands"
+        ],
+        "any_of": {
+          "minimum": 0,
+          "alternatives_en": []
+        },
+        "topology_edges_en": [
+          "fabric opacity seam and band continue consistently from thigh to foot"
+        ],
+        "camera_requirements_en": [
+          "full leg view including both top bands and both covered feet"
+        ],
+        "temporal_states_en": [],
+        "interaction_requirements_en": [],
+        "negative_visual_confounds_en": [
+          "pantyhose",
+          "leggings",
+          "thigh-high socks without feet",
+          "invented hidden garter"
+        ],
+        "supported_output_modes": [
+          "single_frame",
+          "paired_frame",
+          "sequence"
+        ]
+      },
+      {
+        "id": "self_supporting_holdups",
+        "candidate_subtype_ids": [
+          "st_hold_ups",
+          "self_supporting_sheer_holdups"
+        ],
+        "required_component_group_ids": [
+          "separate_footed_garments",
+          "support_topology"
+        ],
+        "all_of_en": [
+          "two separate footed stockings",
+          "self-supporting top bands without invented garter straps"
+        ],
+        "any_of": {
+          "minimum": 0,
+          "alternatives_en": []
+        },
+        "topology_edges_en": [
+          "fabric opacity seam and band continue consistently from thigh to foot"
+        ],
+        "camera_requirements_en": [
+          "full leg view including both top bands and both covered feet"
+        ],
+        "temporal_states_en": [],
+        "interaction_requirements_en": [],
+        "negative_visual_confounds_en": [
+          "pantyhose",
+          "leggings",
+          "thigh-high socks without feet",
+          "invented hidden garter"
+        ],
+        "supported_output_modes": [
+          "single_frame",
+          "paired_frame",
+          "sequence"
+        ]
+      },
+      {
+        "id": "surface_or_contrast_study",
+        "candidate_subtype_ids": [
+          "st_surface_style",
+          "st_tights_pantyhose"
+        ],
+        "required_component_group_ids": [
+          "separate_footed_garments",
+          "support_topology"
+        ],
+        "all_of_en": [
+          "explicit side-by-side distinction between separate stockings and one-piece pantyhose",
+          "feet and waist topology both visible for comparison"
+        ],
+        "any_of": {
+          "minimum": 0,
+          "alternatives_en": []
+        },
+        "topology_edges_en": [
+          "fabric opacity seam and band continue consistently from thigh to foot"
+        ],
+        "camera_requirements_en": [
+          "full leg view including both top bands and both covered feet"
+        ],
+        "temporal_states_en": [],
+        "interaction_requirements_en": [],
+        "negative_visual_confounds_en": [
+          "pantyhose",
+          "leggings",
+          "thigh-high socks without feet",
+          "invented hidden garter"
+        ],
+        "supported_output_modes": [
+          "paired_frame",
+          "sequence"
+        ]
+      }
+    ],
+    "image_evidence_id": "moe_image_evidence_18"
+  },
+  "candidate_reviews": [
+    {
+      "candidate_id": "moe_candidate_moe_stockings_neutral",
+      "term_ids": [
+        "MG-09-003",
+        "MG-09-005"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "기본 사례는 두 개의 발가락까지 덮는 허벅지 스타킹·양쪽 윗밴드·옷과 밴드 사이 피부 간격 및 홀드업 시 넓은 밴드를 제시한다. 일반 스타킹을 모두 홀드업으로 확정하지 않는다.",
+      "candidate_record_sha256": "5a0ccabf04dd33daf176b404cbcad5675b78785325d51ee1b189affa87b7eaf8",
+      "record": {
+        "id": "moe_candidate_moe_stockings_neutral",
+        "label_en": "Canonical researched separate thigh stockings",
+        "subtype_id": "self_supporting_sheer_holdups",
+        "novelty_level": 1,
+        "canonical_default": true,
+        "intent_keys": [
+          "stockings.sheer_self_supporting_holdups_wide_band"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "neutral canonical default"
+        ],
+        "preference_profile": {
+          "intent": "neutral"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_neutral_primary",
+          "prompt_fragment_en": "Use two separate footed thigh stockings with two visible top bands, a narrow skin gap between each band and the torso garment, and continuous fabric to both covered toes; if self-supporting, show a wider hold-up band instead of inventing hidden garter straps.",
+          "observable_evidence": [
+            "two separate footed thigh stockings",
+            "two visible top bands",
+            "skin gap"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_neutral_support_1",
+            "prompt_fragment_en": "Directly show two separate footed thigh stockings.",
+            "observable_evidence": [
+              "two separate footed thigh stockings"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_neutral_support_2",
+            "prompt_fragment_en": "Directly show two visible top bands.",
+            "observable_evidence": [
+              "two visible top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_neutral_support_3",
+            "prompt_fragment_en": "Directly show skin gap.",
+            "observable_evidence": [
+              "skin gap"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_preference",
+      "term_ids": [
+        "MG-09-003",
+        "MG-09-008"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "선택된 뒤 3/4 구도의 시어 뒤심 스타킹·가터벨트·4개 끈·2개 윗밴드·뒤 중심선이 함께 필요하다. 일반 가터에 4개 끈·뒤심·카메라를 강제하지 않는다.",
+      "candidate_record_sha256": "e525c8ccc52c26b258ed2dd7b0bd0a42aa221b00a55de042dc45d906b176b497",
+      "record": {
+        "id": "moe_candidate_moe_stockings_preference",
+        "label_en": "Preference-developed separate thigh stockings",
+        "subtype_id": "garter_supported_seam_back",
+        "novelty_level": 2,
+        "canonical_default": false,
+        "intent_keys": [
+          "stockings.garter_supported_sheer_seam_back"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "가터벨트",
+          "seam-back",
+          "후면 3/4",
+          "네 개의 가터"
+        ],
+        "preference_profile": {
+          "support_type": "garter_supported",
+          "pattern": "seam_back",
+          "viewpoint": "rear_three_quarter"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_preference_primary",
+          "prompt_fragment_en": "Choose sheer seam-back stockings supported by a garter belt, shown rear three-quarter so four suspender straps connect to two top bands and each center-back seam continues down the leg.",
+          "observable_evidence": [
+            "four visible garter straps",
+            "two separate stocking top bands",
+            "continuous center-back seams"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_preference_support_1",
+            "prompt_fragment_en": "Directly show four visible garter straps.",
+            "observable_evidence": [
+              "four visible garter straps"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_preference_support_2",
+            "prompt_fragment_en": "Directly show two separate stocking top bands.",
+            "observable_evidence": [
+              "two separate stocking top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_preference_support_3",
+            "prompt_fragment_en": "Directly show continuous center-back seams.",
+            "observable_evidence": [
+              "continuous center-back seams"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_primary_garter",
+      "term_ids": [
+        "MG-09-003",
+        "MG-09-008"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "분리 스타킹, 클립이 닿는 두 윗단·발가락 덮음·허리 연결 팬티스타킹과 차이를 사용. 색 등 선택 큐가 의미의 필수조건인지 별도 검토해야 한다.",
+      "candidate_record_sha256": "e3f777d4817fbba2b28824edfef254432a23aba161e07bd179deba10fe2a0146",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_primary_garter",
+        "label_en": "st primary garter",
+        "subtype_id": "st_garter_stockings",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_primary_garter"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "가터",
+          "서스펜더",
+          "클립",
+          "가터벨트",
+          "검정",
+          "블랙"
+        ],
+        "preference_profile": {
+          "support_topology": "garter",
+          "color": "black"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_primary_garter_primary",
+          "prompt_fragment_en": "Replace vague thigh-high legwear with separately supported stockings and route each strap to a visible welt.",
+          "observable_evidence": [
+            "skin gap above welts",
+            "clips meet both stockings",
+            "toes are covered",
+            "no waist-to-toe pantyhose continuity"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_primary_garter_support_1",
+            "prompt_fragment_en": "Directly show skin gap above welts.",
+            "observable_evidence": [
+              "skin gap above welts"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_garter_support_2",
+            "prompt_fragment_en": "Directly show clips meet both stockings.",
+            "observable_evidence": [
+              "clips meet both stockings"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_garter_support_3",
+            "prompt_fragment_en": "Directly show toes are covered.",
+            "observable_evidence": [
+              "toes are covered"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_primary_holdup",
+      "term_ids": [
+        "MG-09-003",
+        "MG-09-005"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "별도 밴드 두 개·각 밴드 위 간격·덮인 발가락·늘어진 클립 없음의 선택 사례. 보이는 밴드가 실제 실리콘 조성·지속 고정력을 입증하지 않는다.",
+      "candidate_record_sha256": "106eb52034874f327c8ce88d1b9385e8e8d78e12c12a2dc4110a4cd903eaf422",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_primary_holdup",
+        "label_en": "st primary holdup",
+        "subtype_id": "st_hold_ups",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_primary_holdup"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "밴드",
+          "홀드업",
+          "스테이업",
+          "실리콘 탑",
+          "무지",
+          "플레인",
+          "레이스 탑",
+          "레이스 밴드",
+          "검정",
+          "블랙",
+          "흰색",
+          "화이트"
+        ],
+        "preference_profile": {
+          "support_topology": "hold_up",
+          "surface_pattern": "lace_welt",
+          "color": "white"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_primary_holdup_primary",
+          "prompt_fragment_en": "Specify self-supporting hold-ups and keep the top bands exposed enough to distinguish them from tights.",
+          "observable_evidence": [
+            "two separate top bands",
+            "skin gap above each band",
+            "covered toes",
+            "no dangling clips"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_primary_holdup_support_1",
+            "prompt_fragment_en": "Directly show two separate top bands.",
+            "observable_evidence": [
+              "two separate top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_holdup_support_2",
+            "prompt_fragment_en": "Directly show skin gap above each band.",
+            "observable_evidence": [
+              "skin gap above each band"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_holdup_support_3",
+            "prompt_fragment_en": "Directly show covered toes.",
+            "observable_evidence": [
+              "covered toes"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_primary_tights",
+      "term_ids": [
+        "MG-09-004"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "타이츠/팬티스타킹 또는 허리까지 연속이 명시될 때의 라우팅 제안. 허리가 상의에 가려진 경우 actual waist continuity의 픽셀 근거는 미관찰이다.",
+      "candidate_record_sha256": "e60efe37f90892c0c39e682db57e6a64d126021d0aef4b98fb7ab6492ae685e6",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_primary_tights",
+        "label_en": "st primary tights",
+        "subtype_id": "st_tights_pantyhose",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_primary_tights"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "팬티스타킹",
+          "허리까지",
+          "올인원",
+          "타이츠",
+          "살색",
+          "스킨톤"
+        ],
+        "preference_profile": {
+          "support_topology": "tights",
+          "color": "skin_tone"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_primary_tights_primary",
+          "prompt_fragment_en": "Route broad Korean '스타킹' cues here only when waist-to-toe continuity or pantyhose/tights wording is explicit.",
+          "observable_evidence": [
+            "waist section is visible or clearly covered by an overlaying garment",
+            "no thigh-top bands",
+            "continuous material to toes"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_primary_tights_support_1",
+            "prompt_fragment_en": "Directly show waist section is visible or clearly covered by an overlaying garment.",
+            "observable_evidence": [
+              "waist section is visible or clearly covered by an overlaying garment"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_tights_support_2",
+            "prompt_fragment_en": "Directly show no thigh-top bands.",
+            "observable_evidence": [
+              "no thigh-top bands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_primary_tights_support_3",
+            "prompt_fragment_en": "Directly show continuous material to toes.",
+            "observable_evidence": [
+              "continuous material to toes"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_support_garter_hardware",
+      "term_ids": [
+        "MG-09-008"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "보이는 각 끈이 벨트에서 스타킹 윗단까지 이어지는 보조 관계 및 클립 방향. 실제 장력은 정지 이미지에서 추정하지 않는다.",
+      "candidate_record_sha256": "14990ef0aca14ebc043e63051bdd913833ab005a29fd96f413aec3546384bf9d",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_support_garter_hardware",
+        "label_en": "st support garter hardware",
+        "subtype_id": "st_garter_stockings",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_garter_hardware"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "가터",
+          "서스펜더",
+          "클립",
+          "가터벨트"
+        ],
+        "preference_profile": {
+          "support_topology": "garter"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_garter_hardware_primary",
+          "prompt_fragment_en": "Add physically routed support hardware and prevent straps from terminating in empty space.",
+          "observable_evidence": [
+            "each visible strap connects belt to welt",
+            "clip orientation follows tension"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_garter_hardware_support_1",
+            "prompt_fragment_en": "Directly show each visible strap connects belt to welt.",
+            "observable_evidence": [
+              "each visible strap connects belt to welt"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_garter_hardware_support_2",
+            "prompt_fragment_en": "Directly show clip orientation follows tension.",
+            "observable_evidence": [
+              "clip orientation follows tension"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_support_sheer",
+      "term_ids": [
+        "MG-09-003",
+        "MG-09-004"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "양쪽의 일관된 비침·의복 경계 및 발가락/윗밴드 밀도 차이 보존. paired_or_sequence 모드이므로 단일 프레임에 자동 결합하면 안 된다.",
+      "candidate_record_sha256": "108decba32f5dfb69a54524d73bfdc79ae74372cef7cc15cb76284d48f96f794",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_support_sheer",
+        "label_en": "st support sheer",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_sheer"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "시스루",
+          "얇은",
+          "저데니어",
+          "투명한"
+        ],
+        "preference_profile": {
+          "opacity": "sheer_low_denier"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_sheer_primary",
+          "prompt_fragment_en": "Lower opacity while preserving garment edges and paired density; avoid bare-looking legs with only a top band.",
+          "observable_evidence": [
+            "consistent sheer tone across both legs",
+            "toe and welt density changes remain legible"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_sheer_support_1",
+            "prompt_fragment_en": "Directly show consistent sheer tone across both legs.",
+            "observable_evidence": [
+              "consistent sheer tone across both legs"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_sheer_support_2",
+            "prompt_fragment_en": "Directly show toe and welt density changes remain legible.",
+            "observable_evidence": [
+              "toe and welt density changes remain legible"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_support_opaque",
+      "term_ids": [
+        "MG-09-003",
+        "MG-09-004"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "아래 피부가 비치지 않되 유연한 스타킹 원단으로 읽히는 선택 예. 라텍스가 아니라는 부정은 해당 후보 조건이며 숫자 데니어 증명은 별도다.",
+      "candidate_record_sha256": "0aee1f08f6df5b7541664bfaff3d40f6df597f028cb12e683930088e00193a38",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_support_opaque",
+        "label_en": "st support opaque",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_opaque"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "불투명",
+          "두꺼운",
+          "고데니어",
+          "보온"
+        ],
+        "preference_profile": {
+          "opacity": "opaque_high_denier"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_opaque_primary",
+          "prompt_fragment_en": "Use high opacity and soft textile response; do not render as glossy latex.",
+          "observable_evidence": [
+            "skin is not visible through main knit",
+            "material still reads as flexible hosiery"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_opaque_support_1",
+            "prompt_fragment_en": "Directly show skin is not visible through main knit.",
+            "observable_evidence": [
+              "skin is not visible through main knit"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_opaque_support_2",
+            "prompt_fragment_en": "Directly show material still reads as flexible hosiery.",
+            "observable_evidence": [
+              "material still reads as flexible hosiery"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_support_back_seam",
+      "term_ids": [
+        "MG-09-003",
+        "MG-09-004"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "양쪽 뒤 중심선·발뒤꿈치에서 위쪽 정렬과 뒤 3/4 시점의 선택 예. 구조 전체나 실제 봉제 공정을 확정하지 않는다.",
+      "candidate_record_sha256": "4a8b687bf086ba45621e5b106d80a2f15c08ed416ce1b00463792b1ee728cc1d",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_support_back_seam",
+        "label_en": "st support back seam",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_back_seam"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "백심",
+          "시머",
+          "뒤 세로선"
+        ],
+        "preference_profile": {
+          "surface_pattern": "back_seam"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_back_seam_primary",
+          "prompt_fragment_en": "Add paired rear seams and choose a rear-three-quarter view; prevent seams from drifting around the calf.",
+          "observable_evidence": [
+            "two continuous centered lines",
+            "lines align from heel upward"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_back_seam_support_1",
+            "prompt_fragment_en": "Directly show two continuous centered lines.",
+            "observable_evidence": [
+              "two continuous centered lines"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_back_seam_support_2",
+            "prompt_fragment_en": "Directly show lines align from heel upward.",
+            "observable_evidence": [
+              "lines align from heel upward"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    },
+    {
+      "candidate_id": "moe_candidate_moe_stockings_st_support_pattern",
+      "term_ids": [
+        "MG-09-006"
+      ],
+      "classification": "scoped_selected_illustration_candidate",
+      "comparison": "양다리에 한 무늬 체계를 유지하며 윗단·클립·허리 단서를 덮지 않는 표면 장식 후보. 모든 피시넷에 가터 클립을 필수화하면 안 된다.",
+      "candidate_record_sha256": "96ead7dfc2870d2b1547c54b637e72c5671ffd88d5e0363295ae904e3ca1240e",
+      "record": {
+        "id": "moe_candidate_moe_stockings_st_support_pattern",
+        "label_en": "st support pattern",
+        "subtype_id": "st_surface_style",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.stockings.st_support_pattern"
+        ],
+        "representation_mode": "single_frame",
+        "integration_role": "wardrobe",
+        "selection_cues": [
+          "망사",
+          "피시넷",
+          "포인트 컬러",
+          "배색"
+        ],
+        "preference_profile": {
+          "surface_pattern": "fishnet",
+          "color": "accent_color"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_stockings_st_support_pattern_primary",
+          "prompt_fragment_en": "Apply one pattern system to both legs without allowing it to replace the welt, clips, or waist evidence.",
+          "observable_evidence": [
+            "pattern density is paired",
+            "mesh deforms coherently around knees and ankles"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_stockings_st_support_pattern_support_1",
+            "prompt_fragment_en": "Directly show pattern density is paired.",
+            "observable_evidence": [
+              "pattern density is paired"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_stockings_st_support_pattern_support_2",
+            "prompt_fragment_en": "Directly show mesh deforms coherently around knees and ankles.",
+            "observable_evidence": [
+              "mesh deforms coherently around knees and ankles"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_secondary|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "wardrobe_support",
+          "footed_legwear",
+          "garment_top_boundary"
+        ],
+        "source_claim_ids": [
+          "moe_claim_18_definition",
+          "moe_claim_18_evidence"
+        ],
+        "limitation": "Waist-to-toe pantyhose, footless tights, leggings and stockings are different constructions even when colloquial Korean uses one label."
+      },
+      "review_depth": "core_proposition_only"
+    }
+  ],
+  "unverified": "These are source assets and contract review only. Active runtime, routing, search exposure, generation and pixel validation were not tested. Other illustration elements and candidate families remain open.",
+  "possible_contract_conflict": "surface_or_contrast_study requires side-by-side separate stockings and pantyhose but its negative_visual_confounds_en also includes pantyhose. This may mean pantyhose as a substitute rather than a forbidden comparison subject; clarify semantics and test evaluator, not an established runtime failure.",
+  "review_depth_counts": {
+    "full_record": 0,
+    "core_proposition_only": 10
+  }
+}

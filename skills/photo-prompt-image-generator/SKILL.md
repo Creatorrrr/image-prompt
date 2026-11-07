@@ -547,6 +547,7 @@ All references below are post-core only. Load only what the frozen request and r
 - Image generation, saving, retries, and ledger records: `references/image-runtime.md`
 - Body-action review binding and conditional pixel gates: `references/embodiment-preflight.md`
 - Dictionary/profile edits, validation, semantic index, and evaluation: `references/maintenance.md`
+- Magical-girl research inventory and maintenance boundaries: `references/magical-girl-semantics-20261107.md`
 
 Do not load every reference for a normal prompt request. Maintenance fixtures and research evidence are never runtime composition sources.
 

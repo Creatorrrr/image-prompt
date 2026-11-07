@@ -23,6 +23,13 @@ python3 skills/photo-prompt-image-generator/scripts/photo_prepare_reviewed_views
 
 현재 고정된 검색본과 별도 후보 원본 인덱스는 크기 때문에 Git에 포함하지 않는다. `data/tobe-release-lock.json`에 기록된 해시와 일치하는 두 파일을 별도로 보관하고 옮겨야 한다. 기존 모델 설치가 없다면 먼저 [로컬 임베딩 설치](local-embeddings.md)를 완료한다. 그다음 저장소 루트에서 실행한다.
 
+2026-11-07 마법소녀 갱신의 로컬 검증 묶음은 저장소 루트의
+`generated/magical-girl-hf2-20261107/offline-release/archives/`에 있다.
+`generated/`는 Git 배포 대상이 아니므로 이 묶음은 별도로 보관·전달해야 한다.
+해당 묶음으로 별도 저장소와 skill 사본에 비활성 복원하고 인덱스 조각
+1,045개의 해시를 확인했다. 원본 기록과 각 데이터의 한계는
+`references/magical-girl-semantics-20261107.md`를 따른다.
+
 ```sh
 python3 skills/photo-prompt-image-generator/scripts/install_photo_tobe_bundle.py \
   --bundle /absolute/tobe-runtime-only-20261104.tar.zst \

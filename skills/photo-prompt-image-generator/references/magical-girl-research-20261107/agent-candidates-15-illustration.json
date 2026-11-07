@@ -1,0 +1,1441 @@
+{
+  "scope": "선행 어휘 검색에 없던 흑화 관련 일러스트 요소 및 11개 V4 후보의 의미별 대조",
+  "asset_sha256": {
+    "illustration_moe_grammar_v4.json": "85154fd28af2d31094cab80c4b73fe1845e3d2dd7f2522f5414afb1c5399a6e5",
+    "illustration_moe_elements_v1.json": "29247cafc226055961ae6c7e70ea26f43c1cc3399ebd151ecb5b087758923b9b",
+    "research_evidence_moe_elements/moe_meaning_contracts_v2.json": "b9430c06872b0d68c9d961ebf447bfe45f7591524a6b43bb7226c2930f97860e",
+    "illustration_moe_grammar_v5.json": "2ce8257abca1c710273775a415865a65adbf4995684c65b9283a0f72cf9b8c89"
+  },
+  "legacy_element": {
+    "id": "moe_darkening_corruption",
+    "ordinal": 1,
+    "category": "character_relationship_narrative",
+    "label_ko": "흑화·타락",
+    "label_en": "darkening or corruption arc",
+    "aliases": [
+      "흑화",
+      "타락",
+      "闇堕ち",
+      "corruption arc"
+    ],
+    "mechanism_type": "narrative_state",
+    "representation_mode": "paired_or_sequence",
+    "prompt_clause_en": "Use before-and-after panels of the same character, preserving one same identity marker while a formerly intact allegiance emblem becomes a visibly corrupted emblem with a concrete consequence in the later panel",
+    "evidence_groups_en": [
+      [
+        "before-and-after panels"
+      ],
+      [
+        "same identity marker"
+      ],
+      [
+        "corrupted emblem"
+      ],
+      [
+        "concrete consequence"
+      ]
+    ],
+    "observable_evidence": [
+      "identity marker repeated across states",
+      "changed allegiance or value symbol",
+      "later-state consequence"
+    ],
+    "incompatible_with": [],
+    "origin_source_ids": [
+      "blog_1172",
+      "blog_185"
+    ],
+    "independent_source_ids": [
+      "ext_darkening_kotobank"
+    ],
+    "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person.",
+    "design_inference": "A paired frame is the smallest honest default because the trope depends on identity continuity plus state transition."
+  },
+  "element_meaning_contract": {
+    "element_id": "moe_darkening_corruption",
+    "ordinal": 1,
+    "source_dossier": "narrative",
+    "canonical_definition_ko": "흑화·타락은 이미 알려진 인물의 가치, 충성, 판단 또는 존재 상태가 어두운 방향으로 변해 이전의 그 인물과 충돌하는 서사적 변화다. 자발적 선택, 절망, 세뇌, 빙의, 오염과 신체 변환은 서로 다른 주체성·정체성 관계를 가진다.",
+    "essential_semantics_ko": [
+      "변화 이전의 기준 상태",
+      "변화 원인과 당사자의 주체성",
+      "변화 뒤의 가치·관계·행동 차이",
+      "동일 인물임을 잇는 연속 표지"
+    ],
+    "non_equivalents_ko": [
+      "검은 복장이나 어두운 팔레트만 적용한 상태",
+      "일시적 분노",
+      "원래부터 악인이었던 인물",
+      "잠입을 위한 위장 변절"
+    ],
+    "semantic_axes": [
+      "cause_agency",
+      "identity_continuity",
+      "value_or_allegiance_delta",
+      "reversibility",
+      "temporal_phase"
+    ],
+    "runtime_label_policy": "allow",
+    "runtime_forbidden_labels": [],
+    "semantic_fidelity": "sequence_required",
+    "component_groups": [
+      {
+        "id": "before_after_continuity",
+        "minimum": 1,
+        "alternatives_en": [
+          "before-and-after panels",
+          "three-stage sequence",
+          "same identity marker"
+        ]
+      },
+      {
+        "id": "visible_state_delta",
+        "minimum": 1,
+        "alternatives_en": [
+          "corrupted emblem",
+          "broken oath emblem",
+          "irreversible allegiance mark",
+          "visible consequence"
+        ]
+      }
+    ],
+    "optional_components_en": [
+      "cause-specific aura",
+      "recovery attempt",
+      "former ally reaction"
+    ],
+    "false_substitutes_en": [
+      "dark costume only",
+      "generic evil smile",
+      "unrelated villain reveal"
+    ],
+    "do_not_infer_en": [
+      "voluntary choice without a shown or requested cause",
+      "irreversibility from one still",
+      "identity replacement when possession is intended"
+    ],
+    "adult_requirement": "none",
+    "capability": {
+      "single_frame": "partial",
+      "sequence": "required",
+      "interaction": "not_required"
+    }
+  },
+  "element_visual_meaning_contract": {
+    "element_id": "moe_darkening_corruption",
+    "ordinal": 1,
+    "base_contract_sha256": "a2fd210399fa2a393cd1b0b2862a761e0701e9b1890eac756ea54ceb80bdbfe2",
+    "default_variant_id": "canonical_visual_signature",
+    "alias_bindings": [
+      {
+        "alias": "흑화",
+        "relation": "exact",
+        "variant_id": null
+      },
+      {
+        "alias": "타락",
+        "relation": "exact",
+        "variant_id": null
+      },
+      {
+        "alias": "闇堕ち",
+        "relation": "exact",
+        "variant_id": null
+      },
+      {
+        "alias": "corruption arc",
+        "relation": "exact",
+        "variant_id": null
+      }
+    ],
+    "visual_variants": [
+      {
+        "id": "canonical_visual_signature",
+        "candidate_subtype_ids": [
+          "ambient_corruptive_exposure",
+          "coerced_reprogramming",
+          "external_gradual_corruption",
+          "incremental_compromise",
+          "latent_self_awakening",
+          "possession_takeover",
+          "reversible_recovery",
+          "voluntary_ideological_fall",
+          "voluntary_irreversible_corruption"
+        ],
+        "required_component_group_ids": [
+          "before_after_continuity",
+          "visible_state_delta"
+        ],
+        "all_of_en": [
+          "same camera and scale across the earlier and later character states",
+          "one unchanged identity anchor visible in every state"
+        ],
+        "any_of": {
+          "minimum": 1,
+          "alternatives_en": [
+            "expression and gaze direction change tied to the state change",
+            "palette or lighting delta tied to the state change",
+            "former ally reacting to the changed allegiance"
+          ]
+        },
+        "topology_edges_en": [
+          "the unchanged identity anchor connects the earlier and later figure while the allegiance marker changes"
+        ],
+        "camera_requirements_en": [
+          "matched full or three-quarter character framing without identity-obscuring crop"
+        ],
+        "temporal_states_en": [
+          "baseline state before the catalyst",
+          "changed allegiance and visible consequence after the catalyst"
+        ],
+        "interaction_requirements_en": [],
+        "negative_visual_confounds_en": [
+          "dark costume only",
+          "generic evil smile",
+          "unrelated villain reveal"
+        ],
+        "supported_output_modes": [
+          "paired_frame",
+          "sequence"
+        ]
+      }
+    ],
+    "image_evidence_id": "moe_image_evidence_01"
+  },
+  "compatibility_and_conflicts": [
+    "moe_tsf_transformation",
+    "Use only when bodily transformation and value corruption are independently evidenced; one does not imply the other.",
+    "moe_yandere_obsession",
+    "A love-driven corruption arc can combine them if the prior affectionate baseline and later controlling action are both shown.",
+    "multi_frame_narrative",
+    "Strong fit for cause-process-result and matched before/after.",
+    "possession",
+    "If an occupant fully replaces the host, label identity takeover rather than assuming the host's moral conversion.",
+    "Color and costume alone do not prove value change.",
+    "A person who was always aligned with the opposing side has no demonstrated fall.",
+    "Temporary emotion does not establish a persistent moral or allegiance change."
+  ],
+  "comparisons": [
+    {
+      "term_id": "MG-15-001",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_neutral",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "2be01733b1dfd205e5a7a89ceb080d1c35f32b5f0cbacf52fbbb038c3268907e",
+      "classification": "partial",
+      "comparison": "전후 두 패널, 동일 인물 표식, 기존 충성 문장 변질과 후기 구체 결과. 한 특정 외부 점진 침식 사례이며 모든 흑화의 필수 장면이 아니다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_neutral",
+        "label_en": "Canonical researched darkening or corruption arc",
+        "subtype_id": "external_gradual_corruption",
+        "novelty_level": 1,
+        "canonical_default": true,
+        "intent_keys": [
+          "corruption.external_pressure_then_allegiance_break"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "neutral canonical default"
+        ],
+        "preference_profile": {
+          "intent": "neutral"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_neutral_primary",
+          "prompt_fragment_en": "Use before-and-after panels of the same character, preserving one same identity marker while a formerly intact allegiance emblem becomes a visibly corrupted emblem with a concrete consequence in the later panel.",
+          "observable_evidence": [
+            "before-and-after panels",
+            "same identity marker",
+            "corrupted emblem"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_neutral_support_1",
+            "prompt_fragment_en": "Directly show before-and-after panels.",
+            "observable_evidence": [
+              "before-and-after panels"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_neutral_support_2",
+            "prompt_fragment_en": "Directly show same identity marker.",
+            "observable_evidence": [
+              "same identity marker"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_neutral_support_3",
+            "prompt_fragment_en": "Directly show corrupted emblem.",
+            "observable_evidence": [
+              "corrupted emblem"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-004",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_neutral",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "2be01733b1dfd205e5a7a89ceb080d1c35f32b5f0cbacf52fbbb038c3268907e",
+      "classification": "partial",
+      "comparison": "전후 두 패널, 동일 인물 표식, 기존 충성 문장 변질과 후기 구체 결과. 한 특정 외부 점진 침식 사례이며 모든 흑화의 필수 장면이 아니다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_neutral",
+        "label_en": "Canonical researched darkening or corruption arc",
+        "subtype_id": "external_gradual_corruption",
+        "novelty_level": 1,
+        "canonical_default": true,
+        "intent_keys": [
+          "corruption.external_pressure_then_allegiance_break"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "neutral canonical default"
+        ],
+        "preference_profile": {
+          "intent": "neutral"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_neutral_primary",
+          "prompt_fragment_en": "Use before-and-after panels of the same character, preserving one same identity marker while a formerly intact allegiance emblem becomes a visibly corrupted emblem with a concrete consequence in the later panel.",
+          "observable_evidence": [
+            "before-and-after panels",
+            "same identity marker",
+            "corrupted emblem"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_neutral_support_1",
+            "prompt_fragment_en": "Directly show before-and-after panels.",
+            "observable_evidence": [
+              "before-and-after panels"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_neutral_support_2",
+            "prompt_fragment_en": "Directly show same identity marker.",
+            "observable_evidence": [
+              "same identity marker"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_neutral_support_3",
+            "prompt_fragment_en": "Directly show corrupted emblem.",
+            "observable_evidence": [
+              "corrupted emblem"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-001",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_preference",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "66415cbf422efdc1329e43cef9dd39f0bef4d3aa54e34f09eb3762a0d7dab602",
+      "classification": "partial",
+      "comparison": "성인 주인공의 자유 선택·옛 서약 문장 파괴·최종 비가역 진영 표식의 세 단계. 자발성·성인·비가역을 원문 일반 뜻에 추가하지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_preference",
+        "label_en": "Preference-developed darkening or corruption arc",
+        "subtype_id": "voluntary_irreversible_corruption",
+        "novelty_level": 2,
+        "canonical_default": false,
+        "intent_keys": [
+          "corruption.voluntary_choice_irreversible_oath_break"
+        ],
+        "representation_mode": "sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "스스로",
+          "옛 서약",
+          "불가역",
+          "세 단계"
+        ],
+        "preference_profile": {
+          "agency": "voluntary",
+          "reversibility": "irreversible",
+          "transition_phase": "choice_break_consequence"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_preference_primary",
+          "prompt_fragment_en": "Use a three-stage sequence in which the adult protagonist freely chooses power, breaks the old oath emblem by hand, and carries an irreversible allegiance mark into the final frame.",
+          "observable_evidence": [
+            "a voluntary reach toward the power source",
+            "the oath emblem breaking under the protagonist's own hand",
+            "one irreversible allegiance mark in the final state"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_preference_support_1",
+            "prompt_fragment_en": "Directly show a voluntary reach toward the power source.",
+            "observable_evidence": [
+              "a voluntary reach toward the power source"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_preference_support_2",
+            "prompt_fragment_en": "Directly show the oath emblem breaking under the protagonist's own hand.",
+            "observable_evidence": [
+              "the oath emblem breaking under the protagonist's own hand"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_preference_support_3",
+            "prompt_fragment_en": "Directly show one irreversible allegiance mark in the final state.",
+            "observable_evidence": [
+              "one irreversible allegiance mark in the final state"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-002",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_preference",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "66415cbf422efdc1329e43cef9dd39f0bef4d3aa54e34f09eb3762a0d7dab602",
+      "classification": "partial",
+      "comparison": "성인 주인공의 자유 선택·옛 서약 문장 파괴·최종 비가역 진영 표식의 세 단계. 자발성·성인·비가역을 원문 일반 뜻에 추가하지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_preference",
+        "label_en": "Preference-developed darkening or corruption arc",
+        "subtype_id": "voluntary_irreversible_corruption",
+        "novelty_level": 2,
+        "canonical_default": false,
+        "intent_keys": [
+          "corruption.voluntary_choice_irreversible_oath_break"
+        ],
+        "representation_mode": "sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "스스로",
+          "옛 서약",
+          "불가역",
+          "세 단계"
+        ],
+        "preference_profile": {
+          "agency": "voluntary",
+          "reversibility": "irreversible",
+          "transition_phase": "choice_break_consequence"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_preference_primary",
+          "prompt_fragment_en": "Use a three-stage sequence in which the adult protagonist freely chooses power, breaks the old oath emblem by hand, and carries an irreversible allegiance mark into the final frame.",
+          "observable_evidence": [
+            "a voluntary reach toward the power source",
+            "the oath emblem breaking under the protagonist's own hand",
+            "one irreversible allegiance mark in the final state"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_preference_support_1",
+            "prompt_fragment_en": "Directly show a voluntary reach toward the power source.",
+            "observable_evidence": [
+              "a voluntary reach toward the power source"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_preference_support_2",
+            "prompt_fragment_en": "Directly show the oath emblem breaking under the protagonist's own hand.",
+            "observable_evidence": [
+              "the oath emblem breaking under the protagonist's own hand"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_preference_support_3",
+            "prompt_fragment_en": "Directly show one irreversible allegiance mark in the final state.",
+            "observable_evidence": [
+              "one irreversible allegiance mark in the final state"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-001",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_voluntary_oath_break",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "598fbfe0fa917ee8c5c5a2f36dee238cd5e4a1e3ec9d6083e34c27f49b14f213",
+      "classification": "partial",
+      "comparison": "성인이 옛 진영 배지를 제거하고 경쟁 표식을 붙이며 전경에 깨진 서약·정신 조종 장치 없음. 자발적 진영 이동의 한 선택이다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_voluntary_oath_break",
+        "label_en": "dark voluntary oath break",
+        "subtype_id": "voluntary_ideological_fall",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_voluntary_oath_break"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "자발적으로",
+          "스스로 넘어간",
+          "신념이 바뀐",
+          "타락을 받아들인"
+        ],
+        "preference_profile": {
+          "cause_agency": "voluntary"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_primary",
+          "prompt_fragment_en": "Show the same adult character calmly removing their former faction badge and fastening a rival emblem, with the broken oath visible in the foreground and no mind-control device.",
+          "observable_evidence": [
+            "same-person marker",
+            "discarded former badge",
+            "deliberate new allegiance",
+            "active choice"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_support_1",
+            "prompt_fragment_en": "Directly show same-person marker.",
+            "observable_evidence": [
+              "same-person marker"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_support_2",
+            "prompt_fragment_en": "Directly show discarded former badge.",
+            "observable_evidence": [
+              "discarded former badge"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_support_3",
+            "prompt_fragment_en": "Directly show deliberate new allegiance.",
+            "observable_evidence": [
+              "deliberate new allegiance"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-002",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_voluntary_oath_break",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "598fbfe0fa917ee8c5c5a2f36dee238cd5e4a1e3ec9d6083e34c27f49b14f213",
+      "classification": "partial",
+      "comparison": "성인이 옛 진영 배지를 제거하고 경쟁 표식을 붙이며 전경에 깨진 서약·정신 조종 장치 없음. 자발적 진영 이동의 한 선택이다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_voluntary_oath_break",
+        "label_en": "dark voluntary oath break",
+        "subtype_id": "voluntary_ideological_fall",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_voluntary_oath_break"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "자발적으로",
+          "스스로 넘어간",
+          "신념이 바뀐",
+          "타락을 받아들인"
+        ],
+        "preference_profile": {
+          "cause_agency": "voluntary"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_primary",
+          "prompt_fragment_en": "Show the same adult character calmly removing their former faction badge and fastening a rival emblem, with the broken oath visible in the foreground and no mind-control device.",
+          "observable_evidence": [
+            "same-person marker",
+            "discarded former badge",
+            "deliberate new allegiance",
+            "active choice"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_support_1",
+            "prompt_fragment_en": "Directly show same-person marker.",
+            "observable_evidence": [
+              "same-person marker"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_support_2",
+            "prompt_fragment_en": "Directly show discarded former badge.",
+            "observable_evidence": [
+              "discarded former badge"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_voluntary_oath_break_support_3",
+            "prompt_fragment_en": "Directly show deliberate new allegiance.",
+            "observable_evidence": [
+              "deliberate new allegiance"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-005",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_coercive_reprogramming",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "8a400275dcced93642279bb931108733203d25b618d5cb7a4d19ed6de745c496",
+      "classification": "partial",
+      "comparison": "외부 통제자가 성인 주체에게 새 경례를 강제하고 저항하는 손이 옛 문장을 쥔다. 제시된 선택 사례이며 명시된 강제와 비동의를 성적 연출로 변경하지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_coercive_reprogramming",
+        "label_en": "dark coercive reprogramming",
+        "subtype_id": "coerced_reprogramming",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_coercive_reprogramming"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "강제로",
+          "세뇌된",
+          "조종당한",
+          "개조된"
+        ],
+        "preference_profile": {
+          "cause_agency": "coerced"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_coercive_reprogramming_primary",
+          "prompt_fragment_en": "Depict an adult subject forced into a new salute by a visible external controller, while one resisting hand still grips the former emblem; make coercion, not consent, unmistakable.",
+          "observable_evidence": [
+            "visible controller",
+            "involuntary salute",
+            "resisting hand",
+            "low agency"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_coercive_reprogramming_support_1",
+            "prompt_fragment_en": "Directly show visible controller.",
+            "observable_evidence": [
+              "visible controller"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_coercive_reprogramming_support_2",
+            "prompt_fragment_en": "Directly show involuntary salute.",
+            "observable_evidence": [
+              "involuntary salute"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_coercive_reprogramming_support_3",
+            "prompt_fragment_en": "Directly show resisting hand.",
+            "observable_evidence": [
+              "resisting hand"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-004",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_ambient_corruption",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "351e9be411f09aded9628f4daa84f671886a967da622a146b394457ee60ccb90",
+      "classification": "partial",
+      "comparison": "성인 동일 인물의 한 접촉점에서 침식이 퍼지는 세 단계와 매 단계 동일성 표식. 피부·의복 경계와 원인의 별도 검토가 필요하다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_ambient_corruption",
+        "label_en": "dark ambient corruption",
+        "subtype_id": "ambient_corruptive_exposure",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_ambient_corruption"
+        ],
+        "representation_mode": "sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "서서히 물든",
+          "저주에 잠식된",
+          "오염된",
+          "기생에 침식된",
+          "타락 과정",
+          "점점 변하는",
+          "단계별"
+        ],
+        "preference_profile": {
+          "cause_agency": "ambient",
+          "temporal_focus": "process"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_ambient_corruption_primary",
+          "prompt_fragment_en": "Create a three-stage sequence in which corruption spreads from one contact point across the same adult character, preserving one unmistakable identity marker in every stage.",
+          "observable_evidence": [
+            "directional spread",
+            "three change stages",
+            "stable identity marker",
+            "cause before change"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_ambient_corruption_support_1",
+            "prompt_fragment_en": "Directly show directional spread.",
+            "observable_evidence": [
+              "directional spread"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_ambient_corruption_support_2",
+            "prompt_fragment_en": "Directly show three change stages.",
+            "observable_evidence": [
+              "three change stages"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_ambient_corruption_support_3",
+            "prompt_fragment_en": "Directly show stable identity marker.",
+            "observable_evidence": [
+              "stable identity marker"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-006",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_possession_takeover",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "9797f185473cb8acdf357a89a571473f708b57a2cc457670665a15f0e6641f32",
+      "classification": "partial",
+      "comparison": "성인 숙주, 두 번째 점유자의 통제, 불일치한 거울과 숙주가 향하는 개인 물건. 숙주와 점유자 구분; 그림자·거울만으로 실제 빙의를 증명하지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_possession_takeover",
+        "label_en": "dark possession takeover",
+        "subtype_id": "possession_takeover",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_possession_takeover"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "빙의",
+          "몸을 빼앗긴",
+          "통제권을 잃은"
+        ],
+        "preference_profile": {
+          "cause_agency": "takeover"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_possession_takeover_primary",
+          "prompt_fragment_en": "Show an adult host whose body obeys a second occupant, using a mismatched mirror reflection and a personal keepsake that the host still reaches for; keep host and occupant identities distinct.",
+          "observable_evidence": [
+            "mismatched reflection",
+            "host keepsake",
+            "contradictory body action",
+            "two identities"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_possession_takeover_support_1",
+            "prompt_fragment_en": "Directly show mismatched reflection.",
+            "observable_evidence": [
+              "mismatched reflection"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_possession_takeover_support_2",
+            "prompt_fragment_en": "Directly show host keepsake.",
+            "observable_evidence": [
+              "host keepsake"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_possession_takeover_support_3",
+            "prompt_fragment_en": "Directly show contradictory body action.",
+            "observable_evidence": [
+              "contradictory body action"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-001",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_incremental_compromise",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "a684998ac1c2279cadfba1564e3171be47a823afb00c8d5fcd76c6abab92837b",
+      "classification": "partial",
+      "comparison": "동일 성인 인물의 세 패널, 한 규칙에 대한 심화되는 예외, 재사용 소품과 마지막 배신. 변화의 특정 시퀀스이며 보편 필수는 아니다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_incremental_compromise",
+        "label_en": "dark incremental compromise",
+        "subtype_id": "incremental_compromise",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_incremental_compromise"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "자발적으로",
+          "스스로 넘어간",
+          "신념이 바뀐",
+          "타락을 받아들인",
+          "타락 과정",
+          "점점 변하는",
+          "단계별"
+        ],
+        "preference_profile": {
+          "cause_agency": "voluntary",
+          "temporal_focus": "process"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_incremental_compromise_primary",
+          "prompt_fragment_en": "Build three connected panels where the same adult character makes increasingly serious exceptions to one former rule, reusing the same prop until the final rationalized betrayal.",
+          "observable_evidence": [
+            "repeated prop",
+            "escalating exceptions",
+            "final rationalization",
+            "cumulative compromise"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_incremental_compromise_support_1",
+            "prompt_fragment_en": "Directly show repeated prop.",
+            "observable_evidence": [
+              "repeated prop"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_incremental_compromise_support_2",
+            "prompt_fragment_en": "Directly show escalating exceptions.",
+            "observable_evidence": [
+              "escalating exceptions"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_incremental_compromise_support_3",
+            "prompt_fragment_en": "Directly show final rationalization.",
+            "observable_evidence": [
+              "final rationalization"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-001",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_split_control_contest",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "cf100b541df159aad5ac51ddce4cfe486a78ede20b931e4673fd66a350592db1",
+      "classification": "partial",
+      "comparison": "옛 물건을 지키는 행동과 새로운 표식, 비대칭 거울을 지닌 성인의 양립하지 않는 행위. 결론은 미해결이며 옛 물건이 곧 의식이나 주체성의 증거는 아니다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_split_control_contest",
+        "label_en": "dark split control contest",
+        "subtype_id": "latent_self_awakening",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_split_control_contest"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "아직 모르는",
+          "흔들리는",
+          "양쪽 자아가 싸우는"
+        ],
+        "preference_profile": {
+          "reversibility": "uncertain"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_split_control_contest_primary",
+          "prompt_fragment_en": "Compose one adult character caught between two incompatible actions, protecting an old keepsake while a new insignia activates, with an asymmetric reflection that leaves the outcome unresolved.",
+          "observable_evidence": [
+            "conflicting hands",
+            "old keepsake",
+            "new insignia",
+            "unresolved control"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_split_control_contest_support_1",
+            "prompt_fragment_en": "Directly show conflicting hands.",
+            "observable_evidence": [
+              "conflicting hands"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_split_control_contest_support_2",
+            "prompt_fragment_en": "Directly show old keepsake.",
+            "observable_evidence": [
+              "old keepsake"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_split_control_contest_support_3",
+            "prompt_fragment_en": "Directly show new insignia.",
+            "observable_evidence": [
+              "new insignia"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-001",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_recovery_anchor",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "1bdca8c4286793a5648f665e216b612bfb92d998d3221aa4734d3a5b15646583",
+      "classification": "partial",
+      "comparison": "과거 유대 소품이 변화한 행동을 잠시 끊고 원래 몸짓 또는 눈 단서를 회복. 원문 흑화에 회복 가능성을 강제하지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_recovery_anchor",
+        "label_en": "dark recovery anchor",
+        "subtype_id": "reversible_recovery",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_recovery_anchor"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "되돌릴 수 있는",
+          "정신을 차리는 순간",
+          "구원 가능",
+          "회복 여지"
+        ],
+        "preference_profile": {
+          "reversibility": "reversible"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_recovery_anchor_primary",
+          "prompt_fragment_en": "Add a former-bond keepsake that interrupts the corrupted action and briefly restores one original gesture or eye cue, without completing the recovery.",
+          "observable_evidence": [
+            "former-bond anchor",
+            "interrupted action",
+            "brief original cue",
+            "possible recovery"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_recovery_anchor_support_1",
+            "prompt_fragment_en": "Directly show former-bond anchor.",
+            "observable_evidence": [
+              "former-bond anchor"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_recovery_anchor_support_2",
+            "prompt_fragment_en": "Directly show interrupted action.",
+            "observable_evidence": [
+              "interrupted action"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_recovery_anchor_support_3",
+            "prompt_fragment_en": "Directly show brief original cue.",
+            "observable_evidence": [
+              "brief original cue"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-001",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_before_after_diptych",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "195af983e513dd4da20650653748fd6ba84e469007db75165c4478b62528657e",
+      "classification": "partial",
+      "comparison": "동일 카메라·동일성 표식의 전후 두 패널에서 같은 도덕적 시험에 대한 행동과 소속 표식이 반전. 원문의 전향이 언제나 도덕 시험을 요구하지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_before_after_diptych",
+        "label_en": "dark before after diptych",
+        "subtype_id": "voluntary_ideological_fall",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_before_after_diptych"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "전후 비교",
+          "비포 애프터",
+          "같은 인물 대비"
+        ],
+        "preference_profile": {
+          "temporal_focus": "before_after"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_primary",
+          "prompt_fragment_en": "Create a matched before-and-after diptych with identical camera and identity markers, repeating the same moral test but reversing the character's action and allegiance token.",
+          "observable_evidence": [
+            "matched camera",
+            "same-person marker",
+            "reversed action",
+            "comparable states"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_support_1",
+            "prompt_fragment_en": "Directly show matched camera.",
+            "observable_evidence": [
+              "matched camera"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_support_2",
+            "prompt_fragment_en": "Directly show same-person marker.",
+            "observable_evidence": [
+              "same-person marker"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_support_3",
+            "prompt_fragment_en": "Directly show reversed action.",
+            "observable_evidence": [
+              "reversed action"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-002",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_before_after_diptych",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "195af983e513dd4da20650653748fd6ba84e469007db75165c4478b62528657e",
+      "classification": "partial",
+      "comparison": "동일 카메라·동일성 표식의 전후 두 패널에서 같은 도덕적 시험에 대한 행동과 소속 표식이 반전. 원문의 전향이 언제나 도덕 시험을 요구하지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_before_after_diptych",
+        "label_en": "dark before after diptych",
+        "subtype_id": "voluntary_ideological_fall",
+        "novelty_level": 0,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_before_after_diptych"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "전후 비교",
+          "비포 애프터",
+          "같은 인물 대비"
+        ],
+        "preference_profile": {
+          "temporal_focus": "before_after"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_primary",
+          "prompt_fragment_en": "Create a matched before-and-after diptych with identical camera and identity markers, repeating the same moral test but reversing the character's action and allegiance token.",
+          "observable_evidence": [
+            "matched camera",
+            "same-person marker",
+            "reversed action",
+            "comparable states"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_support_1",
+            "prompt_fragment_en": "Directly show matched camera.",
+            "observable_evidence": [
+              "matched camera"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_support_2",
+            "prompt_fragment_en": "Directly show same-person marker.",
+            "observable_evidence": [
+              "same-person marker"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_before_after_diptych_support_3",
+            "prompt_fragment_en": "Directly show reversed action.",
+            "observable_evidence": [
+              "reversed action"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    },
+    {
+      "term_id": "MG-15-002",
+      "candidate_id": "moe_candidate_moe_darkening_corruption_dark_irreversible_aftermath",
+      "module": "skills/subculture-illustration-image-generator/assets/illustration_moe_grammar_v4.json",
+      "whole_record_sha256": "83a4d0731daad46bfc5d9046f7fb4e166918f1ef702464bb4f6c98c05b463d71",
+      "classification": "partial",
+      "comparison": "성인이 새 진영의 일상에 정착하고 이전 표식은 재용도화, 회복 단서는 없음. 과거 사건·비가역성은 단일 장면만으로 입증되지 않는다.",
+      "native_record": {
+        "id": "moe_candidate_moe_darkening_corruption_dark_irreversible_aftermath",
+        "label_en": "dark irreversible aftermath",
+        "subtype_id": "voluntary_ideological_fall",
+        "novelty_level": 1,
+        "canonical_default": false,
+        "intent_keys": [
+          "research.darkening_corruption.dark_irreversible_aftermath"
+        ],
+        "representation_mode": "paired_or_sequence",
+        "integration_role": "relationship_event",
+        "selection_cues": [
+          "돌이킬 수 없는",
+          "완전히 넘어간",
+          "영구 타락",
+          "타락 후",
+          "적이 된 뒤",
+          "완료 상태"
+        ],
+        "preference_profile": {
+          "reversibility": "irreversible",
+          "temporal_focus": "aftermath"
+        },
+        "primary_atom": {
+          "id": "moe_atom_moe_darkening_corruption_dark_irreversible_aftermath_primary",
+          "prompt_fragment_en": "Show the adult character settled into a new faction routine, with the former emblem permanently repurposed and no active recovery cue, while retaining one same-person marker.",
+          "observable_evidence": [
+            "repurposed old emblem",
+            "settled new routine",
+            "same-person marker",
+            "completed fall"
+          ]
+        },
+        "support_atoms": [
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_irreversible_aftermath_support_1",
+            "prompt_fragment_en": "Directly show repurposed old emblem.",
+            "observable_evidence": [
+              "repurposed old emblem"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_irreversible_aftermath_support_2",
+            "prompt_fragment_en": "Directly show settled new routine.",
+            "observable_evidence": [
+              "settled new routine"
+            ]
+          },
+          {
+            "id": "moe_atom_moe_darkening_corruption_dark_irreversible_aftermath_support_3",
+            "prompt_fragment_en": "Directly show same-person marker.",
+            "observable_evidence": [
+              "same-person marker"
+            ]
+          }
+        ],
+        "resource_claims": [
+          "focal_primary|scene|1|exclusive",
+          "event_peak|scene|1|shared"
+        ],
+        "compatibility_tags": [
+          "narrative_state_delta",
+          "temporal_proof_required",
+          "primary_composition_owner"
+        ],
+        "source_claim_ids": [
+          "moe_claim_01_definition",
+          "moe_claim_01_evidence"
+        ],
+        "limitation": "A dark palette or hostile portrait alone cannot prove that the character was formerly good, why the change occurred, or that both states are the same person."
+      },
+      "owning_element_id": "moe_darkening_corruption",
+      "native_runtime_verified": false,
+      "pixel_status": "NOT_RUN",
+      "review_depth": "core_proposition_only",
+      "review_depth_note": "후보의 primary proposition과 상위 의미·시각 계약을 비교했다. 해당 후보의 모든 support atom·런타임 구현 및 바인딩을 개별 수동 대조한 상태는 아니다."
+    }
+  ],
+  "limitations": [
+    "V4의 모든 11개 흑화 후보를 읽었으나 전체 일러스트 자산의 유사 후보 전수는 아니다.",
+    "V1 기본과 V4 후보 및 V5 manifest는 서로 다른 계약 계층이므로 사진 후보에 그대로 이전하지 않는다. 실제 실행 활성화·인덱스·이미지 품질은 검증하지 않았다.",
+    "기존 계약에는 sequence_required와 동일 카메라·동일 표식 등 강한 표현 제약이 있으며 이것이 모든 일러스트 또는 원 대화의 보편 정의가 아니라 현재 자산의 계약이다."
+  ]
+}

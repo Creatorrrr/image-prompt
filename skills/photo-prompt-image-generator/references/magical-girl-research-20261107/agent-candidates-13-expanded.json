@@ -1,0 +1,1658 @@
+[
+  {
+    "id": "MG-13-1-010",
+    "existing_candidate_status": "limited_review_other_candidates_open",
+    "reviewed_candidates": [
+      {
+        "candidate_id": "cand_8991868ea80e52829549b60f7fdf4704",
+        "module": "photo_candidate_candidates_013.json",
+        "whole_record_sha256": "adb74c01a2bc9788e8fadf29a37563e2f982dae5c68928a100314429bfaf17a2",
+        "classification": "partial",
+        "comparison": "사람 조건으로 회전하는 스커트 동작 자세를 제안한다. 치마·리본·머리 전부의 구체 형상이나 실제 연속 회전은 명시하지 않는다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "bindings": [
+          {
+            "candidate_id": "cand_8991868ea80e52829549b60f7fdf4704",
+            "conditions": {
+              "subject_applicability": {}
+            },
+            "id": "bind_8991868ea80e52829549b60f7fdf4704",
+            "role": "optional",
+            "slot_id": "action",
+            "weight": 0.74,
+            "semantic_role": "direct"
+          }
+        ],
+        "complete_content_snapshot": {
+          "en": "spinning-skirt motion pose",
+          "ko": "치맛자락이 회전하는 포즈",
+          "tags": [
+            "human",
+            "motion",
+            "fashion"
+          ]
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      },
+      {
+        "candidate_id": "cand_cdb870a54fb55a9eb04a3fe7b777773a",
+        "module": "photo_candidate_candidates_013.json",
+        "whole_record_sha256": "a8d7741512eb29a439c048ef6ec3b16fcfe8637d5fc88ae87eabc6a7d5de52af",
+        "classification": "partial",
+        "comparison": "회전 치마가 바깥으로 펼쳐지며 허리띠가 착용자에게 붙은 관계 프로필. 완전 관계가 명시되어야 활성화되고 흐릿한 색·떠 있는 원반을 거부한다. 머리·리본은 별도이며 정지 이미지에서 시간 경과를 추정하지 않는다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {},
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "bindings": [],
+        "complete_content_snapshot": {
+          "activation": {
+            "exact_terms": [
+              "the rotating skirt flares outward while its waistband stays attached to the wearer",
+              "허리에서 바깥으로 펼쳐지는 회전 치마"
+            ],
+            "hard_activation": {
+              "contract_version": "photo-visual-hard-activation/v1",
+              "required_any_groups": [
+                {
+                  "any_terms": [
+                    "the rotating skirt flares outward while its waistband stays attached to the wearer",
+                    "허리에서 바깥으로 펼쳐지는 회전 치마"
+                  ],
+                  "id": "selected_relation"
+                }
+              ]
+            },
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          },
+          "authored_components": {
+            "components": [
+              {
+                "evidence_field": "component_1_phrase",
+                "evidence_terms": [
+                  "the rotating skirt flares outward while its waistband stays attached to the wearer"
+                ],
+                "id": "component_1",
+                "instruction": "Preserve this selected visible owner relation: the rotating skirt flares outward while its waistband stays attached to the wearer",
+                "match_terms": [
+                  "the rotating skirt flares outward while its waistband stays attached to the wearer",
+                  "허리에서 바깥으로 펼쳐지는 회전 치마"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "the rotating skirt flares outward while its waistband stays attached to the wearer; inspect the declared owner and relation. A nearby unrelated object or an occluded relation does not satisfy this gate.",
+                  "id": "vo_ccx_cc39_01",
+                  "review_scale": "native"
+                }
+              }
+            ],
+            "contract_version": "photo-authored-visual-components/v1"
+          },
+          "category": "costume_cosplay_visible_relation",
+          "composition_instruction": "Preserve this selected visible owner relation: the rotating skirt flares outward while its waistband stays attached to the wearer",
+          "concept_candidate": {
+            "concept_terms": [
+              "허리에서 바깥으로 펼쳐지는 회전 치마",
+              "회전하는 플리츠 치마의 고정점"
+            ]
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "the rotating skirt flares outward while its waistband stays attached to the wearer"
+              ]
+            }
+          },
+          "reject_substitutes": [
+            "번진 색이나 떠 있는 원반은 움직이는 치마를 충족하지 않는다.",
+            "주름과 허리 부착은 모션블러 안에서도 읽혀야 한다."
+          ],
+          "render_gates": [
+            {
+              "description": "the rotating skirt flares outward while its waistband stays attached to the wearer; inspect the declared owner and relation. A nearby unrelated object or an occluded relation does not satisfy this gate.",
+              "id": "vo_ccx_cc39_01",
+              "review_scale": "native"
+            }
+          ],
+          "required_evidence_fields": [
+            "component_1_phrase"
+          ],
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "forbidden_prompt_terms": [],
+            "prompt_label_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "semantics": {
+            "claim_limits": [
+              "One request-supported visible relation, not a universal costume or character definition.",
+              "The selected garment or appendage does not establish wearer identity, age, occupation or anatomy.",
+              "Occluded required relations fail pixel review; hidden construction or physical function is not inferred."
+            ],
+            "component_semantics": {
+              "groups": [
+                {
+                  "any_terms": [
+                    "the rotating skirt flares outward while its waistband stays attached to the wearer",
+                    "허리에서 바깥으로 펼쳐지는 회전 치마"
+                  ],
+                  "id": "component_1"
+                }
+              ],
+              "minimum_component_groups": 1,
+              "required_group_ids": [
+                "component_1"
+              ]
+            },
+            "contrast_examples": [
+              "번진 색이나 떠 있는 원반은 움직이는 치마를 충족하지 않는다.",
+              "주름과 허리 부착은 모션블러 안에서도 읽혀야 한다."
+            ],
+            "definition": "the rotating skirt flares outward while its waistband stays attached to the wearer",
+            "paraphrase_examples": [
+              "rotating skirt visibly anchored to wearer waistband"
+            ]
+          }
+        },
+        "record_kind": "visual_profile",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      }
+    ],
+    "note": "기존 원표제 문자열 검색에 없는 KO/EN/JA 묘사식 확장에서 선택·개별 검토한 후보. 확장 탐색 전수 및 부재를 증명하지 않는다."
+  },
+  {
+    "id": "MG-13-2-002",
+    "existing_candidate_status": "limited_review_other_candidates_open",
+    "reviewed_candidates": [
+      {
+        "candidate_id": "cand_836425591eb051296e30a1d6b737792a",
+        "module": "photo_candidate_reactorprompt_pose_composition_20261026.json",
+        "whole_record_sha256": "46433966e61c5a152a0253dba779caa343c9566c9ea5bccb9b2ce19e6808057a",
+        "classification": "underspecified",
+        "comparison": "인간의 한 손 또는 두 손으로 물건을 잡는 넓은 옵션. 지팡이·두 손·마력 집중을 모두 충족한다는 보증이 아니다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "pose"
+          ],
+          "properties": [
+            {
+              "dimension": "pose",
+              "property": "pose.hand_object.hold_or_grip",
+              "target": "subject hand(s) to named object"
+            }
+          ]
+        },
+        "bindings": [],
+        "complete_content_snapshot": {
+          "aliases": [
+            "hand holding an object",
+            "both hands gripping a prop",
+            "손으로 물체 잡기",
+            "양손으로 소품 쥐기",
+            "holding",
+            "gripping",
+            "Both hands hold",
+            "both hands hold",
+            "both hands holding",
+            "both hands wrapped around",
+            "fingers closing on",
+            "fingers gripping",
+            "hand grip",
+            "hand gripping",
+            "hand grips",
+            "hand holding",
+            "hand holds",
+            "hands gripping",
+            "One hand holding",
+            "one hand holding",
+            "One hand holds",
+            "one hand holds",
+            "손으로 꼭 잡고 바라보는 모습 - 작은 포크를 들고",
+            "손으로 들고",
+            "손으로 휴대폰을 들고",
+            "Holding",
+            "fingers and a believable phone grip, no logos on the phone",
+            "fingers delicately holding a small pale object",
+            "grip",
+            "grips",
+            "hand gripping the left page, right hand",
+            "hand grips the",
+            "hand holding a light-colored takeaway cup",
+            "hand holding a phone",
+            "hand holding a white ceramic latte cup",
+            "hand holding the cream-cased phone",
+            "hand holding the flip phone",
+            "hand holding the iced cup",
+            "hand holding the phone",
+            "hand holding the wine glass",
+            "hand holds a large clear plastic cup",
+            "hand holds a paper coffee cup",
+            "hand holds a plastic shopping bag, shoulder",
+            "hand holds the clutch chain at her thigh",
+            "hand holds the phone",
+            "hand loose at her side holding a phone",
+            "hand loosely holding a mug of coffee on the rail",
+            "hand loosely holds a tall transparent glass",
+            "hand she holds a champagne glass",
+            "hands low, holding the phone",
+            "hands wrapped around a large ceramic mug",
+            "hold",
+            "holds",
+            "손으로 스마트폰 들고",
+            "open palm",
+            "In both hands",
+            "In her hands",
+            "In one hand",
+            "between her fingers",
+            "in both hands",
+            "in her hand",
+            "in her hands",
+            "in one hand",
+            "supporting it naturally from below",
+            "손으로 조심스럽게 들"
+          ],
+          "definition": "The subject holds or grips an object with one or both hands. / 인물의 한 손 또는 양손으로 물체를 잡거나 쥔다.",
+          "en": "The subject holds or grips an object with one or both hands.",
+          "keywords": [
+            "hand-object grasp",
+            "holding a prop",
+            "손과 물체의 파지 관계",
+            "소품을 잡은 손",
+            "holding",
+            "gripping",
+            "Both hands hold",
+            "both hands hold",
+            "both hands holding",
+            "both hands wrapped around",
+            "fingers closing on",
+            "fingers gripping",
+            "hand grip",
+            "hand gripping",
+            "hand grips",
+            "hand holding",
+            "hand holds",
+            "hands gripping",
+            "One hand holding",
+            "one hand holding",
+            "One hand holds",
+            "one hand holds",
+            "손으로 꼭 잡고 바라보는 모습 - 작은 포크를 들고",
+            "손으로 들고",
+            "손으로 휴대폰을 들고",
+            "Holding",
+            "fingers and a believable phone grip, no logos on the phone",
+            "fingers delicately holding a small pale object",
+            "grip",
+            "grips",
+            "hand gripping the left page, right hand",
+            "hand grips the",
+            "hand holding a light-colored takeaway cup",
+            "hand holding a phone",
+            "hand holding a white ceramic latte cup",
+            "hand holding the cream-cased phone",
+            "hand holding the flip phone",
+            "hand holding the iced cup",
+            "hand holding the phone",
+            "hand holding the wine glass",
+            "hand holds a large clear plastic cup",
+            "hand holds a paper coffee cup",
+            "hand holds a plastic shopping bag, shoulder",
+            "hand holds the clutch chain at her thigh",
+            "hand holds the phone",
+            "hand loose at her side holding a phone",
+            "hand loosely holding a mug of coffee on the rail",
+            "hand loosely holds a tall transparent glass",
+            "hand she holds a champagne glass",
+            "hands low, holding the phone",
+            "hands wrapped around a large ceramic mug",
+            "hold",
+            "holds",
+            "손으로 스마트폰 들고"
+          ],
+          "ko": "인물의 한 손 또는 양손으로 물체를 잡거나 쥔다.",
+          "paraphrases": [
+            "The subject holds or grips an object with one or both hands.",
+            "인물의 한 손 또는 양손으로 물체를 잡거나 쥔다."
+          ]
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      }
+    ],
+    "note": "기존 원표제 문자열 검색에 없는 KO/EN/JA 묘사식 확장에서 선택·개별 검토한 후보. 확장 탐색 전수 및 부재를 증명하지 않는다."
+  },
+  {
+    "id": "MG-13-2-007",
+    "existing_candidate_status": "limited_review_other_candidates_open",
+    "reviewed_candidates": [
+      {
+        "candidate_id": "cand_d1a58ce7fe215400aea8e1462d1713bd",
+        "module": "photo_candidate_candidates_000.json",
+        "whole_record_sha256": "f85b119606feddf75bd3c3bc1f15606895b1869a27e3dfbeaaa3ea9cafb80a43",
+        "classification": "partial",
+        "comparison": "발목 족저굴곡, 발과 발가락의 다리 연결, 발의 지면 접촉 또는 든 역할을 별도 명시하는 프로필. 사람 포즈 맥락과 요소별 증거를 요구하며 뒤꿈치만 들기·발가락 굽힘·발레 토슈즈를 대체로 거부한다. 도약 자체는 별도다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {},
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "bindings": [],
+        "complete_content_snapshot": {
+          "activation": {
+            "exact_terms": [
+              "발목 족저굴곡으로 길게 뻗은 발",
+              "Pointed foot pose",
+              "Pointed toes pose",
+              "발끝 뻗기 자세"
+            ],
+            "hard_activation": {
+              "contract_version": "photo-visual-hard-activation/v1",
+              "required_any_groups": [
+                {
+                  "any_terms": [
+                    "pose",
+                    "posing",
+                    "posture",
+                    "person",
+                    "woman",
+                    "man",
+                    "human",
+                    "subject",
+                    "actor",
+                    "dancer",
+                    "ballet",
+                    "sitting",
+                    "seated",
+                    "kneeling",
+                    "hand",
+                    "finger",
+                    "foot",
+                    "인물",
+                    "자세",
+                    "포즈",
+                    "사람",
+                    "무릎",
+                    "손",
+                    "발레",
+                    "앉기",
+                    "앉은"
+                  ],
+                  "id": "body_pose_context"
+                }
+              ]
+            },
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          },
+          "authored_components": {
+            "components": [
+              {
+                "evidence_field": "component_1_phrase",
+                "evidence_terms": [
+                  "ankle extends into a plantarflexed line"
+                ],
+                "id": "component_1",
+                "instruction": "Bind this visible configuration to the declared actor and target: ankle extends into a plantarflexed line.",
+                "match_terms": [
+                  "ankle extends into a plantarflexed line"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "ankle extends into a plantarflexed line. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_pointed_foot_1",
+                  "review_scale": "both"
+                }
+              },
+              {
+                "evidence_field": "component_2_phrase",
+                "evidence_terms": [
+                  "toes and foot continue from the lower leg"
+                ],
+                "id": "component_2",
+                "instruction": "Bind this visible configuration to the declared actor and target: toes and foot continue from the lower leg.",
+                "match_terms": [
+                  "toes and foot continue from the lower leg"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "toes and foot continue from the lower leg. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_pointed_foot_2",
+                  "review_scale": "both"
+                }
+              },
+              {
+                "evidence_field": "component_3_phrase",
+                "evidence_terms": [
+                  "ground contact or lifted-foot role is declared separately"
+                ],
+                "id": "component_3",
+                "instruction": "Bind this visible configuration to the declared actor and target: ground contact or lifted-foot role is declared separately.",
+                "match_terms": [
+                  "ground contact or lifted-foot role is declared separately"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "ground contact or lifted-foot role is declared separately. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_pointed_foot_3",
+                  "review_scale": "both"
+                }
+              }
+            ],
+            "contract_version": "photo-authored-visual-components/v1"
+          },
+          "category": "observable_pose_configuration",
+          "composition_instruction": "Bind this visible configuration to the declared actor and target: ankle extends into a plantarflexed line. Bind this visible configuration to the declared actor and target: toes and foot continue from the lower leg. Bind this visible configuration to the declared actor and target: ground contact or lifted-foot role is declared separately.",
+          "concept_candidate": {
+            "affected_dimensions": [
+              "pose"
+            ],
+            "affected_properties": [
+              {
+                "dimension": "pose",
+                "property": "body.support_and_configuration",
+                "target": "main_subject"
+              }
+            ],
+            "concept_terms": [
+              "발목 족저굴곡으로 길게 뻗은 발",
+              "Pointed foot",
+              "Pointed toes",
+              "발끝 뻗기",
+              "ankle extends into a plantarflexed line",
+              "toes and foot continue from the lower leg",
+              "ground contact or lifted-foot role is declared separately"
+            ],
+            "core_assertion_discovery": true
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "ankle extends into a plantarflexed line"
+              ]
+            },
+            "component_2_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "toes and foot continue from the lower leg"
+              ]
+            },
+            "component_3_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "ground contact or lifted-foot role is declared separately"
+              ]
+            }
+          },
+          "reject_substitutes": [
+            "heel lift alone",
+            "toe curl alone",
+            "en pointe assumed"
+          ],
+          "render_gates": [
+            {
+              "description": "ankle extends into a plantarflexed line. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_pointed_foot_1",
+              "review_scale": "both"
+            },
+            {
+              "description": "toes and foot continue from the lower leg. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_pointed_foot_2",
+              "review_scale": "both"
+            },
+            {
+              "description": "ground contact or lifted-foot role is declared separately. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_pointed_foot_3",
+              "review_scale": "both"
+            }
+          ],
+          "required_evidence_fields": [
+            "component_1_phrase",
+            "component_2_phrase",
+            "component_3_phrase"
+          ],
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "forbidden_prompt_terms": [],
+            "prompt_label_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "semantics": {
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "component_semantics": {
+              "groups": [
+                {
+                  "any_terms": [
+                    "ankle extends into a plantarflexed line"
+                  ],
+                  "id": "component_1"
+                },
+                {
+                  "any_terms": [
+                    "toes and foot continue from the lower leg"
+                  ],
+                  "id": "component_2"
+                },
+                {
+                  "any_terms": [
+                    "ground contact or lifted-foot role is declared separately"
+                  ],
+                  "id": "component_3"
+                }
+              ],
+              "minimum_component_groups": 3,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3"
+              ]
+            },
+            "contrast_examples": [
+              "heel lift alone",
+              "toe curl alone",
+              "en pointe assumed"
+            ],
+            "definition": "ankle extends into a plantarflexed line; toes and foot continue from the lower leg; ground contact or lifted-foot role is declared separately",
+            "paraphrase_examples": [
+              "ankle extends into a plantarflexed line",
+              "toes and foot continue from the lower leg",
+              "ground contact or lifted-foot role is declared separately"
+            ],
+            "visual_components": [
+              "ankle extends into a plantarflexed line",
+              "toes and foot continue from the lower leg",
+              "ground contact or lifted-foot role is declared separately"
+            ]
+          }
+        },
+        "record_kind": "visual_profile",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      },
+      {
+        "candidate_id": "cand_63fdae124c9d54269805bcfaa1bbae5e",
+        "module": "photo_candidate_candidates_000.json",
+        "whole_record_sha256": "87b4d9adf7d035ef820081d84883fac961e2f3fca2f36f6375c29e7232fbade5",
+        "classification": "partial",
+        "comparison": "공중의 두 발, 앞뒤로 뻗은 다리와 같은 골반·몸통의 연결을 요구하는 그랑 주테 프로필. 한 발 출발·착지는 시퀀스 메타데이터이며 발끝 모양은 이 요약만으로 확정하지 않는다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {},
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "bindings": [],
+        "complete_content_snapshot": {
+          "activation": {
+            "exact_terms": [
+              "공중에서 앞뒤 다리를 펼친 그랑 주테",
+              "Grand jeté pose",
+              "Grand jete pose",
+              "그랑 주테 자세"
+            ],
+            "hard_activation": {
+              "contract_version": "photo-visual-hard-activation/v1",
+              "required_any_groups": [
+                {
+                  "any_terms": [
+                    "pose",
+                    "posing",
+                    "posture",
+                    "person",
+                    "woman",
+                    "man",
+                    "human",
+                    "subject",
+                    "actor",
+                    "dancer",
+                    "ballet",
+                    "sitting",
+                    "seated",
+                    "kneeling",
+                    "hand",
+                    "finger",
+                    "foot",
+                    "인물",
+                    "자세",
+                    "포즈",
+                    "사람",
+                    "무릎",
+                    "손",
+                    "발레",
+                    "앉기",
+                    "앉은"
+                  ],
+                  "id": "body_pose_context"
+                }
+              ]
+            },
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          },
+          "authored_components": {
+            "components": [
+              {
+                "evidence_field": "component_1_phrase",
+                "evidence_terms": [
+                  "both feet clear the ground in the selected leap phase"
+                ],
+                "id": "component_1",
+                "instruction": "Bind this visible configuration to the declared actor and target: both feet clear the ground in the selected leap phase.",
+                "match_terms": [
+                  "both feet clear the ground in the selected leap phase"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "both feet clear the ground in the selected leap phase. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_grand_jete_1",
+                  "review_scale": "both"
+                }
+              },
+              {
+                "evidence_field": "component_2_phrase",
+                "evidence_terms": [
+                  "legs extend in opposing front-back directions"
+                ],
+                "id": "component_2",
+                "instruction": "Bind this visible configuration to the declared actor and target: legs extend in opposing front-back directions.",
+                "match_terms": [
+                  "legs extend in opposing front-back directions"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "legs extend in opposing front-back directions. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_grand_jete_2",
+                  "review_scale": "both"
+                }
+              },
+              {
+                "evidence_field": "component_3_phrase",
+                "evidence_terms": [
+                  "pelvis and torso remain connected between the legs"
+                ],
+                "id": "component_3",
+                "instruction": "Bind this visible configuration to the declared actor and target: pelvis and torso remain connected between the legs.",
+                "match_terms": [
+                  "pelvis and torso remain connected between the legs"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "pelvis and torso remain connected between the legs. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_grand_jete_3",
+                  "review_scale": "both"
+                }
+              },
+              {
+                "evidence_field": "component_4_phrase",
+                "evidence_terms": [
+                  "one-foot takeoff and landing belong to sequence metadata"
+                ],
+                "id": "component_4",
+                "instruction": "Bind this visible configuration to the declared actor and target: one-foot takeoff and landing belong to sequence metadata.",
+                "match_terms": [
+                  "one-foot takeoff and landing belong to sequence metadata"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "one-foot takeoff and landing belong to sequence metadata. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_grand_jete_4",
+                  "review_scale": "both"
+                }
+              }
+            ],
+            "contract_version": "photo-authored-visual-components/v1"
+          },
+          "category": "observable_pose_configuration",
+          "composition_instruction": "Bind this visible configuration to the declared actor and target: both feet clear the ground in the selected leap phase. Bind this visible configuration to the declared actor and target: legs extend in opposing front-back directions. Bind this visible configuration to the declared actor and target: pelvis and torso remain connected between the legs. Bind this visible configuration to the declared actor and target: one-foot takeoff and landing belong to sequence metadata.",
+          "concept_candidate": {
+            "affected_dimensions": [
+              "action",
+              "pose"
+            ],
+            "affected_properties": [
+              {
+                "dimension": "action",
+                "property": "body.action_configuration",
+                "target": "main_subject"
+              },
+              {
+                "dimension": "pose",
+                "property": "body.support_and_configuration",
+                "target": "main_subject"
+              }
+            ],
+            "concept_terms": [
+              "공중에서 앞뒤 다리를 펼친 그랑 주테",
+              "Grand jeté",
+              "Grand jete",
+              "그랑 주테",
+              "both feet clear the ground in the selected leap phase",
+              "legs extend in opposing front-back directions",
+              "pelvis and torso remain connected between the legs",
+              "one-foot takeoff and landing belong to sequence metadata"
+            ],
+            "core_assertion_discovery": true
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "both feet clear the ground in the selected leap phase"
+              ]
+            },
+            "component_2_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "legs extend in opposing front-back directions"
+              ]
+            },
+            "component_3_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "pelvis and torso remain connected between the legs"
+              ]
+            },
+            "component_4_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "one-foot takeoff and landing belong to sequence metadata"
+              ]
+            }
+          },
+          "reject_substitutes": [
+            "grounded front split",
+            "ordinary tucked jump",
+            "side split"
+          ],
+          "render_gates": [
+            {
+              "description": "both feet clear the ground in the selected leap phase. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_grand_jete_1",
+              "review_scale": "both"
+            },
+            {
+              "description": "legs extend in opposing front-back directions. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_grand_jete_2",
+              "review_scale": "both"
+            },
+            {
+              "description": "pelvis and torso remain connected between the legs. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_grand_jete_3",
+              "review_scale": "both"
+            },
+            {
+              "description": "one-foot takeoff and landing belong to sequence metadata. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_grand_jete_4",
+              "review_scale": "both"
+            }
+          ],
+          "required_evidence_fields": [
+            "component_1_phrase",
+            "component_2_phrase",
+            "component_3_phrase",
+            "component_4_phrase"
+          ],
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "forbidden_prompt_terms": [],
+            "prompt_label_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "semantics": {
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "component_semantics": {
+              "groups": [
+                {
+                  "any_terms": [
+                    "both feet clear the ground in the selected leap phase"
+                  ],
+                  "id": "component_1"
+                },
+                {
+                  "any_terms": [
+                    "legs extend in opposing front-back directions"
+                  ],
+                  "id": "component_2"
+                },
+                {
+                  "any_terms": [
+                    "pelvis and torso remain connected between the legs"
+                  ],
+                  "id": "component_3"
+                },
+                {
+                  "any_terms": [
+                    "one-foot takeoff and landing belong to sequence metadata"
+                  ],
+                  "id": "component_4"
+                }
+              ],
+              "minimum_component_groups": 4,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3",
+                "component_4"
+              ]
+            },
+            "contrast_examples": [
+              "grounded front split",
+              "ordinary tucked jump",
+              "side split"
+            ],
+            "definition": "both feet clear the ground in the selected leap phase; legs extend in opposing front-back directions; pelvis and torso remain connected between the legs; one-foot takeoff and landing belong to sequence metadata",
+            "paraphrase_examples": [
+              "both feet clear the ground in the selected leap phase",
+              "legs extend in opposing front-back directions",
+              "pelvis and torso remain connected between the legs",
+              "one-foot takeoff and landing belong to sequence metadata"
+            ],
+            "visual_components": [
+              "both feet clear the ground in the selected leap phase",
+              "legs extend in opposing front-back directions",
+              "pelvis and torso remain connected between the legs",
+              "one-foot takeoff and landing belong to sequence metadata"
+            ]
+          }
+        },
+        "record_kind": "visual_profile",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      },
+      {
+        "candidate_id": "cand_cebb61b808895635a4cff4352c0bb3a7",
+        "module": "photo_candidate_candidates_003.json",
+        "whole_record_sha256": "147b1fa502678578f56eaf95377424a4528bcb8cb50355549e2260c5d85bbefb",
+        "classification": "underspecified",
+        "comparison": "사람 조건의 공중 무용 도약만 명시하고 발끝의 구체 모양은 보장하지 않는다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "bindings": [
+          {
+            "candidate_id": "cand_cebb61b808895635a4cff4352c0bb3a7",
+            "conditions": {
+              "subject_applicability": {}
+            },
+            "id": "bind_cebb61b808895635a4cff4352c0bb3a7",
+            "role": "optional",
+            "slot_id": "action",
+            "weight": 0.74,
+            "semantic_role": "direct"
+          }
+        ],
+        "complete_content_snapshot": {
+          "en": "a midair dance leap",
+          "ko": "공중에 떠오른 댄스 점프",
+          "tags": [
+            "human",
+            "motion",
+            "dance"
+          ]
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      },
+      {
+        "candidate_id": "cand_d2bae2e0320753a29ff11ceeaafbdb94",
+        "module": "photo_candidate_candidates_004.json",
+        "whole_record_sha256": "08e387f8938764cbb63f29c85eba1c59ab2dc95d820a7a50ae29a4ab259396d3",
+        "classification": "partial",
+        "comparison": "사람 조건의 그랑 주테 변형: 두 발이 떠 있고 앞뒤 다리가 벌어지며 몸통과 골반은 연결된다. 발끝은 별도이고 출발과 착지는 시간 메타데이터다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action",
+            "pose"
+          ],
+          "properties": [
+            {
+              "dimension": "action",
+              "property": "body.action_configuration",
+              "target": "main_subject"
+            },
+            {
+              "dimension": "pose",
+              "property": "body.support_and_configuration",
+              "target": "main_subject"
+            }
+          ]
+        },
+        "bindings": [
+          {
+            "candidate_id": "cand_d2bae2e0320753a29ff11ceeaafbdb94",
+            "conditions": {
+              "subject_applicability": {}
+            },
+            "id": "bind_d2bae2e0320753a29ff11ceeaafbdb94",
+            "role": "optional",
+            "slot_id": "action",
+            "weight": 0.5,
+            "semantic_role": "direct"
+          }
+        ],
+        "complete_content_snapshot": {
+          "aliases": [
+            "공중에서 앞뒤 다리를 펼친 그랑 주테",
+            "Grand jeté",
+            "Grand jete",
+            "그랑 주테"
+          ],
+          "concept_units": [
+            "both feet clear the ground in the selected leap phase",
+            "legs extend in opposing front-back directions",
+            "pelvis and torso remain connected between the legs",
+            "one-foot takeoff and landing belong to sequence metadata"
+          ],
+          "core_assertion_discovery": true,
+          "embedding_text": "공중에서 앞뒤 다리를 펼친 그랑 주테; Grand jeté; Grand jete; 그랑 주테; both feet clear the ground in the selected leap phase; legs extend in opposing front-back directions; pelvis and torso remain connected between the legs; one-foot takeoff and landing belong to sequence metadata",
+          "en": "both feet clear the ground in the selected leap phase; legs extend in opposing front-back directions; pelvis and torso remain connected between the legs; one-foot takeoff and landing belong to sequence metadata",
+          "keywords": [
+            "공중에서 앞뒤 다리를 펼친 그랑 주테",
+            "Grand jeté",
+            "Grand jete",
+            "그랑 주테"
+          ],
+          "ko": "공중에서 앞뒤 다리를 펼친 그랑 주테",
+          "relations": [
+            {
+              "id": "owner_scope",
+              "object": "the body parts, support surfaces and contact targets stated in this configuration",
+              "subject": "main_subject",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "pose_vocabulary",
+            "action"
+          ]
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      },
+      {
+        "candidate_id": "cand_b157a54f4c585cad81169a3d343ab5e4",
+        "module": "photo_candidate_candidates_006.json",
+        "whole_record_sha256": "6ab84198ae9cf32fa3c18638e74ab78ecd33104bc41c8a5f2a242504ba0fcf26",
+        "classification": "partial",
+        "comparison": "다리선과 이어지는 발목의 족저굴곡을 나타내는 옵션. 공중에 있는지 도약 중인지는 별도다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {},
+        "effects": {
+          "dimensions": [
+            "pose"
+          ],
+          "properties": []
+        },
+        "bindings": [
+          {
+            "candidate_id": "cand_b157a54f4c585cad81169a3d343ab5e4",
+            "conditions": {
+              "subject_applicability": {
+                "deny_domains": [
+                  "product",
+                  "jewelry",
+                  "food",
+                  "wildlife"
+                ],
+                "subject_categories": [
+                  "human"
+                ]
+              }
+            },
+            "id": "bind_b157a54f4c585cad81169a3d343ab5e4",
+            "role": "optional",
+            "slot_id": "body_pose",
+            "weight": 0.6,
+            "semantic_role": "direct"
+          }
+        ],
+        "complete_content_snapshot": {
+          "aliases": [
+            "plantar-flexed leg line",
+            "extended ankle line",
+            "저측굴곡 하체 선"
+          ],
+          "contextual_usage": {
+            "contexts": [
+              {
+                "claim_limits": [
+                  "Equivalent observable pose only; attire, tone, framing and actor count are independent.",
+                  "Apparent support is visible configuration, not a force measurement."
+                ],
+                "id": "pose_vocabulary_pv_pointed_foot",
+                "meaning_scope": "ankle extends into a plantarflexed line; toes and foot continue from the lower leg; ground contact or lifted-foot role is declared separately",
+                "ordinary_readings": [
+                  "heel lift alone",
+                  "toe curl alone",
+                  "en pointe assumed"
+                ]
+              }
+            ]
+          },
+          "embedding_text": "a plantar-flexed ankle continues the visible calf and shin line through the dorsum of the foot toward the toes while joint structure stays coherent, distinct from isolated curled toes or a hidden ankle",
+          "en": "plantar-flexed ankle continuing the lower-limb line",
+          "facets": {
+            "safety_tier": [
+              "general"
+            ],
+            "soft_body_role": [
+              "narrative_safe"
+            ]
+          },
+          "keywords": [
+            "plantar flexion",
+            "calf to foot line",
+            "visible ankle",
+            "extended foot"
+          ],
+          "ko": "종아리에서 발등과 발끝까지 이어지는 저측굴곡 하체 선",
+          "paraphrases": [
+            "발목 족저굴곡으로 길게 뻗은 발",
+            "Pointed foot",
+            "Pointed toes",
+            "발끝 뻗기",
+            "ankle extends into a plantarflexed line",
+            "toes and foot continue from the lower leg",
+            "ground contact or lifted-foot role is declared separately",
+            "The ankle extends in plantar flexion to continue the lower leg line through the foot.",
+            "발목이 발바닥 굽힘으로 펴져 하퇴의 선이 발까지 이어진다."
+          ],
+          "tags": [
+            "human",
+            "pose",
+            "ankle",
+            "foot",
+            "line",
+            "narrative_safe"
+          ]
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      }
+    ],
+    "note": "기존 원표제 문자열 검색에 없는 KO/EN/JA 묘사식 확장에서 선택·개별 검토한 후보. 확장 탐색 전수 및 부재를 증명하지 않는다."
+  },
+  {
+    "id": "MG-13-2-009",
+    "existing_candidate_status": "limited_review_other_candidates_open",
+    "reviewed_candidates": [
+      {
+        "candidate_id": "cand_4db81c4a201458949b0edfc47351ea95",
+        "module": "photo_candidate_candidates_003.json",
+        "whole_record_sha256": "ef05bcdbc058628b37ded8e37516fb23bbfdd883bd5256c6dbf3b1f2baf276a4",
+        "classification": "partial",
+        "comparison": "사람 조건에서 한쪽 무릎이 바닥에 닿고 다른 다리 발이 앞에 놓이는 정지 지지 구성. 착지의 전후 과정은 확인하지 않는다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "pose"
+          ],
+          "properties": [
+            {
+              "dimension": "pose",
+              "property": "body.support_and_configuration",
+              "target": "main_subject"
+            }
+          ]
+        },
+        "bindings": [
+          {
+            "candidate_id": "cand_4db81c4a201458949b0edfc47351ea95",
+            "conditions": {
+              "subject_applicability": {
+                "deny_domains": [
+                  "product",
+                  "jewelry",
+                  "food",
+                  "wildlife"
+                ],
+                "subject_categories": [
+                  "human"
+                ]
+              }
+            },
+            "id": "bind_4db81c4a201458949b0edfc47351ea95",
+            "role": "optional",
+            "slot_id": "body_pose",
+            "weight": 0.5,
+            "semantic_role": "direct"
+          }
+        ],
+        "complete_content_snapshot": {
+          "aliases": [
+            "한 무릎과 반대 발의 지지",
+            "Half-kneeling",
+            "One-knee pose",
+            "한쪽 무릎 꿇기"
+          ],
+          "concept_units": [
+            "one knee contacts the floor",
+            "the other foot is planted forward",
+            "the grounded knee and planted foot belong to different legs"
+          ],
+          "contextual_usage": {
+            "contexts": [
+              {
+                "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+                "claim_limits": [
+                  "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+                  "Support means an observable support configuration, not measured force or motion history.",
+                  "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+                  "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+                  "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+                ],
+                "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+                "id": "vel_pv_half_kneel_meaning_boundary"
+              }
+            ]
+          },
+          "core_assertion_discovery": true,
+          "embedding_text": "한 무릎과 반대 발의 지지; Half-kneeling; One-knee pose; 한쪽 무릎 꿇기; one knee contacts the floor; the other foot is planted forward; the grounded knee and planted foot belong to different legs",
+          "en": "one knee contacts the floor; the other foot is planted forward; the grounded knee and planted foot belong to different legs",
+          "keywords": [
+            "한 무릎과 반대 발의 지지",
+            "Half-kneeling",
+            "One-knee pose",
+            "한쪽 무릎 꿇기"
+          ],
+          "ko": "한 무릎과 반대 발의 지지",
+          "paraphrases": [
+            "One knee rests on the support while the opposite foot is planted forward.",
+            "한 무릎은 지지면에 놓이고 반대 발은 앞쪽 바닥에 딛는다.",
+            "한쪽 무릎은 바닥에 닿고 다른 다리의 발은 앞으로 디뎌 두 지지점이 서로 다른 다리에 속한다",
+            "바닥의 한 무릎과 앞쪽에 세운 반대 발이 반무릎 자세를 지지한다",
+            "one grounded knee and the opposite planted forward foot belong to different legs",
+            "a half-kneeling actor supports on one floor-contact knee and the other foot planted ahead"
+          ],
+          "relations": [
+            {
+              "id": "owner_scope",
+              "object": "the body parts, support surfaces and contact targets stated in this configuration",
+              "subject": "main_subject",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "pose_vocabulary",
+            "body_pose"
+          ]
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      },
+      {
+        "candidate_id": "cand_3a7c9eddfb4157c0ba505454ca85d1de",
+        "module": "photo_candidate_candidates_014.json",
+        "whole_record_sha256": "c3123bc29102b26a74465b427a017ac1bc4cfac54484dc604c3d8164deaa4556",
+        "classification": "partial",
+        "comparison": "한 무릎 접지와 반대 발 접지 및 다리 소유 관계를 모두 요구하는 half-kneeling 프로필. 두 무릎 접지나 뒤 무릎이 떠 있는 런지를 대체로 거부한다. 동작 완료 시점은 별도다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {},
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "bindings": [],
+        "complete_content_snapshot": {
+          "activation": {
+            "exact_terms": [
+              "한 무릎과 반대 발의 지지",
+              "Half-kneeling pose",
+              "One-knee pose",
+              "한쪽 무릎 꿇기 자세"
+            ],
+            "hard_activation": {
+              "contract_version": "photo-visual-hard-activation/v1",
+              "required_any_groups": [
+                {
+                  "any_terms": [
+                    "pose",
+                    "posing",
+                    "posture",
+                    "person",
+                    "woman",
+                    "man",
+                    "human",
+                    "subject",
+                    "actor",
+                    "dancer",
+                    "ballet",
+                    "sitting",
+                    "seated",
+                    "kneeling",
+                    "hand",
+                    "finger",
+                    "foot",
+                    "인물",
+                    "자세",
+                    "포즈",
+                    "사람",
+                    "무릎",
+                    "손",
+                    "발레",
+                    "앉기",
+                    "앉은"
+                  ],
+                  "id": "body_pose_context"
+                }
+              ]
+            },
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          },
+          "authored_components": {
+            "components": [
+              {
+                "evidence_field": "component_1_phrase",
+                "evidence_terms": [
+                  "one knee contacts the floor"
+                ],
+                "id": "component_1",
+                "instruction": "Bind this visible configuration to the declared actor and target: one knee contacts the floor.",
+                "match_terms": [
+                  "one knee contacts the floor"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "one knee contacts the floor. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_half_kneel_1",
+                  "review_scale": "both"
+                }
+              },
+              {
+                "evidence_field": "component_2_phrase",
+                "evidence_terms": [
+                  "the other foot is planted forward"
+                ],
+                "id": "component_2",
+                "instruction": "Bind this visible configuration to the declared actor and target: the other foot is planted forward.",
+                "match_terms": [
+                  "the other foot is planted forward"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "the other foot is planted forward. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_half_kneel_2",
+                  "review_scale": "both"
+                }
+              },
+              {
+                "evidence_field": "component_3_phrase",
+                "evidence_terms": [
+                  "the grounded knee and planted foot belong to different legs"
+                ],
+                "id": "component_3",
+                "instruction": "Bind this visible configuration to the declared actor and target: the grounded knee and planted foot belong to different legs.",
+                "match_terms": [
+                  "the grounded knee and planted foot belong to different legs"
+                ],
+                "min_content_words": 3,
+                "render_gate": {
+                  "description": "the grounded knee and planted foot belong to different legs. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+                  "id": "vo_pv_profile_half_kneel_3",
+                  "review_scale": "both"
+                }
+              }
+            ],
+            "contract_version": "photo-authored-visual-components/v1"
+          },
+          "category": "observable_pose_configuration",
+          "composition_instruction": "Bind this visible configuration to the declared actor and target: one knee contacts the floor. Bind this visible configuration to the declared actor and target: the other foot is planted forward. Bind this visible configuration to the declared actor and target: the grounded knee and planted foot belong to different legs.",
+          "concept_candidate": {
+            "affected_dimensions": [
+              "pose"
+            ],
+            "affected_properties": [
+              {
+                "dimension": "pose",
+                "property": "body.support_and_configuration",
+                "target": "main_subject"
+              }
+            ],
+            "concept_terms": [
+              "한 무릎과 반대 발의 지지",
+              "Half-kneeling",
+              "One-knee pose",
+              "한쪽 무릎 꿇기",
+              "one knee contacts the floor",
+              "the other foot is planted forward",
+              "the grounded knee and planted foot belong to different legs",
+              "한쪽 무릎은 바닥에 닿고 다른 다리의 발은 앞으로 디뎌 두 지지점이 서로 다른 다리에 속한다",
+              "바닥의 한 무릎과 앞쪽에 세운 반대 발이 반무릎 자세를 지지한다",
+              "one grounded knee and the opposite planted forward foot belong to different legs",
+              "a half-kneeling actor supports on one floor-contact knee and the other foot planted ahead"
+            ],
+            "core_assertion_discovery": true
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "one knee contacts the floor"
+              ]
+            },
+            "component_2_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "the other foot is planted forward"
+              ]
+            },
+            "component_3_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "the grounded knee and planted foot belong to different legs"
+              ]
+            }
+          },
+          "reject_substitutes": [
+            "both knees down",
+            "lunge with rear knee airborne"
+          ],
+          "render_gates": [
+            {
+              "description": "one knee contacts the floor. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_half_kneel_1",
+              "review_scale": "both"
+            },
+            {
+              "description": "the other foot is planted forward. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_half_kneel_2",
+              "review_scale": "both"
+            },
+            {
+              "description": "the grounded knee and planted foot belong to different legs. Inspect the complete relation in the original pixels; partial evidence fails and a hidden prerequisite is unobservable.",
+              "id": "vo_pv_profile_half_kneel_3",
+              "review_scale": "both"
+            }
+          ],
+          "required_evidence_fields": [
+            "component_1_phrase",
+            "component_2_phrase",
+            "component_3_phrase"
+          ],
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "forbidden_prompt_terms": [],
+            "prompt_label_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "semantics": {
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "component_semantics": {
+              "groups": [
+                {
+                  "any_terms": [
+                    "one knee contacts the floor"
+                  ],
+                  "id": "component_1"
+                },
+                {
+                  "any_terms": [
+                    "the other foot is planted forward"
+                  ],
+                  "id": "component_2"
+                },
+                {
+                  "any_terms": [
+                    "the grounded knee and planted foot belong to different legs"
+                  ],
+                  "id": "component_3"
+                }
+              ],
+              "minimum_component_groups": 3,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3"
+              ]
+            },
+            "contrast_examples": [
+              "both knees down",
+              "lunge with rear knee airborne"
+            ],
+            "definition": "one knee contacts the floor; the other foot is planted forward; the grounded knee and planted foot belong to different legs",
+            "paraphrase_examples": [
+              "one knee contacts the floor",
+              "the other foot is planted forward",
+              "the grounded knee and planted foot belong to different legs",
+              "한쪽 무릎은 바닥에 닿고 다른 다리의 발은 앞으로 디뎌 두 지지점이 서로 다른 다리에 속한다",
+              "바닥의 한 무릎과 앞쪽에 세운 반대 발이 반무릎 자세를 지지한다",
+              "one grounded knee and the opposite planted forward foot belong to different legs",
+              "a half-kneeling actor supports on one floor-contact knee and the other foot planted ahead"
+            ],
+            "visual_components": [
+              "one knee contacts the floor",
+              "the other foot is planted forward",
+              "the grounded knee and planted foot belong to different legs"
+            ]
+          }
+        },
+        "record_kind": "visual_profile",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      }
+    ],
+    "note": "기존 원표제 문자열 검색에 없는 KO/EN/JA 묘사식 확장에서 선택·개별 검토한 후보. 확장 탐색 전수 및 부재를 증명하지 않는다."
+  },
+  {
+    "id": "MG-13-2-010",
+    "existing_candidate_status": "limited_review_other_candidates_open",
+    "reviewed_candidates": [
+      {
+        "candidate_id": "cand_145cdcbbf28f5206b4eeb77bcefeafe3",
+        "module": "photo_candidate_theatre_expansion_20261105.json",
+        "whole_record_sha256": "ccfcc7a1d11fb425aee58072076ba812b037b916841f7c156a11cdcfbbf95e0b",
+        "classification": "partial",
+        "comparison": "무대 연기자가 손가락을 펴고 두 손바닥을 같은 높이로 앞으로 밀며 관객 사이 공기가 보이는 구성. 무대·관객·사람 수 및 접촉 없는 틈을 보존해야 하며 실제 방어 목적·마법은 증명하지 않는다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {},
+        "effects": {
+          "dimensions": [
+            "count",
+            "pose",
+            "relationship",
+            "setting"
+          ],
+          "properties": []
+        },
+        "bindings": [
+          {
+            "id": "bind_de8000a7bd3d5d34af70d000f7243c2a",
+            "candidate_id": "cand_145cdcbbf28f5206b4eeb77bcefeafe3",
+            "slot_id": "hand_pose",
+            "role": "optional",
+            "semantic_role": "direct",
+            "conditions": {
+              "subject_applicability": {}
+            },
+            "weight": 1.0
+          }
+        ],
+        "complete_content_snapshot": {
+          "en": "A stage performer presses both palms forward at the same height with fingers spread, leaving open air visibly between the performer and the audience.",
+          "ko": "무대 위 공연자 한 명이 손가락을 펼친 두 손바닥을 같은 높이에서 앞으로 밀고, 공연자와 객석 사이에는 열린 공간이 보인다.",
+          "definition": "Complete optional theatre visual realization: A stage performer presses both palms forward at the same height with fingers spread, leaving open air visibly between the performer and the audience.",
+          "aliases": [
+            "마임의 보이지 않는 벽",
+            "mime invisible wall gesture"
+          ],
+          "application_contract": "Use only as a complete optional source after independent owner and permission review. Preserve every stated person, count, object, owner, pose, contact, gap, support, gaze and front-back relation. No identity, consent, emotion, sound, history, cause or transition follows from a still. Hidden required endpoints are unobservable.",
+          "research_semantics": {
+            "id": "E038",
+            "name_ko": "마임의 보이지 않는 벽",
+            "candidate_id": "cand_145cdcbbf28f5206b4eeb77bcefeafe3",
+            "positive_en": "A stage performer presses both palms forward at the same height with fingers spread, leaving open air visibly between the performer and the audience.",
+            "positive_ko": "무대 위 공연자 한 명이 손가락을 펼친 두 손바닥을 같은 높이에서 앞으로 밀고, 공연자와 객석 사이에는 열린 공간이 보인다.",
+            "suggested_slot": "hand_pose",
+            "source": "expansion-research.md",
+            "source_evidence_scope": "authored scene geometry; sources support topic and cultural context, not this exact photograph",
+            "observable_gate": "필수 가시 조건: 무대 위 공연자 한 명이 손가락을 펼친 두 손바닥을 같은 높이에서 앞으로 밀고, 공연자와 객석 사이에는 열린 공간이 보인다. 모든 명시된 소유자와 수, 각 접점·간격·앞뒤·지지 관계가 보여야 한다. 가려진 요소는 관찰 불가.",
+            "confusion_boundary": "Do not infer age, identity, consent, actual violence, sound, precise history, cause or temporal change from still pixels. Preserve each named owner and connection.",
+            "requires_explicit_adult_context": false,
+            "native_approval": false,
+            "pixel_status": "NOT_RUN"
+          }
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      }
+    ],
+    "note": "기존 원표제 문자열 검색에 없는 KO/EN/JA 묘사식 확장에서 선택·개별 검토한 후보. 확장 탐색 전수 및 부재를 증명하지 않는다."
+  },
+  {
+    "id": "MG-13-3-006",
+    "existing_candidate_status": "limited_review_other_candidates_open",
+    "reviewed_candidates": [
+      {
+        "candidate_id": "cand_5157d667a7805434a739b735cb68f6f4",
+        "module": "photo_candidate_youth_film_20261105.json",
+        "whole_record_sha256": "d9a16e3c624c8220f42d8aac06cb46767be11fe957cfec7eecffbeda12f9d39d",
+        "classification": "scoped_visual_match",
+        "comparison": "같은 사람의 한쪽 눈 아래 눈물 자국과 살짝 올라간 입꼬리를 함께 요구한다. 재회·안도·슬픔 등의 실제 원인은 정지 외관만으로 정하지 않는다.",
+        "discovery_method": "ko_en_ja_descriptive_expansion_selected_results",
+        "conditions": {},
+        "effects": {
+          "dimensions": [
+            "expression"
+          ],
+          "properties": []
+        },
+        "bindings": [
+          {
+            "id": "bind_8a06618896e85e669b218d948e286141",
+            "candidate_id": "cand_5157d667a7805434a739b735cb68f6f4",
+            "slot_id": "expression",
+            "role": "optional",
+            "semantic_role": "direct",
+            "conditions": {
+              "subject_applicability": {}
+            },
+            "weight": 1.0
+          }
+        ],
+        "complete_content_snapshot": {
+          "en": "A person has a visible tear track below one eye and the corners of their mouth are slightly raised.",
+          "ko": "한 사람의 한쪽 눈 아래에 눈물 자국이 보이고 입꼬리는 살짝 올라가 있다.",
+          "definition": "Complete optional youth-film visual realization: A person has a visible tear track below one eye and the corners of their mouth are slightly raised.",
+          "aliases": [
+            "눈물 자국과 미소"
+          ],
+          "application_contract": "Apply only as a complete optional visual realization, to independently identified owners and allowed changes. Preserve person and object counts, directed gaze, each contact or gap, support, garment carrier and depicted-media boundaries exactly as stated. No scene history, age, social identity, relationship, consent, emotion, causation, sound or temporal change follows from appearance alone. Review all effects and exact conditions independently. Research metadata is not native qualification or authority. If a required component is hidden it is unobservable, not a pass.",
+          "research_semantics": {
+            "id": "Y29",
+            "name_ko": "눈물 자국과 미소",
+            "candidate_id": "cand_5157d667a7805434a739b735cb68f6f4",
+            "positive_en": "A person has a visible tear track below one eye and the corners of their mouth are slightly raised.",
+            "positive_ko": "한 사람의 한쪽 눈 아래에 눈물 자국이 보이고 입꼬리는 살짝 올라가 있다.",
+            "suggested_slot": "expression",
+            "source": "research-plan.md#4",
+            "source_evidence_scope": "authored proposed geometry; research sources support topic context, not this exact arrangement",
+            "observable_gate": "A person has a visible tear track below one eye and the corners of their mouth are slightly raised.",
+            "confusion_boundary": "Context and temporal meaning are not established by visible arrangement. All stated endpoints must remain observable.",
+            "native_approval": false,
+            "pixel_status": "NOT_RUN"
+          }
+        },
+        "record_kind": "visual_option",
+        "runtime_exposure": "not_verified",
+        "pixel_qualification": "not_tested",
+        "review_depth": "core_proposition_only",
+        "review_depth_note": "핵심 명제·대조점을 개별 비교했다. 원본 전체 content와 조건·효과·바인딩은 보존했으나 모든 중첩 활성화·계약과 전체 효력을 독립적으로 완전 해석했다고 집계하지 않는다."
+      }
+    ],
+    "note": "기존 원표제 문자열 검색에 없는 KO/EN/JA 묘사식 확장에서 선택·개별 검토한 후보. 확장 탐색 전수 및 부재를 증명하지 않는다."
+  }
+]
