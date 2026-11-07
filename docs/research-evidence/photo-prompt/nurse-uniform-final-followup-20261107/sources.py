@@ -1,0 +1,38 @@
+import json
+from pathlib import Path
+O=Path(__file__).parent
+sources={}
+def add(nums,url,title,scope,kind='partial'):
+ for n in nums:
+  k=f'NURSE-ROW-{n:03d}';sources.setdefault(k,[]).append({'url':url,'title':title,'supported_scope_ko':scope,'support':kind})
+add([231],'https://rebeccakshores.com/blog/tutorial/porcelain-doll-halloween-makeup-tutorial','Rebecca Shores 인형풍 화장','개별 작성자가 밝은 색면과 눈·속눈썹을 활용한 화장 사례. 모든 인형풍 화장이나 착용자 나이를 규정하지 않는다.')
+add([235],'https://pixabay.com/photos/woman-portrait-calm-expression-10217256/','차분한 응시로 설명된 인물상','직접 응시와 차분함으로 명명된 이미지의 사례. 표정만으로 심리상태나 연령을 확정하지 않는다.')
+add([236],'https://umma.umich.edu/objects/washington-2012-2-196/','Michigan 미술관 엄격한 표정 초상','미술관이 엄격한 표정과 정면 시선으로 서술한 초상 사례. 실제 감정과 자세의 보편 정의는 아니다.')
+add([237,346],'https://jeroom.design/work/wink','Jeroom 윙크 인물사진','사진가가 하나의 윙크를 중심으로 한 인물사진 시리즈로 기술한다. 장난기는 연출 인상이며 실제 의도는 불명이다.')
+add([252,288],'https://geekysextoys.com/product/nurse-bondage-kit/','간호 테마 커프스 상품','판매자가 간호 테마의 커프스와 버클 등을 기술하는 개별 상품 사례. 실제 구속·동의·의료 직업을 판정하지 않는다.')
+add([253],'https://research.aub.ac.uk/id/eprint/344/1/S%20Hall%20-%20Horror%20of%20the%20Woman%20Flower%20-%20Accepted%20Version.pdf','Arts University Bournemouth 패션 연구','광택 소재와 하네스, 높은 부츠를 포함하는 패션 연출 사례. 간호 테마를 직접 증명하지 않고 역할·동의를 외관에서 추론하지 않는다.')
+add([262],'https://www.oxfordlearnersdictionaries.com/us/definition/english/cleavage','Oxford Learner 사전 cleavage','해부학적 의복 목선 관련 의미의 사전 풀이. 특정 복장이나 성적 행동의 증거는 아니다.','direct_meaning')
+add([263],'https://www.dictionary.com/culture/slang/underboob','Dictionary.com underboob 풀이','유방 아래쪽에 대한 구어적 용례. 개별 이미지의 가려진 부위와 연령은 알 수 없다.','direct_meaning')
+add([264],'https://www.collinsdictionary.com/dictionary/english/sideboob','Collins sideboob','유방 옆부분과 의복 노출에 관한 사전 풀이. 특정 사진의 가려진 부분은 미관찰이다.','direct_meaning')
+add([281],'https://www.aritzia.com/us/en/product/contour-squareneck-high-leg-bodysuit/107351018.html','Aritzia 하이 레그 보디수트','제조사가 높은 다리선을 설명하는 한 제품. 실제 신체나 숨은 의복, 모든 제품의 동일한 선은 뜻하지 않는다.')
+add([282],'https://designmuseum.nl/app/uploads/2026/02/DM-handout-EN.pdf','Design Museum 열린 컵 브래지어 전시','전시 자료에서 오픈컵 구조를 언급한다. 인물의 신체 노출이나 착용자 나이를 입증하지 않는다.')
+add([285],'https://en.wiktionary.org/wiki/%E8%A3%B8%E3%82%A8%E3%83%97%E3%83%AD%E3%83%B3','Wiktionary 裸エプロン','앞치마만 착용한다는 용어의 일본어 사전 풀이. 단일 사진에서 가려진 다른 옷의 부재나 사람의 나이를 입증하지 못한다.','direct_meaning')
+add([291],'https://www.seventhloves.com/products/halloween-costume-horror-bloody-doctor-bloody-nurse-ghost-bride-ghost-nurse','Ghost Nurse 코스튬 상품 제목','판매자가 유령·간호사 표현을 함께 사용한 개별 상품 제목. 특정 옷이나 창백함·흐릿함을 보편 정의하지 않는다.')
+add([295],'https://aviannacosplay.wordpress.com/gallery/demon-nurse2/','Avianna의 Demon Nurse 코스프레','제작자가 Demon Nurse라고 이름 붙인 Silent Hill 3 해석 사례. 뿔이나 꼬리가 이 사례에 있다고 입증하지 않는다.')
+add([296,297],'https://www.konami.com/games/eu/es/topics/4654/','Konami 간호사 코스프레 인터뷰','코스플레이어가 간호사 캐릭터용 가면에 붕대를 감는다고 설명한 특정 사례. 실제 얼굴 부재나 의료적 붕대 기능은 뜻하지 않는다.')
+add([327],'https://www.engraversguild.co.uk/personalised-nurses-watches/','Nurse fob watch 제품 설명','옷에 매단 시계의 문자판을 아래로 내려다보아 읽는 구조를 설명한다. 정지 사진만으로 읽기 행위의 전후를 증명하지 않는다.')
+add([328],'https://www.namebadge.com/designs/name-badges-for-nurses','간호사 이름표 상품 안내','간호사 제복에 착용하는 이름표와 부착 방식을 설명하는 상품 안내. 직접 배지를 고쳐 다는 특정 동작은 보여 주지 않는다.')
+add([329],'https://reach.cdc.gov/sites/default/files/job-aids-resources/PPE-Scenario2B-Script.pdf','CDC 장갑과 가운 소매','장갑과 가운 소맷단의 겹침과 착용 동작을 설명한다. 장갑 정리 포즈 전체나 사진 속 무균 상태는 입증하지 않는다.')
+add([332],'https://pmc.ncbi.nlm.nih.gov/articles/PMC12352414/','손짓과 언어 연구','Arrernte어 사용자의 펴진 손을 이용한 영역 지시와 별도의 손바닥 위쪽 손짓 사례를 소개한다. 두 용례를 혼동하거나 모든 문화의 의도를 추정하지 않는다.')
+add([339],'https://www.agsa.sa.gov.au/collection-publications/collection/works/outdoor-portrait-of-an-elderly-gentleman-wearing-hat-hands-clasped-behind-back/22119/','남호주 미술관 뒤로 모은 손 사진','실제 사진의 제목이 등 뒤로 모은 두 손을 명시한다. 전면 의상이나 감정은 별도다.')
+add([342],'https://collectionswa.net.au/items/547247e2-e502-45e4-9ae8-74fbe57b5431','Royal Perth Hospital Museum 간호 캡','역사적 간호 캡의 머리 위 착용과 고정을 보여 주는 소장품 설명. 손으로 모자를 고치는 동작까지 입증하지 않는다.')
+add([343],'https://vflatworld.com/blogs/behind-the-scenes/using-v-flats-for-clean-e-commerce-fashion-photography','V-Flat World 칼라를 든 패션 사진','사진가의 의상 사진에서 손으로 옷깃을 잡는 사례. 어떤 직업이나 간호 칼라는 확인되지 않는다.')
+add([347],'https://www.adorkastock.com/pose/classic-pinup-pose/','AdorkaStock 핀업 포즈','한쪽 무릎을 구부린 핀업 포즈 사례. 발을 뒤로 완전히 들어 올리는 형태까지 입증하지 않는다.')
+add([353],'https://shotkit.com/fashion-poses/','사진가 패션 포즈 가이드','쪼그린 패션 인물 사진 예. 실제 체중 분배나 건강 상태는 사진만으로 확정하지 않는다.')
+add([355],'https://jessiewymanphotography.com/blog/my-favorite-poses-for-your-personal-branding-photo-session','Jessie Wyman 앞으로 기울이기','카메라 방향으로 상체를 기울이는 포즈 예. 감정이나 정확한 렌즈 거리는 별도다.')
+add([358],'https://www.si.edu/es/object/sketch-portrait-mrs-george-f-betts%3Achndm_1942-50-679','Smithsonian 치마를 잡은 초상 스케치','한 손으로 치마를 잡는 미술 작품의 설명. 치맛단을 잡는 정확한 위치와 사진 장르는 별도로 확인한다.')
+add([359,360,361,362,363],'https://www.besoberlin.com/en/act-like-a-zombie-posture-expression-gaze/','BESO Berlin 좀비 연기 워크숍','연기 연습에서 머리·어깨 높이의 비대칭, 몸통·손·보행을 구분한다. 개별 포즈 전체나 실제 보행 이력·의도를 사진 한 장으로 증명하지 않는다.')
+add([365],'https://unsplash.com/photos/woman-peeking-through-a-red-door-wrpv3IU9KIs','Unsplash 문 너머를 보는 사진','문 뒤에서 들여다보는 사람의 사진으로 기술된 한 장면. 미관찰 신체와 실제 의도는 추정하지 않는다.')
+add([366],'https://www.davidstarryphotography.com/productionphotos','David Starry 공연 사진','배우가 소품을 들고 손을 올리는 공연 사진 사례. 위협성이나 소품의 기능을 입증하지 않는다.')
+add([378],'https://spectrum.rosco.com/index.php/2016/04/how-to-properly-choose-a-color-filter','Rosco 연극 조명 색상 필터','공연 조명에서 붉은 필터와 색이 의상 시료에 미치는 영향을 설명한다. 비상등의 존재·작동이나 병원 공간임을 증명하지 않는다.')
+p=O/'source-map.json';p.write_text(json.dumps(sources,ensure_ascii=False,indent=2)+'\n');print('rows',len(sources))
