@@ -1,0 +1,259 @@
+{
+  "schema": "photo-reviewed-source-transition-evidence/v1",
+  "generation_id": "d737e9d8c1ba5e037c255ddfab896c66c41b83aa3ca228c7314fc9bffc21ce2e",
+  "records": {
+    "cand_9303dc641ccb32c2928a26074419a603": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "camera slightly above eye level",
+          "slightly elevated camera height",
+          "눈높이보다 약간 높은 카메라",
+          "살짝 올라간 카메라 높이",
+          "camera positioned slightly above eye level",
+          "Camera: front view slightly above eye level",
+          "CAMERA: slightly above eye level",
+          "LENS & CAPTURE: straight-on at slightly above eye level",
+          "lens held slightly above eye level",
+          "phone at arm's length slightly above eye level",
+          "selfie composition, front-facing, with the camera held slightly above eye level"
+        ],
+        "definition": "The camera height is slightly above the subject’s eye line. / 카메라 높이가 피사체 눈높이보다 약간 위에 있다.",
+        "en": "Position the camera slightly above the subject’s eye level.",
+        "keywords": [
+          "camera height slightly above subject eye line",
+          "slightly elevated camera viewpoint",
+          "피사체 눈높이보다 약간 높은 카메라 위치",
+          "살짝 위에 둔 카메라 높이",
+          "camera positioned slightly above eye level",
+          "camera slightly above eye level",
+          "Camera: front view slightly above eye level",
+          "CAMERA: slightly above eye level",
+          "LENS & CAPTURE: straight-on at slightly above eye level",
+          "lens held slightly above eye level",
+          "phone at arm's length slightly above eye level",
+          "selfie composition, front-facing, with the camera held slightly above eye level"
+        ],
+        "ko": "카메라를 피사체의 눈높이보다 약간 위에 둔다.",
+        "paraphrases": [
+          "Raise the camera just a little above the subject’s eye line.",
+          "Position the viewpoint slightly higher than the subject’s eyes.",
+          "카메라를 피사체 눈높이보다 조금만 높게 둔다.",
+          "시점을 인물 눈높이보다 살짝 위에 놓는다."
+        ],
+        "role_evidence": {
+          "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+          "complete": true,
+          "dependencies": {
+            "base": []
+          },
+          "effect_sets": {
+            "base": {
+              "dimensions": [
+                "camera"
+              ],
+              "properties": [
+                {
+                  "dimension": "camera",
+                  "property": "camera.height",
+                  "target": "slightly_above_subject_eye_level"
+                }
+              ]
+            }
+          },
+          "facts": [
+            {
+              "dimension": "camera",
+              "id": "camera_height_relation",
+              "mode": "effect",
+              "operation": "set_value",
+              "pointer": "/content/en",
+              "property": "camera.height",
+              "quote": "slightly above the subject’s eye level",
+              "realization_id": "base",
+              "receivers": [],
+              "requires": [],
+              "target": "slightly_above_subject_eye_level",
+              "value": {
+                "type": "camera.height_relation/v1",
+                "value": "slightly above the subject’s eye level"
+              }
+            }
+          ],
+          "guard_sets": {
+            "base": {
+              "member_conditions": {},
+              "source_conditions": [
+                {
+                  "for_any": [
+                    "human"
+                  ]
+                },
+                {}
+              ]
+            }
+          },
+          "meaning_sha256": "d92c0639bfffea4c00d792d558b6d3fa465ce444db4847989ccceffd12dfa4e2",
+          "owner_maps": {
+            "base": {
+              "bindings": [
+                {
+                  "introduced_by": null,
+                  "origin": "existing",
+                  "selector": {
+                    "kind": "core_role",
+                    "role": "recording_camera"
+                  },
+                  "target": "slightly_above_subject_eye_level"
+                }
+              ],
+              "schema": "photo-native-owner-bindings/v3"
+            }
+          },
+          "profile_contracts": {
+            "base": null
+          },
+          "reference_sha256": {},
+          "review": {
+            "basis": "Root reviewed the exact EN/KO/definition fields, human condition, camera.height effect, and recording-camera owner relation for the B source. The V4 canonical primary inventory is exactly these three fields. Root also read the four unchanged V3 paraphrases and confirmed they restate the same qualitative relation without additional camera or subject properties; V4 does not expose them as primary anchors and this proof assigns no units to them. Aliases and keywords remain lookup metadata and anchor no facts.",
+            "native_review": {
+              "method": "codex_subagent_direct_source_read",
+              "native_contract_sha256": "f7b32e6bb29459a1b46d8ea23219db282290b4dba0a0351b6f4a3e3bcb82a02a",
+              "reviewer": "/root/completion_qualification"
+            },
+            "original_review": {
+              "artifact": "/Users/chasoik/Projects/image-prompt/generated/trend-scout/raw/reactorprompt-pose-composition-20261026/completion-20261027/review/completion/CAMERA-HEIGHT-ROOT-REVIEW.json",
+              "candidate_id": "cand_9303dc641ccb32c2928a26074419a603",
+              "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+              "decision_sha256": "ae5e99b15123a91e85f59356311d3cd3dfba7180cf03875a2cc0424d762c78d4",
+              "source_record_sha256": "f12557e8070c4b8d7711733b5a855f0888b5e695a67fd0dc4b255e970852763c"
+            },
+            "source_correction": null,
+            "whole_source_reviewed": true
+          },
+          "roles": {
+            "camera_height": {
+              "fact_refs": [
+                "camera_height_relation"
+              ],
+              "realization_ids": [
+                "base"
+              ],
+              "scope": "whole_record",
+              "spec_sha256": "91d6b86b6605043296308a1636f523defaf934e45fa0d20ec150f5f34dcb3604",
+              "support_modes": [
+                "effect"
+              ]
+            }
+          },
+          "schema": "photo-candidate-role-evidence/v4",
+          "source_units": [
+            {
+              "disposition": "semantic",
+              "fact_refs": [
+                "camera_height_relation"
+              ],
+              "pointer": "/content/en",
+              "quote": "Position the camera slightly above the subject’s eye level.",
+              "realization_id": "base"
+            },
+            {
+              "disposition": "semantic_reference",
+              "fact_refs": [
+                "camera_height_relation"
+              ],
+              "pointer": "/content/ko",
+              "quote": "카메라를 피사체의 눈높이보다 약간 위에 둔다.",
+              "realization_id": "base",
+              "reference_relation": "partial_restatement",
+              "retained_constraint_rationale": "The Korean field retains the same camera owner, relative eye-height reference, and slight-above direction. It adds no numeric height, lens choice, camera angle, distance, or subject pose. The direct English field anchors the unchanged fact."
+            },
+            {
+              "disposition": "semantic_reference",
+              "fact_refs": [
+                "camera_height_relation"
+              ],
+              "pointer": "/content/definition",
+              "quote": "The camera height is slightly above the subject’s eye line. / 카메라 높이가 피사체 눈높이보다 약간 위에 있다.",
+              "realization_id": "base",
+              "reference_relation": "partial_restatement",
+              "retained_constraint_rationale": "The bilingual definition restates the same qualitative height relation and does not turn eye-line comparison into a numeric measurement or camera direction. The direct English field anchors the unchanged fact."
+            }
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [
+          "camera"
+        ],
+        "properties": [
+          {
+            "dimension": "camera",
+            "property": "camera.height",
+            "target": "slightly_above_subject_eye_level"
+          }
+        ]
+      },
+      "id": "cand_9303dc641ccb32c2928a26074419a603",
+      "provenance": [
+        {
+          "sha256": "0a120282a0bf0de71a711e98b6a9fa09da3ff582eeac587cbcaa0927964e9e0e",
+          "source": "reactorprompt-document:0a120282a0bf0de71a711e98b6a9fa09da3ff582eeac587cbcaa0927964e9e0e#chars:208-358"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_4c3df132db45558b80ccba3f4b48603e": {
+      "conditions": {},
+      "content": {
+        "aliases": [
+          "인형풍 속눈썹과 화장"
+        ],
+        "application_contract": "Apply only as one complete optional visual realization to independently identified owners and permitted changes. Preserve stated parts, counts, owners and relations. Do not infer age, identity, occupation, consent, intent, real treatment, material chemistry or events outside the frame. Source evidence supports only its stated scope. Research metadata does not grant native qualification or automatic selection.",
+        "definition": "Complete optional nurse follow-up visual realization: A makeup display head has evenly covered cheeks, a sharply defined upper lash line and separate prominent lashes around the eyes.",
+        "en": "A makeup display head has evenly covered cheeks, a sharply defined upper lash line and separate prominent lashes around the eyes.",
+        "ko": "화장 전시용 머리의 볼은 고르게 색이 덮이고 눈 둘레에 또렷한 위 속눈썹선과 구분되는 긴 속눈썹이 있다.",
+        "research_semantics": {
+          "boundary_ko": "출처는 명시된 일부 단서·용례만 뒷받침한다. 원문 전체나 후보의 완전 동등성, 가려진 부분, 나이·의도·행동의 이력은 증명하지 않는다.",
+          "candidate_id": "cand_4c3df132db45558b80ccba3f4b48603e",
+          "id": "F231",
+          "native_approval": false,
+          "pixel_status": "NOT_RUN",
+          "positive_en": "A makeup display head has evenly covered cheeks, a sharply defined upper lash line and separate prominent lashes around the eyes.",
+          "positive_ko": "화장 전시용 머리의 볼은 고르게 색이 덮이고 눈 둘레에 또렷한 위 속눈썹선과 구분되는 긴 속눈썹이 있다.",
+          "scope": "One optional authored visual example; source evidence may cover only a component and does not establish equivalence, native admission or pixel quality.",
+          "source_evidence": [
+            {
+              "support": "partial",
+              "supported_scope_ko": "개별 작성자가 밝은 색면과 눈·속눈썹을 활용한 화장 사례. 모든 인형풍 화장이나 착용자 나이를 규정하지 않는다.",
+              "title": "Rebecca Shores 인형풍 화장",
+              "url": "https://rebeccakshores.com/blog/tutorial/porcelain-doll-halloween-makeup-tutorial"
+            }
+          ],
+          "source_review_file": "photo_nurse_uniform_final_followup_review_20261107.json",
+          "source_review_sha256": "6c18af89fa5266d8848925289caf45517574966f114767b3aed6770dd5f642b3",
+          "source_row_id": "NURSE-ROW-231"
+        }
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": []
+      },
+      "id": "cand_4c3df132db45558b80ccba3f4b48603e",
+      "provenance": [
+        {
+          "sha256": "6c18af89fa5266d8848925289caf45517574966f114767b3aed6770dd5f642b3",
+          "source": "authored-research:photo_nurse_uniform_final_followup_review_20261107.json#F231"
+        }
+      ],
+      "record_kind": "visual_option"
+    }
+  },
+  "use": "search source comparison only; no native qualification or permission"
+}

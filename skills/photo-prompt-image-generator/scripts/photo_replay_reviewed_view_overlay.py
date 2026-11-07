@@ -96,6 +96,8 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--no-followups', action='store_true',
                    help='replay only the requested overlay, for historical inspection')
+    p.add_argument('--historical-release', action='store_true',
+                   help='restore the pinned historical candidate versions before replay')
     args = p.parse_args()
     if args.output.exists() or args.output.resolve() == args.input.resolve():
         raise ValueError('output must be a new file')
@@ -113,6 +115,18 @@ def main():
     else:
         raw, expected_sha256 = args.overlay.read_bytes(), args.overlay_sha256
     records = corpus.load(args.assets)['candidates']
+    # The registered default sequence belongs to the historical candidate
+    # release. An explicitly selected overlay keeps strict caller-owned
+    # sources unless historical restoration is explicitly requested.
+    use_historical = args.historical_release or args.overlay is None
+    if use_historical:
+        import photo_reviewed_view_rebase
+        release, delta, _, _ = photo_reviewed_view_rebase.read_release()
+        baseline = args.assets / release['historical_baseline']
+        if (photo_reviewed_view_rebase.file_sha(baseline) != release['historical_baseline_sha256']
+                or photo_reviewed_view_rebase.file_sha(FOLLOWUPS) != release['historical_replay_manifest_sha256']):
+            raise ValueError('historical baseline or overlay sequence changed')
+        records = photo_reviewed_view_rebase.historical_records(records, delta)
     result, stages = apply_registered(json.loads(args.input.read_bytes()), records, raw,
                                       expected_sha256, followups=not args.no_followups)
     legacy = None
@@ -130,7 +144,8 @@ def main():
                       'already_present': sum(s['already_present'] for s in stages),
                       'stages': stages, 'legacy_evidence': legacy,
                       'research_originals': 'not retained or revalidated',
-                      'runtime_activation': 'unchanged'}))
+                      'runtime_activation': 'unchanged',
+                      'historical_release': use_historical}))
 
 
 if __name__ == '__main__':
